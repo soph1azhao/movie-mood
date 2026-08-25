@@ -4,7 +4,7 @@ A small, cinematic movie-discovery site for the question: **what should I watch 
 
 ## Live demo
 
-After GitHub Pages is enabled, the site will be available at `https://YOUR-USERNAME.github.io/movie-mood/`.
+Try the [live demo](https://soph1azhao.github.io/movie-mood/).
 
 ## Screenshot
 
@@ -19,6 +19,8 @@ Run the site locally and add a screenshot here whenever you’re ready.
 - Responsive, keyboard-friendly single-page interface with an intentional initial state.
 - Custom title posters created in CSS, so there are no fragile external image links or API keys.
 
+Note: V1 posters are CSS-generated title posters, not official movie posters.
+
 ## Tech stack
 
 - React
@@ -30,7 +32,7 @@ Run the site locally and add a screenshot here whenever you’re ready.
 ## Run locally
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/movie-mood.git
+git clone https://github.com/soph1azhao/movie-mood.git
 cd movie-mood
 npm install
 npm run dev
@@ -78,6 +80,6 @@ src/
 - Favorites and a personal taste profile
 - Conversational AI recommendations
 
-## What I learned
+## Learning notes
 
-_Add your own notes here as you explore the project — for example, how React state changes the recommendations, how the data file is structured, or how a GitHub Actions deployment works._
+See [LEARNING_NOTES.md](LEARNING_NOTES.md) for a beginner-friendly guide to the app and its deployment.
