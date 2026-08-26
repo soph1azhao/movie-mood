@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import type { Movie } from '../types/movie'
+import { MovieDetails } from './MovieDetails'
 
 interface MovieCardProps {
   movie: Movie
@@ -6,6 +8,7 @@ interface MovieCardProps {
 }
 
 export function MovieCard({ movie, index }: MovieCardProps) {
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false)
   const titleParts = movie.title.split(' ')
   const breakAt = Math.ceil(titleParts.length / 2)
   const languageText = movie.languages.length > 2
@@ -13,6 +16,7 @@ export function MovieCard({ movie, index }: MovieCardProps) {
     : movie.languages.join(', ')
   const paceLabel = `${movie.pace} pace`
   const emotionalWeightLabel = `${movie.emotionalWeight} weight`
+  const detailsId = `movie-details-${movie.id}`
   const posterTitle = (
     <>
       {titleParts.slice(0, breakAt).join(' ')}
@@ -64,6 +68,18 @@ export function MovieCard({ movie, index }: MovieCardProps) {
         <div className="why-watch">
           <p className="why-label">Why it fits tonight</p>
           <p>{movie.whyWatch}</p>
+        </div>
+        <button
+          type="button"
+          className="details-toggle"
+          aria-expanded={isDetailsOpen}
+          aria-controls={detailsId}
+          onClick={() => setIsDetailsOpen((current) => !current)}
+        >
+          {isDetailsOpen ? 'Hide details' : 'More details'}
+        </button>
+        <div className={`expanded-details ${isDetailsOpen ? 'is-open' : ''}`} id={detailsId} hidden={!isDetailsOpen}>
+          <MovieDetails movie={movie} />
         </div>
       </div>
     </article>
