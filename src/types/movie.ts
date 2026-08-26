@@ -8,6 +8,22 @@ export type EmotionalWeight = 'light' | 'moderate' | 'heavy'
 
 export type RuntimeFilter = 'short' | 'medium' | 'long'
 
+export type AttentionDemand = 'easy' | 'engaged' | 'immersive'
+
+export type DiscoveryStyle = 'familiar' | 'different' | 'adventurous'
+
+export interface Dealbreakers {
+  avoidHeavy: boolean
+  avoidSlow: boolean
+  underTwoHours: boolean
+}
+
+export interface DiscoveryPreferences {
+  attentionDemand: AttentionDemand | null
+  discoveryStyle: DiscoveryStyle | null
+  dealbreakers: Dealbreakers
+}
+
 export interface MovieFilters {
   genres: string[]
   runtime: RuntimeFilter | null
@@ -29,6 +45,8 @@ export interface Movie {
   situations: ViewingSituation[]
   pace: Pace
   emotionalWeight: EmotionalWeight
+  attentionDemand: AttentionDemand
+  discoveryStyle: DiscoveryStyle
   description: string
   whyWatch: string
   curiosityHook: string
