@@ -54,6 +54,8 @@ function App() {
   const activeMood = moods.find((mood) => mood.id === selectedMood)
   const hasMorePicks = filterResult.recommendationPool.length > PICKS_PER_ROUND
   const isViewingFavorites = view === 'favorites'
+  const resultCount = isViewingFavorites ? favoriteMovies.length : filterResult.recommendationPool.length
+  const resultCountLabel = `${resultCount} ${resultCount === 1 ? 'movie' : 'movies'}`
   const resultMessage = filterResult.usedSituationFallback
     ? `Only ${filterResult.exactMatches.length} matched everything, so we added ${filterResult.fallbackMatches.length} more that fit your mood and filters.`
     : null
@@ -165,6 +167,7 @@ function App() {
                     <h2 id="results-heading">
                       {isViewingFavorites ? 'My List' : `For a ${activeMood.label.toLowerCase()} kind of night.`}
                     </h2>
+                    <p className="result-count">{resultCountLabel}</p>
                   </div>
                 </div>
                 {!isViewingFavorites && hasMorePicks && (
@@ -197,12 +200,15 @@ function App() {
                     <MovieGrid movies={picks} isFavorite={isFavorite} onToggleFavorite={toggleFavorite} />
                   ) : (
                     <div className="empty-state compact-empty">
-                      <div>
-                        <p className="eyebrow">No matches</p>
-                        <h2>No movies match all of these preferences.</h2>
-                        <p>Clear filters to widen the shortlist.</p>
-                      </div>
+                    <div>
+                      <p className="eyebrow">No matches</p>
+                      <h2>No movies match all of these preferences.</h2>
+                      <p>Clear filters to widen the shortlist.</p>
+                      <button type="button" className="empty-action" onClick={clearFilters}>
+                        Clear filters
+                      </button>
                     </div>
+                  </div>
                   )}
                 </>
               )}
