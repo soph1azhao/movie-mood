@@ -62,3 +62,36 @@ After a successful commit:
 
 Do not perform heavyweight verification when a lower-risk change does not justify it.
 Prefer the smallest verification procedure that gives reasonable confidence.
+
+## Phase Completion Convention
+
+For implementation tasks:
+
+### "Implement Phase X"
+
+- Implement only the requested phase.
+- Apply the appropriate risk-based verification.
+- Report the results.
+- Do not commit or push.
+
+### "Complete Phase X"
+
+After the user has reviewed and approved the implementation:
+
+1. Stage only files belonging to the approved phase.
+2. Confirm the staged file list contains no unrelated changes.
+3. Commit with a concise phase-specific commit message.
+4. Push the commit to origin/main.
+5. Run:
+   - git status
+   - git log --oneline --decorate -5
+6. Confirm:
+   - working tree is clean
+   - local main is up to date with origin/main
+
+Do not ask for a separate push instruction after an approved phase unless:
+
+- the push fails,
+- the branch is not main,
+- unrelated staged changes are present,
+- or another Git safety issue is detected.
