@@ -103,21 +103,41 @@ Do not change GitHub Pages deployment configuration unless the task requires it.
 
 ---
 
-## Implementation Tasks
+## Phase Execution Convention
 
 When asked:
 
 ```text
-Implement V3 Phase X
+Execute V3 Phase X
 ```
 
-1. read the relevant phase and acceptance criteria in `docs/V3_IMPLEMENTATION_SPEC.md`
-2. inspect the existing code affected by that phase
-3. implement only that phase
-4. verify according to risk
-5. fix discovered issues
-6. report the result concisely
-7. stop before commit or push
+1. Read the relevant phase and acceptance criteria from `docs/V3_IMPLEMENTATION_SPEC.md`.
+2. Inspect the existing code needed for that phase.
+3. Implement only the requested phase.
+4. Run risk-appropriate verification and automated tests.
+5. Fix issues found during verification.
+6. If all required checks pass:
+   - inspect the working-tree changes,
+   - stage only files belonging to the phase,
+   - verify the staged file list contains no unrelated changes,
+   - commit with a concise phase-specific message,
+   - push to `origin/main`,
+   - confirm the working tree is clean,
+   - confirm local `main` and `origin/main` are aligned.
+7. Report concisely:
+   - what was implemented,
+   - checks performed and result,
+   - commit SHA,
+   - any material limitation or assumption.
+
+Stop before commit only if:
+
+* a material product or architecture decision is unresolved,
+* required verification cannot be made to pass safely,
+* unrelated user changes create Git risk,
+* or another genuine blocker requires user input.
+
+Do not require a separate implementation, approval, commit, or push prompt for a normally successful phase.
 
 Do not stop after producing a plan when implementation was requested.
 
@@ -208,27 +228,6 @@ Before staging:
 Stage only approved phase files.
 
 Keep commits phase-scoped.
-
----
-
-## Phase Completion
-
-When asked:
-
-```text
-Complete V3 Phase X
-```
-
-1. confirm the phase implementation exists
-2. run only the verification still needed for completion
-3. stage only phase-related files
-4. inspect the staged file list
-5. commit with a concise phase-specific message
-6. push to `origin/main`
-7. confirm the working tree is clean
-8. confirm local `main` and `origin/main` are aligned
-
-Do not require a separate push request unless a Git safety issue blocks completion.
 
 Do not amend or rewrite unrelated history.
 
