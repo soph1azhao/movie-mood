@@ -25,8 +25,9 @@ function App() {
   const [selectedSituation, setSelectedSituation] = useState<ViewingSituation | null>(null)
   const [filters, setFilters] = useState<MovieFilters>(emptyFilters)
   const [round, setRound] = useState(0)
+  const [view, setView] = useState<'recommendations' | 'favorites'>('recommendations')
   const resultsRef = useRef<HTMLElement>(null)
-  const { toggleFavorite, isFavorite } = useFavorites()
+  const { favoriteIds, toggleFavorite, isFavorite } = useFavorites()
 
   const genreOptions = useMemo(
     () => [...new Set(movies.flatMap((movie) => movie.genres))].sort(),
@@ -45,9 +46,14 @@ function App() {
     () => getPicks(filterResult.recommendationPool, round),
     [filterResult.recommendationPool, round],
   )
+  const favoriteMovies = useMemo(
+    () => movies.filter((movie) => favoriteIds.includes(movie.id)),
+    [favoriteIds],
+  )
 
   const activeMood = moods.find((mood) => mood.id === selectedMood)
   const hasMorePicks = filterResult.recommendationPool.length > PICKS_PER_ROUND
+  const isViewingFavorites = view === 'favorites'
   const resultMessage = filterResult.usedSituationFallback
     ? `Only ${filterResult.exactMatches.length} matched everything, so we added ${filterResult.fallbackMatches.length} more that fit your mood and filters.`
     : null
@@ -55,6 +61,7 @@ function App() {
   function chooseMood(mood: Mood) {
     const isNewMood = mood !== selectedMood
     setSelectedMood(mood)
+    setView('recommendations')
     setRound(0)
     if (isNewMood) {
       window.setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80)
@@ -85,6 +92,15 @@ function App() {
     window.setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0)
   }
 
+  function showFavorites() {
+    setView('favorites')
+    window.setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0)
+  }
+
+  function showRecommendations() {
+    setView('recommendations')
+  }
+
   return (
     <div className="app-shell" id="top">
       <div className="ambient ambient-one" />
@@ -111,39 +127,84 @@ function App() {
         <section className={`results ${selectedMood ? 'has-picks' : ''}`} ref={resultsRef} aria-live="polite" aria-labelledby="results-heading">
           {selectedMood && activeMood ? (
             <>
-              <SituationSelector selectedSituation={selectedSituation} onSelect={chooseSituation} />
-              <FilterPanel
-                filters={filters}
-                genreOptions={genreOptions}
-                languageOptions={languageOptions}
-                onChange={updateFilters}
-                onClear={clearFilters}
-              />
+              <div className="view-controls" aria-label="Choose recommendation or saved movies view">
+                <button
+                  type="button"
+                  className={`view-button ${!isViewingFavorites ? 'is-selected' : ''}`}
+                  aria-pressed={!isViewingFavorites}
+                  onClick={showRecommendations}
+                >
+                  Recommendations
+                </button>
+                <button
+                  type="button"
+                  className={`view-button ${isViewingFavorites ? 'is-selected' : ''}`}
+                  aria-pressed={isViewingFavorites}
+                  onClick={showFavorites}
+                >
+                  My List ({favoriteIds.length})
+                </button>
+              </div>
+              {!isViewingFavorites && (
+                <>
+                  <SituationSelector selectedSituation={selectedSituation} onSelect={chooseSituation} />
+                  <FilterPanel
+                    filters={filters}
+                    genreOptions={genreOptions}
+                    languageOptions={languageOptions}
+                    onChange={updateFilters}
+                    onClear={clearFilters}
+                  />
+                </>
+              )}
               <div className="results-header">
                 <div className="section-heading">
                   <p className="section-count">02</p>
                   <div>
-                    <p className="eyebrow">Your three picks</p>
-                    <h2 id="results-heading">For a {activeMood.label.toLowerCase()} kind of night.</h2>
+                    <p className="eyebrow">{isViewingFavorites ? 'Saved movies' : 'Your three picks'}</p>
+                    <h2 id="results-heading">
+                      {isViewingFavorites ? 'My List' : `For a ${activeMood.label.toLowerCase()} kind of night.`}
+                    </h2>
                   </div>
                 </div>
-                {hasMorePicks && (
+                {!isViewingFavorites && hasMorePicks && (
                   <button type="button" className="another-button" onClick={showAnotherThree}>
                     Another three <span aria-hidden="true">↻</span>
                   </button>
                 )}
+                {isViewingFavorites && (
+                  <button type="button" className="another-button" onClick={showRecommendations}>
+                    Back to recommendations
+                  </button>
+                )}
               </div>
-              {resultMessage && <p className="result-note">{resultMessage}</p>}
-              {filterResult.recommendationPool.length > 0 ? (
-                <MovieGrid movies={picks} isFavorite={isFavorite} onToggleFavorite={toggleFavorite} />
-              ) : (
-                <div className="empty-state compact-empty">
-                  <div>
-                    <p className="eyebrow">No matches</p>
-                    <h2>No movies match all of these preferences.</h2>
-                    <p>Clear filters to widen the shortlist.</p>
+              {isViewingFavorites ? (
+                favoriteMovies.length > 0 ? (
+                  <MovieGrid movies={favoriteMovies} isFavorite={isFavorite} onToggleFavorite={toggleFavorite} />
+                ) : (
+                  <div className="empty-state compact-empty">
+                    <div>
+                      <p className="eyebrow">Nothing saved yet</p>
+                      <h2>No movies saved yet.</h2>
+                      <p>Tap the heart on a movie you might want to watch later.</p>
+                    </div>
                   </div>
-                </div>
+                )
+              ) : (
+                <>
+                  {resultMessage && <p className="result-note">{resultMessage}</p>}
+                  {filterResult.recommendationPool.length > 0 ? (
+                    <MovieGrid movies={picks} isFavorite={isFavorite} onToggleFavorite={toggleFavorite} />
+                  ) : (
+                    <div className="empty-state compact-empty">
+                      <div>
+                        <p className="eyebrow">No matches</p>
+                        <h2>No movies match all of these preferences.</h2>
+                        <p>Clear filters to widen the shortlist.</p>
+                      </div>
+                    </div>
+                  )}
+                </>
               )}
             </>
           ) : (
