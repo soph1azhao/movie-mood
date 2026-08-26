@@ -3,24 +3,35 @@ import { CategorySelector, moods } from './components/CategorySelector'
 import { Footer } from './components/Footer'
 import { Header } from './components/Header'
 import { MovieGrid } from './components/MovieGrid'
+import { SituationSelector } from './components/SituationSelector'
 import { movies } from './data/movies'
-import type { Mood } from './types/movie'
+import type { Mood, ViewingSituation } from './types/movie'
 
 const PICKS_PER_ROUND = 3
 
-function getPicks(mood: Mood, offset: number) {
-  const matches = movies.filter((movie) => movie.moods.includes(mood))
+function getPicks(mood: Mood, situation: ViewingSituation | null, offset: number) {
+  const matches = movies.filter((movie) => (
+    movie.moods.includes(mood)
+    && (!situation || movie.situations.includes(situation))
+  ))
+  if (matches.length === 0) {
+    return []
+  }
+  if (matches.length <= PICKS_PER_ROUND) {
+    return matches
+  }
   return Array.from({ length: PICKS_PER_ROUND }, (_, index) => matches[(offset + index) % matches.length])
 }
 
 function App() {
   const [selectedMood, setSelectedMood] = useState<Mood | null>(null)
+  const [selectedSituation, setSelectedSituation] = useState<ViewingSituation | null>(null)
   const [round, setRound] = useState(0)
   const resultsRef = useRef<HTMLElement>(null)
 
   const picks = useMemo(
-    () => (selectedMood ? getPicks(selectedMood, round * PICKS_PER_ROUND) : []),
-    [selectedMood, round],
+    () => (selectedMood ? getPicks(selectedMood, selectedSituation, round * PICKS_PER_ROUND) : []),
+    [selectedMood, selectedSituation, round],
   )
 
   const activeMood = moods.find((mood) => mood.id === selectedMood)
@@ -32,6 +43,11 @@ function App() {
     if (isNewMood) {
       window.setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80)
     }
+  }
+
+  function chooseSituation(situation: ViewingSituation | null) {
+    setSelectedSituation(situation)
+    setRound(0)
   }
 
   function showAnotherThree() {
@@ -65,6 +81,7 @@ function App() {
         <section className={`results ${selectedMood ? 'has-picks' : ''}`} ref={resultsRef} aria-live="polite" aria-labelledby="results-heading">
           {selectedMood && activeMood ? (
             <>
+              <SituationSelector selectedSituation={selectedSituation} onSelect={chooseSituation} />
               <div className="results-header">
                 <div className="section-heading">
                   <p className="section-count">02</p>
