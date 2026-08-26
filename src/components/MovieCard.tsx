@@ -8,6 +8,11 @@ interface MovieCardProps {
 export function MovieCard({ movie, index }: MovieCardProps) {
   const titleParts = movie.title.split(' ')
   const breakAt = Math.ceil(titleParts.length / 2)
+  const languageText = movie.languages.length > 2
+    ? `${movie.languages.slice(0, 2).join(', ')} +${movie.languages.length - 2}`
+    : movie.languages.join(', ')
+  const paceLabel = `${movie.pace} pace`
+  const emotionalWeightLabel = `${movie.emotionalWeight} weight`
   const posterTitle = (
     <>
       {titleParts.slice(0, breakAt).join(' ')}
@@ -36,7 +41,26 @@ export function MovieCard({ movie, index }: MovieCardProps) {
           <p className="metadata">{movie.year} · {movie.director}</p>
         </div>
         <p className="genres">{movie.genres.join(' · ')}</p>
-        <p className="description">{movie.description}</p>
+        <dl className="movie-facts" aria-label={`Viewing details for ${movie.title}`}>
+          <div>
+            <dt>Runtime</dt>
+            <dd>{movie.runtimeMinutes} min</dd>
+          </div>
+          <div>
+            <dt>Country</dt>
+            <dd>{movie.countries.join(', ')}</dd>
+          </div>
+          <div>
+            <dt>Language</dt>
+            <dd>{languageText}</dd>
+          </div>
+        </dl>
+        <div className="tone-tags" aria-label={`Tone: ${paceLabel}, ${emotionalWeightLabel}`}>
+          <span>{paceLabel}</span>
+          <span>{emotionalWeightLabel}</span>
+        </div>
+        <p className="curiosity-hook">{movie.curiosityHook}</p>
+        <p className="vibe-summary">{movie.vibeSummary}</p>
         <div className="why-watch">
           <p className="why-label">Why it fits tonight</p>
           <p>{movie.whyWatch}</p>
