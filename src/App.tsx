@@ -15,13 +15,8 @@ function getPicks(recommendationPool: typeof movies, offset: number) {
   if (recommendationPool.length === 0) {
     return []
   }
-  if (recommendationPool.length <= PICKS_PER_ROUND) {
-    return recommendationPool
-  }
-  return Array.from(
-    { length: PICKS_PER_ROUND },
-    (_, index) => recommendationPool[(offset + index) % recommendationPool.length],
-  )
+
+  return recommendationPool.slice(offset, offset + PICKS_PER_ROUND)
 }
 
 function App() {
@@ -45,11 +40,12 @@ function App() {
   )
 
   const picks = useMemo(
-    () => getPicks(filterResult.recommendationPool, round * PICKS_PER_ROUND),
+    () => getPicks(filterResult.recommendationPool, round),
     [filterResult.recommendationPool, round],
   )
 
   const activeMood = moods.find((mood) => mood.id === selectedMood)
+  const hasMorePicks = filterResult.recommendationPool.length > PICKS_PER_ROUND
   const resultMessage = filterResult.usedSituationFallback
     ? `Only ${filterResult.exactMatches.length} matched everything, so we added ${filterResult.fallbackMatches.length} more that fit your mood and filters.`
     : null
@@ -79,7 +75,11 @@ function App() {
   }
 
   function showAnotherThree() {
-    setRound((currentRound) => currentRound + 1)
+    setRound((currentOffset) => (
+      currentOffset + PICKS_PER_ROUND >= filterResult.recommendationPool.length
+        ? 0
+        : currentOffset + PICKS_PER_ROUND
+    ))
     window.setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0)
   }
 
@@ -125,9 +125,11 @@ function App() {
                     <h2 id="results-heading">For a {activeMood.label.toLowerCase()} kind of night.</h2>
                   </div>
                 </div>
-                <button type="button" className="another-button" onClick={showAnotherThree}>
-                  Another three <span aria-hidden="true">↻</span>
-                </button>
+                {hasMorePicks && (
+                  <button type="button" className="another-button" onClick={showAnotherThree}>
+                    Another three <span aria-hidden="true">↻</span>
+                  </button>
+                )}
               </div>
               {resultMessage && <p className="result-note">{resultMessage}</p>}
               {filterResult.recommendationPool.length > 0 ? (
