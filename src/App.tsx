@@ -1,12 +1,13 @@
 import { useMemo, useRef, useState } from 'react'
 import { CategorySelector, moods } from './components/CategorySelector'
+import { FilterPanel } from './components/FilterPanel'
 import { Footer } from './components/Footer'
 import { Header } from './components/Header'
 import { MovieGrid } from './components/MovieGrid'
 import { SituationSelector } from './components/SituationSelector'
 import { movies } from './data/movies'
 import { emptyFilters, filterMovies } from './utils/filterMovies'
-import type { Mood, ViewingSituation } from './types/movie'
+import type { Mood, MovieFilters, ViewingSituation } from './types/movie'
 
 const PICKS_PER_ROUND = 3
 
@@ -26,12 +27,21 @@ function getPicks(recommendationPool: typeof movies, offset: number) {
 function App() {
   const [selectedMood, setSelectedMood] = useState<Mood | null>(null)
   const [selectedSituation, setSelectedSituation] = useState<ViewingSituation | null>(null)
+  const [filters, setFilters] = useState<MovieFilters>(emptyFilters)
   const [round, setRound] = useState(0)
   const resultsRef = useRef<HTMLElement>(null)
 
+  const genreOptions = useMemo(
+    () => [...new Set(movies.flatMap((movie) => movie.genres))].sort(),
+    [],
+  )
+  const languageOptions = useMemo(
+    () => [...new Set(movies.flatMap((movie) => movie.languages))].sort(),
+    [],
+  )
   const filterResult = useMemo(
-    () => filterMovies(movies, selectedMood, selectedSituation, emptyFilters),
-    [selectedMood, selectedSituation],
+    () => filterMovies(movies, selectedMood, selectedSituation, filters),
+    [selectedMood, selectedSituation, filters],
   )
 
   const picks = useMemo(
@@ -40,6 +50,9 @@ function App() {
   )
 
   const activeMood = moods.find((mood) => mood.id === selectedMood)
+  const resultMessage = filterResult.usedSituationFallback
+    ? `Only ${filterResult.exactMatches.length} matched everything, so we added ${filterResult.fallbackMatches.length} more that fit your mood and filters.`
+    : null
 
   function chooseMood(mood: Mood) {
     const isNewMood = mood !== selectedMood
@@ -52,6 +65,16 @@ function App() {
 
   function chooseSituation(situation: ViewingSituation | null) {
     setSelectedSituation(situation)
+    setRound(0)
+  }
+
+  function updateFilters(nextFilters: MovieFilters) {
+    setFilters(nextFilters)
+    setRound(0)
+  }
+
+  function clearFilters() {
+    setFilters(emptyFilters)
     setRound(0)
   }
 
@@ -87,6 +110,13 @@ function App() {
           {selectedMood && activeMood ? (
             <>
               <SituationSelector selectedSituation={selectedSituation} onSelect={chooseSituation} />
+              <FilterPanel
+                filters={filters}
+                genreOptions={genreOptions}
+                languageOptions={languageOptions}
+                onChange={updateFilters}
+                onClear={clearFilters}
+              />
               <div className="results-header">
                 <div className="section-heading">
                   <p className="section-count">02</p>
@@ -99,7 +129,18 @@ function App() {
                   Another three <span aria-hidden="true">↻</span>
                 </button>
               </div>
-              <MovieGrid movies={picks} />
+              {resultMessage && <p className="result-note">{resultMessage}</p>}
+              {filterResult.recommendationPool.length > 0 ? (
+                <MovieGrid movies={picks} />
+              ) : (
+                <div className="empty-state compact-empty">
+                  <div>
+                    <p className="eyebrow">No matches</p>
+                    <h2>No movies match all of these preferences.</h2>
+                    <p>Clear filters to widen the shortlist.</p>
+                  </div>
+                </div>
+              )}
             </>
           ) : (
             <div className="empty-state">
