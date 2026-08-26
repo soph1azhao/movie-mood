@@ -6,6 +6,7 @@ import { Header } from './components/Header'
 import { MovieGrid } from './components/MovieGrid'
 import { SituationSelector } from './components/SituationSelector'
 import { movies } from './data/movies'
+import { useFavorites } from './hooks/useFavorites'
 import { emptyFilters, filterMovies } from './utils/filterMovies'
 import type { Mood, MovieFilters, ViewingSituation } from './types/movie'
 
@@ -25,6 +26,7 @@ function App() {
   const [filters, setFilters] = useState<MovieFilters>(emptyFilters)
   const [round, setRound] = useState(0)
   const resultsRef = useRef<HTMLElement>(null)
+  const { toggleFavorite, isFavorite } = useFavorites()
 
   const genreOptions = useMemo(
     () => [...new Set(movies.flatMap((movie) => movie.genres))].sort(),
@@ -133,7 +135,7 @@ function App() {
               </div>
               {resultMessage && <p className="result-note">{resultMessage}</p>}
               {filterResult.recommendationPool.length > 0 ? (
-                <MovieGrid movies={picks} />
+                <MovieGrid movies={picks} isFavorite={isFavorite} onToggleFavorite={toggleFavorite} />
               ) : (
                 <div className="empty-state compact-empty">
                   <div>

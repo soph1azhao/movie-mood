@@ -5,9 +5,11 @@ import { MovieDetails } from './MovieDetails'
 interface MovieCardProps {
   movie: Movie
   index: number
+  isFavorite: boolean
+  onToggleFavorite: (movieId: string) => void
 }
 
-export function MovieCard({ movie, index }: MovieCardProps) {
+export function MovieCard({ movie, index, isFavorite, onToggleFavorite }: MovieCardProps) {
   const [isDetailsOpen, setIsDetailsOpen] = useState(false)
   const titleParts = movie.title.split(' ')
   const breakAt = Math.ceil(titleParts.length / 2)
@@ -40,9 +42,20 @@ export function MovieCard({ movie, index }: MovieCardProps) {
       </div>
       <div className="movie-details">
         <div className="movie-heading">
-          <p className="eyebrow">Pick {String(index + 1).padStart(2, '0')}</p>
-          <h3>{movie.title}</h3>
-          <p className="metadata">{movie.year} · {movie.director}</p>
+          <div>
+            <p className="eyebrow">Pick {String(index + 1).padStart(2, '0')}</p>
+            <h3>{movie.title}</h3>
+            <p className="metadata">{movie.year} · {movie.director}</p>
+          </div>
+          <button
+            type="button"
+            className={`favorite-button ${isFavorite ? 'is-favorite' : ''}`}
+            aria-label={isFavorite ? `Remove ${movie.title} from favorites` : `Save ${movie.title} to favorites`}
+            aria-pressed={isFavorite}
+            onClick={() => onToggleFavorite(movie.id)}
+          >
+            <span aria-hidden="true">{isFavorite ? '♥' : '♡'}</span>
+          </button>
         </div>
         <p className="genres">{movie.genres.join(' · ')}</p>
         <dl className="movie-facts" aria-label={`Viewing details for ${movie.title}`}>
