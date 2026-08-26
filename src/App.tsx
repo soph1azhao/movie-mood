@@ -5,22 +5,22 @@ import { Header } from './components/Header'
 import { MovieGrid } from './components/MovieGrid'
 import { SituationSelector } from './components/SituationSelector'
 import { movies } from './data/movies'
+import { emptyFilters, filterMovies } from './utils/filterMovies'
 import type { Mood, ViewingSituation } from './types/movie'
 
 const PICKS_PER_ROUND = 3
 
-function getPicks(mood: Mood, situation: ViewingSituation | null, offset: number) {
-  const matches = movies.filter((movie) => (
-    movie.moods.includes(mood)
-    && (!situation || movie.situations.includes(situation))
-  ))
-  if (matches.length === 0) {
+function getPicks(recommendationPool: typeof movies, offset: number) {
+  if (recommendationPool.length === 0) {
     return []
   }
-  if (matches.length <= PICKS_PER_ROUND) {
-    return matches
+  if (recommendationPool.length <= PICKS_PER_ROUND) {
+    return recommendationPool
   }
-  return Array.from({ length: PICKS_PER_ROUND }, (_, index) => matches[(offset + index) % matches.length])
+  return Array.from(
+    { length: PICKS_PER_ROUND },
+    (_, index) => recommendationPool[(offset + index) % recommendationPool.length],
+  )
 }
 
 function App() {
@@ -29,9 +29,14 @@ function App() {
   const [round, setRound] = useState(0)
   const resultsRef = useRef<HTMLElement>(null)
 
+  const filterResult = useMemo(
+    () => filterMovies(movies, selectedMood, selectedSituation, emptyFilters),
+    [selectedMood, selectedSituation],
+  )
+
   const picks = useMemo(
-    () => (selectedMood ? getPicks(selectedMood, selectedSituation, round * PICKS_PER_ROUND) : []),
-    [selectedMood, selectedSituation, round],
+    () => getPicks(filterResult.recommendationPool, round * PICKS_PER_ROUND),
+    [filterResult.recommendationPool, round],
   )
 
   const activeMood = moods.find((mood) => mood.id === selectedMood)

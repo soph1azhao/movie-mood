@@ -6,6 +6,16 @@ export type Pace = 'slow' | 'medium' | 'fast'
 
 export type EmotionalWeight = 'light' | 'moderate' | 'heavy'
 
+export type RuntimeFilter = 'short' | 'medium' | 'long'
+
+export interface MovieFilters {
+  genres: string[]
+  runtime: RuntimeFilter | null
+  language: string | null
+  pace: Pace | null
+  emotionalWeight: EmotionalWeight | null
+}
+
 export interface Movie {
   id: string
   title: string
