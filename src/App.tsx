@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { CategorySelector, moods } from './components/CategorySelector'
 import { DecisionMode } from './components/DecisionMode'
 import { DiscoveryPreferencesPanel } from './components/DiscoveryPreferencesPanel'
@@ -12,16 +12,31 @@ import { useFavorites } from './hooks/useFavorites'
 import { emptyDiscoveryPreferences, getDiscoveryPool, getSimilarMovies } from './utils/discovery'
 import { emptyFilters, filterMovies } from './utils/filterMovies'
 import { getNextPickOffset, getPicks, PICKS_PER_ROUND } from './utils/picks'
+import { decodeDecisionState, encodeDecisionState } from './utils/urlCodec'
 import type { DecisionState } from './types/decision'
 import type { DiscoveryPreferences, Mood, MovieFilters, ViewingSituation } from './types/movie'
 
+const restoredDecisionModeState = typeof window === 'undefined'
+  ? null
+  : decodeDecisionState(window.location.href)
+
+function getCleanPageUrl() {
+  const url = new URL(window.location.href)
+  url.search = ''
+  return url.toString()
+}
+
 function App() {
-  const [selectedMood, setSelectedMood] = useState<Mood | null>(null)
-  const [selectedSituation, setSelectedSituation] = useState<ViewingSituation | null>(null)
-  const [filters, setFilters] = useState<MovieFilters>(emptyFilters)
-  const [discoveryPreferences, setDiscoveryPreferences] = useState<DiscoveryPreferences>(emptyDiscoveryPreferences)
+  const [selectedMood, setSelectedMood] = useState<Mood | null>((restoredDecisionModeState?.mood ?? null) as Mood | null)
+  const [selectedSituation, setSelectedSituation] = useState<ViewingSituation | null>(
+    (restoredDecisionModeState?.situation ?? null) as ViewingSituation | null,
+  )
+  const [filters, setFilters] = useState<MovieFilters>(restoredDecisionModeState?.filters ?? emptyFilters)
+  const [discoveryPreferences, setDiscoveryPreferences] = useState<DiscoveryPreferences>(
+    restoredDecisionModeState?.discoveryPreferences ?? emptyDiscoveryPreferences,
+  )
   const [similarToMovieId, setSimilarToMovieId] = useState<string | null>(null)
-  const [decisionState, setDecisionState] = useState<DecisionState | null>(null)
+  const [decisionState, setDecisionState] = useState<DecisionState | null>(restoredDecisionModeState?.decisionState ?? null)
   const [round, setRound] = useState(0)
   const [view, setView] = useState<'recommendations' | 'favorites'>('recommendations')
   const resultsRef = useRef<HTMLElement>(null)
@@ -86,6 +101,29 @@ function App() {
 
     return null
   })()
+  const shareUrl = useMemo(() => {
+    if (!selectedMood || !decisionState) return ''
+
+    return `${window.location.origin}${window.location.pathname}?${encodeDecisionState({
+      schemaVersion: 'v4',
+      mood: selectedMood,
+      situation: selectedSituation,
+      filters,
+      discoveryPreferences,
+      decisionState,
+    })}`
+  }, [decisionState, discoveryPreferences, filters, selectedMood, selectedSituation])
+
+  useEffect(() => {
+    if (!selectedMood || !decisionState) {
+      if (window.location.search.includes('mode=decision')) {
+        window.history.replaceState(null, '', getCleanPageUrl())
+      }
+      return
+    }
+
+    window.history.replaceState(null, '', shareUrl)
+  }, [decisionState, selectedMood, shareUrl])
 
   function chooseMood(mood: Mood) {
     const isNewMood = mood !== selectedMood
@@ -315,6 +353,7 @@ function App() {
                       filters={filters}
                       discoveryPreferences={discoveryPreferences}
                       state={decisionState}
+                      shareUrl={shareUrl}
                       onChange={setDecisionState}
                       onExit={() => setDecisionState(null)}
                     />

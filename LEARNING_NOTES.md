@@ -24,6 +24,8 @@ The **Another three** button advances the recommendation offset by three. It use
 
 Changing the mood, situation, filters, attention preference, discovery preference, or dealbreakers resets the recommendation offset to the beginning.
 
+V4 adds **Help me choose** when a normal three-movie slate is visible. This opens Decision Mode for the current three movies without changing the recommendation pool.
+
 ## How viewing situations work
 
 `src/components/SituationSelector.tsx` renders the optional situation buttons. The available situations are:
@@ -126,6 +128,43 @@ The **More like this** button switches the recommendations area into a related-f
 `getSimilarMovies` compares the seed movie with the local curated dataset using shared moods, genres, pace, emotional weight, attention demand, discovery style, and viewing situations. It excludes the seed movie, returns up to three movies, and uses dataset order as the final tie-breaker.
 
 A similar result can become the next seed by clicking **More like this** again. **Back to recommendations** clears `similarToMovieId` and returns to the ordinary mood-first flow.
+
+## How V4 Decision Mode works
+
+`src/App.tsx` stores the active V4 decision state in `decisionState`. The state can be:
+
+- `three-slate`, with the three current movie IDs
+- `duel`, with two finalist movie IDs and optional source-slate context
+- `pick`, with the chosen movie ID and enough context for **Change my mind**
+
+`src/components/DecisionMode.tsx` renders the decision screens:
+
+- three cards with concise relative cues
+- a two-finalist duel
+- a coin-flip gut check for the two finalists
+- a final Tonight’s Pick ticket
+
+The comparison rules live in `src/utils/decision.ts`. They use existing movie metadata only. Active attention, emotional, discovery, pace, and runtime preferences can influence which differences are shown first, but the app does not create a numerical recommendation score.
+
+Changing the mood, situation, filters, discovery preferences, current view, or recommendation slate exits Decision Mode. This keeps the decision state tied to the context that produced it.
+
+## How V4 URLs and sharing work
+
+`src/utils/urlCodec.ts` turns a V4 decision state into a query string and decodes it back on page load.
+
+A valid V4 decision URL can restore:
+
+- the selected mood
+- the optional situation
+- practical filters
+- discovery preferences and dealbreakers
+- the three-slate, duel, or Tonight’s Pick state
+
+The decoder validates URL-controlled values before using them. Unknown mood values, invalid filter values, and stale movie IDs degrade safely instead of being trusted.
+
+While Decision Mode is active, `App` keeps the URL synchronized with the current V4 state using `history.replaceState`. Returning to normal browsing clears the V4 decision query.
+
+The Tonight’s Pick ticket has a share button. It uses the browser’s native share sheet when available. If not, it copies the current V4 URL to the clipboard and announces the result with an accessible status message.
 
 ## How favorites and My List work
 

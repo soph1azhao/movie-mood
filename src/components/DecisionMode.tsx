@@ -15,6 +15,7 @@ interface DecisionModeProps {
   filters: MovieFilters
   discoveryPreferences: DiscoveryPreferences
   state: DecisionState
+  shareUrl: string
   onChange: (state: DecisionState) => void
   onExit: () => void
 }
@@ -145,11 +146,13 @@ export function DecisionMode({
   filters,
   discoveryPreferences,
   state,
+  shareUrl,
   onChange,
   onExit,
 }: DecisionModeProps) {
   const [selectedDuelIds, setSelectedDuelIds] = useState<string[]>([])
   const [coinFlipWinnerId, setCoinFlipWinnerId] = useState<string | null>(null)
+  const [shareMessage, setShareMessage] = useState('')
   const allMoviesById = useMemo(() => new Map(movies.map((movie) => [movie.id, movie])), [movies])
 
   function chooseMovie(selectedId: string, source?: DuelState | [string, string, string]) {
@@ -167,6 +170,39 @@ export function DecisionMode({
 
   function flipCoin(finalistIds: [string, string]) {
     setCoinFlipWinnerId(finalistIds[Math.floor(Math.random() * finalistIds.length)])
+  }
+
+  async function sharePick(movie: Movie) {
+    const shareText = `Tonight's Pick: ${movie.title} on Movie Mood`
+
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: shareText,
+          text: movie.vibeSummary,
+          url: shareUrl,
+        })
+        setShareMessage('Share sheet opened.')
+        return
+      }
+
+      if (navigator.clipboard) {
+        await navigator.clipboard.writeText(shareUrl)
+      } else {
+        const textArea = document.createElement('textarea')
+        textArea.value = shareUrl
+        textArea.setAttribute('readonly', '')
+        textArea.style.position = 'fixed'
+        textArea.style.top = '-999px'
+        document.body.appendChild(textArea)
+        textArea.select()
+        document.execCommand('copy')
+        document.body.removeChild(textArea)
+      }
+      setShareMessage('Link copied to clipboard.')
+    } catch {
+      setShareMessage('Could not share right now.')
+    }
   }
 
   if (state.kind === 'three-slate') {
@@ -347,6 +383,9 @@ export function DecisionMode({
             </ul>
           </div>
           <div className="decision-actions inline-actions">
+            <button type="button" className="details-toggle decision-primary" onClick={() => sharePick(selectedMovie)}>
+              Share pick
+            </button>
             <button
               type="button"
               className="details-toggle"
@@ -369,6 +408,7 @@ export function DecisionMode({
               Back to browsing
             </button>
           </div>
+          <p className="share-feedback" aria-live="polite">{shareMessage}</p>
         </div>
       </div>
     </div>

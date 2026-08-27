@@ -1,6 +1,6 @@
 # Movie Mood
 
-A small, cinematic movie-discovery site for the question: **what should I watch tonight?** Choose a feeling and Movie Mood gives you three carefully selected films, along with practical details, human discovery preferences, clear “not tonight” boundaries, related-film exploration, and a save-for-later list.
+A small, cinematic movie-discovery site for the question: **what should I watch tonight?** Choose a feeling and Movie Mood gives you three carefully selected films, along with practical details, human discovery preferences, clear “not tonight” boundaries, related-film exploration, a save-for-later list, and a lightweight decision flow for landing on tonight’s pick.
 
 ## Live demo
 
@@ -17,6 +17,8 @@ Run the site locally and add a screenshot here whenever you’re ready.
 - Optional V3 discovery controls for attention demand, comfort-zone distance, and strict “Not tonight” boundaries.
 - Practical filters for genre, runtime, language, pace, and emotional weight.
 - Three focused recommendations at a time, with “Another three” cycling through the current eligible pool.
+- V4 Decision Mode with three-film comparison cues, two-finalist duels, a coin-flip gut check, and a final Tonight’s Pick ticket.
+- Shareable V4 decision URLs that can restore the active preference context, Decision Mode slate, duel, or Tonight’s Pick.
 - “More like this” mode for exploring up to three related films from the local curated dataset.
 - Expandable movie details with runtime, countries, languages, moods, situations, pace, emotional weight, attention demand, discovery style, and recommendation notes.
 - Browser-local favorites stored as movie IDs in `localStorage`, plus a reusable My List view.
@@ -31,6 +33,8 @@ Note: posters are CSS-generated title posters, not official movie posters.
 The V2 implementation plan is documented in [docs/V2_IMPLEMENTATION_SPEC.md](docs/V2_IMPLEMENTATION_SPEC.md).
 
 The V3 implementation plan is documented in [docs/V3_IMPLEMENTATION_SPEC.md](docs/V3_IMPLEMENTATION_SPEC.md).
+
+The V4 implementation plan is documented in [docs/V4_IMPLEMENTATION_SPEC.md](docs/V4_IMPLEMENTATION_SPEC.md).
 
 ## Tech stack
 
@@ -85,7 +89,7 @@ src/
 ├── data/movies.ts # Local movie collection and metadata
 ├── hooks/         # Browser-local favorites state
 ├── types/         # Shared TypeScript types
-├── utils/         # Pure filtering, discovery, similarity, and cycling helpers
+├── utils/         # Pure filtering, discovery, decision, URL, and cycling helpers
 ├── App.tsx        # Page state and recommendation selection
 └── styles.css     # The responsive visual system
 .github/workflows/ # GitHub Pages deployment
@@ -101,6 +105,15 @@ src/
 - `src/components/FilterPanel.tsx` renders controls only; it does not duplicate filtering rules.
 - `src/hooks/useFavorites.ts` stores only favorite movie IDs under `movieMoodFavorites`.
 - `src/components/MovieGrid.tsx` and `src/components/MovieCard.tsx` are reused for recommendations, similar results, and My List.
+
+## V4 Architecture Notes
+
+- `src/App.tsx` owns the active `DecisionState` and resets it whenever upstream mood, situation, filter, discovery preference, view, or slate offset changes.
+- `src/components/DecisionMode.tsx` renders the three-slate comparison, duel, coin gut check, and Tonight’s Pick ticket.
+- `src/utils/decision.ts` keeps decision cues deterministic and context-aware without adding a numerical recommendation score.
+- `src/utils/urlCodec.ts` serializes V4 decision URLs and validates decoded mood, situation, filters, discovery preferences, and movie IDs against the local dataset.
+- While Decision Mode is active, `App` keeps the browser URL synchronized with the current decision state. Valid V4 URLs restore the preference context and decision phase on load; malformed or stale URLs fall back to the normal start state.
+- Tonight’s Pick uses the native Web Share API when available and copies the share URL to the clipboard as a fallback.
 
 ## Adding Movies and Filters
 
