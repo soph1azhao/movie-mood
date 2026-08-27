@@ -5,9 +5,10 @@ interface MovieGridProps {
   movies: Movie[]
   isFavorite: (movieId: string) => boolean
   onToggleFavorite: (movieId: string) => void
+  onFindSimilar?: (movieId: string) => void
 }
 
-export function MovieGrid({ movies, isFavorite, onToggleFavorite }: MovieGridProps) {
+export function MovieGrid({ movies, isFavorite, onToggleFavorite, onFindSimilar }: MovieGridProps) {
   return (
     <div className="movie-grid">
       {movies.map((movie, index) => (
@@ -17,6 +18,7 @@ export function MovieGrid({ movies, isFavorite, onToggleFavorite }: MovieGridPro
           index={index}
           isFavorite={isFavorite(movie.id)}
           onToggleFavorite={onToggleFavorite}
+          onFindSimilar={onFindSimilar}
         />
       ))}
     </div>

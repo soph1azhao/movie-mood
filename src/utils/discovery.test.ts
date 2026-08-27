@@ -4,6 +4,7 @@ import {
   applyDealbreakers,
   emptyDiscoveryPreferences,
   getDiscoveryPool,
+  getSimilarMovies,
   rankByExperiencePreferences,
 } from './discovery'
 
@@ -134,5 +135,84 @@ describe('getDiscoveryPool', () => {
     )
 
     expect(result.map((movie) => movie.id)).toEqual(['exact', 'fallback'])
+  })
+})
+
+describe('getSimilarMovies', () => {
+  it('excludes the seed movie and returns up to the requested limit', () => {
+    const movies = [
+      makeMovie({ id: 'seed', moods: ['funny'], genres: ['Comedy'] }),
+      makeMovie({ id: 'first', moods: ['funny'], genres: ['Comedy'] }),
+      makeMovie({ id: 'second', moods: ['funny'], genres: ['Drama'] }),
+      makeMovie({ id: 'third', moods: ['thoughtful'], genres: ['Drama'] }),
+    ]
+
+    const result = getSimilarMovies(movies, 'seed', 2)
+
+    expect(result).toHaveLength(2)
+    expect(result.map((movie) => movie.id)).not.toContain('seed')
+  })
+
+  it('orders by local metadata similarity and uses dataset order as the final tie-breaker', () => {
+    const movies = [
+      makeMovie({
+        id: 'seed',
+        moods: ['funny'],
+        genres: ['Comedy'],
+        situations: ['friends'],
+        pace: 'fast',
+        emotionalWeight: 'light',
+        attentionDemand: 'easy',
+        discoveryStyle: 'familiar',
+      }),
+      makeMovie({
+        id: 'tie-one',
+        moods: ['funny'],
+        genres: ['Comedy'],
+        situations: ['alone'],
+        pace: 'medium',
+        emotionalWeight: 'moderate',
+        attentionDemand: 'engaged',
+        discoveryStyle: 'different',
+      }),
+      makeMovie({
+        id: 'strong-match',
+        moods: ['funny'],
+        genres: ['Comedy'],
+        situations: ['friends'],
+        pace: 'fast',
+        emotionalWeight: 'light',
+        attentionDemand: 'easy',
+        discoveryStyle: 'familiar',
+      }),
+      makeMovie({
+        id: 'tie-two',
+        moods: ['funny'],
+        genres: ['Comedy'],
+        situations: ['alone'],
+        pace: 'medium',
+        emotionalWeight: 'moderate',
+        attentionDemand: 'engaged',
+        discoveryStyle: 'different',
+      }),
+    ]
+
+    const result = getSimilarMovies(movies, 'seed')
+
+    expect(result.map((movie) => movie.id)).toEqual(['strong-match', 'tie-one', 'tie-two'])
+  })
+
+  it('is deterministic across repeated calls', () => {
+    const movies = [
+      makeMovie({ id: 'seed', moods: ['suspenseful'], genres: ['Thriller'] }),
+      makeMovie({ id: 'first', moods: ['suspenseful'], genres: ['Mystery'] }),
+      makeMovie({ id: 'second', moods: ['thoughtful'], genres: ['Thriller'] }),
+      makeMovie({ id: 'third', moods: ['relaxing'], genres: ['Drama'] }),
+    ]
+
+    const firstRun = getSimilarMovies(movies, 'seed')
+    const secondRun = getSimilarMovies(movies, 'seed')
+
+    expect(secondRun.map((movie) => movie.id)).toEqual(firstRun.map((movie) => movie.id))
   })
 })

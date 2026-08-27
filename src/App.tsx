@@ -8,7 +8,7 @@ import { MovieGrid } from './components/MovieGrid'
 import { SituationSelector } from './components/SituationSelector'
 import { movies } from './data/movies'
 import { useFavorites } from './hooks/useFavorites'
-import { emptyDiscoveryPreferences, getDiscoveryPool } from './utils/discovery'
+import { emptyDiscoveryPreferences, getDiscoveryPool, getSimilarMovies } from './utils/discovery'
 import { emptyFilters, filterMovies } from './utils/filterMovies'
 import { getNextPickOffset, getPicks, PICKS_PER_ROUND } from './utils/picks'
 import type { DiscoveryPreferences, Mood, MovieFilters, ViewingSituation } from './types/movie'
@@ -18,6 +18,7 @@ function App() {
   const [selectedSituation, setSelectedSituation] = useState<ViewingSituation | null>(null)
   const [filters, setFilters] = useState<MovieFilters>(emptyFilters)
   const [discoveryPreferences, setDiscoveryPreferences] = useState<DiscoveryPreferences>(emptyDiscoveryPreferences)
+  const [similarToMovieId, setSimilarToMovieId] = useState<string | null>(null)
   const [round, setRound] = useState(0)
   const [view, setView] = useState<'recommendations' | 'favorites'>('recommendations')
   const resultsRef = useRef<HTMLElement>(null)
@@ -48,11 +49,24 @@ function App() {
     () => movies.filter((movie) => favoriteIds.includes(movie.id)),
     [favoriteIds],
   )
+  const similarSeedMovie = useMemo(
+    () => movies.find((movie) => movie.id === similarToMovieId) ?? null,
+    [similarToMovieId],
+  )
+  const similarMovies = useMemo(
+    () => (similarToMovieId ? getSimilarMovies(movies, similarToMovieId) : []),
+    [similarToMovieId],
+  )
 
   const activeMood = moods.find((mood) => mood.id === selectedMood)
-  const hasMorePicks = discoveryPool.length > PICKS_PER_ROUND
   const isViewingFavorites = view === 'favorites'
-  const resultCount = isViewingFavorites ? favoriteMovies.length : discoveryPool.length
+  const isViewingSimilarMovies = !isViewingFavorites && similarSeedMovie !== null
+  const hasMorePicks = discoveryPool.length > PICKS_PER_ROUND
+  const resultCount = isViewingFavorites
+    ? favoriteMovies.length
+    : isViewingSimilarMovies
+      ? similarMovies.length
+      : discoveryPool.length
   const resultCountLabel = `${resultCount} ${resultCount === 1 ? 'movie' : 'movies'}`
   const activeDealbreakerCount = Object.values(discoveryPreferences.dealbreakers).filter(Boolean).length
   const dealbreakersAreActive = activeDealbreakerCount > 0
@@ -73,6 +87,7 @@ function App() {
     const isNewMood = mood !== selectedMood
     setSelectedMood(mood)
     setView('recommendations')
+    setSimilarToMovieId(null)
     setRound(0)
     if (isNewMood) {
       window.setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80)
@@ -81,26 +96,31 @@ function App() {
 
   function chooseSituation(situation: ViewingSituation | null) {
     setSelectedSituation(situation)
+    setSimilarToMovieId(null)
     setRound(0)
   }
 
   function updateFilters(nextFilters: MovieFilters) {
     setFilters(nextFilters)
+    setSimilarToMovieId(null)
     setRound(0)
   }
 
   function updateDiscoveryPreferences(nextPreferences: DiscoveryPreferences) {
     setDiscoveryPreferences(nextPreferences)
+    setSimilarToMovieId(null)
     setRound(0)
   }
 
   function clearDiscoveryPreferences() {
     setDiscoveryPreferences(emptyDiscoveryPreferences)
+    setSimilarToMovieId(null)
     setRound(0)
   }
 
   function clearFilters() {
     setFilters(emptyFilters)
+    setSimilarToMovieId(null)
     setRound(0)
   }
 
@@ -111,11 +131,19 @@ function App() {
 
   function showFavorites() {
     setView('favorites')
+    setSimilarToMovieId(null)
     window.setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0)
   }
 
   function showRecommendations() {
     setView('recommendations')
+    setSimilarToMovieId(null)
+  }
+
+  function showSimilarMovies(movieId: string) {
+    setView('recommendations')
+    setSimilarToMovieId(movieId)
+    window.setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0)
   }
 
   return (
@@ -162,7 +190,7 @@ function App() {
                   My List ({favoriteIds.length})
                 </button>
               </div>
-              {!isViewingFavorites && (
+              {!isViewingFavorites && !isViewingSimilarMovies && (
                 <>
                   <SituationSelector selectedSituation={selectedSituation} onSelect={chooseSituation} />
                   <DiscoveryPreferencesPanel
@@ -183,16 +211,27 @@ function App() {
                 <div className="section-heading">
                   <p className="section-count">02</p>
                   <div>
-                    <p className="eyebrow">{isViewingFavorites ? 'Saved movies' : 'Your three picks'}</p>
+                    <p className="eyebrow">
+                      {isViewingFavorites ? 'Saved movies' : isViewingSimilarMovies ? 'Movies like this' : 'Your three picks'}
+                    </p>
                     <h2 id="results-heading">
-                      {isViewingFavorites ? 'My List' : `For a ${activeMood.label.toLowerCase()} kind of night.`}
+                      {isViewingFavorites
+                        ? 'My List'
+                        : isViewingSimilarMovies
+                          ? `More like ${similarSeedMovie.title}`
+                          : `For a ${activeMood.label.toLowerCase()} kind of night.`}
                     </h2>
                     <p className="result-count">{resultCountLabel}</p>
                   </div>
                 </div>
-                {!isViewingFavorites && hasMorePicks && (
+                {!isViewingFavorites && !isViewingSimilarMovies && hasMorePicks && (
                   <button type="button" className="another-button" onClick={showAnotherThree}>
                     Another three <span aria-hidden="true">↻</span>
+                  </button>
+                )}
+                {isViewingSimilarMovies && (
+                  <button type="button" className="another-button" onClick={showRecommendations}>
+                    Back to recommendations
                   </button>
                 )}
                 {isViewingFavorites && (
@@ -213,11 +252,36 @@ function App() {
                     </div>
                   </div>
                 )
+              ) : isViewingSimilarMovies ? (
+                similarMovies.length > 0 ? (
+                  <MovieGrid
+                    movies={similarMovies}
+                    isFavorite={isFavorite}
+                    onToggleFavorite={toggleFavorite}
+                    onFindSimilar={showSimilarMovies}
+                  />
+                ) : (
+                  <div className="empty-state compact-empty">
+                    <div>
+                      <p className="eyebrow">No similar movies</p>
+                      <h2>No nearby picks in this collection yet.</h2>
+                      <p>Return to the regular recommendations to keep browsing.</p>
+                      <button type="button" className="empty-action" onClick={showRecommendations}>
+                        Back to recommendations
+                      </button>
+                    </div>
+                  </div>
+                )
               ) : (
                 <>
                   {resultMessage && <p className="result-note">{resultMessage}</p>}
                   {discoveryPool.length > 0 ? (
-                    <MovieGrid movies={picks} isFavorite={isFavorite} onToggleFavorite={toggleFavorite} />
+                    <MovieGrid
+                      movies={picks}
+                      isFavorite={isFavorite}
+                      onToggleFavorite={toggleFavorite}
+                      onFindSimilar={showSimilarMovies}
+                    />
                   ) : (
                     <div className="empty-state compact-empty">
                     <div>

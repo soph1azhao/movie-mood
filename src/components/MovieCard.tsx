@@ -7,9 +7,10 @@ interface MovieCardProps {
   index: number
   isFavorite: boolean
   onToggleFavorite: (movieId: string) => void
+  onFindSimilar?: (movieId: string) => void
 }
 
-export function MovieCard({ movie, index, isFavorite, onToggleFavorite }: MovieCardProps) {
+export function MovieCard({ movie, index, isFavorite, onToggleFavorite, onFindSimilar }: MovieCardProps) {
   const [isDetailsOpen, setIsDetailsOpen] = useState(false)
   const titleParts = movie.title.split(' ')
   const breakAt = Math.ceil(titleParts.length / 2)
@@ -82,15 +83,26 @@ export function MovieCard({ movie, index, isFavorite, onToggleFavorite }: MovieC
           <p className="why-label">Why it fits tonight</p>
           <p>{movie.whyWatch}</p>
         </div>
-        <button
-          type="button"
-          className="details-toggle"
-          aria-expanded={isDetailsOpen}
-          aria-controls={detailsId}
-          onClick={() => setIsDetailsOpen((current) => !current)}
-        >
-          {isDetailsOpen ? 'Hide details' : 'More details'}
-        </button>
+        <div className="card-actions">
+          {onFindSimilar && (
+            <button
+              type="button"
+              className="details-toggle"
+              onClick={() => onFindSimilar(movie.id)}
+            >
+              More like this
+            </button>
+          )}
+          <button
+            type="button"
+            className="details-toggle"
+            aria-expanded={isDetailsOpen}
+            aria-controls={detailsId}
+            onClick={() => setIsDetailsOpen((current) => !current)}
+          >
+            {isDetailsOpen ? 'Hide details' : 'More details'}
+          </button>
+        </div>
         <div className={`expanded-details ${isDetailsOpen ? 'is-open' : ''}`} id={detailsId} hidden={!isDetailsOpen}>
           <MovieDetails movie={movie} />
         </div>
