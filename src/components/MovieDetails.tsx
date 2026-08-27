@@ -21,6 +21,18 @@ const situationLabels: Record<Movie['situations'][number], string> = {
   'easy-watch': 'Don’t want to think too hard',
 }
 
+const attentionDemandLabels: Record<Movie['attentionDemand'], string> = {
+  easy: 'Take it easy',
+  engaged: 'Keep me engaged',
+  immersive: 'Full immersion',
+}
+
+const discoveryStyleLabels: Record<Movie['discoveryStyle'], string> = {
+  familiar: 'Keep it familiar',
+  different: 'Something different',
+  adventurous: 'Surprise me',
+}
+
 export function MovieDetails({ movie }: MovieDetailsProps) {
   return (
     <>
@@ -72,6 +84,14 @@ export function MovieDetails({ movie }: MovieDetailsProps) {
         <div>
           <dt>Emotional weight</dt>
           <dd>{movie.emotionalWeight}</dd>
+        </div>
+        <div>
+          <dt>Attention demand</dt>
+          <dd>{attentionDemandLabels[movie.attentionDemand]}</dd>
+        </div>
+        <div>
+          <dt>Discovery style</dt>
+          <dd>{discoveryStyleLabels[movie.discoveryStyle]}</dd>
         </div>
         <div>
           <dt>Curiosity hook</dt>

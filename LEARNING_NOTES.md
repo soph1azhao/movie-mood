@@ -18,11 +18,11 @@ index.html → src/main.tsx → src/App.tsx
 
 `App` stores the selected mood in `selectedMood`. Mood is still the required starting point: choosing a mood is enough to show recommendations.
 
-After a mood is selected, the app also lets the user choose an optional viewing situation and optional practical filters. `App` passes the selected mood, situation, and filters into `filterMovies` from `src/utils/filterMovies.ts`.
+After a mood is selected, the app also lets the user choose an optional viewing situation, optional V3 discovery preferences, and optional practical filters. `App` passes the selected mood, situation, and practical filters into `filterMovies` from `src/utils/filterMovies.ts`. It then passes that V2-eligible pool through V3 discovery logic in `src/utils/discovery.ts`.
 
 The **Another three** button advances the recommendation offset by three. It uses the current eligible recommendation pool, avoids repeating movies before the pool is exhausted, and hides when there are not more than three eligible movies.
 
-Changing the mood, situation, or filters resets the recommendation offset to the beginning.
+Changing the mood, situation, filters, attention preference, discovery preference, or dealbreakers resets the recommendation offset to the beginning.
 
 ## How viewing situations work
 
@@ -57,6 +57,25 @@ Runtime filters are interpreted as:
 - `medium`: 100 to 130 minutes
 - `long`: over 130 minutes
 
+## How V3 discovery preferences work
+
+`src/components/DiscoveryPreferencesPanel.tsx` renders the optional V3 controls:
+
+- attention demand: take it easy, keep me engaged, or full immersion
+- discovery style: keep it familiar, something different, or surprise me
+- dealbreakers: nothing emotionally heavy, no slow burn, and keep it under 2 hours
+
+These controls are optional. A user can still choose only a mood and immediately get three recommendations.
+
+The rules live in `src/utils/discovery.ts`:
+
+- `applyDealbreakers` removes movies that cross active “Not tonight” boundaries.
+- `rankByExperiencePreferences` moves attention/style matches earlier without removing non-matches.
+- `getDiscoveryPool` keeps exact situation matches ahead of fallback matches, then applies V3 ordering.
+- `getSimilarMovies` finds related movies using local metadata only.
+
+Dealbreakers are strict. Soft experience preferences affect ordering, not eligibility.
+
 ## How fallback recommendations work
 
 The dataset is intentionally small, so some mood, situation, and filter combinations may not produce three exact matches.
@@ -72,11 +91,13 @@ The utility returns:
 
 `App` uses that return value to show recommendations and display a short fallback note when needed.
 
+V3 discovery runs after this fallback step, so practical V2 matching stays separate from human experience preferences.
+
 ## Where movie data lives
 
 The recommendations are in `src/data/movies.ts`. Each item follows the `Movie` type in `src/types/movie.ts`.
 
-V2 movie fields include:
+Movie fields include:
 
 - stable `id`
 - `title`, `year`, and `director`
@@ -84,6 +105,7 @@ V2 movie fields include:
 - `runtimeMinutes`
 - `moods` and `situations`
 - `pace` and `emotionalWeight`
+- `attentionDemand` and `discoveryStyle`
 - `description`, `whyWatch`, `curiosityHook`, and `vibeSummary`
 - `palette`
 
@@ -93,9 +115,17 @@ V2 movie fields include:
 
 The compact card shows the most useful quick-pick details, including runtime, countries, languages, pace, emotional weight, curiosity hook, vibe summary, and `whyWatch`.
 
-The **More details** button expands an inline details section rendered by `src/components/MovieDetails.tsx`. This keeps the compact card readable while still making the full metadata available.
+The **More like this** button switches the recommendations area into a related-film mode seeded by that movie. The **More details** button expands an inline details section rendered by `src/components/MovieDetails.tsx`. This keeps the compact card readable while still making the full metadata available.
 
-`MovieGrid` maps the selected movies into `MovieCard` components. The same grid and card components are reused for recommendations and My List.
+`MovieGrid` maps the selected movies into `MovieCard` components. The same grid and card components are reused for recommendations, similar results, and My List.
+
+## How “More like this” works
+
+`App` stores the active similar-movie seed in `similarToMovieId`. When this value is set, normal discovery controls are hidden and the results heading changes to `More like [Movie Title]`.
+
+`getSimilarMovies` compares the seed movie with the local curated dataset using shared moods, genres, pace, emotional weight, attention demand, discovery style, and viewing situations. It excludes the seed movie, returns up to three movies, and uses dataset order as the final tie-breaker.
+
+A similar result can become the next seed by clicking **More like this** again. **Back to recommendations** clears `similarToMovieId` and returns to the ordinary mood-first flow.
 
 ## How favorites and My List work
 
@@ -109,7 +139,7 @@ It stores only movie IDs, not full movie objects. This keeps saved data small an
 
 The hook safely handles missing data, malformed JSON, non-array values, duplicate IDs, and storage write failures.
 
-Each `MovieCard` has a heart button. Clicking it toggles that movie ID in the saved list. `App` uses the saved IDs to build `favoriteMovies`, and the My List view displays those movies using the same `MovieGrid` and `MovieCard` components.
+Each `MovieCard` has a heart button. Clicking it toggles that movie ID in the saved list. `App` uses the saved IDs to build `favoriteMovies`, and the My List view displays those movies using the same `MovieGrid` and `MovieCard` components. Favorites continue to work from normal recommendations and similar-results mode.
 
 ## How GitHub Pages deployment works
 
@@ -132,7 +162,7 @@ The repository’s Pages source must be set to **GitHub Actions** in **Settings 
 5. Add suitable situation tags to `situations`. Use `family` conservatively; it means a broad family movie-night fit, not an official content rating.
 6. Add runtime, countries, languages, genres, pace, emotional weight, curiosity hook, and vibe summary.
 7. Choose two CSS color values for the `palette` tuple.
-8. Run `pnpm run build` to check the change.
+8. Run `pnpm test` and `pnpm build` to check the change.
 
 ## How to add a future filter
 
