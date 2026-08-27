@@ -1,15 +1,42 @@
-import type { Mood, MovieFilters, DiscoveryPreferences, ViewingSituation } from '../types/movie'
-import type { DecisionState, DecisionModeState } from '../types/decision'
+import { movies } from '../data/movies'
+import type {
+  AttentionDemand,
+  DiscoveryPreferences,
+  DiscoveryStyle,
+  EmotionalWeight,
+  Mood,
+  MovieFilters,
+  Pace,
+  RuntimeFilter,
+  ViewingSituation,
+} from '../types/movie'
+import type { DecisionModeState, DecisionState, DuelState } from '../types/decision'
 
-const DEFAULT_FILTERS: MovieFilters = {
+const VALID_MOVIE_IDS = new Set(movies.map((m) => m.id))
+const VALID_MOODS = ['funny', 'exciting', 'thoughtful', 'relaxing', 'emotional', 'suspenseful'] as const satisfies readonly Mood[]
+const VALID_SITUATIONS = ['alone', 'date-night', 'friends', 'family', 'easy-watch'] as const satisfies readonly ViewingSituation[]
+const VALID_RUNTIMES = ['short', 'medium', 'long'] as const satisfies readonly RuntimeFilter[]
+const VALID_PACES = ['slow', 'medium', 'fast'] as const satisfies readonly Pace[]
+const VALID_EMOTIONAL_WEIGHTS = ['light', 'moderate', 'heavy'] as const satisfies readonly EmotionalWeight[]
+const VALID_ATTENTION_DEMANDS = ['easy', 'engaged', 'immersive'] as const satisfies readonly AttentionDemand[]
+const VALID_DISCOVERY_STYLES = ['familiar', 'different', 'adventurous'] as const satisfies readonly DiscoveryStyle[]
+
+type ValidMood = (typeof VALID_MOODS)[number]
+
+const isOneOf = <T extends string>(value: string, allowed: readonly T[]): value is T =>
+  allowed.includes(value as T)
+
+const isValidMovieId = (id: string): boolean => VALID_MOVIE_IDS.has(id)
+
+const createEmptyFilters = (): MovieFilters => ({
   genres: [],
   runtime: null,
   language: null,
   pace: null,
   emotionalWeight: null,
-}
+})
 
-const DEFAULT_DISCOVERY: DiscoveryPreferences = {
+const createEmptyDiscoveryPreferences = (): DiscoveryPreferences => ({
   attentionDemand: null,
   discoveryStyle: null,
   dealbreakers: {
@@ -17,7 +44,7 @@ const DEFAULT_DISCOVERY: DiscoveryPreferences = {
     avoidSlow: false,
     underTwoHours: false,
   },
-}
+})
 
 function serializeFilters(filters: MovieFilters): string {
   const parts: string[] = []
@@ -39,12 +66,13 @@ function serializeFilters(filters: MovieFilters): string {
   return parts.join('|')
 }
 
-function deserializeFilters(str: string | null): MovieFilters {
+function deserializeFilters(str: string | null): MovieFilters | null {
+  const result = createEmptyFilters()
+
   if (!str) {
-    return { ...DEFAULT_FILTERS }
+    return result
   }
 
-  const result: MovieFilters = { ...DEFAULT_FILTERS }
   const parts = str.split('|')
 
   for (const part of parts) {
@@ -54,13 +82,16 @@ function deserializeFilters(str: string | null): MovieFilters {
     if (key === 'g') {
       result.genres = value.split(',')
     } else if (key === 'r') {
-      result.runtime = value as MovieFilters['runtime']
+      if (!isOneOf(value, VALID_RUNTIMES)) return null
+      result.runtime = value
     } else if (key === 'l') {
       result.language = value
     } else if (key === 'p') {
-      result.pace = value as MovieFilters['pace']
+      if (!isOneOf(value, VALID_PACES)) return null
+      result.pace = value
     } else if (key === 'e') {
-      result.emotionalWeight = value as MovieFilters['emotionalWeight']
+      if (!isOneOf(value, VALID_EMOTIONAL_WEIGHTS)) return null
+      result.emotionalWeight = value
     }
   }
 
@@ -87,12 +118,13 @@ function serializeDiscoveryPreferences(prefs: DiscoveryPreferences): string {
   return parts.join('|')
 }
 
-function deserializeDiscoveryPreferences(str: string | null): DiscoveryPreferences {
+function deserializeDiscoveryPreferences(str: string | null): DiscoveryPreferences | null {
+  const result = createEmptyDiscoveryPreferences()
+
   if (!str) {
-    return { ...DEFAULT_DISCOVERY }
+    return result
   }
 
-  const result: DiscoveryPreferences = { ...DEFAULT_DISCOVERY }
   const parts = str.split('|')
 
   for (const part of parts) {
@@ -100,9 +132,11 @@ function deserializeDiscoveryPreferences(str: string | null): DiscoveryPreferenc
     if (!value) continue
 
     if (key === 'a') {
-      result.attentionDemand = value as DiscoveryPreferences['attentionDemand']
+      if (!isOneOf(value, VALID_ATTENTION_DEMANDS)) return null
+      result.attentionDemand = value
     } else if (key === 'd') {
-      result.discoveryStyle = value as DiscoveryPreferences['discoveryStyle']
+      if (!isOneOf(value, VALID_DISCOVERY_STYLES)) return null
+      result.discoveryStyle = value
     } else if (key === 'dh') {
       result.dealbreakers.avoidHeavy = true
     } else if (key === 'ds') {
@@ -115,14 +149,36 @@ function deserializeDiscoveryPreferences(str: string | null): DiscoveryPreferenc
   return result
 }
 
+function serializeThreeSlateIds(ids: [string, string, string]): string {
+  return ids.join(';')
+}
+
+function toThreeSlateIds(ids: string[]): [string, string, string] | null {
+  if (ids.length !== 3 || ids.some((id) => !id)) {
+    return null
+  }
+  const slateIds: [string, string, string] = [ids[0], ids[1], ids[2]]
+  return slateIds.every(isValidMovieId) ? slateIds : null
+}
+
+function serializeDuelState(state: DuelState): string {
+  const sourceIds = state.sourceThreeSlateIds ? `;${serializeThreeSlateIds(state.sourceThreeSlateIds)}` : ''
+  return `dl:${state.finalistIds.join(';')}${sourceIds}`
+}
+
 function serializeDecisionState(state: DecisionState): string {
   switch (state.kind) {
     case 'three-slate':
-      return `ts:${state.movieIds.join(',')}`
+      return `ts:${serializeThreeSlateIds(state.movieIds)}`
     case 'duel':
-      return `dl:${state.finalistIds.join(',')}`
-    case 'pick':
-      return `pk:${state.selectedId}`
+      return serializeDuelState(state)
+    case 'pick': {
+      if (state.sourceDuel) {
+        return `pk:${state.selectedId};duel;${serializeDuelState(state.sourceDuel)}`
+      }
+      const sourceIds = state.sourceThreeSlateIds ? `;three;${serializeThreeSlateIds(state.sourceThreeSlateIds)}` : ''
+      return `pk:${state.selectedId}${sourceIds}`
+    }
     default:
       throw new Error(`Unknown decision state kind: ${(state as any).kind}`)
   }
@@ -133,45 +189,99 @@ function deserializeDecisionState(str: string | null): DecisionState | null {
     return null
   }
 
-  const [kind, value] = str.split(':')
-  const ids = value?.split(',') ?? []
+  const colonIndex = str.indexOf(':')
+  if (colonIndex === -1) {
+    return null
+  }
+
+  const kind = str.substring(0, colonIndex)
+  const remainder = str.substring(colonIndex + 1)
 
   switch (kind) {
-    case 'ts':
-      if (ids.length !== 3 || ids.some((id) => !id)) {
+    case 'ts': {
+      const movieIds = toThreeSlateIds(remainder.split(';'))
+      return movieIds ? { kind: 'three-slate', movieIds } : null
+    }
+    case 'dl': {
+      const ids = remainder.split(';')
+      if (ids.length !== 2 && ids.length !== 5) {
         return null
       }
-      return { kind: 'three-slate', movieIds: [ids[0], ids[1], ids[2]] as [string, string, string] }
-    case 'dl':
-      if (ids.length !== 2 || ids.some((id) => !id)) {
+      const finalistIds: [string, string] = [ids[0], ids[1]]
+      if (!finalistIds.every(isValidMovieId)) {
         return null
       }
-      return { kind: 'duel', finalistIds: [ids[0], ids[1]] as [string, string] }
-    case 'pk':
+      const sourceThreeSlateIds = ids.length === 5 ? toThreeSlateIds(ids.slice(2)) : null
+      if (ids.length === 5 && !sourceThreeSlateIds) return null
+      return sourceThreeSlateIds
+        ? { kind: 'duel', finalistIds, sourceThreeSlateIds }
+        : { kind: 'duel', finalistIds }
+    }
+    case 'pk': {
+      const ids = remainder.split(';')
       if (!ids[0]) {
         return null
       }
-      return { kind: 'pick', selectedId: ids[0] }
+      if (!isValidMovieId(ids[0])) {
+        return null
+      }
+
+      if (ids.length === 1) {
+        return { kind: 'pick', selectedId: ids[0] }
+      }
+
+      if (ids[1] === 'three' && ids.length === 5) {
+        const sourceThreeSlateIds = toThreeSlateIds(ids.slice(2))
+        return sourceThreeSlateIds ? { kind: 'pick', selectedId: ids[0], sourceThreeSlateIds } : null
+      }
+
+      if (ids[1] === 'duel' && ids.length === 7) {
+        const sourceDuel = deserializeDecisionState(ids.slice(2).join(';'))
+        if (!sourceDuel || sourceDuel.kind !== 'duel') {
+          return null
+        }
+        return { kind: 'pick', selectedId: ids[0], sourceDuel }
+      }
+
+      if (ids.length === 4) {
+        const sourceThreeSlateIds = toThreeSlateIds(ids.slice(1))
+        return sourceThreeSlateIds ? { kind: 'pick', selectedId: ids[0], sourceThreeSlateIds } : null
+      }
+
+      if (ids.length === 6) {
+        const sourceDuel = deserializeDecisionState(`dl:${ids.slice(1).join(';')}`)
+        if (!sourceDuel || sourceDuel.kind !== 'duel') {
+          return null
+        }
+        return { kind: 'pick', selectedId: ids[0], sourceDuel }
+      }
+
+      return null
+    }
     default:
       return null
   }
 }
 
-const VALID_MOODS = ['funny', 'exciting', 'thoughtful', 'relaxing', 'emotional', 'suspenseful'] as const
-const VALID_SITUATIONS = ['alone', 'date-night', 'friends', 'family', 'easy-watch'] as const
-
-type ValidMood = typeof VALID_MOODS[number]
-
-function validateMood(value: string | null): ValidMood | null {
+function validateSituation(value: string | null): ViewingSituation | null {
   if (!value) return null
-  if (VALID_MOODS.includes(value as ValidMood)) return value as ValidMood
+  if (isOneOf(value, VALID_SITUATIONS)) return value
   return null
 }
 
-function validateSituation(value: string | null): ViewingSituation | null {
+function validateMood(value: string | null): ValidMood | null {
   if (!value) return null
-  if (VALID_SITUATIONS.includes(value as ViewingSituation)) return value as ViewingSituation
+  if (isOneOf(value, VALID_MOODS)) return value
   return null
+}
+
+function extractSearchParams(url: string): URLSearchParams {
+  if (!url.includes('?')) {
+    return new URLSearchParams(url.split('#')[0])
+  }
+
+  const afterQuestionMark = url.slice(url.indexOf('?') + 1)
+  return new URLSearchParams(afterQuestionMark.split('#')[0])
 }
 
 export function encodeDecisionState(state: DecisionModeState): string {
@@ -189,44 +299,35 @@ export function encodeDecisionState(state: DecisionModeState): string {
 
 export function decodeDecisionState(url: string): DecisionModeState | null {
   try {
-    const searchParams = new URLSearchParams(
-      url.includes('?') ? url.split('?')[1] : url,
-    )
+    const searchParams = extractSearchParams(url)
 
-    // Check mode is decision
     if (searchParams.get('mode') !== 'decision') {
       return null
     }
 
-    // Check schema version
     const version = searchParams.get('v')
     if (version !== 'v4') {
       return null
     }
 
-    // Validate mood
-    const moodStr = searchParams.get('m')
-    const mood = validateMood(moodStr)
+    const mood = validateMood(searchParams.get('m'))
     if (!mood) {
       return null
     }
 
-    // Parse situation
-    const situationStr = searchParams.get('s')
-    const situation = situationStr ? validateSituation(situationStr) : null
+    const situation = validateSituation(searchParams.get('s'))
 
-    // Parse filters
-    const filtersStr = searchParams.get('f')
-    const filters = deserializeFilters(filtersStr)
+    const filters = deserializeFilters(searchParams.get('f'))
+    if (!filters) {
+      return null
+    }
 
-    // Parse discovery preferences
-    const discoveryStr = searchParams.get('d')
-    const discoveryPreferences = deserializeDiscoveryPreferences(discoveryStr)
+    const discoveryPreferences = deserializeDiscoveryPreferences(searchParams.get('d'))
+    if (!discoveryPreferences) {
+      return null
+    }
 
-    // Parse decision state
-    const decisionStr = searchParams.get('ds')
-    const decisionState = deserializeDecisionState(decisionStr)
-
+    const decisionState = deserializeDecisionState(searchParams.get('ds'))
     if (!decisionState) {
       return null
     }
@@ -245,7 +346,7 @@ export function decodeDecisionState(url: string): DecisionModeState | null {
 }
 
 export function encodeSimpleState(
-  mood: ValidMood,
+  mood: Mood,
   decisionState: DecisionState,
 ): string {
   const searchParams = new URLSearchParams()
@@ -253,8 +354,8 @@ export function encodeSimpleState(
   searchParams.set('v', 'v4')
   searchParams.set('m', mood)
   searchParams.set('s', '')
-  searchParams.set('f', serializeFilters(DEFAULT_FILTERS))
-  searchParams.set('d', serializeDiscoveryPreferences(DEFAULT_DISCOVERY))
+  searchParams.set('f', serializeFilters(createEmptyFilters()))
+  searchParams.set('d', serializeDiscoveryPreferences(createEmptyDiscoveryPreferences()))
   searchParams.set('ds', serializeDecisionState(decisionState))
   return searchParams.toString()
 }

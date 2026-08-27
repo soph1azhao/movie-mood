@@ -1,4 +1,4 @@
-import type { Mood, Movie, MovieFilters, ViewingSituation } from './movie'
+import type { DiscoveryPreferences, Mood, MovieFilters, ViewingSituation } from './movie'
 
 export const V4_SCHEMA_VERSION = 'v4' as const
 
@@ -12,11 +12,14 @@ export type ThreeSlateState = {
 export type DuelState = {
   kind: 'duel'
   finalistIds: [string, string]
+  sourceThreeSlateIds?: [string, string, string]
 }
 
 export type PickState = {
   kind: 'pick'
   selectedId: string
+  sourceDuel?: DuelState
+  sourceThreeSlateIds?: [string, string, string]
 }
 
 export type DecisionState = ThreeSlateState | DuelState | PickState
@@ -26,7 +29,7 @@ export interface DecisionModeState {
   mood: string
   situation: string | null
   filters: MovieFilters
-  discoveryPreferences: import('./movie').DiscoveryPreferences
+  discoveryPreferences: DiscoveryPreferences
   decisionState: DecisionState
 }
 
@@ -48,12 +51,26 @@ export function createThreeSlateState(movieIds: [string, string, string]): Three
   return { kind: 'three-slate', movieIds }
 }
 
-export function createDuelState(finalistIds: [string, string]): DuelState {
-  return { kind: 'duel', finalistIds }
+export function createDuelState(
+  finalistIds: [string, string],
+  sourceThreeSlateIds?: [string, string, string],
+): DuelState {
+  return sourceThreeSlateIds
+    ? { kind: 'duel', finalistIds, sourceThreeSlateIds }
+    : { kind: 'duel', finalistIds }
 }
 
-export function createPickState(selectedId: string): PickState {
-  return { kind: 'pick', selectedId }
+export function createPickState(
+  selectedId: string,
+  sourceDuel?: DuelState | undefined,
+  sourceThreeSlateIds?: [string, string, string] | undefined,
+): PickState {
+  return {
+    kind: 'pick',
+    selectedId,
+    sourceDuel,
+    sourceThreeSlateIds,
+  }
 }
 
 export function isValidDecisionState(state: DecisionState): boolean {
@@ -80,11 +97,11 @@ export function isValidSchemaVersion(version: string): version is DecisionModeSc
   return version === V4_SCHEMA_VERSION
 }
 
-export function isValidMood(mood: string): mood is Mood {
-  return ['funny', 'exciting', 'thoughtful', 'relaxing', 'emotional', 'suspenseful'].includes(mood)
+export function isValidMood(value: string): value is Mood {
+  return ['funny', 'exciting', 'thoughtful', 'relaxing', 'emotional', 'suspenseful'].includes(value)
 }
 
-export function isValidSituation(situation: string | null): situation is ViewingSituation | null {
-  if (situation === null) return true
-  return ['alone', 'date-night', 'friends', 'family', 'easy-watch'].includes(situation)
+export function isValidSituation(value: string | null): value is ViewingSituation | null {
+  if (value === null) return true
+  return ['alone', 'date-night', 'friends', 'family', 'easy-watch'].includes(value)
 }
