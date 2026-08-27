@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest'
 import type { Movie } from '../types/movie'
-import { whyItFitsTonight, compareMoviesForDuel } from './decision'
+import {
+  whyItFitsTonight,
+  compareMoviesForDuel,
+  getPrioritizedDecisionFactors,
+  updateDuelFinalistSelection,
+} from './decision'
 
 const baseMovie: Movie = {
   id: 'base',
@@ -281,5 +286,223 @@ describe('compareMoviesForDuel', () => {
     // Both share 'funny' mood, so moods only differ in unique values (relaxing vs suspenseful)
     // But we're not comparing mood values directly in the current implementation
     expect(result.differences).toHaveLength(2) // mood unique values + genres
+  })
+})
+
+describe('getPrioritizedDecisionFactors', () => {
+  it('prioritizes attention differences when attention preference is active', () => {
+    const first = makeMovie({ id: 'first', attentionDemand: 'easy', pace: 'slow' })
+    const second = makeMovie({ id: 'second', attentionDemand: 'immersive', pace: 'fast' })
+
+    const result = getPrioritizedDecisionFactors(first, second, {
+      mood: 'funny',
+      discoveryPreferences: {
+        attentionDemand: 'easy',
+        discoveryStyle: null,
+        dealbreakers: {
+          avoidHeavy: false,
+          avoidSlow: false,
+          underTwoHours: false,
+        },
+      },
+    })
+
+    expect(result.map((difference) => difference.category)).toEqual(['attention', 'pace'])
+  })
+
+  it('prioritizes emotional-ease differences when an emotional boundary is active', () => {
+    const first = makeMovie({ id: 'first', emotionalWeight: 'light', pace: 'slow' })
+    const second = makeMovie({ id: 'second', emotionalWeight: 'heavy', pace: 'fast' })
+
+    const result = getPrioritizedDecisionFactors(first, second, {
+      mood: 'relaxing',
+      discoveryPreferences: {
+        attentionDemand: null,
+        discoveryStyle: null,
+        dealbreakers: {
+          avoidHeavy: true,
+          avoidSlow: false,
+          underTwoHours: false,
+        },
+      },
+    })
+
+    expect(result[0]).toEqual(expect.objectContaining({ category: 'emotional weight' }))
+  })
+
+  it('prioritizes discovery differences when discovery preference is active', () => {
+    const first = makeMovie({ id: 'first', discoveryStyle: 'familiar', pace: 'slow' })
+    const second = makeMovie({ id: 'second', discoveryStyle: 'adventurous', pace: 'fast' })
+
+    const result = getPrioritizedDecisionFactors(first, second, {
+      mood: 'thoughtful',
+      discoveryPreferences: {
+        attentionDemand: null,
+        discoveryStyle: 'adventurous',
+        dealbreakers: {
+          avoidHeavy: false,
+          avoidSlow: false,
+          underTwoHours: false,
+        },
+      },
+    })
+
+    expect(result.map((difference) => difference.category)).toEqual(['style', 'pace'])
+  })
+
+  it('does not double-count overlapping ease signals independently', () => {
+    const first = makeMovie({
+      id: 'first',
+      title: 'First',
+      moods: ['relaxing'],
+      attentionDemand: 'easy',
+      emotionalWeight: 'light',
+      pace: 'medium',
+    })
+    const second = makeMovie({
+      id: 'second',
+      title: 'Second',
+      moods: ['relaxing'],
+      attentionDemand: 'immersive',
+      emotionalWeight: 'heavy',
+      pace: 'fast',
+    })
+
+    const result = getPrioritizedDecisionFactors(first, second, {
+      mood: 'relaxing',
+      filters: {
+        genres: [],
+        runtime: null,
+        language: null,
+        pace: null,
+        emotionalWeight: null,
+      },
+      discoveryPreferences: {
+        attentionDemand: 'easy',
+        discoveryStyle: null,
+        dealbreakers: {
+          avoidHeavy: true,
+          avoidSlow: false,
+          underTwoHours: false,
+        },
+      },
+    })
+
+    expect(result.map((difference) => difference.category)).toEqual(['attention', 'pace'])
+    expect(result[0].summary).toBe('First is the gentler, lower-effort watch tonight.')
+  })
+
+  it('does not let inactive preferences distort priority', () => {
+    const first = makeMovie({
+      id: 'first',
+      attentionDemand: 'easy',
+      emotionalWeight: 'light',
+      pace: 'slow',
+    })
+    const second = makeMovie({
+      id: 'second',
+      attentionDemand: 'immersive',
+      emotionalWeight: 'heavy',
+      pace: 'fast',
+    })
+
+    const result = getPrioritizedDecisionFactors(first, second, { mood: 'funny' })
+
+    expect(result.map((difference) => difference.category)).toEqual(['pace', 'emotional weight'])
+  })
+
+  it('falls back to pace and runtime when more relevant active dimensions do not differ', () => {
+    const first = makeMovie({
+      id: 'first',
+      attentionDemand: 'easy',
+      discoveryStyle: 'familiar',
+      pace: 'slow',
+      runtimeMinutes: 92,
+    })
+    const second = makeMovie({
+      id: 'second',
+      attentionDemand: 'easy',
+      discoveryStyle: 'familiar',
+      pace: 'fast',
+      runtimeMinutes: 142,
+    })
+
+    const result = getPrioritizedDecisionFactors(first, second, {
+      mood: 'funny',
+      discoveryPreferences: {
+        attentionDemand: 'easy',
+        discoveryStyle: 'familiar',
+        dealbreakers: {
+          avoidHeavy: false,
+          avoidSlow: false,
+          underTwoHours: false,
+        },
+      },
+    })
+
+    expect(result.map((difference) => difference.category)).toEqual(['pace', 'runtime'])
+  })
+
+  it('keeps ordering deterministic', () => {
+    const first = makeMovie({
+      id: 'first',
+      genres: ['Comedy'],
+      runtimeMinutes: 90,
+      pace: 'slow',
+      emotionalWeight: 'light',
+      attentionDemand: 'easy',
+      discoveryStyle: 'familiar',
+    })
+    const second = makeMovie({
+      id: 'second',
+      genres: ['Thriller'],
+      runtimeMinutes: 145,
+      pace: 'fast',
+      emotionalWeight: 'heavy',
+      attentionDemand: 'immersive',
+      discoveryStyle: 'adventurous',
+    })
+    const context = {
+      mood: 'suspenseful' as const,
+      filters: {
+        genres: [],
+        runtime: 'short' as const,
+        language: null,
+        pace: null,
+        emotionalWeight: null,
+      },
+      discoveryPreferences: {
+        attentionDemand: null,
+        discoveryStyle: 'different' as const,
+        dealbreakers: {
+          avoidHeavy: false,
+          avoidSlow: false,
+          underTwoHours: true,
+        },
+      },
+    }
+
+    expect(getPrioritizedDecisionFactors(first, second, context)).toEqual(
+      getPrioritizedDecisionFactors(first, second, context),
+    )
+    expect(getPrioritizedDecisionFactors(first, second, context).map((difference) => difference.category)).toEqual([
+      'style',
+      'runtime',
+    ])
+  })
+})
+
+describe('updateDuelFinalistSelection', () => {
+  it('adds finalists until two are selected', () => {
+    expect(updateDuelFinalistSelection([], 'first')).toEqual(['first'])
+    expect(updateDuelFinalistSelection(['first'], 'second')).toEqual(['first', 'second'])
+  })
+
+  it('removes an already-selected finalist', () => {
+    expect(updateDuelFinalistSelection(['first', 'second'], 'first')).toEqual(['second'])
+  })
+
+  it('does not replace a finalist when two are already selected', () => {
+    expect(updateDuelFinalistSelection(['first', 'second'], 'third')).toEqual(['first', 'second'])
   })
 })

@@ -1,7 +1,12 @@
 import { useMemo, useState } from 'react'
 import type { DecisionState, DuelState } from '../types/decision'
 import type { DiscoveryPreferences, Mood, Movie, MovieFilters, ViewingSituation } from '../types/movie'
-import { compareMoviesForDuel, whyItFitsTonight } from '../utils/decision'
+import {
+  compareMoviesForDuel,
+  getPrioritizedDecisionFactors,
+  updateDuelFinalistSelection,
+  whyItFitsTonight,
+} from '../utils/decision'
 
 interface DecisionModeProps {
   movies: Movie[]
@@ -37,19 +42,33 @@ function formatDifference(first: Movie, second: Movie, category: string, firstVa
   return `${first.title}: ${firstValue || 'less of this'} · ${second.title}: ${secondValue || 'less of this'}`
 }
 
-function getPairDifferences(first: Movie, second: Movie, mood: Mood) {
-  return compareMoviesForDuel(first, second, { mood }).differences
-    .slice(0, 2)
-    .map((difference) => formatDifference(first, second, difference.category, difference.firstValue, difference.secondValue))
+function getPairDifferences(
+  first: Movie,
+  second: Movie,
+  mood: Mood,
+  filters: MovieFilters,
+  discoveryPreferences: DiscoveryPreferences,
+) {
+  return getPrioritizedDecisionFactors(first, second, { mood, filters, discoveryPreferences })
+    .map((difference) => (
+      difference.summary
+        ?? formatDifference(first, second, difference.category, difference.firstValue, difference.secondValue)
+    ))
 }
 
-function getSlateCue(movie: Movie, others: Movie[], mood: Mood) {
+function getSlateCue(
+  movie: Movie,
+  others: Movie[],
+  mood: Mood,
+  filters: MovieFilters,
+  discoveryPreferences: DiscoveryPreferences,
+) {
   const comparison = others
-    .flatMap((other) => compareMoviesForDuel(movie, other, { mood }).differences)
+    .flatMap((other) => compareMoviesForDuel(movie, other, { mood, filters, discoveryPreferences }).differences)
     .find((difference) => difference.firstValue)
 
   if (comparison) {
-    return `${comparison.category}: ${comparison.firstValue}`
+    return comparison.summary ?? `${comparison.category}: ${comparison.firstValue}`
   }
 
   return movie.vibeSummary
@@ -81,10 +100,21 @@ interface DecisionMovieCardProps {
   cue: string
   isSelected?: boolean
   onToggleDuel?: () => void
+  canAddToDuel?: boolean
   onChoose: () => void
 }
 
-function DecisionMovieCard({ movie, eyebrow, cue, isSelected = false, onToggleDuel, onChoose }: DecisionMovieCardProps) {
+function DecisionMovieCard({
+  movie,
+  eyebrow,
+  cue,
+  isSelected = false,
+  onToggleDuel,
+  canAddToDuel = true,
+  onChoose,
+}: DecisionMovieCardProps) {
+  const isBlocked = Boolean(onToggleDuel) && !isSelected && !canAddToDuel
+
   return (
     <article className={`decision-card ${isSelected ? 'is-selected' : ''}`}>
       <DecisionPoster movie={movie} />
@@ -95,8 +125,8 @@ function DecisionMovieCard({ movie, eyebrow, cue, isSelected = false, onToggleDu
         <p className="decision-cue">{cue}</p>
         <div className="decision-actions">
           {onToggleDuel && (
-            <button type="button" className="details-toggle" onClick={onToggleDuel}>
-              {isSelected ? 'Remove from duel' : 'Put in final duel'}
+            <button type="button" className="details-toggle" disabled={isBlocked} onClick={onToggleDuel}>
+              {isSelected ? 'Remove from duel' : isBlocked ? 'Remove one finalist first' : 'Put in final duel'}
             </button>
           )}
           <button type="button" className="details-toggle decision-primary" onClick={onChoose}>
@@ -132,13 +162,7 @@ export function DecisionMode({
   }
 
   function toggleDuelMovie(movieId: string) {
-    setSelectedDuelIds((currentIds) => {
-      if (currentIds.includes(movieId)) {
-        return currentIds.filter((id) => id !== movieId)
-      }
-
-      return currentIds.length >= 2 ? [currentIds[1], movieId] : [...currentIds, movieId]
-    })
+    setSelectedDuelIds((currentIds) => updateDuelFinalistSelection(currentIds, movieId))
   }
 
   function flipCoin(finalistIds: [string, string]) {
@@ -153,6 +177,7 @@ export function DecisionMode({
     }
 
     const canStartDuel = selectedDuelIds.length === 2
+    const canAddToDuel = selectedDuelIds.length < 2
 
     return (
       <div className="decision-mode" aria-labelledby="decision-heading">
@@ -169,15 +194,26 @@ export function DecisionMode({
               key={movie.id}
               movie={movie}
               eyebrow={`Option ${index + 1}`}
-              cue={getSlateCue(movie, slateMovies.filter((other) => other.id !== movie.id), mood)}
+              cue={getSlateCue(
+                movie,
+                slateMovies.filter((other) => other.id !== movie.id),
+                mood,
+                filters,
+                discoveryPreferences,
+              )}
               isSelected={selectedDuelIds.includes(movie.id)}
+              canAddToDuel={canAddToDuel}
               onToggleDuel={() => toggleDuelMovie(movie.id)}
               onChoose={() => chooseMovie(movie.id, state.movieIds)}
             />
           ))}
         </div>
         <div className="duel-builder">
-          <p>{selectedDuelIds.length < 2 ? 'Pick two finalists for a head-to-head.' : 'Two finalists are ready.'}</p>
+          <p>
+            {selectedDuelIds.length < 2
+              ? 'Pick two finalists for a head-to-head.'
+              : 'Two finalists are ready. Remove one before adding a different movie.'}
+          </p>
           <button
             type="button"
             className="another-button"
@@ -207,7 +243,11 @@ export function DecisionMode({
     }
 
     const [first, second] = finalistMovies
-    const differences = getPairDifferences(first, second, mood)
+    const differences = getPairDifferences(first, second, mood, filters, discoveryPreferences)
+    const otherFinalistId = coinFlipWinnerId
+      ? state.finalistIds.find((movieId) => movieId !== coinFlipWinnerId) ?? null
+      : null
+    const otherFinalist = otherFinalistId ? allMoviesById.get(otherFinalistId) : null
 
     return (
       <div className="decision-mode duel-mode" aria-labelledby="duel-heading">
@@ -259,11 +299,13 @@ export function DecisionMode({
                 <p>How does that feel?</p>
                 <div className="decision-actions inline-actions">
                   <button type="button" className="details-toggle decision-primary" onClick={() => chooseMovie(coinFlipWinnerId, state)}>
-                    Feels right
+                    Go with the coin
                   </button>
-                  <button type="button" className="details-toggle" onClick={() => setCoinFlipWinnerId(null)}>
-                    Flip again
-                  </button>
+                  {otherFinalist && (
+                    <button type="button" className="details-toggle" onClick={() => chooseMovie(otherFinalist.id, state)}>
+                      Choose {otherFinalist.title}
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

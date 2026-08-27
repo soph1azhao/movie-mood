@@ -1,4 +1,11 @@
-import type { Mood, Movie, Mood as MoodType, ViewingSituation } from '../types/movie'
+import type {
+  DiscoveryPreferences,
+  Mood,
+  Movie,
+  MovieFilters,
+  Mood as MoodType,
+  ViewingSituation,
+} from '../types/movie'
 
 const MOOD_LABELS: Record<string, string> = {
   funny: 'funny',
@@ -50,6 +57,12 @@ interface WhyFitsOptions {
   emotionalWeight: 'light' | 'moderate' | 'heavy' | null
 }
 
+interface DecisionContext {
+  mood: MoodType
+  filters?: MovieFilters
+  discoveryPreferences?: DiscoveryPreferences
+}
+
 export function whyItFitsTonight(
   movie: Movie,
   options: WhyFitsOptions,
@@ -93,88 +106,217 @@ interface DiffReason {
   category: string
   firstValue: string
   secondValue: string
+  summary?: string
 }
 
 interface ComparisonResult {
   differences: DiffReason[]
 }
 
+type DecisionDimension = 'attention' | 'emotional weight' | 'style' | 'pace' | 'runtime' | 'genre' | 'mood'
+
+const fallbackDimensionOrder: DecisionDimension[] = [
+  'pace',
+  'runtime',
+  'emotional weight',
+  'attention',
+  'style',
+  'genre',
+  'mood',
+]
+
+function getActiveContextDimensions(context: DecisionContext): DecisionDimension[] {
+  const dimensions: DecisionDimension[] = []
+  const filters = context.filters
+  const preferences = context.discoveryPreferences
+
+  if (preferences?.attentionDemand) {
+    dimensions.push('attention')
+  }
+
+  if (filters?.emotionalWeight || preferences?.dealbreakers.avoidHeavy) {
+    dimensions.push('emotional weight')
+  }
+
+  if (preferences?.discoveryStyle) {
+    dimensions.push('style')
+  }
+
+  if (filters?.pace || preferences?.dealbreakers.avoidSlow) {
+    dimensions.push('pace')
+  }
+
+  if (filters?.runtime || preferences?.dealbreakers.underTwoHours) {
+    dimensions.push('runtime')
+  }
+
+  return dimensions
+}
+
+function uniqueInOrder<T>(values: T[]) {
+  return values.filter((value, index) => values.indexOf(value) === index)
+}
+
+function runtimeLabel(movie: Movie) {
+  if (movie.runtimeMinutes < 100) return `${movie.runtimeMinutes} min, shorter`
+  if (movie.runtimeMinutes <= 130) return `${movie.runtimeMinutes} min, medium length`
+  return `${movie.runtimeMinutes} min, longer`
+}
+
+function emotionalRank(movie: Movie) {
+  if (movie.emotionalWeight === 'light') return 0
+  if (movie.emotionalWeight === 'moderate') return 1
+  return 2
+}
+
+function attentionRank(movie: Movie) {
+  if (movie.attentionDemand === 'easy') return 0
+  if (movie.attentionDemand === 'engaged') return 1
+  return 2
+}
+
+function lowerEffortSummary(first: Movie, second: Movie) {
+  const firstIsEmotionallyEasier = emotionalRank(first) < emotionalRank(second)
+  const secondIsEmotionallyEasier = emotionalRank(second) < emotionalRank(first)
+  const firstIsLowerEffort = attentionRank(first) < attentionRank(second)
+  const secondIsLowerEffort = attentionRank(second) < attentionRank(first)
+
+  if ((firstIsEmotionallyEasier || firstIsLowerEffort) && !secondIsEmotionallyEasier && !secondIsLowerEffort) {
+    return `${first.title} is the gentler, lower-effort watch tonight.`
+  }
+
+  if ((secondIsEmotionallyEasier || secondIsLowerEffort) && !firstIsEmotionallyEasier && !firstIsLowerEffort) {
+    return `${second.title} is the gentler, lower-effort watch tonight.`
+  }
+
+  return null
+}
+
+function createDifference(first: Movie, second: Movie, dimension: DecisionDimension): DiffReason | null {
+  switch (dimension) {
+    case 'attention':
+      return first.attentionDemand === second.attentionDemand
+        ? null
+        : {
+          category: 'attention',
+          firstValue: ATTENTION_LABEL[first.attentionDemand],
+          secondValue: ATTENTION_LABEL[second.attentionDemand],
+          summary: lowerEffortSummary(first, second) ?? undefined,
+        }
+    case 'emotional weight':
+      return first.emotionalWeight === second.emotionalWeight
+        ? null
+        : {
+          category: 'emotional weight',
+          firstValue: EMOTIONAL_LABEL[first.emotionalWeight],
+          secondValue: EMOTIONAL_LABEL[second.emotionalWeight],
+          summary: lowerEffortSummary(first, second) ?? undefined,
+        }
+    case 'style':
+      return first.discoveryStyle === second.discoveryStyle
+        ? null
+        : {
+          category: 'style',
+          firstValue: DISCOVERY_LABEL[first.discoveryStyle],
+          secondValue: DISCOVERY_LABEL[second.discoveryStyle],
+        }
+    case 'pace':
+      return first.pace === second.pace
+        ? null
+        : {
+          category: 'pace',
+          firstValue: PACE_LABEL[first.pace],
+          secondValue: PACE_LABEL[second.pace],
+        }
+    case 'runtime':
+      return first.runtimeMinutes === second.runtimeMinutes
+        ? null
+        : {
+          category: 'runtime',
+          firstValue: runtimeLabel(first),
+          secondValue: runtimeLabel(second),
+        }
+    case 'genre': {
+      const firstGenres = new Set(first.genres)
+      const secondGenres = new Set(second.genres)
+      const firstOnlyGenres = [...firstGenres].filter((genre) => !secondGenres.has(genre))
+      const secondOnlyGenres = [...secondGenres].filter((genre) => !firstGenres.has(genre))
+
+      return firstOnlyGenres.length > 0 || secondOnlyGenres.length > 0
+        ? {
+          category: 'genre',
+          firstValue: first.genres.join(', '),
+          secondValue: second.genres.join(', '),
+        }
+        : null
+    }
+    case 'mood': {
+      const firstOnlyMoods = first.moods.filter((mood) => !second.moods.includes(mood))
+      const secondOnlyMoods = second.moods.filter((mood) => !first.moods.includes(mood))
+
+      return firstOnlyMoods.length > 0 || secondOnlyMoods.length > 0
+        ? {
+          category: 'mood',
+          firstValue: firstOnlyMoods.join(', '),
+          secondValue: secondOnlyMoods.join(', '),
+        }
+        : null
+    }
+    default:
+      return null
+  }
+}
+
+export function getPrioritizedDecisionFactors(
+  first: Movie,
+  second: Movie,
+  context: DecisionContext,
+  limit = 2,
+): DiffReason[] {
+  const dimensionOrder = uniqueInOrder([
+    ...getActiveContextDimensions(context),
+    ...fallbackDimensionOrder,
+  ])
+  const differences: DiffReason[] = []
+  let usedEaseSummary = false
+
+  for (const dimension of dimensionOrder) {
+    const difference = createDifference(first, second, dimension)
+    if (!difference) continue
+
+    if (
+      difference.summary
+      && (dimension === 'attention' || dimension === 'emotional weight')
+      && !usedEaseSummary
+    ) {
+      differences.push(difference)
+      usedEaseSummary = true
+    } else if (difference.summary && usedEaseSummary) {
+      continue
+    } else {
+      differences.push(difference)
+    }
+
+    if (differences.length >= limit) break
+  }
+
+  return differences
+}
+
+export function updateDuelFinalistSelection(currentIds: string[], movieId: string) {
+  if (currentIds.includes(movieId)) {
+    return currentIds.filter((id) => id !== movieId)
+  }
+
+  return currentIds.length >= 2 ? currentIds : [...currentIds, movieId]
+}
+
 export function compareMoviesForDuel(
   first: Movie,
   second: Movie,
-  context: { mood: MoodType },
+  context: DecisionContext,
 ): ComparisonResult {
-  const differences: DiffReason[] = []
-
-  // Compare moods (shared + unique)
-  const firstOnlyMoods = first.moods.filter((m) => !second.moods.includes(m))
-  const secondOnlyMoods = second.moods.filter((m) => !first.moods.includes(m))
-
-  if (firstOnlyMoods.length > 0) {
-    differences.push({
-      category: 'mood',
-      firstValue: firstOnlyMoods.join(', '),
-      secondValue: secondOnlyMoods.join(', '),
-    })
-  } else if (secondOnlyMoods.length > 0) {
-    differences.push({
-      category: 'mood',
-      firstValue: firstOnlyMoods.join(', '),
-      secondValue: secondOnlyMoods.join(', '),
-    })
-  }
-
-  // Compare genres
-  const firstGenres = new Set(first.genres)
-  const secondGenres = new Set(second.genres)
-  const firstOnlyGenres = [...firstGenres].filter((g) => !secondGenres.has(g))
-  const secondOnlyGenres = [...secondGenres].filter((g) => !firstGenres.has(g))
-
-  if (firstOnlyGenres.length > 0 || secondOnlyGenres.length > 0) {
-    differences.push({
-      category: 'genre',
-      firstValue: first.genres.join(', '),
-      secondValue: second.genres.join(', '),
-    })
-  }
-
-  // Compare pace
-  if (first.pace !== second.pace) {
-    differences.push({
-      category: 'pace',
-      firstValue: PACE_LABEL[first.pace],
-      secondValue: PACE_LABEL[second.pace],
-    })
-  }
-
-  // Compare emotional weight
-  if (first.emotionalWeight !== second.emotionalWeight) {
-    differences.push({
-      category: 'emotional weight',
-      firstValue: EMOTIONAL_LABEL[first.emotionalWeight],
-      secondValue: EMOTIONAL_LABEL[second.emotionalWeight],
-    })
-  }
-
-  // Compare attention demand
-  if (first.attentionDemand !== second.attentionDemand) {
-    differences.push({
-      category: 'attention',
-      firstValue: ATTENTION_LABEL[first.attentionDemand],
-      secondValue: ATTENTION_LABEL[second.attentionDemand],
-    })
-  }
-
-  // Compare discovery style
-  if (first.discoveryStyle !== second.discoveryStyle) {
-    differences.push({
-      category: 'style',
-      firstValue: DISCOVERY_LABEL[first.discoveryStyle],
-      secondValue: DISCOVERY_LABEL[second.discoveryStyle],
-    })
-  }
-
-  return { differences }
+  return { differences: getPrioritizedDecisionFactors(first, second, context) }
 }
 
-export type { DiffReason, ComparisonResult }
+export type { DecisionContext, DiffReason, ComparisonResult }
