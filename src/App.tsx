@@ -1,5 +1,6 @@
 import { useMemo, useRef, useState } from 'react'
 import { CategorySelector, moods } from './components/CategorySelector'
+import { DecisionMode } from './components/DecisionMode'
 import { DiscoveryPreferencesPanel } from './components/DiscoveryPreferencesPanel'
 import { FilterPanel } from './components/FilterPanel'
 import { Footer } from './components/Footer'
@@ -11,6 +12,7 @@ import { useFavorites } from './hooks/useFavorites'
 import { emptyDiscoveryPreferences, getDiscoveryPool, getSimilarMovies } from './utils/discovery'
 import { emptyFilters, filterMovies } from './utils/filterMovies'
 import { getNextPickOffset, getPicks, PICKS_PER_ROUND } from './utils/picks'
+import type { DecisionState } from './types/decision'
 import type { DiscoveryPreferences, Mood, MovieFilters, ViewingSituation } from './types/movie'
 
 function App() {
@@ -19,6 +21,7 @@ function App() {
   const [filters, setFilters] = useState<MovieFilters>(emptyFilters)
   const [discoveryPreferences, setDiscoveryPreferences] = useState<DiscoveryPreferences>(emptyDiscoveryPreferences)
   const [similarToMovieId, setSimilarToMovieId] = useState<string | null>(null)
+  const [decisionState, setDecisionState] = useState<DecisionState | null>(null)
   const [round, setRound] = useState(0)
   const [view, setView] = useState<'recommendations' | 'favorites'>('recommendations')
   const resultsRef = useRef<HTMLElement>(null)
@@ -62,6 +65,7 @@ function App() {
   const isViewingFavorites = view === 'favorites'
   const isViewingSimilarMovies = !isViewingFavorites && similarSeedMovie !== null
   const hasMorePicks = discoveryPool.length > PICKS_PER_ROUND
+  const canUseDecisionMode = !decisionState && !isViewingFavorites && !isViewingSimilarMovies && picks.length === PICKS_PER_ROUND
   const resultCount = isViewingFavorites
     ? favoriteMovies.length
     : isViewingSimilarMovies
@@ -88,6 +92,7 @@ function App() {
     setSelectedMood(mood)
     setView('recommendations')
     setSimilarToMovieId(null)
+    setDecisionState(null)
     setRound(0)
     if (isNewMood) {
       window.setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80)
@@ -97,34 +102,40 @@ function App() {
   function chooseSituation(situation: ViewingSituation | null) {
     setSelectedSituation(situation)
     setSimilarToMovieId(null)
+    setDecisionState(null)
     setRound(0)
   }
 
   function updateFilters(nextFilters: MovieFilters) {
     setFilters(nextFilters)
     setSimilarToMovieId(null)
+    setDecisionState(null)
     setRound(0)
   }
 
   function updateDiscoveryPreferences(nextPreferences: DiscoveryPreferences) {
     setDiscoveryPreferences(nextPreferences)
     setSimilarToMovieId(null)
+    setDecisionState(null)
     setRound(0)
   }
 
   function clearDiscoveryPreferences() {
     setDiscoveryPreferences(emptyDiscoveryPreferences)
     setSimilarToMovieId(null)
+    setDecisionState(null)
     setRound(0)
   }
 
   function clearFilters() {
     setFilters(emptyFilters)
     setSimilarToMovieId(null)
+    setDecisionState(null)
     setRound(0)
   }
 
   function showAnotherThree() {
+    setDecisionState(null)
     setRound((currentOffset) => getNextPickOffset(discoveryPool.length, currentOffset))
     window.setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0)
   }
@@ -132,17 +143,29 @@ function App() {
   function showFavorites() {
     setView('favorites')
     setSimilarToMovieId(null)
+    setDecisionState(null)
     window.setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0)
   }
 
   function showRecommendations() {
     setView('recommendations')
     setSimilarToMovieId(null)
+    setDecisionState(null)
   }
 
   function showSimilarMovies(movieId: string) {
     setView('recommendations')
     setSimilarToMovieId(movieId)
+    setDecisionState(null)
+    window.setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0)
+  }
+
+  function startDecisionMode() {
+    if (!canUseDecisionMode) return
+    setDecisionState({
+      kind: 'three-slate',
+      movieIds: [picks[0].id, picks[1].id, picks[2].id],
+    })
     window.setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0)
   }
 
@@ -224,10 +247,19 @@ function App() {
                     <p className="result-count">{resultCountLabel}</p>
                   </div>
                 </div>
-                {!isViewingFavorites && !isViewingSimilarMovies && hasMorePicks && (
-                  <button type="button" className="another-button" onClick={showAnotherThree}>
-                    Another three <span aria-hidden="true">↻</span>
-                  </button>
+                {!isViewingFavorites && !isViewingSimilarMovies && (
+                  <div className="result-actions">
+                    {canUseDecisionMode && (
+                      <button type="button" className="another-button decision-start-button" onClick={startDecisionMode}>
+                        Help me choose
+                      </button>
+                    )}
+                    {hasMorePicks && (
+                      <button type="button" className="another-button" onClick={showAnotherThree}>
+                        Another three <span aria-hidden="true">↻</span>
+                      </button>
+                    )}
+                  </div>
                 )}
                 {isViewingSimilarMovies && (
                   <button type="button" className="another-button" onClick={showRecommendations}>
@@ -275,7 +307,18 @@ function App() {
               ) : (
                 <>
                   {resultMessage && <p className="result-note">{resultMessage}</p>}
-                  {discoveryPool.length > 0 ? (
+                  {decisionState && selectedMood ? (
+                    <DecisionMode
+                      movies={movies}
+                      mood={selectedMood}
+                      situation={selectedSituation}
+                      filters={filters}
+                      discoveryPreferences={discoveryPreferences}
+                      state={decisionState}
+                      onChange={setDecisionState}
+                      onExit={() => setDecisionState(null)}
+                    />
+                  ) : discoveryPool.length > 0 ? (
                     <MovieGrid
                       movies={picks}
                       isFavorite={isFavorite}
