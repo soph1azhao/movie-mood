@@ -10,13 +10,17 @@ import {
 
 const baseMovie: Movie = {
   id: 'base',
+  tmdbId: 1,
   title: 'Base Movie',
   year: 2000,
   director: 'Director',
   countries: ['United States'],
+  filterLanguages: ['English'],
   languages: ['English'],
+  spokenLanguages: ['English'],
   genres: ['Drama'],
   runtimeMinutes: 100,
+  posterPath: null,
   moods: ['thoughtful'],
   situations: ['alone'],
   pace: 'medium',

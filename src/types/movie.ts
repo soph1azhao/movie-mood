@@ -32,17 +32,12 @@ export interface MovieFilters {
   emotionalWeight: EmotionalWeight | null
 }
 
-export interface Movie {
+export interface CuratedMovie {
   id: string
-  title: string
-  year: number
-  director: string
-  countries: string[]
-  languages: string[]
-  genres: string[]
-  runtimeMinutes: number
+  tmdbId: number
   moods: Mood[]
   situations: ViewingSituation[]
+  filterLanguages: string[]
   pace: Pace
   emotionalWeight: EmotionalWeight
   attentionDemand: AttentionDemand
@@ -52,4 +47,20 @@ export interface Movie {
   curiosityHook: string
   vibeSummary: string
   palette: [string, string]
+}
+
+export interface MovieFacts {
+  tmdbId: number
+  title: string
+  year: number
+  director: string
+  countries: string[]
+  spokenLanguages: string[]
+  genres: string[]
+  runtimeMinutes: number
+  posterPath: string | null
+}
+
+export interface Movie extends CuratedMovie, MovieFacts {
+  languages: string[]
 }
