@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import type { Movie } from '../types/movie'
 import { MovieDetails } from './MovieDetails'
+import { MoviePoster } from './MoviePoster'
 
 interface MovieCardProps {
   movie: Movie
@@ -12,35 +13,16 @@ interface MovieCardProps {
 
 export function MovieCard({ movie, index, isFavorite, onToggleFavorite, onFindSimilar }: MovieCardProps) {
   const [isDetailsOpen, setIsDetailsOpen] = useState(false)
-  const titleParts = movie.title.split(' ')
-  const breakAt = Math.ceil(titleParts.length / 2)
   const languageText = movie.languages.length > 2
     ? `${movie.languages.slice(0, 2).join(', ')} +${movie.languages.length - 2}`
     : movie.languages.join(', ')
   const paceLabel = `${movie.pace} pace`
   const emotionalWeightLabel = `${movie.emotionalWeight} weight`
   const detailsId = `movie-details-${movie.id}`
-  const posterTitle = (
-    <>
-      {titleParts.slice(0, breakAt).join(' ')}
-      {titleParts.length > 1 && <br />}
-      {titleParts.slice(breakAt).join(' ')}
-    </>
-  )
 
   return (
     <article className="movie-card" style={{ '--card-index': index } as React.CSSProperties}>
-      <div
-        className="poster"
-        style={{ '--poster-start': movie.palette[0], '--poster-end': movie.palette[1] } as React.CSSProperties}
-        aria-label={`Illustrated title poster for ${movie.title}`}
-        role="img"
-      >
-        <span className="poster-year">{movie.year}</span>
-        <span className="poster-symbol" aria-hidden="true">◒</span>
-        <strong>{posterTitle}</strong>
-        <span className="poster-line" aria-hidden="true" />
-      </div>
+      <MoviePoster movie={movie} />
       <div className="movie-details">
         <div className="movie-heading">
           <div>

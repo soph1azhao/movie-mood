@@ -49,7 +49,7 @@ Choosing **No preference** clears the situation by passing `null` back to `App`.
 - pace, which is single-select
 - emotional weight, which is single-select
 
-Genre and language options are generated from the local movie dataset in `src/data/movies.ts`, so adding a new movie can automatically expand those lists.
+Genre and language options are generated from the resolved movie dataset in `src/data/movies.ts`, so adding a new movie can automatically expand those lists.
 
 The filter panel only renders controls and sends updated `MovieFilters` back to `App`. The filtering rules live in `src/utils/filterMovies.ts`, which keeps the logic easier to test and understand.
 
@@ -97,14 +97,18 @@ V3 discovery runs after this fallback step, so practical V2 matching stays separ
 
 ## Where movie data lives
 
-The recommendations are in `src/data/movies.ts`. Each item follows the `Movie` type in `src/types/movie.ts`.
+The app imports recommendations from `src/data/movies.ts`, but V5 builds that array by merging two sources:
+
+- `src/data/curatedMovies.ts` for Movie Mood meaning and editorial choices
+- `src/data/generated/tmdbMovies.json` for factual TMDB metadata
 
 Movie fields include:
 
 - stable `id`
-- `title`, `year`, and `director`
-- `countries`, `languages`, and `genres`
-- `runtimeMinutes`
+- `tmdbId`
+- TMDB `title`, `year`, and `director`
+- TMDB `countries`, `spokenLanguages`, `genres`, `runtimeMinutes`, and `posterPath`
+- curated `filterLanguages`, exposed as `languages` for the existing practical language filter
 - `moods` and `situations`
 - `pace` and `emotionalWeight`
 - `attentionDemand` and `discoveryStyle`
@@ -113,9 +117,11 @@ Movie fields include:
 
 ## How `MovieCard` displays one recommendation
 
-`src/components/MovieCard.tsx` receives one `Movie` object and its position in the list. It creates a CSS-generated title poster from the movie’s title, year, symbol, and `palette` colors.
+`src/components/MovieCard.tsx` receives one resolved `Movie` object and its position in the list. It uses `src/components/MoviePoster.tsx` to show a real TMDB poster when `posterPath` is available.
 
-The compact card shows the most useful quick-pick details, including runtime, countries, languages, pace, emotional weight, curiosity hook, vibe summary, and `whyWatch`.
+If a movie has no poster path, or if the TMDB image CDN fails to load the image, `MoviePoster` falls back to the CSS-generated title poster built from the movie’s title, year, symbol, and `palette` colors.
+
+The compact card shows the most useful quick-pick details, including runtime, countries, curated viewing languages, pace, emotional weight, curiosity hook, vibe summary, and `whyWatch`.
 
 The **More like this** button switches the recommendations area into a related-film mode seeded by that movie. The **More details** button expands an inline details section rendered by `src/components/MovieDetails.tsx`. This keeps the compact card readable while still making the full metadata available.
 
@@ -166,6 +172,22 @@ While Decision Mode is active, `App` keeps the URL synchronized with the current
 
 The Tonight’s Pick ticket has a share button. It uses the browser’s native share sheet when available. If not, it copies the current V4 URL to the clipboard and announces the result with an accessible status message.
 
+## How V5 TMDB data works
+
+Movie Mood owns the meaning layer: moods, situations, curated viewing/filter languages, attention demand, discovery style, editorial copy, and fallback poster colors.
+
+TMDB owns factual metadata: title, year, director, countries, spoken languages, genres, runtime, and poster path. The browser does not call the TMDB data API during normal use, tests, builds, or GitHub Pages deployment.
+
+Maintainers refresh the committed snapshot with:
+
+```bash
+TMDB_READ_ACCESS_TOKEN=your_token pnpm sync:tmdb
+```
+
+The command fetches exact mapped TMDB IDs, validates the complete snapshot, writes atomically, and reports behavior-impacting runtime and genre changes for review. The token is read from the process environment only and must not be committed.
+
+Movie Mood uses TMDB poster images from the image CDN when they load successfully. The app remains usable if those images are unavailable because `MoviePoster` falls back to the local CSS title-poster treatment.
+
 ## How favorites and My List work
 
 `src/hooks/useFavorites.ts` manages favorite movie IDs in browser `localStorage` using the key `movieMoodFavorites`.
@@ -194,14 +216,16 @@ The repository’s Pages source must be set to **GitHub Actions** in **Settings 
 
 ## How to add a new movie
 
-1. Open `src/data/movies.ts`.
-2. Add another object to the `movies` array with every field required by the `Movie` type.
+1. Open `src/data/curatedMovies.ts`.
+2. Add another object to the `curatedMovies` array with Movie Mood-owned fields.
 3. Give it a unique, stable `id`. Do not change existing IDs after release because favorites are saved by ID.
-4. Add one or more valid mood IDs to `moods`.
-5. Add suitable situation tags to `situations`. Use `family` conservatively; it means a broad family movie-night fit, not an official content rating.
-6. Add runtime, countries, languages, genres, pace, emotional weight, curiosity hook, and vibe summary.
-7. Choose two CSS color values for the `palette` tuple.
-8. Run `pnpm test` and `pnpm build` to check the change.
+4. Add a manually verified `tmdbId`.
+5. Add one or more valid mood IDs to `moods`.
+6. Add suitable situation tags to `situations`. Use `family` conservatively; it means a broad family movie-night fit, not an official content rating.
+7. Add curated `filterLanguages`, pace, emotional weight, curiosity hook, vibe summary, and two CSS color values for the `palette` tuple.
+8. Add the same local ID and TMDB ID to `src/data/tmdbMovieMappings.json`.
+9. Run `TMDB_READ_ACCESS_TOKEN=your_token pnpm sync:tmdb`.
+10. Run `pnpm test` and `pnpm build` to check the change.
 
 ## How to add a future filter
 
@@ -218,5 +242,5 @@ New moods are postponed beyond V2, but the code path is:
 
 1. Add the new mood ID to the `Mood` union in `src/types/movie.ts`.
 2. Add its label, icon, and short note to the `moods` array in `src/components/CategorySelector.tsx`.
-3. Add that mood ID to the `moods` array of any matching movies in `src/data/movies.ts`.
+3. Add that mood ID to the `moods` array of any matching movies in `src/data/curatedMovies.ts`.
 4. Run `pnpm run build` and try the new button locally.

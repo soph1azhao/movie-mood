@@ -58,8 +58,12 @@ export function MovieDetails({ movie }: MovieDetailsProps) {
           <dd>{movie.countries.join(', ')}</dd>
         </div>
         <div>
-          <dt>Languages</dt>
+          <dt>Viewing languages</dt>
           <dd>{movie.languages.join(', ')}</dd>
+        </div>
+        <div>
+          <dt>Spoken languages</dt>
+          <dd>{movie.spokenLanguages.join(', ')}</dd>
         </div>
         <div>
           <dt>Genres</dt>

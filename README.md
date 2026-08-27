@@ -20,13 +20,13 @@ Run the site locally and add a screenshot here whenever you’re ready.
 - V4 Decision Mode with three-film comparison cues, two-finalist duels, a coin-flip gut check, and a final Tonight’s Pick ticket.
 - Shareable V4 decision URLs that can restore the active preference context, Decision Mode slate, duel, or Tonight’s Pick.
 - “More like this” mode for exploring up to three related films from the local curated dataset.
-- Expandable movie details with runtime, countries, languages, moods, situations, pace, emotional weight, attention demand, discovery style, and recommendation notes.
+- Expandable movie details with runtime, countries, viewing languages, TMDB spoken languages, moods, situations, pace, emotional weight, attention demand, discovery style, and recommendation notes.
 - Browser-local favorites stored as movie IDs in `localStorage`, plus a reusable My List view.
-- A local, TypeScript-typed collection of 36 films spanning decades, countries, directors, genres, and curated V3 metadata.
+- A local, TypeScript-typed curated layer for 36 films, resolved with a committed TMDB factual snapshot.
 - Responsive, keyboard-friendly single-page interface with an intentional initial state.
-- Custom title posters created in CSS, so there are no fragile external image links or API keys.
+- Real TMDB poster images where available, with CSS-generated Movie Mood title posters as the fallback.
 
-Note: posters are CSS-generated title posters, not official movie posters.
+Note: normal app usage, tests, builds, and GitHub Pages deployment do not require a TMDB token. Poster images are loaded from TMDB's image CDN when available.
 
 ## Implementation Specs
 
@@ -35,6 +35,8 @@ The V2 implementation plan is documented in [docs/V2_IMPLEMENTATION_SPEC.md](doc
 The V3 implementation plan is documented in [docs/V3_IMPLEMENTATION_SPEC.md](docs/V3_IMPLEMENTATION_SPEC.md).
 
 The V4 implementation plan is documented in [docs/V4_IMPLEMENTATION_SPEC.md](docs/V4_IMPLEMENTATION_SPEC.md).
+
+The V5 implementation plan is documented in [docs/V5_IMPLEMENTATION_SPEC.md](docs/V5_IMPLEMENTATION_SPEC.md).
 
 ## Tech stack
 
@@ -86,7 +88,7 @@ Vite is configured with a relative asset base, so the built site works at either
 ```text
 src/
 ├── components/    # Small visual building blocks
-├── data/movies.ts # Local movie collection and metadata
+├── data/          # Curated movie meaning plus generated TMDB facts
 ├── hooks/         # Browser-local favorites state
 ├── types/         # Shared TypeScript types
 ├── utils/         # Pure filtering, discovery, decision, URL, and cycling helpers
@@ -115,9 +117,30 @@ src/
 - While Decision Mode is active, `App` keeps the browser URL synchronized with the current decision state. Valid V4 URLs restore the preference context and decision phase on load; malformed or stale URLs fall back to the normal start state.
 - Tonight’s Pick uses the native Web Share API when available and copies the share URL to the clipboard as a fallback.
 
+## V5 Architecture Notes
+
+- `src/data/curatedMovies.ts` owns Movie Mood meaning: local IDs, moods, situations, viewing/filter languages, experience fields, editorial copy, and fallback poster palettes.
+- `src/data/generated/tmdbMovies.json` is the committed TMDB factual snapshot: title, year, director, countries, spoken languages, genres, runtime, and poster path.
+- `src/data/movies.ts` resolves those layers into the existing `Movie[]` import surface so app components keep using stable Movie Mood IDs.
+- `src/components/MoviePoster.tsx` centralizes TMDB poster URL usage and falls back to the CSS title poster when `posterPath` is missing or the image fails to load.
+- Runtime TMDB data API calls are not made by the browser. The browser may load poster images from TMDB's image CDN.
+- This product uses the TMDB API but is not endorsed or certified by TMDB.
+
+## TMDB Snapshot Maintenance
+
+`pnpm sync:tmdb` is a maintainer-only command that refreshes the committed TMDB snapshot from exact mapped TMDB IDs.
+
+```bash
+TMDB_READ_ACCESS_TOKEN=your_token pnpm sync:tmdb
+```
+
+The token is read only from the process environment. It must not be committed, exposed through `import.meta.env`, or added to GitHub Pages deployment.
+
+The sync command validates the complete snapshot before replacing it. Missing tokens, hard API/data failures, exhausted transient retries, duplicate mappings, and one-to-one merge failures stop the command without partially updating the snapshot. Behavior-impacting runtime and genre changes are reported for review.
+
 ## Adding Movies and Filters
 
-To add a movie, update `src/data/movies.ts` with every field required by `Movie` in `src/types/movie.ts`, including `runtimeMinutes`, `languages`, `situations`, `pace`, `emotionalWeight`, `attentionDemand`, `discoveryStyle`, `curiosityHook`, and `vibeSummary`. Keep IDs stable because favorites are stored by ID.
+To add a movie, update `src/data/curatedMovies.ts` with Movie Mood-owned fields, including `id`, `tmdbId`, `filterLanguages`, `situations`, `pace`, `emotionalWeight`, `attentionDemand`, `discoveryStyle`, `curiosityHook`, `vibeSummary`, and `palette`. Then add the exact TMDB mapping and run `pnpm sync:tmdb` with `TMDB_READ_ACCESS_TOKEN` available so generated factual data is refreshed. Keep IDs stable because favorites are stored by ID.
 
 Situation tags are curated manually. Use `family` conservatively for broad family movie-night picks, and do not treat it as an official age rating.
 

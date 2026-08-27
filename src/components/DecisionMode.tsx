@@ -7,6 +7,7 @@ import {
   updateDuelFinalistSelection,
   whyItFitsTonight,
 } from '../utils/decision'
+import { MoviePoster } from './MoviePoster'
 
 interface DecisionModeProps {
   movies: Movie[]
@@ -75,26 +76,6 @@ function getSlateCue(
   return movie.vibeSummary
 }
 
-function DecisionPoster({ movie }: { movie: Movie }) {
-  const titleParts = movie.title.split(' ')
-  const breakAt = Math.ceil(titleParts.length / 2)
-
-  return (
-    <div
-      className="decision-poster"
-      style={{ '--poster-start': movie.palette[0], '--poster-end': movie.palette[1] } as React.CSSProperties}
-      aria-hidden="true"
-    >
-      <span>{movie.year}</span>
-      <strong>
-        {titleParts.slice(0, breakAt).join(' ')}
-        {titleParts.length > 1 && <br />}
-        {titleParts.slice(breakAt).join(' ')}
-      </strong>
-    </div>
-  )
-}
-
 interface DecisionMovieCardProps {
   movie: Movie
   eyebrow: string
@@ -118,7 +99,7 @@ function DecisionMovieCard({
 
   return (
     <article className={`decision-card ${isSelected ? 'is-selected' : ''}`}>
-      <DecisionPoster movie={movie} />
+      <MoviePoster movie={movie} className="decision-poster" isDecorative />
       <div className="decision-card-body">
         <p className="eyebrow">{eyebrow}</p>
         <h3>{movie.title}</h3>
@@ -370,7 +351,7 @@ export function DecisionMode({
   return (
     <div className="decision-mode ticket-mode" aria-labelledby="ticket-heading">
       <div className="tonight-ticket">
-        <DecisionPoster movie={selectedMovie} />
+        <MoviePoster movie={selectedMovie} className="decision-poster" isDecorative />
         <div className="ticket-copy">
           <p className="eyebrow">Tonight’s Pick</p>
           <h3 id="ticket-heading">{selectedMovie.title}</h3>
