@@ -278,3 +278,21 @@ A fresh valid URL can restore:
 * Tonight's Pick
 
 Malformed or stale URLs degrade safely.
+
+---
+
+## V4 Completion Status
+
+V4 implementation is complete.
+
+* Phase 1 completed the decision-state foundation, context-aware deciding factors, deterministic `Why it fits tonight` logic, versioned URL codec, runtime URL validation, movie-ID validation, decision-context preservation, decoder isolation, and targeted tests.
+* Phase 2 completed Help Me Choose, three-film Decision Mode, direct selection, two-film duel, context-aware deciding factors, intentional finalist selection, the coin-flip gut check, Tonight's Pick, Change my mind, and incompatible-state reset behavior.
+* Phase 3 completed initial restoration from valid V4 URLs, ongoing Decision Mode URL synchronization using browser-native history replacement, native Web Share with clipboard fallback, accessible share feedback, and V4 README / learning-note documentation.
+* Final automated verification currently reports:
+  * `pnpm test`: 64 tests passed
+  * `pnpm build`: passed
+  * `git diff --check`: passed
+* Overlapping active user-intent signals are treated as meaningful decision dimensions rather than independently double-counted.
+* The coin flip is only a gut-check between the two current finalists. The user can accept the coin-selected movie or explicitly choose the other finalist.
+* Invalid or stale V4 decision URLs currently degrade safely to normal application state rather than attempting partial upstream-context restoration.
+* No numerical recommendation scoring, backend, account system, external movie API, routing dependency, or new subjective movie taxonomy was introduced in V4.
