@@ -1,5 +1,6 @@
 import { useMemo, useRef, useState } from 'react'
 import { CategorySelector, moods } from './components/CategorySelector'
+import { DiscoveryPreferencesPanel } from './components/DiscoveryPreferencesPanel'
 import { FilterPanel } from './components/FilterPanel'
 import { Footer } from './components/Footer'
 import { Header } from './components/Header'
@@ -7,23 +8,16 @@ import { MovieGrid } from './components/MovieGrid'
 import { SituationSelector } from './components/SituationSelector'
 import { movies } from './data/movies'
 import { useFavorites } from './hooks/useFavorites'
+import { emptyDiscoveryPreferences, getDiscoveryPool } from './utils/discovery'
 import { emptyFilters, filterMovies } from './utils/filterMovies'
-import type { Mood, MovieFilters, ViewingSituation } from './types/movie'
-
-const PICKS_PER_ROUND = 3
-
-function getPicks(recommendationPool: typeof movies, offset: number) {
-  if (recommendationPool.length === 0) {
-    return []
-  }
-
-  return recommendationPool.slice(offset, offset + PICKS_PER_ROUND)
-}
+import { getNextPickOffset, getPicks, PICKS_PER_ROUND } from './utils/picks'
+import type { DiscoveryPreferences, Mood, MovieFilters, ViewingSituation } from './types/movie'
 
 function App() {
   const [selectedMood, setSelectedMood] = useState<Mood | null>(null)
   const [selectedSituation, setSelectedSituation] = useState<ViewingSituation | null>(null)
   const [filters, setFilters] = useState<MovieFilters>(emptyFilters)
+  const [discoveryPreferences, setDiscoveryPreferences] = useState<DiscoveryPreferences>(emptyDiscoveryPreferences)
   const [round, setRound] = useState(0)
   const [view, setView] = useState<'recommendations' | 'favorites'>('recommendations')
   const resultsRef = useRef<HTMLElement>(null)
@@ -41,10 +35,14 @@ function App() {
     () => filterMovies(movies, selectedMood, selectedSituation, filters),
     [selectedMood, selectedSituation, filters],
   )
+  const discoveryPool = useMemo(
+    () => getDiscoveryPool(filterResult, discoveryPreferences),
+    [filterResult, discoveryPreferences],
+  )
 
   const picks = useMemo(
-    () => getPicks(filterResult.recommendationPool, round),
-    [filterResult.recommendationPool, round],
+    () => getPicks(discoveryPool, round),
+    [discoveryPool, round],
   )
   const favoriteMovies = useMemo(
     () => movies.filter((movie) => favoriteIds.includes(movie.id)),
@@ -52,13 +50,24 @@ function App() {
   )
 
   const activeMood = moods.find((mood) => mood.id === selectedMood)
-  const hasMorePicks = filterResult.recommendationPool.length > PICKS_PER_ROUND
+  const hasMorePicks = discoveryPool.length > PICKS_PER_ROUND
   const isViewingFavorites = view === 'favorites'
-  const resultCount = isViewingFavorites ? favoriteMovies.length : filterResult.recommendationPool.length
+  const resultCount = isViewingFavorites ? favoriteMovies.length : discoveryPool.length
   const resultCountLabel = `${resultCount} ${resultCount === 1 ? 'movie' : 'movies'}`
-  const resultMessage = filterResult.usedSituationFallback
-    ? `Only ${filterResult.exactMatches.length} matched everything, so we added ${filterResult.fallbackMatches.length} more that fit your mood and filters.`
-    : null
+  const activeDealbreakerCount = Object.values(discoveryPreferences.dealbreakers).filter(Boolean).length
+  const dealbreakersAreActive = activeDealbreakerCount > 0
+  const limitedByDealbreakers = dealbreakersAreActive && filterResult.recommendationPool.length > discoveryPool.length
+  const resultMessage = (() => {
+    if (limitedByDealbreakers && discoveryPool.length > 0 && discoveryPool.length < PICKS_PER_ROUND) {
+      return `Only ${discoveryPool.length} ${discoveryPool.length === 1 ? 'movie fits' : 'movies fit'} these boundaries tonight. Try removing a “Not tonight” choice to see more.`
+    }
+
+    if (filterResult.usedSituationFallback) {
+      return `Only ${filterResult.exactMatches.length} matched everything, so we added ${filterResult.fallbackMatches.length} more that fit your mood and filters.`
+    }
+
+    return null
+  })()
 
   function chooseMood(mood: Mood) {
     const isNewMood = mood !== selectedMood
@@ -80,17 +89,23 @@ function App() {
     setRound(0)
   }
 
+  function updateDiscoveryPreferences(nextPreferences: DiscoveryPreferences) {
+    setDiscoveryPreferences(nextPreferences)
+    setRound(0)
+  }
+
+  function clearDiscoveryPreferences() {
+    setDiscoveryPreferences(emptyDiscoveryPreferences)
+    setRound(0)
+  }
+
   function clearFilters() {
     setFilters(emptyFilters)
     setRound(0)
   }
 
   function showAnotherThree() {
-    setRound((currentOffset) => (
-      currentOffset + PICKS_PER_ROUND >= filterResult.recommendationPool.length
-        ? 0
-        : currentOffset + PICKS_PER_ROUND
-    ))
+    setRound((currentOffset) => getNextPickOffset(discoveryPool.length, currentOffset))
     window.setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0)
   }
 
@@ -150,6 +165,11 @@ function App() {
               {!isViewingFavorites && (
                 <>
                   <SituationSelector selectedSituation={selectedSituation} onSelect={chooseSituation} />
+                  <DiscoveryPreferencesPanel
+                    preferences={discoveryPreferences}
+                    onChange={updateDiscoveryPreferences}
+                    onClear={clearDiscoveryPreferences}
+                  />
                   <FilterPanel
                     filters={filters}
                     genreOptions={genreOptions}
@@ -196,16 +216,28 @@ function App() {
               ) : (
                 <>
                   {resultMessage && <p className="result-note">{resultMessage}</p>}
-                  {filterResult.recommendationPool.length > 0 ? (
+                  {discoveryPool.length > 0 ? (
                     <MovieGrid movies={picks} isFavorite={isFavorite} onToggleFavorite={toggleFavorite} />
                   ) : (
                     <div className="empty-state compact-empty">
                     <div>
                       <p className="eyebrow">No matches</p>
-                      <h2>No movies match all of these preferences.</h2>
-                      <p>Clear filters to widen the shortlist.</p>
-                      <button type="button" className="empty-action" onClick={clearFilters}>
-                        Clear filters
+                      <h2>
+                        {dealbreakersAreActive
+                          ? 'Nothing in the current collection fits all of these boundaries.'
+                          : 'No movies match all of these preferences.'}
+                      </h2>
+                      <p>
+                        {dealbreakersAreActive
+                          ? 'Try removing one “Not tonight” choice.'
+                          : 'Clear filters to widen the shortlist.'}
+                      </p>
+                      <button
+                        type="button"
+                        className="empty-action"
+                        onClick={dealbreakersAreActive ? clearDiscoveryPreferences : clearFilters}
+                      >
+                        {dealbreakersAreActive ? 'Clear tonight' : 'Clear filters'}
                       </button>
                     </div>
                   </div>
