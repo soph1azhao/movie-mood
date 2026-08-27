@@ -85,11 +85,13 @@ h1 em { color: #d5a968; font-family: 'Playfair Display', Georgia, serif; font-we
 .movie-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
 .movie-card { overflow: hidden; border: 1px solid #36342f; border-radius: 4px; background: #1b1a18; animation: card-enter .45s ease both; animation-delay: calc(var(--card-index) * 75ms); }
 @keyframes card-enter { from { opacity: 0; transform: translateY(9px); } to { opacity: 1; transform: translateY(0); } }
-.poster { position: relative; display: flex; min-height: 235px; overflow: hidden; flex-direction: column; justify-content: flex-end; padding: 24px; color: #fffdf5; background: linear-gradient(140deg, var(--poster-start), var(--poster-end)); isolation: isolate; }
+.poster { position: relative; display: flex; min-height: 235px; overflow: hidden; flex-direction: column; justify-content: flex-end; padding: 24px; color: #fffdf5; background: linear-gradient(140deg, var(--poster-start), var(--poster-end)); isolation: isolate; aspect-ratio: 2/3; }
 .poster:not(.has-real-poster)::before, .poster:not(.has-real-poster)::after { position: absolute; z-index: -1; content: ''; }
 .poster:not(.has-real-poster)::before { width: 220px; height: 220px; top: -72px; right: -64px; border: 2px solid rgba(255,255,255,.26); border-radius: 50%; box-shadow: 0 0 0 25px rgba(255,255,255,.09), 0 0 0 52px rgba(255,255,255,.06); }
 .poster:not(.has-real-poster)::after { inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.02), rgba(0,0,0,.33)); }
-.poster-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; background: #201f1c; }
+.poster-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; background: #201f1c; opacity: 0; transition: opacity .2s ease; }
+.poster.has-real-poster .poster-image { opacity: 1; }
+.poster.has-real-poster.not-loading .poster-image { opacity: 1; }
 .poster strong, .poster-year, .poster-symbol, .poster-line { z-index: 1; }
 .poster strong { max-width: 260px; font-family: 'Playfair Display', Georgia, serif; font-size: clamp(25px, 2.5vw, 34px); font-weight: 500; letter-spacing: -.05em; line-height: .94; }
 .poster-year { position: absolute; top: 20px; left: 22px; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .14em; }
@@ -129,7 +131,7 @@ h1 em { color: #d5a968; font-family: 'Playfair Display', Georgia, serif; font-we
 .decision-card { display: grid; grid-template-rows: auto 1fr; overflow: hidden; border: 1px solid #36342f; border-radius: 4px; background: #1b1a18; transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease; }
 .decision-card.is-selected { border-color: #d3a258; box-shadow: 0 0 0 1px rgba(211, 162, 88, .22); }
 .decision-card:hover { border-color: #82775f; transform: translateY(-1px); }
-.decision-poster { position: relative; display: flex; min-height: 176px; overflow: hidden; flex-direction: column; justify-content: flex-end; padding: 18px; color: #fffdf5; background: linear-gradient(140deg, var(--poster-start), var(--poster-end)); isolation: isolate; }
+.decision-poster { position: relative; display: flex; min-height: 176px; overflow: hidden; flex-direction: column; justify-content: flex-end; padding: 18px; color: #fffdf5; background: linear-gradient(140deg, var(--poster-start), var(--poster-end)); isolation: isolate; aspect-ratio: 2/3; }
 .decision-poster:not(.has-real-poster)::before { position: absolute; z-index: -1; width: 160px; height: 160px; top: -58px; right: -50px; border: 2px solid rgba(255,255,255,.22); border-radius: 50%; box-shadow: 0 0 0 21px rgba(255,255,255,.08), 0 0 0 43px rgba(255,255,255,.05); content: ''; }
 .decision-poster:not(.has-real-poster)::after { position: absolute; z-index: -1; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.02), rgba(0,0,0,.35)); content: ''; }
 .decision-poster .poster-year { position: absolute; top: 15px; left: 17px; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: .14em; }
@@ -158,6 +160,13 @@ h1 em { color: #d5a968; font-family: 'Playfair Display', Georgia, serif; font-we
 .ticket-summary { max-width: 560px; margin: 18px 0; color: #c8c0b4; font-size: 15px; line-height: 1.58; }
 .ticket-reasons { display: grid; gap: 8px; margin: 0; padding-left: 18px; color: #e4ddd1; font-size: 14px; line-height: 1.45; }
 .share-feedback { min-height: 18px; margin: 12px 0 0; color: #c9b996; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .04em; text-transform: uppercase; }
+.watch-action { margin: 0 0 18px; }
+.watch-action .eyebrow { margin-bottom: 10px; }
+.watch-action-list { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 0; padding: 0; }
+.watch-link { display: inline-block; padding: 11px 13px; border: 1px solid #555046; border-radius: 3px; color: #e7ddcb; background: transparent; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .04em; text-transform: uppercase; text-decoration: none; transition: background .2s ease, border-color .2s ease, color .2s ease; }
+.watch-link:hover { border-color: #c8934d; color: #f1d29a; background: rgba(196, 139, 67, .12); }
+.watch-note { margin: 12px 0 0; color: #918a7e; font-size: 10px; font-family: 'DM Mono', monospace; letter-spacing: .04em; text-transform: uppercase; }
+.watch-action-section { margin-top: 18px; border-top: 1px solid #3b3934; padding-top: 18px; }
 .expanded-details { margin-top: 16px; padding-top: 16px; border-top: 1px solid #3b3934; }
 .expanded-details[hidden] { display: none; }
 .details-copy p:last-child { margin-bottom: 16px; color: #c7c1b6; font-size: 13px; line-height: 1.58; }

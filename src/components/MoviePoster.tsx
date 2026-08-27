@@ -1,6 +1,10 @@
 import { useState } from 'react'
 import type { Movie } from '../types/movie'
-import { getTmdbPosterUrl } from '../utils/tmdbImages'
+import { getTmdbPosterUrl, posterAspectRatio } from '../utils/tmdbImages'
+
+// Re-exported so the aspect-ratio helper is discoverable alongside the poster
+// component that consumes it.
+export { posterAspectRatio }
 
 interface MoviePosterProps {
   movie: Movie
@@ -28,24 +32,36 @@ function PosterFallback({ movie }: { movie: Movie }) {
 
 export function MoviePoster({ movie, className = 'poster', isDecorative = false }: MoviePosterProps) {
   const [didPosterFail, setDidPosterFail] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const posterUrl = getTmdbPosterUrl(movie.posterPath)
-  const shouldShowImage = posterUrl && !didPosterFail
+  const shouldShowImage = Boolean(posterUrl) && !didPosterFail
+
+  // Alt text: real posters are decorative within their card, so they stay empty;
+  // the fallback exposes the title so screen readers still announce purpose.
+  const imgAlt = isDecorative ? '' : `Poster for ${movie.title}`
+  const fallbackAria = isDecorative ? undefined : { 'aria-label': `Poster for ${movie.title}` }
 
   return (
     <div
-      className={`${className} ${shouldShowImage ? 'has-real-poster' : ''}`}
-      style={{ '--poster-start': movie.palette[0], '--poster-end': movie.palette[1] } as React.CSSProperties}
-      aria-label={isDecorative ? undefined : `Poster for ${movie.title}`}
-      aria-hidden={isDecorative ? 'true' : undefined}
-      role={isDecorative ? undefined : 'img'}
+      className={`${className} ${shouldShowImage ? 'has-real-poster' : ''} ${isLoading && shouldShowImage ? 'is-loading' : ''}`}
+      style={{
+        '--poster-start': movie.palette[0],
+        '--poster-end': movie.palette[1],
+        aspectRatio: posterAspectRatio(),
+      } as React.CSSProperties}
+      {...(isDecorative ? { 'aria-hidden': 'true' } : fallbackAria)}
     >
       {shouldShowImage ? (
         <img
-          src={posterUrl}
-          alt=""
+          src={posterUrl!}
+          alt={imgAlt}
           className="poster-image"
           loading="lazy"
-          onError={() => setDidPosterFail(true)}
+          onLoad={() => setIsLoading(false)}
+          onError={(event) => {
+            setIsLoading(false)
+            setDidPosterFail(true)
+          }}
         />
       ) : (
         <PosterFallback movie={movie} />

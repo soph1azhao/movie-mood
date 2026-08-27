@@ -1,4 +1,5 @@
 import type { Movie } from '../types/movie'
+import { WatchAction } from './WatchAction'
 
 interface MovieDetailsProps {
   movie: Movie
@@ -110,6 +111,7 @@ export function MovieDetails({ movie }: MovieDetailsProps) {
           <dd>{movie.whyWatch}</dd>
         </div>
       </dl>
+      <WatchAction movie={movie} />
     </>
   )
 }

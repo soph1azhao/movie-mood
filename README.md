@@ -126,6 +126,34 @@ src/
 - Runtime TMDB data API calls are not made by the browser. The browser may load poster images from TMDB's image CDN.
 - This product uses the TMDB API but is not endorsed or certified by TMDB.
 
+## V5.1 Architecture Notes
+
+- `scripts/curateCore.mjs` holds the pure, testable Curation Assistant logic: local-ID suggestion, duplicate detection, candidate normalization, scaffold generation, and orchestration with injected side effects.
+- `scripts/curateAdd.mjs` is the `pnpm curate:add` CLI wrapper. It performs the network search and interactive selection, then writes a curation draft to `docs/curation-drafts/`.
+- The curation assistant does not decide Movie Mood editorial meaning. All taste, mood, and editorial fields are `TODO` placeholders for the maintainer to fill in.
+- The curation assistant never writes to `src/data/generated/tmdbMovies.json`. `pnpm sync:tmdb` remains the only normal producer of the TMDB factual snapshot.
+- `src/utils/watchLinks.ts` centralizes all external "Find where to watch" lookup URLs (general web search, TMDB web page, Letterboxd, JustWatch).
+- `src/components/WatchAction.tsx` renders Tonight's Action links. It appears on the Tonight's Pick ticket and in Movie Details.
+- Poster loading now reserves a 2/3 aspect ratio before images load (layout stability), fades images in on load, and keeps the CSS title-poster fallback consistent on error.
+
+## V5.1 — Adding Movies Safely (Curation Assistant)
+
+`pnpm curate:add "<movie title>"` helps a maintainer add a new curated movie by reducing manual TMDB lookup and schema-copying work. It searches TMDB for the given title, shows the candidate matches in the terminal, and requires an explicit maintainer selection — it never auto-selects the first result.
+
+After a candidate is selected, the assistant writes a scaffold draft to `docs/curation-drafts/<movie-id>.md` with all `CuratedMovie` fields included as `TODO` placeholders. The maintainer then fills in Movie Mood meaning, adds the entry to `src/data/curatedMovies.ts`, adds the mapping to `src/data/tmdbMovieMappings.json`, and runs `pnpm sync:tmdb` with `TMDB_READ_ACCESS_TOKEN` available to refresh generated facts.
+
+```bash
+pnpm curate:add "Perfect Blue"
+```
+
+The command requires `TMDB_READ_ACCESS_TOKEN` only for the search step. It fails clearly and safely without modifying any project files if the token is missing, the query is empty, no candidates are found, or the selection is cancelled.
+
+Movie Mood meaning remains human-authored. The assistant does not guess moods, situations, pace, emotional weight, attention demand, discovery style, whyWatch, curiosityHook, vibeSummary, or filterLanguages.
+
+## V5.1 — Tonight's Action
+
+After Tonight's Pick, Movie Mood offers a "Find where to watch" action with deterministic outbound links. These are external lookups, not verified streaming availability — the app does not claim regional availability, provider logos, or real-time status.
+
 ## TMDB Snapshot Maintenance
 
 `pnpm sync:tmdb` is a maintainer-only command that refreshes the committed TMDB snapshot from exact mapped TMDB IDs.

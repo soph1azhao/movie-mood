@@ -8,6 +8,7 @@ import {
   whyItFitsTonight,
 } from '../utils/decision'
 import { MoviePoster } from './MoviePoster'
+import { WatchAction } from './WatchAction'
 
 interface DecisionModeProps {
   movies: Movie[]
@@ -362,6 +363,9 @@ export function DecisionMode({
             <ul className="ticket-reasons">
               {displayedReasons.map((reason) => <li key={reason}>{reason}</li>)}
             </ul>
+          </div>
+          <div className="watch-action-section">
+            <WatchAction movie={selectedMovie} />
           </div>
           <div className="decision-actions inline-actions">
             <button type="button" className="details-toggle decision-primary" onClick={() => sharePick(selectedMovie)}>

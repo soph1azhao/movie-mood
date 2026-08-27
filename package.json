@@ -9,6 +9,7 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "sync:tmdb": "tsc -p tsconfig.sync.json && node scripts/syncTmdb.mjs",
+    "curate:add": "node scripts/curateAdd.mjs",
     "test": "vitest run"
   },
   "dependencies": {
