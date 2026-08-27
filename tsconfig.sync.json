@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2023", "DOM"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "skipLibCheck": true,
+    "outDir": "dist-sync",
+    "rootDir": "src",
+    "verbatimModuleSyntax": true
+  },
+  "include": ["src/data/movies.ts", "src/types/movie.ts"]
+}

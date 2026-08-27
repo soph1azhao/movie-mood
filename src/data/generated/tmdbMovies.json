@@ -1,0 +1,713 @@
+{
+  "grand-budapest": {
+    "tmdbId": 120467,
+    "title": "The Grand Budapest Hotel",
+    "year": 2014,
+    "director": "Wes Anderson",
+    "countries": [
+      "Germany",
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English",
+      "French"
+    ],
+    "genres": [
+      "Comedy",
+      "Drama"
+    ],
+    "runtimeMinutes": 100,
+    "posterPath": "/eWdyYQreja6JGCzqHWXpWHDrrPo.jpg"
+  },
+  "paddington-2": {
+    "tmdbId": 346648,
+    "title": "Paddington 2",
+    "year": 2017,
+    "director": "Paul King",
+    "countries": [
+      "France",
+      "United Kingdom"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "genres": [
+      "Adventure",
+      "Comedy",
+      "Family"
+    ],
+    "runtimeMinutes": 104,
+    "posterPath": "/1OJ9vkD5xPt3skC6KguyXAgagRZ.jpg"
+  },
+  "hunt-wilderpeople": {
+    "tmdbId": 371645,
+    "title": "Hunt for the Wilderpeople",
+    "year": 2016,
+    "director": "Taika Waititi",
+    "countries": [
+      "New Zealand",
+      "United Kingdom"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "genres": [
+      "Adventure",
+      "Comedy",
+      "Drama"
+    ],
+    "runtimeMinutes": 101,
+    "posterPath": "/hkmz9rxgcweizXNElozGeKwmAJE.jpg"
+  },
+  "knives-out": {
+    "tmdbId": 546554,
+    "title": "Knives Out",
+    "year": 2019,
+    "director": "Rian Johnson",
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English",
+      "Spanish"
+    ],
+    "genres": [
+      "Comedy",
+      "Crime",
+      "Mystery"
+    ],
+    "runtimeMinutes": 131,
+    "posterPath": "/pThyQovXQrw2m0s9x82twj48Jq4.jpg"
+  },
+  "mad-max": {
+    "tmdbId": 76341,
+    "title": "Mad Max: Fury Road",
+    "year": 2015,
+    "director": "George Miller",
+    "countries": [
+      "Australia",
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "genres": [
+      "Action",
+      "Adventure",
+      "Science Fiction"
+    ],
+    "runtimeMinutes": 121,
+    "posterPath": "/ulcAi4dKpAjHwYGS08vNyx9H6I9.jpg"
+  },
+  "mission-impossible": {
+    "tmdbId": 353081,
+    "title": "Mission: Impossible - Fallout",
+    "year": 2018,
+    "director": "Christopher McQuarrie",
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English",
+      "French"
+    ],
+    "genres": [
+      "Action",
+      "Adventure"
+    ],
+    "runtimeMinutes": 147,
+    "posterPath": "/AkJQpZp9WoNdj7pLYSj1L0RcMMN.jpg"
+  },
+  "crouching-tiger": {
+    "tmdbId": 146,
+    "title": "Crouching Tiger, Hidden Dragon",
+    "year": 2000,
+    "director": "Ang Lee",
+    "countries": [
+      "China",
+      "Hong Kong",
+      "Taiwan",
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "Mandarin"
+    ],
+    "genres": [
+      "Action",
+      "Adventure",
+      "Drama",
+      "Fantasy",
+      "Romance"
+    ],
+    "runtimeMinutes": 120,
+    "posterPath": "/iNDVBFNz4XyYzM9Lwip6atSTFqf.jpg"
+  },
+  "rrr": {
+    "tmdbId": 579974,
+    "title": "RRR",
+    "year": 2022,
+    "director": "S. S. Rajamouli",
+    "countries": [
+      "India"
+    ],
+    "spokenLanguages": [
+      "English",
+      "Hindi",
+      "Telugu"
+    ],
+    "genres": [
+      "Action",
+      "Drama",
+      "History"
+    ],
+    "runtimeMinutes": 187,
+    "posterPath": "/u0XUBNQWlOvrh0Gd97ARGpIkL0.jpg"
+  },
+  "arrival": {
+    "tmdbId": 329865,
+    "title": "Arrival",
+    "year": 2016,
+    "director": "Denis Villeneuve",
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English",
+      "Mandarin",
+      "Russian"
+    ],
+    "genres": [
+      "Drama",
+      "Mystery",
+      "Science Fiction"
+    ],
+    "runtimeMinutes": 116,
+    "posterPath": "/pEzNVQfdzYDzVK0XqxERIw2x2se.jpg"
+  },
+  "parasite": {
+    "tmdbId": 496243,
+    "title": "Parasite",
+    "year": 2019,
+    "director": "Bong Joon Ho",
+    "countries": [
+      "South Korea"
+    ],
+    "spokenLanguages": [
+      "English",
+      "German",
+      "Korean"
+    ],
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Thriller"
+    ],
+    "runtimeMinutes": 133,
+    "posterPath": "/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg"
+  },
+  "truman-show": {
+    "tmdbId": 37165,
+    "title": "The Truman Show",
+    "year": 1998,
+    "director": "Peter Weir",
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English",
+      "Italian",
+      "Japanese",
+      "Spanish"
+    ],
+    "genres": [
+      "Comedy",
+      "Drama"
+    ],
+    "runtimeMinutes": 103,
+    "posterPath": "/vuza0WqY239yBXOadKlGwJsZJFE.jpg"
+  },
+  "aftersun": {
+    "tmdbId": 965150,
+    "title": "Aftersun",
+    "year": 2022,
+    "director": "Charlotte Wells",
+    "countries": [
+      "United Kingdom",
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English",
+      "Spanish",
+      "Turkish"
+    ],
+    "genres": [
+      "Drama"
+    ],
+    "runtimeMinutes": 101,
+    "posterPath": "/evKz85EKouVbIr51zy5fOtpNRPg.jpg"
+  },
+  "spirited-away": {
+    "tmdbId": 129,
+    "title": "Spirited Away",
+    "year": 2001,
+    "director": "Hayao Miyazaki",
+    "countries": [
+      "Japan"
+    ],
+    "spokenLanguages": [
+      "Japanese"
+    ],
+    "genres": [
+      "Animation",
+      "Family",
+      "Fantasy"
+    ],
+    "runtimeMinutes": 125,
+    "posterPath": "/39wmItIWsg5sZMyRUHLkWBcuVCM.jpg"
+  },
+  "before-sunrise": {
+    "tmdbId": 76,
+    "title": "Before Sunrise",
+    "year": 1995,
+    "director": "Richard Linklater",
+    "countries": [
+      "Austria",
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English",
+      "French",
+      "German"
+    ],
+    "genres": [
+      "Drama",
+      "Romance"
+    ],
+    "runtimeMinutes": 101,
+    "posterPath": "/kf1Jb1c2JAOqjuzA3H4oDM263uB.jpg"
+  },
+  "perfect-days": {
+    "tmdbId": 976893,
+    "title": "Perfect Days",
+    "year": 2023,
+    "director": "Wim Wenders",
+    "countries": [
+      "Germany",
+      "Japan"
+    ],
+    "spokenLanguages": [
+      "English",
+      "Japanese"
+    ],
+    "genres": [
+      "Drama"
+    ],
+    "runtimeMinutes": 124,
+    "posterPath": "/tvUHVSTJV9ITON3oyHaWp7oaAc8.jpg"
+  },
+  "my-neighbor-totoro": {
+    "tmdbId": 8392,
+    "title": "My Neighbor Totoro",
+    "year": 1988,
+    "director": "Hayao Miyazaki",
+    "countries": [
+      "Japan"
+    ],
+    "spokenLanguages": [
+      "Japanese"
+    ],
+    "genres": [
+      "Animation",
+      "Family",
+      "Fantasy"
+    ],
+    "runtimeMinutes": 86,
+    "posterPath": "/rtGDOeG9LzoerkDGZF9dnVeLppL.jpg"
+  },
+  "shawshank": {
+    "tmdbId": 278,
+    "title": "The Shawshank Redemption",
+    "year": 1994,
+    "director": "Frank Darabont",
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "genres": [
+      "Crime",
+      "Drama"
+    ],
+    "runtimeMinutes": 142,
+    "posterPath": "/9cqNxx0GxF0bflZmeSMuL5tnGzr.jpg"
+  },
+  "portrait-lady-fire": {
+    "tmdbId": 531428,
+    "title": "Portrait of a Lady on Fire",
+    "year": 2019,
+    "director": "Céline Sciamma",
+    "countries": [
+      "France"
+    ],
+    "spokenLanguages": [
+      "French",
+      "Italian"
+    ],
+    "genres": [
+      "Drama",
+      "Romance"
+    ],
+    "runtimeMinutes": 121,
+    "posterPath": "/rUDuOKpkKBHxx41BScqKej72iT3.jpg"
+  },
+  "minari": {
+    "tmdbId": 615643,
+    "title": "Minari",
+    "year": 2021,
+    "director": "Lee Isaac Chung",
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English",
+      "Korean"
+    ],
+    "genres": [
+      "Drama"
+    ],
+    "runtimeMinutes": 115,
+    "posterPath": "/6mPNdmjdbVKPITv3LLCmQoKs9Zw.jpg"
+  },
+  "whiplash": {
+    "tmdbId": 244786,
+    "title": "Whiplash",
+    "year": 2014,
+    "director": "Damien Chazelle",
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "genres": [
+      "Drama",
+      "Music",
+      "Thriller"
+    ],
+    "runtimeMinutes": 107,
+    "posterPath": "/7fn624j5lj3xTme2SgiLCeuedmO.jpg"
+  },
+  "get-out": {
+    "tmdbId": 419430,
+    "title": "Get Out",
+    "year": 2017,
+    "director": "Jordan Peele",
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "genres": [
+      "Horror",
+      "Mystery",
+      "Thriller"
+    ],
+    "runtimeMinutes": 104,
+    "posterPath": "/tFXcEccSQMf3lfhfXKSU9iRBpa3.jpg"
+  },
+  "silence-lambs": {
+    "tmdbId": 274,
+    "title": "The Silence of the Lambs",
+    "year": 1991,
+    "director": "Jonathan Demme",
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "genres": [
+      "Crime",
+      "Drama",
+      "Thriller"
+    ],
+    "runtimeMinutes": 119,
+    "posterPath": "/uS9m8OBk1A8eM9I042bx8XXpqAq.jpg"
+  },
+  "decision-to-leave": {
+    "tmdbId": 705996,
+    "title": "Decision to Leave",
+    "year": 2022,
+    "director": "Park Chan-wook",
+    "countries": [
+      "South Korea"
+    ],
+    "spokenLanguages": [
+      "English",
+      "Korean",
+      "Mandarin"
+    ],
+    "genres": [
+      "Mystery",
+      "Romance",
+      "Thriller"
+    ],
+    "runtimeMinutes": 139,
+    "posterPath": "/zI8KZ4EdLUymWKX1YEkpZ0gtPUa.jpg"
+  },
+  "the-game": {
+    "tmdbId": 2649,
+    "title": "The Game",
+    "year": 1997,
+    "director": "David Fincher",
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "Cantonese",
+      "English",
+      "German"
+    ],
+    "genres": [
+      "Drama",
+      "Mystery",
+      "Thriller"
+    ],
+    "runtimeMinutes": 129,
+    "posterPath": "/4UOa079915QjiTA2u5hT2yKVgUu.jpg"
+  },
+  "little-miss-sunshine": {
+    "tmdbId": 773,
+    "title": "Little Miss Sunshine",
+    "year": 2006,
+    "director": "Valerie Faris & Jonathan Dayton",
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "genres": [
+      "Comedy",
+      "Drama"
+    ],
+    "runtimeMinutes": 102,
+    "posterPath": "/niNdhTpPHSgw22tK0PLjQMV640v.jpg"
+  },
+  "inception": {
+    "tmdbId": 27205,
+    "title": "Inception",
+    "year": 2010,
+    "director": "Christopher Nolan",
+    "countries": [
+      "United Kingdom",
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English",
+      "French",
+      "Japanese",
+      "Swahili"
+    ],
+    "genres": [
+      "Action",
+      "Adventure",
+      "Science Fiction"
+    ],
+    "runtimeMinutes": 148,
+    "posterPath": "/xlaY2zyzMfkhk0HSC5VUwzoZPU1.jpg"
+  },
+  "amelie": {
+    "tmdbId": 194,
+    "title": "Amélie",
+    "year": 2001,
+    "director": "Jean-Pierre Jeunet",
+    "countries": [
+      "France",
+      "Germany"
+    ],
+    "spokenLanguages": [
+      "French",
+      "Russian"
+    ],
+    "genres": [
+      "Comedy",
+      "Romance"
+    ],
+    "runtimeMinutes": 122,
+    "posterPath": "/nSxDa3M9aMvGVLoItzWTepQ5h5d.jpg"
+  },
+  "school-of-rock": {
+    "tmdbId": 1584,
+    "title": "The School of Rock",
+    "year": 2003,
+    "director": "Richard Linklater",
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "genres": [
+      "Comedy",
+      "Family",
+      "Music"
+    ],
+    "runtimeMinutes": 110,
+    "posterPath": "/zXLXaepIBvFVLU25DH3wv4IPSbe.jpg"
+  },
+  "edge-of-tomorrow": {
+    "tmdbId": 137113,
+    "title": "Edge of Tomorrow",
+    "year": 2014,
+    "director": "Doug Liman",
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "genres": [
+      "Action",
+      "Science Fiction"
+    ],
+    "runtimeMinutes": 114,
+    "posterPath": "/nBM9MMa2WCwvMG4IJ3eiGUdbPe6.jpg"
+  },
+  "the-farewell": {
+    "tmdbId": 565310,
+    "title": "The Farewell",
+    "year": 2019,
+    "director": "Lulu Wang",
+    "countries": [
+      "China",
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English",
+      "Japanese",
+      "Mandarin"
+    ],
+    "genres": [
+      "Comedy",
+      "Drama"
+    ],
+    "runtimeMinutes": 100,
+    "posterPath": "/7ht2IMGynDSVQGvAXhAb83DLET8.jpg"
+  },
+  "moonlight": {
+    "tmdbId": 376867,
+    "title": "Moonlight",
+    "year": 2016,
+    "director": "Barry Jenkins",
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "genres": [
+      "Drama"
+    ],
+    "runtimeMinutes": 111,
+    "posterPath": "/qLnfEmPrDjJfPyyddLJPkXmshkp.jpg"
+  },
+  "shoplifters": {
+    "tmdbId": 505192,
+    "title": "Shoplifters",
+    "year": 2018,
+    "director": "Hirokazu Kore-eda",
+    "countries": [
+      "Japan"
+    ],
+    "spokenLanguages": [
+      "Japanese"
+    ],
+    "genres": [
+      "Crime",
+      "Drama",
+      "Thriller"
+    ],
+    "runtimeMinutes": 120,
+    "posterPath": "/4nfRUOv3LX5zLn98WS1WqVBk9E9.jpg"
+  },
+  "run-lola-run": {
+    "tmdbId": 104,
+    "title": "Run Lola Run",
+    "year": 1998,
+    "director": "Tom Tykwer",
+    "countries": [
+      "Germany"
+    ],
+    "spokenLanguages": [
+      "English",
+      "German",
+      "Japanese"
+    ],
+    "genres": [
+      "Action",
+      "Drama",
+      "Thriller"
+    ],
+    "runtimeMinutes": 80,
+    "posterPath": "/v0giIi4bTILVhNhJajet3WWY3FA.jpg"
+  },
+  "rear-window": {
+    "tmdbId": 567,
+    "title": "Rear Window",
+    "year": 1954,
+    "director": "Alfred Hitchcock",
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "genres": [
+      "Drama",
+      "Mystery",
+      "Thriller"
+    ],
+    "runtimeMinutes": 113,
+    "posterPath": "/ILVF0eJxHMddjxeQhswFtpMtqx.jpg"
+  },
+  "tampopo": {
+    "tmdbId": 11830,
+    "title": "Tampopo",
+    "year": 1985,
+    "director": "Jūzō Itami",
+    "countries": [
+      "Japan"
+    ],
+    "spokenLanguages": [
+      "Japanese"
+    ],
+    "genres": [
+      "Comedy"
+    ],
+    "runtimeMinutes": 115,
+    "posterPath": "/ArYdSuX3zY9fMsE4LqmBl7xJq5R.jpg"
+  },
+  "children-of-men": {
+    "tmdbId": 9693,
+    "title": "Children of Men",
+    "year": 2006,
+    "director": "Alfonso Cuarón",
+    "countries": [
+      "United Kingdom",
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "genres": [
+      "Action",
+      "Science Fiction",
+      "Thriller"
+    ],
+    "runtimeMinutes": 109,
+    "posterPath": "/k9IAS4TehZFcKi4HVByxZNPfqex.jpg"
+  }
+}

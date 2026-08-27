@@ -229,6 +229,7 @@ Movie Mood continues to own and manually curate:
 ```ts
 moods
 situations
+filterLanguages
 pace
 emotionalWeight
 attentionDemand
@@ -259,7 +260,7 @@ title
 year
 director
 countries
-languages
+spokenLanguages
 genres
 runtimeMinutes
 posterPath
@@ -296,6 +297,7 @@ export interface CuratedMovie {
 
   moods: Mood[]
   situations: ViewingSituation[]
+  filterLanguages: string[]
 
   pace: Pace
   emotionalWeight: EmotionalWeight
@@ -316,7 +318,7 @@ export interface MovieFacts {
   director: string
 
   countries: string[]
-  languages: string[]
+  spokenLanguages: string[]
   genres: string[]
 
   runtimeMinutes: number
@@ -406,7 +408,7 @@ Conceptually:
     "year": 2024,
     "director": "Example Director",
     "countries": ["Example Country"],
-    "languages": ["Example Language"],
+    "spokenLanguages": ["Example Language"],
     "genres": ["Drama"],
     "runtimeMinutes": 108,
     "posterPath": "/example.jpg"
@@ -442,7 +444,7 @@ For string arrays such as:
 
 ```text
 genres
-languages
+spokenLanguages
 countries
 ```
 
@@ -623,11 +625,13 @@ Normalize deterministically.
 
 ---
 
-## Languages
+## Spoken Languages
 
 Use stable human-readable language names from TMDB's spoken-language data.
 
-Prefer English display names where available because Movie Mood's current language filters are human-readable English labels.
+Prefer English display names where available.
+
+TMDB spoken languages are factual display metadata. They must not replace Movie Mood's curated behavioral language filter values in Phase 1, because TMDB can include minor or incidental spoken languages that would alter existing filtering semantics.
 
 Normalize deterministically.
 
@@ -792,7 +796,7 @@ The synchronization report must distinguish at least:
 ```text
 runtimeMinutes
 genres
-languages
+filterLanguages
 ```
 
 These currently participate in filtering, dealbreakers, similarity, or other V1–V4 behavior.
@@ -808,6 +812,7 @@ title
 year
 director
 countries
+spokenLanguages
 posterPath
 ```
 
@@ -826,7 +831,7 @@ If any behavior-impacting field differs:
 ```text
 runtimeMinutes
 genres
-languages
+filterLanguages
 ```
 
 the agent must stop before commit and report a concise review table containing:
@@ -1013,7 +1018,7 @@ The only TMDB factual fields that may affect existing recommendation behavior ar
 ```text
 runtime
 genres
-languages
+filterLanguages
 ```
 
 The algorithms consuming those fields must retain their existing semantics.
@@ -1106,7 +1111,9 @@ Do not split the complete application movie model yet unless required minimally 
 
 Before committing the initial TMDB snapshot:
 
-* compare TMDB `runtimeMinutes`, `genres`, and `languages` with V4 values
+* compare TMDB `runtimeMinutes` and `genres` with V4 values
+* confirm curated filter-language behavior remains unchanged
+* compare array-valued behavior-impacting fields as normalized sets so ordering-only differences are not reported as behavior changes
 * if any differ, stop and report them for user review
 * do not silently preserve incorrect old values
 * do not silently accept behavior-changing new values
@@ -1162,7 +1169,7 @@ TMDB factual values may cause legitimate result changes when existing V1–V4 be
 ```text
 runtime
 genres
-languages
+filterLanguages
 ```
 
 Do not rewrite algorithms to reproduce previous results artificially.
