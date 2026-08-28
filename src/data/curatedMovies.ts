@@ -577,4 +577,21 @@ export const curatedMovies: CuratedMovie[] = [
     vibeSummary: "Tense, bleak, and deeply involving with a hard-won emotional charge.",
     palette: ["#59614f","#c0985a"],
   },
+  {
+    id: "rye-lane-2023",
+    tmdbId: 1049638,
+    moods: ["funny","relaxing","emotional"],
+    situations: ["date-night","friends","easy-watch"],
+    filterLanguages: ["English"],
+    pace: "fast",
+    emotionalWeight: "light",
+    attentionDemand: "easy",
+    discoveryStyle: "familiar",
+    description: "A bright, fast-moving romantic comedy about two newly heartbroken Londoners who spend one eventful day helping each other recover their nerve.",
+    whyWatch: "Choose this when you want something charming, funny, and emotionally easy without feeling bland.",
+    curiosityHook: "It turns one long walk through South London into a playful rebound story full of color, rhythm, and awkward honesty.",
+    vibeSummary: "Brisk, colorful, and sweetly chaotic — a light date-night pick with real personality.",
+    palette: ["#f05a8a","#22b8cf"],
+  },
+
 ]

@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import {
+  assertValidMappings,
   BEHAVIOR_IMPACTING_COMPARISONS,
   buildSnapshot,
   getFieldDifferences,
@@ -100,6 +101,13 @@ describe('tmdb sync core', () => {
     })).toEqual({
       example: { tmdbId: 123, title: 'Example Movie' },
     })
+  })
+
+  it('validates mappings against curated-only movie records', () => {
+    const curatedOnlyMovies = [{ id: 'new-movie', tmdbId: 456 }]
+    const curatedOnlyMappings = [{ id: 'new-movie', tmdbId: 456 }]
+
+    expect(() => assertValidMappings(curatedOnlyMovies, curatedOnlyMappings)).not.toThrow()
   })
 
   it('serializes snapshots deterministically', () => {

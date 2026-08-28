@@ -482,7 +482,7 @@
     "tmdbId": 773,
     "title": "Little Miss Sunshine",
     "year": 2006,
-    "director": "Valerie Faris & Jonathan Dayton",
+    "director": "Jonathan Dayton & Valerie Faris",
     "countries": [
       "United States of America"
     ],
@@ -709,5 +709,24 @@
     ],
     "runtimeMinutes": 109,
     "posterPath": "/k9IAS4TehZFcKi4HVByxZNPfqex.jpg"
+  },
+  "rye-lane-2023": {
+    "tmdbId": 1049638,
+    "title": "Rye Lane",
+    "year": 2023,
+    "director": "Raine Allen-Miller",
+    "countries": [
+      "United Kingdom",
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "genres": [
+      "Comedy",
+      "Romance"
+    ],
+    "runtimeMinutes": 82,
+    "posterPath": "/int5eEKNc8g0V5i3XYaPeaC6paD.jpg"
   }
 }

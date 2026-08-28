@@ -1,6 +1,6 @@
 import { mkdir, readFile, rename, rm, writeFile } from 'node:fs/promises'
 import { dirname, resolve } from 'node:path'
-import { movies } from '../dist-sync/data/movies.js'
+import { curatedMovies } from '../dist-sync/data/curatedMovies.js'
 import mappings from '../src/data/tmdbMovieMappings.json' with { type: 'json' }
 import {
   BEHAVIOR_IMPACTING_COMPARISONS,
@@ -141,6 +141,24 @@ async function readPreviousSnapshot() {
   }
 }
 
+function parsePreviousSnapshot(previousSnapshot) {
+  if (!previousSnapshot) {
+    return {}
+  }
+
+  return JSON.parse(previousSnapshot)
+}
+
+function buildComparisonMovies(previousFactsByMovieId) {
+  return curatedMovies
+    .filter((curatedMovie) => previousFactsByMovieId[curatedMovie.id])
+    .map((curatedMovie) => ({
+      ...curatedMovie,
+      ...previousFactsByMovieId[curatedMovie.id],
+      languages: curatedMovie.filterLanguages,
+    }))
+}
+
 async function main() {
   const token = getToken()
   const factsByMovieId = {}
@@ -150,12 +168,14 @@ async function main() {
     factsByMovieId[mapping.id] = normalizeTmdbMovieResponse(response, mapping.tmdbId)
   }
 
-  const snapshot = buildSnapshot(movies, mappings, factsByMovieId)
+  const snapshot = buildSnapshot(curatedMovies, mappings, factsByMovieId)
   const serializedSnapshot = serializeSnapshot(snapshot)
   const previousSnapshot = await readPreviousSnapshot()
+  const previousFactsByMovieId = parsePreviousSnapshot(previousSnapshot)
+  const comparisonMovies = buildComparisonMovies(previousFactsByMovieId)
 
-  const behaviorDifferences = getFieldDifferences(movies, snapshot, BEHAVIOR_IMPACTING_COMPARISONS)
-  const displayDifferences = getFieldDifferences(movies, snapshot, DISPLAY_FIELDS)
+  const behaviorDifferences = getFieldDifferences(comparisonMovies, snapshot, BEHAVIOR_IMPACTING_COMPARISONS)
+  const displayDifferences = getFieldDifferences(comparisonMovies, snapshot, DISPLAY_FIELDS)
 
   await writeSnapshotAtomically(serializedSnapshot)
 
