@@ -636,4 +636,25 @@ export const curatedMovies: CuratedMovie[] = [
     palette: ["#4f5d3a", "#d6c27a"],
   },
 
+  {
+    id: "a-separation-2011",
+    tmdbId: 60243,
+    moods: ["thoughtful", "emotional", "suspenseful"],
+    situations: ["alone"],
+    filterLanguages: ["Other / International"],
+    pace: "medium",
+    emotionalWeight: "heavy",
+    attentionDemand: "immersive",
+    discoveryStyle: "adventurous",
+    description:
+      "A tense Iranian family drama where one couple's separation gradually opens into questions of truth, responsibility, class, and moral compromise.",
+    whyWatch:
+      "Choose this when you want a serious, gripping film that gives you a lot to think about without relying on spectacle.",
+    curiosityHook:
+      "Every character has a reason for what they do, and the movie keeps shifting your sense of who is right.",
+    vibeSummary:
+      "Intense, humane, and morally complicated — a heavy watch that stays with you.",
+    palette: ["#5b5148", "#d8c7a3"],
+  },
+
 ]
