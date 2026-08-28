@@ -594,4 +594,25 @@ export const curatedMovies: CuratedMovie[] = [
     palette: ["#f05a8a","#22b8cf"],
   },
 
+  {
+    id: "petite-maman-2021",
+    tmdbId: 749004,
+    moods: ["emotional", "relaxing", "thoughtful"],
+    situations: ["alone", "family", "easy-watch"],
+    filterLanguages: ["French"],
+    pace: "slow",
+    emotionalWeight: "moderate",
+    attentionDemand: "easy",
+    discoveryStyle: "different",
+    description:
+      "A gentle, quietly magical story about a young girl processing loss while forming an unexpected friendship in the woods near her mother's childhood home.",
+    whyWatch:
+      "Choose this when you want something short, tender, and emotionally meaningful without feeling overwhelming.",
+    curiosityHook:
+      "It turns grief into a small, mysterious encounter that feels more like a memory than a fantasy twist.",
+    vibeSummary:
+      "Soft, brief, and quietly moving — a gentle emotional watch with a touch of wonder.",
+    palette: ["#8fb6a8", "#f2d6b3"],
+  },
+
 ]
