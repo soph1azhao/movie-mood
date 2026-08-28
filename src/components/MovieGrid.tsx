@@ -3,12 +3,13 @@ import { MovieCard } from './MovieCard'
 
 interface MovieGridProps {
   movies: Movie[]
+  variant?: 'glimpse' | 'full'
   isFavorite: (movieId: string) => boolean
   onToggleFavorite: (movieId: string) => void
   onFindSimilar?: (movieId: string) => void
 }
 
-export function MovieGrid({ movies, isFavorite, onToggleFavorite, onFindSimilar }: MovieGridProps) {
+export function MovieGrid({ movies, variant = 'full', isFavorite, onToggleFavorite, onFindSimilar }: MovieGridProps) {
   return (
     <div className="movie-grid">
       {movies.map((movie, index) => (
@@ -16,6 +17,7 @@ export function MovieGrid({ movies, isFavorite, onToggleFavorite, onFindSimilar 
           key={movie.id}
           movie={movie}
           index={index}
+          variant={variant}
           isFavorite={isFavorite(movie.id)}
           onToggleFavorite={onToggleFavorite}
           onFindSimilar={onFindSimilar}

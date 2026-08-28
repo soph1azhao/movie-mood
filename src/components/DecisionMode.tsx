@@ -4,7 +4,6 @@ import type { DiscoveryPreferences, Mood, Movie, MovieFilters, ViewingSituation 
 import {
   compareMoviesForDuel,
   getPrioritizedDecisionFactors,
-  updateDuelFinalistSelection,
   whyItFitsTonight,
 } from '../utils/decision'
 import { MoviePoster } from './MoviePoster'
@@ -82,8 +81,7 @@ interface DecisionMovieCardProps {
   eyebrow: string
   cue: string
   isSelected?: boolean
-  onToggleDuel?: () => void
-  canAddToDuel?: boolean
+  onDrop?: () => void
   onChoose: () => void
 }
 
@@ -92,12 +90,9 @@ function DecisionMovieCard({
   eyebrow,
   cue,
   isSelected = false,
-  onToggleDuel,
-  canAddToDuel = true,
+  onDrop,
   onChoose,
 }: DecisionMovieCardProps) {
-  const isBlocked = Boolean(onToggleDuel) && !isSelected && !canAddToDuel
-
   return (
     <article className={`decision-card ${isSelected ? 'is-selected' : ''}`}>
       <MoviePoster movie={movie} className="decision-poster" isDecorative />
@@ -107,9 +102,9 @@ function DecisionMovieCard({
         <p className="decision-meta">{movie.runtimeMinutes} min · {movie.genres.slice(0, 2).join(' · ')}</p>
         <p className="decision-cue">{cue}</p>
         <div className="decision-actions">
-          {onToggleDuel && (
-            <button type="button" className="details-toggle" disabled={isBlocked} onClick={onToggleDuel}>
-              {isSelected ? 'Remove from duel' : isBlocked ? 'Remove one finalist first' : 'Put in final duel'}
+          {onDrop && (
+            <button type="button" className="details-toggle" onClick={onDrop}>
+              {isSelected ? 'Keep it in' : 'Not tonight'}
             </button>
           )}
           <button type="button" className="details-toggle decision-primary" onClick={onChoose}>
@@ -132,7 +127,7 @@ export function DecisionMode({
   onChange,
   onExit,
 }: DecisionModeProps) {
-  const [selectedDuelIds, setSelectedDuelIds] = useState<string[]>([])
+  const [droppedMovieId, setDroppedMovieId] = useState<string | null>(null)
   const [coinFlipWinnerId, setCoinFlipWinnerId] = useState<string | null>(null)
   const [shareMessage, setShareMessage] = useState('')
   const allMoviesById = useMemo(() => new Map(movies.map((movie) => [movie.id, movie])), [movies])
@@ -144,10 +139,6 @@ export function DecisionMode({
     }
 
     onChange(source ? { kind: 'pick', selectedId, sourceDuel: source } : { kind: 'pick', selectedId })
-  }
-
-  function toggleDuelMovie(movieId: string) {
-    setSelectedDuelIds((currentIds) => updateDuelFinalistSelection(currentIds, movieId))
   }
 
   function flipCoin(finalistIds: [string, string]) {
@@ -194,8 +185,10 @@ export function DecisionMode({
       return null
     }
 
-    const canStartDuel = selectedDuelIds.length === 2
-    const canAddToDuel = selectedDuelIds.length < 2
+    const finalistIds = slateMovies
+      .filter((movie) => movie.id !== droppedMovieId)
+      .map((movie) => movie.id)
+    const canStartDuel = finalistIds.length === 2
 
     return (
       <div className="decision-mode" aria-labelledby="decision-heading">
@@ -219,18 +212,17 @@ export function DecisionMode({
                 filters,
                 discoveryPreferences,
               )}
-              isSelected={selectedDuelIds.includes(movie.id)}
-              canAddToDuel={canAddToDuel}
-              onToggleDuel={() => toggleDuelMovie(movie.id)}
+              isSelected={droppedMovieId === movie.id}
+              onDrop={() => setDroppedMovieId((currentId) => currentId === movie.id ? null : movie.id)}
               onChoose={() => chooseMovie(movie.id, state.movieIds)}
             />
           ))}
         </div>
         <div className="duel-builder">
           <p>
-            {selectedDuelIds.length < 2
-              ? 'Pick two finalists for a head-to-head.'
-              : 'Two finalists are ready. Remove one before adding a different movie.'}
+            {droppedMovieId
+              ? 'Good. The remaining two can settle it head-to-head.'
+              : 'Drop the one that feels least like tonight, or choose a movie now.'}
           </p>
           <button
             type="button"
@@ -241,7 +233,7 @@ export function DecisionMode({
               setCoinFlipWinnerId(null)
               onChange({
                 kind: 'duel',
-                finalistIds: [selectedDuelIds[0], selectedDuelIds[1]],
+                finalistIds: [finalistIds[0], finalistIds[1]],
                 sourceThreeSlateIds: state.movieIds,
               })
             }}
@@ -280,7 +272,7 @@ export function DecisionMode({
               className="another-button"
               onClick={() => {
                 setCoinFlipWinnerId(null)
-                setSelectedDuelIds(state.finalistIds)
+                setDroppedMovieId(null)
                 onChange({ kind: 'three-slate', movieIds: state.sourceThreeSlateIds! })
               }}
             >
@@ -377,10 +369,10 @@ export function DecisionMode({
               onClick={() => {
                 setCoinFlipWinnerId(null)
                 if (state.sourceDuel) {
-                  setSelectedDuelIds(state.sourceDuel.finalistIds)
+                  setDroppedMovieId(null)
                   onChange(state.sourceDuel)
                 } else if (state.sourceThreeSlateIds) {
-                  setSelectedDuelIds([])
+                  setDroppedMovieId(null)
                   onChange({ kind: 'three-slate', movieIds: state.sourceThreeSlateIds })
                 } else {
                   onExit()

@@ -24,8 +24,8 @@ export function SituationSelector({ selectedSituation, onSelect }: SituationSele
   return (
     <div className="situation-panel" aria-labelledby="situation-heading">
       <div>
-        <p className="eyebrow">Optional</p>
-        <h3 id="situation-heading">Any viewing situation?</h3>
+        <p className="eyebrow">What's tonight like?</p>
+        <h3 id="situation-heading">Set the room.</h3>
       </div>
       <div className="situation-grid">
         {situations.map((situation) => {

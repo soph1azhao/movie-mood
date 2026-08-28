@@ -38,6 +38,7 @@ function App() {
   const [similarToMovieId, setSimilarToMovieId] = useState<string | null>(null)
   const [decisionState, setDecisionState] = useState<DecisionState | null>(restoredDecisionModeState?.decisionState ?? null)
   const [round, setRound] = useState(0)
+  const [recommendationReveal, setRecommendationReveal] = useState<'glimpse' | 'full'>('glimpse')
   const [view, setView] = useState<'recommendations' | 'favorites'>('recommendations')
   const resultsRef = useRef<HTMLElement>(null)
   const { favoriteIds, toggleFavorite, isFavorite } = useFavorites()
@@ -79,6 +80,7 @@ function App() {
   const activeMood = moods.find((mood) => mood.id === selectedMood)
   const isViewingFavorites = view === 'favorites'
   const isViewingSimilarMovies = !isViewingFavorites && similarSeedMovie !== null
+  const isFullReveal = recommendationReveal === 'full'
   const hasMorePicks = discoveryPool.length > PICKS_PER_ROUND
   const canUseDecisionMode = !decisionState && !isViewingFavorites && !isViewingSimilarMovies && picks.length === PICKS_PER_ROUND
   const resultCount = isViewingFavorites
@@ -132,6 +134,7 @@ function App() {
     setSimilarToMovieId(null)
     setDecisionState(null)
     setRound(0)
+    setRecommendationReveal('glimpse')
     if (isNewMood) {
       window.setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80)
     }
@@ -142,6 +145,7 @@ function App() {
     setSimilarToMovieId(null)
     setDecisionState(null)
     setRound(0)
+    setRecommendationReveal('glimpse')
   }
 
   function updateFilters(nextFilters: MovieFilters) {
@@ -149,6 +153,7 @@ function App() {
     setSimilarToMovieId(null)
     setDecisionState(null)
     setRound(0)
+    setRecommendationReveal('glimpse')
   }
 
   function updateDiscoveryPreferences(nextPreferences: DiscoveryPreferences) {
@@ -156,6 +161,7 @@ function App() {
     setSimilarToMovieId(null)
     setDecisionState(null)
     setRound(0)
+    setRecommendationReveal('glimpse')
   }
 
   function clearDiscoveryPreferences() {
@@ -163,6 +169,7 @@ function App() {
     setSimilarToMovieId(null)
     setDecisionState(null)
     setRound(0)
+    setRecommendationReveal('glimpse')
   }
 
   function clearFilters() {
@@ -170,6 +177,7 @@ function App() {
     setSimilarToMovieId(null)
     setDecisionState(null)
     setRound(0)
+    setRecommendationReveal('glimpse')
   }
 
   function showAnotherThree() {
@@ -182,6 +190,7 @@ function App() {
     setView('favorites')
     setSimilarToMovieId(null)
     setDecisionState(null)
+    setRecommendationReveal('glimpse')
     window.setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0)
   }
 
@@ -189,12 +198,14 @@ function App() {
     setView('recommendations')
     setSimilarToMovieId(null)
     setDecisionState(null)
+    setRecommendationReveal('glimpse')
   }
 
   function showSimilarMovies(movieId: string) {
     setView('recommendations')
     setSimilarToMovieId(movieId)
     setDecisionState(null)
+    setRecommendationReveal('full')
     window.setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0)
   }
 
@@ -227,6 +238,7 @@ function App() {
               <h2 id="mood-heading">What are you in the mood for?</h2>
             </div>
           </div>
+          <p className="mood-nudge">Not completely sure? Pick the closest feeling, and we’ll narrow it from there.</p>
           <CategorySelector selectedMood={selectedMood} onSelect={chooseMood} />
         </section>
 
@@ -251,36 +263,27 @@ function App() {
                   My List ({favoriteIds.length})
                 </button>
               </div>
-              {!isViewingFavorites && !isViewingSimilarMovies && (
-                <>
-                  <SituationSelector selectedSituation={selectedSituation} onSelect={chooseSituation} />
-                  <DiscoveryPreferencesPanel
-                    preferences={discoveryPreferences}
-                    onChange={updateDiscoveryPreferences}
-                    onClear={clearDiscoveryPreferences}
-                  />
-                  <FilterPanel
-                    filters={filters}
-                    genreOptions={genreOptions}
-                    languageOptions={languageOptions}
-                    onChange={updateFilters}
-                    onClear={clearFilters}
-                  />
-                </>
-              )}
               <div className="results-header">
                 <div className="section-heading">
                   <p className="section-count">02</p>
                   <div>
                     <p className="eyebrow">
-                      {isViewingFavorites ? 'Saved movies' : isViewingSimilarMovies ? 'Movies like this' : 'Your three picks'}
+                      {isViewingFavorites
+                        ? 'Saved movies'
+                        : isViewingSimilarMovies
+                          ? 'Movies like this'
+                          : isFullReveal
+                            ? 'A closer look'
+                            : 'First glimpse'}
                     </p>
                     <h2 id="results-heading">
                       {isViewingFavorites
                         ? 'My List'
                         : isViewingSimilarMovies
                           ? `More like ${similarSeedMovie.title}`
-                          : `For a ${activeMood.label.toLowerCase()} kind of night.`}
+                          : isFullReveal
+                            ? `For a ${activeMood.label.toLowerCase()} kind of night.`
+                            : 'Anything here pull you in?'}
                     </h2>
                     <p className="result-count">{resultCountLabel}</p>
                   </div>
@@ -358,35 +361,78 @@ function App() {
                       onExit={() => setDecisionState(null)}
                     />
                   ) : discoveryPool.length > 0 ? (
-                    <MovieGrid
-                      movies={picks}
-                      isFavorite={isFavorite}
-                      onToggleFavorite={toggleFavorite}
-                      onFindSimilar={showSimilarMovies}
-                    />
+                    <>
+                      <MovieGrid
+                        movies={picks}
+                        variant={isFullReveal ? 'full' : 'glimpse'}
+                        isFavorite={isFavorite}
+                        onToggleFavorite={toggleFavorite}
+                        onFindSimilar={isFullReveal ? showSimilarMovies : undefined}
+                      />
+                      <div className="refinement-stack">
+                        <SituationSelector selectedSituation={selectedSituation} onSelect={chooseSituation} />
+                        <DiscoveryPreferencesPanel
+                          preferences={discoveryPreferences}
+                          onChange={updateDiscoveryPreferences}
+                          onClear={clearDiscoveryPreferences}
+                        />
+                        <FilterPanel
+                          filters={filters}
+                          genreOptions={genreOptions}
+                          languageOptions={languageOptions}
+                          onChange={updateFilters}
+                          onClear={clearFilters}
+                        />
+                        {!isFullReveal && (
+                          <div className="reveal-panel">
+                            <p>Got a maybe? Open up the current three before you decide.</p>
+                            <button type="button" className="another-button decision-start-button" onClick={() => setRecommendationReveal('full')}>
+                              Take a closer look
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    </>
                   ) : (
-                    <div className="empty-state compact-empty">
-                    <div>
-                      <p className="eyebrow">No matches</p>
-                      <h2>
-                        {dealbreakersAreActive
-                          ? 'Nothing in the current collection fits all of these boundaries.'
-                          : 'No movies match all of these preferences.'}
-                      </h2>
-                      <p>
-                        {dealbreakersAreActive
-                          ? 'Try removing one “Not tonight” choice.'
-                          : 'Clear filters to widen the shortlist.'}
-                      </p>
-                      <button
-                        type="button"
-                        className="empty-action"
-                        onClick={dealbreakersAreActive ? clearDiscoveryPreferences : clearFilters}
-                      >
-                        {dealbreakersAreActive ? 'Clear tonight' : 'Clear filters'}
-                      </button>
-                    </div>
-                  </div>
+                    <>
+                      <div className="empty-state compact-empty">
+                        <div>
+                          <p className="eyebrow">No matches</p>
+                          <h2>
+                            {dealbreakersAreActive
+                              ? 'Nothing in the current collection fits all of these boundaries.'
+                              : 'No movies match all of these preferences.'}
+                          </h2>
+                          <p>
+                            {dealbreakersAreActive
+                              ? 'Try removing one “Not tonight” choice.'
+                              : 'Clear filters to widen the shortlist.'}
+                          </p>
+                          <button
+                            type="button"
+                            className="empty-action"
+                            onClick={dealbreakersAreActive ? clearDiscoveryPreferences : clearFilters}
+                          >
+                            {dealbreakersAreActive ? 'Clear tonight' : 'Clear filters'}
+                          </button>
+                        </div>
+                      </div>
+                      <div className="refinement-stack">
+                        <SituationSelector selectedSituation={selectedSituation} onSelect={chooseSituation} />
+                        <DiscoveryPreferencesPanel
+                          preferences={discoveryPreferences}
+                          onChange={updateDiscoveryPreferences}
+                          onClear={clearDiscoveryPreferences}
+                        />
+                        <FilterPanel
+                          filters={filters}
+                          genreOptions={genreOptions}
+                          languageOptions={languageOptions}
+                          onChange={updateFilters}
+                          onClear={clearFilters}
+                        />
+                      </div>
+                    </>
                   )}
                 </>
               )}

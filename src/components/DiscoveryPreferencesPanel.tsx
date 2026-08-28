@@ -1,4 +1,4 @@
-import type { AttentionDemand, DiscoveryPreferences, DiscoveryStyle } from '../types/movie'
+import type { AttentionDemand, DiscoveryPreferences } from '../types/movie'
 
 interface DiscoveryPreferencesPanelProps {
   preferences: DiscoveryPreferences
@@ -10,12 +10,6 @@ const attentionOptions: { id: AttentionDemand; label: string }[] = [
   { id: 'easy', label: 'Take it easy' },
   { id: 'engaged', label: 'Keep me engaged' },
   { id: 'immersive', label: 'Full immersion' },
-]
-
-const discoveryOptions: { id: DiscoveryStyle; label: string }[] = [
-  { id: 'familiar', label: 'Keep it familiar' },
-  { id: 'different', label: 'Something different' },
-  { id: 'adventurous', label: 'Surprise me' },
 ]
 
 const dealbreakerOptions: { id: keyof DiscoveryPreferences['dealbreakers']; label: string }[] = [
@@ -46,13 +40,6 @@ export function DiscoveryPreferencesPanel({
     })
   }
 
-  function selectDiscoveryStyle(discoveryStyle: DiscoveryStyle) {
-    onChange({
-      ...preferences,
-      discoveryStyle: preferences.discoveryStyle === discoveryStyle ? null : discoveryStyle,
-    })
-  }
-
   function toggleDealbreaker(dealbreaker: keyof DiscoveryPreferences['dealbreakers']) {
     onChange({
       ...preferences,
@@ -67,8 +54,8 @@ export function DiscoveryPreferencesPanel({
     <section className="discovery-panel" aria-labelledby="discovery-heading">
       <div className="discovery-heading">
         <div>
-          <p className="eyebrow">Optional</p>
-          <h3 id="discovery-heading">What feels right tonight?</h3>
+          <p className="eyebrow">Getting warmer?</p>
+          <h3 id="discovery-heading">Tell me a little more.</h3>
         </div>
         <button type="button" className="clear-filters" onClick={onClear} disabled={!activePreferences}>
           Clear tonight
@@ -77,7 +64,7 @@ export function DiscoveryPreferencesPanel({
 
       <div className="discovery-groups">
         <div className="filter-group">
-          <p className="filter-label">Attention</p>
+          <p className="filter-label">How much focus do you have?</p>
           <div className="filter-options">
             {attentionOptions.map((option) => {
               const isSelected = preferences.attentionDemand === option.id
@@ -88,26 +75,6 @@ export function DiscoveryPreferencesPanel({
                   aria-pressed={isSelected}
                   key={option.id}
                   onClick={() => selectAttention(option.id)}
-                >
-                  {option.label}
-                </button>
-              )
-            })}
-          </div>
-        </div>
-
-        <div className="filter-group">
-          <p className="filter-label">Discovery</p>
-          <div className="filter-options">
-            {discoveryOptions.map((option) => {
-              const isSelected = preferences.discoveryStyle === option.id
-              return (
-                <button
-                  type="button"
-                  className={`filter-chip ${isSelected ? 'is-selected' : ''}`}
-                  aria-pressed={isSelected}
-                  key={option.id}
-                  onClick={() => selectDiscoveryStyle(option.id)}
                 >
                   {option.label}
                 </button>

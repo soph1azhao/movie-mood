@@ -58,12 +58,15 @@ export function FilterPanel({ filters, genreOptions, languageOptions, onChange, 
   }
 
   return (
-    <section className="filter-panel" aria-labelledby="filter-heading">
-      <div className="filter-heading">
+    <details className="filter-panel" open={activeFilters}>
+      <summary className="filter-heading">
         <div>
-          <p className="eyebrow">Optional filters</p>
-          <h3 id="filter-heading">Refine the shortlist</h3>
+          <p className="eyebrow">Get specific</p>
+          <h3 id="filter-heading">Narrow the shortlist</h3>
         </div>
+        <span className="summary-hint" aria-hidden="true">{activeFilters ? 'Open' : 'Optional'}</span>
+      </summary>
+      <div className="filter-toolbar">
         <button type="button" className="clear-filters" onClick={onClear} disabled={!activeFilters}>
           Clear filters
         </button>
@@ -170,6 +173,6 @@ export function FilterPanel({ filters, genreOptions, languageOptions, onChange, 
           </div>
         </div>
       </div>
-    </section>
+    </details>
   )
 }

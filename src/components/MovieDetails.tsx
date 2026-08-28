@@ -1,4 +1,5 @@
 import type { Movie } from '../types/movie'
+import { getEmotionalWeightDetailLabel, getPaceDetailLabel } from '../utils/moviePresentation'
 import { WatchAction } from './WatchAction'
 
 interface MovieDetailsProps {
@@ -84,11 +85,11 @@ export function MovieDetails({ movie }: MovieDetailsProps) {
         </div>
         <div>
           <dt>Pace</dt>
-          <dd>{movie.pace}</dd>
+          <dd>{getPaceDetailLabel(movie.pace)}</dd>
         </div>
         <div>
           <dt>Emotional weight</dt>
-          <dd>{movie.emotionalWeight}</dd>
+          <dd>{getEmotionalWeightDetailLabel(movie.emotionalWeight)}</dd>
         </div>
         <div>
           <dt>Attention demand</dt>
