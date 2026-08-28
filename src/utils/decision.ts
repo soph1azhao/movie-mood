@@ -25,8 +25,8 @@ const SITUATION_LABELS: Record<string, string> = {
 }
 
 const ATTENTION_LABEL: Record<string, string> = {
-  easy: 'easy',
-  engaged: 'engaged',
+  easy: 'easygoing',
+  engaged: 'engaging',
   immersive: 'immersive',
 }
 
@@ -37,15 +37,15 @@ const DISCOVERY_LABEL: Record<string, string> = {
 }
 
 const PACE_LABEL: Record<string, string> = {
-  slow: 'slow',
-  medium: 'medium-paced',
-  fast: 'fast',
+  slow: 'slower',
+  medium: 'steady',
+  fast: 'faster',
 }
 
 const EMOTIONAL_LABEL: Record<string, string> = {
-  light: 'light',
-  moderate: 'moderate emotional weight',
-  heavy: 'heavy emotional weight',
+  light: 'lighter',
+  moderate: 'emotionally balanced',
+  heavy: 'heavier',
 }
 
 interface WhyFitsOptions {
@@ -81,22 +81,22 @@ export function whyItFitsTonight(
 
   // Attention demand (soft preference)
   if (options.attentionDemand && movie.attentionDemand === options.attentionDemand) {
-    reasons.push(`matches your ${ATTENTION_LABEL[options.attentionDemand]} vibe`)
+    reasons.push(`matches the ${ATTENTION_LABEL[options.attentionDemand]} headspace`)
   }
 
   // Discovery style (soft preference)
   if (options.discoveryStyle && movie.discoveryStyle === options.discoveryStyle) {
-    reasons.push(`offers a ${DISCOVERY_LABEL[options.discoveryStyle]} feel vibe`)
+    reasons.push(`keeps things ${DISCOVERY_LABEL[options.discoveryStyle]}`)
   }
 
   // Pace matching (when specified as preference)
   if (options.pace && movie.pace === options.pace) {
-    reasons.push(`has a ${PACE_LABEL[movie.pace]} pace`)
+    reasons.push(movie.pace === 'medium' ? 'keeps an even rhythm' : `leans ${PACE_LABEL[movie.pace]}`)
   }
 
   // Emotional weight matching (when specified as preference)
   if (options.emotionalWeight && movie.emotionalWeight === options.emotionalWeight) {
-    reasons.push(`has ${EMOTIONAL_LABEL[movie.emotionalWeight]} emotional weight`)
+    reasons.push(movie.emotionalWeight === 'moderate' ? 'has room for feeling without going all the way under' : `stays ${EMOTIONAL_LABEL[movie.emotionalWeight]}`)
   }
 
   return reasons
@@ -163,6 +163,28 @@ function runtimeLabel(movie: Movie) {
   return `${movie.runtimeMinutes} min, longer`
 }
 
+function runtimeSummary(first: Movie, second: Movie) {
+  const difference = Math.abs(first.runtimeMinutes - second.runtimeMinutes)
+  if (difference < 10) return null
+
+  const shorter = first.runtimeMinutes < second.runtimeMinutes ? first : second
+  const longer = shorter.id === first.id ? second : first
+
+  if (difference >= 25) {
+    return `${shorter.title} is the shorter commitment tonight.`
+  }
+
+  return `${longer.title} asks for about ${difference} more minutes.`
+}
+
+function paceSummary(first: Movie, second: Movie) {
+  if (first.pace === 'medium' || second.pace === 'medium') return null
+
+  const faster = first.pace === 'fast' ? first : second
+  const slower = faster.id === first.id ? second : first
+  return `${faster.title} moves faster; ${slower.title} takes its time.`
+}
+
 function emotionalRank(movie: Movie) {
   if (movie.emotionalWeight === 'light') return 0
   if (movie.emotionalWeight === 'moderate') return 1
@@ -227,6 +249,7 @@ function createDifference(first: Movie, second: Movie, dimension: DecisionDimens
           category: 'pace',
           firstValue: PACE_LABEL[first.pace],
           secondValue: PACE_LABEL[second.pace],
+          summary: paceSummary(first, second) ?? undefined,
         }
     case 'runtime':
       return first.runtimeMinutes === second.runtimeMinutes
@@ -235,6 +258,7 @@ function createDifference(first: Movie, second: Movie, dimension: DecisionDimens
           category: 'runtime',
           firstValue: runtimeLabel(first),
           secondValue: runtimeLabel(second),
+          summary: runtimeSummary(first, second) ?? undefined,
         }
     case 'genre': {
       const firstGenres = new Set(first.genres)
@@ -291,7 +315,11 @@ export function getPrioritizedDecisionFactors(
     ) {
       differences.push(difference)
       usedEaseSummary = true
-    } else if (difference.summary && usedEaseSummary) {
+    } else if (
+      difference.summary
+      && (dimension === 'attention' || dimension === 'emotional weight')
+      && usedEaseSummary
+    ) {
       continue
     } else {
       differences.push(difference)

@@ -36,14 +36,6 @@ function getMovieList(movies: Movie[], movieIds: string[]) {
     .filter((movie): movie is Movie => movie !== null)
 }
 
-function formatDifference(first: Movie, second: Movie, category: string, firstValue: string, secondValue: string) {
-  if (!firstValue && !secondValue) {
-    return `${first.title} and ${second.title} differ most in ${category}.`
-  }
-
-  return `${first.title}: ${firstValue || 'less of this'} · ${second.title}: ${secondValue || 'less of this'}`
-}
-
 function getPairDifferences(
   first: Movie,
   second: Movie,
@@ -52,10 +44,8 @@ function getPairDifferences(
   discoveryPreferences: DiscoveryPreferences,
 ) {
   return getPrioritizedDecisionFactors(first, second, { mood, filters, discoveryPreferences })
-    .map((difference) => (
-      difference.summary
-        ?? formatDifference(first, second, difference.category, difference.firstValue, difference.secondValue)
-    ))
+    .map((difference) => difference.summary)
+    .filter((summary): summary is string => Boolean(summary))
 }
 
 function getSlateCue(
@@ -67,10 +57,10 @@ function getSlateCue(
 ) {
   const comparison = others
     .flatMap((other) => compareMoviesForDuel(movie, other, { mood, filters, discoveryPreferences }).differences)
-    .find((difference) => difference.firstValue)
+    .find((difference) => difference.summary)
 
-  if (comparison) {
-    return comparison.summary ?? `${comparison.category}: ${comparison.firstValue}`
+  if (comparison?.summary) {
+    return comparison.summary
   }
 
   return movie.vibeSummary

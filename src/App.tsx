@@ -41,6 +41,7 @@ function App() {
   const [recommendationReveal, setRecommendationReveal] = useState<'glimpse' | 'full'>('glimpse')
   const [view, setView] = useState<'recommendations' | 'favorites'>('recommendations')
   const resultsRef = useRef<HTMLElement>(null)
+  const refinementRef = useRef<HTMLDivElement>(null)
   const { favoriteIds, toggleFavorite, isFavorite } = useFavorites()
 
   const genreOptions = useMemo(
@@ -218,6 +219,10 @@ function App() {
     window.setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0)
   }
 
+  function showRefinementControls() {
+    refinementRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
   return (
     <div className="app-shell" id="top">
       <div className="ambient ambient-one" />
@@ -369,7 +374,23 @@ function App() {
                         onToggleFavorite={toggleFavorite}
                         onFindSimilar={isFullReveal ? showSimilarMovies : undefined}
                       />
-                      <div className="refinement-stack">
+                      {!isFullReveal && (
+                        <div className="glimpse-bridge">
+                          <div>
+                            <p className="eyebrow">Next move</p>
+                            <p>Still circling? Tune the night. Already tempted? Open these three up.</p>
+                          </div>
+                          <div className="bridge-actions">
+                            <button type="button" className="details-toggle" onClick={showRefinementControls}>
+                              Refine tonight
+                            </button>
+                            <button type="button" className="details-toggle decision-primary" onClick={() => setRecommendationReveal('full')}>
+                              Take a closer look
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                      <div className="refinement-stack" ref={refinementRef}>
                         <SituationSelector selectedSituation={selectedSituation} onSelect={chooseSituation} />
                         <DiscoveryPreferencesPanel
                           preferences={discoveryPreferences}
@@ -383,14 +404,6 @@ function App() {
                           onChange={updateFilters}
                           onClear={clearFilters}
                         />
-                        {!isFullReveal && (
-                          <div className="reveal-panel">
-                            <p>Got a maybe? Open up the current three before you decide.</p>
-                            <button type="button" className="another-button decision-start-button" onClick={() => setRecommendationReveal('full')}>
-                              Take a closer look
-                            </button>
-                          </div>
-                        )}
                       </div>
                     </>
                   ) : (
@@ -417,7 +430,7 @@ function App() {
                           </button>
                         </div>
                       </div>
-                      <div className="refinement-stack">
+                      <div className="refinement-stack" ref={refinementRef}>
                         <SituationSelector selectedSituation={selectedSituation} onSelect={chooseSituation} />
                         <DiscoveryPreferencesPanel
                           preferences={discoveryPreferences}

@@ -81,7 +81,7 @@ describe('whyItFitsTonight', () => {
       emotionalWeight: null,
     })
 
-    expect(reasons).toContain('matches your engaged vibe')
+    expect(reasons).toContain('matches the engaging headspace')
   })
 
   it('returns reasons for discovery style match', () => {
@@ -95,7 +95,7 @@ describe('whyItFitsTonight', () => {
       emotionalWeight: null,
     })
 
-    expect(reasons).toContain('offers a different feel vibe')
+    expect(reasons).toContain('keeps things different')
   })
 
   it('returns reasons for pace match', () => {
@@ -109,7 +109,7 @@ describe('whyItFitsTonight', () => {
       emotionalWeight: null,
     })
 
-    expect(reasons).toContain('has a fast pace')
+    expect(reasons).toContain('leans faster')
   })
 
   it('returns reasons for emotional weight match', () => {
@@ -123,7 +123,7 @@ describe('whyItFitsTonight', () => {
       emotionalWeight: 'light',
     })
 
-    expect(reasons).toContain('has light emotional weight')
+    expect(reasons).toContain('stays lighter')
   })
 
   it('returns multiple reasons when multiple preferences match', () => {
@@ -147,10 +147,10 @@ describe('whyItFitsTonight', () => {
     expect(reasons).toHaveLength(6)
     expect(reasons).toContain('fits your funny mood')
     expect(reasons).toContain('perfect for friends')
-    expect(reasons).toContain('matches your engaged vibe')
-    expect(reasons).toContain('offers a familiar feel vibe')
-    expect(reasons).toContain('has a fast pace')
-    expect(reasons).toContain('has light emotional weight')
+    expect(reasons).toContain('matches the engaging headspace')
+    expect(reasons).toContain('keeps things familiar')
+    expect(reasons).toContain('leans faster')
+    expect(reasons).toContain('stays lighter')
   })
 
   it('returns empty array when no preferences match', () => {
@@ -189,16 +189,17 @@ describe('compareMoviesForDuel', () => {
   })
 
   it('shows pace differences', () => {
-    const first = makeMovie({ id: 'movie-1', moods: ['funny'], pace: 'fast' })
-    const second = makeMovie({ id: 'movie-2', moods: ['funny'], pace: 'slow' })
+    const first = makeMovie({ id: 'movie-1', title: 'Fast Movie', moods: ['funny'], pace: 'fast' })
+    const second = makeMovie({ id: 'movie-2', title: 'Slow Movie', moods: ['funny'], pace: 'slow' })
 
     const result = compareMoviesForDuel(first, second, { mood: 'funny' })
 
     expect(result.differences).toEqual([
       expect.objectContaining({
         category: 'pace',
-        firstValue: 'fast',
-        secondValue: 'slow',
+        firstValue: 'faster',
+        secondValue: 'slower',
+        summary: 'Fast Movie moves faster; Slow Movie takes its time.',
       }),
     ])
   })
@@ -212,8 +213,8 @@ describe('compareMoviesForDuel', () => {
     expect(result.differences).toEqual([
       expect.objectContaining({
         category: 'emotional weight',
-        firstValue: 'light',
-        secondValue: 'heavy emotional weight',
+        firstValue: 'lighter',
+        secondValue: 'heavier',
       }),
     ])
   })
@@ -227,7 +228,7 @@ describe('compareMoviesForDuel', () => {
     expect(result.differences).toEqual([
       expect.objectContaining({
         category: 'attention',
-        firstValue: 'easy',
+        firstValue: 'easygoing',
         secondValue: 'immersive',
       }),
     ])
@@ -445,6 +446,43 @@ describe('getPrioritizedDecisionFactors', () => {
     })
 
     expect(result.map((difference) => difference.category)).toEqual(['pace', 'runtime'])
+  })
+
+  it('summarizes meaningful runtime differences without medium-length filler', () => {
+    const first = makeMovie({
+      id: 'shorter',
+      title: 'Shorter Movie',
+      runtimeMinutes: 101,
+      pace: 'medium',
+      emotionalWeight: 'moderate',
+    })
+    const second = makeMovie({
+      id: 'longer',
+      title: 'Longer Movie',
+      runtimeMinutes: 122,
+      pace: 'medium',
+      emotionalWeight: 'moderate',
+    })
+
+    const result = getPrioritizedDecisionFactors(first, second, { mood: 'funny' })
+
+    expect(result[0]).toEqual(expect.objectContaining({
+      category: 'runtime',
+      summary: 'Longer Movie asks for about 21 more minutes.',
+    }))
+    expect(result[0].summary).not.toContain('medium length')
+  })
+
+  it('omits runtime summaries when the difference is too small to help decide', () => {
+    const first = makeMovie({ id: 'first', runtimeMinutes: 101, pace: 'medium' })
+    const second = makeMovie({ id: 'second', runtimeMinutes: 106, pace: 'medium' })
+
+    const result = getPrioritizedDecisionFactors(first, second, { mood: 'funny' })
+
+    expect(result[0]).toEqual(expect.objectContaining({
+      category: 'runtime',
+      summary: undefined,
+    }))
   })
 
   it('keeps ordering deterministic', () => {

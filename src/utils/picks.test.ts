@@ -23,4 +23,13 @@ describe('getNextPickOffset', () => {
   it('keeps the offset at zero for pools that fit in one slate', () => {
     expect(getNextPickOffset(3, 0)).toBe(0)
   })
+
+  it('advances by the slate size across repeated rounds', () => {
+    const pool = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
+    const secondOffset = getNextPickOffset(pool.length, 0)
+    const thirdOffset = getNextPickOffset(pool.length, secondOffset)
+
+    expect(getPicks(pool, secondOffset)).toEqual(['d', 'e', 'f'])
+    expect(getPicks(pool, thirdOffset)).toEqual(['g', 'a', 'b'])
+  })
 })
