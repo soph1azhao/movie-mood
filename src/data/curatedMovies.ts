@@ -657,4 +657,25 @@ export const curatedMovies: CuratedMovie[] = [
     palette: ["#5b5148", "#d8c7a3"],
   },
 
+  {
+    id: "one-cut-of-the-dead-2017",
+    tmdbId: 513434,
+    moods: ["funny", "exciting", "suspenseful"],
+    situations: ["friends"],
+    filterLanguages: ["Japanese"],
+    pace: "fast",
+    emotionalWeight: "moderate",
+    attentionDemand: "engaged",
+    discoveryStyle: "adventurous",
+    description:
+      "A wildly inventive Japanese zombie comedy that begins as a chaotic low-budget horror shoot and gradually reveals a much stranger, funnier filmmaking trick.",
+    whyWatch:
+      "Choose this when you want a surprising group watch that starts messy on purpose and rewards you for sticking with it.",
+    curiosityHook:
+      "Its biggest pleasure is realizing that the awkward chaos is not a flaw — it is part of the movie's hidden construction.",
+    vibeSummary:
+      "Scrappy, frantic, and unexpectedly clever — a chaotic friends-night pick with a great payoff.",
+    palette: ["#7a1f1f", "#f0d36b"],
+  },
+
 ]

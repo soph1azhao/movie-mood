@@ -786,5 +786,24 @@
     ],
     "runtimeMinutes": 123,
     "posterPath": "/xQadpnoLokxzN3hRpCPbBGpxsiz.jpg"
+  },
+  "one-cut-of-the-dead-2017": {
+    "tmdbId": 513434,
+    "title": "One Cut of the Dead",
+    "year": 2017,
+    "director": "Shinichiro Ueda",
+    "countries": [
+      "Japan"
+    ],
+    "spokenLanguages": [
+      "Japanese"
+    ],
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Horror"
+    ],
+    "runtimeMinutes": 96,
+    "posterPath": "/rws34k2bqYVo2B5MkhKAbV8925j.jpg"
   }
 }
