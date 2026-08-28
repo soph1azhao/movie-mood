@@ -615,4 +615,25 @@ export const curatedMovies: CuratedMovie[] = [
     palette: ["#8fb6a8", "#f2d6b3"],
   },
 
+  {
+    id: "the-host-2006",
+    tmdbId: 1255,
+    moods: ["suspenseful", "exciting", "funny"],
+    situations: ["friends", "alone"],
+    filterLanguages: ["Korean"],
+    pace: "fast",
+    emotionalWeight: "moderate",
+    attentionDemand: "engaged",
+    discoveryStyle: "different",
+    description:
+      "A sharp, chaotic monster movie about a family trying to rescue a young girl after a creature emerges from Seoul's Han River.",
+    whyWatch:
+      "Choose this when you want something tense, energetic, and strange, with both creature-feature thrills and messy family emotion.",
+    curiosityHook:
+      "It mixes monster-movie spectacle, social satire, slapstick panic, and genuine heartbreak in a way that feels unmistakably Bong Joon-ho.",
+    vibeSummary:
+      "Frantic, funny, and unnerving — a Korean genre ride with real emotional bite.",
+    palette: ["#4f5d3a", "#d6c27a"],
+  },
+
 ]

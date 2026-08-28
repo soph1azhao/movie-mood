@@ -748,5 +748,25 @@
     ],
     "runtimeMinutes": 72,
     "posterPath": "/fMghdAE1eRk8PdpDftsA574zs0S.jpg"
+  },
+  "the-host-2006": {
+    "tmdbId": 1255,
+    "title": "The Host",
+    "year": 2006,
+    "director": "Bong Joon Ho",
+    "countries": [
+      "South Korea"
+    ],
+    "spokenLanguages": [
+      "English",
+      "Korean"
+    ],
+    "genres": [
+      "Drama",
+      "Horror",
+      "Science Fiction"
+    ],
+    "runtimeMinutes": 120,
+    "posterPath": "/dEDLY3KeghKFzks5nTDWdigVikr.jpg"
   }
 }
