@@ -389,6 +389,8 @@ function App() {
                       discoveryPreferences={discoveryPreferences}
                       state={decisionState}
                       shareUrl={shareUrl}
+                      isFavorite={isFavorite}
+                      onToggleFavorite={toggleFavorite}
                       onChange={setDecisionState}
                       onExit={() => setDecisionState(null)}
                     />

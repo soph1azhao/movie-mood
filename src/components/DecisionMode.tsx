@@ -19,6 +19,8 @@ interface DecisionModeProps {
   discoveryPreferences: DiscoveryPreferences
   state: DecisionState
   shareUrl: string
+  isFavorite: (movieId: string) => boolean
+  onToggleFavorite: (movieId: string) => void
   onChange: (state: DecisionState) => void
   onExit: () => void
 }
@@ -56,6 +58,8 @@ interface DecisionMovieCardProps {
   cue: string
   isSelected?: boolean
   showFinishTime?: boolean
+  isFavorite?: boolean
+  onToggleFavorite?: (movieId: string) => void
   onDrop?: () => void
   onChoose: () => void
 }
@@ -66,6 +70,8 @@ function DecisionMovieCard({
   cue,
   isSelected = false,
   showFinishTime = false,
+  isFavorite = false,
+  onToggleFavorite,
   onDrop,
   onChoose,
 }: DecisionMovieCardProps) {
@@ -76,8 +82,23 @@ function DecisionMovieCard({
     <article className={`decision-card ${isSelected ? 'is-selected' : ''}`}>
       <MoviePoster movie={movie} className="decision-poster" isDecorative />
       <div className="decision-card-body">
-        <p className="eyebrow">{eyebrow}</p>
-        <h3>{movie.title}</h3>
+        <div className="decision-card-heading">
+          <div>
+            <p className="eyebrow">{eyebrow}</p>
+            <h3>{movie.title}</h3>
+          </div>
+          {onToggleFavorite && (
+            <button
+              type="button"
+              className={`favorite-button ${isFavorite ? 'is-favorite' : ''}`}
+              aria-label={isFavorite ? `Remove ${movie.title} from favorites` : `Save ${movie.title} to favorites`}
+              aria-pressed={isFavorite}
+              onClick={() => onToggleFavorite(movie.id)}
+            >
+              <span aria-hidden="true">{isFavorite ? '♥' : '♡'}</span>
+            </button>
+          )}
+        </div>
         <p className="decision-meta">{metaLine}</p>
         <p className="decision-cue">{cue}</p>
         <div className="decision-actions">
@@ -103,6 +124,8 @@ export function DecisionMode({
   discoveryPreferences,
   state,
   shareUrl,
+  isFavorite,
+  onToggleFavorite,
   onChange,
   onExit,
 }: DecisionModeProps) {
@@ -322,6 +345,8 @@ export function DecisionMode({
               eyebrow={`Finalist ${index + 1}`}
               cue={differences[index] ?? movie.vibeSummary}
               showFinishTime
+              isFavorite={isFavorite(movie.id)}
+              onToggleFavorite={onToggleFavorite}
               onChoose={() => chooseMovie(movie.id, state)}
             />
           ))}
@@ -397,6 +422,15 @@ export function DecisionMode({
           <div className="decision-actions inline-actions">
             <button type="button" className="details-toggle decision-primary" onClick={() => sharePick(selectedMovie)}>
               Share pick
+            </button>
+            <button
+              type="button"
+              className={`favorite-button ${isFavorite(selectedMovie.id) ? 'is-favorite' : ''}`}
+              aria-label={isFavorite(selectedMovie.id) ? `Remove ${selectedMovie.title} from favorites` : `Save ${selectedMovie.title} to favorites`}
+              aria-pressed={isFavorite(selectedMovie.id)}
+              onClick={() => onToggleFavorite(selectedMovie.id)}
+            >
+              <span aria-hidden="true">{isFavorite(selectedMovie.id) ? '♥' : '♡'}</span>
             </button>
             <button
               type="button"

@@ -38,8 +38,12 @@ function cueForCard(markup: string, title: string) {
   return match?.[1]
 }
 
+// Shared no-op favorites — existing tests are not concerned with favorites.
+const noFavorite = () => false
+const noToggle = () => undefined
+
 describe('DecisionMode three-slate cues', () => {
-  it('renders each card with that movie’s own vibe summary, not a pairwise comparison', () => {
+  it('renders each card with that movie\u2019s own vibe summary, not a pairwise comparison', () => {
     const paddington = getMovie('paddington-2')
     const hunt = getMovie('hunt-wilderpeople')
     const grandBudapest = getMovie('grand-budapest')
@@ -52,6 +56,8 @@ describe('DecisionMode three-slate cues', () => {
         discoveryPreferences={discoveryPreferences}
         state={{ kind: 'three-slate', movieIds: [paddington.id, hunt.id, grandBudapest.id] }}
         shareUrl="https://example.com"
+        isFavorite={noFavorite}
+        onToggleFavorite={noToggle}
         onChange={() => undefined}
         onExit={() => undefined}
       />,
@@ -78,6 +84,8 @@ describe('DecisionMode three-slate cues', () => {
         discoveryPreferences={discoveryPreferences}
         state={{ kind: 'three-slate', movieIds: [rearWindow.id, childrenOfMen.id, petiteMaman.id] }}
         shareUrl="https://example.com"
+        isFavorite={noFavorite}
+        onToggleFavorite={noToggle}
         onChange={() => undefined}
         onExit={() => undefined}
       />,
@@ -106,6 +114,8 @@ describe('DecisionMode three-slate cues', () => {
         discoveryPreferences={discoveryPreferences}
         state={{ kind: 'three-slate', movieIds: [shoplifters.id, ryeLane.id, petiteMaman.id] }}
         shareUrl="https://example.com"
+        isFavorite={noFavorite}
+        onToggleFavorite={noToggle}
         onChange={() => undefined}
         onExit={() => undefined}
       />,
@@ -135,6 +145,8 @@ describe('DecisionMode three-slate cues', () => {
           dismissedCompanionOutlierId: childrenOfMen.id,
         }}
         shareUrl="https://example.com"
+        isFavorite={noFavorite}
+        onToggleFavorite={noToggle}
         onChange={() => undefined}
         onExit={() => undefined}
       />,
@@ -169,6 +181,8 @@ describe('DecisionMode three-slate cues', () => {
           },
         }}
         shareUrl="https://example.com"
+        isFavorite={noFavorite}
+        onToggleFavorite={noToggle}
         onChange={() => undefined}
         onExit={() => undefined}
       />,
@@ -180,5 +194,152 @@ describe('DecisionMode three-slate cues', () => {
     expect(markup).not.toContain('Children of Men</h3>')
     expect(markup).toContain('Flip a coin')
     expect(markup).toContain('Back to all three')
+  })
+})
+
+describe('DecisionMode Phase 4 — Favorite Affordance Continuity', () => {
+  const rearWindow = getMovie('rear-window')
+  const petiteMaman = getMovie('petite-maman-2021')
+  const childrenOfMen = getMovie('children-of-men')
+  const shoplifters = getMovie('shoplifters')
+
+  const duelState = {
+    kind: 'duel' as const,
+    finalistIds: [rearWindow.id, petiteMaman.id] as [string, string],
+    sourceThreeSlateIds: [rearWindow.id, childrenOfMen.id, petiteMaman.id] as [string, string, string],
+  }
+
+  it('Duel finalist cards render a favorite control for each movie', () => {
+    const markup = renderToStaticMarkup(
+      <DecisionMode
+        movies={movies}
+        mood="suspenseful"
+        situation={null}
+        filters={filters}
+        discoveryPreferences={discoveryPreferences}
+        state={duelState}
+        shareUrl="https://example.com"
+        isFavorite={noFavorite}
+        onToggleFavorite={noToggle}
+        onChange={() => undefined}
+        onExit={() => undefined}
+      />,
+    )
+
+    // Both finalist movies should have a favorite button rendered
+    expect(markup).toContain(`Save ${rearWindow.title} to favorites`)
+    expect(markup).toContain(`Save ${petiteMaman.title} to favorites`)
+  })
+
+  it('Duel favorite buttons reflect aria-pressed=false when not favorited', () => {
+    const markup = renderToStaticMarkup(
+      <DecisionMode
+        movies={movies}
+        mood="suspenseful"
+        situation={null}
+        filters={filters}
+        discoveryPreferences={discoveryPreferences}
+        state={duelState}
+        shareUrl="https://example.com"
+        isFavorite={noFavorite}
+        onToggleFavorite={noToggle}
+        onChange={() => undefined}
+        onExit={() => undefined}
+      />,
+    )
+
+    // aria-pressed="false" for non-favorites
+    const pressedFalseCount = (markup.match(/aria-pressed="false"/g) ?? []).length
+    expect(pressedFalseCount).toBeGreaterThanOrEqual(2)
+  })
+
+  it('Duel favorite buttons reflect aria-pressed=true and Remove label when favorited', () => {
+    const markup = renderToStaticMarkup(
+      <DecisionMode
+        movies={movies}
+        mood="suspenseful"
+        situation={null}
+        filters={filters}
+        discoveryPreferences={discoveryPreferences}
+        state={duelState}
+        shareUrl="https://example.com"
+        isFavorite={(movieId) => movieId === rearWindow.id}
+        onToggleFavorite={noToggle}
+        onChange={() => undefined}
+        onExit={() => undefined}
+      />,
+    )
+
+    expect(markup).toContain(`Remove ${rearWindow.title} from favorites`)
+    expect(markup).toContain('aria-pressed="true"')
+    expect(markup).toContain(`Save ${petiteMaman.title} to favorites`)
+  })
+
+  it('Tonight\'s Pick exposes the favorite affordance', () => {
+    const markup = renderToStaticMarkup(
+      <DecisionMode
+        movies={movies}
+        mood="suspenseful"
+        situation={null}
+        filters={filters}
+        discoveryPreferences={discoveryPreferences}
+        state={{ kind: 'pick', selectedId: rearWindow.id }}
+        shareUrl="https://example.com"
+        isFavorite={noFavorite}
+        onToggleFavorite={noToggle}
+        onChange={() => undefined}
+        onExit={() => undefined}
+      />,
+    )
+
+    expect(markup).toContain(`Save ${rearWindow.title} to favorites`)
+    expect(markup).toContain('Tonight\u2019s Pick')
+  })
+
+  it('Tonight\'s Pick reflects Remove label when the selected movie is already favorited', () => {
+    const markup = renderToStaticMarkup(
+      <DecisionMode
+        movies={movies}
+        mood="suspenseful"
+        situation={null}
+        filters={filters}
+        discoveryPreferences={discoveryPreferences}
+        state={{ kind: 'pick', selectedId: rearWindow.id }}
+        shareUrl="https://example.com"
+        isFavorite={(movieId) => movieId === rearWindow.id}
+        onToggleFavorite={noToggle}
+        onChange={() => undefined}
+        onExit={() => undefined}
+      />,
+    )
+
+    expect(markup).toContain(`Remove ${rearWindow.title} from favorites`)
+    expect(markup).toContain('aria-pressed="true"')
+  })
+
+  it('three-slate Decision Mode does NOT render a favorite control', () => {
+    const markup = renderToStaticMarkup(
+      <DecisionMode
+        movies={movies}
+        mood="emotional"
+        situation={null}
+        filters={filters}
+        discoveryPreferences={discoveryPreferences}
+        state={{
+          kind: 'three-slate',
+          movieIds: [shoplifters.id, rearWindow.id, petiteMaman.id],
+        }}
+        shareUrl="https://example.com"
+        isFavorite={(movieId) => movieId === shoplifters.id}
+        onToggleFavorite={noToggle}
+        onChange={() => undefined}
+        onExit={() => undefined}
+      />,
+    )
+
+    // Three-slate cards must not render favorite buttons
+    expect(markup).not.toContain('Save')
+    expect(markup).not.toContain('Remove')
+    expect(markup).not.toContain('favorite-button')
   })
 })
