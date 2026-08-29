@@ -1,0 +1,888 @@
+# Movie Mood — Research
+
+## Project Overview
+Movie Mood is a small, cinematic movie-discovery React/TypeScript/Vite site hosted on GitHub Pages: https://soph1azhao.github.io/movie-mood/
+
+Question it answers: What should I watch tonight? Pick a feeling → get three curated films with practical details, human discovery preferences, "not tonight" boundaries, related-film exploration, a save-for-later list, and a lightweight decision flow.
+
+## Features
+- Six mood-first entry points: funny, exciting, thought-provoking, relaxing, emotional, suspenseful
+- Optional viewing situations: quiet solo, date night, friends, family movie night, easy-watch
+- V3 discovery controls: attention demand, comfort-zone distance, strict "Not tonight" dealbreakers
+- Practical filters: genre, runtime, language, pace, emotional weight
+- Three focused recommendations at a time, "Another three" cycling
+- V4 Decision Mode: three-film comparison, two-finalist duel, coin-flip gut check, Tonight's Pick ticket
+- Shareable V4 decision URLs that restore context
+- "More like this" mode (up to 3 related films)
+- Expandable movie details
+- Browser-local favorites in localStorage + My List view
+- 34 curated films, TypeScript-typed, with committed TMDB factual snapshot
+- Responsive, keyboard-friendly single-page interface
+- Real TMDB poster images where available, CSS-generated Movie Mood title posters as fallback
+
+Note: Normal app usage, tests, builds, and GitHub Pages deployment do NOT require a TMDB token. Poster images load from TMDB's image CDN when available.
+
+## Implementation Specs
+- V2: docs/V2_IMPLEMENTATION_SPEC.md
+- V3: docs/V3_IMPLEMENTATION_SPEC.md
+- V4: docs/V4_IMPLEMENTATION_SPEC.md
+- V5: docs/V5_IMPLEMENTATION_SPEC.md
+
+Current release: v4.0.0 (V4 checkpoint: 686e6e62f44ff4789524e105e6a21407a8b3270d)
+V5 status: Infrastructure/data-quality/presentation version. Not a new recommendation system.
+
+## V5 Product Goal
+Connect the completed Movie Mood experience to real movie data by enriching every existing curated movie with verified factual metadata and real poster imagery from TMDB.
+
+Defining principle: Movie Mood owns meaning. TMDB owns facts.
+
+Movie Mood continues to decide: why a movie fits a mood, how demanding it feels, emotional weight, familiarity/adventure, situations, discovery relations, what distinctions matter tonight.
+
+TMDB supplies factual info. TMDB must NOT become the recommendation engine.
+
+## Hard Architecture Constraints (V5)
+Must remain: static, backend-free, database-free, account-free, GitHub Pages deployable, deterministic during normal use, understandable by one developer, inexpensive/free to operate, usable without runtime TMDB API access.
+
+Do NOT add:
+- backend services, serverless functions, databases, authentication, TMDB user auth, cloud persistence
+- runtime TMDB data API calls from browser, browser-exposed TMDB API credentials
+- automatic scheduled metadata refresh, GitHub Actions metadata sync
+- TMDB search in product UI, universal movie catalogue browsing
+- popularity-based ranking, vote/rating-based recommendation logic, AI-generated editorial annotations, ML
+- React Router, Redux, Zustand, another state-management framework, TV support, streaming-provider availability
+- broad redesign of V1–V4 interaction flows
+
+Normal usage must remain a static client application.
+
+## V1–V4 Preserved Behavior
+- existing local Movie Mood IDs
+- existing favorites/localStorage IDs
+- existing V4 URL movie IDs
+- mood matching, situation fallback, practical filtering semantics
+- V3 dealbreaker semantics, V3 soft-preference ordering
+- More like this scoring rules, cycling behavior
+- Decision Mode behavior, duel behavior, Tonight's Pick, Change my mind
+- share/restoration behavior
+
+Movie Mood local ID = application identity. TMDB ID = external factual-data mapping. Never rename existing movie IDs. Never replace Movie Mood IDs with TMDB IDs.
+
+## V5 Data Ownership Model (3 layers)
+
+### 6.1 Movie Mood Identity
+Every curated movie retains: id: string, tmdbId: number. ID remains authoritative inside Movie Mood. TMDB ID identifies the corresponding TMDB movie. TMDB ID must never replace Movie Mood ID in favorites, My List, URLs, recommendation state, decision state, similarity seed state.
+
+### 6.2 Movie Mood Editorial Data
+Movie Mood continues to own and manually curate: moods, situations, filterLanguages, pace, emotionalWeight, attentionDemand, discoveryStyle, description, whyWatch, curiosityHook, vibeSummary, palette. Description remains Movie Mood editorial copy (NOT TMDB overview). Palette remains for visual fallback when real poster unavailable.
+
+### 6.3 TMDB Factual Data
+TMDB supplies: title, year, director, countries, spokenLanguages, genres, runtimeMinutes, posterPath. Do NOT import: popularity, voteAverage, voteCount, trending rank, TMDB recommendations, TMDB overview, cast lists, backdrops, keywords, reviews, watch providers (unless explicitly required by future spec).
+
+## Target Type Structure
+interface CuratedMovie {
+  id: string
+  tmdbId: number
+  moods: Mood[]
+  situations: ViewingSituation[]
+  filterLanguages: string[]
+  pace: Pace
+  emotionalWeight: EmotionalWeight
+  attentionDemand: AttentionDemand
+  discoveryStyle: DiscoveryStyle
+  description: string
+  whyWatch: string
+  curiosityHook: string
+  vibeSummary: string
+  palette: [string, string]
+}
+
+interface MovieFacts {
+  title: string
+  year: number
+  director: string
+  countries: string[]
+  spokenLanguages: string[]
+  genres: string[]
+  runtimeMinutes: number
+  posterPath: string | null
+}
+
+interface Movie extends CuratedMovie, MovieFacts {}
+
+Final application continues consuming a resolved Movie[]. Existing components should not need to understand where each field originated.
+
+## Repository Data Architecture
+src/
+  data/
+    curatedMovies.ts       # Hand-authored Movie Mood meaning
+    movies.ts              # Resolves curated + TMDB facts → Movie[]
+    generated/
+      tmdbMovies.json      # Generated factual TMDB snapshot, committed to Git
+  types/
+    movie.ts               # Shared types
+scripts/
+  syncTmdb.ts              # Or Node-compatible equivalent
+
+### curatedMovies.ts
+Hand-authored Movie Mood meaning layer. Contains: local ID, TMDB ID, Movie Mood editorial metadata.
+
+### generated/tmdbMovies.json
+Generated factual TMDB snapshot. Committed to Git. Never manually edited except when repairing corrupted repository state.
+
+### movies.ts
+Resolves: curated Movie Mood data + generated TMDB facts = Movie[]. Keep as normal application import where practical so V1–V4 components don't need unnecessary import churn.
+
+## Generated Snapshot Schema
+Uses Movie Mood local ID as top-level key:
+{
+  "movie-mood-stable-id": {
+    "tmdbId": 123456,
+    "title": "Example Movie",
+    "year": 2024,
+    "director": "Example Director",
+    "countries": ["Example Country"],
+    "spokenLanguages": ["Example Language"],
+    "genres": ["Drama"],
+    "runtimeMinutes": 108,
+    "posterPath": "/example.jpg"
+  }
+}
+Snapshot includes tmdbId so one-to-one correspondence can be validated. Do NOT key application by TMDB ID.
+
+## Snapshot Determinism
+Must be deterministic. No volatile fields: fetchedAt, updatedAt, popularity, voteAverage, voteCount, request timestamp, trending position. Normalize string arrays (genres, spokenLanguages, countries) by removing duplicates and producing stable ordering. Serialize local movie entries in stable curated dataset order or another explicitly deterministic order. Repeated sync against unchanged TMDB responses must produce no Git diff.
+
+## TMDB Mapping Rules
+Every V4 curated movie must receive exactly one manually verified tmdbId. Do NOT add/remove movies merely because V5 introduces TMDB. Requirements:
+- every curated movie has one positive integer tmdbId
+- every tmdbId maps to exactly one Movie Mood movie
+- duplicate tmdbId values are invalid
+- duplicate local IDs remain invalid
+- existing Movie Mood local IDs must not change
+
+A one-time TMDB search may be used by a maintainer to locate candidate IDs. BUT: The production synchronization command must never search by title or automatically choose a movie. Synchronization must fetch only the exact committed tmdbId. Candidate mapping should be reviewed using title, release year, director. Do NOT silently choose first search result.
+
+## Maintainer-Time Synchronization
+Add: pnpm sync:tmdb. Explicit maintainer operation.
+
+Flow:
+curatedMovies
+      ↓
+exact tmdbId values
+      ↓
+TMDB API
+      ↓
+validate all responses
+      ↓
+normalize all facts
+      ↓
+compare with existing snapshot
+      ↓
+write complete new snapshot
+
+Synchronization is NOT part of: pnpm dev, pnpm test, pnpm build, GitHub Pages deployment. Normal application build must work without any TMDB credential.
+
+## Authentication and Secret Handling
+Use TMDB API Read Access Token through TMDB_READ_ACCESS_TOKEN environment variable. Token must be read from maintainer process environment.
+
+Do NOT: commit a token, hard-code a token, serialize token into generated data, expose through import.meta.env, include in frontend code, place into built JavaScript bundle, print in logs, include in errors, place in normal GitHub Pages deployment config. If local env file used, must already be ignored or added safely to .gitignore. Prefer environment-based auth over command-line arguments containing the token.
+
+## TMDB Request Scope
+Use TMDB movie-details endpoint for each exact mapped movie ID. Single explicit localization: language=en-US. Use append_to_response for credits if needed so director info can be obtained without unnecessary request proliferation. Keep simple: sequential requests or very low concurrency, native platform HTTP/fetch. Do NOT add a TMDB SDK. Small dev-only script-running dependency acceptable only if genuinely needed. Do NOT add runtime application dependency merely for synchronization.
+
+## TMDB Fact Normalization
+
+### Title
+Use localized TMDB movie title returned for configured language. Must be non-empty string.
+
+### Year
+Derive from TMDB release date. Missing or invalid release year is a synchronization failure.
+
+### Runtime
+Must be positive integer number of minutes. Missing, zero, negative, non-numeric, or otherwise invalid runtime is a synchronization failure. Behaviorally important because Movie Mood uses runtime for filters, dealbreakers, and decision contrasts.
+
+### Genres
+Use TMDB movie genre names. Must produce valid non-empty string array for current curated catalogue. Normalize deterministically.
+
+### Spoken Languages
+Use stable human-readable language names from TMDB's spoken-language data. Prefer English display names where available. TMDB spoken languages are factual display metadata. Must NOT replace Movie Mood's curated behavioral language filter values in Phase 1, because TMDB can include minor/incidental spoken languages that would alter existing filtering semantics. Normalize deterministically.
+
+### Countries
+Use TMDB production-country names. Normalize deterministically.
+
+### Director
+Derive from appended credits by crew entries identified as directors. If multiple directors exist, preserve all identified directors in one stable display string. Missing usable director for existing curated feature film is a synchronization failure.
+
+### Poster
+Store only: posterPath: string | null. Missing poster is allowed. Do NOT treat posterPath === null as synchronization failure.
+
+## Explicit Synchronization Failure Policy
+Synchronization is atomic: Either every curated movie produces one valid factual snapshot entry, or the existing generated snapshot remains unchanged. Never leave partially updated snapshot.
+
+### Hard Data/Configuration Failures (fail immediately or fail sync)
+TMDB_READ_ACCESS_TOKEN missing → Fail immediately. Do not modify snapshot.
+Invalid/missing local movie ID → Fail.
+Missing/invalid tmdbId → Fail.
+Duplicate local ID → Fail.
+Duplicate tmdbId → Fail.
+TMDB 401 → Fail immediately. Do not retry as transient.
+TMDB 403 → Fail immediately. Do not retry as transient.
+TMDB 404 for committed tmdbId → Fail. Never search automatically for replacement.
+Response movie ID differs from requested ID → Fail.
+Invalid response structure → Fail.
+Missing/invalid title → Fail.
+Missing/invalid year → Fail.
+Missing/invalid runtime → Fail.
+Malformed required genre data → Fail.
+Malformed required language data → Fail.
+Missing usable director → Fail.
+Snapshot count differs from curated movie count → Fail.
+Snapshot cannot resolve one-to-one with curated data → Fail.
+
+### Transient Failures (may be retried)
+HTTP 429, HTTP 5xx, temporary network failures. Retry behavior must be bounded. Small fixed maximum number of attempts. Simple exponential/backoff. When Retry-After provided for rate limiting, respect where practical. If bounded retries exhausted: fail entire synchronization, preserve previous snapshot. Do NOT retry indefinitely.
+
+### Allowed Graceful Degradation
+posterPath === null is NOT a synchronization failure. At browser runtime, poster CDN image load failure must degrade gracefully to existing Movie Mood poster treatment. Movie recommendation functionality must remain usable without poster delivery.
+
+## Atomic Write Requirement
+Do NOT overwrite generated snapshot movie-by-movie. Synchronization must:
+1. load and validate curated mapping
+2. fetch all required TMDB records
+3. validate every response
+4. construct complete candidate snapshot
+5. validate one-to-one correspondence
+6. serialize complete deterministic candidate
+7. only then replace existing generated snapshot
+
+Safe implementation may write temporary file beside final snapshot and rename/promote only after complete validation. If any failure occurs before final promotion: existing snapshot remains untouched. Clean up temporary artifacts when practical.
+
+## Behavior-Impact Classification
+Not every factual TMDB change has same product impact. Sync report must distinguish:
+
+### Behavior-impacting fields
+runtimeMinutes, genres, filterLanguages — currently participate in filtering, dealbreakers, similarity, or other V1–V4 behavior. Changes must be prominently reported.
+
+### Primarily display-oriented fields
+title, year, director, countries, spokenLanguages, posterPath — should still appear in generated Git diff but do not currently define same filtering/similarity semantics.
+
+## Initial V5 Behavior Review Gate (Phase 1)
+Phase 1 is migration from existing hand-entered facts to first TMDB factual snapshot. Agent must compare first TMDB snapshot against existing V4 factual values before committing phase. If any behavior-impacting field differs (runtimeMinutes, genres, filterLanguages), agent must stop before commit and report concise review table containing: Movie Mood ID, movie title, field, old V4 value, new TMDB value. This is a deliberate human review gate and counts as valid reason to stop before commit under AGENTS.md. Do NOT change filtering/similarity algorithms merely to compensate for factual differences. After user approves factual changes, continue phase normally. Display-only differences do not require special stop unless they reveal likely incorrect TMDB mapping.
+
+## Future Metadata Refreshes (after V5)
+Normal maintenance:
+maintainer runs pnpm sync:tmdb
+        ↓
+script validates and updates snapshot
+        ↓
+maintainer reviews behavior-impact warnings
+        ↓
+maintainer reviews Git diff
+        ↓
+pnpm test
+pnpm build
+        ↓
+commit
+
+Do NOT implement automatic scheduled refresh in V5. Manual review is intentional because factual changes can alter Movie Mood behavior.
+
+## Normal Build and Deployment Contract
+Must work with no TMDB credential:
+pnpm dev
+pnpm test
+pnpm build
+
+GitHub Pages deployment must also require no TMDB credential. Do NOT modify existing deployment workflow to call TMDB. Deployed application reads only: committed Movie Mood editorial data + committed TMDB factual snapshot. TMDB data API is therefore not a runtime dependency.
+
+## Real Poster Integration (V5)
+Replace normal visual preference from CSS-only poster treatment to real TMDB poster imagery where available. Create or reuse one centralized poster-rendering component/helper. Do NOT scatter TMDB image URL construction across components. Use one documented, appropriate poster size such as medium card-friendly size. Poster should render:
+TMDB poster available and loads → real movie poster
+posterPath null OR image load fails → existing CSS/palette poster
+
+Do NOT show broken-image icon. Do NOT collapse card layout when poster loading fails.
+
+## Poster Runtime Dependency Boundary
+TMDB data API must NOT be called at runtime. However, TMDB-hosted poster images MAY be loaded from TMDB's image CDN. Correct resilience model:
+TMDB data API unavailable → Movie Mood continues to work from committed factual snapshot.
+TMDB image CDN unavailable → Movie Mood remains fully usable but falls back to local CSS/palette posters.
+
+Do NOT describe V5 as fully offline if remote poster images remain enabled.
+
+## Poster Coverage
+Use same poster behavior anywhere current application meaningfully presents movie visually. At minimum review: normal recommendation cards, More like this results, My List, Movie Details, Decision Mode, duel/finalist presentation, Tonight's Pick. Prefer reuse of one poster component rather than separate TMDB-image logic in each view. Do NOT broadly redesign those views.
+
+## TMDB Attribution (V5)
+V5 is incomplete without TMDB attribution. Add About/Credits-style attribution area appropriate to existing application. Must include:
+- an approved TMDB logo
+- required TMDB attribution notice: "This product uses the TMDB API but is not endorsed or certified by TMDB."
+
+TMDB logo must not be presented more prominently than Movie Mood's own identity and must not imply endorsement. Use approved, unmodified TMDB logo asset consistent with TMDB's current branding requirements. Do NOT invent custom TMDB logo.
+
+## No New Recommendation Semantics
+TMDB data must NOT introduce new recommendation factors in V5. Do NOT use: popularity, ratings, vote count, trending status, TMDB recommendations, release recency, cast popularity, external recommendation scores to change Movie Mood ranking. The only TMDB factual fields that may affect existing recommendation behavior are fields that V1–V4 already use: runtime, genres, filterLanguages. Algorithms consuming those fields must retain existing semantics.
+
+## Automated Tests (V5)
+Use existing Vitest setup. Do NOT make automated tests depend on live TMDB availability. Use fixtures/mocked responses for synchronization tests. At minimum add targeted coverage for:
+
+### Mapping validation
+- every curated movie has valid positive tmdbId
+- duplicate tmdbId is rejected
+- duplicate local IDs remain rejected
+- snapshot/local mapping is one-to-one
+
+### Snapshot validation
+- valid TMDB response normalizes correctly
+- response ID must match requested ID
+- invalid title fails
+- invalid year fails
+- invalid runtime fails
+- malformed genre/language data fails
+- null poster is accepted
+- output ordering/serialization is deterministic
+
+### Failure behavior
+- authentication failure does not replace snapshot
+- missing movie/404 does not replace snapshot
+- one failed movie prevents partial snapshot replacement
+- bounded transient retry eventually succeeds or fails predictably
+- exhausted retries preserve previous snapshot
+
+### Merge/resolution
+- every curated movie resolves to one final Movie
+- every generated fact entry belongs to a curated movie
+- tmdbId correspondence is validated
+- Movie Mood local IDs remain final application IDs
+
+### Poster behavior
+Where practical without broad component-test infrastructure:
+- missing poster path chooses fallback
+- failed poster load chooses fallback
+- valid poster URL construction is centralized and deterministic
+
+Do NOT add live-network tests to pnpm test.
+
+## V5 Phases
+
+### Phase 1 — TMDB Identity and Synchronization Foundation
+Implement external factual-data foundation without switching application to it yet. Scope: add tmdbId mapping for every current curated movie, manually verify mappings, add TMDB synchronization command, use environment-based API Read Access Token, exact-ID movie fetching, fixed localization, credits/director extraction, deterministic normalization, generated factual snapshot, atomic write behavior, bounded retry handling, explicit failure handling, behavior-impact classification/reporting, tests for synchronization/mapping/failure logic. Existing application may continue using current monolithic movie facts during this phase. Do NOT add real-poster UI yet. Do NOT split complete application movie model yet unless required minimally for synchronization foundation.
+
+Phase 1 Human Review Gate: Before committing initial TMDB snapshot: compare TMDB runtimeMinutes and genres with V4 values, confirm curated filter-language behavior remains unchanged, compare array-valued behavior-impacting fields as normalized sets so ordering-only differences are not reported as behavior changes, if any differ stop and report them for user review, do not silently preserve incorrect old values, do not silently accept behavior-changing new values, do not modify recommendation algorithms. After explicit user approval of reviewed differences, complete the phase.
+
+Phase 1 Acceptance: all current curated movies have one verified tmdbId, no local Movie Mood IDs changed, pnpm sync:tmdb works with valid token, missing token fails safely, hard API/data failures preserve existing snapshot, transient retries are bounded, generated snapshot is deterministic, behavior-impact changes are clearly reported, no runtime application API calls exist, existing V1–V4 behavior still runs from old data, all tests pass, production build passes, git diff --check passes. Risk: high.
+
+### Phase 2 — Factual/Editorial Model Separation
+Migrate Movie Mood from monolithic local movie objects to resolved editorial + TMDB snapshot data. Scope: create curated editorial data layer, move Movie Mood-owned fields into that layer, move factual fields to generated TMDB snapshot, create/retain single resolved Movie[], keep normal application imports simple, validate one-to-one merge behavior, remove redundant manually maintained factual values, preserve all stable local movie IDs, preserve V4 URL compatibility, preserve favorites/My List compatibility, preserve recommendation algorithms, update/filter dataset-derived options using resolved movie facts. Do NOT add poster UI yet unless minimal structural helper required.
+
+Important Semantic Rule: TMDB factual values may cause legitimate result changes when existing V1–V4 behavior already depends on: runtime, genres, filterLanguages. Do NOT rewrite algorithms to reproduce previous results artificially. Instead verify that: the algorithm itself is unchanged, changed behavior is explainable by reviewed factual-data changes.
+
+Phase 2 Acceptance: application movie data resolves from editorial + generated factual layers, existing local IDs unchanged, existing V4 URLs remain valid, existing favorites remain addressable by same IDs, practical filters still use same semantics, dealbreakers still use same semantics, More like this uses same scoring semantics, Decision Mode still consumes resolved Movie model normally, no duplicated manually maintained factual metadata remains unnecessarily, normal build requires no TMDB token, normal tests require no network, all tests pass, production build passes, git diff --check passes. Risk: high.
+
+### Phase 3 — Real Posters, Attribution, Integration, Documentation
+Complete visible V5 experience and maintainer documentation. Scope: reusable TMDB poster rendering, centralized image URL construction, real posters throughout relevant existing views, CSS/palette poster fallback, image-load failure fallback, responsive poster behavior, accessibility sanity checks, TMDB Credits/About attribution, approved TMDB logo, required attribution notice, README update, LEARNING_NOTES update, document TMDB setup, document TMDB_READ_ACCESS_TOKEN, document pnpm sync:tmdb, document manual review workflow, document failure behavior, document factual/editorial architecture, final V1–V5 regression review. Do NOT add new TMDB-derived product features.
+
+Phase 3 Acceptance: recommendation cards show real posters where available, More like this works with posters, My List works with posters, Movie Details works, Decision Mode works, duel works, Tonight's Pick works, missing poster paths fall back cleanly, image CDN failures fall back cleanly, no broken-image state remains, attribution is present and compliant, no TMDB token exists in frontend source/bundle, pnpm dev does not require token, pnpm test does not require token, pnpm build does not require token, GitHub Pages deployment does not contact TMDB data API, existing V4 shared URLs remain valid, favorites/My List remain compatible, README and learning notes reflect V5 architecture. Required verification: pnpm test, pnpm build, git diff --check — all must pass. Risk: medium/high.
+
+## Real Blockers (legitimate reasons to stop and ask user)
+- repository or remote is incorrect
+- unrelated user changes create Git safety risk
+- TMDB credential is required but unavailable
+- an existing curated movie cannot be mapped confidently to one TMDB movie
+- behavior-impacting differences are found during initial migration and require user review
+- TMDB attribution requirements cannot be satisfied with an approved asset
+- the specification contains a material contradiction
+- required verification cannot be made to pass safely
+- implementation would require violating the static/backend-free architecture
+
+Minor implementation decisions are NOT blockers. Make reasonable local decisions and continue.
+
+## Explicitly Out of V5
+Do NOT opportunistically implement ideas documented in docs/POST_V5_IDEAS.md (non-normative, not part of V5 acceptance criteria). V5 explicitly excludes: streaming availability, automated scheduled synchronization, universal TMDB search, large-catalogue expansion, curation automation, AI annotation, TMDB accounts, cloud watchlists, ratings/popularity ranking, TV, self-hosted poster infrastructure, additional subjective movie taxonomies.
+
+## V5 Completion Criteria
+V5 is complete when:
+1. every existing curated Movie Mood movie has one verified TMDB identity
+2. Movie Mood local IDs remain unchanged
+3. Movie Mood editorial meaning remains locally curated
+4. factual movie metadata comes from a committed generated TMDB snapshot
+5. synchronization is explicit, validated, deterministic, atomic, and reviewable
+6. failed synchronization cannot partially corrupt the snapshot
+7. normal builds and deployment require no TMDB credential
+8. the browser makes no authenticated TMDB data API calls
+9. existing recommendation semantics remain intact
+10. behavior-impacting factual changes are reviewable rather than silent
+11. real TMDB posters appear where available
+12. poster failures degrade to the existing Movie Mood visual fallback
+13. TMDB attribution requirements are implemented
+14. all V1–V4 flows continue to work
+15. tests and production build pass
+
+V5 in one sentence:
+V5 connects Movie Mood's carefully curated meaning layer to verified real-world TMDB facts and posters through a static, reviewable snapshot—making the movies real without giving the API control over what they mean.
+
+## V4 Product Goal
+Movie Mood V4 helps finish the choice: when three good movies still feel like too many, Help Me Choose surfaces the differences that matter tonight, supports a lightweight final duel and optional gut check, and turns the result into a shareable Tonight's Pick.
+
+Must remain: static, local-first, transparent, small, backend-free, account-free, understandable, deterministic except for explicitly identified coin flip. Do NOT introduce numerical recommendation systems, new movie taxonomies, or external APIs.
+
+## V4 Scope
+
+### Included
+- Help me choose button on three-movie slate
+- three-film Decision Mode
+- concise relative cues showing why movies differ
+- direct Choose this tonight from the three
+- intentional narrowing to two
+- lightweight duel view with decisive differences
+- return from duel to three-film state
+- gut-check Flip a coin for two finalists
+- post-flip How does that feel? confirmation step
+- final Tonight's Pick state
+- deterministic Why it fits tonight explanation
+- Change my mind to return to prior decision context
+- URL-state serialization for V4 modes
+- state reset when upstream preferences change
+- native Web Share API with clipboard fallback
+
+### Explicitly Deferred to V5
+- TMDb integration, official movie posters/backdrops, API authentication, build-time or runtime movie API fetching, API caching, feature images
+
+## V4 Decision Mode State Types
+
+### DecisionModeSchemaVersion
+export type DecisionModeSchemaVersion = 'v4'
+
+### DecisionState
+Three phases:
+export type DecisionState =
+  | { kind: 'three-slate', movieIds: [string, string, string] }
+  | { kind: 'duel', finalistIds: [string, string] }
+  | { kind: 'pick', selectedId: string }
+
+### DecisionModeState
+Complete V4 decision state includes context needed to restore:
+export interface DecisionModeState {
+  schemaVersion: DecisionModeSchemaVersion
+  mood: string
+  situation: string | null
+  filters: MovieFilters
+  discoveryPreferences: DiscoveryPreferences
+  decisionState: DecisionState
+}
+
+## V4 URL State Codec
+
+### URL Format
+?mode=decision&m=...&s=...&filters=...&discovery=...&state=...
+- mode=decision indicates V4 decision mode
+- All other parameters encode upstream recommendation context
+- state encodes decision phase (three-slate | duel | pick)
+
+### Encoding/Decoding
+Create src/utils/urlCodec.ts:
+export function encodeDecisionState(state: DecisionModeState): string
+export function decodeDecisionState(url: string): DecisionModeState | null
+
+Degenerate/stale URLs should decode to null for graceful degradation.
+
+## V4 Comparison Utility
+
+### MovieComparison
+export interface MovieComparison {
+  movieId: string
+  differences: string[]
+}
+export function compareMoviesForDuel(
+  first: Movie,
+  second: Movie,
+  context: Pick<Mood, 'id'>
+): MovieComparison
+
+### Why It Fits Tonight
+export function whyItFitsTonight(
+  movie: Movie,
+  options: {
+    mood: Mood
+    situation: ViewingSituation | null
+    filters: MovieFilters
+  }
+): string[]
+
+Returns array of concise reasons (user's corrections mention "concise differences" and "one or two strongest deciding factors").
+
+## V4 Acceptance Criteria (Phase 1)
+Must Pass:
+- existing V1–V3 behavior remains unchanged
+- decision logic uses only existing metadata
+- active preferences influence deciding-factor priority
+- no numerical recommendation system is introduced
+- no new movie taxonomy is introduced
+- decision logic is deterministic
+- URL state round-trips supported values
+- malformed URL values degrade safely
+- schema version is represented
+- existing tests continue to pass
+- new targeted tests pass
+- production build passes
+
+Verification: pnpm test, pnpm build. Risk: high.
+
+## V4 Implementation Phases
+
+### Phase 1 — Decision and URL Foundations
+Implement reusable non-UI foundations. Scope: V4 decision-state types or equivalent state structure, pure decision comparison utility, relative-cue logic, context-aware deciding-factor priority, deterministic Why it fits tonight helper, URL-state schema/version, URL codec, URL-value validation, required unit tests. Do NOT add complete V4 Decision Mode UI yet.
+
+### Phase 2 — Help Me Choose and Decision Closure
+Implement V4 decision experience. Scope: Help me choose, three-film Decision Mode, concise relative cues, direct Choose this tonight, optional narrowing to two, lightweight duel view, one or two strongest deciding factors, return from duel to three-film state, gut-check Flip a coin, reduced-motion-compatible coin behavior, post-flip How does that feel?, confirmation of either finalist, Tonight's Pick / Tonight's Ticket.
+
+### Phase 3 — Sharing, Restoration, Integration, Documentation
+Complete V4. Scope: initialize application state from valid V4 URLs, restore recommendation context, restore three-film Decision Mode, restore duel state, restore valid Tonight's Pick, ongoing URL synchronization, native Web Share, clipboard fallback, accessible share feedback, responsive Decision Mode, responsive duel, responsive Tonight's Pick, accessibility sanity checks, final V1–V4 regression review, README update, LEARNING_NOTES update, document V4 architecture and URL-state behavior.
+
+Acceptance Criteria: A fresh valid URL can restore: normal Movie Mood preference context, Decision Mode candidates, duel finalists, Tonight's Pick. Malformed or stale URLs degrade safely.
+
+## V4 Completion Status
+V4 implementation is complete.
+- Phase 1: decision-state foundation, context-aware deciding factors, deterministic Why it fits tonight logic, versioned URL codec, runtime URL validation, movie-ID validation, decision-context preservation, decoder isolation, targeted tests.
+- Phase 2: Help Me Choose, three-film Decision Mode, direct selection, two-film duel, context-aware deciding factors, intentional finalist selection, coin-flip gut check, Tonight's Pick, Change my mind, incompatible-state reset behavior.
+- Phase 3: initial restoration from valid V4 URLs, ongoing Decision Mode URL synchronization using browser-native history replacement, native Web Share with clipboard fallback, accessible share feedback, V4 README/learning-note documentation.
+- Final automated verification: pnpm test: 64 tests passed, pnpm build: passed, git diff --check: passed.
+- Overlapping active user-intent signals are treated as meaningful decision dimensions rather than independently double-counted.
+- Coin flip is only a gut-check between two current finalists. User can accept coin-selected movie or explicitly choose other finalist.
+- Invalid or stale V4 decision URLs currently degrade safely to normal application state rather than attempting partial upstream-context restoration.
+- No numerical recommendation scoring, backend, account system, external movie API, routing dependency, or new subjective movie taxonomy was introduced in V4.
+
+## Tech Stack
+- React
+- TypeScript
+- Vite
+- Plain CSS
+- GitHub Pages + GitHub Actions
+
+## Run Locally
+git clone https://github.com/soph1azhao/movie-mood.git
+cd movie-mood
+pnpm install
+pnpm dev
+
+Vite prints local URL, normally http://localhost:5173. Repository uses pnpm in CI and includes pnpm lockfile.
+
+## Build
+pnpm build
+pnpm preview
+
+## Test
+pnpm test
+
+## Deploy to GitHub Pages
+Workflow in .github/workflows/deploy.yml builds and publishes site whenever changes pushed to main.
+1. Push repository to GitHub.
+2. Open Settings → Pages in GitHub repository.
+3. Under Build and deployment, set source to GitHub Actions.
+4. Push to main (or run workflow manually from Actions tab).
+Vite configured with relative asset base, so built site works at either repository URL such as /movie-mood/ or custom project path.
+
+## Project Structure
+src/
+├── components/    # Small visual building blocks
+├── data/          # Curated movie meaning plus generated TMDB facts
+├── hooks/         # Browser-local favorites state
+├── types/         # Shared TypeScript types
+├── utils/         # Pure filtering, discovery, decision, URL, and cycling helpers
+├── App.tsx        # Page state and recommendation selection
+└── styles.css     # The responsive visual system
+.github/workflows/ # GitHub Pages deployment
+
+## V3 Architecture Notes
+- src/App.tsx owns page state: selected mood, optional situation, practical filters, V3 discovery preferences, recommendation offset, current view, optional similar-movie seed.
+- src/utils/filterMovies.ts preserves V2 matching and situation fallback behavior.
+- src/utils/discovery.ts applies V3 dealbreakers, soft experience ordering, discovery-pool composition, deterministic similar-movie matching.
+- src/utils/picks.ts handles three-card slate selection and wraps final cycle without duplicating movie within one slate.
+- src/components/DiscoveryPreferencesPanel.tsx renders optional V3 controls; does not contain matching logic.
+- src/components/FilterPanel.tsx renders controls only; does not duplicate filtering rules.
+- src/hooks/useFavorites.ts stores only favorite movie IDs under movieMoodFavorites.
+- src/components/MovieGrid.tsx and src/components/MovieCard.tsx reused for recommendations, similar results, My List.
+
+## V4 Architecture Notes
+- src/App.tsx owns active DecisionState and resets it whenever upstream mood, situation, filter, discovery preference, view, or slate offset changes.
+- src/components/DecisionMode.tsx renders three-slate comparison, duel, coin gut check, Tonight's Pick ticket.
+- src/utils/decision.ts keeps decision cues deterministic and context-aware without adding numerical recommendation score.
+- src/utils/urlCodec.ts serializes V4 decision URLs and validates decoded mood, situation, filters, discovery preferences, movie IDs against local dataset.
+- While Decision Mode active, App keeps browser URL synchronized with current decision state. Valid V4 URLs restore preference context and decision phase on load; malformed or stale URLs fall back to normal start state.
+- Tonight's Pick uses native Web Share API when available and copies share URL to clipboard as fallback.
+
+## V5 Architecture Notes
+- src/data/curatedMovies.ts owns Movie Mood meaning: local IDs, moods, situations, viewing/filter languages, experience fields, editorial copy, fallback poster palettes.
+- src/data/generated/tmdbMovies.json is committed TMDB factual snapshot: title, year, director, countries, spoken languages, genres, runtime, poster path.
+- src/data/movies.ts resolves those layers into existing Movie[] import surface so app components keep using stable Movie Mood IDs.
+- src/components/MoviePoster.tsx centralizes TMDB poster URL usage and falls back to CSS title poster when posterPath missing or image fails to load.
+- Runtime TMDB data API calls not made by browser. Browser may load poster images from TMDB's image CDN.
+- This product uses TMDB API but is not endorsed or certified by TMDB.
+
+## V5.1 Architecture Notes
+- scripts/curateCore.mjs holds pure, testable Curation Assistant logic: local-ID suggestion, duplicate detection, candidate normalization, scaffold generation, orchestration with injected side effects.
+- scripts/curateAdd.mjs is pnpm curate:add CLI wrapper. Performs network search and interactive selection, then writes curation draft to docs/curation-drafts/.
+- Curation assistant does not decide Movie Mood editorial meaning. All taste, mood, editorial fields are TODO placeholders for maintainer to fill in.
+- Curation assistant never writes to src/data/generated/tmdbMovies.json. pnpm sync:tmdb remains only normal producer of TMDB factual snapshot.
+- src/utils/watchLinks.ts centralizes all external "Find where to watch" lookup URLs (general web search, TMDB web page, Letterboxd, JustWatch).
+- src/components/WatchAction.tsx renders Tonight's Action links. Appears on Tonight's Pick ticket and Movie Details.
+- Poster loading now reserves 2/3 aspect ratio before images load (layout stability), fades images in on load, keeps CSS title-poster fallback consistent on error.
+
+## V5.1 — Adding Movies Safely (Curation Assistant)
+pnpm curate:add "<movie title>" helps maintainer add new curated movie by reducing manual TMDB lookup and schema-copying work. Searches TMDB for given title, shows candidate matches in terminal, requires explicit maintainer selection — never auto-selects first result.
+
+After candidate selected, assistant writes scaffold draft to docs/curation-drafts/<movie-id>.md with all CuratedMovie fields included as TODO placeholders. Maintainer then fills in Movie Mood meaning, adds entry to src/data/curatedMovies.ts, adds mapping to src/data/tmdbMovieMappings.json, runs pnpm sync:tmdb with TMDB_READ_ACCESS_TOKEN available to refresh generated facts.
+
+pnpm curate:add "Perfect Blue"
+
+Command requires TMDB_READ_ACCESS_TOKEN only for search step. Fails clearly and safely without modifying any project files if token missing, query empty, no candidates found, or selection cancelled.
+
+Movie Mood meaning remains human-authored. Assistant does not guess moods, situations, pace, emotional weight, attention demand, discovery style, whyWatch, curiosityHook, vibeSummary, or filterLanguages.
+
+## V5.1 — Tonight's Action
+After Tonight's Pick, Movie Mood offers "Find where to watch" action with deterministic outbound links. These are external lookups, not verified streaming availability — app does not claim regional availability, provider logos, or real-time status.
+
+## TMDB Snapshot Maintenance
+pnpm sync:tmdb is maintainer-only command that refreshes committed TMDB snapshot from exact mapped TMDB IDs.
+
+TMDB_READ_ACCESS_TOKEN=... pnpm sync:tmdb
+
+Token read only from process environment. Must not be committed, exposed through import.meta.env, or added to GitHub Pages deployment.
+
+Sync command validates complete snapshot before replacing it. Missing tokens, hard API/data failures, exhausted transient retries, duplicate mappings, one-to-one merge failures stop command without partially updating snapshot. Behavior-impacting runtime and genre changes are reported for review.
+
+## Adding Movies and Filters
+To add movie, update src/data/curatedMovies.ts with Movie Mood-owned fields including id, tmdbId, filterLanguages, situations, pace, emotionalWeight, attentionDemand, discoveryStyle, curiosityHook, vibeSummary, palette. Then add exact TMDB mapping and run pnpm sync:tmdb with TMDB_READ_ACCESS_TOKEN available so generated factual data refreshed. Keep IDs stable because favorites stored by ID.
+
+Situation tags curated manually. Use family conservatively for broad family movie-night picks, do not treat as official age rating.
+
+Future filters should be added first to shared types, then to pure filtering utility, and only after that to UI. Keep practical filters strict unless V2 spec explicitly changes fallback rule.
+
+V3 experience labels are editorial categories, not scores. Keep attentionDemand and discoveryStyle categorical and avoid adding numerical recommendation percentages or hidden taste-profile data.
+
+## Learning Notes
+See LEARNING_NOTES.md for beginner-friendly guide to app and deployment.
+
+---
+
+## Codebase Inspection
+
+### Data Layer
+curatedMovies.ts (34 movies): Each has id, tmdbId, moods, situations, filterLanguages, pace, emotionalWeight, attentionDemand, discoveryStyle, description, whyWatch, curiosityHook, vibeSummary, palette.
+
+Sample entries:
+- grand-budapest (tmdbId: 120467) — moods: funny, relaxing; situations: date-night, friends, easy-watch; pace: fast; emotionalWeight: light; attentionDemand: easy; discoveryStyle: familiar
+- paddington-2 (tmdbId: 346648) — moods: funny, relaxing; situations: friends, family, easy-watch; pace: medium; emotionalWeight: light; attentionDemand: easy; discoveryStyle: familiar
+- mad-max (tmdbId: 76341) — moods: exciting; situations: alone, friends; pace: fast; emotionalWeight: heavy; attentionDemand: immersive; discoveryStyle: different
+- rrr (tmdbId: 579974) — moods: exciting, emotional; situations: friends; pace: fast; emotionalWeight: heavy; attentionDemand: immersive; discoveryStyle: adventurous; filterLanguages: Telugu
+- parasite (tmdbId: 496243) — moods: thoughtful, suspenseful; situations: alone, friends; pace: fast; emotionalWeight: heavy; attentionDemand: immersive; discoveryStyle: adventurous; filterLanguages: Korean
+- arrival (tmdbId: 329865) — moods: thoughtful, emotional; situations: alone, date-night; pace: slow; emotionalWeight: moderate; attentionDemand: immersive; discoveryStyle: different
+- children-of-men (tmdbId: 9693) — moods: suspenseful, thoughtful; situations: alone; pace: fast; emotionalWeight: heavy; attentionDemand: immersive; discoveryStyle: different; filterLanguages: English, Spanish
+- one-cut-of-the-dead-2017 (tmdbId: 513434) — moods: funny, exciting, suspenseful; situations: friends; pace: fast; emotionalWeight: moderate; attentionDemand: engaged; discoveryStyle: adventurous; filterLanguages: Japanese
+- the-host-2006 (tmdbId: 1255) — moods: suspenseful, exciting, funny; situations: friends, alone; pace: fast; emotionalWeight: moderate; attentionDemand: engaged; discoveryStyle: different; filterLanguages: Korean
+- a-separation-2011 (tmdbId: 60243) — moods: thoughtful, emotional, suspenseful; situations: alone; pace: medium; emotionalWeight: heavy; attentionDemand: immersive; discoveryStyle: adventurous; filterLanguages: Other / International
+
+tmdbMovies.json (generated snapshot): Contains factual data for all 34 movies keyed by local ID. Example:
+"grand-budapest": {
+  "tmdbId": 120467,
+  "title": "The Grand Budapest Hotel",
+  "year": 2014,
+  "director": "Wes Anderson",
+  "countries": ["Germany", "United States of America"],
+  "spokenLanguages": ["English", "French"],
+  "genres": ["Comedy", "Drama"],
+  "runtimeMinutes": 100,
+  "posterPath": "/eWdyYQreja6JGCzqHWXpWHDrrPo.jpg"
+}
+
+movies.ts (resolution layer):
+import { curatedMovies } from './curatedMovies.js'
+import tmdbMovies from './generated/tmdbMovies.json' with { type: 'json' }
+import type { Movie, MovieFacts } from '../types/movie'
+
+const factsByMovieId: Record<string, MovieFacts> = tmdbMovies
+
+function resolveMovies(): Movie[] {
+  const seenMovieIds = new Set<string>()
+  const seenTmdbIds = new Set<number>()
+
+  return curatedMovies.map((curatedMovie) => {
+    if (seenMovieIds.has(curatedMovie.id)) {
+      throw new Error(`Duplicate curated movie ID: ${curatedMovie.id}`)
+    }
+    if (seenTmdbIds.has(curatedMovie.tmdbId)) {
+      throw new Error(`Duplicate curated TMDB ID: ${curatedMovie.tmdbId}`)
+    }
+    seenMovieIds.add(curatedMovie.id)
+    seenTmdbIds.add(curatedMovie.tmdbId)
+    const facts = factsByMovieId[curatedMovie.id]
+    if (!facts) {
+      throw new Error(`Missing TMDB facts for ${curatedMovie.id}`)
+    }
+    if (facts.tmdbId !== curatedMovie.tmdbId) {
+      throw new Error(`TMDB ID mismatch for ${curatedMovie.id}`)
+    }
+    return {
+      ...curatedMovie,
+      ...facts,
+      languages: curatedMovie.filterLanguages,
+    }
+  })
+}
+
+export const movies: Movie[] = resolveMovies()
+
+### Types
+
+movie.ts:
+export type Mood = 'funny' | 'exciting' | 'thoughtful' | 'relaxing' | 'emotional' | 'suspenseful'
+export type ViewingSituation = 'alone' | 'date-night' | 'friends' | 'family' | 'easy-watch'
+export type Pace = 'slow' | 'medium' | 'fast'
+export type EmotionalWeight = 'light' | 'moderate' | 'heavy'
+export type RuntimeFilter = 'short' | 'medium' | 'long'
+export type AttentionDemand = 'easy' | 'engaged' | 'immersive'
+export type DiscoveryStyle = 'familiar' | 'different' | 'adventurous'
+
+export interface Dealbreakers {
+  avoidHeavy: boolean
+  avoidSlow: boolean
+  underTwoHours: boolean
+}
+
+export interface DiscoveryPreferences {
+  attentionDemand: AttentionDemand | null
+  discoveryStyle: DiscoveryStyle | null
+  dealbreakers: Dealbreakers
+}
+
+export interface MovieFilters {
+  genres: string[]
+  runtime: RuntimeFilter | null
+  language: string | null
+  pace: Pace | null
+  emotionalWeight: EmotionalWeight | null
+}
+
+export interface CuratedMovie {
+  id: string
+  tmdbId: number
+  moods: Mood[]
+  situations: ViewingSituation[]
+  filterLanguages: string[]
+  pace: Pace
+  emotionalWeight: EmotionalWeight
+  attentionDemand: AttentionDemand
+  discoveryStyle: DiscoveryStyle
+  description: string
+  whyWatch: string
+  curiosityHook: string
+  vibeSummary: string
+  palette: [string, string]
+}
+
+export interface MovieFacts {
+  tmdbId: number
+  title: string
+  year: number
+  director: string
+  countries: string[]
+  spokenLanguages: string[]
+  genres: string[]
+  runtimeMinutes: number
+  posterPath: string | null
+}
+
+export interface Movie extends CuratedMovie, MovieFacts {
+  languages: string[]
+}
+
+decision.ts:
+export const V4_SCHEMA_VERSION = 'v4' as const
+export type DecisionModeSchemaVersion = typeof V4_SCHEMA_VERSION
+export type ThreeSlateState = { kind: 'three-slate', movieIds: [string, string, string] }
+export type DuelState = { kind: 'duel', finalistIds: [string, string], sourceThreeSlateIds?: [string, string, string] }
+export type PickState = { kind: 'pick', selectedId: string, sourceDuel?: DuelState, sourceThreeSlateIds?: [string, string, string] }
+export type DecisionState = ThreeSlateState | DuelState | PickState
+export interface DecisionModeState {
+  schemaVersion: DecisionModeSchemaVersion
+  mood: string
+  situation: string | null
+  filters: MovieFilters
+  discoveryPreferences: DiscoveryPreferences
+  decisionState: DecisionState
+}
+// Plus helper functions: isThreeSlateState, isDuelState, isPickState, createThreeSlateState, createDuelState, createPickState, isValidDecisionState, isValidSchemaVersion, isValidMood, isValidSituation
+
+### Utility Functions
+
+filterMovies.ts: Core filtering logic. emptyFilters, matchesRuntime(), matchesPracticalFilters(), matchesMoodAndFilters(), getExactMatches(), getSituationFallbackMatches(), filterMovies() returns FilterResult with exactMatches, fallbackMatches, recommendationPool, usedSituationFallback.
+
+discovery.ts: V3 discovery. emptyDiscoveryPreferences, applyDealbreakers(), getExperienceScore(), rankByExperiencePreferences(), getDiscoveryPool(), countSharedValues(), getSimilarityScore(), getSimilarMovies() (limit 3).
+
+picks.ts: Cycling. PICKS_PER_ROUND = 3, getPicks<T>(recommendationPool, offset, picksPerRound), getNextPickOffset(poolSize, currentOffset, picksPerRound).
+
+decision.ts (V4): whyItFitsTonight() returns string[], getPrioritizedDecisionFactors() returns DiffReason[], compareMoviesForDuel() returns ComparisonResult, updateDuelFinalistSelection(). Uses labels: MOOD_LABELS, SITUATION_LABELS, ATTENTION_LABEL, DISCOVERY_LABEL, PACE_LABEL, EMOTIONAL_LABEL. Decision dimensions: 'attention' | 'emotional weight' | 'style' | 'pace' | 'runtime' | 'genre' | 'mood'.
+
+urlCodec.ts (V4): encodeDecisionState(), decodeDecisionState(), encodeSimpleState(), buildUrlFromState(). Serializes filters (g, r, l, p, e), discovery prefs (a, d, dh, ds, dt), decision state (ts, dl, pk).
+
+tmdbImages.ts: TMDB_IMAGE_BASE_URL = 'https://image.tmdb.org/t/p', POSTER_SIZE = 'w500', TMDB_POSTER_ASPECT_RATIO = 1.5, posterAspectRatio(), getTmdbPosterUrl(posterPath).
+
+watchLinks.ts (V5.1): TMDB_WEB_BASE_URL, buildTmdbWebUrl(tmdbId), buildWhereToWatchSearchUrl(title, year), buildLetterboxdSearchUrl(title), buildJustWatchSearchUrl(title, country), WATCH_LINKS_LABEL = 'Find where to watch'.
+
+### Components
+
+App.tsx: Main page state. Uses selectedMood, selectedSituation, filters, discoveryPreferences, similarToMovieId, decisionState, round, recommendationReveal, view, resultsRef, refinementRef, favoriteIds, toggleFavorite, isFavorite. Derives: genreOptions, languageOptions, filterResult, discoveryPool, picks, favoriteMovies, similarSeedMovie, similarMovies, activeMood, isViewingFavorites, isViewingSimilarMovies, isFullReveal, hasMorePicks, canUseDecisionMode, resultCount, resultCountLabel, activeDealbreakerCount, dealbreakersAreActive, limitedByDealbreakers, resultMessage, shareUrl. Methods: chooseMood(), chooseSituation(), updateFilters(), updateDiscoveryPreferences(), clearDiscoveryPreferences(), clearFilters(), showAnotherThree(), showFavorites(), showRecommendations(), showSimilarMovies(), startDecisionMode(), showRefinementControls(). Renders: Header, hero section, mood section with CategorySelector, results section with view controls, results header, result actions, MovieGrid or DecisionMode or empty states, refinement stack (SituationSelector, DiscoveryPreferencesPanel, FilterPanel), Footer.
+
+MovieCard.tsx: Renders movie cards. Props: movie, index, variant (glimpse|full), isFavorite, onToggleFavorite, onFindSimilar. Glimpse variant shows poster + eyebrow + title + curiosityHook. Full variant shows poster + heading with title + metadata + favorite button + genres + experientialCue + whyWatch + card actions (More like this, More details) + expanded details (MovieDetails).
+
+MoviePoster.tsx: Centralized poster component. Props: movie, className, isDecorative. Uses getTmdbPosterUrl() and posterAspectRatio(). Shows real image if posterUrl available and not failed; otherwise shows PosterFallback (title split, year, symbol ◒, palette-based styling). Handles loading and error states.
+
+MovieDetails.tsx, DecisionMode.tsx, DiscoveryPreferencesPanel.tsx, FilterPanel.tsx, SituationSelector.tsx, CategorySelector.tsx, MovieGrid.tsx, Header.tsx, Footer.tsx, WatchAction.tsx: Various UI components.
+
+Footer.tsx: Contains TMDB attribution with logo SVG and required notice text.
+
+### Scripts
+
+syncTmdb.mjs: Maintainer-time synchronization script. Imports from ../dist-sync/data/curatedMovies.js and ../src/data/tmdbMovieMappings.json. Uses BEHAVIOR_IMPACTING_COMPARISONS, DISPLAY_FIELDS, buildSnapshot, getFieldDifferences, normalizeTmdbMovieResponse, serializeSnapshot from ./tmdbCore.mjs. Flow: getToken(), loop through mappings fetching each movie via fetchMovie() with retry logic (max 3 attempts, exponential backoff, respects Retry-After), normalize responses, build snapshot, serialize, compare with previous snapshot, write atomically via temp file + rename, print behavior-impact and display differences. Handles 401/403/404 as hard failures, 429/5xx as transient with retries.
+
+### Package.json
+{
+  "name": "movie-mood",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "packageManager": "pnpm@11.19.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "sync:tmdb": "tsc -p tsconfig.sync.json && node scripts/syncTmdb.mjs",
+    "curate:add": "node scripts/curateAdd.mjs",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "latest",
+    "vite": "latest",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "typescript": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "vitest": "latest"
+  }
+}
+
+### Test Results (current)
+Test Files  10 passed (10)
+Tests       123 passed (123)
+Duration    217ms
+
+### Git History (recent)
+9222d05 Polish V5.2 release candidate interactions
+3fccff6 Implement V5.2 progressive reveal flow
+6f63915 Add Antigravity project policy
+de7e634 Document catalogue curation workflow
+3fff899 Add One Cut of the Dead catalogue trial entry
+
+---
+
+That's the full research dump. 123 tests passing, build passing, 34 curated movies with TMDB integration, V5 data separation complete, V4 Decision Mode complete, V5.2 work in progress.
