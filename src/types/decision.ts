@@ -1,18 +1,59 @@
-import type { DiscoveryPreferences, Mood, MovieFilters, ViewingSituation } from './movie'
+import type {
+  AttentionDemand,
+  DiscoveryPreferences,
+  EmotionalWeight,
+  Mood,
+  MovieFilters,
+  Pace,
+  RuntimeFilter,
+  ViewingSituation,
+} from './movie'
 
 export const V4_SCHEMA_VERSION = 'v4' as const
+export const V6_SCHEMA_VERSION = 'v6' as const
 
-export type DecisionModeSchemaVersion = typeof V4_SCHEMA_VERSION
+export type DecisionModeSchemaVersion = typeof V4_SCHEMA_VERSION | typeof V6_SCHEMA_VERSION
+
+export type AdaptiveDecisionDimension = 'attentionDemand' | 'pace' | 'emotionalWeight' | 'runtime'
+
+export type AdaptiveDecisionValue = AttentionDemand | Pace | EmotionalWeight | RuntimeFilter
+
+export type AdaptiveDecisionOption = {
+  id: string
+  label: string
+  keepMovieIds: [string, string]
+  eliminatedMovieId: string
+}
+
+export type AdaptiveDecisionQuestion = {
+  dimension: AdaptiveDecisionDimension
+  prompt: string
+  options: [AdaptiveDecisionOption, AdaptiveDecisionOption]
+}
+
+export type AdaptiveDecisionReduction =
+  | {
+    kind: 'adaptive-answer'
+    dimension: AdaptiveDecisionDimension
+    selectedOptionId: string
+    eliminatedMovieId: string
+  }
+  | {
+    kind: 'manual-drop'
+    droppedMovieId: string
+  }
 
 export type ThreeSlateState = {
   kind: 'three-slate'
   movieIds: [string, string, string]
+  manuallyDroppedMovieId?: string
 }
 
 export type DuelState = {
   kind: 'duel'
   finalistIds: [string, string]
   sourceThreeSlateIds?: [string, string, string]
+  reduction?: AdaptiveDecisionReduction
 }
 
 export type PickState = {
@@ -79,12 +120,28 @@ export function isValidDecisionState(state: DecisionState): boolean {
       return (
         typeof state.movieIds[0] === 'string' &&
         typeof state.movieIds[1] === 'string' &&
-        typeof state.movieIds[2] === 'string'
+        typeof state.movieIds[2] === 'string' &&
+        (
+          state.manuallyDroppedMovieId === undefined ||
+          state.movieIds.includes(state.manuallyDroppedMovieId)
+        )
       )
     case 'duel':
       return (
         typeof state.finalistIds[0] === 'string' &&
-        typeof state.finalistIds[1] === 'string'
+        typeof state.finalistIds[1] === 'string' &&
+        (
+          state.reduction === undefined ||
+          (
+            state.reduction.kind === 'adaptive-answer' &&
+            typeof state.reduction.eliminatedMovieId === 'string' &&
+            typeof state.reduction.selectedOptionId === 'string'
+          ) ||
+          (
+            state.reduction.kind === 'manual-drop' &&
+            typeof state.reduction.droppedMovieId === 'string'
+          )
+        )
       )
     case 'pick':
       return typeof state.selectedId === 'string'
@@ -94,7 +151,7 @@ export function isValidDecisionState(state: DecisionState): boolean {
 }
 
 export function isValidSchemaVersion(version: string): version is DecisionModeSchemaVersion {
-  return version === V4_SCHEMA_VERSION
+  return version === V4_SCHEMA_VERSION || version === V6_SCHEMA_VERSION
 }
 
 export function isValidMood(value: string): value is Mood {

@@ -3,6 +3,7 @@ import type { Movie } from '../types/movie'
 import {
   whyItFitsTonight,
   compareMoviesForDuel,
+  getAdaptiveDecisionQuestion,
   getPrioritizedDecisionFactors,
   updateDuelFinalistSelection,
 } from './decision'
@@ -40,6 +41,151 @@ function makeMovie(overrides: Partial<Movie> = {}): Movie {
     id: overrides.id || `movie-${Math.random().toString(36).substr(2, 5)}`,
   }
 }
+
+const noAdaptiveContext = {
+  mood: 'funny' as const,
+  filters: {
+    genres: [],
+    runtime: null,
+    language: null,
+    pace: null,
+    emotionalWeight: null,
+  },
+  discoveryPreferences: {
+    attentionDemand: null,
+    discoveryStyle: null,
+    dealbreakers: {
+      avoidHeavy: false,
+      avoidSlow: false,
+      underTwoHours: false,
+    },
+  },
+}
+
+describe('getAdaptiveDecisionQuestion', () => {
+  it('returns null unless exactly three movies are supplied', () => {
+    const first = makeMovie({ id: 'first' })
+    const second = makeMovie({ id: 'second' })
+
+    expect(getAdaptiveDecisionQuestion([first, second], noAdaptiveContext)).toBeNull()
+  })
+
+  it('returns a clean 2:1 attention question with transparent finalist options', () => {
+    const first = makeMovie({ id: 'first', title: 'First', attentionDemand: 'easy' })
+    const second = makeMovie({ id: 'second', title: 'Second', attentionDemand: 'easy' })
+    const third = makeMovie({ id: 'third', title: 'Third', attentionDemand: 'immersive' })
+
+    const question = getAdaptiveDecisionQuestion([first, second, third], noAdaptiveContext)
+
+    expect(question?.dimension).toBe('attentionDemand')
+    expect(question?.options[0]).toEqual(expect.objectContaining({
+      id: 'majority',
+      keepMovieIds: ['first', 'second'],
+      eliminatedMovieId: 'third',
+    }))
+    expect(question?.options[1]).toEqual(expect.objectContaining({
+      id: 'outlier',
+      keepMovieIds: ['third', 'first'],
+      eliminatedMovieId: 'second',
+    }))
+  })
+
+  it('returns null for uniform and three-way slates', () => {
+    const uniform = [
+      makeMovie({ id: 'first', attentionDemand: 'easy', pace: 'medium', emotionalWeight: 'light', runtimeMinutes: 105 }),
+      makeMovie({ id: 'second', attentionDemand: 'easy', pace: 'medium', emotionalWeight: 'light', runtimeMinutes: 110 }),
+      makeMovie({ id: 'third', attentionDemand: 'easy', pace: 'medium', emotionalWeight: 'light', runtimeMinutes: 115 }),
+    ]
+    const threeWay = [
+      makeMovie({ id: 'first', attentionDemand: 'easy', pace: 'medium', emotionalWeight: 'light', runtimeMinutes: 105 }),
+      makeMovie({ id: 'second', attentionDemand: 'engaged', pace: 'medium', emotionalWeight: 'light', runtimeMinutes: 110 }),
+      makeMovie({ id: 'third', attentionDemand: 'immersive', pace: 'medium', emotionalWeight: 'light', runtimeMinutes: 115 }),
+    ]
+
+    expect(getAdaptiveDecisionQuestion(uniform, noAdaptiveContext)).toBeNull()
+    expect(getAdaptiveDecisionQuestion(threeWay, noAdaptiveContext)).toBeNull()
+  })
+
+  it('uses priority only after context-redundant dimensions are removed', () => {
+    const slate = [
+      makeMovie({ id: 'first', attentionDemand: 'easy', pace: 'fast' }),
+      makeMovie({ id: 'second', attentionDemand: 'easy', pace: 'medium' }),
+      makeMovie({ id: 'third', attentionDemand: 'immersive', pace: 'medium' }),
+    ]
+
+    expect(getAdaptiveDecisionQuestion(slate, noAdaptiveContext)?.dimension).toBe('attentionDemand')
+    expect(getAdaptiveDecisionQuestion(slate, {
+      ...noAdaptiveContext,
+      discoveryPreferences: {
+        ...noAdaptiveContext.discoveryPreferences,
+        attentionDemand: 'easy',
+      },
+    })?.dimension).toBe('pace')
+  })
+
+  it('removes explicitly constrained dimensions before asking', () => {
+    const slate = [
+      makeMovie({ id: 'first', pace: 'fast', emotionalWeight: 'light' }),
+      makeMovie({ id: 'second', pace: 'medium', emotionalWeight: 'moderate' }),
+      makeMovie({ id: 'third', pace: 'medium', emotionalWeight: 'moderate' }),
+    ]
+
+    expect(getAdaptiveDecisionQuestion(slate, {
+      ...noAdaptiveContext,
+      filters: {
+        ...noAdaptiveContext.filters,
+        pace: 'medium',
+      },
+    })?.dimension).toBe('emotionalWeight')
+  })
+
+  it('treats dealbreakers as redundant only when they resolve the proposed split', () => {
+    const underTwoHourRuntimeSplit = [
+      makeMovie({ id: 'first', runtimeMinutes: 95 }),
+      makeMovie({ id: 'second', runtimeMinutes: 110 }),
+      makeMovie({ id: 'third', runtimeMinutes: 115 }),
+    ]
+    const crossesTwoHourBoundary = [
+      makeMovie({ id: 'first', runtimeMinutes: 95 }),
+      makeMovie({ id: 'second', runtimeMinutes: 124 }),
+      makeMovie({ id: 'third', runtimeMinutes: 126 }),
+    ]
+    const context = {
+      ...noAdaptiveContext,
+      discoveryPreferences: {
+        ...noAdaptiveContext.discoveryPreferences,
+        dealbreakers: {
+          avoidHeavy: false,
+          avoidSlow: false,
+          underTwoHours: true,
+        },
+      },
+    }
+
+    expect(getAdaptiveDecisionQuestion(underTwoHourRuntimeSplit, context)?.dimension).toBe('runtime')
+    expect(getAdaptiveDecisionQuestion(crossesTwoHourBoundary, context)).toBeNull()
+  })
+
+  it('returns null when context removes the only clean split', () => {
+    const slate = [
+      makeMovie({ id: 'first', emotionalWeight: 'heavy' }),
+      makeMovie({ id: 'second', emotionalWeight: 'moderate' }),
+      makeMovie({ id: 'third', emotionalWeight: 'moderate' }),
+    ]
+
+    expect(getAdaptiveDecisionQuestion(slate, {
+      ...noAdaptiveContext,
+      discoveryPreferences: {
+        ...noAdaptiveContext.discoveryPreferences,
+        dealbreakers: {
+          avoidHeavy: true,
+          avoidSlow: false,
+          underTwoHours: false,
+        },
+      },
+    })).toBeNull()
+  })
+})
 
 describe('whyItFitsTonight', () => {
   it('returns reasons for mood match', () => {

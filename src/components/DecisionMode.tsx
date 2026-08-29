@@ -3,6 +3,7 @@ import type { DecisionState, DuelState } from '../types/decision'
 import type { DiscoveryPreferences, Mood, Movie, MovieFilters, ViewingSituation } from '../types/movie'
 import {
   compareMoviesForDuel,
+  getAdaptiveDecisionQuestion,
   getPrioritizedDecisionFactors,
   whyItFitsTonight,
 } from '../utils/decision'
@@ -117,7 +118,6 @@ export function DecisionMode({
   onChange,
   onExit,
 }: DecisionModeProps) {
-  const [droppedMovieId, setDroppedMovieId] = useState<string | null>(null)
   const [coinFlipWinnerId, setCoinFlipWinnerId] = useState<string | null>(null)
   const [shareMessage, setShareMessage] = useState('')
   const allMoviesById = useMemo(() => new Map(movies.map((movie) => [movie.id, movie])), [movies])
@@ -170,11 +170,17 @@ export function DecisionMode({
 
   if (state.kind === 'three-slate') {
     const slateMovies = getMovieList(movies, state.movieIds)
+    const droppedMovieId = state.manuallyDroppedMovieId ?? null
 
     if (slateMovies.length !== 3) {
       return null
     }
 
+    const adaptiveQuestion = getAdaptiveDecisionQuestion(slateMovies, {
+      mood,
+      filters,
+      discoveryPreferences,
+    })
     const finalistIds = slateMovies
       .filter((movie) => movie.id !== droppedMovieId)
       .map((movie) => movie.id)
@@ -203,11 +209,49 @@ export function DecisionMode({
                 discoveryPreferences,
               )}
               isSelected={droppedMovieId === movie.id}
-              onDrop={() => setDroppedMovieId((currentId) => currentId === movie.id ? null : movie.id)}
+              onDrop={() => {
+                onChange({
+                  ...state,
+                  manuallyDroppedMovieId: droppedMovieId === movie.id ? undefined : movie.id,
+                })
+              }}
               onChoose={() => chooseMovie(movie.id, state.movieIds)}
             />
           ))}
         </div>
+        {adaptiveQuestion && (
+          <div className="adaptive-decision-panel" aria-labelledby="adaptive-decision-heading">
+            <div>
+              <p className="eyebrow">Decision companion</p>
+              <h4 id="adaptive-decision-heading">{adaptiveQuestion.prompt}</h4>
+            </div>
+            <div className="adaptive-option-grid">
+              {adaptiveQuestion.options.map((option) => (
+                <button
+                  key={option.id}
+                  type="button"
+                  className="adaptive-option"
+                  onClick={() => {
+                    setCoinFlipWinnerId(null)
+                    onChange({
+                      kind: 'duel',
+                      finalistIds: option.keepMovieIds,
+                      sourceThreeSlateIds: state.movieIds,
+                      reduction: {
+                        kind: 'adaptive-answer',
+                        dimension: adaptiveQuestion.dimension,
+                        selectedOptionId: option.id,
+                        eliminatedMovieId: option.eliminatedMovieId,
+                      },
+                    })
+                  }}
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
         <div className="duel-builder">
           <p>
             {droppedMovieId
@@ -225,6 +269,9 @@ export function DecisionMode({
                 kind: 'duel',
                 finalistIds: [finalistIds[0], finalistIds[1]],
                 sourceThreeSlateIds: state.movieIds,
+                reduction: droppedMovieId
+                  ? { kind: 'manual-drop', droppedMovieId }
+                  : undefined,
               })
             }}
           >
@@ -262,7 +309,6 @@ export function DecisionMode({
               className="another-button"
               onClick={() => {
                 setCoinFlipWinnerId(null)
-                setDroppedMovieId(null)
                 onChange({ kind: 'three-slate', movieIds: state.sourceThreeSlateIds! })
               }}
             >
@@ -359,10 +405,8 @@ export function DecisionMode({
               onClick={() => {
                 setCoinFlipWinnerId(null)
                 if (state.sourceDuel) {
-                  setDroppedMovieId(null)
                   onChange(state.sourceDuel)
                 } else if (state.sourceThreeSlateIds) {
-                  setDroppedMovieId(null)
                   onChange({ kind: 'three-slate', movieIds: state.sourceThreeSlateIds })
                 } else {
                   onExit()

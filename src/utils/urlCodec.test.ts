@@ -80,6 +80,64 @@ describe('urlCodec', () => {
       expect(decoded).toEqual(original)
     })
 
+    it('round-trips a V6 three-slate with a manual drop in progress', () => {
+      const original: DecisionModeState = {
+        ...createDecisionModeState({
+          kind: 'three-slate',
+          movieIds: threeMovieIds,
+          manuallyDroppedMovieId: 'paddington-2',
+        }),
+        schemaVersion: 'v6',
+      }
+      const decoded = decodeDecisionState(encodeDecisionState(original))
+
+      expect(decoded).toEqual(original)
+    })
+
+    it('round-trips a V6 duel created from an adaptive answer', () => {
+      const original: DecisionModeState = {
+        ...createDecisionModeState({
+          kind: 'duel',
+          finalistIds: duelMovieIds,
+          sourceThreeSlateIds: threeMovieIds,
+          reduction: {
+            kind: 'adaptive-answer',
+            dimension: 'attentionDemand',
+            selectedOptionId: 'majority',
+            eliminatedMovieId: 'paddington-2',
+          },
+        }),
+        schemaVersion: 'v6',
+      }
+      const decoded = decodeDecisionState(encodeDecisionState(original))
+
+      expect(decoded).toEqual(original)
+    })
+
+    it('round-trips a V6 pick with source adaptive duel context', () => {
+      const original: DecisionModeState = {
+        ...createDecisionModeState({
+          kind: 'pick',
+          selectedId: 'knives-out',
+          sourceDuel: {
+            kind: 'duel',
+            finalistIds: duelMovieIds,
+            sourceThreeSlateIds: threeMovieIds,
+            reduction: {
+              kind: 'adaptive-answer',
+              dimension: 'pace',
+              selectedOptionId: 'outlier',
+              eliminatedMovieId: 'paddington-2',
+            },
+          },
+        }),
+        schemaVersion: 'v6',
+      }
+      const decoded = decodeDecisionState(encodeDecisionState(original))
+
+      expect(decoded).toEqual(original)
+    })
+
     it('encodes a simple state with default context', () => {
       const decoded = decodeDecisionState(encodeSimpleState('funny', {
         kind: 'three-slate',
@@ -109,6 +167,39 @@ describe('urlCodec', () => {
         decisionState: {
           kind: 'three-slate',
           movieIds: threeMovieIds,
+        },
+      })
+    })
+
+    it('still decodes existing V4 decision URLs', () => {
+      const decoded = decodeDecisionState(
+        'mode=decision&v=v4&m=funny&s=&f=&d=&ds=dl%3Agrand-budapest%3Bknives-out%3Bgrand-budapest%3Bpaddington-2%3Bknives-out',
+      )
+
+      expect(decoded).toEqual({
+        schemaVersion: 'v4',
+        mood: 'funny',
+        situation: null,
+        filters: {
+          genres: [],
+          runtime: null,
+          language: null,
+          pace: null,
+          emotionalWeight: null,
+        },
+        discoveryPreferences: {
+          attentionDemand: null,
+          discoveryStyle: null,
+          dealbreakers: {
+            avoidHeavy: false,
+            avoidSlow: false,
+            underTwoHours: false,
+          },
+        },
+        decisionState: {
+          kind: 'duel',
+          finalistIds: duelMovieIds,
+          sourceThreeSlateIds: threeMovieIds,
         },
       })
     })

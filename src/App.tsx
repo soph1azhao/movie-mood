@@ -108,7 +108,7 @@ function App() {
     if (!selectedMood || !decisionState) return ''
 
     return `${window.location.origin}${window.location.pathname}?${encodeDecisionState({
-      schemaVersion: 'v4',
+      schemaVersion: 'v6',
       mood: selectedMood,
       situation: selectedSituation,
       filters,

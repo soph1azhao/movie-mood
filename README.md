@@ -17,8 +17,8 @@ Run the site locally and add a screenshot here whenever you’re ready.
 - Optional V3 discovery controls for attention demand, comfort-zone distance, and strict “Not tonight” boundaries.
 - Practical filters for genre, runtime, language, pace, and emotional weight.
 - Three focused recommendations at a time, with “Another three” cycling through the current eligible pool.
-- V4 Decision Mode with three-film comparison cues, two-finalist duels, a coin-flip gut check, and a final Tonight’s Pick ticket.
-- Shareable V4 decision URLs that can restore the active preference context, Decision Mode slate, duel, or Tonight’s Pick.
+- V6 Decision Mode with an adaptive one-question companion when the current three-film slate supports a useful distinction, plus silent manual drop when it does not.
+- Shareable V6 decision URLs that can restore the active preference context, Decision Mode slate, manual drop, adaptive answer, duel, or Tonight’s Pick.
 - “More like this” mode for exploring up to three related films from the local curated dataset.
 - Expandable movie details with runtime, countries, viewing languages, TMDB spoken languages, moods, situations, pace, emotional weight, attention demand, discovery style, and recommendation notes.
 - Browser-local favorites stored as movie IDs in `localStorage`, plus a reusable My List view.
@@ -120,6 +120,13 @@ src/
 - `src/utils/urlCodec.ts` serializes V4 decision URLs and validates decoded mood, situation, filters, discovery preferences, and movie IDs against the local dataset.
 - While Decision Mode is active, `App` keeps the browser URL synchronized with the current decision state. Valid V4 URLs restore the preference context and decision phase on load; malformed or stale URLs fall back to the normal start state.
 - Tonight’s Pick uses the native Web Share API when available and copies the share URL to the clipboard as a fallback.
+
+## V6 Architecture Notes
+
+- `src/utils/decision.ts` now derives one adaptive Help Me Choose question from clean 2:1 splits across attention demand, pace, emotional weight, and runtime category.
+- Context-redundant dimensions are removed before the explicit priority tiebreaker is used; no numerical score or hidden taste profile is introduced.
+- `src/components/DecisionMode.tsx` renders the adaptive companion only inside the three-film Help Me Choose state. No-question contexts stay silent and keep the manual drop path.
+- `src/utils/urlCodec.ts` emits V6 decision URLs for new decisions while preserving V4 URL decoding for older shared links.
 
 ## V5 Architecture Notes
 

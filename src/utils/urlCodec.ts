@@ -10,7 +10,13 @@ import type {
   RuntimeFilter,
   ViewingSituation,
 } from '../types/movie'
-import type { DecisionModeState, DecisionState, DuelState } from '../types/decision'
+import type {
+  AdaptiveDecisionDimension,
+  AdaptiveDecisionReduction,
+  DecisionModeState,
+  DecisionState,
+  DuelState,
+} from '../types/decision'
 
 const VALID_MOVIE_IDS = new Set(movies.map((m) => m.id))
 const VALID_MOODS = ['funny', 'exciting', 'thoughtful', 'relaxing', 'emotional', 'suspenseful'] as const satisfies readonly Mood[]
@@ -20,6 +26,7 @@ const VALID_PACES = ['slow', 'medium', 'fast'] as const satisfies readonly Pace[
 const VALID_EMOTIONAL_WEIGHTS = ['light', 'moderate', 'heavy'] as const satisfies readonly EmotionalWeight[]
 const VALID_ATTENTION_DEMANDS = ['easy', 'engaged', 'immersive'] as const satisfies readonly AttentionDemand[]
 const VALID_DISCOVERY_STYLES = ['familiar', 'different', 'adventurous'] as const satisfies readonly DiscoveryStyle[]
+const VALID_ADAPTIVE_DIMENSIONS = ['attentionDemand', 'pace', 'emotionalWeight', 'runtime'] as const satisfies readonly AdaptiveDecisionDimension[]
 
 type ValidMood = (typeof VALID_MOODS)[number]
 
@@ -161,15 +168,52 @@ function toThreeSlateIds(ids: string[]): [string, string, string] | null {
   return slateIds.every(isValidMovieId) ? slateIds : null
 }
 
+function serializeReduction(reduction: AdaptiveDecisionReduction): string {
+  if (reduction.kind === 'adaptive-answer') {
+    return `ad;${reduction.dimension};${reduction.selectedOptionId};${reduction.eliminatedMovieId}`
+  }
+
+  return `md;${reduction.droppedMovieId}`
+}
+
+function deserializeReduction(parts: string[]): AdaptiveDecisionReduction | null {
+  if (parts[0] === 'ad' && parts.length === 4) {
+    const [, dimension, selectedOptionId, eliminatedMovieId] = parts
+    if (!isOneOf(dimension, VALID_ADAPTIVE_DIMENSIONS)) return null
+    if (!selectedOptionId || !isValidMovieId(eliminatedMovieId)) return null
+
+    return {
+      kind: 'adaptive-answer',
+      dimension,
+      selectedOptionId,
+      eliminatedMovieId,
+    }
+  }
+
+  if (parts[0] === 'md' && parts.length === 2) {
+    const [, droppedMovieId] = parts
+    return isValidMovieId(droppedMovieId) ? { kind: 'manual-drop', droppedMovieId } : null
+  }
+
+  return null
+}
+
 function serializeDuelState(state: DuelState): string {
-  const sourceIds = state.sourceThreeSlateIds ? `;${serializeThreeSlateIds(state.sourceThreeSlateIds)}` : ''
-  return `dl:${state.finalistIds.join(';')}${sourceIds}`
+  if (!state.reduction) {
+    const sourceIds = state.sourceThreeSlateIds ? `;${serializeThreeSlateIds(state.sourceThreeSlateIds)}` : ''
+    return `dl:${state.finalistIds.join(';')}${sourceIds}`
+  }
+
+  const sourceIds = state.sourceThreeSlateIds ? `;src;${serializeThreeSlateIds(state.sourceThreeSlateIds)}` : ''
+  return `dl:${state.finalistIds.join(';')}${sourceIds};${serializeReduction(state.reduction)}`
 }
 
 function serializeDecisionState(state: DecisionState): string {
   switch (state.kind) {
     case 'three-slate':
-      return `ts:${serializeThreeSlateIds(state.movieIds)}`
+      return state.manuallyDroppedMovieId
+        ? `ts:${serializeThreeSlateIds(state.movieIds)};md;${state.manuallyDroppedMovieId}`
+        : `ts:${serializeThreeSlateIds(state.movieIds)}`
     case 'duel':
       return serializeDuelState(state)
     case 'pick': {
@@ -199,18 +243,49 @@ function deserializeDecisionState(str: string | null): DecisionState | null {
 
   switch (kind) {
     case 'ts': {
-      const movieIds = toThreeSlateIds(remainder.split(';'))
-      return movieIds ? { kind: 'three-slate', movieIds } : null
+      const ids = remainder.split(';')
+      if (ids.length !== 3 && ids.length !== 5) {
+        return null
+      }
+
+      const movieIds = toThreeSlateIds(ids.slice(0, 3))
+      if (!movieIds) {
+        return null
+      }
+
+      if (ids.length === 5) {
+        const reduction = deserializeReduction(ids.slice(3))
+        if (!reduction || reduction.kind !== 'manual-drop') return null
+        if (!movieIds.includes(reduction.droppedMovieId)) return null
+        return { kind: 'three-slate', movieIds, manuallyDroppedMovieId: reduction.droppedMovieId }
+      }
+
+      return { kind: 'three-slate', movieIds }
     }
     case 'dl': {
       const ids = remainder.split(';')
-      if (ids.length !== 2 && ids.length !== 5) {
+      if (ids.length !== 2 && ids.length !== 5 && ids.length !== 6 && ids.length !== 10) {
         return null
       }
       const finalistIds: [string, string] = [ids[0], ids[1]]
       if (!finalistIds.every(isValidMovieId)) {
         return null
       }
+
+      if (ids.length === 6) {
+        const reduction = deserializeReduction(ids.slice(2))
+        return reduction ? { kind: 'duel', finalistIds, reduction } : null
+      }
+
+      if (ids.length === 10) {
+        if (ids[2] !== 'src') return null
+        const sourceThreeSlateIds = toThreeSlateIds(ids.slice(3, 6))
+        const reduction = deserializeReduction(ids.slice(6))
+        return sourceThreeSlateIds && reduction
+          ? { kind: 'duel', finalistIds, sourceThreeSlateIds, reduction }
+          : null
+      }
+
       const sourceThreeSlateIds = ids.length === 5 ? toThreeSlateIds(ids.slice(2)) : null
       if (ids.length === 5 && !sourceThreeSlateIds) return null
       return sourceThreeSlateIds
@@ -235,7 +310,7 @@ function deserializeDecisionState(str: string | null): DecisionState | null {
         return sourceThreeSlateIds ? { kind: 'pick', selectedId: ids[0], sourceThreeSlateIds } : null
       }
 
-      if (ids[1] === 'duel' && ids.length === 7) {
+      if (ids[1] === 'duel') {
         const sourceDuel = deserializeDecisionState(ids.slice(2).join(';'))
         if (!sourceDuel || sourceDuel.kind !== 'duel') {
           return null
@@ -306,7 +381,7 @@ export function decodeDecisionState(url: string): DecisionModeState | null {
     }
 
     const version = searchParams.get('v')
-    if (version !== 'v4') {
+    if (version !== 'v4' && version !== 'v6') {
       return null
     }
 
@@ -333,7 +408,7 @@ export function decodeDecisionState(url: string): DecisionModeState | null {
     }
 
     return {
-      schemaVersion: 'v4',
+      schemaVersion: version,
       mood,
       situation,
       filters,
