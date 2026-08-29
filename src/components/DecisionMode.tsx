@@ -7,6 +7,7 @@ import {
   getPrioritizedDecisionFactors,
   whyItFitsTonight,
 } from '../utils/decision'
+import { getFinishTimeLabel } from '../utils/moviePresentation'
 import { MoviePoster } from './MoviePoster'
 import { WatchAction } from './WatchAction'
 
@@ -54,6 +55,7 @@ interface DecisionMovieCardProps {
   eyebrow: string
   cue: string
   isSelected?: boolean
+  showFinishTime?: boolean
   onDrop?: () => void
   onChoose: () => void
 }
@@ -63,16 +65,20 @@ function DecisionMovieCard({
   eyebrow,
   cue,
   isSelected = false,
+  showFinishTime = false,
   onDrop,
   onChoose,
 }: DecisionMovieCardProps) {
+  const metaLine = showFinishTime
+    ? `${movie.runtimeMinutes} min · ${getFinishTimeLabel(movie.runtimeMinutes)} · ${movie.genres.slice(0, 2).join(' · ')}`
+    : `${movie.runtimeMinutes} min · ${movie.genres.slice(0, 2).join(' · ')}`
   return (
     <article className={`decision-card ${isSelected ? 'is-selected' : ''}`}>
       <MoviePoster movie={movie} className="decision-poster" isDecorative />
       <div className="decision-card-body">
         <p className="eyebrow">{eyebrow}</p>
         <h3>{movie.title}</h3>
-        <p className="decision-meta">{movie.runtimeMinutes} min · {movie.genres.slice(0, 2).join(' · ')}</p>
+        <p className="decision-meta">{metaLine}</p>
         <p className="decision-cue">{cue}</p>
         <div className="decision-actions">
           {onDrop && (
@@ -315,6 +321,7 @@ export function DecisionMode({
               movie={movie}
               eyebrow={`Finalist ${index + 1}`}
               cue={differences[index] ?? movie.vibeSummary}
+              showFinishTime
               onChoose={() => chooseMovie(movie.id, state)}
             />
           ))}
@@ -376,7 +383,7 @@ export function DecisionMode({
         <div className="ticket-copy">
           <p className="eyebrow">Tonight’s Pick</p>
           <h3 id="ticket-heading">{selectedMovie.title}</h3>
-          <p className="decision-meta">{selectedMovie.year} · {selectedMovie.director} · {selectedMovie.runtimeMinutes} min</p>
+          <p className="decision-meta">{selectedMovie.year} · {selectedMovie.director} · {selectedMovie.runtimeMinutes} min · {getFinishTimeLabel(selectedMovie.runtimeMinutes)}</p>
           <p className="ticket-summary">{selectedMovie.vibeSummary}</p>
           <div className="why-watch">
             <p className="why-label">Why it fits tonight</p>

@@ -22,6 +22,16 @@ export function formatRuntime(runtimeMinutes: number) {
   return `${runtimeMinutes} min`
 }
 
+export function getFinishTimeLabel(runtimeMinutes: number, now: Date = new Date()): string {
+  const finish = new Date(now.getTime() + runtimeMinutes * 60 * 1000)
+  const hours24 = finish.getHours()
+  const minutes = finish.getMinutes()
+  const period = hours24 < 12 ? 'AM' : 'PM'
+  const hours12 = hours24 % 12 === 0 ? 12 : hours24 % 12
+  const mm = String(minutes).padStart(2, '0')
+  return `Ends around ${hours12}:${mm} ${period}`
+}
+
 export function formatCompactFacts(movie: Movie) {
   return `${movie.year} · ${formatRuntime(movie.runtimeMinutes)}`
 }

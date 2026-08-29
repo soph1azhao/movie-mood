@@ -379,6 +379,7 @@ function App() {
                         onToggleFavorite={toggleFavorite}
                         onFindSimilar={isFullReveal ? showSimilarMovies : undefined}
                         onChooseMovie={isFullReveal ? directPickMovie : undefined}
+                        showFinishTime={isFullReveal}
                       />
                       {!isFullReveal && (
                         <div className="glimpse-bridge">

@@ -5,6 +5,7 @@ import {
   formatGenreSummary,
   getEmotionalWeightDetailLabel,
   getExperientialCue,
+  getFinishTimeLabel,
   getPaceDetailLabel,
 } from './moviePresentation'
 
@@ -60,5 +61,28 @@ describe('movie presentation helpers', () => {
   it('uses human detail labels for pace and emotional weight', () => {
     expect(getPaceDetailLabel('medium')).toBe('Balanced pace')
     expect(getEmotionalWeightDetailLabel('moderate')).toBe('Moderate')
+  })
+})
+describe('getFinishTimeLabel', () => {
+  it('returns same-day finish time for a typical runtime', () => {
+    // 9:00 PM + 116 min = 10:56 PM
+    const now = new Date(2024, 0, 1, 21, 0, 0)
+    expect(getFinishTimeLabel(116, now)).toBe('Ends around 10:56 PM')
+  })
+
+  it('handles after-midnight finish time correctly', () => {
+    // 11:10 PM + 140 min = 1:30 AM
+    const now = new Date(2024, 0, 1, 23, 10, 0)
+    expect(getFinishTimeLabel(140, now)).toBe('Ends around 1:30 AM')
+  })
+
+  it('handles noon boundary correctly (11:00 AM + 90 min = 12:30 PM)', () => {
+    const now = new Date(2024, 0, 1, 11, 0, 0)
+    expect(getFinishTimeLabel(90, now)).toBe('Ends around 12:30 PM')
+  })
+
+  it('handles midnight exactly (11:00 PM + 60 min = 12:00 AM)', () => {
+    const now = new Date(2024, 0, 1, 23, 0, 0)
+    expect(getFinishTimeLabel(60, now)).toBe('Ends around 12:00 AM')
   })
 })

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import type { Movie } from '../types/movie'
-import { formatCompactFacts, formatGenreSummary, getExperientialCue } from '../utils/moviePresentation'
+import { formatCompactFacts, formatGenreSummary, getExperientialCue, getFinishTimeLabel } from '../utils/moviePresentation'
 import { MovieDetails } from './MovieDetails'
 import { MoviePoster } from './MoviePoster'
 
@@ -12,12 +12,16 @@ interface MovieCardProps {
   onToggleFavorite: (movieId: string) => void
   onFindSimilar?: (movieId: string) => void
   onChooseMovie?: (movieId: string) => void
+  showFinishTime?: boolean
 }
 
-export function MovieCard({ movie, index, variant = 'full', isFavorite, onToggleFavorite, onFindSimilar, onChooseMovie }: MovieCardProps) {
+export function MovieCard({ movie, index, variant = 'full', isFavorite, onToggleFavorite, onFindSimilar, onChooseMovie, showFinishTime }: MovieCardProps) {
   const [isDetailsOpen, setIsDetailsOpen] = useState(false)
   const detailsId = `movie-details-${movie.id}`
   const experientialCue = getExperientialCue(movie)
+  const compactFacts = showFinishTime
+    ? `${formatCompactFacts(movie)} · ${getFinishTimeLabel(movie.runtimeMinutes)}`
+    : formatCompactFacts(movie)
 
   if (variant === 'glimpse') {
     return (
@@ -40,7 +44,7 @@ export function MovieCard({ movie, index, variant = 'full', isFavorite, onToggle
           <div>
             <p className="eyebrow">Pick {String(index + 1).padStart(2, '0')}</p>
             <h3>{movie.title}</h3>
-            <p className="metadata">{formatCompactFacts(movie)}</p>
+            <p className="metadata">{compactFacts}</p>
           </div>
           <button
             type="button"
