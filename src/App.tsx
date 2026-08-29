@@ -38,6 +38,7 @@ function App() {
   const [similarToMovieId, setSimilarToMovieId] = useState<string | null>(null)
   const [decisionState, setDecisionState] = useState<DecisionState | null>(restoredDecisionModeState?.decisionState ?? null)
   const [round, setRound] = useState(0)
+  const [previousPickOffset, setPreviousPickOffset] = useState<number | null>(null)
   const [recommendationReveal, setRecommendationReveal] = useState<'glimpse' | 'full'>('glimpse')
   const [view, setView] = useState<'recommendations' | 'favorites'>('recommendations')
   const resultsRef = useRef<HTMLElement>(null)
@@ -135,6 +136,7 @@ function App() {
     setSimilarToMovieId(null)
     setDecisionState(null)
     setRound(0)
+    setPreviousPickOffset(null)
     setRecommendationReveal('glimpse')
     if (isNewMood) {
       window.setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80)
@@ -146,6 +148,7 @@ function App() {
     setSimilarToMovieId(null)
     setDecisionState(null)
     setRound(0)
+    setPreviousPickOffset(null)
     setRecommendationReveal('glimpse')
   }
 
@@ -154,6 +157,7 @@ function App() {
     setSimilarToMovieId(null)
     setDecisionState(null)
     setRound(0)
+    setPreviousPickOffset(null)
     setRecommendationReveal('glimpse')
   }
 
@@ -162,6 +166,7 @@ function App() {
     setSimilarToMovieId(null)
     setDecisionState(null)
     setRound(0)
+    setPreviousPickOffset(null)
     setRecommendationReveal('glimpse')
   }
 
@@ -170,6 +175,7 @@ function App() {
     setSimilarToMovieId(null)
     setDecisionState(null)
     setRound(0)
+    setPreviousPickOffset(null)
     setRecommendationReveal('glimpse')
   }
 
@@ -178,19 +184,28 @@ function App() {
     setSimilarToMovieId(null)
     setDecisionState(null)
     setRound(0)
+    setPreviousPickOffset(null)
     setRecommendationReveal('glimpse')
   }
 
   function showAnotherThree() {
+    setPreviousPickOffset(round)
     setDecisionState(null)
-    setRound((currentOffset) => getNextPickOffset(discoveryPool.length, currentOffset))
+    setRound(getNextPickOffset(discoveryPool.length, round))
     window.setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0)
+  }
+
+  function showPreviousThree() {
+    if (previousPickOffset === null) return
+    setRound(previousPickOffset)
+    setPreviousPickOffset(null)
   }
 
   function showFavorites() {
     setView('favorites')
     setSimilarToMovieId(null)
     setDecisionState(null)
+    setPreviousPickOffset(null)
     setRecommendationReveal('glimpse')
     window.setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0)
   }
@@ -199,6 +214,7 @@ function App() {
     setView('recommendations')
     setSimilarToMovieId(null)
     setDecisionState(null)
+    setPreviousPickOffset(null)
     setRecommendationReveal('glimpse')
   }
 
@@ -206,6 +222,7 @@ function App() {
     setView('recommendations')
     setSimilarToMovieId(movieId)
     setDecisionState(null)
+    setPreviousPickOffset(null)
     setRecommendationReveal('full')
     window.setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0)
   }
@@ -303,6 +320,11 @@ function App() {
                     {canUseDecisionMode && (
                       <button type="button" className="another-button decision-start-button" onClick={startDecisionMode}>
                         Help me choose
+                      </button>
+                    )}
+                    {previousPickOffset !== null && (
+                      <button type="button" className="another-button" onClick={showPreviousThree}>
+                        Previous three
                       </button>
                     )}
                     {hasMorePicks && (
