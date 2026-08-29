@@ -11,9 +11,10 @@ interface MovieCardProps {
   isFavorite: boolean
   onToggleFavorite: (movieId: string) => void
   onFindSimilar?: (movieId: string) => void
+  onChooseMovie?: (movieId: string) => void
 }
 
-export function MovieCard({ movie, index, variant = 'full', isFavorite, onToggleFavorite, onFindSimilar }: MovieCardProps) {
+export function MovieCard({ movie, index, variant = 'full', isFavorite, onToggleFavorite, onFindSimilar, onChooseMovie }: MovieCardProps) {
   const [isDetailsOpen, setIsDetailsOpen] = useState(false)
   const detailsId = `movie-details-${movie.id}`
   const experientialCue = getExperientialCue(movie)
@@ -78,6 +79,15 @@ export function MovieCard({ movie, index, variant = 'full', isFavorite, onToggle
           >
             {isDetailsOpen ? 'Hide details' : 'More details'}
           </button>
+          {onChooseMovie && (
+            <button
+              type="button"
+              className="details-toggle decision-primary"
+              onClick={() => onChooseMovie(movie.id)}
+            >
+              That’s the one
+            </button>
+          )}
         </div>
         <div className={`expanded-details ${isDetailsOpen ? 'is-open' : ''}`} id={detailsId} hidden={!isDetailsOpen}>
           <MovieDetails movie={movie} />

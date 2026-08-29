@@ -223,6 +223,11 @@ function App() {
     refinementRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
+  function directPickMovie(movieId: string) {
+    setDecisionState({ kind: 'pick', selectedId: movieId })
+    window.setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0)
+  }
+
   return (
     <div className="app-shell" id="top">
       <div className="ambient ambient-one" />
@@ -373,6 +378,7 @@ function App() {
                         isFavorite={isFavorite}
                         onToggleFavorite={toggleFavorite}
                         onFindSimilar={isFullReveal ? showSimilarMovies : undefined}
+                        onChooseMovie={isFullReveal ? directPickMovie : undefined}
                       />
                       {!isFullReveal && (
                         <div className="glimpse-bridge">
