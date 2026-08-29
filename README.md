@@ -38,6 +38,10 @@ The V4 implementation plan is documented in [docs/V4_IMPLEMENTATION_SPEC.md](doc
 
 The V5 implementation plan is documented in [docs/V5_IMPLEMENTATION_SPEC.md](docs/V5_IMPLEMENTATION_SPEC.md).
 
+The V6 Adaptive Decision Companion scope is documented in [docs/V6_ADAPTIVE_DECISION_COMPANION_SPEC.md](docs/V6_ADAPTIVE_DECISION_COMPANION_SPEC.md).
+
+The phase-by-phase Codex implementation prompt is documented in [docs/V6_CODEX_IMPLEMENTATION_PROMPT.md](docs/V6_CODEX_IMPLEMENTATION_PROMPT.md).
+
 ## Tech stack
 
 - React
