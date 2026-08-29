@@ -3,7 +3,7 @@ import type { DecisionState, DuelState } from '../types/decision'
 import type { DiscoveryPreferences, Mood, Movie, MovieFilters, ViewingSituation } from '../types/movie'
 import {
   compareMoviesForDuel,
-  getAdaptiveDecisionQuestion,
+  getDecisionCompanionCue,
   getPrioritizedDecisionFactors,
   whyItFitsTonight,
 } from '../utils/decision'
@@ -47,24 +47,6 @@ function getPairDifferences(
   return getPrioritizedDecisionFactors(first, second, { mood, filters, discoveryPreferences })
     .map((difference) => difference.summary)
     .filter((summary): summary is string => Boolean(summary))
-}
-
-function getSlateCue(
-  movie: Movie,
-  others: Movie[],
-  mood: Mood,
-  filters: MovieFilters,
-  discoveryPreferences: DiscoveryPreferences,
-) {
-  const comparison = others
-    .flatMap((other) => compareMoviesForDuel(movie, other, { mood, filters, discoveryPreferences }).differences)
-    .find((difference) => difference.summary)
-
-  if (comparison?.summary) {
-    return comparison.summary
-  }
-
-  return movie.vibeSummary
 }
 
 interface DecisionMovieCardProps {
@@ -176,11 +158,18 @@ export function DecisionMode({
       return null
     }
 
-    const adaptiveQuestion = getAdaptiveDecisionQuestion(slateMovies, {
+    const companionCue = getDecisionCompanionCue(slateMovies, {
       mood,
       filters,
       discoveryPreferences,
     })
+    const companionMovie = companionCue ? getMovieById(movies, companionCue.outlierMovieId) : null
+    const showCompanion = Boolean(
+      companionCue
+      && companionMovie
+      && state.dismissedCompanionOutlierId !== companionCue.outlierMovieId
+      && !droppedMovieId
+    )
     const finalistIds = slateMovies
       .filter((movie) => movie.id !== droppedMovieId)
       .map((movie) => movie.id)
@@ -201,13 +190,7 @@ export function DecisionMode({
               key={movie.id}
               movie={movie}
               eyebrow={`Option ${index + 1}`}
-              cue={getSlateCue(
-                movie,
-                slateMovies.filter((other) => other.id !== movie.id),
-                mood,
-                filters,
-                discoveryPreferences,
-              )}
+              cue={movie.vibeSummary}
               isSelected={droppedMovieId === movie.id}
               onDrop={() => {
                 onChange({
@@ -219,36 +202,45 @@ export function DecisionMode({
             />
           ))}
         </div>
-        {adaptiveQuestion && (
-          <div className="adaptive-decision-panel" aria-labelledby="adaptive-decision-heading">
+        {showCompanion && companionCue && companionMovie && (
+          <div className="decision-companion-panel" aria-labelledby="decision-companion-heading">
             <div>
               <p className="eyebrow">Decision companion</p>
-              <h4 id="adaptive-decision-heading">{adaptiveQuestion.prompt}</h4>
+              <h4 id="decision-companion-heading">{companionMovie.title} stands a little apart.</h4>
+              <p className="decision-companion-observation">{companionCue.observation}</p>
+              <p className="decision-companion-vibe">{companionMovie.vibeSummary}</p>
             </div>
-            <div className="adaptive-option-grid">
-              {adaptiveQuestion.options.map((option) => (
-                <button
-                  key={option.id}
-                  type="button"
-                  className="adaptive-option"
-                  onClick={() => {
-                    setCoinFlipWinnerId(null)
-                    onChange({
-                      kind: 'duel',
-                      finalistIds: option.keepMovieIds,
-                      sourceThreeSlateIds: state.movieIds,
-                      reduction: {
-                        kind: 'adaptive-answer',
-                        dimension: adaptiveQuestion.dimension,
-                        selectedOptionId: option.id,
-                        eliminatedMovieId: option.eliminatedMovieId,
-                      },
-                    })
-                  }}
-                >
-                  {option.label}
-                </button>
-              ))}
+            <div className="decision-companion-actions">
+              <button
+                type="button"
+                className="decision-companion-action"
+                onClick={() => {
+                  setCoinFlipWinnerId(null)
+                  onChange({
+                    kind: 'duel',
+                    finalistIds: companionCue.majorityMovieIds,
+                    sourceThreeSlateIds: state.movieIds,
+                    reduction: {
+                      kind: 'companion-drop',
+                      droppedMovieId: companionCue.outlierMovieId,
+                    },
+                  })
+                }}
+              >
+                Not tonight
+              </button>
+              <button
+                type="button"
+                className="decision-companion-action"
+                onClick={() => {
+                  onChange({
+                    ...state,
+                    dismissedCompanionOutlierId: companionCue.outlierMovieId,
+                  })
+                }}
+              >
+                Keep it in
+              </button>
             </div>
           </div>
         )}

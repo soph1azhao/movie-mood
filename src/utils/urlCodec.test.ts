@@ -94,17 +94,15 @@ describe('urlCodec', () => {
       expect(decoded).toEqual(original)
     })
 
-    it('round-trips a V6 duel created from an adaptive answer', () => {
+    it('round-trips a V6 duel created from a companion drop', () => {
       const original: DecisionModeState = {
         ...createDecisionModeState({
           kind: 'duel',
           finalistIds: duelMovieIds,
           sourceThreeSlateIds: threeMovieIds,
           reduction: {
-            kind: 'adaptive-answer',
-            dimension: 'attentionDemand',
-            selectedOptionId: 'majority',
-            eliminatedMovieId: 'paddington-2',
+            kind: 'companion-drop',
+            droppedMovieId: 'paddington-2',
           },
         }),
         schemaVersion: 'v6',
@@ -114,7 +112,7 @@ describe('urlCodec', () => {
       expect(decoded).toEqual(original)
     })
 
-    it('round-trips a V6 pick with source adaptive duel context', () => {
+    it('round-trips a V6 pick with source companion-drop duel context', () => {
       const original: DecisionModeState = {
         ...createDecisionModeState({
           kind: 'pick',
@@ -124,10 +122,8 @@ describe('urlCodec', () => {
             finalistIds: duelMovieIds,
             sourceThreeSlateIds: threeMovieIds,
             reduction: {
-              kind: 'adaptive-answer',
-              dimension: 'pace',
-              selectedOptionId: 'outlier',
-              eliminatedMovieId: 'paddington-2',
+              kind: 'companion-drop',
+              droppedMovieId: 'paddington-2',
             },
           },
         }),
@@ -136,6 +132,36 @@ describe('urlCodec', () => {
       const decoded = decodeDecisionState(encodeDecisionState(original))
 
       expect(decoded).toEqual(original)
+    })
+
+    it('round-trips a V6 three-slate with a dismissed companion cue', () => {
+      const original: DecisionModeState = {
+        ...createDecisionModeState({
+          kind: 'three-slate',
+          movieIds: threeMovieIds,
+          dismissedCompanionOutlierId: 'paddington-2',
+        }),
+        schemaVersion: 'v6',
+      }
+      const decoded = decodeDecisionState(encodeDecisionState(original))
+
+      expect(decoded).toEqual(original)
+    })
+
+    it('decodes historical adaptive-answer reductions as explicit companion drops', () => {
+      const decoded = decodeDecisionState(
+        'mode=decision&v=v6&m=funny&s=&f=&d=&ds=dl%3Agrand-budapest%3Bknives-out%3Bsrc%3Bgrand-budapest%3Bpaddington-2%3Bknives-out%3Bad%3BattentionDemand%3Bmajority%3Bpaddington-2',
+      )
+
+      expect(decoded?.decisionState).toEqual({
+        kind: 'duel',
+        finalistIds: duelMovieIds,
+        sourceThreeSlateIds: threeMovieIds,
+        reduction: {
+          kind: 'companion-drop',
+          droppedMovieId: 'paddington-2',
+        },
+      })
     })
 
     it('encodes a simple state with default context', () => {

@@ -7,10 +7,8 @@ import type {
   ViewingSituation,
 } from '../types/movie'
 import type {
-  AdaptiveDecisionDimension,
-  AdaptiveDecisionOption,
-  AdaptiveDecisionQuestion,
-  AdaptiveDecisionValue,
+  DecisionCompanionCue,
+  DecisionCompanionDimension,
 } from '../types/decision'
 
 const MOOD_LABELS: Record<string, string> = {
@@ -54,42 +52,11 @@ const EMOTIONAL_LABEL: Record<string, string> = {
   heavy: 'heavier',
 }
 
-const ADAPTIVE_DIMENSION_PRIORITY: AdaptiveDecisionDimension[] = [
+const DECISION_COMPANION_DIMENSIONS: DecisionCompanionDimension[] = [
   'attentionDemand',
-  'pace',
   'emotionalWeight',
-  'runtime',
+  'pace',
 ]
-
-const ADAPTIVE_PROMPTS: Record<AdaptiveDecisionDimension, string> = {
-  attentionDemand: 'What kind of attention do you want to spend tonight?',
-  pace: 'What rhythm sounds better tonight?',
-  emotionalWeight: 'How much emotional weight do you want tonight?',
-  runtime: 'How much time do you want to give this?',
-}
-
-const ADAPTIVE_OPTION_LABELS: Record<AdaptiveDecisionDimension, Record<string, string>> = {
-  attentionDemand: {
-    easy: 'Keep it easygoing',
-    engaged: 'Stay more engaged',
-    immersive: 'Go more immersive',
-  },
-  pace: {
-    slow: 'Take it slower',
-    medium: 'Keep it steady',
-    fast: 'Move faster',
-  },
-  emotionalWeight: {
-    light: 'Keep it lighter',
-    moderate: 'Keep some emotional room',
-    heavy: 'Go heavier',
-  },
-  runtime: {
-    short: 'Keep it shorter',
-    medium: 'Keep it medium length',
-    long: 'Settle in longer',
-  },
-}
 
 interface WhyFitsOptions {
   mood: MoodType
@@ -106,12 +73,12 @@ interface DecisionContext {
   discoveryPreferences?: DiscoveryPreferences
 }
 
-interface CandidateAdaptiveSplit {
-  dimension: AdaptiveDecisionDimension
-  majorityValue: AdaptiveDecisionValue
-  minorityValue: AdaptiveDecisionValue
+interface CandidateDecisionCompanionSplit {
+  dimension: DecisionCompanionDimension
+  majorityValue: string
+  outlierValue: string
   majorityMovies: [Movie, Movie]
-  minorityMovie: Movie
+  outlierMovie: Movie
 }
 
 export function whyItFitsTonight(
@@ -214,27 +181,18 @@ function runtimeLabel(movie: Movie) {
   return `${movie.runtimeMinutes} min, longer`
 }
 
-function runtimeCategory(movie: Movie) {
-  if (movie.runtimeMinutes < 100) return 'short'
-  if (movie.runtimeMinutes <= 130) return 'medium'
-  return 'long'
+function getCompanionValue(movie: Movie, dimension: DecisionCompanionDimension): string {
+  return movie[dimension]
 }
 
-function getAdaptiveValue(movie: Movie, dimension: AdaptiveDecisionDimension): AdaptiveDecisionValue {
-  if (dimension === 'attentionDemand') return movie.attentionDemand
-  if (dimension === 'pace') return movie.pace
-  if (dimension === 'emotionalWeight') return movie.emotionalWeight
-  return runtimeCategory(movie)
-}
-
-function getCleanAdaptiveSplit(
+function getCleanDecisionCompanionSplit(
   movies: [Movie, Movie, Movie],
-  dimension: AdaptiveDecisionDimension,
-): CandidateAdaptiveSplit | null {
-  const groups = new Map<AdaptiveDecisionValue, Movie[]>()
+  dimension: DecisionCompanionDimension,
+): CandidateDecisionCompanionSplit | null {
+  const groups = new Map<string, Movie[]>()
 
   for (const movie of movies) {
-    const value = getAdaptiveValue(movie, dimension)
+    const value = getCompanionValue(movie, dimension)
     groups.set(value, [...(groups.get(value) ?? []), movie])
   }
 
@@ -253,13 +211,13 @@ function getCleanAdaptiveSplit(
   return {
     dimension,
     majorityValue: majorityEntry[0],
-    minorityValue: minorityEntry[0],
+    outlierValue: minorityEntry[0],
     majorityMovies: [majorityEntry[1][0], majorityEntry[1][1]],
-    minorityMovie: minorityEntry[1][0],
+    outlierMovie: minorityEntry[1][0],
   }
 }
 
-function dealbreakerResolvesSplit(split: CandidateAdaptiveSplit, context: DecisionContext) {
+function dealbreakerResolvesCompanionSplit(split: CandidateDecisionCompanionSplit, context: DecisionContext) {
   const dealbreakers = context.discoveryPreferences?.dealbreakers
 
   if (!dealbreakers) {
@@ -269,7 +227,7 @@ function dealbreakerResolvesSplit(split: CandidateAdaptiveSplit, context: Decisi
   if (
     split.dimension === 'pace'
     && dealbreakers.avoidSlow
-    && (split.majorityValue === 'slow' || split.minorityValue === 'slow')
+    && (split.majorityValue === 'slow' || split.outlierValue === 'slow')
   ) {
     return true
   }
@@ -277,21 +235,15 @@ function dealbreakerResolvesSplit(split: CandidateAdaptiveSplit, context: Decisi
   if (
     split.dimension === 'emotionalWeight'
     && dealbreakers.avoidHeavy
-    && (split.majorityValue === 'heavy' || split.minorityValue === 'heavy')
+    && (split.majorityValue === 'heavy' || split.outlierValue === 'heavy')
   ) {
     return true
-  }
-
-  if (split.dimension === 'runtime' && dealbreakers.underTwoHours) {
-    const majorityIsUnderTwoHours = split.majorityMovies.every((movie) => movie.runtimeMinutes < 120)
-    const minorityIsUnderTwoHours = split.minorityMovie.runtimeMinutes < 120
-    return majorityIsUnderTwoHours !== minorityIsUnderTwoHours
   }
 
   return false
 }
 
-function contextMakesAdaptiveSplitRedundant(split: CandidateAdaptiveSplit, context: DecisionContext) {
+function contextMakesCompanionSplitRedundant(split: CandidateDecisionCompanionSplit, context: DecisionContext) {
   const filters = context.filters
   const preferences = context.discoveryPreferences
 
@@ -300,77 +252,85 @@ function contextMakesAdaptiveSplitRedundant(split: CandidateAdaptiveSplit, conte
   }
 
   if (split.dimension === 'pace') {
-    return Boolean(filters?.pace) || dealbreakerResolvesSplit(split, context)
+    return Boolean(filters?.pace) || dealbreakerResolvesCompanionSplit(split, context)
   }
 
   if (split.dimension === 'emotionalWeight') {
-    return Boolean(filters?.emotionalWeight) || dealbreakerResolvesSplit(split, context)
+    return Boolean(filters?.emotionalWeight) || dealbreakerResolvesCompanionSplit(split, context)
   }
 
-  return Boolean(filters?.runtime) || dealbreakerResolvesSplit(split, context)
+  return false
 }
 
-function createAdaptiveOption(
-  id: string,
-  dimension: AdaptiveDecisionDimension,
-  value: AdaptiveDecisionValue,
-  keepMovies: [Movie, Movie],
-  eliminatedMovie: Movie,
-): AdaptiveDecisionOption {
-  const baseLabel = ADAPTIVE_OPTION_LABELS[dimension][value]
+function isSalientCompanionSplit(split: CandidateDecisionCompanionSplit) {
+  const values = new Set([split.majorityValue, split.outlierValue])
 
-  return {
-    id,
-    label: `${baseLabel}: ${keepMovies[0].title} + ${keepMovies[1].title}`,
-    keepMovieIds: [keepMovies[0].id, keepMovies[1].id],
-    eliminatedMovieId: eliminatedMovie.id,
+  if (split.dimension === 'attentionDemand') {
+    return values.has('easy') && (values.has('engaged') || values.has('immersive'))
   }
-}
 
-function createAdaptiveQuestion(split: CandidateAdaptiveSplit): AdaptiveDecisionQuestion {
-  const [firstMajorityMovie, secondMajorityMovie] = split.majorityMovies
-
-  return {
-    dimension: split.dimension,
-    prompt: ADAPTIVE_PROMPTS[split.dimension],
-    options: [
-      createAdaptiveOption(
-        'majority',
-        split.dimension,
-        split.majorityValue,
-        split.majorityMovies,
-        split.minorityMovie,
-      ),
-      createAdaptiveOption(
-        'outlier',
-        split.dimension,
-        split.minorityValue,
-        [split.minorityMovie, firstMajorityMovie],
-        secondMajorityMovie,
-      ),
-    ],
+  if (split.dimension === 'emotionalWeight') {
+    return values.has('heavy') && (values.has('moderate') || values.has('light'))
   }
+
+  return values.has('slow') && values.has('fast')
 }
 
-export function getAdaptiveDecisionQuestion(
+function getCompanionObservation(split: CandidateDecisionCompanionSplit): string {
+  if (split.dimension === 'attentionDemand') {
+    return split.outlierValue === 'easy'
+      ? 'It asks less of your attention than the other two.'
+      : 'It asks for more of your attention; the other two are easier to settle into.'
+  }
+
+  if (split.dimension === 'emotionalWeight') {
+    return split.outlierValue === 'heavy'
+      ? 'It carries a heavier emotional charge than the other two.'
+      : 'It stays emotionally lighter than the other two.'
+  }
+
+  return split.outlierValue === 'fast'
+    ? 'It moves at a much quicker clip; the other two take their time.'
+    : 'It takes its time more than the other two.'
+}
+
+export function getDecisionCompanionCue(
   movies: Movie[],
   context: DecisionContext,
-): AdaptiveDecisionQuestion | null {
+): DecisionCompanionCue | null {
   if (movies.length !== 3) {
     return null
   }
 
   const slate: [Movie, Movie, Movie] = [movies[0], movies[1], movies[2]]
-  const usefulSplits = ADAPTIVE_DIMENSION_PRIORITY
-    .map((dimension) => getCleanAdaptiveSplit(slate, dimension))
-    .filter((split): split is CandidateAdaptiveSplit => split !== null)
-    .filter((split) => !contextMakesAdaptiveSplitRedundant(split, context))
+  const salientSplits = DECISION_COMPANION_DIMENSIONS
+    .map((dimension) => getCleanDecisionCompanionSplit(slate, dimension))
+    .filter((split): split is CandidateDecisionCompanionSplit => split !== null)
+    .filter((split) => !contextMakesCompanionSplitRedundant(split, context))
+    .filter(isSalientCompanionSplit)
 
-  if (usefulSplits.length === 0) {
+  if (salientSplits.length === 0) {
     return null
   }
 
-  return createAdaptiveQuestion(usefulSplits[0])
+  const [firstSplit] = salientSplits
+  const hasOneCoherentOutlier = salientSplits.every(
+    (split) => split.outlierMovie.id === firstSplit.outlierMovie.id,
+  )
+
+  if (!hasOneCoherentOutlier) {
+    return null
+  }
+
+  return {
+    outlierMovieId: firstSplit.outlierMovie.id,
+    majorityMovieIds: [
+      firstSplit.majorityMovies[0].id,
+      firstSplit.majorityMovies[1].id,
+    ],
+    salientDimensions: salientSplits.map((split) => split.dimension),
+    observation: getCompanionObservation(firstSplit),
+  }
 }
 
 function runtimeSummary(first: Movie, second: Movie) {

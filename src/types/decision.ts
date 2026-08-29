@@ -1,11 +1,7 @@
 import type {
-  AttentionDemand,
   DiscoveryPreferences,
-  EmotionalWeight,
   Mood,
   MovieFilters,
-  Pace,
-  RuntimeFilter,
   ViewingSituation,
 } from './movie'
 
@@ -14,29 +10,19 @@ export const V6_SCHEMA_VERSION = 'v6' as const
 
 export type DecisionModeSchemaVersion = typeof V4_SCHEMA_VERSION | typeof V6_SCHEMA_VERSION
 
-export type AdaptiveDecisionDimension = 'attentionDemand' | 'pace' | 'emotionalWeight' | 'runtime'
+export type DecisionCompanionDimension = 'attentionDemand' | 'emotionalWeight' | 'pace'
 
-export type AdaptiveDecisionValue = AttentionDemand | Pace | EmotionalWeight | RuntimeFilter
-
-export type AdaptiveDecisionOption = {
-  id: string
-  label: string
-  keepMovieIds: [string, string]
-  eliminatedMovieId: string
+export type DecisionCompanionCue = {
+  outlierMovieId: string
+  majorityMovieIds: [string, string]
+  salientDimensions: DecisionCompanionDimension[]
+  observation: string
 }
 
-export type AdaptiveDecisionQuestion = {
-  dimension: AdaptiveDecisionDimension
-  prompt: string
-  options: [AdaptiveDecisionOption, AdaptiveDecisionOption]
-}
-
-export type AdaptiveDecisionReduction =
+export type DecisionReduction =
   | {
-    kind: 'adaptive-answer'
-    dimension: AdaptiveDecisionDimension
-    selectedOptionId: string
-    eliminatedMovieId: string
+    kind: 'companion-drop'
+    droppedMovieId: string
   }
   | {
     kind: 'manual-drop'
@@ -47,13 +33,14 @@ export type ThreeSlateState = {
   kind: 'three-slate'
   movieIds: [string, string, string]
   manuallyDroppedMovieId?: string
+  dismissedCompanionOutlierId?: string
 }
 
 export type DuelState = {
   kind: 'duel'
   finalistIds: [string, string]
   sourceThreeSlateIds?: [string, string, string]
-  reduction?: AdaptiveDecisionReduction
+  reduction?: DecisionReduction
 }
 
 export type PickState = {
@@ -124,6 +111,10 @@ export function isValidDecisionState(state: DecisionState): boolean {
         (
           state.manuallyDroppedMovieId === undefined ||
           state.movieIds.includes(state.manuallyDroppedMovieId)
+        ) &&
+        (
+          state.dismissedCompanionOutlierId === undefined ||
+          state.movieIds.includes(state.dismissedCompanionOutlierId)
         )
       )
     case 'duel':
@@ -133,9 +124,8 @@ export function isValidDecisionState(state: DecisionState): boolean {
         (
           state.reduction === undefined ||
           (
-            state.reduction.kind === 'adaptive-answer' &&
-            typeof state.reduction.eliminatedMovieId === 'string' &&
-            typeof state.reduction.selectedOptionId === 'string'
+            state.reduction.kind === 'companion-drop' &&
+            typeof state.reduction.droppedMovieId === 'string'
           ) ||
           (
             state.reduction.kind === 'manual-drop' &&

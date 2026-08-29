@@ -11,8 +11,7 @@ import type {
   ViewingSituation,
 } from '../types/movie'
 import type {
-  AdaptiveDecisionDimension,
-  AdaptiveDecisionReduction,
+  DecisionReduction,
   DecisionModeState,
   DecisionState,
   DuelState,
@@ -26,7 +25,6 @@ const VALID_PACES = ['slow', 'medium', 'fast'] as const satisfies readonly Pace[
 const VALID_EMOTIONAL_WEIGHTS = ['light', 'moderate', 'heavy'] as const satisfies readonly EmotionalWeight[]
 const VALID_ATTENTION_DEMANDS = ['easy', 'engaged', 'immersive'] as const satisfies readonly AttentionDemand[]
 const VALID_DISCOVERY_STYLES = ['familiar', 'different', 'adventurous'] as const satisfies readonly DiscoveryStyle[]
-const VALID_ADAPTIVE_DIMENSIONS = ['attentionDemand', 'pace', 'emotionalWeight', 'runtime'] as const satisfies readonly AdaptiveDecisionDimension[]
 
 type ValidMood = (typeof VALID_MOODS)[number]
 
@@ -168,26 +166,25 @@ function toThreeSlateIds(ids: string[]): [string, string, string] | null {
   return slateIds.every(isValidMovieId) ? slateIds : null
 }
 
-function serializeReduction(reduction: AdaptiveDecisionReduction): string {
-  if (reduction.kind === 'adaptive-answer') {
-    return `ad;${reduction.dimension};${reduction.selectedOptionId};${reduction.eliminatedMovieId}`
+function serializeReduction(reduction: DecisionReduction): string {
+  if (reduction.kind === 'companion-drop') {
+    return `cd;${reduction.droppedMovieId}`
   }
 
   return `md;${reduction.droppedMovieId}`
 }
 
-function deserializeReduction(parts: string[]): AdaptiveDecisionReduction | null {
+function deserializeReduction(parts: string[]): DecisionReduction | null {
   if (parts[0] === 'ad' && parts.length === 4) {
-    const [, dimension, selectedOptionId, eliminatedMovieId] = parts
-    if (!isOneOf(dimension, VALID_ADAPTIVE_DIMENSIONS)) return null
-    if (!selectedOptionId || !isValidMovieId(eliminatedMovieId)) return null
+    const [, , , eliminatedMovieId] = parts
+    return isValidMovieId(eliminatedMovieId)
+      ? { kind: 'companion-drop', droppedMovieId: eliminatedMovieId }
+      : null
+  }
 
-    return {
-      kind: 'adaptive-answer',
-      dimension,
-      selectedOptionId,
-      eliminatedMovieId,
-    }
+  if (parts[0] === 'cd' && parts.length === 2) {
+    const [, droppedMovieId] = parts
+    return isValidMovieId(droppedMovieId) ? { kind: 'companion-drop', droppedMovieId } : null
   }
 
   if (parts[0] === 'md' && parts.length === 2) {
@@ -211,8 +208,11 @@ function serializeDuelState(state: DuelState): string {
 function serializeDecisionState(state: DecisionState): string {
   switch (state.kind) {
     case 'three-slate':
-      return state.manuallyDroppedMovieId
-        ? `ts:${serializeThreeSlateIds(state.movieIds)};md;${state.manuallyDroppedMovieId}`
+      if (state.manuallyDroppedMovieId) {
+        return `ts:${serializeThreeSlateIds(state.movieIds)};md;${state.manuallyDroppedMovieId}`
+      }
+      return state.dismissedCompanionOutlierId
+        ? `ts:${serializeThreeSlateIds(state.movieIds)};dc;${state.dismissedCompanionOutlierId}`
         : `ts:${serializeThreeSlateIds(state.movieIds)}`
     case 'duel':
       return serializeDuelState(state)
@@ -254,17 +254,19 @@ function deserializeDecisionState(str: string | null): DecisionState | null {
       }
 
       if (ids.length === 5) {
-        const reduction = deserializeReduction(ids.slice(3))
-        if (!reduction || reduction.kind !== 'manual-drop') return null
-        if (!movieIds.includes(reduction.droppedMovieId)) return null
-        return { kind: 'three-slate', movieIds, manuallyDroppedMovieId: reduction.droppedMovieId }
+        const marker = ids[3]
+        const movieId = ids[4]
+        if (!isValidMovieId(movieId) || !movieIds.includes(movieId)) return null
+        if (marker === 'md') return { kind: 'three-slate', movieIds, manuallyDroppedMovieId: movieId }
+        if (marker === 'dc') return { kind: 'three-slate', movieIds, dismissedCompanionOutlierId: movieId }
+        return null
       }
 
       return { kind: 'three-slate', movieIds }
     }
     case 'dl': {
       const ids = remainder.split(';')
-      if (ids.length !== 2 && ids.length !== 5 && ids.length !== 6 && ids.length !== 10) {
+      if (ids.length !== 2 && ids.length !== 4 && ids.length !== 5 && ids.length !== 6 && ids.length !== 8 && ids.length !== 10) {
         return null
       }
       const finalistIds: [string, string] = [ids[0], ids[1]]
@@ -272,12 +274,12 @@ function deserializeDecisionState(str: string | null): DecisionState | null {
         return null
       }
 
-      if (ids.length === 6) {
+      if (ids.length === 4 || ids.length === 6) {
         const reduction = deserializeReduction(ids.slice(2))
         return reduction ? { kind: 'duel', finalistIds, reduction } : null
       }
 
-      if (ids.length === 10) {
+      if (ids.length === 8 || ids.length === 10) {
         if (ids[2] !== 'src') return null
         const sourceThreeSlateIds = toThreeSlateIds(ids.slice(3, 6))
         const reduction = deserializeReduction(ids.slice(6))

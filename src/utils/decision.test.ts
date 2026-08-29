@@ -1,9 +1,10 @@
 import { describe, expect, it } from 'vitest'
+import { movies as catalogMovies } from '../data/movies'
 import type { Movie } from '../types/movie'
 import {
   whyItFitsTonight,
   compareMoviesForDuel,
-  getAdaptiveDecisionQuestion,
+  getDecisionCompanionCue,
   getPrioritizedDecisionFactors,
   updateDuelFinalistSelection,
 } from './decision'
@@ -42,7 +43,7 @@ function makeMovie(overrides: Partial<Movie> = {}): Movie {
   }
 }
 
-const noAdaptiveContext = {
+const noCompanionContext = {
   mood: 'funny' as const,
   filters: {
     genres: [],
@@ -62,35 +63,78 @@ const noAdaptiveContext = {
   },
 }
 
-describe('getAdaptiveDecisionQuestion', () => {
+function getMovieById(id: string) {
+  const movie = oracleMovies.find((candidate) => candidate.id === id)
+
+  if (!movie) {
+    throw new Error(`Missing oracle fixture ${id}`)
+  }
+
+  return movie
+}
+
+function oracleSlate(ids: [string, string, string]): [Movie, Movie, Movie] {
+  return [getMovieById(ids[0]), getMovieById(ids[1]), getMovieById(ids[2])]
+}
+
+function catalogSlate(ids: [string, string, string]): [Movie, Movie, Movie] {
+  return ids.map((id) => {
+    const movie = catalogMovies.find((candidate) => candidate.id === id)
+
+    if (!movie) {
+      throw new Error(`Missing catalog movie ${id}`)
+    }
+
+    return movie
+  }) as [Movie, Movie, Movie]
+}
+
+function permutations<T>(items: [T, T, T]): [T, T, T][] {
+  return [
+    [items[0], items[1], items[2]],
+    [items[0], items[2], items[1]],
+    [items[1], items[0], items[2]],
+    [items[1], items[2], items[0]],
+    [items[2], items[0], items[1]],
+    [items[2], items[1], items[0]],
+  ]
+}
+
+const oracleMovies = [
+  makeMovie({ id: 'rear-window', title: 'Rear Window', attentionDemand: 'easy', emotionalWeight: 'moderate', pace: 'slow' }),
+  makeMovie({ id: 'children-of-men', title: 'Children of Men', attentionDemand: 'easy', emotionalWeight: 'moderate', pace: 'fast' }),
+  makeMovie({ id: 'petite-maman', title: 'Petite Maman', attentionDemand: 'easy', emotionalWeight: 'moderate', pace: 'slow' }),
+  makeMovie({ id: 'a-separation', title: 'A Separation', attentionDemand: 'easy', emotionalWeight: 'heavy', pace: 'medium' }),
+  makeMovie({ id: 'arrival', title: 'Arrival', attentionDemand: 'immersive', emotionalWeight: 'heavy', pace: 'medium' }),
+  makeMovie({ id: 'parasite', title: 'Parasite', attentionDemand: 'easy', emotionalWeight: 'heavy', pace: 'medium' }),
+  makeMovie({ id: 'moonlight', title: 'Moonlight', attentionDemand: 'engaged', emotionalWeight: 'heavy', pace: 'slow' }),
+  makeMovie({ id: 'shoplifters', title: 'Shoplifters', attentionDemand: 'engaged', emotionalWeight: 'heavy', pace: 'slow' }),
+  makeMovie({ id: 'rye-lane', title: 'Rye Lane', attentionDemand: 'easy', emotionalWeight: 'light', pace: 'fast' }),
+  makeMovie({ id: 'aftersun', title: 'Aftersun', attentionDemand: 'easy', emotionalWeight: 'heavy', pace: 'medium' }),
+  makeMovie({ id: 'spirited-away', title: 'Spirited Away', attentionDemand: 'easy', emotionalWeight: 'light', pace: 'medium' }),
+  makeMovie({ id: 'perfect-days', title: 'Perfect Days', attentionDemand: 'easy', emotionalWeight: 'light', pace: 'medium' }),
+  makeMovie({ id: 'amelie', title: 'Amelie', attentionDemand: 'easy', emotionalWeight: 'light', pace: 'slow' }),
+  makeMovie({ id: 'school-of-rock', title: 'School of Rock', attentionDemand: 'easy', emotionalWeight: 'light', pace: 'slow' }),
+  makeMovie({ id: 'edge-of-tomorrow', title: 'Edge of Tomorrow', attentionDemand: 'easy', emotionalWeight: 'light', pace: 'fast' }),
+  makeMovie({ id: 'portrait-lady-fire', title: 'Portrait of a Lady on Fire', attentionDemand: 'easy', emotionalWeight: 'light', pace: 'medium' }),
+  makeMovie({ id: 'get-out', title: 'Get Out', attentionDemand: 'easy', emotionalWeight: 'heavy', pace: 'medium' }),
+  makeMovie({ id: 'inception', title: 'Inception', attentionDemand: 'immersive', emotionalWeight: 'light', pace: 'medium' }),
+  makeMovie({ id: 'before-sunrise', title: 'Before Sunrise', attentionDemand: 'engaged', emotionalWeight: 'light', pace: 'medium' }),
+  makeMovie({ id: 'my-neighbor-totoro', title: 'My Neighbor Totoro', attentionDemand: 'easy', emotionalWeight: 'light', pace: 'medium' }),
+]
+
+describe('getDecisionCompanionCue', () => {
   it('returns null unless exactly three movies are supplied', () => {
     const first = makeMovie({ id: 'first' })
     const second = makeMovie({ id: 'second' })
+    const third = makeMovie({ id: 'third' })
+    const fourth = makeMovie({ id: 'fourth' })
 
-    expect(getAdaptiveDecisionQuestion([first, second], noAdaptiveContext)).toBeNull()
+    expect(getDecisionCompanionCue([first, second], noCompanionContext)).toBeNull()
+    expect(getDecisionCompanionCue([first, second, third, fourth], noCompanionContext)).toBeNull()
   })
 
-  it('returns a clean 2:1 attention question with transparent finalist options', () => {
-    const first = makeMovie({ id: 'first', title: 'First', attentionDemand: 'easy' })
-    const second = makeMovie({ id: 'second', title: 'Second', attentionDemand: 'easy' })
-    const third = makeMovie({ id: 'third', title: 'Third', attentionDemand: 'immersive' })
-
-    const question = getAdaptiveDecisionQuestion([first, second, third], noAdaptiveContext)
-
-    expect(question?.dimension).toBe('attentionDemand')
-    expect(question?.options[0]).toEqual(expect.objectContaining({
-      id: 'majority',
-      keepMovieIds: ['first', 'second'],
-      eliminatedMovieId: 'third',
-    }))
-    expect(question?.options[1]).toEqual(expect.objectContaining({
-      id: 'outlier',
-      keepMovieIds: ['third', 'first'],
-      eliminatedMovieId: 'second',
-    }))
-  })
-
-  it('returns null for uniform and three-way slates', () => {
+  it('returns null for uniform dimensions, raw three-way dimensions, and non-collapsed raw categories', () => {
     const uniform = [
       makeMovie({ id: 'first', attentionDemand: 'easy', pace: 'medium', emotionalWeight: 'light', runtimeMinutes: 105 }),
       makeMovie({ id: 'second', attentionDemand: 'easy', pace: 'medium', emotionalWeight: 'light', runtimeMinutes: 110 }),
@@ -101,89 +145,266 @@ describe('getAdaptiveDecisionQuestion', () => {
       makeMovie({ id: 'second', attentionDemand: 'engaged', pace: 'medium', emotionalWeight: 'light', runtimeMinutes: 110 }),
       makeMovie({ id: 'third', attentionDemand: 'immersive', pace: 'medium', emotionalWeight: 'light', runtimeMinutes: 115 }),
     ]
-
-    expect(getAdaptiveDecisionQuestion(uniform, noAdaptiveContext)).toBeNull()
-    expect(getAdaptiveDecisionQuestion(threeWay, noAdaptiveContext)).toBeNull()
-  })
-
-  it('uses priority only after context-redundant dimensions are removed', () => {
-    const slate = [
-      makeMovie({ id: 'first', attentionDemand: 'easy', pace: 'fast' }),
-      makeMovie({ id: 'second', attentionDemand: 'easy', pace: 'medium' }),
-      makeMovie({ id: 'third', attentionDemand: 'immersive', pace: 'medium' }),
+    const threeWayWeight = [
+      makeMovie({ id: 'first', attentionDemand: 'easy', pace: 'medium', emotionalWeight: 'light' }),
+      makeMovie({ id: 'second', attentionDemand: 'easy', pace: 'medium', emotionalWeight: 'moderate' }),
+      makeMovie({ id: 'third', attentionDemand: 'easy', pace: 'medium', emotionalWeight: 'heavy' }),
     ]
 
-    expect(getAdaptiveDecisionQuestion(slate, noAdaptiveContext)?.dimension).toBe('attentionDemand')
-    expect(getAdaptiveDecisionQuestion(slate, {
-      ...noAdaptiveContext,
+    expect(getDecisionCompanionCue(uniform, noCompanionContext)).toBeNull()
+    expect(getDecisionCompanionCue(threeWay, noCompanionContext)).toBeNull()
+    expect(getDecisionCompanionCue(threeWayWeight, noCompanionContext)).toBeNull()
+  })
+
+  it.each([
+    ['easy/easy/engaged', 'engaged', [
+      makeMovie({ id: 'easy-1', attentionDemand: 'easy' }),
+      makeMovie({ id: 'easy-2', attentionDemand: 'easy' }),
+      makeMovie({ id: 'engaged', attentionDemand: 'engaged' }),
+    ]],
+    ['easy/easy/immersive', 'immersive', [
+      makeMovie({ id: 'easy-1', attentionDemand: 'easy' }),
+      makeMovie({ id: 'easy-2', attentionDemand: 'easy' }),
+      makeMovie({ id: 'immersive', attentionDemand: 'immersive' }),
+    ]],
+  ])('keeps attention split %s salient', (_label, expectedId, movies) => {
+    expect(getDecisionCompanionCue(movies as Movie[], noCompanionContext)?.outlierMovieId).toBe(expectedId)
+  })
+
+  it.each([
+    ['engaged/engaged/immersive', [
+      makeMovie({ id: 'engaged-1', attentionDemand: 'engaged' }),
+      makeMovie({ id: 'engaged-2', attentionDemand: 'engaged' }),
+      makeMovie({ id: 'immersive', attentionDemand: 'immersive' }),
+    ]],
+    ['easy/engaged/immersive', [
+      makeMovie({ id: 'easy', attentionDemand: 'easy' }),
+      makeMovie({ id: 'engaged', attentionDemand: 'engaged' }),
+      makeMovie({ id: 'immersive', attentionDemand: 'immersive' }),
+    ]],
+  ])('discards non-salient or raw three-way attention split %s', (_label, movies) => {
+    expect(getDecisionCompanionCue(movies as Movie[], noCompanionContext)).toBeNull()
+  })
+
+  it.each([
+    ['moderate/moderate/heavy', 'heavy', [
+      makeMovie({ id: 'moderate-1', emotionalWeight: 'moderate' }),
+      makeMovie({ id: 'moderate-2', emotionalWeight: 'moderate' }),
+      makeMovie({ id: 'heavy', emotionalWeight: 'heavy' }),
+    ]],
+    ['light/light/heavy', 'heavy', [
+      makeMovie({ id: 'light-1', emotionalWeight: 'light' }),
+      makeMovie({ id: 'light-2', emotionalWeight: 'light' }),
+      makeMovie({ id: 'heavy', emotionalWeight: 'heavy' }),
+    ]],
+  ])('keeps emotional split %s salient', (_label, expectedId, movies) => {
+    expect(getDecisionCompanionCue(movies as Movie[], noCompanionContext)?.outlierMovieId).toBe(expectedId)
+  })
+
+  it.each([
+    ['light/light/moderate', [
+      makeMovie({ id: 'light-1', emotionalWeight: 'light' }),
+      makeMovie({ id: 'light-2', emotionalWeight: 'light' }),
+      makeMovie({ id: 'moderate', emotionalWeight: 'moderate' }),
+    ]],
+    ['light/moderate/heavy', [
+      makeMovie({ id: 'light', emotionalWeight: 'light' }),
+      makeMovie({ id: 'moderate', emotionalWeight: 'moderate' }),
+      makeMovie({ id: 'heavy', emotionalWeight: 'heavy' }),
+    ]],
+  ])('discards non-salient or raw three-way emotional split %s', (_label, movies) => {
+    expect(getDecisionCompanionCue(movies as Movie[], noCompanionContext)).toBeNull()
+  })
+
+  it('keeps only slow/fast pace salient', () => {
+    expect(getDecisionCompanionCue([
+      makeMovie({ id: 'slow-1', pace: 'slow' }),
+      makeMovie({ id: 'slow-2', pace: 'slow' }),
+      makeMovie({ id: 'fast', pace: 'fast' }),
+    ], noCompanionContext)?.outlierMovieId).toBe('fast')
+
+    expect(getDecisionCompanionCue([
+      makeMovie({ id: 'slow-1', pace: 'slow' }),
+      makeMovie({ id: 'slow-2', pace: 'slow' }),
+      makeMovie({ id: 'medium', pace: 'medium' }),
+    ], noCompanionContext)).toBeNull()
+
+    expect(getDecisionCompanionCue([
+      makeMovie({ id: 'medium-1', pace: 'medium' }),
+      makeMovie({ id: 'medium-2', pace: 'medium' }),
+      makeMovie({ id: 'fast', pace: 'fast' }),
+    ], noCompanionContext)).toBeNull()
+  })
+
+  it('never creates a cue from runtime-only distinction', () => {
+    expect(getDecisionCompanionCue([
+      makeMovie({ id: 'first', runtimeMinutes: 82 }),
+      makeMovie({ id: 'second', runtimeMinutes: 84 }),
+      makeMovie({ id: 'third', runtimeMinutes: 148 }),
+    ], noCompanionContext)).toBeNull()
+  })
+
+  it('removes context-redundant splits before salience', () => {
+    expect(getDecisionCompanionCue([
+      makeMovie({ id: 'first', attentionDemand: 'easy' }),
+      makeMovie({ id: 'second', attentionDemand: 'easy' }),
+      makeMovie({ id: 'third', attentionDemand: 'engaged' }),
+    ], {
+      ...noCompanionContext,
       discoveryPreferences: {
-        ...noAdaptiveContext.discoveryPreferences,
+        ...noCompanionContext.discoveryPreferences,
         attentionDemand: 'easy',
       },
-    })?.dimension).toBe('pace')
-  })
+    })).toBeNull()
 
-  it('removes explicitly constrained dimensions before asking', () => {
-    const slate = [
-      makeMovie({ id: 'first', pace: 'fast', emotionalWeight: 'light' }),
-      makeMovie({ id: 'second', pace: 'medium', emotionalWeight: 'moderate' }),
-      makeMovie({ id: 'third', pace: 'medium', emotionalWeight: 'moderate' }),
-    ]
-
-    expect(getAdaptiveDecisionQuestion(slate, {
-      ...noAdaptiveContext,
-      filters: {
-        ...noAdaptiveContext.filters,
-        pace: 'medium',
-      },
-    })?.dimension).toBe('emotionalWeight')
-  })
-
-  it('treats dealbreakers as redundant only when they resolve the proposed split', () => {
-    const underTwoHourRuntimeSplit = [
-      makeMovie({ id: 'first', runtimeMinutes: 95 }),
-      makeMovie({ id: 'second', runtimeMinutes: 110 }),
-      makeMovie({ id: 'third', runtimeMinutes: 115 }),
-    ]
-    const crossesTwoHourBoundary = [
-      makeMovie({ id: 'first', runtimeMinutes: 95 }),
-      makeMovie({ id: 'second', runtimeMinutes: 124 }),
-      makeMovie({ id: 'third', runtimeMinutes: 126 }),
-    ]
-    const context = {
-      ...noAdaptiveContext,
-      discoveryPreferences: {
-        ...noAdaptiveContext.discoveryPreferences,
-        dealbreakers: {
-          avoidHeavy: false,
-          avoidSlow: false,
-          underTwoHours: true,
-        },
-      },
-    }
-
-    expect(getAdaptiveDecisionQuestion(underTwoHourRuntimeSplit, context)?.dimension).toBe('runtime')
-    expect(getAdaptiveDecisionQuestion(crossesTwoHourBoundary, context)).toBeNull()
-  })
-
-  it('returns null when context removes the only clean split', () => {
-    const slate = [
-      makeMovie({ id: 'first', emotionalWeight: 'heavy' }),
+    expect(getDecisionCompanionCue([
+      makeMovie({ id: 'first', emotionalWeight: 'moderate' }),
       makeMovie({ id: 'second', emotionalWeight: 'moderate' }),
-      makeMovie({ id: 'third', emotionalWeight: 'moderate' }),
-    ]
+      makeMovie({ id: 'third', emotionalWeight: 'heavy' }),
+    ], {
+      ...noCompanionContext,
+      filters: { ...noCompanionContext.filters, emotionalWeight: 'moderate' },
+    })).toBeNull()
 
-    expect(getAdaptiveDecisionQuestion(slate, {
-      ...noAdaptiveContext,
+    expect(getDecisionCompanionCue([
+      makeMovie({ id: 'first', emotionalWeight: 'moderate' }),
+      makeMovie({ id: 'second', emotionalWeight: 'moderate' }),
+      makeMovie({ id: 'third', emotionalWeight: 'heavy' }),
+    ], {
+      ...noCompanionContext,
       discoveryPreferences: {
-        ...noAdaptiveContext.discoveryPreferences,
-        dealbreakers: {
-          avoidHeavy: true,
-          avoidSlow: false,
-          underTwoHours: false,
-        },
+        ...noCompanionContext.discoveryPreferences,
+        dealbreakers: { avoidHeavy: true, avoidSlow: false, underTwoHours: false },
       },
     })).toBeNull()
+
+    expect(getDecisionCompanionCue([
+      makeMovie({ id: 'first', pace: 'slow' }),
+      makeMovie({ id: 'second', pace: 'slow' }),
+      makeMovie({ id: 'third', pace: 'fast' }),
+    ], {
+      ...noCompanionContext,
+      filters: { ...noCompanionContext.filters, pace: 'fast' },
+    })).toBeNull()
+
+    expect(getDecisionCompanionCue([
+      makeMovie({ id: 'first', pace: 'slow' }),
+      makeMovie({ id: 'second', pace: 'slow' }),
+      makeMovie({ id: 'third', pace: 'fast' }),
+    ], {
+      ...noCompanionContext,
+      discoveryPreferences: {
+        ...noCompanionContext.discoveryPreferences,
+        dealbreakers: { avoidHeavy: false, avoidSlow: true, underTwoHours: false },
+      },
+    })).toBeNull()
+  })
+
+  it('applies salience before coherence so weak conflicts cannot veto strong ones', () => {
+    const cue = getDecisionCompanionCue([
+      makeMovie({ id: 'first', attentionDemand: 'engaged', emotionalWeight: 'light' }),
+      makeMovie({ id: 'second', attentionDemand: 'engaged', emotionalWeight: 'light' }),
+      makeMovie({ id: 'third', attentionDemand: 'immersive', emotionalWeight: 'heavy' }),
+    ], noCompanionContext)
+
+    expect(cue?.outlierMovieId).toBe('third')
+    expect(cue?.salientDimensions).toEqual(['emotionalWeight'])
+  })
+
+  it('returns a cue for multiple salient splits with the same outlier', () => {
+    const cue = getDecisionCompanionCue([
+      makeMovie({ id: 'first', attentionDemand: 'easy', emotionalWeight: 'light' }),
+      makeMovie({ id: 'second', attentionDemand: 'easy', emotionalWeight: 'light' }),
+      makeMovie({ id: 'third', attentionDemand: 'immersive', emotionalWeight: 'heavy' }),
+    ], noCompanionContext)
+
+    expect(cue).toEqual(expect.objectContaining({
+      outlierMovieId: 'third',
+      majorityMovieIds: ['first', 'second'],
+      salientDimensions: ['attentionDemand', 'emotionalWeight'],
+    }))
+  })
+
+  it('returns silence for conflicting salient outliers', () => {
+    expect(getDecisionCompanionCue([
+      makeMovie({ id: 'first', attentionDemand: 'engaged', emotionalWeight: 'light' }),
+      makeMovie({ id: 'second', attentionDemand: 'easy', emotionalWeight: 'heavy' }),
+      makeMovie({ id: 'third', attentionDemand: 'easy', emotionalWeight: 'light' }),
+    ], noCompanionContext)).toBeNull()
+  })
+
+  it('describes the outlier without quality, warning, or enum-label copy', () => {
+    expect(getDecisionCompanionCue([
+      makeMovie({ id: 'first', attentionDemand: 'immersive' }),
+      makeMovie({ id: 'second', attentionDemand: 'immersive' }),
+      makeMovie({ id: 'third', attentionDemand: 'easy' }),
+    ], noCompanionContext)?.observation).toBe(
+      'It asks less of your attention than the other two.',
+    )
+
+    expect(getDecisionCompanionCue([
+      makeMovie({ id: 'first', pace: 'slow' }),
+      makeMovie({ id: 'second', pace: 'slow' }),
+      makeMovie({ id: 'third', pace: 'fast' }),
+    ], noCompanionContext)?.observation).toBe(
+      'It moves at a much quicker clip; the other two take their time.',
+    )
+
+    expect(getDecisionCompanionCue([
+      makeMovie({ id: 'first', emotionalWeight: 'light' }),
+      makeMovie({ id: 'second', emotionalWeight: 'light' }),
+      makeMovie({ id: 'third', emotionalWeight: 'heavy' }),
+    ], noCompanionContext)?.observation).toBe(
+      'It carries a heavier emotional charge than the other two.',
+    )
+  })
+
+  it('is invariant under slate permutation and never chooses a majority survivor by array order', () => {
+    const baseSlate = [
+      makeMovie({ id: 'majority-a', pace: 'slow' }),
+      makeMovie({ id: 'majority-b', pace: 'slow' }),
+      makeMovie({ id: 'outlier', pace: 'fast' }),
+    ] as [Movie, Movie, Movie]
+
+    for (const permutedSlate of permutations(baseSlate)) {
+      const cue = getDecisionCompanionCue(permutedSlate, noCompanionContext)
+      expect(cue?.outlierMovieId).toBe('outlier')
+      expect(new Set(cue?.majorityMovieIds)).toEqual(new Set(['majority-a', 'majority-b']))
+    }
+  })
+
+  it('matches the locked A-H behavioral oracle', () => {
+    const cases: Array<[[string, string, string], string | null]> = [
+      [['rear-window', 'children-of-men', 'petite-maman'], 'children-of-men'],
+      [['a-separation', 'arrival', 'parasite'], 'arrival'],
+      [['moonlight', 'shoplifters', 'rye-lane'], 'rye-lane'],
+      [['aftersun', 'spirited-away', 'perfect-days'], 'aftersun'],
+      [['amelie', 'school-of-rock', 'edge-of-tomorrow'], 'edge-of-tomorrow'],
+      [['portrait-lady-fire', 'get-out', 'inception'], null],
+      [['before-sunrise', 'perfect-days', 'my-neighbor-totoro'], 'before-sunrise'],
+      [['shoplifters', 'rye-lane', 'petite-maman'], null],
+    ]
+
+    for (const [ids, expectedOutlierMovieId] of cases) {
+      expect(getDecisionCompanionCue(oracleSlate(ids), noCompanionContext)?.outlierMovieId ?? null).toBe(expectedOutlierMovieId)
+    }
+  })
+
+  it('matches the locked A-H behavioral oracle against the current catalog', () => {
+    const cases: Array<[[string, string, string], string | null]> = [
+      [['rear-window', 'children-of-men', 'petite-maman-2021'], 'children-of-men'],
+      [['a-separation-2011', 'arrival', 'parasite'], 'arrival'],
+      [['moonlight', 'shoplifters', 'rye-lane-2023'], 'rye-lane-2023'],
+      [['aftersun', 'spirited-away', 'perfect-days'], 'aftersun'],
+      [['amelie', 'school-of-rock', 'edge-of-tomorrow'], 'edge-of-tomorrow'],
+      [['portrait-lady-fire', 'get-out', 'inception'], null],
+      [['before-sunrise', 'perfect-days', 'my-neighbor-totoro'], 'before-sunrise'],
+      [['shoplifters', 'rye-lane-2023', 'petite-maman-2021'], null],
+    ]
+
+    for (const [ids, expectedOutlierMovieId] of cases) {
+      expect(getDecisionCompanionCue(catalogSlate(ids), noCompanionContext)?.outlierMovieId ?? null).toBe(expectedOutlierMovieId)
+    }
   })
 })
 
