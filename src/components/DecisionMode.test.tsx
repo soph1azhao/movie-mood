@@ -343,3 +343,73 @@ describe('DecisionMode Phase 4 — Favorite Affordance Continuity', () => {
     expect(markup).not.toContain('favorite-button')
   })
 })
+
+describe('DecisionMode V7.2 Phase 1 — Action Hierarchy + Tonight’s Pick + WatchAction', () => {
+  const rearWindow = getMovie('rear-window')
+
+  it('Tonight’s Pick renders the primary Find where to watch action and secondary destinations', () => {
+    const markup = renderToStaticMarkup(
+      <DecisionMode
+        movies={movies}
+        mood="suspenseful"
+        situation={null}
+        filters={filters}
+        discoveryPreferences={discoveryPreferences}
+        state={{ kind: 'pick', selectedId: rearWindow.id }}
+        shareUrl="https://example.com"
+        isFavorite={noFavorite}
+        onToggleFavorite={noToggle}
+        onChange={() => undefined}
+        onExit={() => undefined}
+      />,
+    )
+
+    // Primary action visible copy
+    expect(markup).toContain('Find where to watch')
+    expect(markup).toContain('watch-link-primary')
+    expect(markup).toContain('google.com/search?q=Rear+Window+1954+where+to+watch')
+
+    // Secondary destinations
+    expect(markup).toContain('On JustWatch')
+    expect(markup).toContain('justwatch.com')
+    expect(markup).toContain('On Letterboxd')
+    expect(markup).toContain('letterboxd.com')
+    expect(markup).toContain('On TMDB')
+    expect(markup).toContain('themoviedb.org')
+
+    // Disclaimer
+    expect(markup).toContain('Movie Mood does not verify streaming availability.')
+  })
+
+  it('Tonight’s Pick renders supporting and quiet reversal actions without competing primary CTAs', () => {
+    const markup = renderToStaticMarkup(
+      <DecisionMode
+        movies={movies}
+        mood="suspenseful"
+        situation={null}
+        filters={filters}
+        discoveryPreferences={discoveryPreferences}
+        state={{ kind: 'pick', selectedId: rearWindow.id }}
+        shareUrl="https://example.com"
+        isFavorite={noFavorite}
+        onToggleFavorite={noToggle}
+        onChange={() => undefined}
+        onExit={() => undefined}
+      />,
+    )
+
+    // Supporting actions
+    expect(markup).toContain('Share pick')
+    expect(markup).toContain('action-supporting')
+    expect(markup).toContain('favorite-button')
+
+    // Reversal / navigation actions
+    expect(markup).toContain('Change my mind')
+    expect(markup).toContain('Back to browsing')
+    expect(markup).toContain('action-quiet')
+
+    // Reversals and Share pick must not have decision-primary class
+    expect(markup).not.toMatch(/class="[^"]*details-toggle[^"]*decision-primary[^"]*"[^>]*>Back to browsing/)
+    expect(markup).not.toMatch(/class="[^"]*details-toggle[^"]*decision-primary[^"]*"[^>]*>Share pick/)
+  })
+})

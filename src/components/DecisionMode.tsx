@@ -419,38 +419,42 @@ export function DecisionMode({
           <div className="watch-action-section">
             <WatchAction movie={selectedMovie} />
           </div>
-          <div className="decision-actions inline-actions">
-            <button type="button" className="details-toggle decision-primary" onClick={() => sharePick(selectedMovie)}>
-              Share pick
-            </button>
-            <button
-              type="button"
-              className={`favorite-button ${isFavorite(selectedMovie.id) ? 'is-favorite' : ''}`}
-              aria-label={isFavorite(selectedMovie.id) ? `Remove ${selectedMovie.title} from favorites` : `Save ${selectedMovie.title} to favorites`}
-              aria-pressed={isFavorite(selectedMovie.id)}
-              onClick={() => onToggleFavorite(selectedMovie.id)}
-            >
-              <span aria-hidden="true">{isFavorite(selectedMovie.id) ? '♥' : '♡'}</span>
-            </button>
-            <button
-              type="button"
-              className="details-toggle"
-              onClick={() => {
-                setCoinFlipWinnerId(null)
-                if (state.sourceDuel) {
-                  onChange(state.sourceDuel)
-                } else if (state.sourceThreeSlateIds) {
-                  onChange({ kind: 'three-slate', movieIds: state.sourceThreeSlateIds })
-                } else {
-                  onExit()
-                }
-              }}
-            >
-              Change my mind
-            </button>
-            <button type="button" className="details-toggle decision-primary" onClick={onExit}>
-              Back to browsing
-            </button>
+          <div className="ticket-actions">
+            <div className="ticket-supporting-actions">
+              <button
+                type="button"
+                className={`favorite-button ${isFavorite(selectedMovie.id) ? 'is-favorite' : ''}`}
+                aria-label={isFavorite(selectedMovie.id) ? `Remove ${selectedMovie.title} from favorites` : `Save ${selectedMovie.title} to favorites`}
+                aria-pressed={isFavorite(selectedMovie.id)}
+                onClick={() => onToggleFavorite(selectedMovie.id)}
+              >
+                <span aria-hidden="true">{isFavorite(selectedMovie.id) ? '♥' : '♡'}</span>
+              </button>
+              <button type="button" className="details-toggle action-supporting" onClick={() => sharePick(selectedMovie)}>
+                Share pick
+              </button>
+            </div>
+            <div className="ticket-reversal-actions">
+              <button
+                type="button"
+                className="details-toggle action-quiet"
+                onClick={() => {
+                  setCoinFlipWinnerId(null)
+                  if (state.sourceDuel) {
+                    onChange(state.sourceDuel)
+                  } else if (state.sourceThreeSlateIds) {
+                    onChange({ kind: 'three-slate', movieIds: state.sourceThreeSlateIds })
+                  } else {
+                    onExit()
+                  }
+                }}
+              >
+                Change my mind
+              </button>
+              <button type="button" className="details-toggle action-quiet" onClick={onExit}>
+                Back to browsing
+              </button>
+            </div>
           </div>
           <p className="share-feedback" aria-live="polite">{shareMessage}</p>
         </div>
