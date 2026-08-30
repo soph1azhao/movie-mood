@@ -2,21 +2,26 @@
 
 ## Status
 
-Locked for **V7.1 functional implementation**.
+V7.1 is **released and frozen** at:
 
-Target first V7 checkpoint: `v7.1.0`
+```text
+v7.1.0 — Movie Mood V7.1 — Match the Moment
+4bf51ce — Implement V7 Phase 4 — Favorite Affordance Continuity
+```
+
+V7.2 is **locked for visual / interaction implementation**.
+
+V7.2 changes presentation and interaction feel only.
 
 Accepted baseline: `v6.0.0`
 
-Released baseline commit:
+Original V7.1 released baseline commit:
 
 ```text
 71615b8 — Implement V6 decision companion
 ```
 
-This document is the canonical source of truth for V7.1 implementation work.
-
-V7.2 is reserved for a later cinematic visual/interaction pass. V7.2 is **not executable from this document yet** beyond the boundary constraints recorded below; its visual details must be locked separately after the Claude design handoff.
+This document is the canonical source of truth for both V7.1 (accepted history) and V7.2 (locked active implementation).
 
 Movie Mood continues to preserve the accepted upstream flow:
 
@@ -602,43 +607,1093 @@ The implementation must preserve accessibility and existing component boundaries
 
 ---
 
-# V7.2 Reserved Boundary — Cinematic Expression
+# V7.2 — Earned Atmosphere
 
-V7.2 is a separate later phase.
+## Status
 
-Its purpose is:
+Locked for **V7.2 visual / interaction implementation** after the released V7.1.0 checkpoint.
+
+V7.1 is accepted and frozen.
+
+V7.2 changes presentation and interaction feel only.
+
+It must preserve the accepted product flows:
 
 ```text
-Keep V7.1 semantics stable.
-Change how the experience feels.
+Glimpse -> Refine -> Reveal -> Decide
 ```
 
-Candidate V7.2 territory already reserved for later design work includes:
+and:
 
-- cinematic visual identity;
-- typography system;
-- ambient visual treatment;
-- editorial/card physicality;
-- restrained micro-motion;
-- mobile-specific cinematic composition;
-- Duel tension;
-- tactile 3D coin presentation;
-- `prefers-reduced-motion` fallback;
-- Tonight's Pick closure;
-- outbound WatchAction hierarchy;
-- visual treatment of Direct Pick, Finish-Time Cue, and Previous Three.
+```text
+three movies
+-> direct choice OR Drop One
+-> Duel
+-> optional gut check
+-> Tonight's Pick
+```
 
-The later Claude visual handoff may refine this list.
+---
 
-V7.2 must not silently introduce:
+## Product Thesis — Earned Atmosphere
 
-- new recommendation semantics;
-- new DecisionState kinds;
-- new preference dimensions;
-- new filtering logic;
-- new V6 companion logic.
+V7.2 follows one visual rule:
 
-Do not implement V7.2 from this document before its visual direction is explicitly locked.
+```text
+Visual weight increases as commitment increases.
+```
+
+Movie Mood already has a visual identity.
+
+V7.2 does **not** redesign that identity from scratch.
+
+Instead:
+
+```text
+Glimpse stays light.
+Refine stays useful.
+Full Reveal stays considered.
+Three-slate feels like narrowing.
+Duel gains tension.
+Tonight's Pick gains stillness and closure.
+```
+
+The interface earns more atmosphere only as the user gets closer to one movie.
+
+Core test:
+
+```text
+Does this visual decision help the user feel closer to pressing Play?
+```
+
+If not, remove it.
+
+---
+
+## Existing Visual Identity — Preserve
+
+The released V7.1 application already has a coherent visual language:
+
+- dark evening background;
+- warm amber / gold accents;
+- DM Sans body typography;
+- DM Mono metadata / eyebrow typography;
+- Playfair Display editorial emphasis;
+- subtle ambient radial light;
+- thin borders;
+- restrained radii;
+- poster-led cards;
+- existing card entrance motion;
+- existing `prefers-reduced-motion` fallback.
+
+V7.2 must build on this system.
+
+Do not replace the typography stack.
+
+Do not redesign the palette.
+
+Do not introduce a new UI framework, animation framework, or component library.
+
+Do not perform a broad design-system rewrite.
+
+---
+
+## Protected Upstream Surfaces
+
+The following surfaces are intentionally outside V7.2 redesign scope:
+
+### Glimpse
+
+Current Glimpse already shows only:
+
+- poster;
+- Glimpse label;
+- movie title;
+- `curiosityHook`.
+
+Preserve this lightweight state.
+
+Do not add:
+
+- finish time;
+- favorite;
+- Direct Pick;
+- metadata blocks;
+- glow effects;
+- card tilt;
+- parallax;
+- extra hover motion;
+- extra editorial copy.
+
+### Refine
+
+Situation, discovery preferences, dealbreakers, and filters remain utility surfaces.
+
+Do not cinematicize them.
+
+Preserve their existing chip / panel interaction language unless a regression fix is required.
+
+### Mood Entry
+
+Do not introduce a global mood-reactive background system.
+
+Do not add heavy animation or per-mood cinematic scenes.
+
+Existing mood selection semantics and visual structure remain intact.
+
+### Full Reveal
+
+V7.2 does not perform a full information-architecture rewrite of Full Reveal or `MovieDetails`.
+
+Direct Pick, finish-time cue, favorites, More Like This, and More Details behavior remain unchanged.
+
+Minor class-role adjustments needed to safely style downstream actions are allowed.
+
+---
+
+## Locked V7.2 Scope
+
+V7.2 implements only four user-visible areas:
+
+1. **Tonight's Pick Closure**
+2. **WatchAction Hierarchy**
+3. **Duel Atmosphere**
+4. **Tactile Coin**
+
+One implementation prerequisite is also allowed:
+
+5. **Semantic action-role class modifiers**
+
+This prerequisite exists only to prevent shared CSS classes from leaking downstream visual changes into unrelated controls.
+
+It is not a new product feature and must not become a design-system rewrite.
+
+---
+
+## V7.2 Architecture Guardrails
+
+Preserve:
+
+- Vite;
+- React;
+- TypeScript;
+- plain CSS;
+- GitHub Pages;
+- existing state architecture;
+- existing DecisionState types;
+- existing URL codec;
+- existing TMDB snapshot model;
+- existing Favorites persistence;
+- existing WatchAction URL builders.
+
+Do not add:
+
+- backend;
+- database;
+- accounts;
+- runtime AI;
+- runtime authenticated TMDB API;
+- provider availability API;
+- routing library;
+- global state framework;
+- animation library unless native CSS is proven insufficient.
+
+For the locked V7.2 scope, native CSS is expected to be sufficient.
+
+---
+
+## Frozen V7.1 Semantics
+
+V7.2 must not change the semantics of:
+
+- `getDecisionCompanionCue`;
+- Salience-First logic;
+- V6 coherence logic;
+- `Not tonight`;
+- `Keep it in`;
+- manual Drop One;
+- Duel finalist selection;
+- `Back to all three`;
+- pairwise decision copy;
+- Direct Pick;
+- finish-time cue;
+- Previous Three;
+- Favorites behavior;
+- Share Pick;
+- Change My Mind;
+- WatchAction destinations;
+- coin winner selection;
+- gut-check meaning.
+
+The coin remains a gut-check mechanism, not an authority.
+
+The product meaning remains:
+
+```text
+The random result reveals the user's reaction.
+It does not decide for the user.
+```
+
+---
+
+## V7.2 Implementation Prerequisite — Semantic Action Roles
+
+### Problem
+
+Current shared classes such as `.details-toggle` and `.another-button` span multiple unrelated roles, including:
+
+- disclosure;
+- commit;
+- reversal;
+- navigation;
+- outbound links.
+
+V7.2 needs to change visual hierarchy downstream without accidentally restyling unrelated upstream controls.
+
+### Required approach
+
+Prefer small semantic modifiers rather than new component architecture.
+
+Conceptually acceptable roles include:
+
+```text
+commit
+secondary
+quiet
+disclosure
+navigation
+```
+
+Exact class names are implementation details.
+
+Requirements:
+
+- preserve native `<button>` / `<a>` semantics;
+- preserve existing focus-visible behavior;
+- preserve keyboard access;
+- avoid broad markup refactors;
+- do not introduce a Button component solely for V7.2;
+- do not replace existing classes everywhere if a modifier is sufficient.
+
+Core rule:
+
+```text
+Modifier, not rewrite.
+```
+
+---
+
+## V7.2 Feature 1 — Tonight's Pick Closure
+
+### Product Goal
+
+Tonight's Pick should communicate:
+
+```text
+The decision is made.
+This is tonight.
+```
+
+The existing screen already contains the right functional pieces.
+
+V7.2 should improve hierarchy, not add information.
+
+### Preserve
+
+Keep:
+
+- poster;
+- title;
+- year;
+- director;
+- runtime;
+- finish-time cue;
+- `vibeSummary`;
+- Why It Fits Tonight reasons;
+- WatchAction;
+- Favorite;
+- Share Pick;
+- Change My Mind;
+- Back to Browsing.
+
+Do not add:
+
+- another confirmation button;
+- committed / confirmed boolean state;
+- celebration effects;
+- autoplay trailer;
+- new recommendation reasoning;
+- new share state.
+
+### Hierarchy
+
+The movie itself must dominate.
+
+Desired ordering:
+
+```text
+Movie identity / poster
+-> why it fits
+-> primary real-world next action
+-> supporting utilities
+-> reversal / exit actions
+```
+
+#### Primary next action
+
+The strongest downstream action should be:
+
+```text
+Find where to watch
+```
+
+This should use the existing general where-to-watch search destination.
+
+#### Supporting actions
+
+Keep:
+
+- Favorite;
+- Share Pick.
+
+These should remain useful but must not visually compete with the watch action.
+
+#### Reversal / exit
+
+Keep:
+
+- Change My Mind;
+- Back to Browsing.
+
+Both should be visually quieter than the primary next action.
+
+`Back to browsing` must no longer compete as a primary CTA with `Share pick`.
+
+### Visual treatment
+
+Increase closure through:
+
+- stronger poster presence where space allows;
+- more negative space;
+- clearer title dominance;
+- restrained supporting metadata;
+- more separation between decision content and utility controls;
+- reduced competition among buttons.
+
+Do not turn the screen into literal ticket skeuomorphism.
+
+Do not add confetti or theatrical celebration.
+
+### Motion
+
+A subtle entrance treatment is allowed.
+
+Use CSS-only arrival animation if it improves the shift into the final state.
+
+Do not stage or delay DecisionState transitions.
+
+Do not retain the previous screen to animate it out.
+
+Rule:
+
+```text
+Animate the arriving state, not the state transition machinery.
+```
+
+Reduced-motion users must receive the final layout immediately.
+
+---
+
+## V7.2 Feature 2 — WatchAction Hierarchy
+
+### Product Goal
+
+The user who has chosen a movie should have one obvious next step:
+
+```text
+Find where to watch
+```
+
+Movie Mood still does not verify streaming availability.
+
+### Existing destinations
+
+Preserve the existing outbound destinations:
+
+- general where-to-watch search;
+- TMDB;
+- Letterboxd;
+- JustWatch.
+
+Do not change URL-builder semantics unless fixing an actual defect.
+
+### Locked hierarchy
+
+#### Primary
+
+Use the existing general search as:
+
+```text
+Find where to watch
+```
+
+It should receive clear primary treatment.
+
+#### Secondary
+
+Keep the service-specific destinations as secondary:
+
+```text
+JustWatch
+Letterboxd
+TMDB
+```
+
+Exact secondary ordering may follow existing product conventions, but they must not visually compete with the primary search.
+
+### Disclaimer
+
+Preserve:
+
+```text
+Movie Mood does not verify streaming availability.
+```
+
+Do not add:
+
+- provider logos;
+- availability badges;
+- subscription state;
+- region detection;
+- streaming-provider API;
+- claims that a movie is currently available somewhere.
+
+### Accessibility
+
+Preserve normal anchor behavior.
+
+Do not rely on visual styling alone to communicate destination.
+
+Existing external-link safety (`target="_blank"` + `rel="noopener noreferrer"`) must survive.
+
+---
+
+## V7.2 Feature 3 — Duel Atmosphere
+
+### Product Goal
+
+Duel should feel different from three-slate browsing because only two finalists remain.
+
+It should create restrained tension without becoming competitive spectacle.
+
+### Preserve
+
+Keep:
+
+- exact finalist IDs;
+- exact pairwise decision copy;
+- favorite controls;
+- finish-time cues;
+- choose actions;
+- Back to All Three;
+- coin gut-check route.
+
+Do not add:
+
+- score bars;
+- percentages;
+- winner badges;
+- versus iconography;
+- recommendation confidence;
+- automatic winner styling.
+
+### Desktop composition
+
+Increase the sense of finality using:
+
+- slightly stronger poster presence;
+- deliberate negative space between finalists;
+- quieter surrounding chrome;
+- clearer separation between finalist cards and `duel-differences`;
+- more breathing room before the coin panel.
+
+The two cards should feel like finalists, not two generic grid cards.
+
+### Mobile composition
+
+Do not force desktop confrontation onto narrow screens.
+
+At mobile widths, prefer a deliberate vertical sequence.
+
+Conceptual rhythm:
+
+```text
+Finalist 1
+-> comparison breathing space
+-> Finalist 2
+-> deciding differences
+-> gut check
+```
+
+Do not use horizontal overflow or force two narrow columns.
+
+### Motion
+
+A small CSS-only Duel entrance is optional.
+
+If used:
+
+- animate the arriving Duel state;
+- keep it short;
+- do not animate the discarded movie out;
+- do not delay state transitions.
+
+Reduced-motion fallback should render the final Duel immediately.
+
+---
+
+## V7.2 Feature 4 — Tactile Coin
+
+### Product Goal
+
+Upgrade the existing styled coin button and result-settle treatment into a short tactile flip.
+
+The coin remains a gut check.
+
+### State Model
+
+Keep state minimal.
+
+Conceptually:
+
+```text
+idle
+-> flipping
+-> result
+```
+
+Do not build a multi-stage animation state machine.
+
+Winner selection may remain immediate at click time.
+
+The visible result should appear after the short flip animation completes.
+
+### Interaction
+
+Existing trigger remains:
+
+```text
+Flip a coin
+```
+
+Expected sequence:
+
+```text
+click
+-> determine winner
+-> short physical flip
+-> settle
+-> reveal existing Gut check result
+-> "How does that feel?"
+```
+
+The full sequence should feel immediate, not suspenseful.
+
+### Timing
+
+Target philosophy:
+
+```text
+roughly 600–800 ms total
+```
+
+This is guidance, not a requirement for exact millisecond values.
+
+Avoid multi-second animation.
+
+### Visual treatment
+
+Native CSS 3D is preferred.
+
+Use:
+
+- transform / rotateY or equivalent;
+- perspective;
+- `transform-style: preserve-3d`;
+- `backface-visibility` as appropriate.
+
+No animation library is expected.
+
+No canvas or WebGL.
+
+No sound.
+
+No confetti.
+
+No slot-machine / roulette treatment.
+
+No casino colors or flashing effects.
+
+### Result
+
+After the coin settles, preserve the existing result semantics and controls:
+
+- winner name;
+- `Gut check`;
+- `How does that feel?`;
+- `Go with the coin`;
+- choose the other finalist.
+
+Do not remove the user's ability to reject the random result.
+
+### Reduced Motion
+
+Under `prefers-reduced-motion: reduce`:
+
+- do not perform 3D spinning;
+- reveal a settled result immediately or near-immediately;
+- preserve the same Gut check semantics;
+- do not require motion to understand who the result is.
+
+Avoid adding artificial delay solely to imitate the full animation.
+
+Accessibility takes priority over preserving a dramatic pause.
+
+### Repeat flip
+
+If the existing UI allows another flip only through normal state flow, preserve that behavior.
+
+Do not add gambling-like repeated-spin affordances or counters.
+
+---
+
+## V7.2 Motion Policy
+
+### MUST
+
+- tactile coin flip.
+
+### NICE
+
+Only if achieved with simple CSS and no state complexity:
+
+- Duel arrival;
+- Tonight's Pick arrival.
+
+### REJECT
+
+- Glimpse hover tilt;
+- poster parallax;
+- recommendation cycling animation;
+- filter / chip animation beyond existing transitions;
+- loser card visibly receding before Pick;
+- elaborate Direct Pick transition;
+- retained outgoing-screen transition;
+- autoplay background movement;
+- global mood-reactive animation;
+- confetti;
+- cinematic intro splash.
+
+Core rule:
+
+```text
+Motion must explain or deepen a meaningful downstream moment.
+It must not become atmosphere wallpaper.
+```
+
+---
+
+## V7.2 Responsive Requirements
+
+V7.2 must be designed and verified at both desktop and narrow mobile widths.
+
+### Tonight's Pick
+
+Desktop may preserve poster + copy composition.
+
+Mobile should remain readable as a single-column composition with:
+
+- poster;
+- title / metadata;
+- Why It Fits;
+- primary watch action;
+- supporting actions;
+- quiet reversal actions.
+
+Do not allow action hierarchy to collapse into a stack of visually identical full-width buttons.
+
+### Duel
+
+Desktop may use spatial opposition.
+
+Mobile must use intentional vertical sequencing.
+
+### Coin
+
+Coin must remain comfortably tappable and legible.
+
+Do not let 3D transforms create horizontal overflow.
+
+---
+
+## V7.2 Accessibility Requirements
+
+Preserve or improve:
+
+- native button / anchor semantics;
+- keyboard operability;
+- visible focus states;
+- `aria-pressed` favorite state;
+- movie-specific accessible labels;
+- sufficient contrast;
+- readable text independent of poster imagery;
+- `prefers-reduced-motion`.
+
+Do not hide essential information inside motion.
+
+Do not use hover as the only way to reveal a control.
+
+Do not suppress focus outlines for visual polish.
+
+---
+
+## Explicit V7.2 Non-Goals
+
+Do not implement:
+
+- Glimpse redesign;
+- Refine redesign;
+- mood-reactive background system;
+- new font system;
+- new color palette;
+- broad typography rewrite;
+- global card redesign;
+- Full Reveal information-architecture rewrite;
+- MovieDetails redesign;
+- general design-system rewrite;
+- new Button component framework;
+- animation library;
+- page-transition state machine;
+- parallax;
+- card tilt;
+- poster hover 3D;
+- autoplay trailers;
+- sound;
+- confetti;
+- literal ornate ticket UI;
+- provider logos;
+- provider availability claims;
+- new streaming API;
+- new preference model;
+- new recommendation logic;
+- new DecisionState type;
+- URL schema change;
+- new V6 companion logic;
+- new V7.1 behavior.
+
+---
+
+## V7.2 Implementation Phases
+
+### Phase 1 — Action Hierarchy + Tonight's Pick + WatchAction
+
+Implement only:
+
+- semantic action-role modifiers needed for safe styling;
+- Tonight's Pick action hierarchy;
+- WatchAction primary / secondary hierarchy;
+- restrained Tonight's Pick closure styling.
+
+Do not change Duel or coin behavior in this phase.
+
+#### Expected files
+
+Likely:
+
+- `src/components/DecisionMode.tsx`
+- `src/components/WatchAction.tsx`
+- `src/styles.css`
+- focused existing tests if markup / labels change
+
+Avoid unrelated files.
+
+#### Phase 1 Acceptance
+
+- `Find where to watch` is the clear primary next action;
+- existing general search URL behavior is reused;
+- JustWatch / Letterboxd / TMDB remain available as secondary destinations;
+- disclaimer remains;
+- Favorite and Share Pick remain available but subordinate;
+- Change My Mind and Back to Browsing remain available but visually quiet;
+- Back to Browsing is no longer a competing primary action;
+- no V7.1 semantics change;
+- no upstream control styling regression;
+- keyboard / focus behavior remains intact;
+- mobile hierarchy remains understandable;
+- tests/build pass.
+
+---
+
+### Phase 2 — Duel Atmosphere
+
+Implement only Duel visual composition.
+
+Expected work:
+
+- stronger finalist presence;
+- deliberate desktop spacing;
+- clearer separation of deciding differences;
+- quieter surrounding UI;
+- intentional mobile vertical composition;
+- optional CSS-only Duel entrance if it adds value without state complexity.
+
+Do not implement coin animation in this phase.
+
+#### Expected files
+
+Likely:
+
+- `src/components/DecisionMode.tsx` only if small semantic wrappers/classes are needed;
+- `src/styles.css`.
+
+#### Phase 2 Acceptance
+
+- exact Duel finalist semantics unchanged;
+- pairwise copy unchanged;
+- favorite and finish-time behavior unchanged;
+- Back to All Three unchanged;
+- desktop finalists feel visually distinct from generic cards;
+- mobile remains single-column and deliberate;
+- no horizontal overflow;
+- no score / versus / winner treatment;
+- reduced-motion remains valid;
+- tests/build pass.
+
+---
+
+### Phase 3 — Tactile Coin
+
+Implement only tactile coin interaction.
+
+Expected work:
+
+- minimal `flipping` presentation state if required;
+- preserve existing random winner selection;
+- delay visible result only for the short flip;
+- native CSS 3D coin treatment;
+- reduced-motion fallback;
+- retain existing gut-check controls and semantics.
+
+#### Expected files
+
+Likely:
+
+- `src/components/DecisionMode.tsx`
+- `src/styles.css`
+- `src/components/DecisionMode.test.tsx` or focused equivalent
+
+No new dependency.
+
+#### Phase 3 Acceptance
+
+- click still selects one of the exact two finalist IDs;
+- visual coin flips briefly before result appears under normal motion settings;
+- result settles in under roughly one second;
+- no multi-stage suspense;
+- no casino / game-show styling;
+- Gut check copy remains;
+- user can still choose the other finalist;
+- reduced-motion path does not rely on spinning;
+- no animation library;
+- no DecisionState schema change;
+- tests/build pass.
+
+---
+
+### Phase 4 — Integrated Visual Acceptance
+
+Do not add features.
+
+Do not broaden scope.
+
+Review the integrated V7.2 result only.
+
+Allowed work:
+
+- small spacing corrections;
+- responsive fixes;
+- contrast fixes;
+- focus-state fixes;
+- animation timing refinement;
+- overflow fixes;
+- class leakage corrections.
+
+Not allowed:
+
+- new visual concepts;
+- new surfaces;
+- new animations;
+- upstream redesign;
+- "while we're here" cleanup.
+
+#### Phase 4 Acceptance
+
+V7.2 should satisfy:
+
+```text
+Glimpse remains light.
+Duel feels narrower and more consequential.
+Coin feels tactile but not playful/casino-like.
+Tonight's Pick feels resolved.
+The next real-world action is obvious.
+```
+
+---
+
+## V7.2 Required Automated Verification
+
+Use existing Vitest tooling.
+
+Do not add a new UI testing framework solely for V7.2.
+
+At minimum preserve all existing V7.1 tests.
+
+Add/update focused tests only where behavior-bearing markup changes.
+
+### WatchAction
+
+Verify:
+
+- general search link still uses the existing general search builder;
+- JustWatch remains available;
+- Letterboxd remains available;
+- TMDB remains available;
+- disclaimer remains.
+
+If visible label changes from `General search` to `Find where to watch`, update focused assertions accordingly.
+
+### DecisionMode
+
+Preserve tests for:
+
+- V6 Form B;
+- V6 silence;
+- manual Drop One;
+- Duel finalists;
+- favorite controls;
+- Tonight's Pick;
+- finish-time cue.
+
+For coin behavior, add coverage for stable state semantics rather than animation pixels.
+
+Do not snapshot CSS animation internals.
+
+---
+
+## V7.2 Manual / Runtime Verification
+
+After each phase, perform focused runtime smoke checks.
+
+After full V7.2 integration, verify:
+
+### Glimpse / Refine protection
+
+- Glimpse content remains unchanged;
+- no new Glimpse animation or visual weight;
+- Refine controls remain usable and visually stable.
+
+### Full Reveal protection
+
+- Direct Pick still works;
+- finish-time cue still appears;
+- Favorite still works;
+- More Like This / More Details still work.
+
+### Duel
+
+- exact finalists preserved;
+- finish-time cues preserved;
+- favorites preserved;
+- deciding differences readable;
+- desktop spacing intentional;
+- mobile vertical flow intentional;
+- Back to All Three works.
+
+### Coin
+
+- flip is short;
+- result is readable;
+- Gut check appears correctly;
+- user can accept or reject result;
+- reduced-motion behavior works.
+
+### Tonight's Pick
+
+- poster/title hierarchy is strong;
+- `Find where to watch` is obvious;
+- all secondary watch destinations remain available;
+- Favorite works;
+- Share Pick works;
+- Change My Mind works;
+- Back to Browsing works;
+- finish-time cue remains;
+- no action hierarchy confusion.
+
+### Accessibility
+
+Verify:
+
+- keyboard navigation;
+- focus-visible treatment;
+- narrow mobile viewport;
+- `prefers-reduced-motion`.
+
+---
+
+## V7.2 Validation
+
+Before V7.2 is accepted:
+
+```text
+pnpm test
+pnpm build
+```
+
+Both must pass.
+
+Also perform production/runtime smoke testing because V7.2 is primarily experiential and cannot be accepted from unit tests alone.
+
+If deployed before release, verify GitHub Pages deployment success.
+
+---
+
+## V7.2 Acceptance Criteria
+
+V7.2 is accepted only if:
+
+1. V7.1 functional behavior remains unchanged;
+2. Glimpse remains structurally and visually lightweight;
+3. Refine is not redesigned;
+4. existing typography and palette remain the product foundation;
+5. Tonight's Pick has one clear primary real-world action;
+6. `Find where to watch` reuses the existing general search destination;
+7. service-specific WatchAction links remain available but secondary;
+8. streaming availability is not claimed;
+9. Share / Favorite remain available;
+10. reversal / browsing actions are visually subordinate;
+11. Duel feels more final without introducing scoring or winner semantics;
+12. Duel remains intentionally usable on mobile;
+13. coin flip gains short tactile motion;
+14. coin result semantics remain a gut check;
+15. reduced-motion users do not depend on 3D animation;
+16. no animation library is added;
+17. no outgoing-state transition machinery is introduced;
+18. no V6 / V7.1 recommendation or decision semantics change;
+19. no URL schema change occurs;
+20. existing tests remain green;
+21. production build passes;
+22. desktop/mobile runtime smoke passes;
+23. accessibility smoke passes.
 
 ---
 
@@ -965,19 +2020,17 @@ Only after these criteria pass should V7.1 be considered ready for release/taggi
 
 ---
 
-# Release / Sequencing Boundary
+# Release / Sequencing
 
-The intended sequence is:
+The completed sequence to date:
 
 ```text
 v6.0.0
--> V7.1 Functional Deference
--> v7.1.0 release checkpoint
--> Claude visual-system handoff
--> V7.2 Cinematic Expression specification update
+-> V7.1 Functional Deference (Phases 1–4)
+-> v7.1.0 release checkpoint  ← released
+-> V7.2 Earned Atmosphere specification locked  ← current
 -> V7.2 implementation
+-> v7.2.0 release checkpoint
 ```
 
-Do not start V7.2 merely because V7.1 is complete.
-
-V7.2 requires its own locked visual/product direction before code changes begin.
+Do not tag or release V7.2 until integrated runtime verification passes.
