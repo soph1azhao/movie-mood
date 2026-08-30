@@ -1,0 +1,608 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Movie Mood — V8 · Editorial Wire 3C · Variant P · Native Poster 2:3</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;0,900;1,500;1,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root{
+  --ground:#18120e;
+  --ink:#f3ece2;
+  --ink-dim:#b7a99a;
+  --ink-faint:#7c6f61;
+  --line:#372d24;
+  --line-soft:#241c16;
+  --accent:#c8492b;
+  --accent-soft:rgba(200,73,43,.14);
+  --display:'Fraunces', Georgia, serif;
+  --sans:'Inter', Arial, sans-serif;
+  --mono:'IBM Plex Mono', monospace;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;}
+a{color:inherit;}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer;padding:0;}
+.wrap{width:min(1220px, calc(100% - 64px));margin:0 auto;}
+img,svg{display:block;max-width:100%;}
+
+.corner-tag{position:fixed;left:20px;bottom:20px;z-index:50;display:flex;align-items:center;gap:8px;padding:10px 14px;border:1px solid var(--line);background:rgba(24,18,14,.92);backdrop-filter:blur(6px);font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;text-decoration:none;color:var(--ink-dim);transition:border-color .2s ease,color .2s ease;}
+.corner-tag:hover{border-color:var(--accent);color:var(--ink);}
+.corner-tag span{color:var(--accent);}
+
+.eyebrow{margin:0;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);}
+.eyebrow.accent{color:var(--accent);}
+.tag-num{font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:.05em;}
+
+/* frame-rhythm threshold rule — used only at commitment transitions */
+.threshold{height:5px;margin:0;background-image:repeating-linear-gradient(90deg, var(--line) 0 2px, transparent 2px 14px);opacity:.8;}
+
+header.site{border-bottom:1px solid var(--line-soft);}
+.site-inner{height:86px;display:flex;align-items:center;justify-content:space-between;}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:600;font-size:15px;font-family:var(--display);}
+.brand-mark{width:26px;height:26px;border:1px solid var(--accent);border-radius:50%;color:var(--accent);display:grid;place-items:center;font-size:16px;font-family:Georgia,serif;}
+.gh{font-family:var(--mono);font-size:11px;color:var(--ink-faint);text-decoration:none;}
+.gh:hover{color:var(--ink);}
+
+.hero{padding:104px 0 116px;}
+.hero h1{margin:22px 0 22px;font-family:var(--display);font-weight:700;font-size:clamp(46px,7.4vw,100px);line-height:.98;letter-spacing:-.02em;color:var(--accent);}
+.hero h1 i{font-style:italic;font-weight:500;}
+.hero-copy{max-width:420px;color:var(--ink-dim);font-size:16px;line-height:1.65;}
+
+.section-head{display:grid;grid-template-columns:60px 1fr;gap:16px;align-items:start;margin-bottom:44px;}
+.section-head h2{margin:8px 0 0;font-family:var(--display);font-weight:600;font-size:clamp(26px,3.2vw,44px);line-height:1.05;letter-spacing:-.01em;}
+.section-head .sub{margin:14px 0 0;max-width:480px;color:var(--ink-dim);font-size:14px;line-height:1.6;}
+section{padding:84px 0;border-top:1px solid var(--line-soft);}
+.head-row{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:8px;}
+
+/* mood — inline editorial nav line */
+.mood-line{display:flex;flex-wrap:wrap;align-items:baseline;gap:0;row-gap:16px;}
+.mood-item{display:flex;align-items:baseline;}
+.mood-item:not(:last-child)::after{content:'·';margin:0 18px;color:var(--ink-faint);font-size:20px;}
+.mood-btn{font-family:var(--display);font-size:19px;color:var(--ink-faint);font-weight:500;border-bottom:1px solid transparent;padding-bottom:3px;transition:color .2s ease;}
+.mood-btn:hover{color:var(--ink-dim);}
+.mood-item.is-selected .mood-btn{color:var(--accent);font-size:clamp(30px,3.6vw,46px);font-weight:600;border-bottom-color:var(--accent);}
+.mood-selected-note{margin:18px 0 0;font-family:var(--mono);font-size:11px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.06em;}
+
+/* glimpse — three-across, equal weight (3C · Overlap & Bleed) */
+.trio-grid-3c{display:flex;align-items:stretch;gap:0 34px;}
+.trio-card-3c{flex:1 1 0;min-width:0;}
+.trio-imgwrap-3c{position:relative;}
+.trio-img-3c{aspect-ratio:2/3;background:linear-gradient(135deg,var(--p1),var(--p2));position:relative;}
+.trio-img-3c::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(24,18,14,.94),transparent 48%);}
+.trio-bleed-3c{position:relative;z-index:1;margin:-0.6em 0 0;padding:0 2px;font-family:var(--display);font-weight:900;font-size:clamp(27px,2.6vw,38px);line-height:.94;color:var(--ink);letter-spacing:-.02em;}
+.trio-index-3c{margin:16px 0 10px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);}
+.trio-hook-3c{margin:0;font-family:var(--display);font-style:italic;font-size:14.5px;line-height:1.55;color:var(--ink-dim);}
+
+@media (max-width:860px){
+  .trio-grid-3c{gap:0 20px;}
+  .trio-bleed-3c{font-size:clamp(22px,2.4vw,30px);}
+}
+@media (max-width:620px){
+  .trio-grid-3c{flex-direction:column;gap:0;}
+  .trio-card-3c:not(:last-child){margin-bottom:40px;}
+}
+
+.cue-pill{display:inline-block;padding:5px 9px;border:1px solid var(--line);font-family:var(--mono);font-size:9px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-dim);}
+.link-btn.quiet{font-size:9px;color:var(--ink-faint);}
+.link-btn.quiet:hover{color:var(--ink-dim);}
+.bridge{margin-top:40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;padding-top:26px;border-top:1px solid var(--line-soft);}
+.bridge p{margin:0;color:var(--ink-dim);font-size:14px;font-style:italic;font-family:var(--display);}
+.link-btn{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding-bottom:4px;border-bottom:1px solid var(--ink-faint);transition:color .2s ease,border-color .2s ease;}
+.link-btn:hover{color:var(--ink);border-color:var(--ink);}
+.link-btn.primary{color:var(--accent);border-color:var(--accent);}
+
+/* refine */
+.refine-group{margin-bottom:28px;}
+.refine-group:last-child{margin-bottom:0;}
+.refine-label{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:12px;}
+.refine-row{display:flex;flex-wrap:wrap;gap:8px 22px;}
+.word-chip{font-family:var(--sans);font-size:13px;color:var(--ink-dim);padding:6px 0;border-bottom:1px solid transparent;transition:color .2s ease,border-color .2s ease;}
+.word-chip:hover{color:var(--ink);}
+.word-chip.is-selected{color:var(--accent);border-color:var(--accent);}
+
+.reveal-eyebrow{font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin:0 0 10px;}
+
+/* full reveal — three-across, equal weight (3C · Overlap & Bleed) */
+.trio-reveal-grid-3c{display:flex;align-items:flex-start;gap:0 34px;}
+.trio-reveal-card-3c{flex:1 1 0;min-width:0;}
+.trio-reveal-eyebrow-3c{margin:0 0 14px;font-family:var(--mono);font-size:10px;color:var(--ink-faint);letter-spacing:.1em;text-transform:uppercase;}
+.trio-reveal-imgwrap-3c{position:relative;}
+.trio-reveal-img-3c{aspect-ratio:2/3;background:linear-gradient(135deg,var(--p1),var(--p2));position:relative;}
+.trio-reveal-img-3c::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(24,18,14,.94),transparent 52%);}
+.trio-reveal-bleed-3c{position:relative;z-index:1;margin:-0.56em 0 0;padding:0 2px;font-family:var(--display);font-weight:900;font-size:clamp(26px,2.4vw,34px);line-height:.96;color:var(--ink);letter-spacing:-.015em;}
+.trio-reveal-quote-3c{margin:16px 0 18px;font-family:var(--display);font-style:italic;font-size:16px;line-height:1.5;color:var(--ink);}
+.trio-reveal-card-3c > a.link-btn.primary{display:inline-block;margin:0 0 16px;}
+.trio-reveal-quiet-row-3c{display:flex;gap:16px;margin:0 0 22px;}
+.trio-reveal-whisper-3c{margin:0 0 2px;font-family:var(--mono);font-size:9.5px;color:var(--ink-faint);opacity:.8;letter-spacing:.02em;}
+.trio-reveal-whisper-cluster-3c{margin-top:18px;}
+.trio-details{display:none;margin-top:18px;padding-top:18px;border-top:1px solid var(--line-soft);}
+.trio-details.is-open{display:block;}
+.trio-details p{margin:0 0 12px;font-size:13px;line-height:1.65;color:var(--ink-dim);}
+.trio-details dl{display:grid;grid-template-columns:auto 1fr;gap:5px 10px;margin:0;font-size:11px;}
+.trio-details dt{font-family:var(--mono);color:var(--ink-faint);text-transform:uppercase;letter-spacing:.04em;}
+.trio-details dd{margin:0;color:var(--ink-dim);}
+
+@media (max-width:860px){
+  .trio-reveal-grid-3c{gap:0 20px;}
+  .trio-reveal-bleed-3c{font-size:clamp(21px,2.2vw,27px);}
+}
+@media (max-width:620px){
+  .trio-reveal-grid-3c{flex-direction:column;gap:0;}
+  .trio-reveal-card-3c:not(:last-child){margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--line-soft);}
+}
+/* decision */
+.slate-row{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.slate-card{display:flex;flex-direction:column;gap:12px;transition:opacity .25s ease;}
+.slate-card.is-dropped{opacity:.32;}
+.slate-swatch{aspect-ratio:2/3;background:linear-gradient(135deg,var(--p1),var(--p2));}
+.slate-card h4{margin:0;font-family:var(--display);font-weight:600;font-size:20px;}
+.slate-card .cue{font-family:var(--display);font-style:italic;color:var(--ink-dim);font-size:13px;line-height:1.5;margin:0;flex:1;}
+.slate-actions{display:flex;justify-content:space-between;gap:10px;}
+.slate-actions .link-btn{font-size:9px;}
+.duel-cta{margin-top:34px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+.duel-cta p{margin:0;color:var(--ink-dim);font-family:var(--display);font-style:italic;font-size:14px;}
+
+/* duel */
+.duel-field{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:0;}
+.duel-side{padding:0 8px;}
+.duel-poster{aspect-ratio:2/3;background:linear-gradient(135deg,var(--p1),var(--p2));margin-bottom:20px;}
+.duel-side h3{margin:0 0 10px;font-family:var(--display);font-weight:700;font-size:clamp(24px,2.6vw,32px);}
+.duel-side .cue{font-family:var(--display);font-style:italic;color:var(--ink-dim);font-size:14px;line-height:1.55;max-width:34ch;margin:0 0 20px;}
+.duel-mid{padding:0 26px;height:220px;}
+@media (min-width:640px){.duel-mid .threshold{height:220px;width:5px;background-image:repeating-linear-gradient(180deg, var(--line) 0 2px, transparent 2px 14px);}}
+
+.coin-row{margin-top:52px;display:flex;align-items:center;gap:22px;flex-wrap:wrap;}
+.coin-btn{width:76px;height:76px;border-radius:50%;border:1px solid var(--ink-faint);display:grid;place-items:center;font-family:var(--mono);font-size:9px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-dim);transition:border-color .2s ease,color .2s ease;flex:0 0 auto;}
+.coin-btn:hover{border-color:var(--accent);color:var(--accent);}
+.coin-btn.is-flipping{animation:coinspin .7s ease;}
+@keyframes coinspin{0%{transform:rotateY(0);}50%{transform:rotateY(540deg) scale(1.08);}100%{transform:rotateY(1080deg);}}
+.coin-result{display:none;font-size:14px;color:var(--ink-dim);}
+.coin-result.is-visible{display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+.coin-result strong{font-family:var(--display);color:var(--accent);font-size:20px;font-weight:600;}
+
+/* tonight's pick */
+.pick-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:0 48px;align-items:center;}
+.pick-poster{aspect-ratio:2/3;background:linear-gradient(135deg,var(--p1),var(--p2));}
+.pick-body{margin-left:-56px;padding-left:56px;}
+.pick-body h2{margin:0 0 10px;font-family:var(--display);font-weight:700;font-size:clamp(42px,6vw,92px);line-height:.92;color:var(--accent);}
+.pick-meta{font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin-bottom:24px;}
+.pick-vibe{font-family:var(--display);font-style:italic;color:var(--ink-dim);font-size:17px;line-height:1.6;max-width:520px;margin-bottom:26px;}
+.pick-reasons{list-style:none;margin:0 0 32px;padding:0;display:grid;gap:9px;}
+.pick-reasons li{padding-left:20px;position:relative;font-size:14px;line-height:1.55;color:var(--ink);}
+.pick-reasons li::before{content:'—';position:absolute;left:0;color:var(--accent);}
+.watch-row{display:flex;flex-wrap:wrap;gap:22px;align-items:center;margin-bottom:22px;}
+.watch-primary{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);border-bottom:1px solid var(--accent);padding-bottom:4px;}
+.watch-secondary{display:flex;gap:16px;flex-wrap:wrap;}
+.watch-secondary a{font-family:var(--mono);font-size:10px;color:var(--ink-faint);text-decoration:none;}
+.watch-secondary a:hover{color:var(--ink-dim);}
+.pick-footer-actions{display:flex;gap:22px;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-faint);}
+.pick-footer-actions a{text-decoration:none;}
+.pick-footer-actions a:hover{color:var(--ink-dim);}
+
+footer.site{border-top:1px solid var(--line-soft);padding:34px 0 60px;font-family:var(--mono);font-size:10px;color:var(--ink-faint);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+
+@media (max-width:900px){
+  .wrap{width:min(100% - 40px,1220px);}
+  .slate-row{grid-template-columns:1fr;}
+  .duel-field{grid-template-columns:1fr;}
+  .duel-mid{padding:20px 0;height:auto;}
+  .duel-mid .threshold{height:5px;}
+  .pick-grid{grid-template-columns:1fr;}
+  .pick-body{margin:0;padding:0;margin-top:24px;}
+  .section-head{grid-template-columns:1fr;}
+}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms !important;transition-duration:.01ms !important;}}
+
+.geo-badge{position:fixed;right:20px;bottom:20px;z-index:50;padding:10px 14px;border:1px solid var(--accent);background:rgba(24,18,14,.92);backdrop-filter:blur(6px);font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);}
+</style>
+</head>
+<body>
+
+<a class="corner-tag" href="editorial-wire-3c-geometry-comparison.html">← Geometry comparison <span>· Variant P · Native Poster 2:3</span></a>
+
+<div class="geo-badge">GEOMETRY: 2:3 · NATIVE POSTER</div>
+<header class="site">
+  <div class="wrap site-inner">
+    <a class="brand" href="#top"><span class="brand-mark">◐</span>Movie Mood</a>
+    <a class="gh" href="#" onclick="return false;">GitHub ↗</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="top" style="border-top:none;">
+    <div class="wrap">
+      <p class="eyebrow accent">● A better way to pick a movie</p>
+      <h1>Find the right film<br>for <i>right now.</i></h1>
+      <p class="hero-copy">A small, considered shortlist for whatever kind of night you're having.</p>
+    </div>
+  </section>
+
+  <section id="mood">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="tag-num">01</p>
+        <div>
+          <p class="eyebrow">Start with the feeling</p>
+          <h2>What are you in the mood for?</h2>
+          <p class="sub">Not completely sure? Pick the closest feeling — we'll narrow it from there.</p>
+        </div>
+      </div>
+      <div class="mood-line" id="moodList">
+        <span class="mood-item"><button class="mood-btn">Funny</button></span>
+        <span class="mood-item"><button class="mood-btn">Exciting</button></span>
+        <span class="mood-item is-selected"><button class="mood-btn">Thought&#8209;provoking</button></span>
+        <span class="mood-item"><button class="mood-btn">Relaxing</button></span>
+        <span class="mood-item"><button class="mood-btn">Emotional</button></span>
+        <span class="mood-item"><button class="mood-btn">Suspenseful</button></span>
+      </div>
+      <p class="mood-selected-note" id="moodNote">For the curious — tonight leans thought&#8209;provoking.</p>
+    </div>
+  </section>
+
+  <section id="glimpse">
+    <div class="wrap">
+      <div class="head-row">
+        <div class="section-head" style="margin-bottom:0;">
+          <p class="tag-num">02</p>
+          <div>
+            <p class="eyebrow">First glimpse</p>
+            <h2>Anything here pull you in?</h2>
+          </div>
+        </div>
+        <button class="link-btn" id="reshuffleBtn">Another three ↻</button>
+      </div>
+      <div class="trio-grid-3c" id="storyGrid">
+      <article class="trio-card-3c">
+        <div class="trio-imgwrap-3c">
+          <div class="trio-img-3c" style="--p1:#2d4c34;--p2:#9aaa4e;"></div>
+          <h3 class="trio-bleed-3c">Parasite</h3>
+        </div>
+        <p class="trio-index-3c">Glimpse 01</p>
+        <p class="trio-hook-3c">One family&#8217;s clever plan opens a trapdoor beneath another family&#8217;s perfect home.</p>
+      </article>
+      <article class="trio-card-3c">
+        <div class="trio-imgwrap-3c">
+          <div class="trio-img-3c" style="--p1:#77bbce;--p2:#f4d55c;"></div>
+          <h3 class="trio-bleed-3c">The Truman Show</h3>
+        </div>
+        <p class="trio-index-3c">Glimpse 02</p>
+        <p class="trio-hook-3c">A sunny seaside life begins to show the edges of its invisible set.</p>
+      </article>
+      <article class="trio-card-3c">
+        <div class="trio-imgwrap-3c">
+          <div class="trio-img-3c" style="--p1:#5e7c74;--p2:#d6a85e;"></div>
+          <h3 class="trio-bleed-3c">The Farewell</h3>
+        </div>
+        <p class="trio-index-3c">Glimpse 03</p>
+        <p class="trio-hook-3c">A fake wedding gives one family a reason to say goodbye without saying it aloud.</p>
+      </article>
+      </div>
+      <div class="bridge">
+        <p>Still circling? Tune the room. Already tempted? Read on.</p>
+        <div style="display:flex;gap:24px;">
+          <a class="link-btn" href="#refine">Refine tonight</a>
+          <a class="link-btn primary" href="#reveal">Take a closer look</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+<section id="refine">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="tag-num">—</p>
+        <div>
+          <p class="eyebrow">Set the room</p>
+          <h2 style="font-size:clamp(24px,2.6vw,32px);">Getting warmer?</h2>
+        </div>
+      </div>
+      <div class="refine-group">
+        <p class="refine-label">Tonight is</p>
+        <div class="refine-row" id="situationRow">
+          <button class="word-chip">No preference</button>
+          <button class="word-chip is-selected">Quiet night alone</button>
+          <button class="word-chip">Date night</button>
+          <button class="word-chip">With friends</button>
+          <button class="word-chip">Family movie night</button>
+          <button class="word-chip">Don't want to think too hard</button>
+        </div>
+      </div>
+      <div class="refine-group">
+        <p class="refine-label">Genre</p>
+        <div class="refine-row" id="genreRow">
+          <button class="word-chip is-selected">Comedy</button>
+          <button class="word-chip">Drama</button>
+          <button class="word-chip">Thriller</button>
+          <button class="word-chip">Animation</button>
+          <button class="word-chip">Romance</button>
+        </div>
+      </div>
+      <div class="refine-group">
+        <p class="refine-label">Pace</p>
+        <div class="refine-row" id="paceRow">
+          <button class="word-chip">Slow</button>
+          <button class="word-chip is-selected">Medium</button>
+          <button class="word-chip">Fast</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap"><div class="threshold" aria-hidden="true"></div></div>
+
+  <section id="reveal" style="border-top:none;">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="tag-num">02b</p>
+        <div>
+          <p class="eyebrow">A closer look</p>
+          <h2>For a thought-provoking kind of night.</h2>
+        </div>
+      </div>
+
+      <div class="trio-reveal-grid-3c">
+      <article class="trio-reveal-card-3c">
+        <p class="trio-reveal-eyebrow-3c">Pick 01</p>
+        <div class="trio-reveal-imgwrap-3c">
+          <div class="trio-reveal-img-3c" style="--p1:#2d4c34;--p2:#9aaa4e;"></div>
+          <h3 class="trio-reveal-bleed-3c">Parasite</h3>
+        </div>
+        <p class="trio-reveal-quote-3c">So entertaining that its social observations sneak up on you — then stay with you.</p>
+        <a class="link-btn primary" href="#" onclick="return false;">That&#8217;s the one</a>
+        <div class="trio-reveal-quiet-row-3c">
+          <button class="link-btn quiet">More like this</button>
+          <button class="link-btn quiet details-toggle" data-target="d1">More details</button>
+        </div>
+        <div class="trio-reveal-whisper-cluster-3c">
+          <p class="trio-reveal-whisper-3c">2019 · 132 min · Ends around 1:12 AM</p>
+          <p class="trio-reveal-whisper-3c">Thriller · Drama</p>
+        </div>
+        <span class="cue-pill" style="margin-top:10px;">Emotionally weighty</span>
+        <div class="trio-details" id="d1">
+          <p>A cash-strapped family slowly inserts itself into the household of a wealthy Seoul family.</p>
+          <dl><dt>Languages</dt><dd>Korean</dd><dt>Attention</dt><dd>Full immersion</dd><dt>Discovery</dt><dd>Surprise me</dd></dl>
+        </div>
+      </article>
+      <article class="trio-reveal-card-3c">
+        <p class="trio-reveal-eyebrow-3c">Pick 02</p>
+        <div class="trio-reveal-imgwrap-3c">
+          <div class="trio-reveal-img-3c" style="--p1:#77bbce;--p2:#f4d55c;"></div>
+          <h3 class="trio-reveal-bleed-3c">The Truman Show</h3>
+        </div>
+        <p class="trio-reveal-quote-3c">Bright and approachable on the surface, with questions that feel more relevant every year.</p>
+        <a class="link-btn primary" href="#" onclick="return false;">That&#8217;s the one</a>
+        <div class="trio-reveal-quiet-row-3c">
+          <button class="link-btn quiet">More like this</button>
+          <button class="link-btn quiet details-toggle" data-target="d2">More details</button>
+        </div>
+        <div class="trio-reveal-whisper-cluster-3c">
+          <p class="trio-reveal-whisper-3c">1998 · 103 min · Ends around 12:43 AM</p>
+          <p class="trio-reveal-whisper-3c">Comedy · Drama</p>
+        </div>
+        <span class="cue-pill" style="margin-top:10px;">Keeps you engaged</span>
+        <div class="trio-details" id="d2">
+          <p>A cheerful insurance salesman begins to suspect that every detail of his life is being staged.</p>
+          <dl><dt>Languages</dt><dd>English</dd><dt>Attention</dt><dd>Keep me engaged</dd><dt>Discovery</dt><dd>Keep it familiar</dd></dl>
+        </div>
+      </article>
+      <article class="trio-reveal-card-3c">
+        <p class="trio-reveal-eyebrow-3c">Pick 03</p>
+        <div class="trio-reveal-imgwrap-3c">
+          <div class="trio-reveal-img-3c" style="--p1:#5e7c74;--p2:#d6a85e;"></div>
+          <h3 class="trio-reveal-bleed-3c">The Farewell</h3>
+        </div>
+        <p class="trio-reveal-quote-3c">Gentle, funny, and piercing about love, duty, and what families choose to carry together.</p>
+        <a class="link-btn primary" href="#" onclick="return false;">That&#8217;s the one</a>
+        <div class="trio-reveal-quiet-row-3c">
+          <button class="link-btn quiet">More like this</button>
+          <button class="link-btn quiet details-toggle" data-target="d3">More details</button>
+        </div>
+        <div class="trio-reveal-whisper-cluster-3c">
+          <p class="trio-reveal-whisper-3c">2019 · 100 min · Ends around 12:40 AM</p>
+          <p class="trio-reveal-whisper-3c">Comedy · Drama</p>
+        </div>
+        <span class="cue-pill" style="margin-top:10px;">Keeps you engaged</span>
+        <div class="trio-details" id="d3">
+          <p>A family stages a wedding in China to gather around a grandmother who does not know she is ill.</p>
+          <dl><dt>Languages</dt><dd>English, Mandarin</dd><dt>Attention</dt><dd>Keep me engaged</dd><dt>Discovery</dt><dd>Something different</dd></dl>
+        </div>
+      </article>
+      </div>
+    </div>
+  </section>
+
+  
+<section id="decision">
+    <div class="wrap">
+      <div class="head-row">
+        <div class="section-head" style="margin-bottom:0;">
+          <p class="tag-num">03</p>
+          <div>
+            <p class="eyebrow">Decision mode</p>
+            <h2 style="font-size:clamp(26px,3vw,40px);">Three good options.<br>One calmer choice.</h2>
+          </div>
+        </div>
+      </div>
+      <div class="slate-row">
+        <div class="slate-card">
+          <div class="slate-swatch" style="--p1:#2d4c34;--p2:#9aaa4e;"></div>
+          <h4>Parasite</h4>
+          <p class="cue">Sharp, tense, and darkly funny before it turns much heavier.</p>
+          <div class="slate-actions">
+            <span class="link-btn">Not tonight</span>
+            <span class="link-btn primary">Choose this tonight</span>
+          </div>
+        </div>
+        <div class="slate-card is-dropped">
+          <div class="slate-swatch" style="--p1:#77bbce;--p2:#f4d55c;"></div>
+          <h4>The Truman Show</h4>
+          <p class="cue">Bright and approachable, with questions that feel relevant every year.</p>
+          <div class="slate-actions">
+            <span class="link-btn" style="color:var(--accent);border-color:var(--accent);">✓ Not tonight</span>
+            <span class="link-btn">Choose anyway</span>
+          </div>
+        </div>
+        <div class="slate-card">
+          <div class="slate-swatch" style="--p1:#5e7c74;--p2:#d6a85e;"></div>
+          <h4>The Farewell</h4>
+          <p class="cue">Tender and specific, with humor tucked inside complicated grief.</p>
+          <div class="slate-actions">
+            <span class="link-btn">Not tonight</span>
+            <span class="link-btn primary">Choose this tonight</span>
+          </div>
+        </div>
+      </div>
+      <div class="duel-cta">
+        <p>Good — the remaining two can settle it head-to-head.</p>
+        <a class="link-btn primary" href="#duel">Start the duel →</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap"><div class="threshold" aria-hidden="true"></div></div>
+
+  <section id="duel" style="border-top:none;">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="tag-num">04</p>
+        <div>
+          <p class="eyebrow">Final duel</p>
+          <h2>Which one feels more like tonight?</h2>
+        </div>
+      </div>
+      <div class="duel-field">
+        <div class="duel-side">
+          <div class="duel-poster" style="--p1:#2d4c34;--p2:#9aaa4e;"></div>
+          <p class="reveal-eyebrow">Finalist 1</p>
+          <h3>Parasite</h3>
+          <p class="cue">132 min · Higher intensity — the sharper, less comfortable pick of the two.</p>
+          <button class="link-btn primary">Choose this tonight</button>
+        </div>
+        <div class="duel-mid"><div class="threshold" aria-hidden="true"></div></div>
+        <div class="duel-side">
+          <div class="duel-poster" style="--p1:#5e7c74;--p2:#d6a85e;"></div>
+          <p class="reveal-eyebrow">Finalist 2</p>
+          <h3>The Farewell</h3>
+          <p class="cue">100 min · Culturally specific in a way Parasite isn't reaching for tonight.</p>
+          <button class="link-btn primary">Choose this tonight</button>
+        </div>
+      </div>
+      <div class="coin-row">
+        <button class="coin-btn" id="coinBtn">Flip a<br>coin</button>
+        <div class="coin-result" id="coinResult">
+          <span>Gut check —</span> <strong id="coinWinner">Parasite</strong>
+          <button class="link-btn primary" id="coinGo">Go with the coin</button>
+          <button class="link-btn" id="coinOther">Choose the other</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap"><div class="threshold" aria-hidden="true"></div></div>
+
+  <section class="pick-section" id="pick" style="border-top:none;">
+    <div class="wrap">
+      <p class="eyebrow accent" style="margin-bottom:10px;">Tonight's pick</p>
+      <div class="pick-grid">
+        <div class="pick-poster" style="--p1:#2d4c34;--p2:#9aaa4e;"></div>
+        <div class="pick-body">
+          <h2>Parasite</h2>
+          <p class="pick-meta">2019 · Bong Joon-ho · 132 min · Ends around 1:12 AM</p>
+          <p class="pick-vibe">Sharp, tense, and darkly funny before it turns much heavier.</p>
+          <ul class="pick-reasons">
+            <li>Fits your thought-provoking mood</li>
+            <li>Matches a quiet night alone</li>
+            <li>Rewards full immersion tonight</li>
+          </ul>
+          <div class="watch-row">
+            <a class="watch-primary" href="#" onclick="return false;">Find where to watch</a>
+            <div class="watch-secondary">
+              <a href="#" onclick="return false;">JustWatch</a>
+              <a href="#" onclick="return false;">Letterboxd</a>
+              <a href="#" onclick="return false;">TMDB</a>
+            </div>
+          </div>
+          <div class="pick-footer-actions">
+            <a href="#duel">Change my mind</a>
+            <a href="#top">Back to browsing</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+    <p>Editorial Wire 3C, poster geometry locked to Variant P · Native Poster 2:3 (2/3) at every stage and every viewport — desktop, tablet, and phone. Layout changes; the film object's shape does not.</p>
+    <p>This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
+  </div>
+</footer>
+
+<script>
+const moodNotes = {
+  'Funny':'A little lighter — tonight leans funny.',
+  'Exciting':'Turn it up — tonight leans exciting.',
+  'Thought\u2011provoking':'For the curious — tonight leans thought\u2011provoking.',
+  'Relaxing':'Ease into it — tonight leans relaxing.',
+  'Emotional':'Feel something — tonight leans emotional.',
+  'Suspenseful':'Keep you guessing — tonight leans suspenseful.'
+};
+document.querySelectorAll('#moodList .mood-item').forEach(item=>{
+  item.querySelector('.mood-btn').addEventListener('click',()=>{
+    document.querySelectorAll('#moodList .mood-item').forEach(i=>i.classList.remove('is-selected'));
+    item.classList.add('is-selected');
+    const label=item.querySelector('.mood-btn').textContent.trim();
+    document.getElementById('moodNote').textContent = moodNotes[label] || '';
+  });
+});
+function wireChipRow(id){
+  document.querySelectorAll('#'+id+' .word-chip').forEach(chip=>{
+    chip.addEventListener('click',()=>{
+      document.querySelectorAll('#'+id+' .word-chip').forEach(c=>c.classList.remove('is-selected'));
+      chip.classList.add('is-selected');
+    });
+  });
+}
+wireChipRow('situationRow'); wireChipRow('genreRow'); wireChipRow('paceRow');
+
+document.querySelectorAll('.details-toggle').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const panel=document.getElementById(btn.dataset.target);
+    const open=panel.classList.toggle('is-open');
+    btn.textContent= open ? 'Hide details' : 'More details';
+  });
+});
+
+document.getElementById('reshuffleBtn').addEventListener('click',()=>{
+  const grid=document.getElementById('storyGrid');
+  grid.style.transition='none'; grid.style.opacity='0'; grid.style.transform='translateY(6px)';
+  requestAnimationFrame(()=>{
+    grid.style.transition='opacity .4s ease, transform .4s ease';
+    grid.style.opacity='1'; grid.style.transform='translateY(0)';
+  });
+});
+
+const coinBtn=document.getElementById('coinBtn');
+const coinResult=document.getElementById('coinResult');
+const coinWinner=document.getElementById('coinWinner');
+coinBtn.addEventListener('click',()=>{
+  if(coinBtn.classList.contains('is-flipping')) return;
+  coinBtn.classList.add('is-flipping');
+  const names=['Parasite','The Farewell'];
+  const pick=names[Math.floor(Math.random()*2)];
+  setTimeout(()=>{
+    coinBtn.classList.remove('is-flipping');
+    coinWinner.textContent=pick;
+    coinResult.classList.add('is-visible');
+  },700);
+});
+</script>
+</body>
+</html>
