@@ -413,3 +413,43 @@ describe('DecisionMode V7.2 Phase 1 — Action Hierarchy + Tonight’s Pick + Wa
     expect(markup).not.toMatch(/class="[^"]*details-toggle[^"]*decision-primary[^"]*"[^>]*>Share pick/)
   })
 })
+
+describe('DecisionMode V7.2 Phase 3 — Tactile Coin', () => {
+  const rearWindow = getMovie('rear-window')
+  const petiteMaman = getMovie('petite-maman-2021')
+  const childrenOfMen = getMovie('children-of-men')
+
+  const duelState = {
+    kind: 'duel' as const,
+    finalistIds: [rearWindow.id, petiteMaman.id] as [string, string],
+    sourceThreeSlateIds: [rearWindow.id, childrenOfMen.id, petiteMaman.id] as [string, string, string],
+  }
+
+  it('renders tactile 3D Flip a coin button with native button semantics and accessible label', () => {
+    const markup = renderToStaticMarkup(
+      <DecisionMode
+        movies={movies}
+        mood="suspenseful"
+        situation={null}
+        filters={filters}
+        discoveryPreferences={discoveryPreferences}
+        state={duelState}
+        shareUrl="https://example.com"
+        isFavorite={noFavorite}
+        onToggleFavorite={noToggle}
+        onChange={() => undefined}
+        onExit={() => undefined}
+      />,
+    )
+
+    // Button trigger
+    expect(markup).toContain('Flip a coin')
+    expect(markup).toContain('aria-label="Flip a coin"')
+    expect(markup).toContain('coin-button')
+    expect(markup).toContain('coin-inner')
+    expect(markup).toContain('coin-face coin-front')
+    expect(markup).toContain('coin-face coin-back')
+    expect(markup).toMatch(/<button[^>]*type="button"[^>]*class="[^"]*coin-button[^"]*"/)
+  })
+})
+

@@ -130,6 +130,7 @@ export function DecisionMode({
   onExit,
 }: DecisionModeProps) {
   const [coinFlipWinnerId, setCoinFlipWinnerId] = useState<string | null>(null)
+  const [isCoinFlipping, setIsCoinFlipping] = useState(false)
   const [shareMessage, setShareMessage] = useState('')
   const allMoviesById = useMemo(() => new Map(movies.map((movie) => [movie.id, movie])), [movies])
 
@@ -143,7 +144,16 @@ export function DecisionMode({
   }
 
   function flipCoin(finalistIds: [string, string]) {
-    setCoinFlipWinnerId(finalistIds[Math.floor(Math.random() * finalistIds.length)])
+    if (isCoinFlipping) return
+    const chosenWinnerId = finalistIds[Math.floor(Math.random() * finalistIds.length)]
+    setCoinFlipWinnerId(chosenWinnerId)
+
+    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setIsCoinFlipping(false)
+      return
+    }
+
+    setIsCoinFlipping(true)
   }
 
   async function sharePick(movie: Movie) {
@@ -357,10 +367,25 @@ export function DecisionMode({
           </ul>
         )}
         <div className="coin-panel">
-          <button type="button" className="coin-button" onClick={() => flipCoin(state.finalistIds)}>
-            Flip a coin
+          <button
+            type="button"
+            className={`coin-button ${isCoinFlipping ? 'is-flipping' : ''}`}
+            disabled={isCoinFlipping}
+            aria-label="Flip a coin"
+            aria-busy={isCoinFlipping}
+            onClick={() => flipCoin(state.finalistIds)}
+            onAnimationEnd={(e) => {
+              if (e.animationName === 'coin-3d-flip' || e.target === e.currentTarget) {
+                setIsCoinFlipping(false)
+              }
+            }}
+          >
+            <span className="coin-inner" aria-hidden="true">
+              <span className="coin-face coin-front">Flip a coin</span>
+              <span className="coin-face coin-back">◐</span>
+            </span>
           </button>
-          {coinFlipWinnerId && allMoviesById.get(coinFlipWinnerId) && (
+          {coinFlipWinnerId && !isCoinFlipping && allMoviesById.get(coinFlipWinnerId) && (
             <div className="coin-result">
               <div className="coin-mark" aria-hidden="true">◐</div>
               <div>
