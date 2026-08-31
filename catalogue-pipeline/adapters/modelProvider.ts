@@ -40,6 +40,11 @@ function normalizeJsonOutput(rawOutput: unknown): Record<string, unknown> {
   })
 }
 
+function splitProviderMetadata(output: Record<string, unknown>) {
+  const { providerUsageMetadata, ...structuredOutput } = output
+  return { structuredOutput, providerUsageMetadata }
+}
+
 export function createModelCacheKey({
   stage,
   tmdbId,
@@ -115,7 +120,7 @@ export async function runStructuredModelRequest({
         responseFormat: 'json_object',
         temperature: provider.metadata.supportsTemperature ? (request.temperature ?? 0.1) : undefined,
       })
-      const output = normalizeJsonOutput(rawOutput)
+      const { structuredOutput: output, providerUsageMetadata } = splitProviderMetadata(normalizeJsonOutput(rawOutput))
       const validation = validateOutput?.(output)
 
       if (validation && !validation.ok) {
@@ -132,6 +137,7 @@ export async function runStructuredModelRequest({
           modelId: provider.metadata.modelId,
           attempts: attempt,
           structuredJson: true,
+          ...(providerUsageMetadata ? { providerUsageMetadata } : {}),
         },
       }
     } catch (error) {
