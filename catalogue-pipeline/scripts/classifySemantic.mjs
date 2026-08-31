@@ -187,7 +187,18 @@ export async function classifySemanticCandidate({
   if (await fileExists(cachePath)) {
     const artifact = await readJsonFile(cachePath)
     const wroteArtifact = await writeJsonFile(targetPath, artifact)
-    return { artifact, cacheKey, cachePath, outputPath: targetPath, cacheHit: true, modelCalls: 0, wroteArtifact }
+    return {
+      artifact,
+      cacheKey,
+      cachePath,
+      outputPath: targetPath,
+      cacheHit: true,
+      modelCalls: 0,
+      retries: 0,
+      classificationsCompleted: 1,
+      providerUsageMetadata: artifact.providerMetadata?.providerUsageMetadata ?? null,
+      wroteArtifact,
+    }
   }
 
   const modelResult = await runStructuredModelRequest({
@@ -238,7 +249,18 @@ export async function classifySemanticCandidate({
 
   await writeJsonFile(cachePath, artifact)
   const wroteArtifact = await writeJsonFile(targetPath, artifact)
-  return { artifact, cacheKey, cachePath, outputPath: targetPath, cacheHit: false, modelCalls: modelResult.metadata.attempts, wroteArtifact }
+  return {
+    artifact,
+    cacheKey,
+    cachePath,
+    outputPath: targetPath,
+    cacheHit: false,
+    modelCalls: modelResult.metadata.attempts,
+    retries: Math.max(0, modelResult.metadata.attempts - 1),
+    classificationsCompleted: 1,
+    providerUsageMetadata: modelResult.metadata.providerUsageMetadata ?? null,
+    wroteArtifact,
+  }
 }
 
 async function main() {

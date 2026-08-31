@@ -177,6 +177,16 @@ function assertFrozenPackets(first, second) {
   }
 }
 
+export function assertCalibrationResult(result, candidateId = 'unknown') {
+  if (!result || typeof result !== 'object') throw new CalibrationReplayError(`Classifier result contract is missing for ${candidateId}.`, { code: 'INVALID_CLASSIFIER_RESULT' })
+  if (!Number.isInteger(result.modelCalls) || result.modelCalls < 0) throw new CalibrationReplayError(`Classifier result contract has invalid modelCalls for ${candidateId}.`, { code: 'INVALID_CLASSIFIER_RESULT' })
+  if (typeof result.cacheHit !== 'boolean') throw new CalibrationReplayError(`Classifier result contract has invalid cacheHit for ${candidateId}.`, { code: 'INVALID_CLASSIFIER_RESULT' })
+  if (!Number.isInteger(result.retries) || result.retries < 0) throw new CalibrationReplayError(`Classifier result contract has invalid retries for ${candidateId}.`, { code: 'INVALID_CLASSIFIER_RESULT' })
+  if (result.classificationsCompleted !== 1) throw new CalibrationReplayError(`Classifier result contract has invalid classificationsCompleted for ${candidateId}.`, { code: 'INVALID_CLASSIFIER_RESULT' })
+  if (!Object.prototype.hasOwnProperty.call(result, 'providerUsageMetadata')) throw new CalibrationReplayError(`Classifier result contract omits providerUsageMetadata for ${candidateId}.`, { code: 'INVALID_CLASSIFIER_RESULT' })
+  return result
+}
+
 function setCompare(expectedValues, actualValues) {
   const expected = new Set(expectedValues)
   const actual = new Set(actualValues)
@@ -224,7 +234,16 @@ function summarize(firstResults, secondResults, packets) {
   const disagreements = []
   const ordered = Object.fromEntries(ORDERED_FIELDS.map((field) => [field, { exact: 0, adjacentBoundary: 0, severe: 0, total: 0 }]))
   const sets = Object.fromEntries(SET_FIELDS.map((field) => [field, { exactSetAgreement: 0, averageJaccard: 0, overTagged: 0, total: 0, perFilm: [] }]))
-  const usage = { requestCount: 0, inputTokens: 0, outputTokens: 0, reasoningTokens: 0, reasoningTokensExposed: false }
+  const usage = {
+    requestCount: 0,
+    cacheHits: 0,
+    retries: 0,
+    classificationsCompleted: 0,
+    inputTokens: 0,
+    outputTokens: 0,
+    reasoningTokens: 0,
+    reasoningTokensExposed: false,
+  }
 
   for (const entry of firstResults) {
     const artifact = entry.result.artifact
@@ -234,8 +253,12 @@ function summarize(firstResults, secondResults, packets) {
     const packet = packetById.get(id)
     if (!human || !packet) continue
 
+    assertCalibrationResult(entry.result, id)
     usage.requestCount += entry.result.modelCalls
-    const providerUsage = artifact.providerMetadata?.providerUsageMetadata ?? {}
+    usage.cacheHits += entry.result.cacheHit ? 1 : 0
+    usage.retries += entry.result.retries
+    usage.classificationsCompleted += entry.result.classificationsCompleted
+    const providerUsage = entry.result.providerUsageMetadata ?? {}
     usage.inputTokens += Number(providerUsage.promptTokenCount ?? 0)
     usage.outputTokens += Number(providerUsage.candidatesTokenCount ?? 0)
     if (providerUsage.thoughtsTokenCount !== undefined) {
@@ -316,7 +339,8 @@ async function runClassifierPass({ packets, provider, prompt, outputRoot, cacheR
       maxAttempts: 2,
     })
     results.push({ packet, result })
-    if (result.result.modelCalls > 0 && index < packets.length - 1) {
+    assertCalibrationResult(result, packet.candidateId)
+    if (result.modelCalls > 0 && index < packets.length - 1) {
       await new Promise((resolveDelay) => setTimeout(resolveDelay, LIVE_REQUEST_INTERVAL_MS))
     }
   }
