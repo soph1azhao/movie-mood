@@ -230,7 +230,7 @@ async function main() {
   console.log(`Fetches: ${result.fetchCount}; cache hits: ${result.cacheHits}`)
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   main().catch((error) => {
     console.error(redactSecret(error.message, process.env.TMDB_READ_ACCESS_TOKEN))
     process.exitCode = 1
