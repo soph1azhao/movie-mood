@@ -3,10 +3,57 @@
   "$id": "tmdb-facts.schema.json",
   "title": "Movie Mood Pipeline TMDB Facts",
   "type": "object",
-  "required": ["schemaVersion", "batchId", "facts"],
+  "required": ["schemaVersion", "batchId", "requestVersion", "generatedAt", "cacheKey", "facts", "validation"],
   "properties": {
     "schemaVersion": { "const": "tmdb-facts.v1" },
     "batchId": { "type": "string", "minLength": 1 },
-    "facts": { "type": "array" }
+    "requestVersion": { "type": "string", "minLength": 1 },
+    "generatedAt": { "type": "string", "minLength": 1 },
+    "cacheKey": { "type": "string", "minLength": 64, "maxLength": 64 },
+    "facts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "candidateId",
+          "tmdbId",
+          "title",
+          "year",
+          "director",
+          "countries",
+          "spokenLanguages",
+          "genres",
+          "runtimeMinutes",
+          "posterPath",
+          "posterAvailability",
+          "dataQualityFlags",
+          "factsHash"
+        ],
+        "properties": {
+          "candidateId": { "type": "string", "minLength": 1 },
+          "tmdbId": { "type": "integer", "minimum": 1 },
+          "title": { "type": "string", "minLength": 1 },
+          "year": { "type": "integer", "minimum": 1878 },
+          "director": { "type": "string", "minLength": 1 },
+          "countries": { "type": "array", "items": { "type": "string", "minLength": 1 }, "minItems": 1 },
+          "spokenLanguages": { "type": "array", "items": { "type": "string", "minLength": 1 }, "minItems": 1 },
+          "genres": { "type": "array", "items": { "type": "string", "minLength": 1 }, "minItems": 1 },
+          "runtimeMinutes": { "type": "integer", "minimum": 1 },
+          "posterPath": { "type": ["string", "null"] },
+          "posterAvailability": {
+            "type": "object",
+            "required": ["available", "path", "imageUrl"],
+            "properties": {
+              "available": { "type": "boolean" },
+              "path": { "type": ["string", "null"] },
+              "imageUrl": { "type": ["string", "null"] }
+            }
+          },
+          "dataQualityFlags": { "type": "array" },
+          "factsHash": { "type": "string", "minLength": 64, "maxLength": 64 }
+        }
+      }
+    },
+    "validation": { "type": "object" }
   }
 }
