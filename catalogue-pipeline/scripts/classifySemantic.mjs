@@ -161,6 +161,7 @@ export async function classifySemanticCandidate({
   outputPath,
   createdAt = new Date().toISOString(),
   maxAttempts = 2,
+  delayFn,
   readJsonFile = readJson,
   writeJsonFile = writeJsonIfChanged,
   fileExists = pathExists,
@@ -205,6 +206,7 @@ export async function classifySemanticCandidate({
       return { ok: validation.ok, hardFailures: validation.hardFailures }
     },
     maxAttempts,
+    ...(delayFn ? { delayFn } : {}),
   })
 
   assertClassifierOnly(modelResult.output)

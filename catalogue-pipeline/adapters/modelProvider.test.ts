@@ -66,6 +66,25 @@ describe('model provider adapter', () => {
     expect(delayFn).toHaveBeenCalledTimes(1)
   })
 
+  it('uses provider retry timing for bounded rate-limit retries', async () => {
+    const rateLimitError = new ModelProviderError('rate limited', { retryable: true, retryAfterMs: 27000 })
+    const generateStructured = vi.fn()
+      .mockRejectedValueOnce(rateLimitError)
+      .mockResolvedValueOnce({ ok: true })
+    const delayFn = vi.fn().mockResolvedValue(undefined)
+
+    const result = await runStructuredModelRequest({
+      provider: { ...provider, generateStructured },
+      request: { stage: 'semantic-classifier' },
+      maxAttempts: 2,
+      delayFn,
+    })
+
+    expect(result.output).toEqual({ ok: true })
+    expect(delayFn).toHaveBeenCalledWith(27000)
+    expect(generateStructured).toHaveBeenCalledTimes(2)
+  })
+
   it('keeps credentials outside committed provider config', () => {
     expect(resolveCredential({
       credentialEnv: 'MODEL_API_KEY',

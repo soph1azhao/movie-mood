@@ -12,6 +12,8 @@ type GeminiProviderOptions = {
 }
 
 const DEFAULT_ENDPOINT_BASE_URL = 'https://generativelanguage.googleapis.com/v1beta'
+const RETRY_SAFETY_MARGIN_MS = 1000
+const MAX_PROVIDER_RETRY_DELAY_MS = 10 * 60 * 1000
 
 function asObject(value: unknown): Record<string, unknown> {
   return value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, unknown> : {}
@@ -115,13 +117,59 @@ function parseStructuredText(text: string): Record<string, unknown> {
   })
 }
 
-async function safeErrorText(response: Response): Promise<string> {
+async function safeErrorText(response: Response, credential: string): Promise<string> {
   try {
     const text = await response.text()
-    return text ? ` ${text.slice(0, 500)}` : ''
+    if (!text) return ''
+    return ` ${text.slice(0, 500).replaceAll(credential, '[REDACTED_CREDENTIAL]')}`
   } catch {
     return ''
   }
+}
+
+function boundedDelayMs(delayMs: number): number | undefined {
+  if (!Number.isFinite(delayMs) || delayMs < 0 || delayMs > MAX_PROVIDER_RETRY_DELAY_MS) return undefined
+  return delayMs + RETRY_SAFETY_MARGIN_MS
+}
+
+function parseRetryDelayDuration(value: unknown): number | undefined {
+  if (typeof value !== 'string') return undefined
+  const match = /^\s*(\d+(?:\.\d+)?)s\s*$/.exec(value)
+  if (!match) return undefined
+  return boundedDelayMs(Number(match[1]) * 1000)
+}
+
+function retryAfterHeaderMs(response: Response): number | undefined {
+  const value = response.headers?.get?.('retry-after') ?? response.headers?.get?.('Retry-After') ?? null
+  if (!value) return undefined
+  const seconds = Number(value)
+  if (Number.isFinite(seconds) && seconds >= 0) return boundedDelayMs(seconds * 1000)
+  const timestamp = Date.parse(value)
+  if (Number.isFinite(timestamp)) return boundedDelayMs(Math.max(0, timestamp - Date.now()))
+  return undefined
+}
+
+function retryInfoDelayMs(errorText: string): number | undefined {
+  try {
+    const parsed = JSON.parse(errorText)
+    const details = Array.isArray(parsed?.error?.details) ? parsed.error.details : []
+    const retryInfo = details.find((detail: unknown) => {
+      const object = asObject(detail)
+      return object['@type'] === 'type.googleapis.com/google.rpc.RetryInfo'
+    })
+    return parseRetryDelayDuration(asObject(retryInfo).retryDelay)
+  } catch {
+    return undefined
+  }
+}
+
+function retryMessageDelayMs(errorText: string): number | undefined {
+  const match = /\bPlease retry in (\d+(?:\.\d+)?)s\s*\.?/i.exec(errorText)
+  return match ? parseRetryDelayDuration(`${match[1]}s`) : undefined
+}
+
+function retryDelayMs(response: Response, errorText: string): number | undefined {
+  return retryAfterHeaderMs(response) ?? retryInfoDelayMs(errorText) ?? retryMessageDelayMs(errorText)
 }
 
 export function createGeminiProvider({
@@ -168,9 +216,11 @@ export function createGeminiProvider({
 
       if (!response.ok) {
         const retryable = response.status === 429 || response.status >= 500
-        throw new ModelProviderError(`Gemini request failed with HTTP ${response.status}.${await safeErrorText(response)}`, {
+        const errorText = await safeErrorText(response, credential)
+        throw new ModelProviderError(`Gemini request failed with HTTP ${response.status}.${errorText}`, {
           code: response.status === 429 ? 'MODEL_RATE_LIMIT' : 'MODEL_PROVIDER_HTTP_ERROR',
           retryable,
+          retryAfterMs: response.status === 429 ? retryDelayMs(response, errorText) : undefined,
         })
       }
 

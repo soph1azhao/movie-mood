@@ -5,13 +5,15 @@ export const MODEL_STAGES = ['semantic-classifier', 'editorial-writer', 'critic'
 export class ModelProviderError extends Error {
   code: string
   retryable: boolean
+  retryAfterMs?: number
   cause?: unknown
 
-  constructor(message: string, { code = 'MODEL_PROVIDER_ERROR', retryable = false, cause = undefined } = {}) {
+  constructor(message: string, { code = 'MODEL_PROVIDER_ERROR', retryable = false, retryAfterMs = undefined, cause = undefined } = {}) {
     super(message)
     this.name = 'ModelProviderError'
     this.code = code
     this.retryable = retryable
+    this.retryAfterMs = retryAfterMs
     this.cause = cause
   }
 }
@@ -154,7 +156,9 @@ export async function runStructuredModelRequest({
         })
       }
 
-      await delayFn(250 * 2 ** (attempt - 1))
+      await delayFn(error instanceof ModelProviderError && error.retryAfterMs !== undefined
+        ? error.retryAfterMs
+        : 250 * 2 ** (attempt - 1))
     }
   }
 

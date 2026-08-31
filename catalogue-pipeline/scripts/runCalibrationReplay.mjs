@@ -43,6 +43,8 @@ const EXCLUDED_FIELDS = [
   'curiosityHook',
   'vibeSummary',
 ]
+const LIVE_REQUEST_INTERVAL_MS = 5000
+const DEFAULT_CALIBRATION_MODEL = 'gemini-3.7-flash'
 
 class CalibrationReplayError extends Error {
   constructor(message, { code = 'CALIBRATION_REPLAY_ERROR', details = {} } = {}) {
@@ -78,6 +80,12 @@ function requireEnv(name) {
   const value = process.env[name]
   if (!value) throw new CalibrationReplayError(`${name} is missing.`, { code: `MISSING_${name}` })
   return value
+}
+
+export function resolveCalibrationModel(env = process.env) {
+  const modelId = env.GEMINI_MODEL?.trim() || DEFAULT_CALIBRATION_MODEL
+  if (!/^[A-Za-z0-9._-]+$/.test(modelId)) throw new CalibrationReplayError('GEMINI_MODEL contains unsupported characters.', { code: 'INVALID_GEMINI_MODEL' })
+  return modelId
 }
 
 function calibrationBatch() {
@@ -297,7 +305,7 @@ function summarize(firstResults, secondResults, packets) {
 
 async function runClassifierPass({ packets, provider, prompt, outputRoot, cacheRoot }) {
   const results = []
-  for (const packet of packets) {
+  for (const [index, packet] of packets.entries()) {
     const result = await classifySemanticCandidate({
       evidencePacket: packet,
       provider,
@@ -308,6 +316,9 @@ async function runClassifierPass({ packets, provider, prompt, outputRoot, cacheR
       maxAttempts: 2,
     })
     results.push({ packet, result })
+    if (result.result.modelCalls > 0 && index < packets.length - 1) {
+      await new Promise((resolveDelay) => setTimeout(resolveDelay, LIVE_REQUEST_INTERVAL_MS))
+    }
   }
   return results
 }
@@ -348,10 +359,11 @@ async function main() {
   }
 
   requireEnv('GEMINI_API_KEY')
-  const provider = createGeminiProvider({ modelId: 'gemini-3.7-flash' })
+  const modelId = resolveCalibrationModel()
+  const provider = createGeminiProvider({ modelId })
   const prompt = await readFile(resolve(pipelineRoot, 'prompts/semantic-classifier.v1.md'), 'utf8')
-  const outputRoot = resolve(pipelineRoot, 'generated/semantic/phase-5a-calibration/gemini-3.7-flash')
-  const cacheRoot = resolve(pipelineRoot, 'cache/semantic/phase-5a-calibration/gemini-3.7-flash')
+  const outputRoot = resolve(pipelineRoot, `generated/semantic/phase-5a-calibration/${modelId}`)
+  const cacheRoot = resolve(pipelineRoot, `cache/semantic/phase-5a-calibration/${modelId}`)
   const firstResults = await runClassifierPass({ packets, provider, prompt, outputRoot, cacheRoot })
   const secondResults = await runClassifierPass({ packets, provider, prompt, outputRoot, cacheRoot })
   const report = summarize(firstResults, secondResults, packets)
