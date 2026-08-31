@@ -74,14 +74,14 @@ export function FilterPanel({ filters, genreOptions, languageOptions, onChange, 
 
       <div className="filter-groups">
         <div className="filter-group">
-          <p className="filter-label">Genre</p>
-          <div className="filter-options">
+          <p className="refine-label">Genre</p>
+          <div className="refine-row">
             {genreOptions.map((genre) => {
               const isSelected = filters.genres.includes(genre)
               return (
                 <button
                   type="button"
-                  className={`filter-chip ${isSelected ? 'is-selected' : ''}`}
+                  className={`word-chip ${isSelected ? 'is-selected' : ''}`}
                   aria-pressed={isSelected}
                   key={genre}
                   onClick={() => toggleGenre(genre)}
@@ -94,14 +94,14 @@ export function FilterPanel({ filters, genreOptions, languageOptions, onChange, 
         </div>
 
         <div className="filter-group">
-          <p className="filter-label">Runtime</p>
-          <div className="filter-options">
+          <p className="refine-label">Runtime</p>
+          <div className="refine-row">
             {runtimeOptions.map((runtime) => {
               const isSelected = filters.runtime === runtime.id
               return (
                 <button
                   type="button"
-                  className={`filter-chip ${isSelected ? 'is-selected' : ''}`}
+                  className={`word-chip ${isSelected ? 'is-selected' : ''}`}
                   aria-pressed={isSelected}
                   key={runtime.id}
                   onClick={() => toggleSingleFilter('runtime', runtime.id)}
@@ -114,14 +114,14 @@ export function FilterPanel({ filters, genreOptions, languageOptions, onChange, 
         </div>
 
         <div className="filter-group">
-          <p className="filter-label">Language</p>
-          <div className="filter-options">
+          <p className="refine-label">Language</p>
+          <div className="refine-row">
             {languageOptions.map((language) => {
               const isSelected = filters.language === language
               return (
                 <button
                   type="button"
-                  className={`filter-chip ${isSelected ? 'is-selected' : ''}`}
+                  className={`word-chip ${isSelected ? 'is-selected' : ''}`}
                   aria-pressed={isSelected}
                   key={language}
                   onClick={() => toggleSingleFilter('language', language)}
@@ -134,14 +134,14 @@ export function FilterPanel({ filters, genreOptions, languageOptions, onChange, 
         </div>
 
         <div className="filter-group">
-          <p className="filter-label">Pace</p>
-          <div className="filter-options">
+          <p className="refine-label">Pace</p>
+          <div className="refine-row">
             {paceOptions.map((pace) => {
               const isSelected = filters.pace === pace.id
               return (
                 <button
                   type="button"
-                  className={`filter-chip ${isSelected ? 'is-selected' : ''}`}
+                  className={`word-chip ${isSelected ? 'is-selected' : ''}`}
                   aria-pressed={isSelected}
                   key={pace.id}
                   onClick={() => toggleSingleFilter('pace', pace.id)}
@@ -154,14 +154,14 @@ export function FilterPanel({ filters, genreOptions, languageOptions, onChange, 
         </div>
 
         <div className="filter-group">
-          <p className="filter-label">Emotional weight</p>
-          <div className="filter-options">
+          <p className="refine-label">Emotional weight</p>
+          <div className="refine-row">
             {emotionalWeightOptions.map((emotionalWeight) => {
               const isSelected = filters.emotionalWeight === emotionalWeight.id
               return (
                 <button
                   type="button"
-                  className={`filter-chip ${isSelected ? 'is-selected' : ''}`}
+                  className={`word-chip ${isSelected ? 'is-selected' : ''}`}
                   aria-pressed={isSelected}
                   key={emotionalWeight.id}
                   onClick={() => toggleSingleFilter('emotionalWeight', emotionalWeight.id)}

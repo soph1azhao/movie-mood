@@ -32,7 +32,7 @@ export function WatchAction({ movie, label = WATCH_LINKS_LABEL }: WatchActionPro
             href={primarySearchUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="details-toggle watch-link watch-link-primary"
+            className="watch-link watch-link-primary"
           >
             Find where to watch
           </a>
@@ -46,7 +46,7 @@ export function WatchAction({ movie, label = WATCH_LINKS_LABEL }: WatchActionPro
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="details-toggle watch-link watch-link-secondary"
+                className="watch-link watch-link-secondary"
                 role="menuitem"
               >
                 {link.title}

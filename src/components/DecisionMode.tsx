@@ -79,8 +79,14 @@ function DecisionMovieCard({
     ? `${movie.runtimeMinutes} min · ${getFinishTimeLabel(movie.runtimeMinutes)} · ${movie.genres.slice(0, 2).join(' · ')}`
     : `${movie.runtimeMinutes} min · ${movie.genres.slice(0, 2).join(' · ')}`
   return (
-    <article className={`decision-card ${isSelected ? 'is-selected' : ''}`}>
-      <MoviePoster movie={movie} className="decision-poster" isDecorative />
+    <article className={`decision-card ${isSelected ? 'is-selected is-dropped' : ''}`}>
+      <MoviePoster
+        movie={movie}
+        className="decision-poster"
+        isDecorative
+        bleedTitle={movie.title}
+        bleedClassName="poster-bleed-title decision-bleed-title"
+      />
       <div className="decision-card-body">
         <div className="decision-card-heading">
           <div>
@@ -347,19 +353,28 @@ export function DecisionMode({
             </button>
           )}
         </div>
-        <div className="duel-grid">
-          {finalistMovies.map((movie, index) => (
-            <DecisionMovieCard
-              key={movie.id}
-              movie={movie}
-              eyebrow={`Finalist ${index + 1}`}
-              cue={differences[index] ?? movie.vibeSummary}
-              showFinishTime
-              isFavorite={isFavorite(movie.id)}
-              onToggleFavorite={onToggleFavorite}
-              onChoose={() => chooseMovie(movie.id, state)}
-            />
-          ))}
+        <div className="duel-field">
+          <DecisionMovieCard
+            movie={finalistMovies[0]}
+            eyebrow="Finalist 1"
+            cue={differences[0] ?? finalistMovies[0].vibeSummary}
+            showFinishTime
+            isFavorite={isFavorite(finalistMovies[0].id)}
+            onToggleFavorite={onToggleFavorite}
+            onChoose={() => chooseMovie(finalistMovies[0].id, state)}
+          />
+          <div className="duel-mid" aria-hidden="true">
+            <div className="threshold" />
+          </div>
+          <DecisionMovieCard
+            movie={finalistMovies[1]}
+            eyebrow="Finalist 2"
+            cue={differences[1] ?? finalistMovies[1].vibeSummary}
+            showFinishTime
+            isFavorite={isFavorite(finalistMovies[1].id)}
+            onToggleFavorite={onToggleFavorite}
+            onChoose={() => chooseMovie(finalistMovies[1].id, state)}
+          />
         </div>
         {differences.length > 0 && (
           <ul className="duel-differences" aria-label="Deciding differences">
@@ -428,23 +443,20 @@ export function DecisionMode({
 
   return (
     <div className="decision-mode ticket-mode" aria-labelledby="ticket-heading">
-      <div className="tonight-ticket">
-        <MoviePoster movie={selectedMovie} className="decision-poster" isDecorative />
-        <div className="ticket-copy">
+      <div className="tonight-ticket pick-grid">
+        <MoviePoster movie={selectedMovie} className="decision-poster pick-poster" isDecorative />
+        <div className="ticket-copy pick-body">
           <p className="eyebrow">Tonight’s Pick</p>
-          <h3 id="ticket-heading">{selectedMovie.title}</h3>
-          <p className="decision-meta">{selectedMovie.year} · {selectedMovie.director} · {selectedMovie.runtimeMinutes} min · {getFinishTimeLabel(selectedMovie.runtimeMinutes)}</p>
-          <p className="ticket-summary">{selectedMovie.vibeSummary}</p>
-          <div className="why-watch">
-            <p className="why-label">Why it fits tonight</p>
-            <ul className="ticket-reasons">
-              {displayedReasons.map((reason) => <li key={reason}>{reason}</li>)}
-            </ul>
-          </div>
+          <h2 id="ticket-heading">{selectedMovie.title}</h2>
+          <p className="decision-meta pick-meta">{selectedMovie.year} · {selectedMovie.director} · {selectedMovie.runtimeMinutes} min · {getFinishTimeLabel(selectedMovie.runtimeMinutes)}</p>
+          <p className="ticket-summary pick-vibe">{selectedMovie.vibeSummary}</p>
+          <ul className="ticket-reasons pick-reasons">
+            {displayedReasons.map((reason) => <li key={reason}>{reason}</li>)}
+          </ul>
           <div className="watch-action-section">
             <WatchAction movie={selectedMovie} />
           </div>
-          <div className="ticket-actions">
+          <div className="ticket-actions pick-footer-actions">
             <div className="ticket-supporting-actions">
               <button
                 type="button"

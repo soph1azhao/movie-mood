@@ -52,7 +52,7 @@ export function DiscoveryPreferencesPanel({
 
   return (
     <section className="discovery-panel" aria-labelledby="discovery-heading">
-      <div className="discovery-heading">
+      <div className="discovery-heading refine-heading">
         <div>
           <p className="eyebrow">Getting warmer?</p>
           <h3 id="discovery-heading">Tell me a little more.</h3>
@@ -64,14 +64,14 @@ export function DiscoveryPreferencesPanel({
 
       <div className="discovery-groups">
         <div className="filter-group">
-          <p className="filter-label">How much focus do you have?</p>
-          <div className="filter-options">
+          <p className="refine-label">How much focus do you have?</p>
+          <div className="refine-row">
             {attentionOptions.map((option) => {
               const isSelected = preferences.attentionDemand === option.id
               return (
                 <button
                   type="button"
-                  className={`filter-chip ${isSelected ? 'is-selected' : ''}`}
+                  className={`word-chip ${isSelected ? 'is-selected' : ''}`}
                   aria-pressed={isSelected}
                   key={option.id}
                   onClick={() => selectAttention(option.id)}
@@ -84,14 +84,14 @@ export function DiscoveryPreferencesPanel({
         </div>
 
         <div className="filter-group">
-          <p className="filter-label">Not tonight</p>
-          <div className="filter-options">
+          <p className="refine-label">Not tonight</p>
+          <div className="refine-row">
             {dealbreakerOptions.map((option) => {
               const isSelected = preferences.dealbreakers[option.id]
               return (
                 <button
                   type="button"
-                  className={`filter-chip ${isSelected ? 'is-selected' : ''}`}
+                  className={`word-chip ${isSelected ? 'is-selected' : ''}`}
                   aria-pressed={isSelected}
                   key={option.id}
                   onClick={() => toggleDealbreaker(option.id)}

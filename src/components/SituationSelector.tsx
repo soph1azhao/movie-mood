@@ -22,24 +22,21 @@ interface SituationSelectorProps {
 
 export function SituationSelector({ selectedSituation, onSelect }: SituationSelectorProps) {
   return (
-    <div className="situation-panel" aria-labelledby="situation-heading">
-      <div>
-        <p className="eyebrow">What's tonight like?</p>
-        <h3 id="situation-heading">Set the room.</h3>
-      </div>
-      <div className="situation-grid">
+    <div className="situation-panel refine-group" aria-label="What's tonight like?">
+      <p className="refine-label">Tonight is</p>
+      <div className="refine-row">
         {situations.map((situation) => {
           const isSelected = selectedSituation === situation.id
           return (
             <button
               type="button"
-              className={`situation-button ${isSelected ? 'is-selected' : ''}`}
+              className={`word-chip ${isSelected ? 'is-selected' : ''}`}
+              aria-label={`${situation.label} ${situation.note}`}
               aria-pressed={isSelected}
               key={situation.label}
               onClick={() => onSelect(situation.id)}
             >
-              <span className="situation-label">{situation.label}</span>
-              <span className="situation-note">{situation.note}</span>
+              {situation.label}
             </button>
           )
         })}

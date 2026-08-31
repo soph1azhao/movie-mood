@@ -26,10 +26,9 @@ export function MovieCard({ movie, index, variant = 'full', isFavorite, onToggle
   if (variant === 'glimpse') {
     return (
       <article className="movie-card glimpse-card" style={{ '--card-index': index } as React.CSSProperties}>
-        <MoviePoster movie={movie} />
+        <MoviePoster movie={movie} bleedTitle={movie.title} bleedClassName="poster-bleed-title glimpse-bleed-title" />
         <div className="movie-details glimpse-details">
           <p className="eyebrow">Glimpse {String(index + 1).padStart(2, '0')}</p>
-          <h3>{movie.title}</h3>
           <p className="curiosity-hook">{movie.curiosityHook}</p>
         </div>
       </article>
@@ -37,14 +36,40 @@ export function MovieCard({ movie, index, variant = 'full', isFavorite, onToggle
   }
 
   return (
-    <article className="movie-card" style={{ '--card-index': index } as React.CSSProperties}>
-      <MoviePoster movie={movie} />
-      <div className="movie-details">
-        <div className="movie-heading">
-          <div>
-            <p className="eyebrow">Pick {String(index + 1).padStart(2, '0')}</p>
-            <h3>{movie.title}</h3>
-            <p className="metadata">{compactFacts}</p>
+    <article className="movie-card reveal-card" style={{ '--card-index': index } as React.CSSProperties}>
+      <p className="eyebrow reveal-index">Pick {String(index + 1).padStart(2, '0')}</p>
+      <MoviePoster movie={movie} bleedTitle={movie.title} bleedClassName="poster-bleed-title reveal-bleed-title" />
+      <div className="movie-details reveal-details">
+        <p className="why-watch reveal-quote">{movie.whyWatch}</p>
+        <div className="card-actions reveal-actions">
+          {onChooseMovie && (
+            <button
+              type="button"
+              className="details-toggle decision-primary reveal-primary"
+              onClick={() => onChooseMovie(movie.id)}
+            >
+              That’s the one
+            </button>
+          )}
+          <div className="reveal-secondary-actions">
+            {onFindSimilar && (
+              <button
+                type="button"
+                className="details-toggle action-quiet"
+                onClick={() => onFindSimilar(movie.id)}
+              >
+                More like this
+              </button>
+            )}
+            <button
+              type="button"
+              className="details-toggle action-quiet"
+              aria-expanded={isDetailsOpen}
+              aria-controls={detailsId}
+              onClick={() => setIsDetailsOpen((current) => !current)}
+            >
+              {isDetailsOpen ? 'Hide details' : 'More details'}
+            </button>
           </div>
           <button
             type="button"
@@ -56,43 +81,13 @@ export function MovieCard({ movie, index, variant = 'full', isFavorite, onToggle
             <span aria-hidden="true">{isFavorite ? '♥' : '♡'}</span>
           </button>
         </div>
-        <p className="genres">{formatGenreSummary(movie)}</p>
+        <div className="reveal-whisper-cluster">
+          <p className="metadata">{compactFacts}</p>
+          <p className="genres">{formatGenreSummary(movie)}</p>
+        </div>
         {experientialCue && (
           <p className="experience-cue">{experientialCue}</p>
         )}
-        <div className="why-watch">
-          <p className="why-label">Why it fits tonight</p>
-          <p>{movie.whyWatch}</p>
-        </div>
-        <div className="card-actions">
-          {onFindSimilar && (
-            <button
-              type="button"
-              className="details-toggle"
-              onClick={() => onFindSimilar(movie.id)}
-            >
-              More like this
-            </button>
-          )}
-          <button
-            type="button"
-            className="details-toggle"
-            aria-expanded={isDetailsOpen}
-            aria-controls={detailsId}
-            onClick={() => setIsDetailsOpen((current) => !current)}
-          >
-            {isDetailsOpen ? 'Hide details' : 'More details'}
-          </button>
-          {onChooseMovie && (
-            <button
-              type="button"
-              className="details-toggle decision-primary"
-              onClick={() => onChooseMovie(movie.id)}
-            >
-              That’s the one
-            </button>
-          )}
-        </div>
         <div className={`expanded-details ${isDetailsOpen ? 'is-open' : ''}`} id={detailsId} hidden={!isDetailsOpen}>
           <MovieDetails movie={movie} />
         </div>
