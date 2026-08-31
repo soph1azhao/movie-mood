@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "tmdb-facts.schema.json",
+  "title": "Movie Mood Pipeline TMDB Facts",
+  "type": "object",
+  "required": ["schemaVersion", "batchId", "facts"],
+  "properties": {
+    "schemaVersion": { "const": "tmdb-facts.v1" },
+    "batchId": { "type": "string", "minLength": 1 },
+    "facts": { "type": "array" }
+  }
+}

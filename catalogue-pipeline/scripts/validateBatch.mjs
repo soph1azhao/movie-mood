@@ -1,0 +1,514 @@
+export const VALID_VALUES = {
+  moods: ['funny', 'exciting', 'thoughtful', 'relaxing', 'emotional', 'suspenseful'],
+  situations: ['alone', 'date-night', 'friends', 'family', 'easy-watch'],
+  pace: ['slow', 'medium', 'fast'],
+  emotionalWeight: ['light', 'moderate', 'heavy'],
+  attentionDemand: ['easy', 'engaged', 'immersive'],
+  discoveryStyle: ['familiar', 'different', 'adventurous'],
+  reviewPriority: ['P0', 'P1', 'P2', 'P3', 'P4'],
+  reviewStatus: ['needs_review', 'blocked', 'ready_for_review', 'candidate_for_batch_approval'],
+}
+
+export const COPY_LIMITS = {
+  description: { minChars: 80, maxChars: 220 },
+  whyWatch: { minChars: 60, maxChars: 180 },
+  curiosityHook: { minChars: 50, maxChars: 170 },
+  vibeSummary: { minChars: 45, maxChars: 150 },
+}
+
+const REQUIRED_CURATED_FIELDS = [
+  'id',
+  'tmdbId',
+  'moods',
+  'situations',
+  'filterLanguages',
+  'pace',
+  'emotionalWeight',
+  'attentionDemand',
+  'discoveryStyle',
+  'description',
+  'whyWatch',
+  'curiosityHook',
+  'vibeSummary',
+  'palette',
+]
+
+const REQUIRED_FACT_FIELDS = [
+  'tmdbId',
+  'title',
+  'year',
+  'director',
+  'countries',
+  'spokenLanguages',
+  'genres',
+  'runtimeMinutes',
+  'posterPath',
+]
+
+const META_COPY_PATTERNS = [
+  /\bmust[- ]watch\b/i,
+  /\bfor fans of cinema\b/i,
+  /\brollercoaster of emotions\b/i,
+  /\bdelves into\b/i,
+  /\bexplores themes of\b/i,
+  /\bat its core\b/i,
+  /\btestament to\b/i,
+  /\bwill leave you\b/i,
+  /\bas an ai\b/i,
+]
+
+const SPOILER_PATTERNS = [
+  /\bending reveals\b/i,
+  /\bfinal twist\b/i,
+  /\bturns out\b/i,
+  /\bin the end\b/i,
+]
+
+function isObject(value) {
+  return Boolean(value) && typeof value === 'object' && !Array.isArray(value)
+}
+
+function hasOwn(value, field) {
+  return Object.prototype.hasOwnProperty.call(value, field)
+}
+
+function addIssue(issues, severity, code, message, details = {}) {
+  issues.push({ severity, code, message, ...details })
+}
+
+function addHardFailure(issues, code, message, details = {}) {
+  addIssue(issues, 'hard_fail', code, message, details)
+}
+
+function addReviewFlag(issues, code, message, details = {}) {
+  addIssue(issues, 'review', code, message, details)
+}
+
+function validateString(value, field, issues) {
+  if (typeof value !== 'string' || value.trim().length === 0) {
+    addHardFailure(issues, 'MISSING_REQUIRED_FIELD', `${field} must be a non-empty string.`, { field })
+  }
+}
+
+function validateInteger(value, field, issues, minimum = 1) {
+  if (!Number.isInteger(value) || value < minimum) {
+    addHardFailure(issues, 'INVALID_NUMBER', `${field} must be an integer >= ${minimum}.`, { field })
+  }
+}
+
+function validateStringArray(value, field, issues, { minItems = 1, allowed = null } = {}) {
+  if (!Array.isArray(value) || value.length < minItems) {
+    addHardFailure(issues, 'MISSING_REQUIRED_FIELD', `${field} must be a non-empty array.`, { field })
+    return
+  }
+
+  for (const item of value) {
+    if (typeof item !== 'string' || item.trim().length === 0) {
+      addHardFailure(issues, 'INVALID_ARRAY_VALUE', `${field} contains an invalid value.`, { field, value: item })
+    } else if (allowed && !allowed.includes(item)) {
+      addHardFailure(issues, 'INVALID_ENUM', `${field} contains invalid enum value "${item}".`, { field, value: item })
+    }
+  }
+}
+
+function validateEnum(value, field, allowed, issues) {
+  if (!allowed.includes(value)) {
+    addHardFailure(issues, 'INVALID_ENUM', `${field} must be one of: ${allowed.join(', ')}.`, { field, value })
+  }
+}
+
+function validatePalette(value, issues) {
+  if (!Array.isArray(value) || value.length !== 2) {
+    addHardFailure(issues, 'MALFORMED_PALETTE', 'palette must be a two-color tuple.', { field: 'palette' })
+    return
+  }
+
+  for (const color of value) {
+    if (typeof color !== 'string' || !/^#[0-9a-f]{6}$/i.test(color)) {
+      addHardFailure(issues, 'MALFORMED_PALETTE', `Invalid palette color: ${String(color)}.`, { field: 'palette', value: color })
+    }
+  }
+}
+
+function validateCopyField(copy, field, issues) {
+  validateString(copy, field, issues)
+  if (typeof copy !== 'string') return
+
+  const trimmed = copy.trim()
+  const limits = COPY_LIMITS[field]
+  if (trimmed.length < limits.minChars) {
+    addHardFailure(issues, 'COPY_TOO_SHORT', `${field} is shorter than ${limits.minChars} characters.`, { field })
+  }
+  if (trimmed.length > limits.maxChars) {
+    addHardFailure(issues, 'COPY_TOO_LONG', `${field} is longer than ${limits.maxChars} characters.`, { field })
+  }
+  if (/\bTODO\b|placeholder/i.test(trimmed)) {
+    addHardFailure(issues, 'PLACEHOLDER_COPY', `${field} contains placeholder text.`, { field })
+  }
+  if (SPOILER_PATTERNS.some((pattern) => pattern.test(trimmed))) {
+    addHardFailure(issues, 'SPOILER_HARD_FAILURE', `${field} appears to reveal spoiler-sensitive information.`, { field })
+  }
+  if (META_COPY_PATTERNS.some((pattern) => pattern.test(trimmed))) {
+    addHardFailure(issues, 'GENERIC_OR_META_COPY', `${field} contains generic or model-like phrasing.`, { field })
+  }
+}
+
+export function validateCandidateBatch(batch) {
+  const issues = []
+
+  if (!isObject(batch)) {
+    addHardFailure(issues, 'INVALID_BATCH', 'Candidate batch must be an object.')
+    return { ok: false, hardFailures: issues, reviewFlags: [] }
+  }
+
+  validateString(batch.batchId, 'batchId', issues)
+  if (batch.schemaVersion !== 'candidate.v1') {
+    addHardFailure(issues, 'INVALID_SCHEMA_VERSION', 'Candidate batch schemaVersion must be candidate.v1.', { field: 'schemaVersion' })
+  }
+
+  if (!isObject(batch.sourcePolicy)) {
+    addHardFailure(issues, 'MISSING_REQUIRED_FIELD', 'sourcePolicy is required.', { field: 'sourcePolicy' })
+  } else {
+    validateString(batch.sourcePolicy.description, 'sourcePolicy.description', issues)
+    if (!Array.isArray(batch.sourcePolicy.licensingNotes)) {
+      addHardFailure(issues, 'MISSING_REQUIRED_FIELD', 'sourcePolicy.licensingNotes must be an array.', { field: 'sourcePolicy.licensingNotes' })
+    }
+  }
+
+  if (!Array.isArray(batch.candidates) || batch.candidates.length === 0) {
+    addHardFailure(issues, 'MISSING_REQUIRED_FIELD', 'candidates must be a non-empty array.', { field: 'candidates' })
+    return { ok: issues.length === 0, hardFailures: issues, reviewFlags: [] }
+  }
+
+  const candidateIds = new Set()
+  const tmdbIds = new Set()
+
+  for (const [index, candidate] of batch.candidates.entries()) {
+    const path = `candidates[${index}]`
+    if (!isObject(candidate)) {
+      addHardFailure(issues, 'INVALID_CANDIDATE', `${path} must be an object.`, { path })
+      continue
+    }
+
+    validateString(candidate.candidateId, `${path}.candidateId`, issues)
+    validateString(candidate.title, `${path}.title`, issues)
+    validateInteger(candidate.year, `${path}.year`, issues, 1878)
+    validateInteger(candidate.tmdbId, `${path}.tmdbId`, issues)
+    validateStringArray(candidate.sourceTags, `${path}.sourceTags`, issues)
+    validateString(candidate.inclusionRationale, `${path}.inclusionRationale`, issues)
+
+    if (candidateIds.has(candidate.candidateId)) {
+      addHardFailure(issues, 'DUPLICATE_CANDIDATE_ID', `Duplicate candidateId: ${candidate.candidateId}.`, { path, value: candidate.candidateId })
+    }
+    if (tmdbIds.has(candidate.tmdbId)) {
+      addHardFailure(issues, 'DUPLICATE_TMDB_ID', `Duplicate tmdbId: ${candidate.tmdbId}.`, { path, value: candidate.tmdbId })
+    }
+    candidateIds.add(candidate.candidateId)
+    tmdbIds.add(candidate.tmdbId)
+  }
+
+  return { ok: issues.length === 0, hardFailures: issues, reviewFlags: [] }
+}
+
+export function validateCuratedMovie(movie, context = {}) {
+  const issues = []
+  const reviewFlags = []
+
+  if (!isObject(movie)) {
+    addHardFailure(issues, 'INVALID_CURATED_MOVIE', 'Curated movie must be an object.')
+    return { ok: false, hardFailures: issues, reviewFlags }
+  }
+
+  for (const field of REQUIRED_CURATED_FIELDS) {
+    if (!hasOwn(movie, field)) {
+      addHardFailure(issues, 'MISSING_REQUIRED_FIELD', `${field} is required.`, { field })
+    }
+  }
+
+  validateString(movie.id, 'id', issues)
+  validateInteger(movie.tmdbId, 'tmdbId', issues)
+  validateStringArray(movie.moods, 'moods', issues, { allowed: VALID_VALUES.moods })
+  validateStringArray(movie.situations, 'situations', issues, { allowed: VALID_VALUES.situations })
+  validateStringArray(movie.filterLanguages, 'filterLanguages', issues)
+  validateEnum(movie.pace, 'pace', VALID_VALUES.pace, issues)
+  validateEnum(movie.emotionalWeight, 'emotionalWeight', VALID_VALUES.emotionalWeight, issues)
+  validateEnum(movie.attentionDemand, 'attentionDemand', VALID_VALUES.attentionDemand, issues)
+  validateEnum(movie.discoveryStyle, 'discoveryStyle', VALID_VALUES.discoveryStyle, issues)
+  validatePalette(movie.palette, issues)
+
+  for (const field of Object.keys(COPY_LIMITS)) {
+    validateCopyField(movie[field], field, issues)
+  }
+
+  for (const flag of getSemanticAnomalies(movie)) {
+    addReviewFlag(reviewFlags, flag.code, flag.message, { fields: flag.fields })
+  }
+
+  if (context.existingIds?.has(movie.id)) {
+    addHardFailure(issues, 'DUPLICATE_LOCAL_ID', `Duplicate local ID: ${movie.id}.`, { field: 'id', value: movie.id })
+  }
+  if (context.existingTmdbIds?.has(movie.tmdbId)) {
+    addHardFailure(issues, 'DUPLICATE_TMDB_ID', `Duplicate TMDB ID: ${movie.tmdbId}.`, { field: 'tmdbId', value: movie.tmdbId })
+  }
+
+  return { ok: issues.length === 0, hardFailures: issues, reviewFlags }
+}
+
+export function validateMovieFacts(facts) {
+  const issues = []
+  const reviewFlags = []
+
+  if (!isObject(facts)) {
+    addHardFailure(issues, 'INVALID_FACTS', 'Movie facts must be an object.')
+    return { ok: false, hardFailures: issues, reviewFlags }
+  }
+
+  for (const field of REQUIRED_FACT_FIELDS) {
+    if (!hasOwn(facts, field)) {
+      addHardFailure(issues, 'MISSING_REQUIRED_FIELD', `${field} is required by the production resolver.`, { field })
+    }
+  }
+
+  validateInteger(facts.tmdbId, 'tmdbId', issues)
+  validateString(facts.title, 'title', issues)
+  validateInteger(facts.year, 'year', issues, 1878)
+  validateString(facts.director, 'director', issues)
+  validateStringArray(facts.countries, 'countries', issues)
+  validateStringArray(facts.spokenLanguages, 'spokenLanguages', issues)
+  validateStringArray(facts.genres, 'genres', issues)
+  validateInteger(facts.runtimeMinutes, 'runtimeMinutes', issues)
+
+  if (facts.posterPath !== null && typeof facts.posterPath !== 'string') {
+    addHardFailure(issues, 'INVALID_POSTER_PATH', 'posterPath must be a string or null.', { field: 'posterPath' })
+  }
+  if (facts.posterPath === null) {
+    addReviewFlag(reviewFlags, 'POSTER_UNAVAILABLE', 'TMDB posterPath is null; poster suitability requires fallback review.', { field: 'posterPath' })
+  }
+
+  return { ok: issues.length === 0, hardFailures: issues, reviewFlags }
+}
+
+export function validateOneToOneMapping(curatedMovies, mappings, factsById) {
+  const hardFailures = []
+  const reviewFlags = []
+
+  if (!Array.isArray(curatedMovies)) {
+    addHardFailure(hardFailures, 'INVALID_CURATED_COLLECTION', 'curatedMovies must be an array.')
+    return { ok: false, hardFailures, reviewFlags }
+  }
+  if (!Array.isArray(mappings)) {
+    addHardFailure(hardFailures, 'INVALID_MAPPING_COLLECTION', 'mappings must be an array.')
+    return { ok: false, hardFailures, reviewFlags }
+  }
+  if (!isObject(factsById)) {
+    addHardFailure(hardFailures, 'INVALID_FACT_COLLECTION', 'factsById must be an object.')
+    return { ok: false, hardFailures, reviewFlags }
+  }
+
+  const curatedIds = new Set()
+  const curatedTmdbIds = new Set()
+  const mappingIds = new Set()
+  const mappingTmdbIds = new Set()
+
+  for (const movie of curatedMovies) {
+    if (curatedIds.has(movie.id)) addHardFailure(hardFailures, 'DUPLICATE_LOCAL_ID', `Duplicate curated movie ID: ${movie.id}.`, { value: movie.id })
+    if (curatedTmdbIds.has(movie.tmdbId)) addHardFailure(hardFailures, 'DUPLICATE_TMDB_ID', `Duplicate curated TMDB ID: ${movie.tmdbId}.`, { value: movie.tmdbId })
+    curatedIds.add(movie.id)
+    curatedTmdbIds.add(movie.tmdbId)
+  }
+
+  for (const mapping of mappings) {
+    if (!mapping?.id || !Number.isInteger(mapping.tmdbId)) {
+      addHardFailure(hardFailures, 'INVALID_TMDB_MAPPING', 'Each mapping needs id and integer tmdbId.', { value: mapping })
+      continue
+    }
+    if (mappingIds.has(mapping.id)) addHardFailure(hardFailures, 'DUPLICATE_MAPPING_ID', `Duplicate mapping ID: ${mapping.id}.`, { value: mapping.id })
+    if (mappingTmdbIds.has(mapping.tmdbId)) addHardFailure(hardFailures, 'DUPLICATE_TMDB_ID', `Duplicate mapped TMDB ID: ${mapping.tmdbId}.`, { value: mapping.tmdbId })
+    if (!curatedIds.has(mapping.id)) addHardFailure(hardFailures, 'INVALID_TMDB_MAPPING', `Mapping does not belong to curated movie: ${mapping.id}.`, { value: mapping.id })
+    mappingIds.add(mapping.id)
+    mappingTmdbIds.add(mapping.tmdbId)
+  }
+
+  for (const movie of curatedMovies) {
+    const mapping = mappings.find((item) => item.id === movie.id)
+    const facts = factsById[movie.id]
+
+    if (!mapping) addHardFailure(hardFailures, 'BROKEN_ONE_TO_ONE_MAPPING', `Missing mapping for ${movie.id}.`, { id: movie.id })
+    if (!facts) addHardFailure(hardFailures, 'MISSING_FACTUAL_SNAPSHOT', `Missing factual snapshot for ${movie.id}.`, { id: movie.id })
+    if (mapping && mapping.tmdbId !== movie.tmdbId) {
+      addHardFailure(hardFailures, 'INVALID_TMDB_MAPPING', `Mapping TMDB ID differs from curated movie for ${movie.id}.`, { id: movie.id })
+    }
+    if (facts && facts.tmdbId !== movie.tmdbId) {
+      addHardFailure(hardFailures, 'BROKEN_ONE_TO_ONE_MAPPING', `Facts TMDB ID differs from curated movie for ${movie.id}.`, { id: movie.id })
+    }
+  }
+
+  if (mappings.length !== curatedMovies.length || Object.keys(factsById).length !== curatedMovies.length) {
+    addHardFailure(hardFailures, 'BROKEN_ONE_TO_ONE_MAPPING', 'Curated, mapping, and facts counts must match.')
+  }
+
+  return { ok: hardFailures.length === 0, hardFailures, reviewFlags }
+}
+
+export function getSemanticAnomalies(movie) {
+  const anomalies = []
+  const moods = Array.isArray(movie?.moods) ? movie.moods : []
+  const situations = Array.isArray(movie?.situations) ? movie.situations : []
+
+  if (moods.includes('funny') && movie.emotionalWeight === 'heavy') {
+    anomalies.push({
+      code: 'FUNNY_HEAVY',
+      fields: ['moods', 'emotionalWeight'],
+      message: 'funny + heavy may be valid but should be reviewed.',
+    })
+  }
+  if (moods.includes('relaxing') && movie.attentionDemand === 'immersive') {
+    anomalies.push({
+      code: 'RELAXING_IMMERSIVE',
+      fields: ['moods', 'attentionDemand'],
+      message: 'relaxing + immersive may be valid but should be reviewed.',
+    })
+  }
+  if (moods.includes('exciting') && movie.pace === 'slow') {
+    anomalies.push({
+      code: 'SLOW_EXCITING',
+      fields: ['moods', 'pace'],
+      message: 'slow + exciting may be valid but should be reviewed.',
+    })
+  }
+  if (moods.includes('suspenseful') && situations.includes('family')) {
+    anomalies.push({
+      code: 'SUSPENSEFUL_FAMILY',
+      fields: ['moods', 'situations'],
+      message: 'suspenseful + family may be valid but should be reviewed.',
+    })
+  }
+  if (situations.includes('easy-watch') && movie.emotionalWeight === 'heavy') {
+    anomalies.push({
+      code: 'EASY_WATCH_HEAVY',
+      fields: ['situations', 'emotionalWeight'],
+      message: 'easy-watch + heavy may be valid but should be reviewed.',
+    })
+  }
+
+  return anomalies
+}
+
+export function validateSemanticOutput(output) {
+  const issues = []
+  const reviewFlags = []
+
+  if (!isObject(output)) {
+    addHardFailure(issues, 'INVALID_SEMANTIC_OUTPUT', 'Semantic output must be an object.')
+    return { ok: false, hardFailures: issues, reviewFlags }
+  }
+
+  if (output.schemaVersion !== 'semantic-output.v1') {
+    addHardFailure(issues, 'INVALID_SCHEMA_VERSION', 'Semantic output schemaVersion must be semantic-output.v1.', { field: 'schemaVersion' })
+  }
+  validateString(output.promptVersion, 'promptVersion', issues)
+  validateString(output.taxonomyVersion, 'taxonomyVersion', issues)
+  if (!isObject(output.movie)) addHardFailure(issues, 'MISSING_REQUIRED_FIELD', 'movie is required.', { field: 'movie' })
+  if (!isObject(output.classification)) {
+    addHardFailure(issues, 'MISSING_REQUIRED_FIELD', 'classification is required.', { field: 'classification' })
+  } else {
+    validateStringArray(output.classification.moods, 'classification.moods', issues, { allowed: VALID_VALUES.moods })
+    validateStringArray(output.classification.situations, 'classification.situations', issues, { allowed: VALID_VALUES.situations })
+    validateStringArray(output.classification.filterLanguages, 'classification.filterLanguages', issues)
+    validateEnum(output.classification.pace, 'classification.pace', VALID_VALUES.pace, issues)
+    validateEnum(output.classification.emotionalWeight, 'classification.emotionalWeight', VALID_VALUES.emotionalWeight, issues)
+    validateEnum(output.classification.attentionDemand, 'classification.attentionDemand', VALID_VALUES.attentionDemand, issues)
+    validateEnum(output.classification.discoveryStyle, 'classification.discoveryStyle', VALID_VALUES.discoveryStyle, issues)
+    for (const flag of getSemanticAnomalies(output.classification)) {
+      addReviewFlag(reviewFlags, flag.code, flag.message, { fields: flag.fields })
+    }
+  }
+
+  if (!isObject(output.evidence)) {
+    addHardFailure(issues, 'MISSING_REQUIRED_FIELD', 'evidence is required.', { field: 'evidence' })
+  }
+
+  return { ok: issues.length === 0, hardFailures: issues, reviewFlags }
+}
+
+export function validateEditorialOutput(output) {
+  const issues = []
+  const reviewFlags = []
+
+  if (!isObject(output)) {
+    addHardFailure(issues, 'INVALID_EDITORIAL_OUTPUT', 'Editorial output must be an object.')
+    return { ok: false, hardFailures: issues, reviewFlags }
+  }
+
+  if (output.schemaVersion !== 'editorial-output.v1') {
+    addHardFailure(issues, 'INVALID_SCHEMA_VERSION', 'Editorial output schemaVersion must be editorial-output.v1.', { field: 'schemaVersion' })
+  }
+  validateString(output.promptVersion, 'promptVersion', issues)
+  validateString(output.voiceGuideVersion, 'voiceGuideVersion', issues)
+  if (!isObject(output.movie)) addHardFailure(issues, 'MISSING_REQUIRED_FIELD', 'movie is required.', { field: 'movie' })
+  if (!isObject(output.copy)) {
+    addHardFailure(issues, 'MISSING_REQUIRED_FIELD', 'copy is required.', { field: 'copy' })
+  } else {
+    for (const field of Object.keys(COPY_LIMITS)) {
+      validateCopyField(output.copy[field], field, issues)
+    }
+  }
+
+  return { ok: issues.length === 0, hardFailures: issues, reviewFlags }
+}
+
+export function validateCriticOutput(output) {
+  const issues = []
+  const reviewFlags = []
+
+  if (!isObject(output)) {
+    addHardFailure(issues, 'INVALID_CRITIC_OUTPUT', 'Critic output must be an object.')
+    return { ok: false, hardFailures: issues, reviewFlags }
+  }
+
+  if (output.schemaVersion !== 'critic-output.v1') {
+    addHardFailure(issues, 'INVALID_SCHEMA_VERSION', 'Critic output schemaVersion must be critic-output.v1.', { field: 'schemaVersion' })
+  }
+  validateString(output.promptVersion, 'promptVersion', issues)
+  validateString(output.voiceGuideVersion, 'voiceGuideVersion', issues)
+  if (!isObject(output.movie)) addHardFailure(issues, 'MISSING_REQUIRED_FIELD', 'movie is required.', { field: 'movie' })
+  validateEnum(output.verdict, 'verdict', ['hard_fail', 'needs_review', 'approve_for_review', 'candidate_for_auto_accept'], issues)
+  if (!Array.isArray(output.issues)) addHardFailure(issues, 'MISSING_REQUIRED_FIELD', 'issues must be an array.', { field: 'issues' })
+  if (!isObject(output.copyAssessment)) addHardFailure(issues, 'MISSING_REQUIRED_FIELD', 'copyAssessment is required.', { field: 'copyAssessment' })
+  if (hasOwn(output, 'writerNotes') || hasOwn(output, 'writerReasoning')) {
+    addHardFailure(issues, 'CRITIC_DEPENDS_ON_WRITER_REASONING', 'Critic output must not include writer hidden reasoning.', { field: 'writerReasoning' })
+  }
+
+  return { ok: issues.length === 0, hardFailures: issues, reviewFlags }
+}
+
+export function validateReviewQueue(queue) {
+  const issues = []
+  const reviewFlags = []
+
+  if (!isObject(queue)) {
+    addHardFailure(issues, 'INVALID_REVIEW_QUEUE', 'Review queue must be an object.')
+    return { ok: false, hardFailures: issues, reviewFlags }
+  }
+
+  validateString(queue.batchId, 'batchId', issues)
+  if (queue.schemaVersion !== 'review-queue.v1') {
+    addHardFailure(issues, 'INVALID_SCHEMA_VERSION', 'Review queue schemaVersion must be review-queue.v1.', { field: 'schemaVersion' })
+  }
+  if (!Array.isArray(queue.items)) {
+    addHardFailure(issues, 'MISSING_REQUIRED_FIELD', 'items must be an array.', { field: 'items' })
+  }
+
+  return { ok: issues.length === 0, hardFailures: issues, reviewFlags }
+}
+
+export function summarizeValidation(results) {
+  const hardFailures = results.flatMap((result) => result.hardFailures ?? [])
+  const reviewFlags = results.flatMap((result) => result.reviewFlags ?? [])
+
+  return {
+    ok: hardFailures.length === 0,
+    hardFailures,
+    reviewFlags,
+  }
+}

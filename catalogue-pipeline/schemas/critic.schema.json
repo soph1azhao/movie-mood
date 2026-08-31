@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "critic.schema.json",
+  "title": "Movie Mood Critic Output",
+  "type": "object",
+  "required": ["schemaVersion", "promptVersion", "voiceGuideVersion", "movie", "verdict", "issues", "copyAssessment"],
+  "properties": {
+    "schemaVersion": { "const": "critic-output.v1" },
+    "promptVersion": { "type": "string", "minLength": 1 },
+    "voiceGuideVersion": { "type": "string", "minLength": 1 },
+    "movie": { "type": "object" },
+    "verdict": { "enum": ["hard_fail", "needs_review", "approve_for_review", "candidate_for_auto_accept"] },
+    "issues": { "type": "array" },
+    "copyAssessment": { "type": "object" }
+  }
+}

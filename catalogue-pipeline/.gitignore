@@ -1,0 +1,10 @@
+/cache/
+/generated/tmdbFacts/
+/generated/semantic/
+/generated/editorial/
+/generated/critic/
+/generated/posters/
+/generated/benchmarks/raw/
+*.local.json
+*.secret.json
+.env

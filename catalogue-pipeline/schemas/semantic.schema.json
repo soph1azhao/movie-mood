@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "semantic.schema.json",
+  "title": "Movie Mood Semantic Output",
+  "type": "object",
+  "required": ["schemaVersion", "promptVersion", "taxonomyVersion", "movie", "classification", "evidence"],
+  "properties": {
+    "schemaVersion": { "const": "semantic-output.v1" },
+    "promptVersion": { "type": "string", "minLength": 1 },
+    "taxonomyVersion": { "type": "string", "minLength": 1 },
+    "voiceGuideVersion": false,
+    "movie": { "type": "object" },
+    "classification": { "type": "object" },
+    "evidence": { "type": "object" },
+    "boundaryFlags": { "type": "array" },
+    "selfConfidence": { "type": "object" }
+  }
+}

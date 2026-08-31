@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "review-queue.schema.json",
+  "title": "Movie Mood Review Queue",
+  "type": "object",
+  "required": ["batchId", "schemaVersion", "items"],
+  "properties": {
+    "batchId": { "type": "string", "minLength": 1 },
+    "schemaVersion": { "const": "review-queue.v1" },
+    "items": { "type": "array" }
+  }
+}

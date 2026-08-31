@@ -1,0 +1,8 @@
+{
+  "candidate": "candidate.v1",
+  "tmdbFacts": "tmdb-facts.v1",
+  "semantic": "semantic-output.v1",
+  "editorial": "editorial-output.v1",
+  "critic": "critic-output.v1",
+  "reviewQueue": "review-queue.v1"
+}

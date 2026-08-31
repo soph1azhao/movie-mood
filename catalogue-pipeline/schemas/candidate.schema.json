@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "candidate.schema.json",
+  "title": "Movie Mood Candidate Batch",
+  "type": "object",
+  "required": ["batchId", "schemaVersion", "createdAt", "sourcePolicy", "candidates"],
+  "properties": {
+    "batchId": { "type": "string", "minLength": 1 },
+    "schemaVersion": { "const": "candidate.v1" },
+    "createdAt": { "type": "string", "minLength": 1 },
+    "sourcePolicy": {
+      "type": "object",
+      "required": ["description", "licensingNotes"],
+      "properties": {
+        "description": { "type": "string", "minLength": 1 },
+        "licensingNotes": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "candidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["candidateId", "title", "year", "tmdbId", "sourceTags", "inclusionRationale"],
+        "properties": {
+          "candidateId": { "type": "string", "minLength": 1 },
+          "title": { "type": "string", "minLength": 1 },
+          "year": { "type": "integer", "minimum": 1878 },
+          "tmdbId": { "type": "integer", "minimum": 1 },
+          "sourceTags": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+          "inclusionRationale": { "type": "string", "minLength": 1 },
+          "knownRisks": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  }
+}

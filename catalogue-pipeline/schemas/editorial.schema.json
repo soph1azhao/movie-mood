@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "editorial.schema.json",
+  "title": "Movie Mood Editorial Output",
+  "type": "object",
+  "required": ["schemaVersion", "promptVersion", "voiceGuideVersion", "movie", "copy"],
+  "properties": {
+    "schemaVersion": { "const": "editorial-output.v1" },
+    "promptVersion": { "type": "string", "minLength": 1 },
+    "voiceGuideVersion": { "type": "string", "minLength": 1 },
+    "movie": { "type": "object" },
+    "copy": { "type": "object" },
+    "writerNotes": { "type": "object" }
+  }
+}

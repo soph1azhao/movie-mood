@@ -1,0 +1,12 @@
+{
+  "modelProvider": "example-provider-adapter-id",
+  "modelId": "example-structured-output-model",
+  "credentials": {
+    "source": "environment",
+    "envVar": "MODEL_PROVIDER_API_KEY"
+  },
+  "notes": [
+    "Do not commit real provider credentials.",
+    "Provider selection is intentionally deferred behind the adapter boundary."
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "taxonomyVersion": "taxonomy.v1",
+  "moods": ["funny", "exciting", "thoughtful", "relaxing", "emotional", "suspenseful"],
+  "situations": ["alone", "date-night", "friends", "family", "easy-watch"],
+  "pace": ["slow", "medium", "fast"],
+  "emotionalWeight": ["light", "moderate", "heavy"],
+  "attentionDemand": ["easy", "engaged", "immersive"],
+  "discoveryStyle": ["familiar", "different", "adventurous"]
+}
