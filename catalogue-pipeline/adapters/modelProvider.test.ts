@@ -50,6 +50,19 @@ describe('model provider adapter', () => {
     expect(generateStructured).toHaveBeenCalledTimes(1)
   })
 
+  it('reports the first sanitized schema validation path and keyword', async () => {
+    const generateStructured = vi.fn().mockResolvedValue({ pace: 'turbo' })
+
+    await expect(runStructuredModelRequest({
+      provider: { ...provider, generateStructured },
+      request: { stage: 'semantic-classifier' },
+      validateOutput: () => ({ ok: false, hardFailures: [{ field: 'attentionDemand', code: 'INVALID_ENUM' }] }),
+    })).rejects.toMatchObject({
+      code: 'MALFORMED_MODEL_OUTPUT',
+      message: expect.stringContaining('path: attentionDemand; keyword: INVALID_ENUM'),
+    })
+  })
+
   it('stops after the configured retry limit for transient model failures', async () => {
     const transientError = new ModelProviderError('try again', { retryable: true })
     const generateStructured = vi.fn().mockRejectedValue(transientError)

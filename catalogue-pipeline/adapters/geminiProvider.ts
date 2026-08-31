@@ -14,12 +14,13 @@ type GeminiProviderOptions = {
 const DEFAULT_ENDPOINT_BASE_URL = 'https://generativelanguage.googleapis.com/v1beta'
 const RETRY_SAFETY_MARGIN_MS = 1000
 const MAX_PROVIDER_RETRY_DELAY_MS = 10 * 60 * 1000
+export const GEMINI_SCHEMA_PROJECTION_VERSION = 'gemini-generate-content-schema.v1'
 
 function asObject(value: unknown): Record<string, unknown> {
   return value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, unknown> : {}
 }
 
-function buildResponseJsonSchema() {
+export function buildGeminiResponseJsonSchema() {
   const evidenceItem = {
     type: 'object',
     required: ['rationale', 'sourceRefs'],
@@ -27,19 +28,22 @@ function buildResponseJsonSchema() {
       rationale: { type: 'string' },
       sourceRefs: { type: 'array', items: { type: 'string' } },
     },
+    additionalProperties: false,
   }
 
   return {
     type: 'object',
     required: ['classification', 'evidence', 'boundaryFlags'],
+    additionalProperties: false,
     properties: {
       classification: {
         type: 'object',
         required: ['moods', 'situations', 'filterLanguages', 'pace', 'emotionalWeight', 'attentionDemand', 'discoveryStyle'],
+        additionalProperties: false,
         properties: {
-          moods: { type: 'array', items: { type: 'string', enum: ['funny', 'exciting', 'thoughtful', 'relaxing', 'emotional', 'suspenseful'] } },
-          situations: { type: 'array', items: { type: 'string', enum: ['alone', 'date-night', 'friends', 'family', 'easy-watch'] } },
-          filterLanguages: { type: 'array', items: { type: 'string' } },
+          moods: { type: 'array', minItems: 1, items: { type: 'string', enum: ['funny', 'exciting', 'thoughtful', 'relaxing', 'emotional', 'suspenseful'] } },
+          situations: { type: 'array', minItems: 1, items: { type: 'string', enum: ['alone', 'date-night', 'friends', 'family', 'easy-watch'] } },
+          filterLanguages: { type: 'array', minItems: 1, items: { type: 'string' } },
           pace: { type: 'string', enum: ['slow', 'medium', 'fast'] },
           emotionalWeight: { type: 'string', enum: ['light', 'moderate', 'heavy'] },
           attentionDemand: { type: 'string', enum: ['easy', 'engaged', 'immersive'] },
@@ -49,9 +53,10 @@ function buildResponseJsonSchema() {
       evidence: {
         type: 'object',
         required: ['moods', 'situations', 'pace', 'emotionalWeight', 'attentionDemand', 'discoveryStyle'],
+        additionalProperties: false,
         properties: {
-          moods: { type: 'object' },
-          situations: { type: 'object' },
+          moods: { type: 'object', additionalProperties: evidenceItem },
+          situations: { type: 'object', additionalProperties: evidenceItem },
           pace: evidenceItem,
           emotionalWeight: evidenceItem,
           attentionDemand: evidenceItem,
@@ -63,6 +68,7 @@ function buildResponseJsonSchema() {
         items: {
           type: 'object',
           required: ['code', 'fields', 'message', 'reviewRequired'],
+          additionalProperties: false,
           properties: {
             code: { type: 'string' },
             fields: { type: 'array', items: { type: 'string' } },
@@ -86,7 +92,7 @@ function extractText(responseBody: Record<string, unknown>): string {
   const parts = Array.isArray(content.parts) ? content.parts : []
   const text = parts.map((part) => asObject(part).text).filter((value): value is string => typeof value === 'string').join('')
   if (!text.trim()) {
-    throw new ModelProviderError('Gemini returned no structured text.', { code: 'MALFORMED_MODEL_OUTPUT' })
+    throw new ModelProviderError('Gemini returned no structured text. [response-extraction]', { code: 'MALFORMED_MODEL_OUTPUT' })
   }
   return text
 }
@@ -106,7 +112,7 @@ function parseStructuredText(text: string): Record<string, unknown> {
     const parsed = JSON.parse(text)
     if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) return parsed as Record<string, unknown>
   } catch (error) {
-    throw new ModelProviderError('Gemini returned malformed structured JSON.', {
+    throw new ModelProviderError('Gemini returned malformed structured JSON. [invalid-json]', {
       code: 'MALFORMED_MODEL_OUTPUT',
       cause: error,
     })
@@ -199,8 +205,12 @@ export function createGeminiProvider({
       const generationConfig: Record<string, unknown> = {
         temperature: typeof request.temperature === 'number' ? request.temperature : 0.1,
         topP: 0.2,
-        responseMimeType: 'application/json',
-        responseJsonSchema: buildResponseJsonSchema(),
+        responseFormat: {
+          text: {
+            mimeType: 'application/json',
+            schema: buildGeminiResponseJsonSchema(),
+          },
+        },
       }
       const response = await fetchImpl(url, {
         method: 'POST',

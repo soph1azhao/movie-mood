@@ -47,6 +47,19 @@ function splitProviderMetadata(output: Record<string, unknown>) {
   return { structuredOutput, providerUsageMetadata }
 }
 
+function validationDiagnostic(failures: unknown): string {
+  const first = Array.isArray(failures) ? failures[0] : undefined
+  if (!first || typeof first !== 'object') return ''
+  const issue = first as Record<string, unknown>
+  const path = typeof issue.field === 'string' ? issue.field : typeof issue.path === 'string' ? issue.path : 'output'
+  const keyword = typeof issue.keyword === 'string'
+    ? issue.keyword
+    : typeof issue.code === 'string'
+      ? issue.code
+      : 'validation'
+  return ` path: ${path}; keyword: ${keyword}.`
+}
+
 export function createModelCacheKey({
   stage,
   tmdbId,
@@ -126,7 +139,7 @@ export async function runStructuredModelRequest({
       const validation = validateOutput?.(output)
 
       if (validation && !validation.ok) {
-        throw new ModelProviderError('Model provider output failed schema validation.', {
+        throw new ModelProviderError(`Model provider output failed schema validation.${validationDiagnostic(validation.hardFailures)}`, {
           code: 'MALFORMED_MODEL_OUTPUT',
           cause: validation.hardFailures,
         })

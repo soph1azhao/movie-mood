@@ -140,6 +140,24 @@ describe('Phase 5 semantic classifier', () => {
     await expect(runInTemp(providerWith(response({ description: 'Not allowed.' })))).rejects.toMatchObject({ code: 'MODEL_PROVIDER_FAILURE' })
   })
 
+  it('does not cache invalid output and accepts a corrected subsequent response', async () => {
+    const root = await mkdtemp(join(tmpdir(), 'movie-mood-semantic-invalid-cache-'))
+    const invalidProvider = providerWith(response({ classification: { ...response().classification, attentionDemand: 'invalid' } }))
+    const options = { evidencePacket: packet(), provider: invalidProvider, prompt, cacheRoot: join(root, 'cache'), outputPath: join(root, 'generated', 'paddington.json') }
+    try {
+      await expect(classifySemanticCandidate(options)).rejects.toMatchObject({ code: 'MALFORMED_MODEL_OUTPUT' })
+      expect(invalidProvider.generateStructured).toHaveBeenCalledTimes(1)
+      await expect(readFile(options.outputPath, 'utf8')).rejects.toThrow()
+
+      const correctedProvider = providerWith(response())
+      const corrected = await classifySemanticCandidate({ ...options, provider: correctedProvider })
+      expect(corrected.cacheHit).toBe(false)
+      expect(correctedProvider.generateStructured).toHaveBeenCalledTimes(1)
+    } finally {
+      await rm(root, { recursive: true, force: true })
+    }
+  })
+
   it('summarizes calibration replay agreement without overwriting human targets', () => {
     const artifact = { movie: { tmdbId: 346648 }, classification: response().classification, evidence: response().evidence, boundaryFlags: [] }
     const replay = summarizeCalibrationReplay({ targets: [{ tmdbId: 346648, ...response().classification }], artifacts: [artifact] })
