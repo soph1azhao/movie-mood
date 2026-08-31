@@ -9,7 +9,6 @@ type GeminiProviderOptions = {
   env?: Record<string, string | undefined>
   fetchImpl?: FetchLike
   endpointBaseUrl?: string
-  authMode?: 'auto' | 'api-key' | 'bearer'
 }
 
 const DEFAULT_ENDPOINT_BASE_URL = 'https://generativelanguage.googleapis.com/v1beta'
@@ -116,15 +115,6 @@ function parseStructuredText(text: string): Record<string, unknown> {
   })
 }
 
-function authHeaders(credential: string, authMode: 'auto' | 'api-key' | 'bearer') {
-  const isBearerCredential = credential.startsWith('ya29') || credential.startsWith('Bearer ')
-  const mode = authMode === 'auto' && isBearerCredential ? 'bearer' : authMode === 'auto' ? 'api-key' : authMode
-  const bearerToken = credential.startsWith('Bearer ') ? credential.slice('Bearer '.length) : credential
-  return mode === 'bearer'
-    ? { Authorization: `Bearer ${bearerToken}` }
-    : { 'x-goog-api-key': credential }
-}
-
 async function safeErrorText(response: Response): Promise<string> {
   try {
     const text = await response.text()
@@ -140,7 +130,6 @@ export function createGeminiProvider({
   env = process.env,
   fetchImpl = globalThis.fetch,
   endpointBaseUrl = DEFAULT_ENDPOINT_BASE_URL,
-  authMode = 'auto',
 }: GeminiProviderOptions) {
   if (!modelId || typeof modelId !== 'string') {
     throw new ModelProviderError('Gemini provider requires a modelId.', { code: 'MISSING_MODEL_ID' })
@@ -169,7 +158,7 @@ export function createGeminiProvider({
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          ...authHeaders(credential, authMode),
+          'x-goog-api-key': credential,
         },
         body: JSON.stringify({
           contents: [{ role: 'user', parts: [{ text: JSON.stringify(request.input) }] }],
