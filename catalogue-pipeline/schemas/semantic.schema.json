@@ -3,16 +3,56 @@
   "$id": "semantic.schema.json",
   "title": "Movie Mood Semantic Output",
   "type": "object",
-  "required": ["schemaVersion", "promptVersion", "taxonomyVersion", "movie", "classification", "evidence"],
+  "required": ["schemaVersion", "promptVersion", "taxonomyVersion", "movie", "classification", "evidence", "boundaryFlags"],
   "properties": {
     "schemaVersion": { "const": "semantic-output.v1" },
     "promptVersion": { "type": "string", "minLength": 1 },
     "taxonomyVersion": { "type": "string", "minLength": 1 },
     "voiceGuideVersion": false,
-    "movie": { "type": "object" },
-    "classification": { "type": "object" },
-    "evidence": { "type": "object" },
-    "boundaryFlags": { "type": "array" },
-    "selfConfidence": { "type": "object" }
+    "movie": { "type": "object", "required": ["candidateId", "tmdbId"] },
+    "classification": {
+      "type": "object",
+      "required": ["moods", "situations", "filterLanguages", "pace", "emotionalWeight", "attentionDemand", "discoveryStyle"]
+    },
+    "evidence": {
+      "type": "object",
+      "required": ["moods", "situations", "pace", "emotionalWeight", "attentionDemand", "discoveryStyle"],
+      "properties": {
+        "moods": { "type": "object", "minProperties": 1 },
+        "situations": { "type": "object", "minProperties": 1 },
+        "pace": { "$ref": "#/$defs/evidenceItem" },
+        "emotionalWeight": { "$ref": "#/$defs/evidenceItem" },
+        "attentionDemand": { "$ref": "#/$defs/evidenceItem" },
+        "discoveryStyle": { "$ref": "#/$defs/evidenceItem" }
+      }
+    },
+    "boundaryFlags": { "type": "array", "items": { "$ref": "#/$defs/boundaryFlag" } },
+    "selfConfidence": {
+      "type": "object",
+      "description": "Supplementary only; it must not be used as the primary review-confidence signal.",
+      "additionalProperties": { "type": "number", "minimum": 0, "maximum": 1 }
+    }
+  },
+  "$defs": {
+    "evidenceItem": {
+      "type": "object",
+      "required": ["rationale", "sourceRefs"],
+      "properties": {
+        "rationale": { "type": "string", "minLength": 12 },
+        "sourceRefs": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } }
+      },
+      "additionalProperties": false
+    },
+    "boundaryFlag": {
+      "type": "object",
+      "required": ["code", "fields", "message", "reviewRequired"],
+      "properties": {
+        "code": { "type": "string", "minLength": 1 },
+        "fields": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "message": { "type": "string", "minLength": 12 },
+        "reviewRequired": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    }
   }
 }

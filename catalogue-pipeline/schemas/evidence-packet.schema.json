@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "evidence-packet.schema.json",
+  "title": "Movie Mood Offline Evidence Packet",
+  "type": "object",
+  "required": ["schemaVersion", "candidateId", "tmdbId", "sourceProvenance", "facts", "inputHash"],
+  "properties": {
+    "schemaVersion": { "const": "evidence-packet.v1" },
+    "candidateId": { "type": "string", "minLength": 1 },
+    "tmdbId": { "type": "integer", "minimum": 1 },
+    "sourceProvenance": { "type": "array", "minItems": 1 },
+    "facts": { "type": "object" },
+    "inputHash": { "type": "string", "pattern": "^sha256:" }
+  }
+}

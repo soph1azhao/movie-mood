@@ -13,6 +13,18 @@ import { buildReviewQueue } from './buildReviewQueue.mjs'
 
 const longText = 'This line is specific enough for Movie Mood validation and carries a clear editorial shape.'
 
+function semanticEvidence() {
+  const item = (rationale) => ({ rationale, sourceRefs: ['tmdb-overview'] })
+  return {
+    moods: { relaxing: item('The overview describes a gentle, restorative experience.') },
+    situations: { family: item('The factual genre and overview support broad shared viewing.') },
+    pace: item('The overview and runtime support an unhurried medium rhythm.'),
+    emotionalWeight: item('The setup indicates limited emotional recovery cost.'),
+    attentionDemand: item('The premise remains legible without dense puzzle tracking.'),
+    discoveryStyle: item('The accessible genre framing offers a distinct but approachable entry.'),
+  }
+}
+
 function validCuratedMovie(overrides = {}) {
   return {
     id: 'example-movie',
@@ -124,7 +136,8 @@ it('semantic output validates taxonomy shape and rejects writer copy fields', ()
       attentionDemand: 'easy',
       discoveryStyle: 'different',
     },
-    evidence: {},
+    evidence: semanticEvidence(),
+    boundaryFlags: [],
   })
 
   expect(result.ok).toBe(true)
@@ -142,6 +155,13 @@ it('editorial output requires voice guide version and copy limits', () => {
       curiosityHook: 'A small discovery opens into a tender night with quiet visual charm.',
       vibeSummary: 'Gentle, bright, and easy to settle into without feeling bland.',
     },
+    writerNotes: {
+      spoilerBoundary: {
+        allowedMaterial: ['starting situation', 'tone'],
+        excludedMaterial: ['later revelations', 'ending'],
+        sourceRefs: ['tmdb-overview'],
+      },
+    },
   })
 
   expect(result.ok).toBe(true)
@@ -155,7 +175,18 @@ it('critic output rejects writer hidden reasoning dependency', () => {
     movie: { candidateId: 'pilot-001', tmdbId: 123 },
     verdict: 'needs_review',
     issues: [],
-    copyAssessment: {},
+    copyAssessment: {
+      taxonomyAlignment: 'pass',
+      voiceConsistency: 'pass',
+      specificity: 'pass',
+      descriptionHookDifferentiation: 'pass',
+      genericLanguageRisk: 'pass',
+      syntacticRepetitionRisk: 'pass',
+      setupOnlySpoilerCompliance: 'pass',
+      synopsisDrift: 'pass',
+      distinctiveness: 'pass',
+      layoutFit: 'pass',
+    },
     writerReasoning: 'Do not include this.',
   })
 

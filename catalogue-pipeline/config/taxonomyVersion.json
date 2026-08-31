@@ -1,5 +1,5 @@
 {
-  "taxonomyVersion": "taxonomy.v1",
+  "taxonomyVersion": "taxonomy.v2",
   "moods": ["funny", "exciting", "thoughtful", "relaxing", "emotional", "suspenseful"],
   "situations": ["alone", "date-night", "friends", "family", "easy-watch"],
   "pace": ["slow", "medium", "fast"],

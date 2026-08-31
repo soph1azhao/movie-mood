@@ -3,13 +3,28 @@
   "$id": "editorial.schema.json",
   "title": "Movie Mood Editorial Output",
   "type": "object",
-  "required": ["schemaVersion", "promptVersion", "voiceGuideVersion", "movie", "copy"],
+  "required": ["schemaVersion", "promptVersion", "voiceGuideVersion", "movie", "copy", "writerNotes"],
   "properties": {
     "schemaVersion": { "const": "editorial-output.v1" },
     "promptVersion": { "type": "string", "minLength": 1 },
     "voiceGuideVersion": { "type": "string", "minLength": 1 },
-    "movie": { "type": "object" },
-    "copy": { "type": "object" },
-    "writerNotes": { "type": "object" }
+    "movie": { "type": "object", "required": ["candidateId", "tmdbId"] },
+    "copy": { "type": "object", "required": ["description", "whyWatch", "curiosityHook", "vibeSummary"] },
+    "writerNotes": {
+      "type": "object",
+      "required": ["spoilerBoundary"],
+      "properties": {
+        "spoilerBoundary": {
+          "type": "object",
+          "required": ["allowedMaterial", "excludedMaterial", "sourceRefs"],
+          "properties": {
+            "allowedMaterial": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+            "excludedMaterial": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+            "sourceRefs": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } }
+          },
+          "additionalProperties": false
+        }
+      }
+    }
   }
 }

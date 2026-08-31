@@ -1,0 +1,15 @@
+{
+  "taxonomyVersion": "taxonomy.v2",
+  "source": "Existing human-curated Movie Mood catalogue; anchors are calibration aids and may be corrected by later review.",
+  "anchors": [
+    { "movieId": "paddington-2", "tmdbId": 346648, "field": "moods", "value": "funny", "anchorType": "positive", "rationale": "Warm, generous comedy; funny is central without implying weightlessness as a universal rule." },
+    { "movieId": "paddington-2", "tmdbId": 346648, "field": "situations", "value": "family", "anchorType": "positive", "rationale": "Broadly shareable with manageable intensity." },
+    { "movieId": "whiplash", "tmdbId": 244786, "field": "emotionalWeight", "value": "heavy", "anchorType": "positive", "rationale": "Intensity and consequence create a sustained emotional cost." },
+    { "movieId": "perfect-days", "tmdbId": 976893, "field": "pace", "value": "slow", "anchorType": "positive", "rationale": "Observational rhythm is patient, while its attention demand remains easy." },
+    { "movieId": "arrival", "tmdbId": 329865, "field": "attentionDemand", "value": "immersive", "anchorType": "positive", "rationale": "Language, time, and emotional construction reward sustained attention." },
+    { "movieId": "mad-max", "tmdbId": 76341, "field": "pace", "value": "fast", "anchorType": "positive", "rationale": "Relentless forward movement; fast does not itself mean every fast film is exciting." },
+    { "movieId": "edge-of-tomorrow", "tmdbId": 137113, "field": "moods", "value": "exciting", "anchorType": "positive", "rationale": "Kinetic escalation and repeat-loop momentum are core to the experience." },
+    { "movieId": "rye-lane-2023", "tmdbId": 1013601, "field": "moods", "value": "funny", "anchorType": "positive", "rationale": "Brisk stylized romance can carry three compatible moods without over-tagging." },
+    { "movieId": "petite-maman-2021", "tmdbId": 519188, "field": "moods", "value": "thoughtful", "anchorType": "positive", "rationale": "Quiet contemplation and emotional intimacy are distinct but both central." }
+  ]
+}

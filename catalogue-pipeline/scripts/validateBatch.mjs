@@ -45,7 +45,23 @@ const REQUIRED_FACT_FIELDS = [
   'posterPath',
 ]
 
-const META_COPY_PATTERNS = [
+const HARD_META_COPY_PATTERNS = [
+  /\bas an ai\b/i,
+  /\blanguage model\b/i,
+  /\bI (cannot|can't|generated|was asked)\b/i,
+  /\bconfidence (score|level)\b/i,
+]
+
+const GENERIC_COPY_PATTERNS = [
+  /\btour de force\b/i,
+  /\brich tapestry\b/i,
+  /\bmasterful blend\b/i,
+  /\bstellar ensemble\b/i,
+  /\bheartwarming tale\b/i,
+  /\ba love letter to\b/i,
+  /\bdeeply moving\b/i,
+  /\bbreathtaking cinematography\b/i,
+  /\bkeeps you on the edge of your seat\b/i,
   /\bmust[- ]watch\b/i,
   /\bfor fans of cinema\b/i,
   /\brollercoaster of emotions\b/i,
@@ -54,10 +70,9 @@ const META_COPY_PATTERNS = [
   /\bat its core\b/i,
   /\btestament to\b/i,
   /\bwill leave you\b/i,
-  /\bas an ai\b/i,
 ]
 
-const SPOILER_PATTERNS = [
+export const SPOILER_PATTERNS = [
   /\bending reveals\b/i,
   /\bfinal twist\b/i,
   /\bturns out\b/i,
@@ -130,7 +145,7 @@ function validatePalette(value, issues) {
   }
 }
 
-function validateCopyField(copy, field, issues) {
+function validateCopyField(copy, field, issues, reviewFlags = []) {
   validateString(copy, field, issues)
   if (typeof copy !== 'string') return
 
@@ -146,11 +161,86 @@ function validateCopyField(copy, field, issues) {
     addHardFailure(issues, 'PLACEHOLDER_COPY', `${field} contains placeholder text.`, { field })
   }
   if (SPOILER_PATTERNS.some((pattern) => pattern.test(trimmed))) {
-    addHardFailure(issues, 'SPOILER_HARD_FAILURE', `${field} appears to reveal spoiler-sensitive information.`, { field })
+    addReviewFlag(reviewFlags, 'SPOILER_PATTERN_REVIEW', `${field} contains a spoiler-sensitive phrase that needs semantic review.`, { field })
   }
-  if (META_COPY_PATTERNS.some((pattern) => pattern.test(trimmed))) {
-    addHardFailure(issues, 'GENERIC_OR_META_COPY', `${field} contains generic or model-like phrasing.`, { field })
+  if (HARD_META_COPY_PATTERNS.some((pattern) => pattern.test(trimmed))) {
+    addHardFailure(issues, 'MODEL_OR_META_LANGUAGE', `${field} contains hard-invalid model or meta language.`, { field })
   }
+  if (GENERIC_COPY_PATTERNS.some((pattern) => pattern.test(trimmed))) {
+    addReviewFlag(reviewFlags, 'GENERIC_LANGUAGE_REVIEW', `${field} contains generic critical language that needs review.`, { field })
+  }
+}
+
+function validateEvidenceItem(item, field, issues) {
+  if (!isObject(item)) {
+    addHardFailure(issues, 'INVALID_SEMANTIC_EVIDENCE', `${field} must be a structured evidence object.`, { field })
+    return
+  }
+  validateString(item.rationale, `${field}.rationale`, issues)
+  if (typeof item.rationale === 'string' && item.rationale.trim().length < 12) {
+    addHardFailure(issues, 'INVALID_SEMANTIC_EVIDENCE', `${field}.rationale must be meaningful.`, { field })
+  }
+  validateStringArray(item.sourceRefs, `${field}.sourceRefs`, issues)
+}
+
+function validateTagEvidence(evidence, field, selectedValues, issues) {
+  if (!isObject(evidence)) {
+    addHardFailure(issues, 'INVALID_SEMANTIC_EVIDENCE', `${field} evidence must map each selected value to evidence.`, { field })
+    return
+  }
+  for (const value of selectedValues) validateEvidenceItem(evidence[value], `${field}.${value}`, issues)
+}
+
+function validateBoundaryFlags(flags, issues) {
+  if (!Array.isArray(flags)) {
+    addHardFailure(issues, 'MISSING_REQUIRED_FIELD', 'boundaryFlags must be an array.', { field: 'boundaryFlags' })
+    return
+  }
+  for (const [index, flag] of flags.entries()) {
+    if (!isObject(flag)) {
+      addHardFailure(issues, 'INVALID_BOUNDARY_FLAG', `boundaryFlags[${index}] must be an object.`, { field: 'boundaryFlags' })
+      continue
+    }
+    validateString(flag.code, `boundaryFlags[${index}].code`, issues)
+    validateStringArray(flag.fields, `boundaryFlags[${index}].fields`, issues)
+    validateString(flag.message, `boundaryFlags[${index}].message`, issues)
+    if (typeof flag.message === 'string' && flag.message.trim().length < 12) addHardFailure(issues, 'INVALID_BOUNDARY_FLAG', 'Boundary flag message must be meaningful.', { field: 'boundaryFlags' })
+    if (typeof flag.reviewRequired !== 'boolean') addHardFailure(issues, 'INVALID_BOUNDARY_FLAG', 'Boundary flag reviewRequired must be boolean.', { field: 'boundaryFlags' })
+  }
+}
+
+function validateSelfConfidence(value, issues) {
+  if (value === undefined) return
+  if (!isObject(value)) {
+    addHardFailure(issues, 'INVALID_SELF_CONFIDENCE', 'selfConfidence must be an object when provided.', { field: 'selfConfidence' })
+    return
+  }
+  for (const [field, confidence] of Object.entries(value)) {
+    if (typeof confidence !== 'number' || confidence < 0 || confidence > 1) addHardFailure(issues, 'INVALID_SELF_CONFIDENCE', `${field} self-confidence must be between 0 and 1.`, { field: `selfConfidence.${field}` })
+  }
+}
+
+function normalizedWords(text) {
+  return new Set(String(text).toLowerCase().match(/[a-z0-9]+/g) ?? [])
+}
+
+export function isDescriptionHookDuplicate(description, curiosityHook) {
+  const descriptionWords = normalizedWords(description)
+  const hookWords = normalizedWords(curiosityHook)
+  if (descriptionWords.size === 0 || hookWords.size === 0) return false
+  const overlap = [...descriptionWords].filter((word) => hookWords.has(word)).length
+  const union = new Set([...descriptionWords, ...hookWords]).size
+  return overlap / union >= 0.72
+}
+
+function validateSpoilerBoundary(value, issues) {
+  if (!isObject(value)) {
+    addHardFailure(issues, 'INVALID_SPOILER_BOUNDARY', 'writerNotes.spoilerBoundary must be a structured audit object.', { field: 'writerNotes.spoilerBoundary' })
+    return
+  }
+  validateStringArray(value.allowedMaterial, 'writerNotes.spoilerBoundary.allowedMaterial', issues)
+  validateStringArray(value.excludedMaterial, 'writerNotes.spoilerBoundary.excludedMaterial', issues)
+  validateStringArray(value.sourceRefs, 'writerNotes.spoilerBoundary.sourceRefs', issues)
 }
 
 export function validateCandidateBatch(batch) {
@@ -237,7 +327,7 @@ export function validateCuratedMovie(movie, context = {}) {
   validatePalette(movie.palette, issues)
 
   for (const field of Object.keys(COPY_LIMITS)) {
-    validateCopyField(movie[field], field, issues)
+    validateCopyField(movie[field], field, issues, reviewFlags)
   }
 
   for (const flag of getSemanticAnomalies(movie)) {
@@ -394,6 +484,37 @@ export function getSemanticAnomalies(movie) {
   return anomalies
 }
 
+export function getCardinalityFlags(classification) {
+  const flags = []
+  const moods = Array.isArray(classification?.moods) ? classification.moods : []
+  const situations = Array.isArray(classification?.situations) ? classification.situations : []
+
+  if (moods.length === 1 || moods.length === 3) {
+    flags.push({ code: 'MOOD_CARDINALITY_REVIEW', fields: ['moods'], message: `${moods.length} selected mood(s) is human-approved but requires per-tag evidence review.` })
+  } else if (moods.length > 3) {
+    flags.push({ code: 'MOOD_CARDINALITY_UNUSUAL', fields: ['moods'], message: `${moods.length} selected moods exceed the current human-approved range and require review.` })
+  }
+
+  if (situations.length === 1 || situations.length === 4) {
+    flags.push({ code: 'SITUATION_CARDINALITY_REVIEW', fields: ['situations'], message: `${situations.length} selected situation(s) is human-approved but requires context review.` })
+  } else if (situations.length > 4) {
+    flags.push({ code: 'SITUATION_CARDINALITY_UNUSUAL', fields: ['situations'], message: `${situations.length} selected situations exceed the current human-approved range and require review.` })
+  }
+
+  return flags
+}
+
+export function shouldRequestIndependentReclassification({
+  isGoldSubset = false,
+  lowConfidence = false,
+  hasBoundaryFlags = false,
+  hasAnomalyFlags = false,
+  classifierCriticDisagreement = false,
+  randomAudit = false,
+} = {}) {
+  return isGoldSubset || lowConfidence || hasBoundaryFlags || hasAnomalyFlags || classifierCriticDisagreement || randomAudit
+}
+
 export function validateSemanticOutput(output) {
   const issues = []
   const reviewFlags = []
@@ -419,14 +540,20 @@ export function validateSemanticOutput(output) {
     validateEnum(output.classification.emotionalWeight, 'classification.emotionalWeight', VALID_VALUES.emotionalWeight, issues)
     validateEnum(output.classification.attentionDemand, 'classification.attentionDemand', VALID_VALUES.attentionDemand, issues)
     validateEnum(output.classification.discoveryStyle, 'classification.discoveryStyle', VALID_VALUES.discoveryStyle, issues)
-    for (const flag of getSemanticAnomalies(output.classification)) {
+    for (const flag of [...getSemanticAnomalies(output.classification), ...getCardinalityFlags(output.classification)]) {
       addReviewFlag(reviewFlags, flag.code, flag.message, { fields: flag.fields })
     }
   }
 
   if (!isObject(output.evidence)) {
     addHardFailure(issues, 'MISSING_REQUIRED_FIELD', 'evidence is required.', { field: 'evidence' })
+  } else if (isObject(output.classification)) {
+    validateTagEvidence(output.evidence.moods, 'evidence.moods', output.classification.moods ?? [], issues)
+    validateTagEvidence(output.evidence.situations, 'evidence.situations', output.classification.situations ?? [], issues)
+    for (const field of ['pace', 'emotionalWeight', 'attentionDemand', 'discoveryStyle']) validateEvidenceItem(output.evidence[field], `evidence.${field}`, issues)
   }
+  validateBoundaryFlags(output.boundaryFlags, issues)
+  validateSelfConfidence(output.selfConfidence, issues)
 
   return { ok: issues.length === 0, hardFailures: issues, reviewFlags }
 }
@@ -450,9 +577,13 @@ export function validateEditorialOutput(output) {
     addHardFailure(issues, 'MISSING_REQUIRED_FIELD', 'copy is required.', { field: 'copy' })
   } else {
     for (const field of Object.keys(COPY_LIMITS)) {
-      validateCopyField(output.copy[field], field, issues)
+      validateCopyField(output.copy[field], field, issues, reviewFlags)
+    }
+    if (typeof output.copy.description === 'string' && typeof output.copy.curiosityHook === 'string' && isDescriptionHookDuplicate(output.copy.description, output.copy.curiosityHook)) {
+      addReviewFlag(reviewFlags, 'DESCRIPTION_HOOK_DUPLICATION', 'description and curiosityHook are too similar and need differentiation review.', { fields: ['description', 'curiosityHook'] })
     }
   }
+  validateSpoilerBoundary(output.writerNotes?.spoilerBoundary, issues)
 
   return { ok: issues.length === 0, hardFailures: issues, reviewFlags }
 }
@@ -475,6 +606,10 @@ export function validateCriticOutput(output) {
   validateEnum(output.verdict, 'verdict', ['hard_fail', 'needs_review', 'approve_for_review', 'candidate_for_auto_accept'], issues)
   if (!Array.isArray(output.issues)) addHardFailure(issues, 'MISSING_REQUIRED_FIELD', 'issues must be an array.', { field: 'issues' })
   if (!isObject(output.copyAssessment)) addHardFailure(issues, 'MISSING_REQUIRED_FIELD', 'copyAssessment is required.', { field: 'copyAssessment' })
+  else {
+    const requiredAssessments = ['taxonomyAlignment', 'voiceConsistency', 'specificity', 'descriptionHookDifferentiation', 'genericLanguageRisk', 'syntacticRepetitionRisk', 'setupOnlySpoilerCompliance', 'synopsisDrift', 'distinctiveness', 'layoutFit']
+    for (const field of requiredAssessments) validateEnum(output.copyAssessment[field], `copyAssessment.${field}`, ['pass', 'review', 'fail'], issues)
+  }
   if (hasOwn(output, 'writerNotes') || hasOwn(output, 'writerReasoning')) {
     addHardFailure(issues, 'CRITIC_DEPENDS_ON_WRITER_REASONING', 'Critic output must not include writer hidden reasoning.', { field: 'writerReasoning' })
   }

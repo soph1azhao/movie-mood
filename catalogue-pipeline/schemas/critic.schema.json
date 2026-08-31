@@ -8,9 +8,13 @@
     "schemaVersion": { "const": "critic-output.v1" },
     "promptVersion": { "type": "string", "minLength": 1 },
     "voiceGuideVersion": { "type": "string", "minLength": 1 },
-    "movie": { "type": "object" },
+    "movie": { "type": "object", "required": ["candidateId", "tmdbId"] },
     "verdict": { "enum": ["hard_fail", "needs_review", "approve_for_review", "candidate_for_auto_accept"] },
     "issues": { "type": "array" },
-    "copyAssessment": { "type": "object" }
+    "copyAssessment": {
+      "type": "object",
+      "required": ["taxonomyAlignment", "voiceConsistency", "specificity", "descriptionHookDifferentiation", "genericLanguageRisk", "syntacticRepetitionRisk", "setupOnlySpoilerCompliance", "synopsisDrift", "distinctiveness", "layoutFit"],
+      "additionalProperties": { "enum": ["pass", "review", "fail"] }
+    }
   }
 }

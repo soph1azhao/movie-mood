@@ -1,0 +1,12 @@
+{
+  "taxonomyVersion": "taxonomy.v2",
+  "boundaryCases": [
+    { "movieId": "perfect-days", "tmdbId": 976893, "field": "attentionDemand", "value": "easy", "contrast": "slow pace does not require immersive attention", "reviewNote": "Treat this as a positive distinction, not an inconsistency." },
+    { "movieId": "arrival", "tmdbId": 329865, "field": "moods", "value": "thoughtful", "contrast": "thoughtful does not equal immersive", "reviewNote": "Immersive is justified by the film's information and emotional construction, not the thoughtful label alone." },
+    { "movieId": "before-sunrise", "tmdbId": 76, "field": "situations", "value": "easy-watch", "contrast": "relaxing and easy-watch remain separate", "reviewNote": "Conversation-led attention can be engaged while the practical fit remains easy-watch." },
+    { "movieId": "mad-max", "tmdbId": 76341, "field": "moods", "value": "exciting", "contrast": "fast does not always mean exciting", "reviewNote": "Use this as an excitement anchor, not a pace shortcut." },
+    { "movieId": "truman-show", "tmdbId": 37165, "field": "situations", "value": "four values", "contrast": "four situations are unusual but human-approved", "reviewNote": "Flag for review context; do not enforce maxItems: 2." },
+    { "movieId": "rye-lane-2023", "tmdbId": 1013601, "field": "moods", "value": "three values", "contrast": "three moods can be specific rather than excessive", "reviewNote": "Review each tag's evidence instead of rejecting cardinality." },
+    { "movieId": "petite-maman-2021", "tmdbId": 519188, "field": "moods", "value": "three values", "contrast": "quiet and contemplative is not automatically relaxing", "reviewNote": "Document the intended experiential distinction before treating labels as a conflict." }
+  ]
+}
