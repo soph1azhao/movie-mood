@@ -13,4 +13,4 @@ V8.1 guardrails:
 - Complete editorial fields for every promoted movie
 - Hard validation failures are separate from semantic review flags
 
-The first implemented tranche is deliberately small: schema files, inert config, a versioned voice-guide placeholder, deterministic validators, and tests. TMDB enrichment, model-provider adapters, classifier, writer, critic, pilot generation, benchmark harnesses, and production promotion are later phases.
+Implemented pipeline stages are TMDB enrichment, the provider-neutral structured-output adapter, and semantic classification. The classifier accepts an injected maintainer-side provider module, writes only ignored semantic cache/generated artifacts, and never produces editorial copy. Editorial writing, critic execution, pilot generation, benchmarks, and production promotion remain later phases.

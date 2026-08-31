@@ -102,6 +102,7 @@ describe('model provider adapter', () => {
       promptVersion: 'semantic-prompt.v1',
       taxonomyVersion: 'taxonomy.v1',
       voiceGuideVersion: undefined,
+      calibrationHash: 'calibration-v1',
       providerId: 'mock-provider',
       modelId: 'mock-model-v1',
     }
@@ -110,10 +111,11 @@ describe('model provider adapter', () => {
     const second = createModelCacheKey({ ...base })
     const promptChanged = createModelCacheKey({ ...base, promptVersion: 'semantic-prompt.v2' })
     const factsChanged = createModelCacheKey({ ...base, factsHash: 'facts-v2' })
+    const calibrationChanged = createModelCacheKey({ ...base, calibrationHash: 'calibration-v2' })
     const modelChanged = createModelCacheKey({ ...base, modelId: 'mock-model-v2' })
 
     expect(first).toHaveLength(64)
     expect(first).toBe(second)
-    expect(new Set([first, promptChanged, factsChanged, modelChanged]).size).toBe(4)
+    expect(new Set([first, promptChanged, factsChanged, calibrationChanged, modelChanged]).size).toBe(5)
   })
 })

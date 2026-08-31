@@ -48,6 +48,7 @@ export function createModelCacheKey({
   promptVersion,
   taxonomyVersion,
   voiceGuideVersion,
+  calibrationHash,
   providerId,
   modelId,
 }: {
@@ -58,6 +59,7 @@ export function createModelCacheKey({
   promptVersion: string
   taxonomyVersion?: string
   voiceGuideVersion?: string
+  calibrationHash?: string
   providerId: string
   modelId: string
 }): string {
@@ -73,6 +75,7 @@ export function createModelCacheKey({
     promptVersion,
     taxonomyVersion: taxonomyVersion ?? null,
     voiceGuideVersion: voiceGuideVersion ?? null,
+    calibrationHash: calibrationHash ?? null,
     providerId,
     modelId,
   })
