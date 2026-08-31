@@ -207,7 +207,7 @@ export function createGeminiProvider({
         topP: 0.2,
         responseFormat: {
           text: {
-            mimeType: 'application/json',
+            mimeType: 'APPLICATION_JSON',
             schema: buildGeminiResponseJsonSchema(),
           },
         },

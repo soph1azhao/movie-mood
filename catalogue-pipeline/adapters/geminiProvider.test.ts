@@ -78,7 +78,7 @@ describe('Gemini model provider', () => {
     expect(body.generationConfig).toMatchObject({
       temperature: 0,
       topP: 0.2,
-      responseFormat: { text: { mimeType: 'application/json' } },
+      responseFormat: { text: { mimeType: 'APPLICATION_JSON' } },
     })
     expect(body.generationConfig.responseFormat.text.schema).toMatchObject({
       type: 'object',
@@ -86,6 +86,7 @@ describe('Gemini model provider', () => {
     })
     expect(body.generationConfig).not.toHaveProperty('responseMimeType')
     expect(body.generationConfig).not.toHaveProperty('responseJsonSchema')
+    expect(JSON.stringify(body.generationConfig.responseFormat)).not.toContain('application/json')
   })
 
   it('always transmits GEMINI_API_KEY through the documented API-key header', async () => {
