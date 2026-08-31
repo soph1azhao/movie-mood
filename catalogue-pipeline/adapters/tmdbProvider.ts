@@ -2,7 +2,7 @@ import { createHash } from 'node:crypto'
 import { normalizeTmdbMovieResponse } from '../../scripts/tmdbCore.mjs'
 
 export const TMDB_FACTS_SCHEMA_VERSION = 'tmdb-facts.v1'
-export const TMDB_REQUEST_VERSION = 'tmdb-movie-details.v1'
+export const TMDB_REQUEST_VERSION = 'tmdb-movie-details.v2'
 export const TMDB_BASE_URL = 'https://api.themoviedb.org/3'
 export const TMDB_POSTER_BASE_URL = 'https://image.tmdb.org/t/p/w500'
 
@@ -70,7 +70,7 @@ export function getRetryDelayMs(response: { headers?: { get?: (name: string) => 
 export function buildTmdbMovieUrl(tmdbId: number): string {
   const url = new URL(`${TMDB_BASE_URL}/movie/${tmdbId}`)
   url.searchParams.set('language', 'en-US')
-  url.searchParams.set('append_to_response', 'credits')
+  url.searchParams.set('append_to_response', 'credits,keywords')
   return url.toString()
 }
 
@@ -179,6 +179,17 @@ export function normalizePipelineTmdbFacts(
   } = {},
 ) {
   const normalized = normalizeTmdbMovieResponse(response, requestedTmdbId)
+  const source = response && typeof response === 'object' && !Array.isArray(response) ? response as Record<string, unknown> : {}
+  const overview = typeof source.overview === 'string' ? source.overview.trim() : ''
+  const rawKeywords = source.keywords && typeof source.keywords === 'object' && !Array.isArray(source.keywords)
+    ? (source.keywords as { keywords?: unknown }).keywords
+    : []
+  const keywords = Array.isArray(rawKeywords)
+    ? [...new Set(rawKeywords
+        .map((keyword) => keyword && typeof keyword === 'object' && !Array.isArray(keyword) ? (keyword as { name?: unknown }).name : null)
+        .filter((keyword): keyword is string => typeof keyword === 'string' && keyword.trim().length > 0)
+        .map((keyword) => keyword.trim()))].sort((first, second) => first.localeCompare(second))
+    : []
   const sourceHash = stableHash(response)
 
   return {
@@ -192,6 +203,8 @@ export function normalizePipelineTmdbFacts(
     spokenLanguages: normalized.spokenLanguages,
     genres: normalized.genres,
     runtimeMinutes: normalized.runtimeMinutes,
+    overview,
+    keywords,
     posterPath: normalized.posterPath,
     posterAvailability: {
       available: normalized.posterPath !== null,
@@ -211,6 +224,8 @@ export function normalizePipelineTmdbFacts(
       schemaVersion: TMDB_FACTS_SCHEMA_VERSION,
       requestVersion: TMDB_REQUEST_VERSION,
       normalized,
+      overview,
+      keywords,
       sourceHash,
     }),
   }

@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 import { enrichTmdbCandidates, TmdbEnrichmentError } from '../scripts/enrichTmdb.mjs'
 import {
+  buildTmdbMovieUrl,
   fetchTmdbMovie,
   normalizePipelineTmdbFacts,
   redactSecret,
@@ -11,12 +12,16 @@ const tmdbResponse = {
   title: 'The Matrix',
   release_date: '1999-03-31',
   runtime: 136,
+  overview: 'A computer hacker learns that reality is not what it seems.',
   poster_path: '/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg',
   production_countries: [{ name: 'United States of America' }],
   spoken_languages: [{ english_name: 'English' }],
   genres: [{ name: 'Action' }, { name: 'Science Fiction' }],
   credits: {
     crew: [{ job: 'Director', name: 'Lana Wachowski' }, { job: 'Director', name: 'Lilly Wachowski' }],
+  },
+  keywords: {
+    keywords: [{ name: 'artificial reality' }, { name: 'dystopia' }, { name: 'artificial reality' }],
   },
 }
 
@@ -67,16 +72,24 @@ function createMemoryJsonStore() {
 }
 
 describe('TMDB offline provider', () => {
+  it('requests credits and keywords for pipeline evidence materialization', () => {
+    const url = new URL(buildTmdbMovieUrl(603))
+
+    expect(url.searchParams.get('append_to_response')).toBe('credits,keywords')
+  })
+
   it('normalizes TMDB responses into pipeline facts while separating poster availability', () => {
     const facts = normalizePipelineTmdbFacts(tmdbResponse, 603, { fetchedAt: '2026-08-31T00:00:00.000Z' })
 
     expect(facts).toMatchObject({
       schemaVersion: 'tmdb-facts.v1',
-      requestVersion: 'tmdb-movie-details.v1',
+      requestVersion: 'tmdb-movie-details.v2',
       tmdbId: 603,
       title: 'The Matrix',
       year: 1999,
       director: 'Lana Wachowski & Lilly Wachowski',
+      overview: 'A computer hacker learns that reality is not what it seems.',
+      keywords: ['artificial reality', 'dystopia'],
       posterPath: '/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg',
       posterAvailability: {
         available: true,
@@ -138,6 +151,28 @@ describe('TMDB offline provider', () => {
         collisions: [{ candidateId: 'matrix-1999', tmdbId: 603, existingMovieId: 'the-matrix' }],
       },
     } satisfies Partial<TmdbEnrichmentError>)
+  })
+
+  it('allows production TMDB collisions only for explicit calibration workflows', async () => {
+    const store = createMemoryJsonStore()
+    const fetchFn = vi.fn().mockResolvedValue(jsonResponse(tmdbResponse))
+
+    const result = await enrichTmdbCandidates({
+      batch: candidateBatch,
+      token: 'secret-token',
+      existingMappings: [{ id: 'the-matrix', tmdbId: 603 }],
+      allowProductionCollisions: true,
+      cacheRoot: '/tmp/movie-mood-tmdb-cache',
+      outputPath: '/tmp/movie-mood-tmdb-output/pilot-001.json',
+      fetchedAt: '2026-08-31T00:00:00.000Z',
+      fetchFn,
+      readJsonFile: store.readJsonFile,
+      writeJsonFile: store.writeJsonFile,
+      fileExists: store.fileExists,
+    })
+
+    expect(result.fetchCount).toBe(1)
+    expect(result.artifact.facts[0].overview).toContain('computer hacker')
   })
 
   it('is idempotent on unchanged cache and artifact reruns', async () => {

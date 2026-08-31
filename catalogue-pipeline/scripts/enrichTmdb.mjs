@@ -131,6 +131,7 @@ export async function enrichTmdbCandidates({
   batch,
   token,
   existingMappings = mappings,
+  allowProductionCollisions = false,
   cacheRoot = defaultCacheRoot,
   outputPath,
   fetchedAt = new Date().toISOString(),
@@ -149,7 +150,7 @@ export async function enrichTmdbCandidates({
     })
   }
 
-  assertNoCandidateCollisions(batch, existingMappings)
+  if (!allowProductionCollisions) assertNoCandidateCollisions(batch, existingMappings)
 
   const cacheEvents = []
   const facts = []

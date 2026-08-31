@@ -84,6 +84,42 @@ describe('Gemini model provider', () => {
     })
   })
 
+  it('uses bearer auth for OAuth-style maintainer credentials without exposing them elsewhere', async () => {
+    const fetchImpl = vi.fn().mockResolvedValue(response({
+      candidates: [{ content: { parts: [{ text: JSON.stringify({ classification: {}, evidence: {}, boundaryFlags: [] }) }] } }],
+      usageMetadata: {},
+    }))
+    const provider = createGeminiProvider({
+      modelId: 'gemini-3.7-flash',
+      env: { GEMINI_API_KEY: 'ya29.test-token' },
+      fetchImpl,
+    })
+
+    await provider.generateStructured({ input: {}, temperature: 0 })
+
+    expect(fetchImpl).toHaveBeenCalledWith(expect.any(String), expect.objectContaining({
+      headers: expect.objectContaining({ Authorization: 'Bearer ya29.test-token' }),
+    }))
+  })
+
+  it('normalizes explicit bearer credentials without duplicating the scheme', async () => {
+    const fetchImpl = vi.fn().mockResolvedValue(response({
+      candidates: [{ content: { parts: [{ text: JSON.stringify({ classification: {}, evidence: {}, boundaryFlags: [] }) }] } }],
+      usageMetadata: {},
+    }))
+    const provider = createGeminiProvider({
+      modelId: 'gemini-3.7-flash',
+      env: { GEMINI_API_KEY: 'Bearer test-token' },
+      fetchImpl,
+    })
+
+    await provider.generateStructured({ input: {}, temperature: 0 })
+
+    expect(fetchImpl).toHaveBeenCalledWith(expect.any(String), expect.objectContaining({
+      headers: expect.objectContaining({ Authorization: 'Bearer test-token' }),
+    }))
+  })
+
   it('marks Gemini rate limits retryable without exposing credentials', async () => {
     const fetchImpl = vi.fn().mockResolvedValue(response({}, false, 429))
     const provider = createGeminiProvider({

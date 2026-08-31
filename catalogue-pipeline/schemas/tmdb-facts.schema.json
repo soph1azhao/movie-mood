@@ -24,6 +24,8 @@
           "spokenLanguages",
           "genres",
           "runtimeMinutes",
+          "overview",
+          "keywords",
           "posterPath",
           "posterAvailability",
           "dataQualityFlags",
@@ -39,6 +41,8 @@
           "spokenLanguages": { "type": "array", "items": { "type": "string", "minLength": 1 }, "minItems": 1 },
           "genres": { "type": "array", "items": { "type": "string", "minLength": 1 }, "minItems": 1 },
           "runtimeMinutes": { "type": "integer", "minimum": 1 },
+          "overview": { "type": "string" },
+          "keywords": { "type": "array", "items": { "type": "string", "minLength": 1 } },
           "posterPath": { "type": ["string", "null"] },
           "posterAvailability": {
             "type": "object",

@@ -9,6 +9,7 @@ type GeminiProviderOptions = {
   env?: Record<string, string | undefined>
   fetchImpl?: FetchLike
   endpointBaseUrl?: string
+  authMode?: 'auto' | 'api-key' | 'bearer'
 }
 
 const DEFAULT_ENDPOINT_BASE_URL = 'https://generativelanguage.googleapis.com/v1beta'
@@ -115,12 +116,31 @@ function parseStructuredText(text: string): Record<string, unknown> {
   })
 }
 
+function authHeaders(credential: string, authMode: 'auto' | 'api-key' | 'bearer') {
+  const isBearerCredential = credential.startsWith('ya29') || credential.startsWith('Bearer ')
+  const mode = authMode === 'auto' && isBearerCredential ? 'bearer' : authMode === 'auto' ? 'api-key' : authMode
+  const bearerToken = credential.startsWith('Bearer ') ? credential.slice('Bearer '.length) : credential
+  return mode === 'bearer'
+    ? { Authorization: `Bearer ${bearerToken}` }
+    : { 'x-goog-api-key': credential }
+}
+
+async function safeErrorText(response: Response): Promise<string> {
+  try {
+    const text = await response.text()
+    return text ? ` ${text.slice(0, 500)}` : ''
+  } catch {
+    return ''
+  }
+}
+
 export function createGeminiProvider({
   modelId,
   credentialEnv = 'GEMINI_API_KEY',
   env = process.env,
   fetchImpl = globalThis.fetch,
   endpointBaseUrl = DEFAULT_ENDPOINT_BASE_URL,
+  authMode = 'auto',
 }: GeminiProviderOptions) {
   if (!modelId || typeof modelId !== 'string') {
     throw new ModelProviderError('Gemini provider requires a modelId.', { code: 'MISSING_MODEL_ID' })
@@ -128,7 +148,7 @@ export function createGeminiProvider({
   if (typeof fetchImpl !== 'function') {
     throw new ModelProviderError('Gemini provider requires fetch.', { code: 'MISSING_FETCH' })
   }
-  const credential = resolveCredential({ credentialEnv, env })
+  const credential = resolveCredential({ credentialEnv, env }).trim()
 
   return {
     metadata: {
@@ -149,7 +169,7 @@ export function createGeminiProvider({
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-goog-api-key': credential,
+          ...authHeaders(credential, authMode),
         },
         body: JSON.stringify({
           contents: [{ role: 'user', parts: [{ text: JSON.stringify(request.input) }] }],
@@ -159,7 +179,7 @@ export function createGeminiProvider({
 
       if (!response.ok) {
         const retryable = response.status === 429 || response.status >= 500
-        throw new ModelProviderError(`Gemini request failed with HTTP ${response.status}.`, {
+        throw new ModelProviderError(`Gemini request failed with HTTP ${response.status}.${await safeErrorText(response)}`, {
           code: response.status === 429 ? 'MODEL_RATE_LIMIT' : 'MODEL_PROVIDER_HTTP_ERROR',
           retryable,
         })
