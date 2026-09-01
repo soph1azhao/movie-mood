@@ -137,6 +137,27 @@ describe('Phase 5 semantic classifier', () => {
     }
   })
 
+  it('keeps Gemini 3.5 and 3.6 semantic cache identities isolated', async () => {
+    const root = await mkdtemp(join(tmpdir(), 'movie-mood-semantic-model-isolation-'))
+    const options = { evidencePacket: packet(), prompt, cacheRoot: join(root, 'cache'), outputPath: join(root, 'generated', 'paddington.json') }
+    const gemini35 = providerWith(response(), { providerId: 'google-gemini-developer-api', modelId: 'gemini-3.5-flash' })
+    const gemini36 = providerWith(response(), { providerId: 'google-gemini-developer-api', modelId: 'gemini-3.6-flash' })
+    try {
+      const result35 = await classifySemanticCandidate({ ...options, provider: gemini35 })
+      const result36 = await classifySemanticCandidate({ ...options, provider: gemini36 })
+
+      expect(result35.cacheHit).toBe(false)
+      expect(result36.cacheHit).toBe(false)
+      expect(result35.cacheKey).not.toBe(result36.cacheKey)
+      expect(result35.artifact).toMatchObject({ modelProvider: 'google-gemini-developer-api', modelId: 'gemini-3.5-flash' })
+      expect(result36.artifact).toMatchObject({ modelProvider: 'google-gemini-developer-api', modelId: 'gemini-3.6-flash' })
+      expect(gemini35.generateStructured).toHaveBeenCalledTimes(1)
+      expect(gemini36.generateStructured).toHaveBeenCalledTimes(1)
+    } finally {
+      await rm(root, { recursive: true, force: true })
+    }
+  })
+
   it('rejects malformed output, honors the provider retry limit, and keeps classifier/editorial work separate', async () => {
     await expect(runInTemp(providerWith('{not json'))).rejects.toMatchObject({ code: 'MALFORMED_MODEL_OUTPUT' })
     const retryProvider = {

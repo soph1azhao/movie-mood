@@ -3,6 +3,7 @@ import { assertCalibrationResult, resolveCalibrationModel } from './runCalibrati
 
 describe('Phase 5A replay model selection', () => {
   it('uses an explicit environment model without changing classifier logic', () => {
+    expect(resolveCalibrationModel({ GEMINI_MODEL: 'gemini-3.5-flash' })).toBe('gemini-3.5-flash')
     expect(resolveCalibrationModel({ GEMINI_MODEL: 'gemini-3.6-flash' })).toBe('gemini-3.6-flash')
   })
 
