@@ -101,7 +101,7 @@ describe('Phase 5 semantic classifier', () => {
       await rm(root, { recursive: true, force: true })
     }
     const unknownSource = providerWith(response({ evidence: { ...response().evidence, pace: { rationale: 'This is supposedly grounded but cites an absent source.', sourceRefs: ['external-review'] } } }))
-    await expect(runInTemp(unknownSource)).rejects.toMatchObject({ code: 'INVALID_SEMANTIC_OUTPUT' })
+    await expect(runInTemp(unknownSource)).rejects.toMatchObject({ code: 'INVALID_SEMANTIC_OUTPUT', message: expect.stringContaining('rule: UNKNOWN_EVIDENCE_SOURCE_REF; field: evidence.pace') })
   })
 
   it('is idempotent on cache hits and invalidates only changed classification keys', async () => {

@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 import { ModelProviderError, runStructuredModelRequest } from './modelProvider.ts'
-import { createGeminiProvider } from './geminiProvider.ts'
+import { buildGeminiResponseJsonSchema, createGeminiProvider } from './geminiProvider.ts'
 
 function response(body: Record<string, unknown>, ok = true, status = 200, headers?: Headers) {
   return {
@@ -87,6 +87,22 @@ describe('Gemini model provider', () => {
     expect(body.generationConfig).not.toHaveProperty('responseMimeType')
     expect(body.generationConfig).not.toHaveProperty('responseJsonSchema')
     expect(JSON.stringify(body.generationConfig.responseFormat)).not.toContain('application/json')
+  })
+
+  it('projects candidate-specific source references as an exact enum', async () => {
+    const fetchImpl = vi.fn().mockResolvedValue(response({
+      candidates: [{ content: { parts: [{ text: JSON.stringify({ classification: {}, evidence: {}, boundaryFlags: [] }) }] } }],
+      usageMetadata: {},
+    }))
+    const provider = createGeminiProvider({ modelId: 'gemini-3.5-flash', env: { GEMINI_API_KEY: 'test-key' }, fetchImpl })
+
+    await provider.generateStructured({ input: { evidencePacket: { sourceProvenance: [{ source: 'tmdb-overview' }, { source: 'tmdb-facts' }, { source: 'tmdb-overview' }] } } })
+
+    const body = JSON.parse((fetchImpl.mock.calls[0][1] as RequestInit).body as string)
+    const projected = body.generationConfig.responseFormat.text.schema
+    expect(projected.properties.evidence.properties.moods.additionalProperties.properties.sourceRefs.items.enum).toEqual(['tmdb-facts', 'tmdb-overview'])
+    expect(projected.properties.evidence.properties.situations.additionalProperties.properties.sourceRefs.items.enum).toEqual(['tmdb-facts', 'tmdb-overview'])
+    expect(buildGeminiResponseJsonSchema().properties.evidence.properties.moods.additionalProperties.properties.sourceRefs.items).not.toHaveProperty('enum')
   })
 
   it('always transmits GEMINI_API_KEY through the documented API-key header', async () => {

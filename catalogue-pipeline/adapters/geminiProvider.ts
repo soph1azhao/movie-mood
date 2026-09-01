@@ -20,13 +20,17 @@ function asObject(value: unknown): Record<string, unknown> {
   return value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, unknown> : {}
 }
 
-export function buildGeminiResponseJsonSchema() {
+export function buildGeminiResponseJsonSchema(sourceRefs: string[] = []) {
+  const validSourceRefs = [...new Set(sourceRefs.filter((sourceRef) => typeof sourceRef === 'string' && sourceRef.length > 0))].sort()
+  const sourceRefsSchema = validSourceRefs.length > 0
+    ? { type: 'array', minItems: 1, items: { type: 'string', enum: validSourceRefs } }
+    : { type: 'array', minItems: 1, items: { type: 'string' } }
   const evidenceItem = {
     type: 'object',
     required: ['rationale', 'sourceRefs'],
     properties: {
       rationale: { type: 'string' },
-      sourceRefs: { type: 'array', items: { type: 'string' } },
+      sourceRefs: sourceRefsSchema,
     },
     additionalProperties: false,
   }
@@ -202,13 +206,18 @@ export function createGeminiProvider({
     },
     async generateStructured(request: Record<string, unknown>) {
       const url = `${endpointBaseUrl.replace(/\/$/, '')}/models/${encodeURIComponent(modelId)}:generateContent`
+      const requestInput = asObject(request.input)
+      const evidencePacket = asObject(requestInput.evidencePacket)
+      const sourceRefs = Array.isArray(evidencePacket.sourceProvenance)
+        ? evidencePacket.sourceProvenance.map((source) => asObject(source).source).filter((source): source is string => typeof source === 'string')
+        : []
       const generationConfig: Record<string, unknown> = {
         temperature: typeof request.temperature === 'number' ? request.temperature : 0.1,
         topP: 0.2,
         responseFormat: {
           text: {
             mimeType: 'APPLICATION_JSON',
-            schema: buildGeminiResponseJsonSchema(),
+            schema: buildGeminiResponseJsonSchema(sourceRefs),
           },
         },
       }
