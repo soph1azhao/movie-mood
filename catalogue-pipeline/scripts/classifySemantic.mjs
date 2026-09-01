@@ -110,6 +110,15 @@ function artifactOutputHash(artifact) {
   return `sha256:${stableHash(hashable)}`
 }
 
+function validationFailureDetails(validation, sourceReferenceFailures) {
+  const firstFailure = validation.hardFailures?.[0] ?? sourceReferenceFailures[0]
+  if (!firstFailure) return { rule: 'INVALID_SEMANTIC_OUTPUT', field: 'output' }
+  return {
+    rule: firstFailure.code ?? 'INVALID_SEMANTIC_OUTPUT',
+    field: firstFailure.field ?? firstFailure.path ?? 'output',
+  }
+}
+
 export function summarizeCalibrationReplay({ targets, artifacts }) {
   const byId = new Map(artifacts.map((artifact) => [artifact.movie?.tmdbId, artifact]))
   const orderedFields = ['pace', 'emotionalWeight', 'attentionDemand', 'discoveryStyle']
@@ -244,7 +253,8 @@ export async function classifySemanticCandidate({
   const validation = validateSemanticOutput(artifact)
   const sourceReferenceFailures = validateSourceReferences(artifact, requiredSourceRefs(evidencePacket))
   if (!validation.ok || sourceReferenceFailures.length > 0) {
-    throw new SemanticClassifierError('Semantic classifier output failed deterministic validation.', { code: 'INVALID_SEMANTIC_OUTPUT', details: { validation, sourceReferenceFailures } })
+    const failure = validationFailureDetails(validation, sourceReferenceFailures)
+    throw new SemanticClassifierError(`Semantic classifier output failed deterministic validation. movie: ${evidencePacket.candidateId}; rule: ${failure.rule}; field: ${failure.field}`, { code: 'INVALID_SEMANTIC_OUTPUT', details: { validation, sourceReferenceFailures, firstFailure: failure } })
   }
 
   await writeJsonFile(cachePath, artifact)

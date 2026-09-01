@@ -153,7 +153,7 @@ describe('Phase 5 semantic classifier', () => {
     const invalidProvider = providerWith(response({ classification: { ...response().classification, attentionDemand: 'invalid' } }))
     const options = { evidencePacket: packet(), provider: invalidProvider, prompt, cacheRoot: join(root, 'cache'), outputPath: join(root, 'generated', 'paddington.json') }
     try {
-      await expect(classifySemanticCandidate(options)).rejects.toMatchObject({ code: 'MALFORMED_MODEL_OUTPUT' })
+      await expect(classifySemanticCandidate(options)).rejects.toMatchObject({ code: 'MALFORMED_MODEL_OUTPUT', message: expect.stringContaining('path: classification.attentionDemand; keyword: INVALID_ENUM') })
       expect(invalidProvider.generateStructured).toHaveBeenCalledTimes(1)
       await expect(readFile(options.outputPath, 'utf8')).rejects.toThrow()
 
