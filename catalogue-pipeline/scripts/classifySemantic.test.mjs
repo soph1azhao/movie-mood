@@ -10,6 +10,7 @@ import {
   SEMANTIC_PROMPT_VERSION,
   summarizeCalibrationReplay,
 } from './classifySemantic.mjs'
+import { validatePhase5bGrounding } from './validatePhase5bGrounding.mjs'
 
 const prompt = '# semantic classifier fixture\npace is not attention demand'
 
@@ -39,6 +40,23 @@ function response(overrides = {}) {
     },
     boundaryFlags: [],
     selfConfidence: { moods: 0.8, situations: 0.8, pace: 0.8, emotionalWeight: 0.8, attentionDemand: 0.8, discoveryStyle: 0.8 },
+    ...overrides,
+  }
+}
+
+function phase5bResponse(overrides = {}) {
+  const output = response()
+  const grounded = (item) => ({ ...item, rationale: 'Direct evidence: The packet states a usable factual trait. Cues: [tmdb-facts: factual genre and runtime].' })
+  return {
+    ...output,
+    evidence: {
+      moods: Object.fromEntries(Object.entries(output.evidence.moods).map(([label, item]) => [label, grounded(item)])),
+      situations: Object.fromEntries(Object.entries(output.evidence.situations).map(([label, item]) => [label, grounded(item)])),
+      pace: grounded(output.evidence.pace),
+      emotionalWeight: grounded(output.evidence.emotionalWeight),
+      attentionDemand: grounded(output.evidence.attentionDemand),
+      discoveryStyle: grounded(output.evidence.discoveryStyle),
+    },
     ...overrides,
   }
 }
@@ -182,6 +200,29 @@ describe('Phase 5 semantic classifier', () => {
       const corrected = await classifySemanticCandidate({ ...options, provider: correctedProvider })
       expect(corrected.cacheHit).toBe(false)
       expect(correctedProvider.generateStructured).toHaveBeenCalledTimes(1)
+    } finally {
+      await rm(root, { recursive: true, force: true })
+    }
+  })
+
+  it('keeps Phase 5B grounding failures out of cache while accepting a corrected grounded result', async () => {
+    const root = await mkdtemp(join(tmpdir(), 'movie-mood-semantic-phase5b-grounding-'))
+    const outputPath = join(root, 'generated', 'paddington.json')
+    const options = {
+      evidencePacket: packet(),
+      prompt,
+      promptVersion: 'semantic-classifier.v2',
+      additionalValidation: validatePhase5bGrounding,
+      cacheRoot: join(root, 'cache'),
+      outputPath,
+    }
+    try {
+      await expect(classifySemanticCandidate({ ...options, provider: providerWith(response()) })).rejects.toMatchObject({ code: 'MALFORMED_MODEL_OUTPUT' })
+      await expect(readFile(outputPath, 'utf8')).rejects.toThrow()
+
+      const corrected = await classifySemanticCandidate({ ...options, provider: providerWith(phase5bResponse()) })
+      expect(corrected.cacheHit).toBe(false)
+      expect(corrected.artifact.promptVersion).toBe('semantic-classifier.v2')
     } finally {
       await rm(root, { recursive: true, force: true })
     }

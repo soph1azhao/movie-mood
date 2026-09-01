@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "phase-5b-experiential-examples.v1",
+  "taxonomyVersion": "taxonomy.v2",
+  "source": "Existing human-curated Movie Mood catalogue; non-evaluation examples used only by the Phase 5B replay.",
+  "positiveExamples": [
+    { "movieId": "grand-budapest", "tmdbId": 120467, "field": "moods", "value": "relaxing", "rationale": "A brisk comic caper can still feel controlled and restorative; fast pace does not rule out relaxing." },
+    { "movieId": "grand-budapest", "tmdbId": 120467, "field": "situations", "value": "friends", "rationale": "Ensemble comedy and playful momentum can support a shared friends viewing fit." },
+    { "movieId": "amelie", "tmdbId": 194, "field": "situations", "value": "date-night", "rationale": "Romantic warmth and manageable viewing cost can support date-night without requiring a literal label." },
+    { "movieId": "amelie", "tmdbId": 194, "field": "situations", "value": "easy-watch", "rationale": "Accessible whimsical framing can support easy-watch while remaining specific rather than generic." },
+    { "movieId": "moonlight", "tmdbId": 376867, "field": "emotionalWeight", "value": "heavy", "rationale": "Quiet presentation can still carry sustained emotional cost; do not equate slow or restrained with light." },
+    { "movieId": "moonlight", "tmdbId": 376867, "field": "pace", "value": "slow", "rationale": "Observational pacing is independent from immersive attention demand and heavy emotional weight." }
+  ],
+  "boundaryAndCounterexamples": [
+    { "movieId": "grand-budapest", "tmdbId": 120467, "field": "moods", "value": "relaxing", "contrast": "fast is not incompatible with relaxing", "reviewNote": "Treat brisk controlled comedy as a possible supported inference when multiple factual cues support it." },
+    { "movieId": "tampopo", "tmdbId": 11830, "field": "situations", "value": "friends", "contrast": "relaxing does not automatically mean easy-watch", "reviewNote": "A film may support a social friends fit without qualifying for easy-watch; assess each situation independently." },
+    { "movieId": "amelie", "tmdbId": 194, "field": "situations", "value": "date-night", "contrast": "date-night is not limited to explicit romance labels", "reviewNote": "Use grounded relational and practical viewing cues rather than requiring literal taxonomy wording." },
+    { "movieId": "moonlight", "tmdbId": 376867, "field": "emotionalWeight", "value": "heavy", "contrast": "slow and restrained can still be heavy", "reviewNote": "Protect against emotional-weight undershoot when factual cues indicate sustained emotional consequence." },
+    { "movieId": "mission-impossible", "tmdbId": 353081, "field": "pace", "value": "fast", "contrast": "exciting is not the sole proof of fast pace", "reviewNote": "Use movement and narrative-pressure cues for pace; do not infer fast only from an excitement label." }
+  ]
+}

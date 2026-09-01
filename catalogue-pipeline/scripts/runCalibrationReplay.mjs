@@ -4,11 +4,15 @@ import { pathToFileURL } from 'node:url'
 import { curatedMovies } from '../../src/data/curatedMovies.ts'
 import tmdbSnapshot from '../../src/data/generated/tmdbMovies.json' with { type: 'json' }
 import mappings from '../../src/data/tmdbMovieMappings.json' with { type: 'json' }
+import anchors from '../calibration/anchors.json' with { type: 'json' }
+import boundaryCases from '../calibration/boundaryCases.json' with { type: 'json' }
+import phase5bExamples from '../calibration/phase5b-experiential-examples.json' with { type: 'json' }
 import { createGeminiProvider } from '../adapters/geminiProvider.ts'
 import { stableHash } from '../adapters/tmdbProvider.ts'
 import { buildEvidencePacket } from './buildEvidencePacket.mjs'
 import { classifySemanticCandidate } from './classifySemantic.mjs'
 import { enrichTmdbCandidates } from './enrichTmdb.mjs'
+import { validatePhase5bGrounding } from './validatePhase5bGrounding.mjs'
 
 const CALIBRATION_IDS = [
   'paddington-2',
@@ -45,6 +49,7 @@ const EXCLUDED_FIELDS = [
 ]
 const LIVE_REQUEST_INTERVAL_MS = 5000
 const DEFAULT_CALIBRATION_MODEL = 'gemini-3.7-flash'
+const PHASE_5B_PROMPT_VERSION = 'semantic-classifier.v2'
 
 class CalibrationReplayError extends Error {
   constructor(message, { code = 'CALIBRATION_REPLAY_ERROR', details = {} } = {}) {
@@ -209,6 +214,18 @@ function orderedKind(field, expected, actual) {
   return distance === 1 ? 'adjacent/boundary' : 'severe'
 }
 
+export function getDealbreakerRisk(field, human, model) {
+  if (field === 'emotionalWeight') {
+    if (human === 'heavy' && model !== 'heavy') return 'DEALBREAKER_UNDERSHOOT'
+    if (human !== 'heavy' && model === 'heavy') return 'DEALBREAKER_OVERSHOOT'
+  }
+  if (field === 'pace') {
+    if (human === 'slow' && model !== 'slow') return 'DEALBREAKER_UNDERSHOOT'
+    if (human !== 'slow' && model === 'slow') return 'DEALBREAKER_OVERSHOOT'
+  }
+  return null
+}
+
 function shortcutSignals(human, model) {
   const signals = []
   if (model.pace === 'fast' && model.attentionDemand === 'immersive' && human.attentionDemand !== 'immersive') signals.push('fast -> immersive')
@@ -228,7 +245,7 @@ function disagreementAssessment({ field, kind, comparison, packet }) {
   return 'defensible boundary disagreement'
 }
 
-function summarize(firstResults, secondResults, packets) {
+export function summarizeCalibrationReplay(firstResults, secondResults, packets) {
   const packetById = new Map(packets.map((packet) => [packet.candidateId, packet]))
   const curatedById = new Map(curatedMovies.map((movie) => [movie.id, movie]))
   const disagreements = []
@@ -243,6 +260,15 @@ function summarize(firstResults, secondResults, packets) {
     outputTokens: 0,
     reasoningTokens: 0,
     reasoningTokensExposed: false,
+  }
+  const productImpact = {
+    rawSemanticDisagreements: 0,
+    hardDealbreakerUndershoots: [],
+    hardDealbreakerOvershoots: [],
+    moodEligibilityChanges: [],
+    situationEligibilityChanges: [],
+    softOrderOnlyDisagreements: [],
+    precisionDiscipline: { extraLabels: 0, overTaggedFilms: 0, evidenceRationaleContractFailures: 0 },
   }
 
   for (const entry of firstResults) {
@@ -282,6 +308,14 @@ function summarize(firstResults, secondResults, packets) {
         shortcutSignals: shortcutSignals(human, model),
         assessment: disagreementAssessment({ field, kind, packet }),
       })
+      if (kind !== 'exact') {
+        productImpact.rawSemanticDisagreements += 1
+        const risk = getDealbreakerRisk(field, human[field], model[field])
+        const impactEntry = { candidateId: id, title: packet.facts.title, field, human: human[field], model: model[field], kind }
+        if (risk === 'DEALBREAKER_UNDERSHOOT') productImpact.hardDealbreakerUndershoots.push(impactEntry)
+        else if (risk === 'DEALBREAKER_OVERSHOOT') productImpact.hardDealbreakerOvershoots.push(impactEntry)
+        else productImpact.softOrderOnlyDisagreements.push(impactEntry)
+      }
     }
 
     for (const field of SET_FIELDS) {
@@ -301,7 +335,18 @@ function summarize(firstResults, secondResults, packets) {
         shortcutSignals: shortcutSignals(human, model),
         assessment: disagreementAssessment({ field, comparison, packet }),
       })
+      if (!comparison.exactSetAgreement) {
+        productImpact.rawSemanticDisagreements += 1
+        const impactEntry = { candidateId: id, title: packet.facts.title, missing: comparison.missing, extra: comparison.extra, jaccard: comparison.jaccard }
+        if (field === 'moods') productImpact.moodEligibilityChanges.push(impactEntry)
+        else productImpact.situationEligibilityChanges.push(impactEntry)
+        productImpact.precisionDiscipline.extraLabels += comparison.extra.length
+        if (comparison.overTagging) productImpact.precisionDiscipline.overTaggedFilms += 1
+      }
     }
+
+    const grounding = validatePhase5bGrounding(artifact)
+    if (!grounding.ok) productImpact.precisionDiscipline.evidenceRationaleContractFailures += grounding.hardFailures.length
   }
 
   for (const field of SET_FIELDS) sets[field].averageJaccard /= sets[field].total
@@ -323,16 +368,29 @@ function summarize(firstResults, secondResults, packets) {
     sets,
     disagreements,
     usage,
+    productImpact: {
+      rawSemanticDisagreements: productImpact.rawSemanticDisagreements,
+      hardDealbreakerUndershoots: { count: productImpact.hardDealbreakerUndershoots.length, perFilm: productImpact.hardDealbreakerUndershoots },
+      hardDealbreakerOvershoots: { count: productImpact.hardDealbreakerOvershoots.length, perFilm: productImpact.hardDealbreakerOvershoots },
+      moodEligibilityChanges: { count: productImpact.moodEligibilityChanges.length, perFilm: productImpact.moodEligibilityChanges },
+      situationEligibilityChanges: { count: productImpact.situationEligibilityChanges.length, perFilm: productImpact.situationEligibilityChanges },
+      softOrderOnlyDisagreements: { count: productImpact.softOrderOnlyDisagreements.length, perFilm: productImpact.softOrderOnlyDisagreements },
+      precisionDiscipline: productImpact.precisionDiscipline,
+    },
   }
 }
 
-async function runClassifierPass({ packets, provider, prompt, outputRoot, cacheRoot }) {
+async function runClassifierPass({ packets, provider, prompt, outputRoot, cacheRoot, promptVersion = PHASE_5B_PROMPT_VERSION, calibrationAnchors, calibrationBoundaryCases }) {
   const results = []
   for (const [index, packet] of packets.entries()) {
     const result = await classifySemanticCandidate({
       evidencePacket: packet,
       provider,
       prompt,
+      promptVersion,
+      additionalValidation: validatePhase5bGrounding,
+      calibrationAnchors,
+      calibrationBoundaryCases,
       cacheRoot,
       outputPath: resolve(outputRoot, `${packet.candidateId}.json`),
       createdAt: '2026-08-31T00:00:00.000Z',
@@ -385,13 +443,15 @@ async function main() {
   requireEnv('GEMINI_API_KEY')
   const modelId = resolveCalibrationModel()
   const provider = createGeminiProvider({ modelId })
-  const prompt = await readFile(resolve(pipelineRoot, 'prompts/semantic-classifier.v1.md'), 'utf8')
-  const outputRoot = resolve(pipelineRoot, `generated/semantic/phase-5a-calibration/${modelId}`)
-  const cacheRoot = resolve(pipelineRoot, `cache/semantic/phase-5a-calibration/${modelId}`)
-  const firstResults = await runClassifierPass({ packets, provider, prompt, outputRoot, cacheRoot })
-  const secondResults = await runClassifierPass({ packets, provider, prompt, outputRoot, cacheRoot })
-  const report = summarize(firstResults, secondResults, packets)
-  await writeJsonIfChanged(resolve(pipelineRoot, 'generated/semantic/phase-5a-calibration/report.json'), report)
+  const prompt = await readFile(resolve(pipelineRoot, 'prompts/semantic-classifier.v2.md'), 'utf8')
+  const calibrationAnchors = { ...anchors, anchors: [...anchors.anchors, ...phase5bExamples.positiveExamples] }
+  const calibrationBoundaryCases = { ...boundaryCases, boundaryCases: [...boundaryCases.boundaryCases, ...phase5bExamples.boundaryAndCounterexamples] }
+  const outputRoot = resolve(pipelineRoot, `generated/semantic/phase-5a-calibration/${modelId}/${PHASE_5B_PROMPT_VERSION}`)
+  const cacheRoot = resolve(pipelineRoot, `cache/semantic/phase-5a-calibration/${modelId}/${PHASE_5B_PROMPT_VERSION}`)
+  const firstResults = await runClassifierPass({ packets, provider, prompt, outputRoot, cacheRoot, calibrationAnchors, calibrationBoundaryCases })
+  const secondResults = await runClassifierPass({ packets, provider, prompt, outputRoot, cacheRoot, calibrationAnchors, calibrationBoundaryCases })
+  const report = summarizeCalibrationReplay(firstResults, secondResults, packets)
+  await writeJsonIfChanged(resolve(outputRoot, 'report.json'), report)
   console.log(JSON.stringify(report, null, 2))
 }
 

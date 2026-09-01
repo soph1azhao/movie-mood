@@ -170,6 +170,7 @@ export async function classifySemanticCandidate({
   outputPath,
   createdAt = new Date().toISOString(),
   maxAttempts = 2,
+  additionalValidation,
   delayFn,
   readJsonFile = readJson,
   writeJsonFile = writeJsonIfChanged,
@@ -223,7 +224,8 @@ export async function classifySemanticCandidate({
         ...rawOutput,
       }
       const validation = validateSemanticOutput(candidateOutput)
-      return { ok: validation.ok, hardFailures: validation.hardFailures }
+      const additional = additionalValidation ? additionalValidation(candidateOutput, evidencePacket) : { ok: true, hardFailures: [] }
+      return { ok: validation.ok && additional.ok, hardFailures: [...validation.hardFailures, ...additional.hardFailures] }
     },
     maxAttempts,
     ...(delayFn ? { delayFn } : {}),
@@ -251,10 +253,12 @@ export async function classifySemanticCandidate({
   artifact.outputHash = artifactOutputHash(artifact)
 
   const validation = validateSemanticOutput(artifact)
+  const additional = additionalValidation ? additionalValidation(artifact, evidencePacket) : { ok: true, hardFailures: [] }
   const sourceReferenceFailures = validateSourceReferences(artifact, requiredSourceRefs(evidencePacket))
-  if (!validation.ok || sourceReferenceFailures.length > 0) {
-    const failure = validationFailureDetails(validation, sourceReferenceFailures)
-    throw new SemanticClassifierError(`Semantic classifier output failed deterministic validation. movie: ${evidencePacket.candidateId}; rule: ${failure.rule}; field: ${failure.field}`, { code: 'INVALID_SEMANTIC_OUTPUT', details: { validation, sourceReferenceFailures, firstFailure: failure } })
+  if (!validation.ok || !additional.ok || sourceReferenceFailures.length > 0) {
+    const combinedValidation = { hardFailures: [...validation.hardFailures, ...additional.hardFailures] }
+    const failure = validationFailureDetails(combinedValidation, sourceReferenceFailures)
+    throw new SemanticClassifierError(`Semantic classifier output failed deterministic validation. movie: ${evidencePacket.candidateId}; rule: ${failure.rule}; field: ${failure.field}`, { code: 'INVALID_SEMANTIC_OUTPUT', details: { validation, additional, sourceReferenceFailures, firstFailure: failure } })
   }
 
   await writeJsonFile(cachePath, artifact)
