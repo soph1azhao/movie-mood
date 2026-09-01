@@ -14,23 +14,47 @@ type GeminiProviderOptions = {
 const DEFAULT_ENDPOINT_BASE_URL = 'https://generativelanguage.googleapis.com/v1beta'
 const RETRY_SAFETY_MARGIN_MS = 1000
 const MAX_PROVIDER_RETRY_DELAY_MS = 10 * 60 * 1000
-export const GEMINI_SCHEMA_PROJECTION_VERSION = 'gemini-generate-content-schema.v1'
+export const GEMINI_SCHEMA_PROJECTION_VERSION = 'gemini-generate-content-schema.v2'
 
 function asObject(value: unknown): Record<string, unknown> {
   return value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, unknown> : {}
 }
 
-export function buildGeminiResponseJsonSchema(sourceRefs: string[] = []) {
+export function buildGeminiResponseJsonSchema(sourceRefs: string[] = [], schemaVersion = 'semantic-output.v1') {
   const validSourceRefs = [...new Set(sourceRefs.filter((sourceRef) => typeof sourceRef === 'string' && sourceRef.length > 0))].sort()
   const sourceRefsSchema = validSourceRefs.length > 0
     ? { type: 'array', minItems: 1, items: { type: 'string', enum: validSourceRefs } }
     : { type: 'array', minItems: 1, items: { type: 'string' } }
   const evidenceItem = {
     type: 'object',
-    required: ['rationale', 'sourceRefs'],
+    required: schemaVersion === 'semantic-output.v2' ? ['rationale', 'sourceRefs', 'grounding'] : ['rationale', 'sourceRefs'],
     properties: {
       rationale: { type: 'string' },
       sourceRefs: sourceRefsSchema,
+      ...(schemaVersion === 'semantic-output.v2' ? {
+        grounding: {
+          type: 'object',
+          required: ['mode', 'cues'],
+          properties: {
+            mode: { type: 'string', enum: ['direct', 'supported-inference'] },
+            cues: {
+              type: 'array',
+              minItems: 1,
+              items: {
+                type: 'object',
+                required: ['sourceRef', 'cue'],
+                properties: {
+                  sourceRef: validSourceRefs.length > 0 ? { type: 'string', enum: validSourceRefs } : { type: 'string' },
+                  cue: { type: 'string' },
+                },
+                additionalProperties: false,
+              },
+            },
+            bridge: { type: 'string' },
+          },
+          additionalProperties: false,
+        },
+      } : {}),
     },
     additionalProperties: false,
   }
@@ -217,7 +241,7 @@ export function createGeminiProvider({
         responseFormat: {
           text: {
             mimeType: 'APPLICATION_JSON',
-            schema: buildGeminiResponseJsonSchema(sourceRefs),
+            schema: buildGeminiResponseJsonSchema(sourceRefs, typeof request.schemaVersion === 'string' ? request.schemaVersion : 'semantic-output.v1'),
           },
         },
       }

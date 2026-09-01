@@ -89,6 +89,13 @@ export function buildSemanticClassifierInput({ evidencePacket, prompt, promptVer
 function validateSourceReferences(output, sourceRefs) {
   const issues = []
   const inspect = (item, field) => {
+    const mode = item?.grounding?.mode
+    const cues = Array.isArray(item?.grounding?.cues) ? item.grounding.cues : []
+    for (const cue of cues) {
+      const prefix = mode === 'supported-inference' ? 'SUPPORTED_INFERENCE' : 'DIRECT_EVIDENCE'
+      if (!sourceRefs.has(cue?.sourceRef)) issues.push({ severity: 'hard_fail', code: `UNKNOWN_${prefix}_CUE_REF`, field, message: `${field} grounding cue references an unavailable evidence source.` })
+      else if (!item?.sourceRefs?.includes(cue?.sourceRef)) issues.push({ severity: 'hard_fail', code: `UNDECLARED_${prefix}_CUE_REF`, field, message: `${field} grounding cue sourceRef must also appear in sourceRefs.` })
+    }
     for (const sourceRef of item?.sourceRefs ?? []) {
       if (!sourceRefs.has(sourceRef)) issues.push({ severity: 'hard_fail', code: 'UNKNOWN_EVIDENCE_SOURCE_REF', field, message: `${field} references unavailable evidence source ${sourceRef}.` })
     }
@@ -170,7 +177,7 @@ export async function classifySemanticCandidate({
   outputPath,
   createdAt = new Date().toISOString(),
   maxAttempts = 2,
-  additionalValidation,
+  schemaVersion = SEMANTIC_SCHEMA_VERSION,
   delayFn,
   readJsonFile = readJson,
   writeJsonFile = writeJsonIfChanged,
@@ -184,7 +191,7 @@ export async function classifySemanticCandidate({
     stage: 'semantic-classifier',
     tmdbId: evidencePacket.tmdbId,
     factsHash: evidencePacket.inputHash,
-    schemaVersion: SEMANTIC_SCHEMA_VERSION,
+    schemaVersion,
     promptVersion,
     taxonomyVersion: taxonomyDefinition.taxonomyVersion,
     calibrationHash: stableHash({ calibrationAnchors, calibrationBoundaryCases }),
@@ -213,19 +220,19 @@ export async function classifySemanticCandidate({
 
   const modelResult = await runStructuredModelRequest({
     provider,
-    request: { stage: 'semantic-classifier', schemaVersion: SEMANTIC_SCHEMA_VERSION, promptVersion, input, outputSchema: semanticSchema, temperature: 0.1, maxRetries: maxAttempts },
+    request: { stage: 'semantic-classifier', schemaVersion, promptVersion, input, outputSchema: semanticSchema, temperature: 0.1, maxRetries: maxAttempts },
     validateOutput: (rawOutput) => {
       assertClassifierOnly(rawOutput)
       const candidateOutput = {
-        schemaVersion: SEMANTIC_SCHEMA_VERSION,
+        schemaVersion,
         promptVersion,
         taxonomyVersion: taxonomyDefinition.taxonomyVersion,
         movie: { candidateId: evidencePacket.candidateId, tmdbId: evidencePacket.tmdbId },
         ...rawOutput,
       }
       const validation = validateSemanticOutput(candidateOutput)
-      const additional = additionalValidation ? additionalValidation(candidateOutput, evidencePacket) : { ok: true, hardFailures: [] }
-      return { ok: validation.ok && additional.ok, hardFailures: [...validation.hardFailures, ...additional.hardFailures] }
+      const sourceReferenceFailures = validateSourceReferences(candidateOutput, requiredSourceRefs(evidencePacket))
+      return { ok: validation.ok && sourceReferenceFailures.length === 0, hardFailures: [...validation.hardFailures, ...sourceReferenceFailures] }
     },
     maxAttempts,
     ...(delayFn ? { delayFn } : {}),
@@ -233,7 +240,7 @@ export async function classifySemanticCandidate({
 
   assertClassifierOnly(modelResult.output)
   const artifact = {
-    schemaVersion: SEMANTIC_SCHEMA_VERSION,
+    schemaVersion,
     promptVersion,
     taxonomyVersion: taxonomyDefinition.taxonomyVersion,
     modelProvider: provider.metadata.providerId,
@@ -253,12 +260,10 @@ export async function classifySemanticCandidate({
   artifact.outputHash = artifactOutputHash(artifact)
 
   const validation = validateSemanticOutput(artifact)
-  const additional = additionalValidation ? additionalValidation(artifact, evidencePacket) : { ok: true, hardFailures: [] }
   const sourceReferenceFailures = validateSourceReferences(artifact, requiredSourceRefs(evidencePacket))
-  if (!validation.ok || !additional.ok || sourceReferenceFailures.length > 0) {
-    const combinedValidation = { hardFailures: [...validation.hardFailures, ...additional.hardFailures] }
-    const failure = validationFailureDetails(combinedValidation, sourceReferenceFailures)
-    throw new SemanticClassifierError(`Semantic classifier output failed deterministic validation. movie: ${evidencePacket.candidateId}; rule: ${failure.rule}; field: ${failure.field}`, { code: 'INVALID_SEMANTIC_OUTPUT', details: { validation, additional, sourceReferenceFailures, firstFailure: failure } })
+  if (!validation.ok || sourceReferenceFailures.length > 0) {
+    const failure = validationFailureDetails(validation, sourceReferenceFailures)
+    throw new SemanticClassifierError(`Semantic classifier output failed deterministic validation. movie: ${evidencePacket.candidateId}; rule: ${failure.rule}; field: ${failure.field}`, { code: 'INVALID_SEMANTIC_OUTPUT', details: { validation, sourceReferenceFailures, firstFailure: failure } })
   }
 
   await writeJsonFile(cachePath, artifact)

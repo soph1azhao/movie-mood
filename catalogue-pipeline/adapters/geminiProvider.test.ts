@@ -105,6 +105,15 @@ describe('Gemini model provider', () => {
     expect(buildGeminiResponseJsonSchema().properties.evidence.properties.moods.additionalProperties.properties.sourceRefs.items).not.toHaveProperty('enum')
   })
 
+  it('projects Phase 5B structured grounding with candidate-specific cue references', () => {
+    const projected = buildGeminiResponseJsonSchema(['tmdb-overview', 'tmdb-facts'], 'semantic-output.v2')
+    const evidenceItem = projected.properties.evidence.properties.pace
+    expect(evidenceItem.required).toEqual(['rationale', 'sourceRefs', 'grounding'])
+    expect(evidenceItem.properties.grounding.properties.mode.enum).toEqual(['direct', 'supported-inference'])
+    expect(evidenceItem.properties.grounding.properties.cues.items.properties.sourceRef.enum).toEqual(['tmdb-facts', 'tmdb-overview'])
+    expect(evidenceItem.properties.grounding.properties).toHaveProperty('bridge')
+  })
+
   it('always transmits GEMINI_API_KEY through the documented API-key header', async () => {
     const fetchImpl = vi.fn().mockResolvedValue(response({
       candidates: [{ content: { parts: [{ text: JSON.stringify({ classification: {}, evidence: {}, boundaryFlags: [] }) }] } }],

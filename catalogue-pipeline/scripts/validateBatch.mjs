@@ -171,7 +171,7 @@ function validateCopyField(copy, field, issues, reviewFlags = []) {
   }
 }
 
-function validateEvidenceItem(item, field, issues) {
+function validateEvidenceItem(item, field, issues, { requireStructuredGrounding = false } = {}) {
   if (!isObject(item)) {
     addHardFailure(issues, 'INVALID_SEMANTIC_EVIDENCE', `${field} must be a structured evidence object.`, { field })
     return
@@ -181,14 +181,40 @@ function validateEvidenceItem(item, field, issues) {
     addHardFailure(issues, 'INVALID_SEMANTIC_EVIDENCE', `${field}.rationale must be meaningful.`, { field })
   }
   validateStringArray(item.sourceRefs, `${field}.sourceRefs`, issues)
+  if (!requireStructuredGrounding) return
+
+  if (!isObject(item.grounding)) {
+    addHardFailure(issues, 'MISSING_EVIDENCE_GROUNDING', `${field}.grounding is required for semantic-output.v2.`, { field })
+    return
+  }
+  validateEnum(item.grounding.mode, `${field}.grounding.mode`, ['direct', 'supported-inference'], issues)
+  if (!Array.isArray(item.grounding.cues)) {
+    addHardFailure(issues, 'INVALID_EVIDENCE_CUES', `${field}.grounding.cues must be an array.`, { field })
+    return
+  }
+  for (const [index, cue] of item.grounding.cues.entries()) {
+    if (!isObject(cue)) {
+      addHardFailure(issues, 'INVALID_EVIDENCE_CUE', `${field}.grounding.cues[${index}] must be an object.`, { field })
+      continue
+    }
+    validateString(cue.sourceRef, `${field}.grounding.cues[${index}].sourceRef`, issues)
+    validateString(cue.cue, `${field}.grounding.cues[${index}].cue`, issues)
+    if (typeof cue.cue === 'string' && cue.cue.trim().length < 8) addHardFailure(issues, 'INVALID_EVIDENCE_CUE', `${field}.grounding.cues[${index}].cue must be meaningful.`, { field })
+  }
+  if (item.grounding.mode === 'direct' && item.grounding.cues.length < 1) addHardFailure(issues, 'TOO_FEW_DIRECT_EVIDENCE_CUES', `${field} direct evidence requires at least one grounded factual cue.`, { field })
+  if (item.grounding.mode === 'supported-inference') {
+    if (item.grounding.cues.length < 2) addHardFailure(issues, 'TOO_FEW_SUPPORTED_INFERENCE_CUES', `${field} supported inference requires multiple grounded factual cues.`, { field })
+    validateString(item.grounding.bridge, `${field}.grounding.bridge`, issues)
+    if (typeof item.grounding.bridge !== 'string' || item.grounding.bridge.trim().length < 12) addHardFailure(issues, 'MISSING_SUPPORTED_INFERENCE_BRIDGE', `${field} supported inference requires a meaningful bridge to the taxonomy judgment.`, { field })
+  }
 }
 
-function validateTagEvidence(evidence, field, selectedValues, issues) {
+function validateTagEvidence(evidence, field, selectedValues, issues, options) {
   if (!isObject(evidence)) {
     addHardFailure(issues, 'INVALID_SEMANTIC_EVIDENCE', `${field} evidence must map each selected value to evidence.`, { field })
     return
   }
-  for (const value of selectedValues) validateEvidenceItem(evidence[value], `${field}.${value}`, issues)
+  for (const value of selectedValues) validateEvidenceItem(evidence[value], `${field}.${value}`, issues, options)
 }
 
 function validateBoundaryFlags(flags, issues) {
@@ -524,8 +550,8 @@ export function validateSemanticOutput(output) {
     return { ok: false, hardFailures: issues, reviewFlags }
   }
 
-  if (output.schemaVersion !== 'semantic-output.v1') {
-    addHardFailure(issues, 'INVALID_SCHEMA_VERSION', 'Semantic output schemaVersion must be semantic-output.v1.', { field: 'schemaVersion' })
+  if (!['semantic-output.v1', 'semantic-output.v2'].includes(output.schemaVersion)) {
+    addHardFailure(issues, 'INVALID_SCHEMA_VERSION', 'Semantic output schemaVersion must be semantic-output.v1 or semantic-output.v2.', { field: 'schemaVersion' })
   }
   validateString(output.promptVersion, 'promptVersion', issues)
   validateString(output.taxonomyVersion, 'taxonomyVersion', issues)
@@ -548,9 +574,10 @@ export function validateSemanticOutput(output) {
   if (!isObject(output.evidence)) {
     addHardFailure(issues, 'MISSING_REQUIRED_FIELD', 'evidence is required.', { field: 'evidence' })
   } else if (isObject(output.classification)) {
-    validateTagEvidence(output.evidence.moods, 'evidence.moods', output.classification.moods ?? [], issues)
-    validateTagEvidence(output.evidence.situations, 'evidence.situations', output.classification.situations ?? [], issues)
-    for (const field of ['pace', 'emotionalWeight', 'attentionDemand', 'discoveryStyle']) validateEvidenceItem(output.evidence[field], `evidence.${field}`, issues)
+    const options = { requireStructuredGrounding: output.schemaVersion === 'semantic-output.v2' }
+    validateTagEvidence(output.evidence.moods, 'evidence.moods', output.classification.moods ?? [], issues, options)
+    validateTagEvidence(output.evidence.situations, 'evidence.situations', output.classification.situations ?? [], issues, options)
+    for (const field of ['pace', 'emotionalWeight', 'attentionDemand', 'discoveryStyle']) validateEvidenceItem(output.evidence[field], `evidence.${field}`, issues, options)
   }
   validateBoundaryFlags(output.boundaryFlags, issues)
   validateSelfConfidence(output.selfConfidence, issues)

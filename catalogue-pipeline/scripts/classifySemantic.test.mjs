@@ -10,7 +10,6 @@ import {
   SEMANTIC_PROMPT_VERSION,
   summarizeCalibrationReplay,
 } from './classifySemantic.mjs'
-import { validatePhase5bGrounding } from './validatePhase5bGrounding.mjs'
 
 const prompt = '# semantic classifier fixture\npace is not attention demand'
 
@@ -44,9 +43,9 @@ function response(overrides = {}) {
   }
 }
 
-function phase5bResponse(overrides = {}) {
+function structuredGroundingResponse(overrides = {}) {
   const output = response()
-  const grounded = (item) => ({ ...item, rationale: 'Direct evidence: The packet states a usable factual trait. Cues: [tmdb-facts: factual genre and runtime].' })
+  const grounded = (item) => ({ ...item, rationale: 'A human-readable explanation can use any punctuation.', grounding: { mode: 'direct', cues: [{ sourceRef: 'tmdb-facts', cue: 'The factual genre and runtime are provided.' }] } })
   return {
     ...output,
     evidence: {
@@ -119,7 +118,7 @@ describe('Phase 5 semantic classifier', () => {
       await rm(root, { recursive: true, force: true })
     }
     const unknownSource = providerWith(response({ evidence: { ...response().evidence, pace: { rationale: 'This is supposedly grounded but cites an absent source.', sourceRefs: ['external-review'] } } }))
-    await expect(runInTemp(unknownSource)).rejects.toMatchObject({ code: 'INVALID_SEMANTIC_OUTPUT', message: expect.stringContaining('rule: UNKNOWN_EVIDENCE_SOURCE_REF; field: evidence.pace') })
+    await expect(runInTemp(unknownSource)).rejects.toMatchObject({ code: 'MALFORMED_MODEL_OUTPUT', message: expect.stringContaining('path: evidence.pace; keyword: UNKNOWN_EVIDENCE_SOURCE_REF') })
   })
 
   it('is idempotent on cache hits and invalidates only changed classification keys', async () => {
@@ -205,14 +204,14 @@ describe('Phase 5 semantic classifier', () => {
     }
   })
 
-  it('keeps Phase 5B grounding failures out of cache while accepting a corrected grounded result', async () => {
+  it('keeps Phase 5B structured-grounding failures out of cache while accepting a corrected result', async () => {
     const root = await mkdtemp(join(tmpdir(), 'movie-mood-semantic-phase5b-grounding-'))
     const outputPath = join(root, 'generated', 'paddington.json')
     const options = {
       evidencePacket: packet(),
       prompt,
-      promptVersion: 'semantic-classifier.v2',
-      additionalValidation: validatePhase5bGrounding,
+      promptVersion: 'semantic-classifier.v3',
+      schemaVersion: 'semantic-output.v2',
       cacheRoot: join(root, 'cache'),
       outputPath,
     }
@@ -220,9 +219,49 @@ describe('Phase 5 semantic classifier', () => {
       await expect(classifySemanticCandidate({ ...options, provider: providerWith(response()) })).rejects.toMatchObject({ code: 'MALFORMED_MODEL_OUTPUT' })
       await expect(readFile(outputPath, 'utf8')).rejects.toThrow()
 
-      const corrected = await classifySemanticCandidate({ ...options, provider: providerWith(phase5bResponse()) })
+      const corrected = await classifySemanticCandidate({ ...options, provider: providerWith(structuredGroundingResponse()) })
       expect(corrected.cacheHit).toBe(false)
-      expect(corrected.artifact.promptVersion).toBe('semantic-classifier.v2')
+      expect(corrected.artifact).toMatchObject({ promptVersion: 'semantic-classifier.v3', schemaVersion: 'semantic-output.v2' })
+    } finally {
+      await rm(root, { recursive: true, force: true })
+    }
+  })
+
+  it('rejects cue references unavailable to this packet with a field-specific code', async () => {
+    const root = await mkdtemp(join(tmpdir(), 'movie-mood-semantic-phase5b-source-ref-'))
+    const outputPath = join(root, 'generated', 'paddington.json')
+    const unavailableCue = structuredGroundingResponse({
+      evidence: {
+        ...structuredGroundingResponse().evidence,
+        pace: {
+          rationale: 'The combined cues support a medium pace.',
+          sourceRefs: ['tmdb-facts', 'tmdb-keywords'],
+          grounding: {
+            mode: 'supported-inference',
+            cues: [{ sourceRef: 'tmdb-facts', cue: 'The runtime is provided.' }, { sourceRef: 'tmdb-keywords', cue: 'A keyword would provide context.' }],
+            bridge: 'Together the cues would support a measured pace classification.',
+          },
+        },
+      },
+    })
+    try {
+      await expect(classifySemanticCandidate({
+        evidencePacket: packet(), provider: providerWith(unavailableCue), prompt, promptVersion: 'semantic-classifier.v3', schemaVersion: 'semantic-output.v2', cacheRoot: join(root, 'cache'), outputPath,
+      })).rejects.toMatchObject({ code: 'MALFORMED_MODEL_OUTPUT', message: expect.stringContaining('path: evidence.pace; keyword: UNKNOWN_SUPPORTED_INFERENCE_CUE_REF') })
+      await expect(readFile(outputPath, 'utf8')).rejects.toThrow()
+    } finally {
+      await rm(root, { recursive: true, force: true })
+    }
+  })
+
+  it('isolates structured-grounding cache entries by schema and prompt version', async () => {
+    const root = await mkdtemp(join(tmpdir(), 'movie-mood-semantic-phase5b-versioned-cache-'))
+    const options = { evidencePacket: packet(), prompt, cacheRoot: join(root, 'cache'), outputPath: join(root, 'generated', 'paddington.json') }
+    try {
+      const v1 = await classifySemanticCandidate({ ...options, provider: providerWith(response()) })
+      const v3 = await classifySemanticCandidate({ ...options, provider: providerWith(structuredGroundingResponse()), promptVersion: 'semantic-classifier.v3', schemaVersion: 'semantic-output.v2' })
+      expect(v1.cacheKey).not.toBe(v3.cacheKey)
+      expect(v3.artifact).toMatchObject({ schemaVersion: 'semantic-output.v2', promptVersion: 'semantic-classifier.v3' })
     } finally {
       await rm(root, { recursive: true, force: true })
     }

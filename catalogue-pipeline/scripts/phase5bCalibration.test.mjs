@@ -1,15 +1,26 @@
 import { describe, expect, it } from 'vitest'
 import examples from '../calibration/phase5b-experiential-examples.json' with { type: 'json' }
 import { getDealbreakerRisk, summarizeCalibrationReplay } from './runCalibrationReplay.mjs'
-import { validatePhase5bGrounding } from './validatePhase5bGrounding.mjs'
+import { validateSemanticOutput } from './validateBatch.mjs'
 
 function directEvidence(sourceRef = 'tmdb-overview') {
-  return { rationale: `Direct evidence: The source states the practical trait. Cues: [${sourceRef}: stated practical trait].`, sourceRefs: [sourceRef] }
+  return {
+    rationale: 'A human-readable explanation remains useful for review.',
+    sourceRefs: [sourceRef],
+    grounding: { mode: 'direct', cues: [{ sourceRef, cue: 'The factual source supplies a concrete trait.' }] },
+  }
 }
 
 function phase5bOutput(overrides = {}) {
   const evidence = directEvidence()
   return {
+    schemaVersion: 'semantic-output.v2',
+    promptVersion: 'semantic-classifier.v3',
+    taxonomyVersion: 'taxonomy.v2',
+    movie: { candidateId: 'example', tmdbId: 1 },
+    classification: {
+      moods: ['relaxing'], situations: ['easy-watch'], filterLanguages: ['English'], pace: 'medium', emotionalWeight: 'light', attentionDemand: 'easy', discoveryStyle: 'familiar',
+    },
     evidence: {
       moods: { relaxing: evidence },
       situations: { 'easy-watch': evidence },
@@ -18,6 +29,7 @@ function phase5bOutput(overrides = {}) {
       attentionDemand: evidence,
       discoveryStyle: evidence,
     },
+    boundaryFlags: [],
     ...overrides,
   }
 }
@@ -48,51 +60,77 @@ describe('Phase 5B experiential inference and directional risk', () => {
     for (const example of [...examples.positiveExamples, ...examples.boundaryAndCounterexamples]) expect(evaluationIds.has(example.movieId)).toBe(false)
   })
 
-  it('accepts a supported inference grounded by multiple declared source cues', () => {
+  it('accepts direct evidence and supported inference grounded by structured factual cues', () => {
     const output = phase5bOutput({
       evidence: {
         ...phase5bOutput().evidence,
         moods: {
           relaxing: {
-            rationale: 'Supported inference: The experience is relaxing. Cues: [tmdb-overview: gentle routine; tmdb-facts: family comedy]. Bridge: Together these cues support a restorative, low-friction viewing experience.',
+            rationale: 'The two factual cues jointly support a restorative viewing fit.',
             sourceRefs: ['tmdb-overview', 'tmdb-facts'],
+            grounding: {
+              mode: 'supported-inference',
+              cues: [{ sourceRef: 'tmdb-overview', cue: 'A gentle routine structures the premise.' }, { sourceRef: 'tmdb-facts', cue: 'The film is a family comedy.' }],
+              bridge: 'Together these cues support a restorative, low-friction viewing experience.',
+            },
           },
         },
       },
     })
-    expect(validatePhase5bGrounding(output).ok).toBe(true)
+    expect(validateSemanticOutput(output).ok).toBe(true)
   })
 
-  it('does not require the literal taxonomy label in factual cues', () => {
+  it('does not require literal taxonomy wording or rationale punctuation for machine validation', () => {
     const output = phase5bOutput({
       evidence: {
         ...phase5bOutput().evidence,
         moods: {
           relaxing: {
-            rationale: 'Supported inference: A calm viewing fit follows. Cues: [tmdb-overview: quiet daily routine; tmdb-facts: 95 minute drama]. Bridge: The routine-led premise and modest runtime jointly support a restorative viewing fit.',
+            rationale: 'Calm viewing fit follows from the stated facts, without a templated sentence.',
             sourceRefs: ['tmdb-overview', 'tmdb-facts'],
+            grounding: {
+              mode: 'supported-inference',
+              cues: [{ sourceRef: 'tmdb-overview', cue: 'A quiet daily routine leads the premise.' }, { sourceRef: 'tmdb-facts', cue: 'The runtime is ninety-five minutes.' }],
+              bridge: 'The routine-led premise and modest runtime jointly support a restorative viewing fit.',
+            },
           },
         },
       },
     })
-    expect(validatePhase5bGrounding(output).ok).toBe(true)
+    expect(validateSemanticOutput(output).ok).toBe(true)
   })
 
-  it('rejects unsupported model-memory assertions and weak inference structure', () => {
+  it('reports distinct structured inference failures', () => {
     const output = phase5bOutput({
       evidence: {
         ...phase5bOutput().evidence,
         moods: {
           relaxing: {
-            rationale: 'Supported inference: I know this is relaxing from pretrained knowledge. Cues: [tmdb-overview: routine]. Bridge: It feels soothing.',
+            rationale: 'The result needs review.',
             sourceRefs: ['tmdb-overview'],
+            grounding: { mode: 'supported-inference', cues: [{ sourceRef: 'tmdb-overview', cue: 'A quiet routine is described.' }] },
           },
         },
       },
     })
-    const validation = validatePhase5bGrounding(output)
+    const validation = validateSemanticOutput(output)
     expect(validation.ok).toBe(false)
-    expect(validation.hardFailures.map((failure) => failure.code)).toContain('UNSUPPORTED_MODEL_MEMORY_ASSERTION')
+    expect(validation.hardFailures.map((failure) => failure.code)).toEqual(expect.arrayContaining(['TOO_FEW_SUPPORTED_INFERENCE_CUES', 'MISSING_SUPPORTED_INFERENCE_BRIDGE']))
+  })
+
+  it('reports missing direct-evidence cues separately', () => {
+    const output = phase5bOutput({
+      evidence: {
+        ...phase5bOutput().evidence,
+        pace: {
+          rationale: 'The pace is stated clearly.',
+          sourceRefs: ['tmdb-overview'],
+          grounding: { mode: 'direct', cues: [] },
+        },
+      },
+    })
+    const validation = validateSemanticOutput(output)
+    expect(validation.hardFailures.map((failure) => failure.code)).toContain('TOO_FEW_DIRECT_EVIDENCE_CUES')
   })
 
   it('classifies directional dealbreaker risks without collapsing soft order changes', () => {

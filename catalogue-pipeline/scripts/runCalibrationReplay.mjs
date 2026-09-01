@@ -12,7 +12,6 @@ import { stableHash } from '../adapters/tmdbProvider.ts'
 import { buildEvidencePacket } from './buildEvidencePacket.mjs'
 import { classifySemanticCandidate } from './classifySemantic.mjs'
 import { enrichTmdbCandidates } from './enrichTmdb.mjs'
-import { validatePhase5bGrounding } from './validatePhase5bGrounding.mjs'
 
 const CALIBRATION_IDS = [
   'paddington-2',
@@ -49,7 +48,8 @@ const EXCLUDED_FIELDS = [
 ]
 const LIVE_REQUEST_INTERVAL_MS = 5000
 const DEFAULT_CALIBRATION_MODEL = 'gemini-3.7-flash'
-const PHASE_5B_PROMPT_VERSION = 'semantic-classifier.v2'
+const PHASE_5B_PROMPT_VERSION = 'semantic-classifier.v3'
+const PHASE_5B_SCHEMA_VERSION = 'semantic-output.v2'
 
 class CalibrationReplayError extends Error {
   constructor(message, { code = 'CALIBRATION_REPLAY_ERROR', details = {} } = {}) {
@@ -345,8 +345,7 @@ export function summarizeCalibrationReplay(firstResults, secondResults, packets)
       }
     }
 
-    const grounding = validatePhase5bGrounding(artifact)
-    if (!grounding.ok) productImpact.precisionDiscipline.evidenceRationaleContractFailures += grounding.hardFailures.length
+    if (artifact.schemaVersion !== PHASE_5B_SCHEMA_VERSION) productImpact.precisionDiscipline.evidenceRationaleContractFailures += 1
   }
 
   for (const field of SET_FIELDS) sets[field].averageJaccard /= sets[field].total
@@ -380,7 +379,7 @@ export function summarizeCalibrationReplay(firstResults, secondResults, packets)
   }
 }
 
-async function runClassifierPass({ packets, provider, prompt, outputRoot, cacheRoot, promptVersion = PHASE_5B_PROMPT_VERSION, calibrationAnchors, calibrationBoundaryCases }) {
+async function runClassifierPass({ packets, provider, prompt, outputRoot, cacheRoot, promptVersion = PHASE_5B_PROMPT_VERSION, schemaVersion = PHASE_5B_SCHEMA_VERSION, calibrationAnchors, calibrationBoundaryCases }) {
   const results = []
   for (const [index, packet] of packets.entries()) {
     const result = await classifySemanticCandidate({
@@ -388,7 +387,7 @@ async function runClassifierPass({ packets, provider, prompt, outputRoot, cacheR
       provider,
       prompt,
       promptVersion,
-      additionalValidation: validatePhase5bGrounding,
+      schemaVersion,
       calibrationAnchors,
       calibrationBoundaryCases,
       cacheRoot,
@@ -443,7 +442,7 @@ async function main() {
   requireEnv('GEMINI_API_KEY')
   const modelId = resolveCalibrationModel()
   const provider = createGeminiProvider({ modelId })
-  const prompt = await readFile(resolve(pipelineRoot, 'prompts/semantic-classifier.v2.md'), 'utf8')
+  const prompt = await readFile(resolve(pipelineRoot, 'prompts/semantic-classifier.v3.md'), 'utf8')
   const calibrationAnchors = { ...anchors, anchors: [...anchors.anchors, ...phase5bExamples.positiveExamples] }
   const calibrationBoundaryCases = { ...boundaryCases, boundaryCases: [...boundaryCases.boundaryCases, ...phase5bExamples.boundaryAndCounterexamples] }
   const outputRoot = resolve(pipelineRoot, `generated/semantic/phase-5a-calibration/${modelId}/${PHASE_5B_PROMPT_VERSION}`)
