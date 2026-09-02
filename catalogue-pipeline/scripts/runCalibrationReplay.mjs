@@ -11,6 +11,13 @@ import { createGeminiProvider } from '../adapters/geminiProvider.ts'
 import { stableHash } from '../adapters/tmdbProvider.ts'
 import { buildEvidencePacket } from './buildEvidencePacket.mjs'
 import { classifySemanticCandidate } from './classifySemantic.mjs'
+import {
+  auditGeneralizationSample,
+  getDiagnosticDefinition,
+  summarizeGeneralizationCoverage,
+  summarizeMultilabelDiagnostics,
+  summarizeOrderedDiagnostics,
+} from './diagnosticScaffolding.mjs'
 import { enrichTmdbCandidates } from './enrichTmdb.mjs'
 
 const CALIBRATION_IDS = [
@@ -93,16 +100,16 @@ export function resolveCalibrationModel(env = process.env) {
   return modelId
 }
 
-function calibrationBatch() {
+function calibrationBatch(replay) {
   const byId = new Map(mappings.map((mapping) => [mapping.id, mapping]))
   return {
     schemaVersion: 'candidate.v1',
-    batchId: 'phase-5a-calibration',
+    batchId: replay.batchId,
     sourcePolicy: {
-      description: 'Existing production movies used only for Phase 5A semantic calibration evidence materialization.',
+      description: replay.sourcePolicy,
       licensingNotes: [],
     },
-    candidates: CALIBRATION_IDS.map((candidateId) => {
+    candidates: replay.candidateIds.map((candidateId) => {
       const mapping = byId.get(candidateId)
       const facts = tmdbSnapshot[candidateId]
       if (!mapping || !facts) throw new CalibrationReplayError(`Missing factual calibration target: ${candidateId}`, { code: 'MISSING_CALIBRATION_TARGET' })
@@ -111,10 +118,45 @@ function calibrationBatch() {
         title: facts.title,
         year: facts.year,
         tmdbId: mapping.tmdbId,
-        sourceTags: ['phase-5a-calibration'],
-        inclusionRationale: 'Existing production movie selected for semantic calibration replay.',
+        sourceTags: [replay.batchId],
+        inclusionRationale: replay.inclusionRationale,
       }
     }),
+  }
+}
+
+export function resolveReplayDefinition(diagnosticName) {
+  if (!diagnosticName) {
+    return {
+      id: 'phase-5a-calibration',
+      batchId: 'phase-5a-calibration',
+      candidateIds: CALIBRATION_IDS,
+      sourcePolicy: 'Existing production movies used only for Phase 5A semantic calibration evidence materialization.',
+      inclusionRationale: 'Existing production movie selected for semantic calibration replay.',
+      promptVersion: PHASE_5B_PROMPT_VERSION,
+      promptFile: 'semantic-classifier.v3.md',
+      schemaVersion: PHASE_5B_SCHEMA_VERSION,
+      outputNamespace: 'phase-5a-calibration',
+      isDiagnostic: false,
+    }
+  }
+  const diagnostic = getDiagnosticDefinition(diagnosticName)
+  return {
+    ...diagnostic,
+    batchId: diagnostic.id,
+    sourcePolicy: diagnostic.purpose,
+    inclusionRationale: 'Existing production movie selected for a non-production semantic diagnostic.',
+    promptFile: diagnostic.kind === 'ordinal-hedging' ? 'semantic-classifier.v3-ordinal-diagnostic.md' : 'semantic-classifier.v3.md',
+    schemaVersion: diagnostic.schemaVersionOutput,
+    outputNamespace: `diagnostics/${diagnostic.id}`,
+    isDiagnostic: true,
+  }
+}
+
+export function resolveReplayStorage(replay, modelId) {
+  return {
+    outputRoot: `generated/semantic/${replay.outputNamespace}/${modelId}/${replay.promptVersion}`,
+    cacheRoot: `cache/semantic/${replay.outputNamespace}/${modelId}/${replay.promptVersion}`,
   }
 }
 
@@ -379,6 +421,59 @@ export function summarizeCalibrationReplay(firstResults, secondResults, packets)
   }
 }
 
+function recordsFromResults(results, packets) {
+  const packetById = new Map(packets.map((packet) => [packet.candidateId, packet]))
+  const curatedById = new Map(curatedMovies.map((movie) => [movie.id, movie]))
+  return results.map((entry) => {
+    const id = entry.result.artifact.movie.candidateId
+    return { id, human: curatedById.get(id), model: entry.result.artifact.classification, packet: packetById.get(id) }
+  }).filter((entry) => entry.human && entry.packet)
+}
+
+function dealbreakerCounts(records) {
+  const counts = { undershoot: 0, overshoot: 0 }
+  for (const record of records) {
+    for (const field of ['pace', 'emotionalWeight']) {
+      const risk = getDealbreakerRisk(field, record.human[field], record.model[field])
+      if (risk === 'DEALBREAKER_UNDERSHOOT') counts.undershoot += 1
+      if (risk === 'DEALBREAKER_OVERSHOOT') counts.overshoot += 1
+    }
+  }
+  return counts
+}
+
+async function loadBaselineRecords({ pipelineRoot, modelId, packets }) {
+  const artifacts = await Promise.all(packets.map(async (packet) => {
+    const path = resolve(pipelineRoot, `generated/semantic/phase-5a-calibration/${modelId}/${PHASE_5B_PROMPT_VERSION}/${packet.candidateId}.json`)
+    try {
+      return JSON.parse(await readFile(path, 'utf8'))
+    } catch {
+      throw new CalibrationReplayError(`Missing frozen v3 baseline artifact for ordinal diagnostic: ${packet.candidateId}`, { code: 'MISSING_ORDINAL_DIAGNOSTIC_BASELINE' })
+    }
+  }))
+  const curatedById = new Map(curatedMovies.map((movie) => [movie.id, movie]))
+  return artifacts.map((artifact) => ({ id: artifact.movie.candidateId, human: curatedById.get(artifact.movie.candidateId), model: artifact.classification }))
+}
+
+function ordinalComparison(baselineRecords, diagnosticRecords) {
+  const baseline = summarizeOrderedDiagnostics(baselineRecords)
+  const diagnostic = summarizeOrderedDiagnostics(diagnosticRecords)
+  return {
+    baseline,
+    diagnostic,
+    delta: Object.fromEntries(ORDERED_FIELDS.map((field) => [field, {
+      centerRegression: diagnostic[field].centerRegressionCount - baseline[field].centerRegressionCount,
+      severe: diagnostic[field].severe - baseline[field].severe,
+      endpointPredictionRate: (
+        diagnostic[field].predictionDistribution[ORDER[field][0]] + diagnostic[field].predictionDistribution[ORDER[field][2]]
+      ) / diagnostic[field].total - (
+        baseline[field].predictionDistribution[ORDER[field][0]] + baseline[field].predictionDistribution[ORDER[field][2]]
+      ) / baseline[field].total,
+    }])),
+    dealbreakerRisk: { baseline: dealbreakerCounts(baselineRecords), diagnostic: dealbreakerCounts(diagnosticRecords) },
+  }
+}
+
 async function runClassifierPass({ packets, provider, prompt, outputRoot, cacheRoot, promptVersion = PHASE_5B_PROMPT_VERSION, schemaVersion = PHASE_5B_SCHEMA_VERSION, calibrationAnchors, calibrationBoundaryCases }) {
   const results = []
   for (const [index, packet] of packets.entries()) {
@@ -406,15 +501,21 @@ async function runClassifierPass({ packets, provider, prompt, outputRoot, cacheR
 
 async function main() {
   const command = process.argv[2] ?? 'run'
+  const diagnosticName = process.argv[3]
   const pipelineRoot = resolve(new URL('..', import.meta.url).pathname)
-  const batch = calibrationBatch()
+  const replay = resolveReplayDefinition(diagnosticName)
+  if (replay.kind === 'generalization') {
+    const audit = auditGeneralizationSample(replay)
+    if (!audit.clean) throw new CalibrationReplayError('Generalization diagnostic sample failed exclusion audit.', { code: 'GENERALIZATION_SAMPLE_LEAKAGE', details: audit })
+  }
+  const batch = calibrationBatch(replay)
   const token = requireEnv('TMDB_READ_ACCESS_TOKEN')
   const factsResult = await enrichTmdbCandidates({
     batch,
     token,
     allowProductionCollisions: true,
-    cacheRoot: resolve(pipelineRoot, 'cache/tmdb/phase-5a-calibration'),
-    outputPath: resolve(pipelineRoot, 'generated/tmdbFacts/phase-5a-calibration.json'),
+    cacheRoot: resolve(pipelineRoot, `cache/tmdb/${replay.outputNamespace}`),
+    outputPath: resolve(pipelineRoot, `generated/tmdbFacts/${replay.outputNamespace}.json`),
     fetchedAt: '2026-08-31T00:00:00.000Z',
   })
   const packets = buildPackets(factsResult.artifact)
@@ -422,7 +523,7 @@ async function main() {
   assertEvidenceIsolation(packets)
   assertFrozenPackets(packets, regeneratedPackets)
 
-  const evidenceRoot = resolve(pipelineRoot, 'generated/semantic/phase-5a-calibration/evidencePackets')
+  const evidenceRoot = resolve(pipelineRoot, `generated/semantic/${replay.outputNamespace}/evidencePackets`)
   await mkdir(evidenceRoot, { recursive: true })
   for (const packet of packets) {
     await writeJsonIfChanged(resolve(evidenceRoot, `${packet.candidateId}.json`), packet)
@@ -442,14 +543,28 @@ async function main() {
   requireEnv('GEMINI_API_KEY')
   const modelId = resolveCalibrationModel()
   const provider = createGeminiProvider({ modelId })
-  const prompt = await readFile(resolve(pipelineRoot, 'prompts/semantic-classifier.v3.md'), 'utf8')
+  const prompt = await readFile(resolve(pipelineRoot, `prompts/${replay.promptFile}`), 'utf8')
   const calibrationAnchors = { ...anchors, anchors: [...anchors.anchors, ...phase5bExamples.positiveExamples] }
   const calibrationBoundaryCases = { ...boundaryCases, boundaryCases: [...boundaryCases.boundaryCases, ...phase5bExamples.boundaryAndCounterexamples] }
-  const outputRoot = resolve(pipelineRoot, `generated/semantic/phase-5a-calibration/${modelId}/${PHASE_5B_PROMPT_VERSION}`)
-  const cacheRoot = resolve(pipelineRoot, `cache/semantic/phase-5a-calibration/${modelId}/${PHASE_5B_PROMPT_VERSION}`)
-  const firstResults = await runClassifierPass({ packets, provider, prompt, outputRoot, cacheRoot, calibrationAnchors, calibrationBoundaryCases })
-  const secondResults = await runClassifierPass({ packets, provider, prompt, outputRoot, cacheRoot, calibrationAnchors, calibrationBoundaryCases })
+  const storage = resolveReplayStorage(replay, modelId)
+  const outputRoot = resolve(pipelineRoot, storage.outputRoot)
+  const cacheRoot = resolve(pipelineRoot, storage.cacheRoot)
+  const firstResults = await runClassifierPass({ packets, provider, prompt, outputRoot, cacheRoot, promptVersion: replay.promptVersion, schemaVersion: replay.schemaVersion, calibrationAnchors, calibrationBoundaryCases })
+  const secondResults = await runClassifierPass({ packets, provider, prompt, outputRoot, cacheRoot, promptVersion: replay.promptVersion, schemaVersion: replay.schemaVersion, calibrationAnchors, calibrationBoundaryCases })
   const report = summarizeCalibrationReplay(firstResults, secondResults, packets)
+  const diagnosticRecords = recordsFromResults(firstResults, packets)
+  if (replay.kind === 'ordinal-hedging') report.ordinalHedgingDiagnostic = {
+    decisionRules: replay.decisionRules,
+    ...ordinalComparison(await loadBaselineRecords({ pipelineRoot, modelId, packets }), diagnosticRecords),
+  }
+  if (replay.kind === 'generalization') report.generalizationDiagnostic = {
+    purpose: replay.purpose,
+    decisionRules: replay.decisionRules,
+    exclusionAudit: auditGeneralizationSample(replay),
+    coverage: summarizeGeneralizationCoverage(replay),
+    ordered: summarizeOrderedDiagnostics(diagnosticRecords),
+    multilabel: summarizeMultilabelDiagnostics(diagnosticRecords),
+  }
   await writeJsonIfChanged(resolve(outputRoot, 'report.json'), report)
   console.log(JSON.stringify(report, null, 2))
 }

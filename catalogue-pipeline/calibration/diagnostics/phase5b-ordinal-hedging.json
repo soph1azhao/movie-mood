@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "semantic-diagnostic.v1",
+  "id": "phase-5b-ordinal-hedging",
+  "kind": "ordinal-hedging",
+  "purpose": "Diagnostic only: test whether ordered-axis middle predictions reflect uncertainty hedging. This is not a production classifier baseline.",
+  "promptVersion": "semantic-classifier.v3-ordinal-diagnostic",
+  "schemaVersionOutput": "semantic-output.v2",
+  "candidateIds": ["paddington-2", "whiplash", "perfect-days", "arrival", "mad-max", "edge-of-tomorrow", "before-sunrise", "rye-lane-2023", "petite-maman-2021", "truman-show"],
+  "baseline": { "promptVersion": "semantic-classifier.v3", "artifactNamespace": "phase-5a-calibration" },
+  "decisionRules": {
+    "success": "Center regression materially decreases; dealbreaker undershoots decrease or remain controlled; severe errors do not increase; endpoint prediction rate does not simply polarize.",
+    "noMaterialEffect": "Center regression remains substantially unchanged.",
+    "regression": "Endpoint predictions increase without improved agreement, severe errors increase, or dealbreaker risk worsens."
+  }
+}

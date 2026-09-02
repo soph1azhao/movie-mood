@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "semantic-diagnostic.v1",
+  "id": "phase-5c0-generalization",
+  "kind": "generalization",
+  "purpose": "Generalization diagnostic only: determine whether observed omission and ordinal-hedging patterns extend beyond the original ten-film calibration set. This is not a gold set or formal validation set.",
+  "promptVersion": "semantic-classifier.v3",
+  "schemaVersionOutput": "semantic-output.v2",
+  "candidateIds": ["hunt-wilderpeople", "knives-out", "crouching-tiger", "rrr", "parasite", "spirited-away", "my-neighbor-totoro", "shawshank", "portrait-lady-fire", "get-out", "little-miss-sunshine", "inception"],
+  "coverageNotes": {
+    "comedy": ["hunt-wilderpeople", "little-miss-sunshine"],
+    "action": ["crouching-tiger", "rrr", "inception"],
+    "horrorThriller": ["knives-out", "parasite", "get-out"],
+    "animationFamily": ["spirited-away", "my-neighbor-totoro"],
+    "romance": ["crouching-tiger", "portrait-lady-fire"],
+    "mainstreamDrama": ["shawshank"],
+    "nonEnglishCommercialCinema": ["crouching-tiger", "rrr", "parasite", "spirited-away", "my-neighbor-totoro"],
+    "emotionallyHeavy": ["rrr", "parasite", "shawshank", "get-out"],
+    "lighterAccessible": ["hunt-wilderpeople", "my-neighbor-totoro", "little-miss-sunshine"]
+  },
+  "coverageLimitations": [
+    "This is a 12-film diagnostic sample, not a balanced validation design or a replacement for the future 45-film gold evaluation.",
+    "The available clean candidates do not produce an even cross-product of every taxonomy axis, genre, language, and cardinality combination."
+  ],
+  "decisionRules": {
+    "generalizedEvidenceDeficit": "Repeated omissions of relaxing, easy-watch, or friends persist outside the original ten-film set.",
+    "sampleSpecificDeficit": "Those omissions largely disappear in this diagnostic sample."
+  }
+}
