@@ -38,7 +38,7 @@
       "type": "object",
       "required": ["rationale", "sourceRefs"],
       "properties": {
-        "rationale": { "type": "string", "minLength": 12 },
+        "rationale": { "type": "string", "minLength": 12, "description": "A meaningful explanation of the evidence; at least 12 characters." },
         "sourceRefs": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
         "grounding": {
           "type": "object",
@@ -52,12 +52,12 @@
                 "required": ["sourceRef", "cue"],
                 "properties": {
                   "sourceRef": { "type": "string", "minLength": 1 },
-                  "cue": { "type": "string", "minLength": 8 }
+                  "cue": { "type": "string", "minLength": 8, "description": "A specific factual phrase from the cited source, not a taxonomy label or trivial token; at least 8 characters." }
                 },
                 "additionalProperties": false
               }
             },
-            "bridge": { "type": "string", "minLength": 12 }
+            "bridge": { "type": "string", "minLength": 12, "description": "A meaningful explanation of how the multiple cues support the taxonomy judgment; at least 12 characters." }
           },
           "additionalProperties": false
         }

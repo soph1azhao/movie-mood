@@ -133,6 +133,59 @@ describe('Phase 5B experiential inference and directional risk', () => {
     expect(validation.hardFailures.map((failure) => failure.code)).toContain('TOO_FEW_DIRECT_EVIDENCE_CUES')
   })
 
+  it('rejects a short cue with its exact nested path while meaningful cues pass', () => {
+    const output = phase5bOutput({
+      evidence: {
+        ...phase5bOutput().evidence,
+        moods: {
+          relaxing: {
+            ...directEvidence(),
+            grounding: { mode: 'direct', cues: [{ sourceRef: 'tmdb-overview', cue: 'calm' }] },
+          },
+        },
+      },
+    })
+    const validation = validateSemanticOutput(output)
+    expect(validation.hardFailures).toEqual(expect.arrayContaining([
+      expect.objectContaining({ code: 'EVIDENCE_CUE_TOO_SHORT', field: 'evidence.moods.relaxing.grounding.cues[0].cue' }),
+    ]))
+    expect(validateSemanticOutput(phase5bOutput()).ok).toBe(true)
+  })
+
+  it('rejects a short rationale with its exact nested path', () => {
+    const output = phase5bOutput({
+      evidence: {
+        ...phase5bOutput().evidence,
+        pace: { ...directEvidence(), rationale: 'Brief' },
+      },
+    })
+    expect(validateSemanticOutput(output).hardFailures).toEqual(expect.arrayContaining([
+      expect.objectContaining({ code: 'EVIDENCE_RATIONALE_TOO_SHORT', field: 'evidence.pace.rationale' }),
+    ]))
+  })
+
+  it('rejects a short supported-inference bridge precisely', () => {
+    const output = phase5bOutput({
+      evidence: {
+        ...phase5bOutput().evidence,
+        moods: {
+          relaxing: {
+            rationale: 'Two facts support the selected experiential judgment.',
+            sourceRefs: ['tmdb-overview', 'tmdb-facts'],
+            grounding: {
+              mode: 'supported-inference',
+              cues: [{ sourceRef: 'tmdb-overview', cue: 'A quiet routine is described.' }, { sourceRef: 'tmdb-facts', cue: 'The runtime is provided.' }],
+              bridge: 'Together',
+            },
+          },
+        },
+      },
+    })
+    expect(validateSemanticOutput(output).hardFailures).toEqual(expect.arrayContaining([
+      expect.objectContaining({ code: 'EVIDENCE_BRIDGE_TOO_SHORT', field: 'evidence.moods.relaxing.grounding.bridge' }),
+    ]))
+  })
+
   it('classifies directional dealbreaker risks without collapsing soft order changes', () => {
     expect(getDealbreakerRisk('emotionalWeight', 'heavy', 'moderate')).toBe('DEALBREAKER_UNDERSHOOT')
     expect(getDealbreakerRisk('emotionalWeight', 'light', 'heavy')).toBe('DEALBREAKER_OVERSHOOT')

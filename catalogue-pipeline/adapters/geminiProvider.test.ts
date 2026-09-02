@@ -112,6 +112,12 @@ describe('Gemini model provider', () => {
     expect(evidenceItem.properties.grounding.properties.mode.enum).toEqual(['direct', 'supported-inference'])
     expect(evidenceItem.properties.grounding.properties.cues.items.properties.sourceRef.enum).toEqual(['tmdb-facts', 'tmdb-overview'])
     expect(evidenceItem.properties.grounding.properties).toHaveProperty('bridge')
+    expect(evidenceItem.properties.rationale).not.toHaveProperty('minLength')
+    expect(evidenceItem.properties.grounding.properties.cues.items.properties.cue).not.toHaveProperty('minLength')
+    expect(evidenceItem.properties.grounding.properties.bridge).not.toHaveProperty('minLength')
+    expect(evidenceItem.properties.rationale.description).toContain('12 characters')
+    expect(evidenceItem.properties.grounding.properties.cues.items.properties.cue.description).toContain('specific factual phrase')
+    expect(evidenceItem.properties.grounding.properties.bridge.description).toContain('12 characters')
   })
 
   it('always transmits GEMINI_API_KEY through the documented API-key header', async () => {

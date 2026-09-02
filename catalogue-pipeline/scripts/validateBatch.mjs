@@ -178,7 +178,7 @@ function validateEvidenceItem(item, field, issues, { requireStructuredGrounding 
   }
   validateString(item.rationale, `${field}.rationale`, issues)
   if (typeof item.rationale === 'string' && item.rationale.trim().length < 12) {
-    addHardFailure(issues, 'INVALID_SEMANTIC_EVIDENCE', `${field}.rationale must be meaningful.`, { field })
+    addHardFailure(issues, 'EVIDENCE_RATIONALE_TOO_SHORT', `${field}.rationale must be a meaningful explanation of at least 12 characters.`, { field: `${field}.rationale` })
   }
   validateStringArray(item.sourceRefs, `${field}.sourceRefs`, issues)
   if (!requireStructuredGrounding) return
@@ -194,18 +194,17 @@ function validateEvidenceItem(item, field, issues, { requireStructuredGrounding 
   }
   for (const [index, cue] of item.grounding.cues.entries()) {
     if (!isObject(cue)) {
-      addHardFailure(issues, 'INVALID_EVIDENCE_CUE', `${field}.grounding.cues[${index}] must be an object.`, { field })
+      addHardFailure(issues, 'EVIDENCE_CUE_NOT_OBJECT', `${field}.grounding.cues[${index}] must be an object.`, { field: `${field}.grounding.cues[${index}]` })
       continue
     }
-    validateString(cue.sourceRef, `${field}.grounding.cues[${index}].sourceRef`, issues)
-    validateString(cue.cue, `${field}.grounding.cues[${index}].cue`, issues)
-    if (typeof cue.cue === 'string' && cue.cue.trim().length < 8) addHardFailure(issues, 'INVALID_EVIDENCE_CUE', `${field}.grounding.cues[${index}].cue must be meaningful.`, { field })
+    if (typeof cue.sourceRef !== 'string' || cue.sourceRef.trim().length === 0) addHardFailure(issues, 'EVIDENCE_CUE_SOURCE_REF_INVALID', `${field}.grounding.cues[${index}].sourceRef must be a non-empty string.`, { field: `${field}.grounding.cues[${index}].sourceRef` })
+    if (typeof cue.cue !== 'string' || cue.cue.trim().length < 8) addHardFailure(issues, 'EVIDENCE_CUE_TOO_SHORT', `${field}.grounding.cues[${index}].cue must be a specific factual phrase of at least 8 characters.`, { field: `${field}.grounding.cues[${index}].cue` })
   }
   if (item.grounding.mode === 'direct' && item.grounding.cues.length < 1) addHardFailure(issues, 'TOO_FEW_DIRECT_EVIDENCE_CUES', `${field} direct evidence requires at least one grounded factual cue.`, { field })
   if (item.grounding.mode === 'supported-inference') {
     if (item.grounding.cues.length < 2) addHardFailure(issues, 'TOO_FEW_SUPPORTED_INFERENCE_CUES', `${field} supported inference requires multiple grounded factual cues.`, { field })
-    validateString(item.grounding.bridge, `${field}.grounding.bridge`, issues)
-    if (typeof item.grounding.bridge !== 'string' || item.grounding.bridge.trim().length < 12) addHardFailure(issues, 'MISSING_SUPPORTED_INFERENCE_BRIDGE', `${field} supported inference requires a meaningful bridge to the taxonomy judgment.`, { field })
+    if (typeof item.grounding.bridge !== 'string' || item.grounding.bridge.trim().length === 0) addHardFailure(issues, 'MISSING_SUPPORTED_INFERENCE_BRIDGE', `${field} supported inference requires a bridge to the taxonomy judgment.`, { field: `${field}.grounding.bridge` })
+    else if (item.grounding.bridge.trim().length < 12) addHardFailure(issues, 'EVIDENCE_BRIDGE_TOO_SHORT', `${field}.grounding.bridge must be a meaningful explanation of at least 12 characters.`, { field: `${field}.grounding.bridge` })
   }
 }
 

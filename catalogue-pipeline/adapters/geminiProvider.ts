@@ -29,7 +29,7 @@ export function buildGeminiResponseJsonSchema(sourceRefs: string[] = [], schemaV
     type: 'object',
     required: schemaVersion === 'semantic-output.v2' ? ['rationale', 'sourceRefs', 'grounding'] : ['rationale', 'sourceRefs'],
     properties: {
-      rationale: { type: 'string' },
+      rationale: { type: 'string', description: 'Local validation requires a meaningful evidence explanation of at least 12 characters.' },
       sourceRefs: sourceRefsSchema,
       ...(schemaVersion === 'semantic-output.v2' ? {
         grounding: {
@@ -45,12 +45,12 @@ export function buildGeminiResponseJsonSchema(sourceRefs: string[] = [], schemaV
                 required: ['sourceRef', 'cue'],
                 properties: {
                   sourceRef: validSourceRefs.length > 0 ? { type: 'string', enum: validSourceRefs } : { type: 'string' },
-                  cue: { type: 'string' },
+                  cue: { type: 'string', description: 'Local validation requires a specific factual phrase, not a taxonomy label or trivial token, of at least 8 characters.' },
                 },
                 additionalProperties: false,
               },
             },
-            bridge: { type: 'string' },
+            bridge: { type: 'string', description: 'Local validation requires a meaningful explanation of how multiple cues support the taxonomy judgment, at least 12 characters.' },
           },
           additionalProperties: false,
         },
