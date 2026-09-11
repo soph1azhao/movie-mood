@@ -1,0 +1,763 @@
+{
+  "protocolId": "phase-5c-c1b-v-confirmatory.v3",
+  "protocolVersion": 3,
+  "studyType": "new-independent-confirmatory-study",
+  "historicalProvenance": {
+    "predecessorProtocol": "phase-5c-c1b-v-confirmatory.v2",
+    "predecessorConclusion": "BLOCKED — DISCOVERY CORPUS EXCEEDS PREDECLARED PAGE BUDGET",
+    "predecessorClosureCommit": "aa6decee9783e12906b3989a37495f7c99fdf60e",
+    "predecessorClosureRecord": "catalogue-pipeline/calibration/diagnostics/phase5c-c1b-v2-stage1-closure.v1.json",
+    "predecessorClosureRawSha256": "sha256:ce8f49d4ce5cef5c1638ce225379ea42a2d9dea043ca06dd33254ffb2f2b949d",
+    "relationship": "not-an-amendment-continuation-restart-or-WAL-reuse",
+    "historicalResultsAdmissible": false,
+    "aggregateRecruitmentFeasibilityInformationUsed": {
+      "1980-1989.total_pages": 45,
+      "1990-1999.total_pages": 65
+    },
+    "candidateLevelV2OutcomeInformationUsed": false,
+    "v2SourceSnapshotCreated": false,
+    "v2CandidateRegistryCreated": false,
+    "v2SemanticWikipediaGoldOrStage2Execution": false,
+    "v2ForensicStateImmutable": true
+  },
+  "requiredDesignDisclosures": {
+    "independentSuccessor": true,
+    "annualPartitionSelectionBasis": "selected after observing only aggregate V2 recruitment-feasibility page counts, not candidate-level semantic, descriptive, Wikipedia, gold, or selection outcomes",
+    "factualEligibilityUniversePreserved": true,
+    "enumerationArchitectureChanged": true,
+    "tmdbIsEvolvingExternalSource": true,
+    "sourceSnapshotMeaning": "exact provider responses observed during this V3 run; not an atomic simultaneous snapshot of the entire TMDB database",
+    "newProtocolIdIntentionallyChangesDeterministicRankHashes": true,
+    "annualCellPageCap": "50-page independently frozen V3 feasibility guard",
+    "derived2250Meaning": "45 × 50 theoretical maximum only; not a separately tuned stopping rule"
+  },
+  "studyEstimands": {
+    "coverage": {
+      "name": "Wikipedia evidence viability over the V3 frozen fresh factual candidate universe",
+      "denominator": 180,
+      "formula": "viableWikipediaEvidenceCount / 180",
+      "exactObservedFrozenUniverseCoverage": "k / 180",
+      "descriptiveBinomialReferenceOnly": true,
+      "populationInferenceAuthorized": false,
+      "fullCatalogueConfidenceInterval": false,
+      "wilsonIntervalInterpretation": "Descriptive reference for the observed frozen 180-candidate universe only. Cannot be interpreted as a catalogue-level or population-level confidence interval.",
+      "reports": [
+        "pointEstimate",
+        "wilson95Interval",
+        "identityResolutionRate",
+        "allowedSectionRate",
+        "eligibleNormalizedWordCountAtLeast150Rate",
+        "failureReasonDistribution",
+        "coverageByFactualStrata"
+      ],
+      "wilsonInterval": {
+        "confidenceLevel": 0.95,
+        "z": 1.959963984540054,
+        "method": "Wilson score interval without continuity correction"
+      },
+      "factualStrata": [
+        "releaseDecade",
+        "voteCountBand",
+        "language",
+        "country",
+        "genre",
+        "runtimeBand"
+      ],
+      "coverageByFriendsGold": "NOT_IDENTIFIABLE_IN_MAIN_V3_DESIGN",
+      "screeningOccursBeforeHumanGold": true
+    },
+    "efficacy": {
+      "name": "Incremental semantic value of Wikipedia reception evidence conditional on deterministic evidence eligibility",
+      "population": "final evidence-eligible confirmatory cohort",
+      "entireMovieMoodCatalogueEstimand": false,
+      "independentFromCoverageEstimand": true
+    }
+  },
+  "stages": [
+    {
+      "stage": 0,
+      "id": "crash-safe-execution-substrate",
+      "hardPrerequisiteForLaterNetworkedStages": true,
+      "wal": {
+        "lifecycle": [
+          "INTENT",
+          "RESPONSE",
+          "TERMINAL"
+        ],
+        "commonRequiredIdentityFields": [
+          "studyId",
+          "invocationId",
+          "attemptId",
+          "stage",
+          "requestScope",
+          "requestPurpose",
+          "requestHash",
+          "attemptOrdinal",
+          "timestamp"
+        ],
+        "scopeConditionalIdentityFields": {
+          "universe": {
+            "scopeId": "required",
+            "candidateId": null,
+            "arm": null,
+            "drawIndex": null
+          },
+          "candidate": {
+            "scopeId": "optional-null",
+            "candidateId": "required",
+            "arm": null,
+            "drawIndex": null
+          },
+          "inference": {
+            "scopeId": "optional-null",
+            "candidateId": "required",
+            "arm": "required",
+            "drawIndex": "required"
+          }
+        },
+        "allowedRequestScopeValues": [
+          "universe",
+          "candidate",
+          "inference"
+        ],
+        "hashChainFields": [
+          "seq",
+          "prevRecordHash",
+          "canonicalRecordHash"
+        ],
+        "hashAlgorithm": "SHA-256",
+        "dispatchOrdering": [
+          "append INTENT",
+          "fsync WAL file",
+          "dispatch network request"
+        ],
+        "responseOrdering": [
+          "append RESPONSE",
+          "fsync WAL file",
+          "advance parsing/state"
+        ],
+        "terminalOrdering": [
+          "append TERMINAL",
+          "fsync WAL file",
+          "advance completed state"
+        ],
+        "criticalAtomicArtifactReplacement": [
+          "write temporary file",
+          "fsync temporary file",
+          "atomic rename",
+          "fsync parent directory"
+        ]
+      },
+      "tornWritePolicy": {
+        "trailingIncompleteRecord": "TORN_TRAILING_RECORD",
+        "recoveryReadScope": "last-valid-hash-chain-prefix-only",
+        "preserveOriginalWal": true,
+        "destructiveTruncationOrRewrite": false,
+        "interiorHashChainOrChecksumFailure": "WAL_CORRUPTION",
+        "interiorFailureOutcome": "OPERATIONALLY_INCONCLUSIVE"
+      },
+      "ambiguousDispatchPolicy": {
+        "unknownInFlightDefinition": "durable INTENT plus request may have been dispatched plus no durable RESPONSE",
+        "unknownInFlightOutcome": "OPERATIONALLY_INCONCLUSIVE",
+        "automaticRetry": false,
+        "manualReplacementDraw": false,
+        "compensationDraw": false,
+        "ambiguousStochasticReplacementsAllowed": 0,
+        "provablyNotDispatchedDefinition": "failure is durably recorded as TERMINAL before transport dispatch",
+        "provablyNotDispatchedMayUseFrozenTransportRetry": true,
+        "crashAfterIntentBeforeDispatchWithoutDurableTerminal": "UNKNOWN_IN_FLIGHT"
+      },
+      "runLock": {
+        "acquisition": "exclusive-create",
+        "durability": [
+          "fsync lock file",
+          "fsync parent directory"
+        ],
+        "automaticTtlClearing": false,
+        "staleLockDisposition": "explicit-controlled-recovery-review"
+      },
+      "requiredSyntheticPreflightScenarios": [
+        "crash-before-INTENT",
+        "crash-after-INTENT-before-dispatch",
+        "crash-after-possible-dispatch-before-RESPONSE",
+        "crash-after-RESPONSE-before-parse",
+        "crash-after-parse-before-TERMINAL",
+        "torn-trailing-WAL-record",
+        "interior-WAL-corruption",
+        "double-runner-launch",
+        "stale-lock",
+        "completed-run-replay"
+      ],
+      "centralInvariant": "no ambiguous state may silently cause a new network request"
+    },
+    {
+      "stage": 1,
+      "id": "annual-partitioned-fresh-factual-candidate-universe",
+      "candidateCount": 180,
+      "stage1RecruitmentContractRef": "stage1-recruitment-contract.v3",
+      "stage1RecruitmentContractHash": "sha256:00c3aa3f7509c0bf662ec8e9eb8d5e0b2119d70dbf957dc821c3aa54d310a5a4",
+      "targetUniverse": {
+        "releaseDateGte": "1980-01-01",
+        "releaseDateLte": "2024-12-31",
+        "tmdbVoteCountMinInclusive": 200,
+        "tmdbVoteCountMaxInclusive": 2000,
+        "endpoint": "/discover/movie",
+        "unchangedFromV2": true
+      },
+      "temporalStrata": [
+        {
+          "id": "1980-1989",
+          "count": 24
+        },
+        {
+          "id": "1990-1999",
+          "count": 24
+        },
+        {
+          "id": "2000-2009",
+          "count": 33
+        },
+        {
+          "id": "2010-2019",
+          "count": 45
+        },
+        {
+          "id": "2020-2024",
+          "count": 54
+        }
+      ],
+      "annualPartition": {
+        "cellCount": 45,
+        "firstCellId": "year-1980",
+        "lastCellId": "year-2024",
+        "cellDefinition": "calendar-year inclusive YYYY-01-01 through YYYY-12-31",
+        "partitionManifestHash": "sha256:10e44ffb38f0e870a80e2a57f61719fd1bb55d6e6fd8836aadb05743a773c0c6",
+        "partitionManifestPersistedBeforeFirstProviderRequest": true,
+        "pageBudgetPerCell": 50,
+        "derivedTheoreticalMaximumRequests": 2250,
+        "derivedMaximumIsIndependentStopThreshold": false,
+        "adaptivePartitioningAllowed": false
+      },
+      "page1Gate": {
+        "order": "ascending year 1980 through 2024",
+        "page1OnlyUntilAllCellsPass": true,
+        "emptyCellRule": "total_pages=0 is valid only when total_results=0 and results.length=0",
+        "invalidEmptyCellStatus": "BLOCKED — INVALID EMPTY-CELL PAGINATION STATE",
+        "overBudgetStatus": "BLOCKED — ANNUAL CELL EXCEEDS PREDECLARED PAGE BUDGET"
+      },
+      "paginationPlan": {
+        "hashName": "paginationPlanHash",
+        "frozenBeforeAnyPageAtLeast2": true,
+        "laterResponseBaselineFields": [
+          "total_pages",
+          "total_results"
+        ],
+        "driftStatus": "BLOCKED — PROVIDER PAGINATION DRIFT"
+      },
+      "requestExecution": {
+        "serial": true,
+        "minimumMillisecondsBetweenTransportDispatchStarts": 250,
+        "automaticRetries": 0,
+        "stage0CrashSafeSubstrateRequired": true,
+        "requestScope": "universe"
+      },
+      "sourceSnapshotBoundary": "freeze canonical request manifest, complete raw response corpus, partitionManifestHash, paginationPlanHash, and sourceSnapshotHash before partition validation affects filtering, duplicate disposition, factual eligibility, exclusion, ranking, or selection",
+      "partitionIntegrity": {
+        "outOfCellReleaseDateStatus": "BLOCKED — PARTITION MEMBERSHIP VIOLATION",
+        "crossCellSameTmdbIdStatus": "BLOCKED — CROSS-CELL TMDB ID CONFLICT",
+        "crossCellConflictAppliesToCanonicallyIdenticalObjects": true,
+        "withinCellNonidenticalDuplicateStatus": "BLOCKED — SOURCE SNAPSHOT DUPLICATE CONFLICT"
+      },
+      "absolutePriorExposureIsolation": {
+        "excludeUnionOf": [
+          "all films materialized into either C1b-V1 Stage-1 registry",
+          "all C1b-V1 human-gold candidates",
+          "all C1b-V1 Wikipedia-exposed candidates",
+          "all C1b-V1 incident/resolution candidates",
+          "all earlier Phase-5 semantic/development exposure-ledger entries",
+          "all other prior semantic/descriptive-evidence or candidate-specific development exposures before V3"
+        ],
+        "v2BroadTmdbDiscoveryPageAppearanceAloneIsExclusion": false,
+        "v2RawPage1ResponsesReusableAsV3SourceData": false,
+        "onlyV2AggregateFeasibilityObservationsUsed": {
+          "1980-1989.total_pages": 45,
+          "1990-1999.total_pages": 65
+        },
+        "newV3ExclusionManifestAndHashRequired": true
+      },
+      "distributionPolicy": {
+        "languageQuotas": false,
+        "countryQuotas": false,
+        "genreQuotas": false,
+        "languageCountryGenreAreDisclosureOnly": true
+      },
+      "deterministicRanking": {
+        "preimage": "protocolId + \"|stage1-select|\" + stratumId + \"|\" + tmdbId",
+        "protocolId": "phase-5c-c1b-v-confirmatory.v3",
+        "protocolIdChangeIntentionallyChangesRanks": true
+      },
+      "crossStratumQuotaBorrowing": false,
+      "replenishmentBatchAllowed": false,
+      "terminalResultPrecedence": [
+        {
+          "order": 1,
+          "status": "OPERATIONALLY_INCONCLUSIVE",
+          "when": "WAL, durability, transport ambiguity, HTTP failure, malformed required discovery payload, or other operational/contract failure not assigned a more specific frozen blocked status"
+        },
+        {
+          "order": 2,
+          "status": "BLOCKED — INVALID EMPTY-CELL PAGINATION STATE",
+          "when": "during page-1 gate, total_pages=0 but total_results!=0 or results is nonempty"
+        },
+        {
+          "order": 3,
+          "status": "BLOCKED — ANNUAL CELL EXCEEDS PREDECLARED PAGE BUDGET",
+          "when": "during page-1 gate, total_pages>50"
+        },
+        {
+          "order": 4,
+          "status": "BLOCKED — PROVIDER PAGINATION DRIFT",
+          "when": "a later response differs from its page-1 total_pages or total_results baseline"
+        },
+        {
+          "order": 5,
+          "status": "BLOCKED — PARTITION MEMBERSHIP VIOLATION",
+          "when": "post-freeze occurrence-to-cell membership verification fails"
+        },
+        {
+          "order": 6,
+          "status": "BLOCKED — CROSS-CELL TMDB ID CONFLICT",
+          "when": "the same TMDB ID occurs in more than one annual cell"
+        },
+        {
+          "order": 7,
+          "status": "BLOCKED — SOURCE SNAPSHOT DUPLICATE CONFLICT",
+          "when": "non-identical same-ID complete objects occur within one annual cell"
+        },
+        {
+          "order": 8,
+          "status": "BLOCKED — INSUFFICIENT FRESH FACTUAL UNIVERSE",
+          "when": "a parent stratum cannot satisfy its exact quota after eligibility and exclusion"
+        },
+        {
+          "order": 9,
+          "status": "STAGE 1 COMPLETE — FRESH FACTUAL UNIVERSE FROZEN",
+          "when": "all prior checks pass and the exact 180-candidate registry is durably persisted"
+        }
+      ],
+      "terminalPrecedenceRule": "evaluate only after all prerequisites for the relevant phase; within a completed frozen corpus apply postFreezeOperationOrder and the first matching status wins; no checks execute after a terminal result"
+    },
+    {
+      "stage": 2,
+      "id": "machine-only-wikipedia-viability",
+      "occursBeforeHumanGold": true,
+      "labelerMaySeeEvidenceTextOrViabilityMetadata": false,
+      "policies": {
+        "identityResolution": "wikipedia-film-identity-resolution.v1",
+        "sectionFamily": "wikipedia-reception-sections.v2",
+        "extraction": "wikipedia-reception-extraction.v2",
+        "normalizationFilter": "wikipedia-reception-normalization-filter.v1",
+        "preserveExistingParagraphFiltering": true,
+        "preserveExistingProvenanceRequirements": true
+      },
+      "viability": {
+        "eligibleNormalizedWordCountMinInclusive": 150,
+        "countCalculatedBeforeInferenceExcerptTruncation": true,
+        "terminalValues": [
+          "VIABLE",
+          "NON_VIABLE"
+        ]
+      },
+      "completionGate": {
+        "requiredDeterminateCandidateCount": 180,
+        "prohibitedOutstandingStates": [
+          "UNKNOWN_IN_FLIGHT",
+          "unresolved-transport-state",
+          "unresolved-provenance-state",
+          "unresolved-technical-status"
+        ],
+        "failureStatus": "BLOCKED — COVERAGE EXECUTION INCOMPLETE",
+        "stage3AuthorizedOnlyAfterPass": true
+      },
+      "producesFrozenCoverageResult": true
+    },
+    {
+      "stage": 3,
+      "id": "evidence-blinded-sequential-human-gold",
+      "inputPopulation": "Wikipedia-VIABLE candidates only",
+      "goldProvenance": [
+        "independent-human",
+        "evidence-blinded",
+        "pre-semantic-model"
+      ],
+      "requiredMetadata": {
+        "machineEvidenceFetchedBeforeGold": true,
+        "labelerExposedToEvidence": false,
+        "semanticModelOutputSeenBeforeGold": false
+      },
+      "ordering": {
+        "algorithm": "SHA-256 lexicographic ascending",
+        "preimage": "protocolId + \"|human-label|\" + canonicalId"
+      },
+      "labelerVisible": "neutral-factual-information-only",
+      "labelerForbidden": [
+        "Wikipedia heading",
+        "Wikipedia word count",
+        "Wikipedia evidence",
+        "evidence hash",
+        "semantic-model output",
+        "current true/false class counts",
+        "current target deficits"
+      ],
+      "humanFields": {
+        "friendsGold": [
+          true,
+          false
+        ],
+        "confidence": [
+          "high",
+          "medium",
+          "low"
+        ],
+        "rationaleSeed": {
+          "required": false,
+          "maxUnicodeCodePoints": 80
+        }
+      },
+      "rationaleSeedForbiddenUses": [
+        "provider-visible",
+        "semantic evidence",
+        "cohort-selection input",
+        "verdict input"
+      ],
+      "sequentialLabeling": {
+        "initialTranche": 48,
+        "increment": 8,
+        "checkpoints": [
+          48,
+          56,
+          64,
+          72
+        ],
+        "maxLabelBudget": 72,
+        "internalCheckpointPredicate": "highMediumTrue >= 12 AND highMediumFalse >= 12",
+        "humanFacingResponses": [
+          "STOP — GOLD TARGET REACHED",
+          "CONTINUE — NEXT PRE-REGISTERED TRANCHE"
+        ],
+        "revealClassCountsDuringLabeling": false,
+        "stopAtFirstPassingCheckpoint": true,
+        "maxBudgetFailure": "BLOCKED — INSUFFICIENT HIGH/MED GOLD CLASS COUNT",
+        "viablePoolExhaustionFailure": "BLOCKED — EVIDENCE-ELIGIBLE POOL EXHAUSTED",
+        "additionalMiningAllowed": false
+      },
+      "lowConfidenceArchive": {
+        "path": "c1b-v3-boundary-pool.json",
+        "beforeFinalSemanticVerdict": {
+          "mayBeStored": true,
+          "mayBeCounted": true,
+          "mayBeAnalyzed": false,
+          "mayBeUsedForPromptChanges": false,
+          "mayBeUsedAsSemanticExamples": false,
+          "mayBeExposedToSemanticModels": false
+        }
+      }
+    },
+    {
+      "stage": 4,
+      "id": "label-freeze-and-final-cohort",
+      "freezeAllCompletedStage3Fields": [
+        "friendsGold",
+        "confidence",
+        "rationaleSeed"
+      ],
+      "selection": {
+        "algorithm": "SHA-256 lexicographic ascending within high/medium gold classes",
+        "preimage": "protocolId + \"|final-cohort|\" + canonicalId",
+        "friendsTrueCount": 12,
+        "friendsFalseCount": 12,
+        "total": 24
+      },
+      "postSelectionHumanFieldsForFinal24": {
+        "humanRationale": "required",
+        "reflectionChanged": "boolean",
+        "mayDisplayRationaleSeed": true
+      },
+      "immutableAfterSelection": [
+        "friendsGold",
+        "confidence",
+        "final cohort"
+      ],
+      "reflectionChangedIsDisclosureOnly": true,
+      "reflectionChangedForbiddenEffects": [
+        "gold",
+        "confidence",
+        "cohort membership",
+        "inference",
+        "verdict"
+      ],
+      "stage4B": {
+        "id": "shared-covariate-inference",
+        "covariateType": "MODEL-DERIVED SEMANTIC COVARIATES",
+        "description": "Stateless one-shot covariate calls for every final-24 candidate. Executed after Stage 4A label-freeze and before Arm0 begins.",
+        "outputs": [
+          "pace",
+          "emotionalWeight",
+          "attentionDemand"
+        ],
+        "provider": "kimi",
+        "model": "k3-256k",
+        "temperature": 1,
+        "reasoningEffort": "high",
+        "stateless": true,
+        "noConversationalHistory": true,
+        "noSessionLinkage": true,
+        "noAuthorshipWording": true,
+        "requiredCompletions": 24,
+        "callsPerCandidate": 1,
+        "forbidden": [
+          "Wikipedia evidence",
+          "friendsGold",
+          "confidence",
+          "rationaleSeed",
+          "humanRationale"
+        ],
+        "completionRule": "Exactly one canonical-valid completion per final-cohort candidate. Any transport ambiguity, missing completion, schema error, or invalid required axis is OPERATIONALLY_INCONCLUSIVE; no retry, repair prompt, or replacement call.",
+        "unknownInFlightOutcome": "OPERATIONALLY_INCONCLUSIVE",
+        "invalidOrMissingOutputOutcome": "OPERATIONALLY_INCONCLUSIVE",
+        "pairedReuseRule": "Exact frozen covariate snapshot (content-hashed per candidate) used identically by Arm0 and Arm1.",
+        "contractRef": "shared-covariate-contract.v2",
+        "contractHash": "sha256:d4ca39a0101b5e6147a243b8afccfb7bfcd4eab61536d9f6d4d8cc0827b21334"
+      }
+    },
+    {
+      "stage": 5,
+      "id": "arm0",
+      "inference": {
+        "provider": "kimi",
+        "model": "k3-256k",
+        "temperature": 1,
+        "reasoningEffort": "high",
+        "drawsPerFilm": 3,
+        "aggregation": "strict-boolean-2-of-3-majority",
+        "requiredDraws": 72,
+        "liveExecution": "stochastic",
+        "completedReplay": "immutable-per-draw-cache"
+      },
+      "drawIdentityFields": [
+        "protocolId",
+        "candidateId",
+        "arm",
+        "drawIndex",
+        "provider",
+        "model",
+        "output-affecting configuration",
+        "prompt",
+        "schema",
+        "canonical input hash",
+        "WAL invocation identity"
+      ],
+      "distinctLiveDrawIdentitiesRequired": 3,
+      "completedDrawReplayModelCalls": 0,
+      "fourthDrawAllowed": false,
+      "confidenceWeightingAllowed": false,
+      "rationaleVotingAllowed": false,
+      "requiredDrawUnknownInFlightOutcome": "OPERATIONALLY_INCONCLUSIVE",
+      "aggregatePredictionCount": 24,
+      "arm0ErrorsFormula": "FP + FN over 24 aggregated majority predictions",
+      "friendsClassificationContractRef": "friends-classification-contract.v2",
+      "friendsClassificationContractHash": "sha256:dd9e28bbc17a5120438ae8eb3df42067bc9c33ba43e553cfd0b72567fb1750d6",
+      "semanticTaxonomyRef": "semantic-taxonomy.v2",
+      "semanticTaxonomyHash": "sha256:27f401884c929964ef7cdb4cc59dc9177b5a5683b964e09677061ab66e6492f4",
+      "arm0InputProjectionRef": "arm0-input-projection.v2",
+      "arm0InputProjectionHash": "sha256:d7e360cf3ded8b1c9c94f36c00f774cf8c34a77fbf9b1a9ef96eab2ef24cd18a",
+      "headroom": {
+        "minimumErrorsInclusive": 5,
+        "failureStatus": "INCONCLUSIVE — INSUFFICIENT BASELINE HEADROOM",
+        "arm1ProhibitedOnFailure": true
+      }
+    },
+    {
+      "stage": 6,
+      "id": "arm1",
+      "prerequisite": "Stage 5 headroom passes",
+      "requiredDraws": 72,
+      "drawsPerFilm": 3,
+      "pairedInputInvariant": "Arm1 provider-visible semantic input equals exact Arm0 semantic input plus frozen Wikipedia descriptive-evidence block",
+      "otherSemanticInputDifferencesAllowed": false,
+      "literalGroundingValidationRequiredPerDraw": true,
+      "invalidOrMissingRequiredDrawOutcome": "OPERATIONALLY_INCONCLUSIVE",
+      "additionalRescueDrawsAllowed": false,
+      "arm1EvidenceProjectionRef": "arm1-evidence-projection.v2",
+      "arm1EvidenceProjectionHash": "sha256:c1770e3843f9c3ad8e6004cc88b061223b88431734abbf2c40de2e53270f0ca5",
+      "wikipediaExcerptProjectionRef": "wikipedia-excerpt-projection.v2",
+      "wikipediaExcerptProjectionHash": "sha256:26f65ad2dc5d2a4734ca5ff1eb1a705dee85a5e2119635803d388af1aeec52f0",
+      "literalGroundingValidatorRef": "literal-grounding-validator.v2",
+      "literalGroundingValidatorHash": "sha256:1eeb33a6e5b623f03af3965d1e5c8ac4fdbf13e0995f36df854afb1133f10851"
+    },
+    {
+      "stage": 7,
+      "id": "frozen-efficacy-verdict",
+      "precedence": [
+        {
+          "order": 1,
+          "when": "operational or contract failure",
+          "verdict": "OPERATIONALLY INCONCLUSIVE"
+        },
+        {
+          "order": 2,
+          "when": "arm0Errors < 5",
+          "verdict": "INCONCLUSIVE — INSUFFICIENT BASELINE HEADROOM"
+        },
+        {
+          "order": 3,
+          "when": "introducedErrors > correctedErrors OR introducedFalsePositives >= 3",
+          "verdict": "EVIDENCE DEFECT — NO-GO"
+        },
+        {
+          "order": 4,
+          "when": "correctedErrors >= 3 AND introducedErrors <= 1 AND netErrorReduction >= 2 AND arm1F1 > arm0F1 AND arm1Precision >= 0.80 AND arm1Recall >= 0.75",
+          "verdict": "PROMOTION GO"
+        },
+        {
+          "order": 5,
+          "when": "correctedErrors >= 2 AND netErrorReduction > 0",
+          "verdict": "PARTIAL / HOLD"
+        },
+        {
+          "order": 6,
+          "when": "otherwise",
+          "verdict": "NO MATERIAL BENEFIT"
+        }
+      ],
+      "requiredMetrics": [
+        "TP",
+        "FP",
+        "FN",
+        "TN",
+        "precision",
+        "recall",
+        "F1",
+        "specificity",
+        "balancedAccuracy",
+        "correctedErrors",
+        "introducedErrors",
+        "introducedFP",
+        "introducedFN",
+        "netErrorReduction",
+        "exactPairedMcNemarBinomialDiscordantPairStatistic",
+        "exactPairedMcNemarBinomialPValue"
+      ],
+      "mcnemarRole": "descriptive-only"
+    },
+    {
+      "stage": 8,
+      "id": "identity-canary",
+      "selectionTiming": "preselected before semantic outcomes exist",
+      "executionTiming": "after main efficacy result",
+      "selection": {
+        "source": "final 24",
+        "friendsTrueCount": 3,
+        "friendsFalseCount": 3,
+        "distinctFrozenHashNamespaceRequired": true
+      },
+      "reidentificationPositive": "correct canonical identity AND confidence >= 80",
+      "caveatThresholdInclusive": 4,
+      "caveatDenominator": 6,
+      "caveat": "COHORT VALIDITY CAVEAT",
+      "altersSemanticVerdict": false,
+      "promotionGoConsequence": "Phase-6 production authorization conditional on a future independent strict-band validation study",
+      "identityCanaryContractRef": "identity-canary-contract.v2",
+      "identityCanaryContractHash": "sha256:9c2e12c8e3952ef00f83837ac5eff1194c091305a81779d9a5606b51a776ebd7",
+      "futureStrictBandStudy": {
+        "tmdbVoteCountMinInclusive": 200,
+        "tmdbVoteCountMaxInclusive": 800,
+        "automaticallyExecutedByV3": false
+      }
+    }
+  ],
+  "forbiddenAdaptationsAfterExecutionBegins": [
+    "changing TMDB vote bands",
+    "changing temporal quotas",
+    "replenishment batches",
+    "lowering Wikipedia 150-word gate",
+    "adding Wikipedia headings",
+    "using other-language Wikipedia as fallback",
+    "changing gold labels",
+    "changing confidence",
+    "exceeding 72 human labels",
+    "replacing final-cohort films",
+    "changing K3 model/config",
+    "changing draws-per-arm",
+    "adding tie-break draws",
+    "semantic retries with modified prompts/settings",
+    "changing outcome thresholds",
+    "using boundary-pool cases for prompt tuning",
+    "changing annual partition boundaries",
+    "adaptive quarterly/monthly/vote-count partition splitting",
+    "changing the 50-page annual-cell budget",
+    "adding/removing annual cells",
+    "changing annual-cell traversal order",
+    "changing frozen pagination baselines or plan",
+    "reusing V2 raw page-1 responses as V3 source data",
+    "changing the 250-millisecond minimum dispatch-start interval"
+  ],
+  "protocolFreeze": {
+    "immutableOnceExecutionBegins": true,
+    "runtimeImplementationIncluded": false,
+    "networkExecutionAuthorizedBySpecificationAlone": false
+  },
+  "contractBundle": {
+    "bundleId": "phase-5c-c1b-v-confirmatory.v3.contracts",
+    "bundleVersion": 1,
+    "contractsBundleHash": "sha256:2f477ef6ba7f12e17ed5f1178026e2572f9abddf12507395121519ed03b6b738",
+    "requiredContracts": [
+      {
+        "id": "shared-covariate-contract.v2",
+        "version": 1,
+        "contentHash": "sha256:d4ca39a0101b5e6147a243b8afccfb7bfcd4eab61536d9f6d4d8cc0827b21334"
+      },
+      {
+        "id": "friends-classification-contract.v2",
+        "version": 1,
+        "contentHash": "sha256:dd9e28bbc17a5120438ae8eb3df42067bc9c33ba43e553cfd0b72567fb1750d6"
+      },
+      {
+        "id": "semantic-taxonomy.v2",
+        "version": 1,
+        "contentHash": "sha256:27f401884c929964ef7cdb4cc59dc9177b5a5683b964e09677061ab66e6492f4"
+      },
+      {
+        "id": "arm0-input-projection.v2",
+        "version": 1,
+        "contentHash": "sha256:d7e360cf3ded8b1c9c94f36c00f774cf8c34a77fbf9b1a9ef96eab2ef24cd18a"
+      },
+      {
+        "id": "arm1-evidence-projection.v2",
+        "version": 1,
+        "contentHash": "sha256:c1770e3843f9c3ad8e6004cc88b061223b88431734abbf2c40de2e53270f0ca5"
+      },
+      {
+        "id": "wikipedia-excerpt-projection.v2",
+        "version": 1,
+        "contentHash": "sha256:26f65ad2dc5d2a4734ca5ff1eb1a705dee85a5e2119635803d388af1aeec52f0"
+      },
+      {
+        "id": "literal-grounding-validator.v2",
+        "version": 1,
+        "contentHash": "sha256:1eeb33a6e5b623f03af3965d1e5c8ac4fdbf13e0995f36df854afb1133f10851"
+      },
+      {
+        "id": "identity-canary-contract.v2",
+        "version": 1,
+        "contentHash": "sha256:9c2e12c8e3952ef00f83837ac5eff1194c091305a81779d9a5606b51a776ebd7"
+      },
+      {
+        "id": "stage1-recruitment-contract.v3",
+        "version": 1,
+          "contentHash": "sha256:00c3aa3f7509c0bf662ec8e9eb8d5e0b2119d70dbf957dc821c3aa54d310a5a4"
+      }
+    ]
+  },
+  "specificationStatus": "registered-frozen"
+}
