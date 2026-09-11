@@ -1,0 +1,66 @@
+{
+  "recordId": "phase5c-c1b-v2-stage1-closure.v1",
+  "protocolId": "phase-5c-c1b-v-confirmatory.v2",
+  "protocolStatus": "BLOCKED",
+  "terminalClassification": "BLOCKED — DISCOVERY CORPUS EXCEEDS PREDECLARED PAGE BUDGET",
+  "runnerCommit": "0e0d000b49279f8db77552e9bf919e41713ba3de",
+  "runnerSourceSha256": "5e03dc44105640b637638a3113783a9aa680c491ea1d6a61b1dcf1612c30292c",
+  "runnerTestSha256": "c4c7222e072bd4c2fbdcb3da84d1bc50127b50e8e527c46ba613e2087bcc679c",
+  "executionStartedAt": "2026-09-11T11:37:51.428Z",
+  "requestCount": 2,
+  "observedPageBudgetGate": {
+    "1980-1989": {
+      "pageRequested": 1,
+      "totalPages": 45,
+      "terminal": "COMPLETED"
+    },
+    "1990-1999": {
+      "pageRequested": 1,
+      "totalPages": 65,
+      "terminal": "COMPLETED",
+      "triggeredFrozenPageBudgetBlock": true
+    }
+  },
+  "laterStrataRequested": false,
+  "walRecovery": {
+    "status": "VALID",
+    "recordCount": 6,
+    "completedRequests": 2,
+    "unknownInFlightRequests": 0
+  },
+  "exclusionManifestHash": "sha256:4c7564fb6bf7affe25aef26d986810176866026163b31c29498f06dbeeb1ebe1",
+  "sourceSnapshotCreated": false,
+  "candidateRegistryCreated": false,
+  "semanticInferenceExecuted": false,
+  "wikipediaEvidenceExecuted": false,
+  "humanGoldExecuted": false,
+  "stage2Executed": false,
+  "artifactRetention": {
+    "committed": [
+      "run-metadata.json",
+      "pre-live-gate.json",
+      "exclusion-manifest.json",
+      "exclusion-provenance.json",
+      "request-manifest.json"
+    ],
+    "preservedLocallyNotCommitted": [
+      "RUN_LOCK",
+      "execution.wal"
+    ]
+  },
+  "artifactSha256": {
+    "RUN_LOCK": "e057e2ed88079a65703488caffc751d164715d826de993b2343c04b4d4baaa57",
+    "execution.wal": "f7c4267665d871c5c8cf19fca86426b9bcaa93b944680d447d9bd38583efca7c",
+    "run-metadata.json": "60136953be65ea6ea3e8a817052bcb042e7793642cf52e8b7c09423006fe0c2f",
+    "pre-live-gate.json": "d7f6a9a56368dc0dc3318d5e5746e6eb4c160663e12fce1d3cbdb0779a1f94d5",
+    "exclusion-manifest.json": "fb90b7bd12cf783064b6ed0240b166d4b00340d4c9ce7a6370f7877f2eab43de",
+    "exclusion-provenance.json": "141c736a8f865751439b9505904be6f685664770037a4f23c0b53a6adc7a58f7",
+    "request-manifest.json": "b78b669ff68ec650e9b25439d6befe9ffab69c6156bda6031bbb3fecdda01a9b"
+  },
+  "frozenProtocolJcsSha256": "sha256:00d82b9b439c2d721fabaf0da6c8e6027b338d7e82bffa3cc9ee0d37c070a376",
+  "frozenContractsBundleSha256": "sha256:7b342a7f51e8d4ac1695298ba80774834fd6984385b6ad7ed7348c2969ac0c99",
+  "successorUseRestriction": {
+    "reuseV2RawResponsesAsSuccessorSourceData": false,
+    "v2BroadDiscoveryAppearanceAloneDeclaredSubstantiveExposure": false
+  }
+}
