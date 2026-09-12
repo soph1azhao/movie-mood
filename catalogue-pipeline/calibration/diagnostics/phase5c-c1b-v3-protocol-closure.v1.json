@@ -1,0 +1,101 @@
+{
+  "recordId": "phase5c-c1b-v3-protocol-closure.v1",
+  "protocolId": "phase5c-c1b-v-confirmatory.v3",
+  "closureKind": "POST_EXECUTION_FORENSIC_CLOSURE",
+  "studyClassification": "BLOCKED — STAGE-2 FROZEN POLICY DEPENDENCY NOT FORENSICALLY REPRODUCIBLE",
+  "classificationIsNewProtocolRule": false,
+  "stage1": {
+    "status": "VALID",
+    "completion": "COMPLETE",
+    "forensicStatus": "FORENSICALLY CLOSED",
+    "closureArtifactPath": "catalogue-pipeline/calibration/diagnostics/phase5c-c1b-v3-stage1-closure.v1.json",
+    "closureArtifactRawSha256": "sha256:d7ebf19f03486da8faa3d907924fab4c10176d3c5150c9cba8273497bd5a348c",
+    "finalCandidateCount": 180,
+    "candidateQuotaCounts": {
+      "1980-1989": 24,
+      "1990-1999": 24,
+      "2000-2009": 33,
+      "2010-2019": 45,
+      "2020-2024": 54
+    },
+    "dispatchedRequests": 542,
+    "walLifecycleCounts": {
+      "INTENT": 542,
+      "RESPONSE": 542,
+      "TERMINAL": 542
+    },
+    "terminalStatus": "COMPLETE"
+  },
+  "stage2": {
+    "executed": false,
+    "wikipediaLiveRequests": 0,
+    "coverageResultExists": false,
+    "viabilityDistributionExists": false,
+    "status": "NOT EXECUTED"
+  },
+  "laterStages": {
+    "humanGoldExecuted": false,
+    "semanticEfficacyInferenceExecuted": false,
+    "stage3Started": false,
+    "stage4PlusStarted": false
+  },
+  "directFrozenPolicySources": {
+    "repositoryReproducible": true,
+    "sources": [
+      {
+        "path": "catalogue-pipeline/adapters/wikipediaDescriptiveEvidenceV2.mjs",
+        "rawSha256": "sha256:609a29bbe7de7f934d9bb389bf6b6257681ac29d0629debcb4380a25fe8e4305"
+      },
+      {
+        "path": "catalogue-pipeline/adapters/wikipediaDescriptiveEvidence.mjs",
+        "rawSha256": "sha256:cf23136fe1a59f67a4ffe2ad695391c7208aec1bdfedb6194aba18892c7fcd85"
+      }
+    ]
+  },
+  "transitivePolicyDependencyObservations": [
+    {
+      "path": "catalogue-pipeline/scripts/wikipediaIdentityContentRiskAudit.mjs",
+      "observedLocalRawSha256": "sha256:65fbc58ec443afc38d8efc47398d6957c8140c2472bedf90d00f2189db6dfb0f",
+      "frozenV3Source": false,
+      "gitTrackedAtClosure": false,
+      "provenanceClassification": "STRONG_PRE_FREEZE_BEHAVIORAL_PROVENANCE_ONLY"
+    },
+    {
+      "path": "catalogue-pipeline/scripts/wikipediaStructuralMissingnessAudit.mjs",
+      "observedLocalRawSha256": "sha256:7a80c9bc96752282aa2bef3fd72d80d383d6ae72f615e4e3ba6530470e22b2d9",
+      "frozenV3Source": false,
+      "gitTrackedAtClosure": false,
+      "provenanceClassification": "STRONG_PRE_FREEZE_BEHAVIORAL_PROVENANCE_ONLY"
+    }
+  ],
+  "causalFinding": {
+    "topLevelWikipediaSourcesReproducible": true,
+    "executableTransitiveClosureReproducible": false,
+    "exactByteProvenanceForTransitiveDependencies": false,
+    "currentTransitiveBytesRegisteredAsV3FrozenSources": false,
+    "stage2OutcomeInformationUsedForSourceChoice": false
+  },
+  "frozenSpecificationArtifacts": {
+    "protocol": {
+      "path": "catalogue-pipeline/calibration/diagnostics/phase5c-c1b-v-confirmatory.v3.json",
+      "rawSha256": "sha256:3568b8fd4f2895ab4b9e2cdba145e501e737c784d08a948491413de47483b374"
+    },
+    "contracts": {
+      "path": "catalogue-pipeline/calibration/diagnostics/phase5c-c1b-v-confirmatory.v3.contracts.json",
+      "rawSha256": "sha256:072b538edcda6b17ff8997d5b5ec2a9fd46029d54d68e0ee7e6c01295b530fdc"
+    },
+    "acceptancePlan": {
+      "path": "catalogue-pipeline/calibration/diagnostics/phase5c-c1b-v-confirmatory.v3.acceptance-tests.md",
+      "rawSha256": "sha256:1fc55f07ed59a6a6551e044a33891581b427df67526dea08176b491d28a3c923"
+    }
+  },
+  "successorRestrictions": {
+    "v3Stage2EvidenceOutcomesExist": false,
+    "reuseCurrentTransitiveBytesAsFrozenV3Implementation": false,
+    "successorMayUseV3HistoryOnlyUnderNewPreRegisteredDesign": true,
+    "successorMustPinCompleteWikipediaPolicyClosureBeforeLiveRequests": true,
+    "successorCandidateUniverseDecisionDeferred": true
+  },
+  "networkCallsDuringClosure": 0,
+  "closureGeneratedBy": "catalogue-pipeline/scripts/c1bV3ProtocolClosure.mjs"
+}
