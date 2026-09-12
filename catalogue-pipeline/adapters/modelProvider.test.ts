@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 import { assertCredentialIsolation, loadProviderConfig, resolveCredential } from './providerConfig.ts'
 import { createModelCacheKey, ModelProviderError, runStructuredModelRequest } from './modelProvider.ts'
+import { stableHash } from './tmdbProvider.ts'
 
 const provider = {
   metadata: {
@@ -181,9 +182,11 @@ describe('model provider adapter', () => {
     const factsChanged = createModelCacheKey({ ...base, factsHash: 'facts-v2' })
     const calibrationChanged = createModelCacheKey({ ...base, calibrationHash: 'calibration-v2' })
     const modelChanged = createModelCacheKey({ ...base, modelId: 'mock-model-v2' })
+    const configurationChanged = createModelCacheKey({ ...base, providerConfiguration: { reasoningEffort: 'high' } })
 
     expect(first).toHaveLength(64)
     expect(first).toBe(second)
-    expect(new Set([first, promptChanged, factsChanged, calibrationChanged, modelChanged]).size).toBe(5)
+    expect(first).toBe(stableHash({ ...base, voiceGuideVersion: null }))
+    expect(new Set([first, promptChanged, factsChanged, calibrationChanged, modelChanged, configurationChanged]).size).toBe(6)
   })
 })

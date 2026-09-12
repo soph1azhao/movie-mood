@@ -197,6 +197,7 @@ export async function classifySemanticCandidate({
     calibrationHash: stableHash({ calibrationAnchors, calibrationBoundaryCases }),
     providerId: provider.metadata.providerId,
     modelId: provider.metadata.modelId,
+    providerConfiguration: provider.metadata.outputAffectingConfiguration,
   })
   const cachePath = resolve(cacheRoot, `${cacheKey}.json`)
   const targetPath = outputPath ?? resolve(defaultOutputRoot, `${evidencePacket.candidateId}.json`)
@@ -247,6 +248,7 @@ export async function classifySemanticCandidate({
     taxonomyVersion: taxonomyDefinition.taxonomyVersion,
     modelProvider: provider.metadata.providerId,
     modelId: provider.metadata.modelId,
+    ...(provider.metadata.outputAffectingConfiguration ? { providerConfiguration: provider.metadata.outputAffectingConfiguration } : {}),
     movie: { candidateId: evidencePacket.candidateId, tmdbId: evidencePacket.tmdbId },
     classification: modelResult.output.classification,
     evidence: modelResult.output.evidence,

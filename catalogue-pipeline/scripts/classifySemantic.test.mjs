@@ -175,6 +175,28 @@ describe('Phase 5 semantic classifier', () => {
     }
   })
 
+  it('keeps Kimi provider and reasoning configuration semantic cache identities isolated from Gemini', async () => {
+    const root = await mkdtemp(join(tmpdir(), 'movie-mood-semantic-provider-isolation-'))
+    const options = { evidencePacket: packet(), prompt, cacheRoot: join(root, 'cache'), outputPath: join(root, 'generated', 'paddington.json') }
+    const gemini = providerWith(response(), { providerId: 'google-gemini-developer-api', modelId: 'gemini-3.6-flash' })
+    const kimiHigh = providerWith(response(), { providerId: 'moonshot-kimi-api', modelId: 'kimi-k2.5', outputAffectingConfiguration: { protocol: 'openai-chat-completions', thinkingMode: 'default' } })
+    const kimiMax = providerWith(response(), { providerId: 'moonshot-kimi-api', modelId: 'kimi-k2.5', outputAffectingConfiguration: { protocol: 'openai-chat-completions', thinkingMode: 'disabled' } })
+    try {
+      const geminiResult = await classifySemanticCandidate({ ...options, provider: gemini })
+      const kimiHighResult = await classifySemanticCandidate({ ...options, provider: kimiHigh })
+      const kimiMaxResult = await classifySemanticCandidate({ ...options, provider: kimiMax })
+
+      expect(geminiResult.cacheKey).not.toBe(kimiHighResult.cacheKey)
+      expect(kimiHighResult.cacheKey).not.toBe(kimiMaxResult.cacheKey)
+      expect(kimiHighResult.artifact).toMatchObject({ modelProvider: 'moonshot-kimi-api', modelId: 'kimi-k2.5', providerConfiguration: { thinkingMode: 'default' } })
+      expect(gemini.generateStructured).toHaveBeenCalledTimes(1)
+      expect(kimiHigh.generateStructured).toHaveBeenCalledTimes(1)
+      expect(kimiMax.generateStructured).toHaveBeenCalledTimes(1)
+    } finally {
+      await rm(root, { recursive: true, force: true })
+    }
+  })
+
   it('rejects malformed output, honors the provider retry limit, and keeps classifier/editorial work separate', async () => {
     await expect(runInTemp(providerWith('{not json'))).rejects.toMatchObject({ code: 'MALFORMED_MODEL_OUTPUT' })
     const retryProvider = {
@@ -248,6 +270,36 @@ describe('Phase 5 semantic classifier', () => {
       const corrected = await classifySemanticCandidate({ ...options, provider: providerWith(structuredGroundingResponse()) })
       expect(corrected.cacheHit).toBe(false)
       expect(corrected.artifact).toMatchObject({ promptVersion: 'semantic-classifier.v3', schemaVersion: 'semantic-output.v2' })
+    } finally {
+      await rm(root, { recursive: true, force: true })
+    }
+  })
+
+  it('rejects malformed Kimi supported-inference grounding through canonical validation without caching it', async () => {
+    const root = await mkdtemp(join(tmpdir(), 'movie-mood-semantic-kimi-grounding-'))
+    const outputPath = join(root, 'generated', 'paddington.json')
+    const malformed = structuredGroundingResponse({
+      evidence: {
+        ...structuredGroundingResponse().evidence,
+        pace: {
+          rationale: 'The source cues are intended to support a measured pace.',
+          sourceRefs: ['tmdb-facts'],
+          grounding: { mode: 'supported-inference', cues: [{ sourceRef: 'tmdb-facts', cue: 'brief' }] },
+        },
+      },
+    })
+    const provider = providerWith(malformed, {
+      providerId: 'moonshot-kimi-api',
+      modelId: 'kimi-k2.5',
+      outputAffectingConfiguration: { protocol: 'openai-chat-completions', thinkingMode: 'default' },
+    })
+    try {
+      await expect(classifySemanticCandidate({
+        evidencePacket: packet(), provider, prompt, promptVersion: 'semantic-classifier.v3', schemaVersion: 'semantic-output.v2', cacheRoot: join(root, 'cache'), outputPath,
+      })).rejects.toMatchObject({ code: 'MALFORMED_MODEL_OUTPUT', message: expect.stringContaining('EVIDENCE_CUE_TOO_SHORT') })
+      expect(provider.generateStructured).toHaveBeenCalledTimes(2)
+      await expect(readFile(outputPath, 'utf8')).rejects.toThrow()
+      await expect(readdir(join(root, 'cache'))).rejects.toThrow()
     } finally {
       await rm(root, { recursive: true, force: true })
     }

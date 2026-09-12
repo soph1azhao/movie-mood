@@ -88,6 +88,7 @@ export function createModelCacheKey({
   calibrationHash,
   providerId,
   modelId,
+  providerConfiguration,
 }: {
   stage: string
   tmdbId: number
@@ -99,12 +100,13 @@ export function createModelCacheKey({
   calibrationHash?: string
   providerId: string
   modelId: string
+  providerConfiguration?: Record<string, unknown>
 }): string {
   if (!MODEL_STAGES.includes(stage as (typeof MODEL_STAGES)[number])) {
     throw new ModelProviderError(`Unsupported model stage: ${stage}`, { code: 'UNSUPPORTED_MODEL_STAGE' })
   }
 
-  return stableHash({
+  const cacheIdentity: Record<string, unknown> = {
     stage,
     tmdbId,
     factsHash,
@@ -115,7 +117,9 @@ export function createModelCacheKey({
     calibrationHash: calibrationHash ?? null,
     providerId,
     modelId,
-  })
+  }
+  if (providerConfiguration) cacheIdentity.providerConfiguration = providerConfiguration
+  return stableHash(cacheIdentity)
 }
 
 export async function runStructuredModelRequest({
@@ -204,6 +208,7 @@ export async function runStructuredModelRequest({
         })
       }
 
+      transportRetries += 1
       await delayFn(error instanceof ModelProviderError && error.retryAfterMs !== undefined
         ? error.retryAfterMs
         : 250 * 2 ** (attempt - 1))
