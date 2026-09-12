@@ -153,7 +153,9 @@ export async function buildTriageExposureAudit({ root = process.cwd() } = {}) {
   ]
   const excludedPrefixes = [
     'catalogue-pipeline/generated/semantic/diagnostics/phase-5c-c1b-v-confirmatory.v3/',
+    'catalogue-pipeline/generated/semantic/diagnostics/phase-5c-c1b-v-confirmatory.v4/stage2-wikipedia-viability-live-v1/',
     'catalogue-pipeline/calibration/diagnostics/phase5c-c1b-v-confirmatory.v4',
+    'catalogue-pipeline/calibration/diagnostics/phase5c-c1b-v4-stage2-closure.v1.json',
     EXECUTABLE_CLOSURE_PATH,
     TRIAGE_AUDIT_PATH,
   ]
