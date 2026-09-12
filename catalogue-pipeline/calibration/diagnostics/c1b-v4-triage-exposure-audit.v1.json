@@ -2,7 +2,7 @@
   "reportId": "c1b-v4-triage-exposure-audit.v1",
   "protocolId": "phase-5c-c1b-v-confirmatory.v4",
   "importedCohort": {
-    "sourceProtocolId": "phase5c-c1b-v-confirmatory.v3",
+    "sourceProtocolId": "phase-5c-c1b-v-confirmatory.v3",
     "candidateCount": 180,
     "candidateRegistryRawSha256": "sha256:2755b9cb603f8fb4bdfdfe7aef46e7c44840ed3334ff9f393a45ec0db04bf11f"
   },

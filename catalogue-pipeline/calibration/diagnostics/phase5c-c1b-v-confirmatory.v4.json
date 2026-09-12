@@ -3,25 +3,31 @@
   "protocolVersion": 4,
   "studyType": "new-independent-confirmatory-study",
   "historicalProvenance": {
-    "predecessorProtocol": "phase5c-c1b-v-confirmatory.v3",
+    "predecessorProtocol": "phase-5c-c1b-v-confirmatory.v3",
     "predecessorClosureCommit": "2013e0f50df5ce8dc6fadd79bbf25cc63f54316e",
     "predecessorConclusion": "BLOCKED — STAGE-2 FROZEN POLICY DEPENDENCY NOT FORENSICALLY REPRODUCIBLE",
     "relationship": "prospective-successor-study-with-explicit-v3-cohort-import",
     "triageExposureStatus": "VERIFIED_NO_ADVERSE_EVIDENCE",
     "triageAuditReportPath": "catalogue-pipeline/calibration/diagnostics/c1b-v4-triage-exposure-audit.v1.json",
-    "triageAuditReportHash": "sha256:8cab671bdb3be66e36d0ad1b98e9351aac5317a3a573f853a4a9fe8f2200b6db",
+    "triageAuditReportHash": "sha256:6dbd87ddb491aeda3856146c40e996116fa477b7ba4c7ff9bbae058b43239369",
     "epistemicStandard": "No adverse evidence of candidate-specific exposure was found across available logs, scripts, and Git history. This is an absence-of-adverse-evidence standard accepted as sufficient for this study."
   },
   "requiredDesignDisclosures": {
     "independentSuccessor": true,
-    "annualPartitionSelectionBasis": "selected after observing only aggregate V2 recruitment-feasibility page counts, not candidate-level semantic, descriptive, Wikipedia, gold, or selection outcomes",
-    "factualEligibilityUniversePreserved": true,
-    "enumerationArchitectureChanged": true,
-    "tmdbIsEvolvingExternalSource": true,
-    "sourceSnapshotMeaning": "exact provider responses observed during this V3 run; not an atomic simultaneous snapshot of the entire TMDB database",
-    "newProtocolIdIntentionallyChangesDeterministicRankHashes": true,
-    "annualCellPageCap": "50-page independently frozen V3 feasibility guard",
-    "derived2250Meaning": "45 × 50 theoretical maximum only; not a separately tuned stopping rule"
+    "exactImmutableV3CohortImport": {
+      "candidateCount": 180,
+      "sourceProtocolId": "phase-5c-c1b-v-confirmatory.v3"
+    },
+    "newTmdbRecruitment": false,
+    "rerankingAllowed": false,
+    "replenishmentAllowed": false,
+    "substitutionAllowed": false,
+    "factualRefreshAllowed": false,
+    "v3Stage2Executed": false,
+    "v3HumanGoldOutcomesExistedAtCarryForwardDecision": false,
+    "v3SemanticEfficacyOutcomesExistedAtCarryForwardDecision": false,
+    "coverageInference": "descriptive-for-exact-imported-180-only",
+    "downstreamProtocolIdNamespace": "V4 protocol-ID namespaces apply only to V4 downstream deterministic selections; Stage 1 is not reselected."
   },
   "studyEstimands": {
     "coverage": {
@@ -55,7 +61,7 @@
         "genre",
         "runtimeBand"
       ],
-      "coverageByFriendsGold": "NOT_IDENTIFIABLE_IN_MAIN_V3_DESIGN",
+      "coverageByFriendsGold": "NOT_IDENTIFIABLE_IN_MAIN_V4_DESIGN",
       "screeningOccursBeforeHumanGold": true
     },
     "efficacy": {
@@ -203,7 +209,7 @@
       "stage": 1,
       "id": "imported-v3-frozen-factual-candidate-universe",
       "candidateCount": 180,
-      "sourceProtocolId": "phase5c-c1b-v-confirmatory.v3",
+      "sourceProtocolId": "phase-5c-c1b-v-confirmatory.v3",
       "sourceClosureCommit": "2013e0f50df5ce8dc6fadd79bbf25cc63f54316e",
       "sourceStage1ClosureRawSha256": "sha256:d7ebf19f03486da8faa3d907924fab4c10176d3c5150c9cba8273497bd5a348c",
       "candidateRegistryRawSha256": "sha256:2755b9cb603f8fb4bdfdfe7aef46e7c44840ed3334ff9f393a45ec0db04bf11f",
@@ -329,7 +335,7 @@
         "additionalMiningAllowed": false
       },
       "lowConfidenceArchive": {
-        "path": "c1b-v3-boundary-pool.json",
+        "path": "c1b-v4-boundary-pool.json",
         "beforeFinalSemanticVerdict": {
           "mayBeStored": true,
           "mayBeCounted": true,
@@ -549,49 +555,33 @@
       "futureStrictBandStudy": {
         "tmdbVoteCountMinInclusive": 200,
         "tmdbVoteCountMaxInclusive": 800,
-        "automaticallyExecutedByV3": false
+        "automaticallyExecutedByV4": false
       }
     }
   ],
   "forbiddenAdaptationsAfterExecutionBegins": [
-    "changing TMDB vote bands",
-    "changing temporal quotas",
-    "replenishment batches",
-    "lowering Wikipedia 150-word gate",
-    "adding Wikipedia headings",
-    "using other-language Wikipedia as fallback",
-    "changing gold labels",
-    "changing confidence",
-    "exceeding 72 human labels",
-    "replacing final-cohort films",
-    "changing K3 model/config",
-    "changing draws-per-arm",
-    "adding tie-break draws",
-    "semantic retries with modified prompts/settings",
-    "changing outcome thresholds",
-    "using boundary-pool cases for prompt tuning",
-    "changing annual partition boundaries",
-    "adaptive quarterly/monthly/vote-count partition splitting",
-    "changing the 50-page annual-cell budget",
-    "adding/removing annual cells",
-    "changing annual-cell traversal order",
-    "changing frozen pagination baselines or plan",
-    "reusing V2 raw page-1 responses as V3 source data",
-    "changing the 250-millisecond minimum dispatch-start interval"
+    "changing the exact imported V3 180-film cohort",
+    "performing new TMDB recruitment or factual refresh",
+    "reranking, replenishing, substituting, or replacing imported-cohort films",
+    "changing the frozen Wikipedia identity-resolution policy",
+    "changing the frozen Wikipedia section-family, extraction, or normalization-filter policy",
+    "changing the Wikipedia 150-word viability gate",
+    "adding Wikipedia headings, other-language Wikipedia, external-source, or replacement-candidate fallbacks"
   ],
   "protocolFreeze": {
     "immutableOnceExecutionBegins": true,
-    "runtimeImplementationIncluded": false,
+    "stage2PolicyImplementationFrozenByReference": true,
+    "frozenImplementationCommit": "0308ca0b2fb8c54315384d41da8871edcd2e0a84",
     "networkExecutionAuthorizedBySpecificationAlone": false
   },
   "contractBundle": {
     "bundleId": "phase-5c-c1b-v-confirmatory.v4.contracts",
     "bundleVersion": 1,
-    "contractsBundleHash": "sha256:602af7c19f3845c1bb29ccdc71a232ade913eb7763ab127349141e2e78f4847a",
+    "contractsBundleHash": "sha256:6ea56d5209c0835959f846998cd8ca5d4bff94ec646dfdb10aab930859b42e98",
     "requiredContracts": [
       {
         "id": "imported-v3-cohort-contract.v4",
-        "contentHash": "sha256:57605536157034b1ebc14500b200dee7e4668d9ef11f7b1e06892d4e9fe7c731"
+        "contentHash": "sha256:2b7b8f27599e3b6589518cd2c81e9ac785414aa9f6427837ce18bc54b48061c5"
       },
       {
         "id": "wikipedia-executable-closure-contract.v1",
@@ -599,7 +589,7 @@
       },
       {
         "id": "wikipedia-zero-overfitting-contract.v1",
-        "contentHash": "sha256:89b2a6195a18567ebe7b4e995d366475226e0338cf5239d0e67e050e9d001a2a"
+        "contentHash": "sha256:90b9fc371721f74c4a4cddc1219b2bbb2a00f6f3a149c4f6e86b95ade767ff56"
       },
       {
         "id": "shared-covariate-contract.v2",

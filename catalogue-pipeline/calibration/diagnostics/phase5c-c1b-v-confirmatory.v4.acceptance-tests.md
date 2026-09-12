@@ -10,6 +10,8 @@ All tests in this plan are offline unless a later, separately authorized Stage-2
 
 - Verify the registered protocol and contract bundle identify V4 and contain no `PENDING_STATIC_REGISTRATION` token or placeholder hash.
 - Verify the historical relationship is an independent prospective successor importing the exact frozen V3 cohort, not an amendment to V3.
+- Verify every predecessor/source protocol reference uses the canonical ID `phase-5c-c1b-v-confirmatory.v3`; current-study namespaces use V4, including the boundary-pool path, gold-coverage identifiability marker, and future strict-band execution field.
+- Verify V4 disclosures describe only immutable carry-forward of the exact 180-film V3 cohort, zero new recruitment/reranking/replenishment/substitution/factual refresh, absence of V3 Stage-2/human-gold/semantic-efficacy outcomes at the carry-forward decision, descriptive exact-cohort coverage, and V4-only downstream deterministic namespaces.
 - Verify the triage audit reports `VERIFIED_NO_ADVERSE_EVIDENCE` and states exactly: “No adverse evidence of candidate-specific exposure was found across available logs, scripts, and Git history. This is an absence-of-adverse-evidence standard accepted as sufficient for this study.”
 - Verify the audit accurately records the repository evidence inspected, candidate-ID comparison method, its bounded limitations, and zero network calls. It must not claim absolute non-exposure and must not require inspection of shell history, filesystem atime, DNS logs, proxy logs, browser history, or unrelated machine telemetry.
 
@@ -40,6 +42,7 @@ All tests in this plan are offline unless a later, separately authorized Stage-2
 - Create a disposable detached checkout at the frozen V4 implementation commit.
 - Run `pnpm install --offline --frozen-lockfile`. If the local pnpm store is incomplete, stop and block registration; never fall back to an online install.
 - Using only fixtures allowed by `tests/fixtures/wikipedia/provenance.json`, execute the real offline identity resolution → structural section selection → extraction → normalization/filtering → viability path.
+- Verify every fixture records an explicit selection rationale and the synthetic fixture states it was selected solely to exercise that frozen path without any V4 candidate-specific Wikipedia outcome.
 - The synthetic path must resolve the declared synthetic film identity, select an allowed reception-family section, extract and normalize eligible prose, and determine viability at the unchanged threshold of 150 eligible normalized words. An import-only smoke test is insufficient.
 - Assert all transport activity is satisfied by deterministic in-memory fixtures and external requests equal zero. Candidate-specific V4 Wikipedia outcomes are forbidden.
 

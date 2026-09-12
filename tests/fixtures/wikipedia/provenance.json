@@ -8,6 +8,7 @@
       "fixtureId": "synthetic-film-2018",
       "title": "Synthetic Film",
       "year": 2018,
+      "selectionRationale": "Synthetic fixture selected solely to exercise the frozen identity → section → extraction → normalization → viability path without using any V4 candidate-specific Wikipedia outcome.",
       "purpose": "Exercise identity, structural section selection, extraction, normalization, and viability without external requests."
     }
   ]

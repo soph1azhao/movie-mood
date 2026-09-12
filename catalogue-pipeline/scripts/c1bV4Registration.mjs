@@ -174,7 +174,7 @@ export async function buildTriageExposureAudit({ root = process.cwd() } = {}) {
   return {
     reportId: 'c1b-v4-triage-exposure-audit.v1',
     protocolId: V4_PROTOCOL_ID,
-    importedCohort: { sourceProtocolId: 'phase5c-c1b-v-confirmatory.v3', candidateCount: 180, candidateRegistryRawSha256: 'sha256:2755b9cb603f8fb4bdfdfe7aef46e7c44840ed3334ff9f393a45ec0db04bf11f' },
+    importedCohort: { sourceProtocolId: 'phase-5c-c1b-v-confirmatory.v3', candidateCount: 180, candidateRegistryRawSha256: 'sha256:2755b9cb603f8fb4bdfdfe7aef46e7c44840ed3334ff9f393a45ec0db04bf11f' },
     evidenceSourcesInspected: [
       { category: 'repository-diagnostic-definitions-and-reports', fileCount: currentFiles.filter((path) => path.includes('/calibration/diagnostics/')).length },
       { category: 'repository-scripts', fileCount: currentFiles.filter((path) => path.includes('/scripts/')).length },
@@ -201,7 +201,7 @@ function contract(id, canonicalContent) { return { id, version: 1, canonicalCont
 export function buildV4Contracts({ v3Bundle, executableClosureHash, triageAuditHash }) {
   const inheritedIds = ['shared-covariate-contract.v2', 'friends-classification-contract.v2', 'semantic-taxonomy.v2', 'arm0-input-projection.v2', 'arm1-evidence-projection.v2', 'wikipedia-excerpt-projection.v2', 'literal-grounding-validator.v2', 'identity-canary-contract.v2']
   const imported = contract('imported-v3-cohort-contract.v4', {
-    sourceProtocolId: 'phase5c-c1b-v-confirmatory.v3', sourceClosureCommit: '2013e0f50df5ce8dc6fadd79bbf25cc63f54316e',
+    sourceProtocolId: 'phase-5c-c1b-v-confirmatory.v3', sourceClosureCommit: '2013e0f50df5ce8dc6fadd79bbf25cc63f54316e',
     stage1Closure: { path: 'catalogue-pipeline/calibration/diagnostics/phase5c-c1b-v3-stage1-closure.v1.json', rawSha256: 'sha256:d7ebf19f03486da8faa3d907924fab4c10176d3c5150c9cba8273497bd5a348c' },
     candidateRegistry: { path: V3_COHORT_PATH, rawSha256: 'sha256:2755b9cb603f8fb4bdfdfe7aef46e7c44840ed3334ff9f393a45ec0db04bf11f', candidateCount: 180 },
     carryForwardOnly: true, tmdbRecruitmentRequests: 0, rerankingAllowed: false, replenishmentAllowed: false, substitutionAllowed: false, factualRefreshAllowed: false,
@@ -239,18 +239,33 @@ export function buildV4Protocol({ v3Protocol, bundle, executableClosureHash, tri
   protocol.protocolId = V4_PROTOCOL_ID
   protocol.protocolVersion = 4
   protocol.historicalProvenance = {
-    predecessorProtocol: 'phase5c-c1b-v-confirmatory.v3', predecessorClosureCommit: '2013e0f50df5ce8dc6fadd79bbf25cc63f54316e',
+    predecessorProtocol: 'phase-5c-c1b-v-confirmatory.v3', predecessorClosureCommit: '2013e0f50df5ce8dc6fadd79bbf25cc63f54316e',
     predecessorConclusion: 'BLOCKED — STAGE-2 FROZEN POLICY DEPENDENCY NOT FORENSICALLY REPRODUCIBLE',
     relationship: 'prospective-successor-study-with-explicit-v3-cohort-import',
     triageExposureStatus: 'VERIFIED_NO_ADVERSE_EVIDENCE', triageAuditReportPath: TRIAGE_AUDIT_PATH, triageAuditReportHash: triageAuditHash,
     epistemicStandard: TRIAGE_STANDARD,
   }
+  protocol.requiredDesignDisclosures = {
+    independentSuccessor: true,
+    exactImmutableV3CohortImport: { candidateCount: 180, sourceProtocolId: 'phase-5c-c1b-v-confirmatory.v3' },
+    newTmdbRecruitment: false,
+    rerankingAllowed: false,
+    replenishmentAllowed: false,
+    substitutionAllowed: false,
+    factualRefreshAllowed: false,
+    v3Stage2Executed: false,
+    v3HumanGoldOutcomesExistedAtCarryForwardDecision: false,
+    v3SemanticEfficacyOutcomesExistedAtCarryForwardDecision: false,
+    coverageInference: 'descriptive-for-exact-imported-180-only',
+    downstreamProtocolIdNamespace: 'V4 protocol-ID namespaces apply only to V4 downstream deterministic selections; Stage 1 is not reselected.',
+  }
+  protocol.studyEstimands.coverage.coverageByFriendsGold = 'NOT_IDENTIFIABLE_IN_MAIN_V4_DESIGN'
   const stage0 = protocol.stages.find(({ stage }) => stage === 0)
   stage0.wikipediaExecutableClosure = { path: EXECUTABLE_CLOSURE_PATH, canonicalSha256: executableClosureHash, frozenImplementationCommit: V4_IMPLEMENTATION_COMMIT, dependencyMembershipAutomaticallyDerived: true }
   stage0.stage2JitExecutionInvariant = { sameRunLockRequired: true, orderedSteps: ['acquire-stage2-RUN_LOCK', 'JIT-hash-and-provenance-verification', 'no-mutable-semantic-policy-operation', 'first-stage2-HTTP-dispatch', 'first-request-durable-completion'], lockRetainedThroughFirstRequestDurableCompletion: true }
   protocol.stages[1] = {
     stage: 1, id: 'imported-v3-frozen-factual-candidate-universe', candidateCount: 180,
-    sourceProtocolId: 'phase5c-c1b-v-confirmatory.v3', sourceClosureCommit: '2013e0f50df5ce8dc6fadd79bbf25cc63f54316e',
+    sourceProtocolId: 'phase-5c-c1b-v-confirmatory.v3', sourceClosureCommit: '2013e0f50df5ce8dc6fadd79bbf25cc63f54316e',
     sourceStage1ClosureRawSha256: 'sha256:d7ebf19f03486da8faa3d907924fab4c10176d3c5150c9cba8273497bd5a348c',
     candidateRegistryRawSha256: 'sha256:2755b9cb603f8fb4bdfdfe7aef46e7c44840ed3334ff9f393a45ec0db04bf11f',
     tmdbRecruitmentRequests: 0, rerankingAllowed: false, replenishmentAllowed: false, substitutionAllowed: false, factualRefreshAllowed: false,
@@ -259,6 +274,28 @@ export function buildV4Protocol({ v3Protocol, bundle, executableClosureHash, tri
   stage2.fixtureProvenancePath = 'tests/fixtures/wikipedia/provenance.json'
   stage2.substantivePolicyFrozenUnchangedFromV3 = true
   stage2.forbiddenProspectiveTuning = ['rule', 'regex', 'section-hierarchy', 'paragraph-filter', 'normalization', 'threshold', 'additional-fallback']
+  const stage3 = protocol.stages.find(({ stage }) => stage === 3)
+  stage3.lowConfidenceArchive.path = 'c1b-v4-boundary-pool.json'
+  const futureStrictBandStudy = protocol.stages.find(({ futureStrictBandStudy }) => futureStrictBandStudy)?.futureStrictBandStudy
+  if (futureStrictBandStudy) {
+    delete futureStrictBandStudy.automaticallyExecutedByV3
+    futureStrictBandStudy.automaticallyExecutedByV4 = false
+  }
+  protocol.forbiddenAdaptationsAfterExecutionBegins = [
+    'changing the exact imported V3 180-film cohort',
+    'performing new TMDB recruitment or factual refresh',
+    'reranking, replenishing, substituting, or replacing imported-cohort films',
+    'changing the frozen Wikipedia identity-resolution policy',
+    'changing the frozen Wikipedia section-family, extraction, or normalization-filter policy',
+    'changing the Wikipedia 150-word viability gate',
+    'adding Wikipedia headings, other-language Wikipedia, external-source, or replacement-candidate fallbacks',
+  ]
+  protocol.protocolFreeze = {
+    immutableOnceExecutionBegins: true,
+    stage2PolicyImplementationFrozenByReference: true,
+    frozenImplementationCommit: V4_IMPLEMENTATION_COMMIT,
+    networkExecutionAuthorizedBySpecificationAlone: false,
+  }
   protocol.contractBundle = { bundleId: bundle.bundleId, bundleVersion: 1, contractsBundleHash: bundle.contractsBundleHash, requiredContracts: bundle.orderedContractManifest.map(({ id, contentHash }) => ({ id, contentHash })) }
   protocol.specificationStatus = 'registered-frozen'
   protocol.registrationStatus = 'REGISTERED'

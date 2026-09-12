@@ -17,7 +17,7 @@
       "id": "imported-v3-cohort-contract.v4",
       "version": 1,
       "canonicalContent": {
-        "sourceProtocolId": "phase5c-c1b-v-confirmatory.v3",
+        "sourceProtocolId": "phase-5c-c1b-v-confirmatory.v3",
         "sourceClosureCommit": "2013e0f50df5ce8dc6fadd79bbf25cc63f54316e",
         "stage1Closure": {
           "path": "catalogue-pipeline/calibration/diagnostics/phase5c-c1b-v3-stage1-closure.v1.json",
@@ -35,7 +35,7 @@
         "substitutionAllowed": false,
         "factualRefreshAllowed": false
       },
-      "contentHash": "sha256:57605536157034b1ebc14500b200dee7e4668d9ef11f7b1e06892d4e9fe7c731"
+      "contentHash": "sha256:2b7b8f27599e3b6589518cd2c81e9ac785414aa9f6427837ce18bc54b48061c5"
     },
     {
       "id": "wikipedia-executable-closure-contract.v1",
@@ -64,7 +64,7 @@
       "version": 1,
       "canonicalContent": {
         "triageAuditReportPath": "catalogue-pipeline/calibration/diagnostics/c1b-v4-triage-exposure-audit.v1.json",
-        "triageAuditReportHash": "sha256:8cab671bdb3be66e36d0ad1b98e9351aac5317a3a573f853a4a9fe8f2200b6db",
+        "triageAuditReportHash": "sha256:6dbd87ddb491aeda3856146c40e996116fa477b7ba4c7ff9bbae058b43239369",
         "triageExposureStatus": "VERIFIED_NO_ADVERSE_EVIDENCE",
         "epistemicStandard": "No adverse evidence of candidate-specific exposure was found across available logs, scripts, and Git history. This is an absence-of-adverse-evidence standard accepted as sufficient for this study.",
         "fixtureProvenancePath": "tests/fixtures/wikipedia/provenance.json",
@@ -86,7 +86,7 @@
           "fallback"
         ]
       },
-      "contentHash": "sha256:89b2a6195a18567ebe7b4e995d366475226e0338cf5239d0e67e050e9d001a2a"
+      "contentHash": "sha256:90b9fc371721f74c4a4cddc1219b2bbb2a00f6f3a149c4f6e86b95ade767ff56"
     },
     {
       "id": "shared-covariate-contract.v2",
@@ -443,7 +443,7 @@
     {
       "id": "imported-v3-cohort-contract.v4",
       "version": 1,
-      "contentHash": "sha256:57605536157034b1ebc14500b200dee7e4668d9ef11f7b1e06892d4e9fe7c731"
+      "contentHash": "sha256:2b7b8f27599e3b6589518cd2c81e9ac785414aa9f6427837ce18bc54b48061c5"
     },
     {
       "id": "wikipedia-executable-closure-contract.v1",
@@ -453,7 +453,7 @@
     {
       "id": "wikipedia-zero-overfitting-contract.v1",
       "version": 1,
-      "contentHash": "sha256:89b2a6195a18567ebe7b4e995d366475226e0338cf5239d0e67e050e9d001a2a"
+      "contentHash": "sha256:90b9fc371721f74c4a4cddc1219b2bbb2a00f6f3a149c4f6e86b95ade767ff56"
     },
     {
       "id": "shared-covariate-contract.v2",
@@ -496,6 +496,6 @@
       "contentHash": "sha256:9c2e12c8e3952ef00f83837ac5eff1194c091305a81779d9a5606b51a776ebd7"
     }
   ],
-  "contractsBundleHash": "sha256:602af7c19f3845c1bb29ccdc71a232ade913eb7763ab127349141e2e78f4847a",
+  "contractsBundleHash": "sha256:6ea56d5209c0835959f846998cd8ca5d4bff94ec646dfdb10aab930859b42e98",
   "registrationStatus": "REGISTERED"
 }
