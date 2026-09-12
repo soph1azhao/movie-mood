@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-11377",
+  "tmdbId": 11377,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "b8518d39ecfc7db1a5f99de092e0fd96d73197cb1cf83c3790ebabd78b76fa09"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "b8518d39ecfc7db1a5f99de092e0fd96d73197cb1cf83c3790ebabd78b76fa09"
+    }
+  ],
+  "facts": {
+    "title": "House on Haunted Hill",
+    "year": 1999,
+    "director": "William Malone",
+    "genres": [
+      "Horror"
+    ],
+    "runtimeMinutes": 93,
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "An amusement park mogul offers a random group of diverse people $1 million to spend the night in a decrepit former mental institution.",
+    "keywords": []
+  },
+  "inputHash": "sha256:239c79a7f23224041ef6848cb801e28123e72a1961554bb4a8b6319ea9740a0b"
+}

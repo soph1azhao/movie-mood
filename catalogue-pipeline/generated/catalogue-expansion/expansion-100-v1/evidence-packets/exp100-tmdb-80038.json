@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-80038",
+  "tmdbId": 80038,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "6bb053410238dcd9f7fef2a7ebbcd16b576bd52a716f5a7905bcb298ca989b5f"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "6bb053410238dcd9f7fef2a7ebbcd16b576bd52a716f5a7905bcb298ca989b5f"
+    }
+  ],
+  "facts": {
+    "title": "Friends with Kids",
+    "year": 2012,
+    "director": "Jennifer Westfeldt",
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Romance"
+    ],
+    "runtimeMinutes": 100,
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "In the wake of their friends' marriages and eventual offspring, longtime pals Julie and Jason decide to have a child together without becoming a couple. By becoming \"time-share\" parents, they reason, they can experience the joys of parenthood without significantly curbing their personal freedom. However, when Julie and Jason both become involved with others, they discover that they secretly harbor romantic feelings for each other.",
+    "keywords": []
+  },
+  "inputHash": "sha256:1dca3caa54f367990f85e612fe9e12cef89846a3f99b5946901c841f24685bc1"
+}

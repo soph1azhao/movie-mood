@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-381719",
+  "tmdbId": 381719,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "7c7c110a7c27bc174e3f4bf0096bbc6dbb78501268260e0c17ca43f26200a6cf"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "7c7c110a7c27bc174e3f4bf0096bbc6dbb78501268260e0c17ca43f26200a6cf"
+    }
+  ],
+  "facts": {
+    "title": "Peter Rabbit",
+    "year": 2018,
+    "director": "Will Gluck",
+    "genres": [
+      "Adventure",
+      "Animation",
+      "Family"
+    ],
+    "runtimeMinutes": 93,
+    "countries": [
+      "Australia",
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "Peter Rabbit's feud with Mr. McGregor escalates to greater heights than ever before as they rival for the affections of the warm-hearted animal lover who lives next door.",
+    "keywords": []
+  },
+  "inputHash": "sha256:851fac4d1391c5dd4f6e29b49b5f4516f7818ca378579a4829eeb93b1ffcf69a"
+}

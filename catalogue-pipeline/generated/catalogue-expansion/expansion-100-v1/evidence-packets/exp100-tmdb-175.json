@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-175",
+  "tmdbId": 175,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "caee9d85266bdecfcbf8002856c8149008468e629abdceb9fa1dbd28e62341d7"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "caee9d85266bdecfcbf8002856c8149008468e629abdceb9fa1dbd28e62341d7"
+    }
+  ],
+  "facts": {
+    "title": "The Big Blue",
+    "year": 1988,
+    "director": "Luc Besson",
+    "genres": [
+      "Adventure",
+      "Drama",
+      "Romance"
+    ],
+    "runtimeMinutes": 168,
+    "countries": [
+      "France"
+    ],
+    "spokenLanguages": [
+      "English",
+      "French",
+      "Italian"
+    ],
+    "overview": "Childhood friends Jacques and Enzo share a passion for the danger of free diving. Jacques, following in the footsteps of his father, who died at sea when Jacques was a boy, harbors a remarkable ability to adjust his heart rate and breathing patterns in the water, with his vital signs more closely resembling those of dolphins than men.",
+    "keywords": []
+  },
+  "inputHash": "sha256:833977f542a4e027ac17ecac6efeb67cd1a53cc3ecb6516864d3b1ed77a755c0"
+}

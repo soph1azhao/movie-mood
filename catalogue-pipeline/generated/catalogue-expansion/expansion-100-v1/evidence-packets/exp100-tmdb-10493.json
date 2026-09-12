@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-10493",
+  "tmdbId": 10493,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "89ee3856149a5b4af748eb65ad149079bdebc4553842f24d921b14d15578b6c3"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "89ee3856149a5b4af748eb65ad149079bdebc4553842f24d921b14d15578b6c3"
+    }
+  ],
+  "facts": {
+    "title": "Dead Calm",
+    "year": 1989,
+    "director": "Phillip Noyce",
+    "genres": [
+      "Drama",
+      "Horror",
+      "Thriller"
+    ],
+    "runtimeMinutes": 96,
+    "countries": [
+      "Australia"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "An Australian couple takes a sailing trip in the Pacific to get over the recent loss of their son. While on the open sea, they come across a sinking ship with one survivor who is not at all what he seems.",
+    "keywords": []
+  },
+  "inputHash": "sha256:f6c103e1a670a0ae897ccfea6a662a411411449d3e2fd7370b28cd903daabcd0"
+}

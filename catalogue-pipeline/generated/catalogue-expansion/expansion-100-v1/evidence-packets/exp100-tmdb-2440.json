@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-2440",
+  "tmdbId": 2440,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "a43a310c13d6c230142272e65312c0de6918300525fed3b689a664117f398dc1"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "a43a310c13d6c230142272e65312c0de6918300525fed3b689a664117f398dc1"
+    }
+  ],
+  "facts": {
+    "title": "Joint Security Area",
+    "year": 2000,
+    "director": "Park Chan-wook",
+    "genres": [
+      "Drama",
+      "Mystery",
+      "Thriller"
+    ],
+    "runtimeMinutes": 108,
+    "countries": [
+      "South Korea"
+    ],
+    "spokenLanguages": [
+      "English",
+      "French",
+      "German",
+      "Korean"
+    ],
+    "overview": "Two North Korean soldiers are killed in the border area between North and South Korea, prompting an investigation by a neutral body. The sergeant is the shooter, but the lead investigator, a Swiss-Korean woman, receives differing accounts from the two sides.",
+    "keywords": []
+  },
+  "inputHash": "sha256:92ea1c0a3879cbfa6c3bc9b4c2f62a6853e5c0d540ba180adf47290fdeccbd4f"
+}

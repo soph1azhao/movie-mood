@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-630240",
+  "tmdbId": 630240,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "c3f95a587ece7cc4523b87d65ff59f127c035f0dd5e4cee7bee55984a7b62eb1"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "c3f95a587ece7cc4523b87d65ff59f127c035f0dd5e4cee7bee55984a7b62eb1"
+    }
+  ],
+  "facts": {
+    "title": "Titane",
+    "year": 2021,
+    "director": "Julia Ducournau",
+    "genres": [
+      "Drama",
+      "Horror",
+      "Thriller"
+    ],
+    "runtimeMinutes": 108,
+    "countries": [
+      "Belgium",
+      "France"
+    ],
+    "spokenLanguages": [
+      "French"
+    ],
+    "overview": "A woman with a metal plate in her head from a childhood car accident embarks on a bizarre journey, bringing her into contact with a firefighter who's reunited with his missing son after 10 years.",
+    "keywords": []
+  },
+  "inputHash": "sha256:3ed869c9a9bc294d3159c420654356529076ccafa1274b1a6d6309ecb89885bb"
+}

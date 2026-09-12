@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-656690",
+  "tmdbId": 656690,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "f0d9b09986d06da4856faedbbc9a13b5d97335ffbf64dd294669b65f8821beaf"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "f0d9b09986d06da4856faedbbc9a13b5d97335ffbf64dd294669b65f8821beaf"
+    }
+  ],
+  "facts": {
+    "title": "The Social Dilemma",
+    "year": 2020,
+    "director": "Jeff Orlowski",
+    "genres": [
+      "Documentary",
+      "Drama"
+    ],
+    "runtimeMinutes": 94,
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "This documentary-drama hybrid explores the dangerous human impact of social networking, with tech experts sounding the alarm on their own creations.",
+    "keywords": []
+  },
+  "inputHash": "sha256:7771ea235b43f69f7034f47dc88a105d71853212bd926030a86b230b90f207c9"
+}

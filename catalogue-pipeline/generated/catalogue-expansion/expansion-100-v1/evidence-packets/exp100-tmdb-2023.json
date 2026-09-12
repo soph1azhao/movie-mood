@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-2023",
+  "tmdbId": 2023,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "f798cb65a1c59245a1c608e9a0fdf9c166ffcad6d66c01723e4163e620b8d5ba"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "f798cb65a1c59245a1c608e9a0fdf9c166ffcad6d66c01723e4163e620b8d5ba"
+    }
+  ],
+  "facts": {
+    "title": "Hidalgo",
+    "year": 2004,
+    "director": "Joe Johnston",
+    "genres": [
+      "Adventure",
+      "Western"
+    ],
+    "runtimeMinutes": 136,
+    "countries": [
+      "Morocco",
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "Arabic",
+      "English"
+    ],
+    "overview": "Set in 1890, this is the story of a Pony Express courier who travels to Arabia to compete with his horse, Hidalgo, in a dangerous race for a massive contest prize, in an adventure that sends the pair around the world...",
+    "keywords": []
+  },
+  "inputHash": "sha256:b9197f38f31aa3982a8b3c78365b89e11479b403a3ff084d6239eca9f733901e"
+}

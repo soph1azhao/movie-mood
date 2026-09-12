@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-2759",
+  "tmdbId": 2759,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "a2d00cb91ae4f926e10a54fe0db95530b73440892eec26fc6c23a7585f001d7c"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "a2d00cb91ae4f926e10a54fe0db95530b73440892eec26fc6c23a7585f001d7c"
+    }
+  ],
+  "facts": {
+    "title": "The Adventures of Priscilla, Queen of the Desert",
+    "year": 1994,
+    "director": "Stephan Elliott",
+    "genres": [
+      "Comedy",
+      "Drama"
+    ],
+    "runtimeMinutes": 103,
+    "countries": [
+      "Australia",
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "Two drag performers and a transgender woman travel across the desert to perform their unique style of cabaret.",
+    "keywords": []
+  },
+  "inputHash": "sha256:1ddd8a9ead559110eed11ca1ea64bd368b4dc8e9b48d98b80f3731f129df12f4"
+}

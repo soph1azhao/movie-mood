@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-921785",
+  "tmdbId": 921785,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "3ed806e2ee8d023305e76540a98807950a7eedd0f5e439777fd8c5450a6200b9"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "3ed806e2ee8d023305e76540a98807950a7eedd0f5e439777fd8c5450a6200b9"
+    }
+  ],
+  "facts": {
+    "title": "Mixed by Erry",
+    "year": 2023,
+    "director": "Sydney Sibilia",
+    "genres": [
+      "Comedy",
+      "History",
+      "Music"
+    ],
+    "runtimeMinutes": 113,
+    "countries": [
+      "Italy"
+    ],
+    "spokenLanguages": [
+      "Italian"
+    ],
+    "overview": "The rise and fall of the pirate mixtape empire of three brothers from Naples, Italy, during the '80s.",
+    "keywords": []
+  },
+  "inputHash": "sha256:2698f49c3481eb40f4bc5732fb4244bd340064006edeb67c669bdc24bafc71db"
+}

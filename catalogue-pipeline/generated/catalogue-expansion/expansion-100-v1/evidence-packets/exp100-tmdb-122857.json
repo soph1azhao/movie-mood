@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-122857",
+  "tmdbId": 122857,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "c5e4c4d3de69b85964331d67db98b9e7e0dc79a2013b24cb53508aff323248eb"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "c5e4c4d3de69b85964331d67db98b9e7e0dc79a2013b24cb53508aff323248eb"
+    }
+  ],
+  "facts": {
+    "title": "Universal Soldier: Day of Reckoning",
+    "year": 2012,
+    "director": "John Hyams",
+    "genres": [
+      "Action",
+      "Science Fiction",
+      "Thriller"
+    ],
+    "runtimeMinutes": 114,
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "After his wife and daughter are murdered in a home invasion, a widower named John now finds himself up against an army of Universal Soldiers in relentless pursuit, led by a mysterious leader who promises to set UniSols free from their conditioning.",
+    "keywords": []
+  },
+  "inputHash": "sha256:d03e2238bec49619a5ef2523eb1f54d07b20221828e65a98191ba8ca83fa9bec"
+}

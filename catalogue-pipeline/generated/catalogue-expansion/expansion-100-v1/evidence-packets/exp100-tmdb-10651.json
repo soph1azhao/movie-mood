@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-10651",
+  "tmdbId": 10651,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "4208c0be1bffda2de7ff342fdbc4c31b1672953c17209fbf1a18a3ee590b834b"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "4208c0be1bffda2de7ff342fdbc4c31b1672953c17209fbf1a18a3ee590b834b"
+    }
+  ],
+  "facts": {
+    "title": "The Dead Pool",
+    "year": 1988,
+    "director": "Buddy Van Horn",
+    "genres": [
+      "Action",
+      "Crime",
+      "Drama",
+      "Thriller"
+    ],
+    "runtimeMinutes": 91,
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "Dirty Harry Callahan returns for his final film adventure. Together with his partner Al Quan, he must investigate the systematic murder of prominent figures. By the time Harry learns that the murders are part of a sick game to predict such deaths, it may be too late.",
+    "keywords": []
+  },
+  "inputHash": "sha256:cb54eb856edd1c54a7e2c0cf937b11a23aaa984d610a3d5126ce6c1211c0778f"
+}

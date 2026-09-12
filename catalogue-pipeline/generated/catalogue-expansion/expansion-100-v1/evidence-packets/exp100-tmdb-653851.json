@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-653851",
+  "tmdbId": 653851,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "2dada82e4e65011b5da82832dc487cff44b8967e32637e0688a0ffd4959bbff4"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "2dada82e4e65011b5da82832dc487cff44b8967e32637e0688a0ffd4959bbff4"
+    }
+  ],
+  "facts": {
+    "title": "Devotion",
+    "year": 2022,
+    "director": "J.D. Dillard",
+    "genres": [
+      "Drama",
+      "History",
+      "War"
+    ],
+    "runtimeMinutes": 139,
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English",
+      "Italian"
+    ],
+    "overview": "The harrowing true story of two elite US Navy fighter pilots during the Korean War. Their heroic sacrifices would ultimately make them the Navy's most celebrated wingmen.",
+    "keywords": []
+  },
+  "inputHash": "sha256:9fec6a7c03dd1b7d154c7597472de0c21fe35796bb6fe28a1155561b76b99de3"
+}

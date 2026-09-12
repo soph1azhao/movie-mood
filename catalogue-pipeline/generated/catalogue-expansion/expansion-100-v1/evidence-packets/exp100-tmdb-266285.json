@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-266285",
+  "tmdbId": 266285,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "96eda13130ac1e477239cf6fed324692502d3e1dccfe5ce9961c47bab7e5d371"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "96eda13130ac1e477239cf6fed324692502d3e1dccfe5ce9961c47bab7e5d371"
+    }
+  ],
+  "facts": {
+    "title": "The Salvation",
+    "year": 2014,
+    "director": "Kristian Levring",
+    "genres": [
+      "Drama",
+      "Western"
+    ],
+    "runtimeMinutes": 92,
+    "countries": [
+      "Belgium",
+      "Brazil",
+      "Denmark",
+      "Norway",
+      "South Africa",
+      "Sweden",
+      "United Kingdom"
+    ],
+    "spokenLanguages": [
+      "Danish",
+      "English"
+    ],
+    "overview": "In 1870s America, a peaceful American settler kills his family's murderer which unleashes the fury of a notorious gang leader. His cowardly fellow townspeople then betray him, forcing him to hunt down the outlaws alone.",
+    "keywords": []
+  },
+  "inputHash": "sha256:3ea7bf70eefeee88bce8ede603fe478858a85859ed4b9d1fc38f4b6bb353d753"
+}

@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-283566",
+  "tmdbId": 283566,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "6cd91b30200217715324ed93b1aac0fef717ea7531ec21a6dc980ae5348fbcf1"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "6cd91b30200217715324ed93b1aac0fef717ea7531ec21a6dc980ae5348fbcf1"
+    }
+  ],
+  "facts": {
+    "title": "Evangelion: 3.0+1.0 Thrice Upon a Time",
+    "year": 2021,
+    "director": "Kazuya Tsurumaki & Mahiro Maeda & Katsuichi Nakayama & Hideaki Anno",
+    "genres": [
+      "Action",
+      "Animation",
+      "Drama",
+      "Science Fiction"
+    ],
+    "runtimeMinutes": 155,
+    "countries": [
+      "Japan"
+    ],
+    "spokenLanguages": [
+      "Japanese"
+    ],
+    "overview": "In the aftermath of the Fourth Impact, stranded without their Evangelions, Shinji, Asuka and Rei find refuge in one of the rare pockets of humanity that still exist on the ruined planet Earth. There, each lives a life far different from their days as an Evangelion pilot. However, the danger to the world is far from over. A new impact is looming on the horizon—one that will prove to be the true end of Evangelion.",
+    "keywords": []
+  },
+  "inputHash": "sha256:a6965e5bbcf0b9a85d23ebb1fed13a70cfc6241df7ab08684d6b58b24a3ab148"
+}

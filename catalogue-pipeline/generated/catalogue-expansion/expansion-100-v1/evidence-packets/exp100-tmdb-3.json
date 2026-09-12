@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-3",
+  "tmdbId": 3,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "8eb969b46fc04ec708e64252ace3f0b20bb2e96e7fe293b7e0c6852d5c47a41d"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "8eb969b46fc04ec708e64252ace3f0b20bb2e96e7fe293b7e0c6852d5c47a41d"
+    }
+  ],
+  "facts": {
+    "title": "Shadows in Paradise",
+    "year": 1986,
+    "director": "Aki Kaurismäki",
+    "genres": [
+      "Drama",
+      "Romance"
+    ],
+    "runtimeMinutes": 74,
+    "countries": [
+      "Finland"
+    ],
+    "spokenLanguages": [
+      "English",
+      "Finnish",
+      "Swedish"
+    ],
+    "overview": "Nikander, a rubbish collector and would-be entrepreneur, finds his plans for success dashed when his business associate dies. One evening, he meets Ilona, a down-on-her-luck cashier, in a local supermarket. Falteringly, a bond begins to develop between them.",
+    "keywords": []
+  },
+  "inputHash": "sha256:8599d29fa174d43002db21ccf50e1aef3db79db4d1b855c7fc63cb8f2cbe390a"
+}

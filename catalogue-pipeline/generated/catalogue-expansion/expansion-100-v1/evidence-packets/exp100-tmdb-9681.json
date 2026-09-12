@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-9681",
+  "tmdbId": 9681,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "8f054d82932f5f0787d72f9b42926d766d3e7e1b468000ba064dd514544d1bea"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "8f054d82932f5f0787d72f9b42926d766d3e7e1b468000ba064dd514544d1bea"
+    }
+  ],
+  "facts": {
+    "title": "Casanova",
+    "year": 2005,
+    "director": "Lasse Hallström",
+    "genres": [
+      "Adventure",
+      "Comedy",
+      "Drama",
+      "Romance"
+    ],
+    "runtimeMinutes": 112,
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "With a reputation for seducing members of the opposite sex, regardless of their marital status, a notorious womanizer discovers a beauty who seems impervious to his charms. However, as he continues to pursue the indifferent lady, he finds himself falling in love.",
+    "keywords": []
+  },
+  "inputHash": "sha256:f7bd7063180c011ab62ade328f84b6d32e7ca056ec06678e3dbe8022420f5b42"
+}

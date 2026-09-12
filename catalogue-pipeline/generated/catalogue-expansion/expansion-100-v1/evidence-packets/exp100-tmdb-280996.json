@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-280996",
+  "tmdbId": 280996,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "afb774638a94dd88a4e4da85f873d145cbedef94219922ade9191abd2eb61b52"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "afb774638a94dd88a4e4da85f873d145cbedef94219922ade9191abd2eb61b52"
+    }
+  ],
+  "facts": {
+    "title": "Mr. Holmes",
+    "year": 2015,
+    "director": "Bill Condon",
+    "genres": [
+      "Drama",
+      "Mystery"
+    ],
+    "runtimeMinutes": 104,
+    "countries": [
+      "United Kingdom",
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English",
+      "French",
+      "Japanese"
+    ],
+    "overview": "In 1947, long-retired and near the end of his life, Sherlock Holmes grapples with an unreliable memory and must rely on his housekeeper's son as he revisits the still-unsolved case that led to his retirement.",
+    "keywords": []
+  },
+  "inputHash": "sha256:fab980c25b583a3a0c78af6846dc245f6391e5a9f1734cddd521fb861deee671"
+}

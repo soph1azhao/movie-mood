@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-728526",
+  "tmdbId": 728526,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "e1ffce34599758b13cce949a5a45852dd2c7a879df28112d2350d3aa2948ae0f"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "e1ffce34599758b13cce949a5a45852dd2c7a879df28112d2350d3aa2948ae0f"
+    }
+  ],
+  "facts": {
+    "title": "Encounter",
+    "year": 2021,
+    "director": "Michael Pearce",
+    "genres": [
+      "Drama",
+      "Mystery",
+      "Thriller"
+    ],
+    "runtimeMinutes": 108,
+    "countries": [
+      "United Kingdom",
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "A decorated Marine goes on a rescue mission to save his two young sons from an unhuman threat. As their journey takes them in increasingly dangerous directions, the boys will need to leave their childhoods behind.",
+    "keywords": []
+  },
+  "inputHash": "sha256:5a81bc363f1176a2a1c691460861d28d8280b7702f9d5b740d2e6207d6066ce4"
+}

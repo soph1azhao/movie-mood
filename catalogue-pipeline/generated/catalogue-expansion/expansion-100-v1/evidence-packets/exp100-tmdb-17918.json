@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-17918",
+  "tmdbId": 17918,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "e34abe29e28dc8e0e65fb8ea0d1cdc964c753f59eb71856c3abf80e893867a82"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "e34abe29e28dc8e0e65fb8ea0d1cdc964c753f59eb71856c3abf80e893867a82"
+    }
+  ],
+  "facts": {
+    "title": "Swamp Thing",
+    "year": 1982,
+    "director": "Wes Craven",
+    "genres": [
+      "Horror",
+      "Science Fiction"
+    ],
+    "runtimeMinutes": 91,
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "Mutated by his own secret formula, Dr. Alec Holland becomes Swamp Thing, a half-human, half-plant superhero who will stop at nothing to rescue government agent Alice Cable and defeat his evil arch nemesis...even if it costs him his life.",
+    "keywords": []
+  },
+  "inputHash": "sha256:a5685e8300c0a3088d4b47cecfba61d6973d41a49e7db83dd7ff2f09092a7d63"
+}

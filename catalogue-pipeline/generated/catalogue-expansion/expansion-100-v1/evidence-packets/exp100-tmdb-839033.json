@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-839033",
+  "tmdbId": 839033,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "8d68263fb61388cac796b295dbd6a11fce925c6054c869fe86b6c2f2e2327614"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "8d68263fb61388cac796b295dbd6a11fce925c6054c869fe86b6c2f2e2327614"
+    }
+  ],
+  "facts": {
+    "title": "The Lord of the Rings: The War of the Rohirrim",
+    "year": 2024,
+    "director": "Kenji Kamiyama",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Animation",
+      "Fantasy"
+    ],
+    "runtimeMinutes": 134,
+    "countries": [
+      "Japan",
+      "New Zealand",
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "A sudden attack by Wulf, a clever and traitorous lord of Rohan seeking vengeance for the death of his father, forces Helm Hammerhand, the King of Rohan, and his people to make a daring last stand in the ancient stronghold of the Hornburg.",
+    "keywords": []
+  },
+  "inputHash": "sha256:598263c139ce1e50e01f83050a8e19c8e92dbdb29bc1b91c6fd597426f44c0b6"
+}

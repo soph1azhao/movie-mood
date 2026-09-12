@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-486947",
+  "tmdbId": 486947,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "116a8a4833f1218b9d64b5609f1f52eda4005e33e6bbcb7129374b5fe2f8e38d"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "116a8a4833f1218b9d64b5609f1f52eda4005e33e6bbcb7129374b5fe2f8e38d"
+    }
+  ],
+  "facts": {
+    "title": "The Guilty",
+    "year": 2018,
+    "director": "Gustav Möller",
+    "genres": [
+      "Crime",
+      "Drama",
+      "Thriller"
+    ],
+    "runtimeMinutes": 85,
+    "countries": [
+      "Denmark"
+    ],
+    "spokenLanguages": [
+      "Danish"
+    ],
+    "overview": "Police officer Asger Holm, demoted to desk work as an alarm dispatcher, answers a call from a panicked woman who claims to have been kidnapped. Confined to the police station and with the phone as his only tool, Asger races against time to get help and find her.",
+    "keywords": []
+  },
+  "inputHash": "sha256:a60cbd5eb8f18b70515ff2b3b6011002cc8c8fa4e745fcfc728fd5ac69f69efd"
+}

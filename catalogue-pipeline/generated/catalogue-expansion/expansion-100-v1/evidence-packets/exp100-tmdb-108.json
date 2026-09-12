@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-108",
+  "tmdbId": 108,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "1414d5bbc7a9d252c230e0ca0afb557c62d7d69c2832c63d0970191baaed51b5"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "1414d5bbc7a9d252c230e0ca0afb557c62d7d69c2832c63d0970191baaed51b5"
+    }
+  ],
+  "facts": {
+    "title": "Three Colors: Blue",
+    "year": 1993,
+    "director": "Krzysztof Kieślowski",
+    "genres": [
+      "Drama"
+    ],
+    "runtimeMinutes": 98,
+    "countries": [
+      "France",
+      "Poland",
+      "Switzerland"
+    ],
+    "spokenLanguages": [
+      "French",
+      "Polish"
+    ],
+    "overview": "The wife of a famous composer survives a car accident that kills her husband and daughter. Now alone, she shakes off her old identity and explores her newfound freedom but finds that she is unbreakably bound to other humans, including her husband’s mistress, whose existence she never suspected.",
+    "keywords": []
+  },
+  "inputHash": "sha256:73313c4b49d5a11cd8f401af7a8f4ea3f8ec9dbb49e8cb20da85f7fe1c55af3a"
+}

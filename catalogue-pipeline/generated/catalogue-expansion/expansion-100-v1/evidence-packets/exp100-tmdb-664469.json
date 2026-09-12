@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-664469",
+  "tmdbId": 664469,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "4c5e869c296050c58ddea99bd6076f52c59b57767d63e2f26adac8ebe6ea83d1"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "4c5e869c296050c58ddea99bd6076f52c59b57767d63e2f26adac8ebe6ea83d1"
+    }
+  ],
+  "facts": {
+    "title": "Amsterdam",
+    "year": 2022,
+    "director": "David O. Russell",
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Mystery"
+    ],
+    "runtimeMinutes": 134,
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English",
+      "French"
+    ],
+    "overview": "In the 1930s, three friends—a doctor, a nurse, and an attorney—witness a murder, become suspects themselves and uncover one of the most outrageous plots in American history.",
+    "keywords": []
+  },
+  "inputHash": "sha256:618faed9c8fdbce385769cfa4a3ec704da79ea91cae8ccc36e9308856e5bd6a3"
+}

@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-20992",
+  "tmdbId": 20992,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "9b791d5654bed5e90bb99dd420b310bead016af77e737a47df5e5bb997d85f7e"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "9b791d5654bed5e90bb99dd420b310bead016af77e737a47df5e5bb997d85f7e"
+    }
+  ],
+  "facts": {
+    "title": "Brother",
+    "year": 1997,
+    "director": "Aleksei Balabanov",
+    "genres": [
+      "Action",
+      "Crime",
+      "Drama"
+    ],
+    "runtimeMinutes": 96,
+    "countries": [
+      "Russia"
+    ],
+    "spokenLanguages": [
+      "Russian"
+    ],
+    "overview": "Danila goes to his successful brother, Victor, in Petersburg to start a new life. Unknown to Danila, Victor is a contract killer, but is in hiding after asking for too much money to assassinate a Chechen mob boss. To avoid exposure, Victor convinces Danila to kill the boss instead.",
+    "keywords": []
+  },
+  "inputHash": "sha256:139793a465dd2bba94ddd98424973447ce4436391de1dcd5c1dffe1ccb60888e"
+}

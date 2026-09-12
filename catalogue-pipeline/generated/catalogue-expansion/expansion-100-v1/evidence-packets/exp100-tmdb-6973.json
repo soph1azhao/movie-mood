@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-6973",
+  "tmdbId": 6973,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "84cb1ddfa5f8ae04e093c712f89e514477f402cd3bdf06b86dc7549ad8aaf90b"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "84cb1ddfa5f8ae04e093c712f89e514477f402cd3bdf06b86dc7549ad8aaf90b"
+    }
+  ],
+  "facts": {
+    "title": "In the Valley of Elah",
+    "year": 2007,
+    "director": "Paul Haggis",
+    "genres": [
+      "Crime",
+      "Drama",
+      "History",
+      "Mystery",
+      "Thriller"
+    ],
+    "runtimeMinutes": 124,
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "A career officer and his wife work with a police detective to uncover the truth behind their son's disappearance following his return from a tour of duty in Iraq.",
+    "keywords": []
+  },
+  "inputHash": "sha256:e6bd3566a05bee6be2657f8f9cb4cf66e45350b0a01809438febc36a27246c33"
+}

@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-967585",
+  "tmdbId": 967585,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "d15a6ec90e6831c2b909d44dc6e759d57defc0af0748b832bb1ab80f0ec6c8b6"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "d15a6ec90e6831c2b909d44dc6e759d57defc0af0748b832bb1ab80f0ec6c8b6"
+    }
+  ],
+  "facts": {
+    "title": "Alibi.com 2",
+    "year": 2023,
+    "director": "Philippe Lacheau",
+    "genres": [
+      "Comedy",
+      "Family"
+    ],
+    "runtimeMinutes": 88,
+    "countries": [
+      "France"
+    ],
+    "spokenLanguages": [
+      "French",
+      "German"
+    ],
+    "overview": "After closing his agency Alibi.com and promising Flo that he would never lie to her again, Greg's new life became quiet, too quiet... Not for long! When he decides to propose to Flo, Greg is up against the wall and has to introduce his family. But with his crooked father and his ex-charm actress mother, this could ruin his future union. He has no choice but to reopen his agency with his former accomplices for an ultimate Alibi and to find more presentable fake parents.",
+    "keywords": []
+  },
+  "inputHash": "sha256:a6fbccd2e013480132b01a5dd31462c392e9891013875013064dfaa38fd03493"
+}

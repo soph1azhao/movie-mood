@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-9647",
+  "tmdbId": 9647,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "9128d5cc70be7be1866bf4a9b212709bc96c518afc1ad123853888d3e01c9cac"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "9128d5cc70be7be1866bf4a9b212709bc96c518afc1ad123853888d3e01c9cac"
+    }
+  ],
+  "facts": {
+    "title": "Scrooged",
+    "year": 1988,
+    "director": "Richard Donner",
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Fantasy"
+    ],
+    "runtimeMinutes": 101,
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "Frank Cross is a wildly successful television executive whose cold ambition and curmudgeonly nature has driven away the love of his life. But after firing a staff member on Christmas Eve, Frank is visited by a series of ghosts who give him a chance to re-evaluate his actions and right the wrongs of his past.",
+    "keywords": []
+  },
+  "inputHash": "sha256:de585f405f38c61894bccc4a1bb48cce644eec5815917e7921b9cd95357d8205"
+}

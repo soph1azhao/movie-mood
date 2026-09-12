@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-16538",
+  "tmdbId": 16538,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "5b3f23a1e51dbcb38918f335869242a540e28be65840271f14357e8d0d458794"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "5b3f23a1e51dbcb38918f335869242a540e28be65840271f14357e8d0d458794"
+    }
+  ],
+  "facts": {
+    "title": "I Love You, Man",
+    "year": 2009,
+    "director": "John Hamburg",
+    "genres": [
+      "Comedy",
+      "Romance"
+    ],
+    "runtimeMinutes": 105,
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "Peter Klaven is a successful real estate agent who, upon getting engaged to the woman of his dreams, Zooey, discovers, to his dismay and chagrin, that he has no male friend close enough to serve as his Best Man. Peter immediately sets out to rectify the situation, embarking on a series of bizarre and awkward \"man-dates.\"",
+    "keywords": []
+  },
+  "inputHash": "sha256:3204e39baf28dac89f266b868feac7701af41b029190197db28fb2d7258bb35a"
+}

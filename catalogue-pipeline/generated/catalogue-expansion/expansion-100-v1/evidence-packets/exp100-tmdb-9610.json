@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-9610",
+  "tmdbId": 9610,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "a619018e0bbf872832ac7953be82c2871c2e2771a920f89b0f1e63aa8f29cd9b"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "a619018e0bbf872832ac7953be82c2871c2e2771a920f89b0f1e63aa8f29cd9b"
+    }
+  ],
+  "facts": {
+    "title": "Conan the Destroyer",
+    "year": 1984,
+    "director": "Richard Fleischer",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Fantasy"
+    ],
+    "runtimeMinutes": 103,
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "Conan is commissioned by the evil queen Taramis to safely escort a teen princess and her powerful bodyguard to a far away castle to retrieve the magic Horn of Dagoth. Unknown to Conan, the queen plans to sacrifice the princess when she returns and inherit her kingdom after the bodyguard kills Conan. The queen's plans fail to take into consideration Conan's strength and cunning and the abilities of his sidekicks: the eccentric wizard Akiro, the warrior woman Zula, and the inept Malak. Together the hero and his allies must defeat both mortal and supernatural foes in this voyage to sword-and-sorcery land.",
+    "keywords": []
+  },
+  "inputHash": "sha256:9b3c83964eed63090d16a66606e47de4913478e2603797054804df9c91655acc"
+}

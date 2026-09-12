@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-62046",
+  "tmdbId": 62046,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "af5c4124c7121d424e0851856003d6aee19aa4967e84e17931fd5cbed1458dfd"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "af5c4124c7121d424e0851856003d6aee19aa4967e84e17931fd5cbed1458dfd"
+    }
+  ],
+  "facts": {
+    "title": "Flypaper",
+    "year": 2011,
+    "director": "Rob Minkoff",
+    "genres": [
+      "Comedy",
+      "Crime",
+      "Mystery"
+    ],
+    "runtimeMinutes": 87,
+    "countries": [
+      "Germany",
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "A man caught in the middle of two simultaneous robberies at a bank desperately tries to protect the teller with whom he's secretly in love.",
+    "keywords": []
+  },
+  "inputHash": "sha256:c6e4ed41f629b7fdc243eb887aeca2ad967862a913ac1ae8119634f9ae0a6e15"
+}

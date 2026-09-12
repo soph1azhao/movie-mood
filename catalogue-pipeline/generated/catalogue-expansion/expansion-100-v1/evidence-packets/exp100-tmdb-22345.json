@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-22345",
+  "tmdbId": 22345,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "ff252fc0b9123a0a6aa7d7d44e69167fd24b3f42af8179b4f5ed2ead57f9941a"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "ff252fc0b9123a0a6aa7d7d44e69167fd24b3f42af8179b4f5ed2ead57f9941a"
+    }
+  ],
+  "facts": {
+    "title": "Baby Geniuses",
+    "year": 1999,
+    "director": "Bob Clark",
+    "genres": [
+      "Comedy",
+      "Family",
+      "Science Fiction"
+    ],
+    "runtimeMinutes": 95,
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "BabyCo is the world's leading manufacturer in baby products. However, what the public doesn't know, is that Drs Kinder and Heep, two of its most brilliant scientists, are tirelessly working in complete secrecy to crack the indecipherable code to 'baby talk': a highly sophisticated language, and the key to the secrets of the universe. Before long, problems arise when mischievous Sly, the smartest of the toddlers, escapes confinement, bent on uniting all babies to free those trapped in the laboratory. Now, Kinder and Heep must find Sly before it is too late.",
+    "keywords": []
+  },
+  "inputHash": "sha256:e2ed2582a5641c8bc4b4b441b46ab07a76ae64ba6672ac07dd038bb3eb2ffc64"
+}

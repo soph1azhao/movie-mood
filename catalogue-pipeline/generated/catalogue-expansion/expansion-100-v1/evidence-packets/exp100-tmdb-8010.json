@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-8010",
+  "tmdbId": 8010,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "fc42ac94f1f179edfb76bed30446031e08be09a3de602cb132870a66ae6f5b11"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "fc42ac94f1f179edfb76bed30446031e08be09a3de602cb132870a66ae6f5b11"
+    }
+  ],
+  "facts": {
+    "title": "Highlander II: The Quickening",
+    "year": 1991,
+    "director": "Russell Mulcahy",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Fantasy",
+      "Science Fiction"
+    ],
+    "runtimeMinutes": 100,
+    "countries": [
+      "United Kingdom",
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "The Prize has been won. Connor MacLeod is mortal... Now an old man on the verge of death, memories of his past on the planet Zeist resurface, where a vengeful enemy, General Katana, plots to destroy him once and for all.",
+    "keywords": []
+  },
+  "inputHash": "sha256:0c386ed18e14838ebadec805e0e29dc38271cfe96c4c860995bdc3f2fa009f60"
+}

@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-21316",
+  "tmdbId": 21316,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "936c2e9cd38efcf2edb4542bb6537277dc505818511942201add9de094c57300"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "936c2e9cd38efcf2edb4542bb6537277dc505818511942201add9de094c57300"
+    }
+  ],
+  "facts": {
+    "title": "Leroy & Stitch",
+    "year": 2006,
+    "director": "Bobs Gannaway & Tony Craig",
+    "genres": [
+      "Animation",
+      "Comedy",
+      "Family",
+      "Science Fiction",
+      "TV Movie"
+    ],
+    "runtimeMinutes": 73,
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "Lilo, Stitch, Jumba, and Pleakley have finally caught all of Jumba's genetic experiments and found the one true place where each of them belongs. Stitch, Jumba and Pleakley are offered positions in the Galactic Alliance, turning them down so they can stay on Earth with Lilo, but Lilo realizes her alien friends have places where they belong – and it's finally time to say \"aloha\".",
+    "keywords": []
+  },
+  "inputHash": "sha256:134927078309199901bb435cbbe5dc9e385d4db2cc0e260d802d2d031d3ed524"
+}

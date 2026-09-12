@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-1075",
+  "tmdbId": 1075,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "8b9690f43f910209eccc44bc35e4928023a6e4fbcb6759564234e30f2671acb2"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "8b9690f43f910209eccc44bc35e4928023a6e4fbcb6759564234e30f2671acb2"
+    }
+  ],
+  "facts": {
+    "title": "Black Cat, White Cat",
+    "year": 1998,
+    "director": "Emir Kusturica",
+    "genres": [
+      "Comedy",
+      "Crime",
+      "Romance"
+    ],
+    "runtimeMinutes": 127,
+    "countries": [
+      "France",
+      "Germany",
+      "Serbia and Montenegro",
+      "Yugoslavia"
+    ],
+    "spokenLanguages": [
+      "Bulgarian",
+      "Serbian"
+    ],
+    "overview": "A small-time hustler makes a deal with a notorious gangster to whom he owes money: marry his teenage son to the latter's daughter. However, the young lovers are not as agreeable.",
+    "keywords": []
+  },
+  "inputHash": "sha256:bf731abcfe979edd9e5fd3b69f72fbd891dde05bada01c339569e61fa6dffd1b"
+}

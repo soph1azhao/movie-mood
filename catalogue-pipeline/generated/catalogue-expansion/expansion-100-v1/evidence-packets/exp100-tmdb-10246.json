@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-10246",
+  "tmdbId": 10246,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "0111243572c7701ab776b9cdf54d8578342afa23f02b3ed96b738e1c61fca37c"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "0111243572c7701ab776b9cdf54d8578342afa23f02b3ed96b738e1c61fca37c"
+    }
+  ],
+  "facts": {
+    "title": "Porky's",
+    "year": 1981,
+    "director": "Bob Clark",
+    "genres": [
+      "Comedy"
+    ],
+    "runtimeMinutes": 94,
+    "countries": [
+      "Canada"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "In 1954 Florida, a group of high school boys head to a strip club in the Everglades in an attempt to lose their collective virginity. When the club's owner and his sheriff brother swindle them out of their money and embarrass them, the boys plan revenge.",
+    "keywords": []
+  },
+  "inputHash": "sha256:f1b0406146387ed23e12fad7b226a80d05ef99c06534dffa6a6686c9fe050772"
+}

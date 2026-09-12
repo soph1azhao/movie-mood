@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-4421",
+  "tmdbId": 4421,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "49cb7e7d6b3b102e0d4c037a2212093e31eb758ddeb1a2aa2562d0f8195d54a3"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "49cb7e7d6b3b102e0d4c037a2212093e31eb758ddeb1a2aa2562d0f8195d54a3"
+    }
+  ],
+  "facts": {
+    "title": "G.I. Jane",
+    "year": 1997,
+    "director": "Ridley Scott",
+    "genres": [
+      "Action",
+      "Drama",
+      "War"
+    ],
+    "runtimeMinutes": 125,
+    "countries": [
+      "United Kingdom",
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "In response to political pressure from Senator Lillian DeHaven, the U.S. Navy begins a program that would allow for the eventual integration of women into its combat services. The program begins with a single trial candidate, Lieutenant Jordan O'Neil, who is chosen specifically for her femininity. O'Neil enters the grueling Navy SEAL training program under the command of Master Chief John James Urgayle, who unfairly pushes O'Neil until her determination wins his respect.",
+    "keywords": []
+  },
+  "inputHash": "sha256:2bae1eb5c94e78a9a170129094803fed972106211a394e4de06a9548901dfdfe"
+}

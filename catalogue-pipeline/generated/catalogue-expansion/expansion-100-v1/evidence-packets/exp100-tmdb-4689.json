@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-4689",
+  "tmdbId": 4689,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "4b7b3cbc5daa9301af573ada0c788a92d70ca45c82841fbb787da8470dfa6573"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "4b7b3cbc5daa9301af573ada0c788a92d70ca45c82841fbb787da8470dfa6573"
+    }
+  ],
+  "facts": {
+    "title": "Sympathy for Mr. Vengeance",
+    "year": 2002,
+    "director": "Park Chan-wook",
+    "genres": [
+      "Action",
+      "Drama",
+      "Thriller"
+    ],
+    "runtimeMinutes": 129,
+    "countries": [
+      "South Korea"
+    ],
+    "spokenLanguages": [
+      "Korean"
+    ],
+    "overview": "A deaf man and his girlfriend resort to desperate measures in order to fund a kidney transplant for his sister. Things go horribly wrong, and the situation spirals rapidly into a cycle of violence and revenge.",
+    "keywords": []
+  },
+  "inputHash": "sha256:d211bf90c76f3565b4792e134c4c8ff88df5f0df1b217016cde51022785f7615"
+}

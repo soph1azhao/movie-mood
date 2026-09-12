@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-238215",
+  "tmdbId": 238215,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "0821c7cefd3acd310e653a8a9fc90c749182ac9f41158234de0076ca33b31a98"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "0821c7cefd3acd310e653a8a9fc90c749182ac9f41158234de0076ca33b31a98"
+    }
+  ],
+  "facts": {
+    "title": "The Cobbler",
+    "year": 2014,
+    "director": "Tom McCarthy",
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Fantasy"
+    ],
+    "runtimeMinutes": 99,
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "Max Simkin repairs shoes in the same New York shop that has been in his family for generations. Disenchanted with the grind of daily life, Max stumbles upon a magical heirloom that allows him to step into the lives of his customers and see the world in a new way. Sometimes walking in another man's shoes is the only way one can discover who they really are.",
+    "keywords": []
+  },
+  "inputHash": "sha256:b2d81ff0cadbf8cf348bc8b6a9d89265b978f92a6427d34d39558950705526bd"
+}

@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-496450",
+  "tmdbId": 496450,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "2088e2acbe37d82215eda3805ac00cbfa7b4150823e16f52ac88d3ac04f55d42"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "2088e2acbe37d82215eda3805ac00cbfa7b4150823e16f52ac88d3ac04f55d42"
+    }
+  ],
+  "facts": {
+    "title": "Miraculous: Ladybug & Cat Noir, The Movie",
+    "year": 2023,
+    "director": "Jeremy Zag",
+    "genres": [
+      "Action",
+      "Animation",
+      "Family",
+      "Fantasy",
+      "Romance"
+    ],
+    "runtimeMinutes": 105,
+    "countries": [
+      "Canada",
+      "China",
+      "France"
+    ],
+    "spokenLanguages": [
+      "English",
+      "French"
+    ],
+    "overview": "After a guardian of magical jewels turns an awkward girl and a popular boy into superheroes, they can never reveal their identities — even to each other.",
+    "keywords": []
+  },
+  "inputHash": "sha256:760233385ce18ef39f520599b4f431e49787db422c088a804c156dc860e21941"
+}

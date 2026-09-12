@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-14208",
+  "tmdbId": 14208,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "fca541a87868d0730771eb3ca261cc1d48739e02882c4ac1d45829cb1e4449e3"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "fca541a87868d0730771eb3ca261cc1d48739e02882c4ac1d45829cb1e4449e3"
+    }
+  ],
+  "facts": {
+    "title": "The Librarian: Return to King Solomon's Mines",
+    "year": 2006,
+    "director": "Jonathan Frakes",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Fantasy"
+    ],
+    "runtimeMinutes": 92,
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "Arabic",
+      "English",
+      "French"
+    ],
+    "overview": "After retrieving the Crystal Skull in Utah, Flynn Carsen receives a map in the mail with the secret location of King Solomon's Mines. When the scroll is stolen, Judson explains the power of the Key of Solomon's book and assigns Flynn to retrieve the map. The map is useless without the legend piece to decipher it, which is located in Volubilis near the Roman ruins in Morocco. Flynn heads to Casablanca to the ruins where he is chased by a group of mercenaries leaded by General Samir. They too want to find the location of King Solomon's mines. Flynn teams-up with Professor Emily Davenport working in the dig and they escape from General Samir and his men. While traveling to Gedi, they save the local Jomo from death and the trio faces a dangerous journey through the wild Africa.",
+    "keywords": []
+  },
+  "inputHash": "sha256:d7c21382c83a8a21227405ce47038b3514eaa98e40f721ac1ca0f8491fdbe44a"
+}

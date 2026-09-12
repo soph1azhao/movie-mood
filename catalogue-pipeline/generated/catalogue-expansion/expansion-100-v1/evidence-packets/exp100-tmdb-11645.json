@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-11645",
+  "tmdbId": 11645,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "76ae8ab6031b555cf0a297bddfa539e926a1995eec59b3642ba14087334e2589"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "76ae8ab6031b555cf0a297bddfa539e926a1995eec59b3642ba14087334e2589"
+    }
+  ],
+  "facts": {
+    "title": "Ran",
+    "year": 1985,
+    "director": "Akira Kurosawa",
+    "genres": [
+      "Action",
+      "Drama",
+      "History"
+    ],
+    "runtimeMinutes": 160,
+    "countries": [
+      "France",
+      "Japan"
+    ],
+    "spokenLanguages": [
+      "Japanese"
+    ],
+    "overview": "Shakespeare's King Lear is reimagined as a singular historical epic set in sixteenth-century Japan where an aging warlord divides his kingdom between his three sons.",
+    "keywords": []
+  },
+  "inputHash": "sha256:04c0b294806d1a6270150f21bb704afe558b4cfa8ef7b43225f923fb9f9d5735"
+}

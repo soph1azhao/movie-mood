@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-8222",
+  "tmdbId": 8222,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "62a03adaa2277ac6f84b0b23acc60b0bbe59d0ad70d3f06d94d68e2cb9392040"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "62a03adaa2277ac6f84b0b23acc60b0bbe59d0ad70d3f06d94d68e2cb9392040"
+    }
+  ],
+  "facts": {
+    "title": "High Heels",
+    "year": 1991,
+    "director": "Pedro Almodóvar",
+    "genres": [
+      "Comedy",
+      "Crime",
+      "Drama"
+    ],
+    "runtimeMinutes": 114,
+    "countries": [
+      "France",
+      "Spain"
+    ],
+    "spokenLanguages": [
+      "Spanish"
+    ],
+    "overview": "After being estranged for 15 years, flamboyant actress Becky del Paramo re-enters her daughter Rebeca's life when she comes to perform a concert.  Rebeca, she finds, is now married to one of Becky's ex-lovers, Manuel. The mother and daughter begin making up for lost time, when suddenly, a murder occurs...",
+    "keywords": []
+  },
+  "inputHash": "sha256:dadde00181ca683b654219e569c86d10ab29abad4cd5414cc1b2c50803c03237"
+}

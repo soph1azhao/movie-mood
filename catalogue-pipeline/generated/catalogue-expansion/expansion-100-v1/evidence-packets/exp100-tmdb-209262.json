@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-209262",
+  "tmdbId": 209262,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "babf23f6e4ae4bae68c80b7f0d80e2b23ca2de2708e404e41bcb3f4733588eed"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "babf23f6e4ae4bae68c80b7f0d80e2b23ca2de2708e404e41bcb3f4733588eed"
+    }
+  ],
+  "facts": {
+    "title": "Parkland",
+    "year": 2013,
+    "director": "Peter Landesman",
+    "genres": [
+      "Drama",
+      "History"
+    ],
+    "runtimeMinutes": 94,
+    "countries": [
+      "United Kingdom",
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "November 22nd, 1963 was a day that changed the world forever — when young American President John F. Kennedy was assassinated in Dallas, Texas. This film follows, almost in real time, a handful of individuals forced to make split-second decisions after an event that would change their lives and forever alter the world’s landscape.",
+    "keywords": []
+  },
+  "inputHash": "sha256:0f35685ddde9de8c06fbd83b59cf9e3961b0b6e9f129935e1134383c53a4b4a5"
+}

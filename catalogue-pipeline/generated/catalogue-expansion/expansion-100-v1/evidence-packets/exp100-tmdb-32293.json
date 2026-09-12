@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-32293",
+  "tmdbId": 32293,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "52303c0e8cff9a3d96d87a9215d4750194106ce9500dacc0c512516cb98f6a05"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "52303c0e8cff9a3d96d87a9215d4750194106ce9500dacc0c512516cb98f6a05"
+    }
+  ],
+  "facts": {
+    "title": "The Cheetah Girls",
+    "year": 2003,
+    "director": "Oz Scott",
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Family",
+      "Music",
+      "TV Movie"
+    ],
+    "runtimeMinutes": 89,
+    "countries": [
+      "Canada",
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "A four-member teen girl group named the Cheetah Girls go to a Manhattan High School for the Performing Arts and try to become the first freshmen to win the talent show in the school's history. During the talent show auditions, they meet a big-time producer named Jackal Johnson, who tries to make the group into superstars, but the girls run into many problems.",
+    "keywords": []
+  },
+  "inputHash": "sha256:6c0dbdb1562ee54138cae8673bd3508abc823b6e249bdea8bb2a6b772e7816ca"
+}

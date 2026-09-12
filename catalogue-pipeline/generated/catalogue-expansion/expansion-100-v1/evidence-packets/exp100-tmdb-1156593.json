@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-1156593",
+  "tmdbId": 1156593,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "fcbb474a5f9d7c6c7d249718dfa5cc96da0b22b7a29f8f8d19163f0a8509edf1"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "fcbb474a5f9d7c6c7d249718dfa5cc96da0b22b7a29f8f8d19163f0a8509edf1"
+    }
+  ],
+  "facts": {
+    "title": "Your Fault",
+    "year": 2024,
+    "director": "Domingo González",
+    "genres": [
+      "Drama",
+      "Romance"
+    ],
+    "runtimeMinutes": 117,
+    "countries": [
+      "Spain",
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "Spanish"
+    ],
+    "overview": "The love between Noah and Nick seems unwavering despite their parents' attempts to separate them. But his job and her entry into college open up their lives to new relationships that will shake the foundations of both their relationship and the Leister family itself.",
+    "keywords": []
+  },
+  "inputHash": "sha256:fb23f934207f89cc9aacd7729427b8497121689117c7df007b0ea9edee65b690"
+}

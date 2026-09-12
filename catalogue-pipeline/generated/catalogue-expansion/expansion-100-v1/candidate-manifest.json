@@ -1,0 +1,3131 @@
+{
+  "batchId": "expansion-100-v1",
+  "schemaVersion": "candidate.v1",
+  "artifactSchemaVersion": "catalogue-expansion-candidate-manifest.v1",
+  "sourcePolicy": {
+    "description": "Production-oriented 100-film cohort: 20 per decade, fixed familiarity bands, balanced English/non-English selection, and deterministic genre/language rotation.",
+    "licensingNotes": [
+      "TMDB discovery metadata and identifiers are used for maintainer-side catalogue preparation."
+    ],
+    "selectionPolicyVersion": "production-diversity-round-robin.v1",
+    "decadeQuotas": {
+      "1980s": 20,
+      "1990s": 20,
+      "2000s": 20,
+      "2010s": 20,
+      "2020s": 20
+    },
+    "familiarityBandQuotasPerDecade": {
+      "mainstream": 7,
+      "familiar": 7,
+      "discovery": 6
+    },
+    "minimumVoteCount": 200,
+    "existingProductionTmdbIdsExcluded": true,
+    "overviewAndPosterRequiredAtSelection": true
+  },
+  "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+  "candidates": [
+    {
+      "candidateId": "exp100-tmdb-36819",
+      "tmdbId": 36819,
+      "title": "Time Bandits",
+      "year": 1981,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1980s",
+        "mainstream",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 1980s / mainstream production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1981"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 0,
+        "bucketIndex": 0,
+        "originalLanguage": "en",
+        "primaryGenreId": 10751,
+        "voteCount": 1196,
+        "voteAverage": 6.63,
+        "popularity": 6.3879
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-11645",
+      "tmdbId": 11645,
+      "title": "Ran",
+      "year": 1985,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1980s",
+        "mainstream",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 1980s / mainstream production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1985"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 1,
+        "bucketIndex": 1,
+        "originalLanguage": "ja",
+        "primaryGenreId": 28,
+        "voteCount": 1902,
+        "voteAverage": 8.018,
+        "popularity": 8.047
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-10015",
+      "tmdbId": 10015,
+      "title": "Heartbreak Ridge",
+      "year": 1986,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1980s",
+        "mainstream",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 1980s / mainstream production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1986"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 2,
+        "bucketIndex": 2,
+        "originalLanguage": "en",
+        "primaryGenreId": 10752,
+        "voteCount": 1158,
+        "voteAverage": 6.911,
+        "popularity": 5.3562
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-175",
+      "tmdbId": 175,
+      "title": "The Big Blue",
+      "year": 1988,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1980s",
+        "mainstream",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 1980s / mainstream production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1988"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 3,
+        "bucketIndex": 3,
+        "originalLanguage": "fr",
+        "primaryGenreId": 10749,
+        "voteCount": 1615,
+        "voteAverage": 7.446,
+        "popularity": 6.3341
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-9610",
+      "tmdbId": 9610,
+      "title": "Conan the Destroyer",
+      "year": 1984,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1980s",
+        "mainstream",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 1980s / mainstream production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1984"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 4,
+        "bucketIndex": 4,
+        "originalLanguage": "en",
+        "primaryGenreId": 12,
+        "voteCount": 1725,
+        "voteAverage": 6.136,
+        "popularity": 7.0675
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-144",
+      "tmdbId": 144,
+      "title": "Wings of Desire",
+      "year": 1987,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1980s",
+        "mainstream",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 1980s / mainstream production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1987"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 5,
+        "bucketIndex": 5,
+        "originalLanguage": "de",
+        "primaryGenreId": 18,
+        "voteCount": 1531,
+        "voteAverage": 7.8,
+        "popularity": 4.1146
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-9647",
+      "tmdbId": 9647,
+      "title": "Scrooged",
+      "year": 1988,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1980s",
+        "mainstream",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 1980s / mainstream production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1988"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 6,
+        "bucketIndex": 6,
+        "originalLanguage": "en",
+        "primaryGenreId": 14,
+        "voteCount": 1750,
+        "voteAverage": 6.789,
+        "popularity": 5.696
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-10651",
+      "tmdbId": 10651,
+      "title": "The Dead Pool",
+      "year": 1988,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1980s",
+        "familiar",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 1980s / familiar production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1988"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 7,
+        "bucketIndex": 0,
+        "originalLanguage": "en",
+        "primaryGenreId": 28,
+        "voteCount": 981,
+        "voteAverage": 6.275,
+        "popularity": 4.7302
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-8740",
+      "tmdbId": 8740,
+      "title": "The Vanishing",
+      "year": 1988,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1980s",
+        "familiar",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 1980s / familiar production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1988"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 8,
+        "bucketIndex": 1,
+        "originalLanguage": "nl",
+        "primaryGenreId": 53,
+        "voteCount": 866,
+        "voteAverage": 7.402,
+        "popularity": 8.3728
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-10246",
+      "tmdbId": 10246,
+      "title": "Porky's",
+      "year": 1981,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1980s",
+        "familiar",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 1980s / familiar production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1981"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 9,
+        "bucketIndex": 2,
+        "originalLanguage": "en",
+        "primaryGenreId": 35,
+        "voteCount": 994,
+        "voteAverage": 6.396,
+        "popularity": 5.7264
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-11953",
+      "tmdbId": 11953,
+      "title": "Kagemusha",
+      "year": 1980,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1980s",
+        "familiar",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 1980s / familiar production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1980"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 10,
+        "bucketIndex": 3,
+        "originalLanguage": "ja",
+        "primaryGenreId": 28,
+        "voteCount": 764,
+        "voteAverage": 7.8,
+        "popularity": 4.5585
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-11509",
+      "tmdbId": 11509,
+      "title": "Silverado",
+      "year": 1985,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1980s",
+        "familiar",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 1980s / familiar production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1985"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 11,
+        "bucketIndex": 4,
+        "originalLanguage": "en",
+        "primaryGenreId": 37,
+        "voteCount": 848,
+        "voteAverage": 6.95,
+        "popularity": 5.5791
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-37775",
+      "tmdbId": 37775,
+      "title": "Bianco, rosso e Verdone",
+      "year": 1981,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1980s",
+        "familiar",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 1980s / familiar production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1981"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 12,
+        "bucketIndex": 5,
+        "originalLanguage": "it",
+        "primaryGenreId": 35,
+        "voteCount": 757,
+        "voteAverage": 7.329,
+        "popularity": 1.5169
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-10493",
+      "tmdbId": 10493,
+      "title": "Dead Calm",
+      "year": 1989,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1980s",
+        "familiar",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 1980s / familiar production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1989"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 13,
+        "bucketIndex": 6,
+        "originalLanguage": "en",
+        "primaryGenreId": 53,
+        "voteCount": 852,
+        "voteAverage": 6.558,
+        "popularity": 5.6419
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-19933",
+      "tmdbId": 19933,
+      "title": "The Brave Little Toaster",
+      "year": 1987,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1980s",
+        "discovery",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 1980s / discovery production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1987"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 14,
+        "bucketIndex": 0,
+        "originalLanguage": "en",
+        "primaryGenreId": 16,
+        "voteCount": 494,
+        "voteAverage": 6.947,
+        "popularity": 3.6339
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-3",
+      "tmdbId": 3,
+      "title": "Shadows in Paradise",
+      "year": 1986,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1980s",
+        "discovery",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 1980s / discovery production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1986"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 15,
+        "bucketIndex": 1,
+        "originalLanguage": "fi",
+        "primaryGenreId": 18,
+        "voteCount": 449,
+        "voteAverage": 7.264,
+        "popularity": 2.4059
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-15392",
+      "tmdbId": 15392,
+      "title": "Crossroads",
+      "year": 1986,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1980s",
+        "discovery",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 1980s / discovery production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1986"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 16,
+        "bucketIndex": 2,
+        "originalLanguage": "en",
+        "primaryGenreId": 18,
+        "voteCount": 494,
+        "voteAverage": 7.334,
+        "popularity": 4.1881
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-3543",
+      "tmdbId": 3543,
+      "title": "Bagdad Cafe",
+      "year": 1987,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1980s",
+        "discovery",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 1980s / discovery production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1987"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 17,
+        "bucketIndex": 3,
+        "originalLanguage": "de",
+        "primaryGenreId": 35,
+        "voteCount": 447,
+        "voteAverage": 7.188,
+        "popularity": 2.7268
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-17918",
+      "tmdbId": 17918,
+      "title": "Swamp Thing",
+      "year": 1982,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1980s",
+        "discovery",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 1980s / discovery production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1982"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 18,
+        "bucketIndex": 4,
+        "originalLanguage": "en",
+        "primaryGenreId": 27,
+        "voteCount": 488,
+        "voteAverage": 5.42,
+        "popularity": 4.4752
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-60175",
+      "tmdbId": 60175,
+      "title": "The Under-Gifted",
+      "year": 1980,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1980s",
+        "discovery",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 1980s / discovery production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1980"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 19,
+        "bucketIndex": 5,
+        "originalLanguage": "fr",
+        "primaryGenreId": 35,
+        "voteCount": 495,
+        "voteAverage": 6.462,
+        "popularity": 2.0617
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-4421",
+      "tmdbId": 4421,
+      "title": "G.I. Jane",
+      "year": 1997,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1990s",
+        "mainstream",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 1990s / mainstream production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1997"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 20,
+        "bucketIndex": 0,
+        "originalLanguage": "en",
+        "primaryGenreId": 28,
+        "voteCount": 1913,
+        "voteAverage": 6.493,
+        "popularity": 7.3006
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-666",
+      "tmdbId": 666,
+      "title": "Central Station",
+      "year": 1998,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1990s",
+        "mainstream",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 1990s / mainstream production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1998"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 21,
+        "bucketIndex": 1,
+        "originalLanguage": "pt",
+        "primaryGenreId": 18,
+        "voteCount": 1073,
+        "voteAverage": 8.122,
+        "popularity": 3.8965
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-10377",
+      "tmdbId": 10377,
+      "title": "My Cousin Vinny",
+      "year": 1992,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1990s",
+        "mainstream",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 1990s / mainstream production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1992"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 22,
+        "bucketIndex": 2,
+        "originalLanguage": "en",
+        "primaryGenreId": 35,
+        "voteCount": 1972,
+        "voteAverage": 7.503,
+        "popularity": 7.875
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-18491",
+      "tmdbId": 18491,
+      "title": "Neon Genesis Evangelion: The End of Evangelion",
+      "year": 1997,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1990s",
+        "mainstream",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 1990s / mainstream production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1997"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 23,
+        "bucketIndex": 3,
+        "originalLanguage": "ja",
+        "primaryGenreId": 16,
+        "voteCount": 1952,
+        "voteAverage": 8.263,
+        "popularity": 12.455
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-11450",
+      "tmdbId": 11450,
+      "title": "Quiz Show",
+      "year": 1994,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1990s",
+        "mainstream",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 1990s / mainstream production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1994"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 24,
+        "bucketIndex": 4,
+        "originalLanguage": "en",
+        "primaryGenreId": 36,
+        "voteCount": 1015,
+        "voteAverage": 7.247,
+        "popularity": 4.1417
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-108",
+      "tmdbId": 108,
+      "title": "Three Colors: Blue",
+      "year": 1993,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1990s",
+        "mainstream",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 1990s / mainstream production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1993"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 25,
+        "bucketIndex": 5,
+        "originalLanguage": "fr",
+        "primaryGenreId": 18,
+        "voteCount": 1946,
+        "voteAverage": 7.6,
+        "popularity": 4.573
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-9349",
+      "tmdbId": 9349,
+      "title": "Universal Soldier",
+      "year": 1992,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1990s",
+        "mainstream",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 1990s / mainstream production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1992"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 26,
+        "bucketIndex": 6,
+        "originalLanguage": "en",
+        "primaryGenreId": 53,
+        "voteCount": 1990,
+        "voteAverage": 6.351,
+        "popularity": 9.0176
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-8010",
+      "tmdbId": 8010,
+      "title": "Highlander II: The Quickening",
+      "year": 1991,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1990s",
+        "familiar",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 1990s / familiar production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1991"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 27,
+        "bucketIndex": 0,
+        "originalLanguage": "en",
+        "primaryGenreId": 14,
+        "voteCount": 995,
+        "voteAverage": 4.686,
+        "popularity": 5.0985
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-1075",
+      "tmdbId": 1075,
+      "title": "Black Cat, White Cat",
+      "year": 1998,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1990s",
+        "familiar",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 1990s / familiar production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1998"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 28,
+        "bucketIndex": 1,
+        "originalLanguage": "sr",
+        "primaryGenreId": 35,
+        "voteCount": 845,
+        "voteAverage": 7.644,
+        "popularity": 3.3633
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-13151",
+      "tmdbId": 13151,
+      "title": "Scooby-Doo on Zombie Island",
+      "year": 1998,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1990s",
+        "familiar",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 1990s / familiar production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1998"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 29,
+        "bucketIndex": 2,
+        "originalLanguage": "en",
+        "primaryGenreId": 16,
+        "voteCount": 883,
+        "voteAverage": 7.678,
+        "popularity": 5.0999
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-10404",
+      "tmdbId": 10404,
+      "title": "Raise the Red Lantern",
+      "year": 1991,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1990s",
+        "familiar",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 1990s / familiar production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1991"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 30,
+        "bucketIndex": 3,
+        "originalLanguage": "zh",
+        "primaryGenreId": 18,
+        "voteCount": 818,
+        "voteAverage": 7.914,
+        "popularity": 7.7925
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-2759",
+      "tmdbId": 2759,
+      "title": "The Adventures of Priscilla, Queen of the Desert",
+      "year": 1994,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1990s",
+        "familiar",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 1990s / familiar production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1994"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 31,
+        "bucketIndex": 4,
+        "originalLanguage": "en",
+        "primaryGenreId": 18,
+        "voteCount": 955,
+        "voteAverage": 7.253,
+        "popularity": 3.7403
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-11782",
+      "tmdbId": 11782,
+      "title": "Hard Boiled",
+      "year": 1992,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1990s",
+        "familiar",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 1990s / familiar production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1992"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 32,
+        "bucketIndex": 5,
+        "originalLanguage": "cn",
+        "primaryGenreId": 28,
+        "voteCount": 980,
+        "voteAverage": 7.521,
+        "popularity": 8.8711
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-11377",
+      "tmdbId": 11377,
+      "title": "House on Haunted Hill",
+      "year": 1999,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1990s",
+        "familiar",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 1990s / familiar production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1999"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 33,
+        "bucketIndex": 6,
+        "originalLanguage": "en",
+        "primaryGenreId": 27,
+        "voteCount": 981,
+        "voteAverage": 5.622,
+        "popularity": 5.0877
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-18129",
+      "tmdbId": 18129,
+      "title": "The Grifters",
+      "year": 1990,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1990s",
+        "discovery",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 1990s / discovery production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1990"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 34,
+        "bucketIndex": 0,
+        "originalLanguage": "en",
+        "primaryGenreId": 80,
+        "voteCount": 496,
+        "voteAverage": 6.508,
+        "popularity": 4.3555
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-20992",
+      "tmdbId": 20992,
+      "title": "Brother",
+      "year": 1997,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1990s",
+        "discovery",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 1990s / discovery production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1997"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 35,
+        "bucketIndex": 1,
+        "originalLanguage": "ru",
+        "primaryGenreId": 80,
+        "voteCount": 492,
+        "voteAverage": 7.481,
+        "popularity": 2.2458
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-22345",
+      "tmdbId": 22345,
+      "title": "Baby Geniuses",
+      "year": 1999,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1990s",
+        "discovery",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 1990s / discovery production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1999"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 36,
+        "bucketIndex": 2,
+        "originalLanguage": "en",
+        "primaryGenreId": 878,
+        "voteCount": 427,
+        "voteAverage": 4.089,
+        "popularity": 3.2106
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-48254",
+      "tmdbId": 48254,
+      "title": "Ovosodo",
+      "year": 1997,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1990s",
+        "discovery",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 1990s / discovery production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1997"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 37,
+        "bucketIndex": 3,
+        "originalLanguage": "it",
+        "primaryGenreId": 35,
+        "voteCount": 485,
+        "voteAverage": 7.2,
+        "popularity": 1.4997
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-10349",
+      "tmdbId": 10349,
+      "title": "The Dark Half",
+      "year": 1993,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1990s",
+        "discovery",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 1990s / discovery production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1993"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 38,
+        "bucketIndex": 4,
+        "originalLanguage": "en",
+        "primaryGenreId": 9648,
+        "voteCount": 484,
+        "voteAverage": 5.973,
+        "popularity": 4.8669
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-8222",
+      "tmdbId": 8222,
+      "title": "High Heels",
+      "year": 1991,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "1990s",
+        "discovery",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 1990s / discovery production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-1991"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 39,
+        "bucketIndex": 5,
+        "originalLanguage": "es",
+        "primaryGenreId": 18,
+        "voteCount": 477,
+        "voteAverage": 7.004,
+        "popularity": 3.4369
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-16538",
+      "tmdbId": 16538,
+      "title": "I Love You, Man",
+      "year": 2009,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2000s",
+        "mainstream",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 2000s / mainstream production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2009"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 40,
+        "bucketIndex": 0,
+        "originalLanguage": "en",
+        "primaryGenreId": 35,
+        "voteCount": 1995,
+        "voteAverage": 6.568,
+        "popularity": 5.0671
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-9550",
+      "tmdbId": 9550,
+      "title": "House of Flying Daggers",
+      "year": 2004,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2000s",
+        "mainstream",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 2000s / mainstream production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2004"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 41,
+        "bucketIndex": 1,
+        "originalLanguage": "zh",
+        "primaryGenreId": 12,
+        "voteCount": 1845,
+        "voteAverage": 7.27,
+        "popularity": 9.0292
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-6973",
+      "tmdbId": 6973,
+      "title": "In the Valley of Elah",
+      "year": 2007,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2000s",
+        "mainstream",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 2000s / mainstream production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2007"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 42,
+        "bucketIndex": 2,
+        "originalLanguage": "en",
+        "primaryGenreId": 36,
+        "voteCount": 1130,
+        "voteAverage": 6.781,
+        "popularity": 4.46
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-11075",
+      "tmdbId": 11075,
+      "title": "Audition",
+      "year": 2000,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2000s",
+        "mainstream",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 2000s / mainstream production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2000"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 43,
+        "bucketIndex": 3,
+        "originalLanguage": "ja",
+        "primaryGenreId": 27,
+        "voteCount": 1844,
+        "voteAverage": 7.113,
+        "popularity": 6.8919
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-2023",
+      "tmdbId": 2023,
+      "title": "Hidalgo",
+      "year": 2004,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2000s",
+        "mainstream",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 2000s / mainstream production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2004"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 44,
+        "bucketIndex": 4,
+        "originalLanguage": "en",
+        "primaryGenreId": 37,
+        "voteCount": 1396,
+        "voteAverage": 6.918,
+        "popularity": 4.5399
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-4689",
+      "tmdbId": 4689,
+      "title": "Sympathy for Mr. Vengeance",
+      "year": 2002,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2000s",
+        "mainstream",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 2000s / mainstream production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2002"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 45,
+        "bucketIndex": 5,
+        "originalLanguage": "ko",
+        "primaryGenreId": 28,
+        "voteCount": 1773,
+        "voteAverage": 7.465,
+        "popularity": 7.5654
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-22825",
+      "tmdbId": 22825,
+      "title": "The Box",
+      "year": 2009,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2000s",
+        "mainstream",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 2000s / mainstream production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2009"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 46,
+        "bucketIndex": 6,
+        "originalLanguage": "en",
+        "primaryGenreId": 53,
+        "voteCount": 1941,
+        "voteAverage": 5.639,
+        "popularity": 6.0704
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-10479",
+      "tmdbId": 10479,
+      "title": "Rules of Engagement",
+      "year": 2000,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2000s",
+        "familiar",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 2000s / familiar production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2000"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 47,
+        "bucketIndex": 0,
+        "originalLanguage": "en",
+        "primaryGenreId": 10752,
+        "voteCount": 823,
+        "voteAverage": 6.247,
+        "popularity": 5.2658
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-12289",
+      "tmdbId": 12289,
+      "title": "Red Cliff",
+      "year": 2008,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2000s",
+        "familiar",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 2000s / familiar production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2008"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 48,
+        "bucketIndex": 1,
+        "originalLanguage": "zh",
+        "primaryGenreId": 12,
+        "voteCount": 911,
+        "voteAverage": 7.11,
+        "popularity": 6.4714
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-21316",
+      "tmdbId": 21316,
+      "title": "Leroy & Stitch",
+      "year": 2006,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2000s",
+        "familiar",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 2000s / familiar production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2006"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 49,
+        "bucketIndex": 2,
+        "originalLanguage": "en",
+        "primaryGenreId": 10770,
+        "voteCount": 625,
+        "voteAverage": 6.52,
+        "popularity": 5.3477
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-2440",
+      "tmdbId": 2440,
+      "title": "Joint Security Area",
+      "year": 2000,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2000s",
+        "familiar",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 2000s / familiar production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2000"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 50,
+        "bucketIndex": 3,
+        "originalLanguage": "ko",
+        "primaryGenreId": 18,
+        "voteCount": 874,
+        "voteAverage": 7.8,
+        "popularity": 5.4043
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-9681",
+      "tmdbId": 9681,
+      "title": "Casanova",
+      "year": 2005,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2000s",
+        "familiar",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 2000s / familiar production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2005"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 51,
+        "bucketIndex": 4,
+        "originalLanguage": "en",
+        "primaryGenreId": 12,
+        "voteCount": 968,
+        "voteAverage": 6.461,
+        "popularity": 2.9371
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-1989",
+      "tmdbId": 1989,
+      "title": "My Blueberry Nights",
+      "year": 2007,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2000s",
+        "familiar",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 2000s / familiar production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2007"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 52,
+        "bucketIndex": 5,
+        "originalLanguage": "cn",
+        "primaryGenreId": 18,
+        "voteCount": 868,
+        "voteAverage": 6.407,
+        "popularity": 3.4566
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-14208",
+      "tmdbId": 14208,
+      "title": "The Librarian: Return to King Solomon's Mines",
+      "year": 2006,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2000s",
+        "familiar",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 2000s / familiar production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2006"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 53,
+        "bucketIndex": 6,
+        "originalLanguage": "en",
+        "primaryGenreId": 14,
+        "voteCount": 648,
+        "voteAverage": 6.265,
+        "popularity": 4.8853
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-26320",
+      "tmdbId": 26320,
+      "title": "Taking Woodstock",
+      "year": 2009,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2000s",
+        "discovery",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 2000s / discovery production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2009"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 54,
+        "bucketIndex": 0,
+        "originalLanguage": "en",
+        "primaryGenreId": 10402,
+        "voteCount": 488,
+        "voteAverage": 6.197,
+        "popularity": 3.5015
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-5595",
+      "tmdbId": 5595,
+      "title": "Fermat's Room",
+      "year": 2007,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2000s",
+        "discovery",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 2000s / discovery production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2007"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 55,
+        "bucketIndex": 1,
+        "originalLanguage": "es",
+        "primaryGenreId": 9648,
+        "voteCount": 474,
+        "voteAverage": 6.628,
+        "popularity": 2.9672
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-2621",
+      "tmdbId": 2621,
+      "title": "Return to Me",
+      "year": 2000,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2000s",
+        "discovery",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 2000s / discovery production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2000"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 56,
+        "bucketIndex": 2,
+        "originalLanguage": "en",
+        "primaryGenreId": 10749,
+        "voteCount": 484,
+        "voteAverage": 6.676,
+        "popularity": 3.1795
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-21786",
+      "tmdbId": 21786,
+      "title": "Cold Prey",
+      "year": 2006,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2000s",
+        "discovery",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 2000s / discovery production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2006"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 57,
+        "bucketIndex": 3,
+        "originalLanguage": "no",
+        "primaryGenreId": 27,
+        "voteCount": 474,
+        "voteAverage": 6.251,
+        "popularity": 2.8136
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-32293",
+      "tmdbId": 32293,
+      "title": "The Cheetah Girls",
+      "year": 2003,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2000s",
+        "discovery",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 2000s / discovery production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2003"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 58,
+        "bucketIndex": 4,
+        "originalLanguage": "en",
+        "primaryGenreId": 10751,
+        "voteCount": 499,
+        "voteAverage": 6.058,
+        "popularity": 3.4397
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-3134",
+      "tmdbId": 3134,
+      "title": "Baise-moi",
+      "year": 2000,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2000s",
+        "discovery",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 2000s / discovery production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2000"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 59,
+        "bucketIndex": 5,
+        "originalLanguage": "fr",
+        "primaryGenreId": 80,
+        "voteCount": 499,
+        "voteAverage": 4.8,
+        "popularity": 12.4362
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-32823",
+      "tmdbId": 32823,
+      "title": "Get Him to the Greek",
+      "year": 2010,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2010s",
+        "mainstream",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 2010s / mainstream production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2010"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 60,
+        "bucketIndex": 0,
+        "originalLanguage": "en",
+        "primaryGenreId": 12,
+        "voteCount": 1998,
+        "voteAverage": 5.96,
+        "popularity": 6.3145
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-538362",
+      "tmdbId": 538362,
+      "title": "On My Skin",
+      "year": 2018,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2010s",
+        "mainstream",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 2010s / mainstream production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2018"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 61,
+        "bucketIndex": 1,
+        "originalLanguage": "it",
+        "primaryGenreId": 18,
+        "voteCount": 1898,
+        "voteAverage": 8.013,
+        "popularity": 1.5534
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-238215",
+      "tmdbId": 238215,
+      "title": "The Cobbler",
+      "year": 2014,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2010s",
+        "mainstream",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 2010s / mainstream production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2014"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 62,
+        "bucketIndex": 2,
+        "originalLanguage": "en",
+        "primaryGenreId": 14,
+        "voteCount": 1841,
+        "voteAverage": 5.872,
+        "popularity": 7.5716
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-486947",
+      "tmdbId": 486947,
+      "title": "The Guilty",
+      "year": 2018,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2010s",
+        "mainstream",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 2010s / mainstream production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2018"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 63,
+        "bucketIndex": 3,
+        "originalLanguage": "da",
+        "primaryGenreId": 53,
+        "voteCount": 1892,
+        "voteAverage": 7.307,
+        "popularity": 3.8214
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-381719",
+      "tmdbId": 381719,
+      "title": "Peter Rabbit",
+      "year": 2018,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2010s",
+        "mainstream",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 2010s / mainstream production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2018"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 64,
+        "bucketIndex": 4,
+        "originalLanguage": "en",
+        "primaryGenreId": 16,
+        "voteCount": 1975,
+        "voteAverage": 6.695,
+        "popularity": 14.1489
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-491584",
+      "tmdbId": 491584,
+      "title": "Burning",
+      "year": 2018,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2010s",
+        "mainstream",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 2010s / mainstream production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2018"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 65,
+        "bucketIndex": 5,
+        "originalLanguage": "ko",
+        "primaryGenreId": 9648,
+        "voteCount": 1890,
+        "voteAverage": 7.38,
+        "popularity": 8.1074
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-280996",
+      "tmdbId": 280996,
+      "title": "Mr. Holmes",
+      "year": 2015,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2010s",
+        "mainstream",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 2010s / mainstream production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2015"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 66,
+        "bucketIndex": 6,
+        "originalLanguage": "en",
+        "primaryGenreId": 18,
+        "voteCount": 1998,
+        "voteAverage": 6.476,
+        "popularity": 6.6413
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-245916",
+      "tmdbId": 245916,
+      "title": "Kill the Messenger",
+      "year": 2014,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2010s",
+        "familiar",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 2010s / familiar production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2014"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 67,
+        "bucketIndex": 0,
+        "originalLanguage": "en",
+        "primaryGenreId": 80,
+        "voteCount": 947,
+        "voteAverage": 6.627,
+        "popularity": 3.9551
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-265180",
+      "tmdbId": 265180,
+      "title": "Leviathan",
+      "year": 2014,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2010s",
+        "familiar",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 2010s / familiar production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2014"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 68,
+        "bucketIndex": 1,
+        "originalLanguage": "ru",
+        "primaryGenreId": 18,
+        "voteCount": 992,
+        "voteAverage": 7.369,
+        "popularity": 3.0811
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-190847",
+      "tmdbId": 190847,
+      "title": "The Last Days on Mars",
+      "year": 2013,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2010s",
+        "familiar",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 2010s / familiar production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2013"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 69,
+        "bucketIndex": 2,
+        "originalLanguage": "en",
+        "primaryGenreId": 878,
+        "voteCount": 947,
+        "voteAverage": 5.511,
+        "popularity": 3.6725
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-266285",
+      "tmdbId": 266285,
+      "title": "The Salvation",
+      "year": 2014,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2010s",
+        "familiar",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 2010s / familiar production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2014"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 70,
+        "bucketIndex": 3,
+        "originalLanguage": "da",
+        "primaryGenreId": 18,
+        "voteCount": 992,
+        "voteAverage": 6.501,
+        "popularity": 5.755
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-62046",
+      "tmdbId": 62046,
+      "title": "Flypaper",
+      "year": 2011,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2010s",
+        "familiar",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 2010s / familiar production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2011"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 71,
+        "bucketIndex": 4,
+        "originalLanguage": "en",
+        "primaryGenreId": 9648,
+        "voteCount": 817,
+        "voteAverage": 6.371,
+        "popularity": 2.6813
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-303542",
+      "tmdbId": 303542,
+      "title": "The Invisible Boy",
+      "year": 2014,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2010s",
+        "familiar",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 2010s / familiar production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2014"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 72,
+        "bucketIndex": 5,
+        "originalLanguage": "it",
+        "primaryGenreId": 14,
+        "voteCount": 985,
+        "voteAverage": 6.273,
+        "popularity": 2.1941
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-39452",
+      "tmdbId": 39452,
+      "title": "Exit Through the Gift Shop",
+      "year": 2010,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2010s",
+        "familiar",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 2010s / familiar production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2010"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 73,
+        "bucketIndex": 6,
+        "originalLanguage": "en",
+        "primaryGenreId": 99,
+        "voteCount": 993,
+        "voteAverage": 7.54,
+        "popularity": 1.8832
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-122857",
+      "tmdbId": 122857,
+      "title": "Universal Soldier: Day of Reckoning",
+      "year": 2012,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2010s",
+        "discovery",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 2010s / discovery production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2012"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 74,
+        "bucketIndex": 0,
+        "originalLanguage": "en",
+        "primaryGenreId": 28,
+        "voteCount": 498,
+        "voteAverage": 5.573,
+        "popularity": 3.9841
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-271706",
+      "tmdbId": 271706,
+      "title": "Big Fish & Begonia",
+      "year": 2016,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2010s",
+        "discovery",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 2010s / discovery production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2016"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 75,
+        "bucketIndex": 1,
+        "originalLanguage": "zh",
+        "primaryGenreId": 16,
+        "voteCount": 498,
+        "voteAverage": 7.326,
+        "popularity": 3.6458
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-80038",
+      "tmdbId": 80038,
+      "title": "Friends with Kids",
+      "year": 2012,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2010s",
+        "discovery",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 2010s / discovery production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2012"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 76,
+        "bucketIndex": 2,
+        "originalLanguage": "en",
+        "primaryGenreId": 35,
+        "voteCount": 499,
+        "voteAverage": 5.934,
+        "popularity": 3.5997
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-437739",
+      "tmdbId": 437739,
+      "title": "The Mansion",
+      "year": 2017,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2010s",
+        "discovery",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 2010s / discovery production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2017"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 77,
+        "bucketIndex": 3,
+        "originalLanguage": "fr",
+        "primaryGenreId": 27,
+        "voteCount": 496,
+        "voteAverage": 4.798,
+        "popularity": 2.5407
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-209262",
+      "tmdbId": 209262,
+      "title": "Parkland",
+      "year": 2013,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2010s",
+        "discovery",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 2010s / discovery production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2013"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 78,
+        "bucketIndex": 4,
+        "originalLanguage": "en",
+        "primaryGenreId": 36,
+        "voteCount": 399,
+        "voteAverage": 6.243,
+        "popularity": 4.4997
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-483983",
+      "tmdbId": 483983,
+      "title": "Balloon",
+      "year": 2018,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2010s",
+        "discovery",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 2010s / discovery production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2018"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 79,
+        "bucketIndex": 5,
+        "originalLanguage": "de",
+        "primaryGenreId": 53,
+        "voteCount": 495,
+        "voteAverage": 7.507,
+        "popularity": 3.0405
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-646097",
+      "tmdbId": 646097,
+      "title": "Rebel Ridge",
+      "year": 2024,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2020s",
+        "mainstream",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 2020s / mainstream production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2024"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 80,
+        "bucketIndex": 0,
+        "originalLanguage": "en",
+        "primaryGenreId": 80,
+        "voteCount": 1718,
+        "voteAverage": 6.97,
+        "popularity": 10.5343
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-630240",
+      "tmdbId": 630240,
+      "title": "Titane",
+      "year": 2021,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2020s",
+        "mainstream",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 2020s / mainstream production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2021"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 81,
+        "bucketIndex": 1,
+        "originalLanguage": "fr",
+        "primaryGenreId": 18,
+        "voteCount": 1740,
+        "voteAverage": 6.328,
+        "popularity": 5.5886
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-615469",
+      "tmdbId": 615469,
+      "title": "Spiderhead",
+      "year": 2022,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2020s",
+        "mainstream",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 2020s / mainstream production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2022"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 82,
+        "bucketIndex": 2,
+        "originalLanguage": "en",
+        "primaryGenreId": 878,
+        "voteCount": 1802,
+        "voteAverage": 5.789,
+        "popularity": 5.2721
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-1156593",
+      "tmdbId": 1156593,
+      "title": "Your Fault",
+      "year": 2024,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2020s",
+        "mainstream",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 2020s / mainstream production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2024"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 83,
+        "bucketIndex": 3,
+        "originalLanguage": "es",
+        "primaryGenreId": 18,
+        "voteCount": 1625,
+        "voteAverage": 7.09,
+        "popularity": 18.7057
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-664469",
+      "tmdbId": 664469,
+      "title": "Amsterdam",
+      "year": 2022,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2020s",
+        "mainstream",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 2020s / mainstream production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2022"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 84,
+        "bucketIndex": 4,
+        "originalLanguage": "en",
+        "primaryGenreId": 9648,
+        "voteCount": 1892,
+        "voteAverage": 6.066,
+        "popularity": 6.5406
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-776797",
+      "tmdbId": 776797,
+      "title": "The Sadness",
+      "year": 2021,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2020s",
+        "mainstream",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 2020s / mainstream production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2021"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 85,
+        "bucketIndex": 5,
+        "originalLanguage": "zh",
+        "primaryGenreId": 27,
+        "voteCount": 1224,
+        "voteAverage": 6.839,
+        "popularity": 8.8695
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-656690",
+      "tmdbId": 656690,
+      "title": "The Social Dilemma",
+      "year": 2020,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2020s",
+        "mainstream",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 2020s / mainstream production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2020"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 86,
+        "bucketIndex": 6,
+        "originalLanguage": "en",
+        "primaryGenreId": 99,
+        "voteCount": 1844,
+        "voteAverage": 7.459,
+        "popularity": 4.1302
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-653851",
+      "tmdbId": 653851,
+      "title": "Devotion",
+      "year": 2022,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2020s",
+        "familiar",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 2020s / familiar production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2022"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 87,
+        "bucketIndex": 0,
+        "originalLanguage": "en",
+        "primaryGenreId": 10752,
+        "voteCount": 851,
+        "voteAverage": 7,
+        "popularity": 4.1241
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-283566",
+      "tmdbId": 283566,
+      "title": "Evangelion: 3.0+1.0 Thrice Upon a Time",
+      "year": 2021,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2020s",
+        "familiar",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 2020s / familiar production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2021"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 88,
+        "bucketIndex": 1,
+        "originalLanguage": "ja",
+        "primaryGenreId": 16,
+        "voteCount": 990,
+        "voteAverage": 8.219,
+        "popularity": 8.5591
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-618588",
+      "tmdbId": 618588,
+      "title": "Arthur the King",
+      "year": 2024,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2020s",
+        "familiar",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 2020s / familiar production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2024"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 89,
+        "bucketIndex": 2,
+        "originalLanguage": "en",
+        "primaryGenreId": 12,
+        "voteCount": 987,
+        "voteAverage": 7.5,
+        "popularity": 8.2478
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-587996",
+      "tmdbId": 587996,
+      "title": "Below Zero",
+      "year": 2021,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2020s",
+        "familiar",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 2020s / familiar production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2021"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 90,
+        "bucketIndex": 3,
+        "originalLanguage": "es",
+        "primaryGenreId": 28,
+        "voteCount": 989,
+        "voteAverage": 6.343,
+        "popularity": 3.9927
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-672647",
+      "tmdbId": 672647,
+      "title": "The Map of Tiny Perfect Things",
+      "year": 2021,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2020s",
+        "familiar",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 2020s / familiar production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2021"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 91,
+        "bucketIndex": 4,
+        "originalLanguage": "en",
+        "primaryGenreId": 14,
+        "voteCount": 910,
+        "voteAverage": 7.147,
+        "popularity": 3.4891
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-496450",
+      "tmdbId": 496450,
+      "title": "Miraculous: Ladybug & Cat Noir, The Movie",
+      "year": 2023,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2020s",
+        "familiar",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 2020s / familiar production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2023"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 92,
+        "bucketIndex": 5,
+        "originalLanguage": "fr",
+        "primaryGenreId": 16,
+        "voteCount": 981,
+        "voteAverage": 7.6,
+        "popularity": 11.9657
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-839033",
+      "tmdbId": 839033,
+      "title": "The Lord of the Rings: The War of the Rohirrim",
+      "year": 2024,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2020s",
+        "familiar",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 2020s / familiar production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2024"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 93,
+        "bucketIndex": 6,
+        "originalLanguage": "en",
+        "primaryGenreId": 16,
+        "voteCount": 929,
+        "voteAverage": 6.5,
+        "popularity": 10.8024
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-693113",
+      "tmdbId": 693113,
+      "title": "Midnight in the Switchgrass",
+      "year": 2021,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2020s",
+        "discovery",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 2020s / discovery production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2021"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 94,
+        "bucketIndex": 0,
+        "originalLanguage": "en",
+        "primaryGenreId": 80,
+        "voteCount": 490,
+        "voteAverage": 5.782,
+        "popularity": 5.2658
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-921785",
+      "tmdbId": 921785,
+      "title": "Mixed by Erry",
+      "year": 2023,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2020s",
+        "discovery",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 2020s / discovery production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2023"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 95,
+        "bucketIndex": 1,
+        "originalLanguage": "it",
+        "primaryGenreId": 35,
+        "voteCount": 498,
+        "voteAverage": 7.44,
+        "popularity": 1.2585
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-670428",
+      "tmdbId": 670428,
+      "title": "PG: Psycho Goreman",
+      "year": 2020,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2020s",
+        "discovery",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 2020s / discovery production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2020"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 96,
+        "bucketIndex": 2,
+        "originalLanguage": "en",
+        "primaryGenreId": 878,
+        "voteCount": 454,
+        "voteAverage": 6.03,
+        "popularity": 2.9995
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-1071806",
+      "tmdbId": 1071806,
+      "title": "Hunger",
+      "year": 2023,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2020s",
+        "discovery",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 2020s / discovery production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2023"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 97,
+        "bucketIndex": 3,
+        "originalLanguage": "th",
+        "primaryGenreId": 18,
+        "voteCount": 498,
+        "voteAverage": 7.211,
+        "popularity": 2.5828
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-728526",
+      "tmdbId": 728526,
+      "title": "Encounter",
+      "year": 2021,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2020s",
+        "discovery",
+        "english-language"
+      ],
+      "inclusionRationale": "Fills the 2020s / discovery production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2021"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 98,
+        "bucketIndex": 4,
+        "originalLanguage": "en",
+        "primaryGenreId": 9648,
+        "voteCount": 475,
+        "voteAverage": 6.258,
+        "popularity": 3.9044
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    },
+    {
+      "candidateId": "exp100-tmdb-967585",
+      "tmdbId": 967585,
+      "title": "Alibi.com 2",
+      "year": 2023,
+      "sourceTags": [
+        "tmdb-discover-offline-snapshot",
+        "2020s",
+        "discovery",
+        "non-english-language"
+      ],
+      "inclusionRationale": "Fills the 2020s / discovery production-diversity allocation using deterministic language and genre rotation.",
+      "knownRisks": [],
+      "sourceRankingProvenance": {
+        "source": "frozen-local-tmdb-discover-response-corpus",
+        "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+        "sourceCellIds": [
+          "year-2023"
+        ],
+        "selectionPolicyVersion": "production-diversity-round-robin.v1",
+        "selectionIndex": 99,
+        "bucketIndex": 5,
+        "originalLanguage": "fr",
+        "primaryGenreId": 35,
+        "voteCount": 498,
+        "voteAverage": 6.549,
+        "popularity": 2.4336
+      },
+      "factualSnapshotStatus": "COMPLETE",
+      "duplicateExistingCatalogueStatus": "NOT_PRESENT"
+    }
+  ],
+  "candidateManifestHash": "sha256:ec6238081a234a67fc249676b27c9c7a6dca4135d03a525a22950b43a622b61e"
+}

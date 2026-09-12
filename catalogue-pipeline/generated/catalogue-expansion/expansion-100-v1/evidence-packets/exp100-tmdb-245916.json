@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-245916",
+  "tmdbId": 245916,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "22545cd9481c107d26bc391a28929fa4c653dd88044f0b26fcc8cac0dbef707f"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "22545cd9481c107d26bc391a28929fa4c653dd88044f0b26fcc8cac0dbef707f"
+    }
+  ],
+  "facts": {
+    "title": "Kill the Messenger",
+    "year": 2014,
+    "director": "Michael Cuesta",
+    "genres": [
+      "Crime",
+      "Drama",
+      "History",
+      "Mystery",
+      "Thriller"
+    ],
+    "runtimeMinutes": 112,
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English",
+      "Spanish"
+    ],
+    "overview": "A reporter becomes the target of a vicious smear campaign that drives him to the point of suicide after he exposes the CIA's role in arming Contra rebels in Nicaragua and importing cocaine into California. Based on the true story of journalist Gary Webb.",
+    "keywords": []
+  },
+  "inputHash": "sha256:923fc8336d9d99271c012d9bbf4c292ecd84e0cffa1fb0a2217b4f793b4b287d"
+}

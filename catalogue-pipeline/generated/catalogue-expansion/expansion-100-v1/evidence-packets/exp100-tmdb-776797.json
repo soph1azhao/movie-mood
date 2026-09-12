@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-776797",
+  "tmdbId": 776797,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "8907cf297ad7895eae2224d9698eb22b651188a5f243ef6e0a2d77f612da0cac"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "8907cf297ad7895eae2224d9698eb22b651188a5f243ef6e0a2d77f612da0cac"
+    }
+  ],
+  "facts": {
+    "title": "The Sadness",
+    "year": 2021,
+    "director": "Rob Jabbaz",
+    "genres": [
+      "Horror",
+      "Thriller"
+    ],
+    "runtimeMinutes": 100,
+    "countries": [
+      "Taiwan"
+    ],
+    "spokenLanguages": [
+      "Mandarin"
+    ],
+    "overview": "A young couple is pushed to the limits of sanity as they attempt to be reunited amid the chaos of a pandemic outbreak. The streets erupt into violence and depravity, as those infected are driven to enact the most cruel and ghastly things imaginable.",
+    "keywords": []
+  },
+  "inputHash": "sha256:539ef308d9f5595daa9e0d7e04893416dec7f9b48ba581b9888d14fc72afe732"
+}

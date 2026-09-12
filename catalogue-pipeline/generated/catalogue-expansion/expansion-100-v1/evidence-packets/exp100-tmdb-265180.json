@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-265180",
+  "tmdbId": 265180,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "3c135bebc28ae7d7d988356490b02332602788625d1daac213fbf14b17260d1b"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "3c135bebc28ae7d7d988356490b02332602788625d1daac213fbf14b17260d1b"
+    }
+  ],
+  "facts": {
+    "title": "Leviathan",
+    "year": 2014,
+    "director": "Andrey Zvyagintsev",
+    "genres": [
+      "Crime",
+      "Drama"
+    ],
+    "runtimeMinutes": 141,
+    "countries": [
+      "Russia"
+    ],
+    "spokenLanguages": [
+      "Russian"
+    ],
+    "overview": "In a Russian coastal town, Kolya is forced to fight the corrupt mayor when he is told that his house will be demolished. He recruits a lawyer friend to help, but the man's arrival brings further misfortune for Kolya and his family.",
+    "keywords": []
+  },
+  "inputHash": "sha256:2048a83f5b2820466d64e3f28ca5842f579379c9615f84d241f4c0aef5e67ec2"
+}

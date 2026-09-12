@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-11450",
+  "tmdbId": 11450,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "429c984de8a119362e3a33ab1264983c172c8121f374dfcf81deaef9453a1b09"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "429c984de8a119362e3a33ab1264983c172c8121f374dfcf81deaef9453a1b09"
+    }
+  ],
+  "facts": {
+    "title": "Quiz Show",
+    "year": 1994,
+    "director": "Robert Redford",
+    "genres": [
+      "Drama",
+      "History"
+    ],
+    "runtimeMinutes": 133,
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "Herbert Stempel's transformation into an unexpected television personality unfolds as he secures victory on the cherished American game show, 'Twenty-One.' However, when the show introduces the highly skilled contestant Charles Van Doren to replace Stempel, it compels Stempel to let out his frustrations and call out the show as rigged. Lawyer Richard Goodwin steps in and attempts to uncover the orchestrated deception behind the scenes.",
+    "keywords": []
+  },
+  "inputHash": "sha256:e26197dde00025611adc7c250daf15d729eca4f1ce52c229c1478e08fa981c4b"
+}

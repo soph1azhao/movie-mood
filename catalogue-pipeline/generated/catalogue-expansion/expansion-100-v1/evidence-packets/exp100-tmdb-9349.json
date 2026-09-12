@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-9349",
+  "tmdbId": 9349,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "97fe5fa81847b520a610df8c8d4d0f6db01598d73684c527158413f618b99403"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "97fe5fa81847b520a610df8c8d4d0f6db01598d73684c527158413f618b99403"
+    }
+  ],
+  "facts": {
+    "title": "Universal Soldier",
+    "year": 1992,
+    "director": "Roland Emmerich",
+    "genres": [
+      "Action",
+      "Science Fiction",
+      "Thriller"
+    ],
+    "runtimeMinutes": 103,
+    "countries": [
+      "France",
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "An American soldier who had been killed during the Vietnam War is revived 25 years later by the military as a semi-android, UniSols, a high-tech soldier of the future. After the failure of the initiative to erase all the soldier's memories, he begins to experience flashbacks that are forcing him to recall his past.",
+    "keywords": []
+  },
+  "inputHash": "sha256:2dd09f8141c20f2d075371ed6bf0adfb42f4534c1760e0ba1cc3d5fb86b92240"
+}

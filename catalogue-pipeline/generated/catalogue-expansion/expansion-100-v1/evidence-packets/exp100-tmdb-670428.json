@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-670428",
+  "tmdbId": 670428,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "811b35a103f3725f1be873b567e51c76b9f57d4f39f4121b22aa7e5ca25ce0d3"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "811b35a103f3725f1be873b567e51c76b9f57d4f39f4121b22aa7e5ca25ce0d3"
+    }
+  ],
+  "facts": {
+    "title": "PG: Psycho Goreman",
+    "year": 2020,
+    "director": "Steven Kostanski",
+    "genres": [
+      "Comedy",
+      "Horror",
+      "Science Fiction"
+    ],
+    "runtimeMinutes": 95,
+    "countries": [
+      "Canada"
+    ],
+    "spokenLanguages": [
+      "English",
+      "Japanese"
+    ],
+    "overview": "Siblings Mimi and Luke unwittingly resurrect an ancient alien overlord. Using a magical amulet, they force the monster to obey their childish whims, and accidentally attract a rogues’ gallery of intergalactic assassins to small-town suburbia.",
+    "keywords": []
+  },
+  "inputHash": "sha256:b4e414da96dee0ad04d18edf08b84ee224f05f3c3227e98ae4a277f6252697d0"
+}

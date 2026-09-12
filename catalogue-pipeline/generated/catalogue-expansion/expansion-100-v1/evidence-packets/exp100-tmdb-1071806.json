@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-1071806",
+  "tmdbId": 1071806,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "7c2ebb09df85e212d791a87bc38e19e07f8384b1c9881aca0d00bb3e6a34c13f"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "7c2ebb09df85e212d791a87bc38e19e07f8384b1c9881aca0d00bb3e6a34c13f"
+    }
+  ],
+  "facts": {
+    "title": "Hunger",
+    "year": 2023,
+    "director": "Sitisiri Mongkolsiri",
+    "genres": [
+      "Drama"
+    ],
+    "runtimeMinutes": 145,
+    "countries": [
+      "Thailand"
+    ],
+    "spokenLanguages": [
+      "Thai"
+    ],
+    "overview": "A talented young street-food cook pushes herself to the limit after accepting an invitation to train under an infamous and ruthless chef.",
+    "keywords": []
+  },
+  "inputHash": "sha256:17871d92856d95c1b24734aaef4f4cfd73c38ea0f840f3214eac0e344772d6a0"
+}

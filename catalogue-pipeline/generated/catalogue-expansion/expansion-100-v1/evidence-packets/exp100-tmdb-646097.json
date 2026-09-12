@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-646097",
+  "tmdbId": 646097,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "266ea775e85bbc075a1d9995f5c4da4ebaf03eb36a23aca10135ff822be7f321"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "266ea775e85bbc075a1d9995f5c4da4ebaf03eb36a23aca10135ff822be7f321"
+    }
+  ],
+  "facts": {
+    "title": "Rebel Ridge",
+    "year": 2024,
+    "director": "Jeremy Saulnier",
+    "genres": [
+      "Action",
+      "Crime",
+      "Drama",
+      "Thriller"
+    ],
+    "runtimeMinutes": 131,
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "A former Marine confronts corruption in a small town when local law enforcement unjustly seizes the bag of cash he needs to post his cousin's bail.",
+    "keywords": []
+  },
+  "inputHash": "sha256:d605de6cc697ef7982be33767c963f280eff2b01abf66e01a07cb20874dd9b25"
+}

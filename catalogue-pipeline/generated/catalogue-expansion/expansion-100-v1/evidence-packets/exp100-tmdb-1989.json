@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-1989",
+  "tmdbId": 1989,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "19ce511a636bc2cd9d9303be6f53643d0fe565487e835c449c10de0de4bfe6e9"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "19ce511a636bc2cd9d9303be6f53643d0fe565487e835c449c10de0de4bfe6e9"
+    }
+  ],
+  "facts": {
+    "title": "My Blueberry Nights",
+    "year": 2007,
+    "director": "Wong Kar-Wai",
+    "genres": [
+      "Drama",
+      "Romance"
+    ],
+    "runtimeMinutes": 95,
+    "countries": [
+      "France",
+      "Hong Kong"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "Elizabeth has just been through a particularly nasty breakup, and now she's ready to leave her friends and memories behind as she chases her dreams across the country. In order to support herself on her journey, Elizabeth picks up a series of waitress jobs along the way. As Elizabeth crosses paths with a series of lost souls whose yearnings are even greater than her own, their emotional turmoil ultimately helps her gain a greater understanding of her own problems...",
+    "keywords": []
+  },
+  "inputHash": "sha256:a67ff6497a6274e09deb7206855f4c768e5540cfda9ad589ff38aa1c880009c8"
+}

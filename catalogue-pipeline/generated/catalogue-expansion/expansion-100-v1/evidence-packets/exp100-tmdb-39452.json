@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-39452",
+  "tmdbId": 39452,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "2c42d6b5c16a3e6cbe48005914ab55c34bab35b33ca2c405a909c7c5e2971c1d"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "2c42d6b5c16a3e6cbe48005914ab55c34bab35b33ca2c405a909c7c5e2971c1d"
+    }
+  ],
+  "facts": {
+    "title": "Exit Through the Gift Shop",
+    "year": 2010,
+    "director": "Banksy",
+    "genres": [
+      "Documentary"
+    ],
+    "runtimeMinutes": 86,
+    "countries": [
+      "United Kingdom",
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "Banksy is a graffiti artist with a global reputation whose work can be seen on walls from post-hurricane New Orleans to the separation barrier on the Palestinian West Bank. Fiercely guarding his anonymity to avoid prosecution, Banksy has so far resisted all attempts to be captured on film. Exit Through the Gift Shop tells the incredible true story of how an eccentric French shop keeper turned documentary maker attempted to locate and befriend Banksy, only to have the artist turn the camera back on its owner.",
+    "keywords": []
+  },
+  "inputHash": "sha256:424d15c18f85137fc2408e8a6a48ce93ddb3ffa755503562f3faffd9d28f8fbd"
+}

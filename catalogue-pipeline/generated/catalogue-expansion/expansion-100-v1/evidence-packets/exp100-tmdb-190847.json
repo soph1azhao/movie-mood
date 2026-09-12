@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-190847",
+  "tmdbId": 190847,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "48b6200ef4baec9177b33f9e765a40cec9a1a97567382ef44ea680a7bca96089"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "48b6200ef4baec9177b33f9e765a40cec9a1a97567382ef44ea680a7bca96089"
+    }
+  ],
+  "facts": {
+    "title": "The Last Days on Mars",
+    "year": 2013,
+    "director": "Ruairi Robinson",
+    "genres": [
+      "Horror",
+      "Science Fiction",
+      "Thriller"
+    ],
+    "runtimeMinutes": 98,
+    "countries": [
+      "Belgium",
+      "Ireland",
+      "United Kingdom",
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "On the last day of the first manned mission to Mars, a crew member of Tantalus Base believes he has made an astounding discovery – fossilized evidence of bacterial life. Unwilling to let the relief crew claim all the glory, he disobeys orders to pack up and goes out on an unauthorized expedition to collect further samples. But a routine excavation turns to disaster when the porous ground collapses and he falls into a deep crevice. His devastated colleagues attempt to recover his body. However, when another vanishes, they start to suspect that the life-form they have discovered is not without danger.",
+    "keywords": []
+  },
+  "inputHash": "sha256:ab63248defd9a67ddd2d114eebb517b69dbc2b2f9f4da738dafb8a91d0b3b2cd"
+}

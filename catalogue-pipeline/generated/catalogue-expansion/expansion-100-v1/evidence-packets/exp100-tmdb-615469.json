@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-615469",
+  "tmdbId": 615469,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "b81deb989ae5eea9687662610e89b36113438e3521a077300a2661025a39d9a7"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "b81deb989ae5eea9687662610e89b36113438e3521a077300a2661025a39d9a7"
+    }
+  ],
+  "facts": {
+    "title": "Spiderhead",
+    "year": 2022,
+    "director": "Joseph Kosinski",
+    "genres": [
+      "Science Fiction",
+      "Thriller"
+    ],
+    "runtimeMinutes": 107,
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "A prisoner in a state-of-the-art penitentiary begins to question the purpose of the emotion-controlling drugs he's testing for a pharmaceutical genius.",
+    "keywords": []
+  },
+  "inputHash": "sha256:ed699e41ac778c8a2dffa5b7e920037b0a1ad8c8e696145be56bc288541f9db3"
+}

@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-437739",
+  "tmdbId": 437739,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "18a5ee79de413fe714983c7471e4639fc09078989d745e6900af94dd5fe112f9"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "18a5ee79de413fe714983c7471e4639fc09078989d745e6900af94dd5fe112f9"
+    }
+  ],
+  "facts": {
+    "title": "The Mansion",
+    "year": 2017,
+    "director": "Tony T. Datis",
+    "genres": [
+      "Comedy",
+      "Horror"
+    ],
+    "runtimeMinutes": 100,
+    "countries": [
+      "France"
+    ],
+    "spokenLanguages": [
+      "French",
+      "German"
+    ],
+    "overview": "A band of students comes to celebrate the New Year in an old manor house isolated from everything. But soon after their arrival, strange events disrupt the atmosphere, before the party turns squarely to the nightmare ...",
+    "keywords": []
+  },
+  "inputHash": "sha256:4693d5888354347aaf57fe8fe9ebaf22c1aea27e86600fd9cbdb5ae79aea6d2a"
+}

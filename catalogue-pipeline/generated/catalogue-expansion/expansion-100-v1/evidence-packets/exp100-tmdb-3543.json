@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-3543",
+  "tmdbId": 3543,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "b3e4007900786b313e0b2c85961d983c8f33e6ffe2cac6055914689a919272c1"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "b3e4007900786b313e0b2c85961d983c8f33e6ffe2cac6055914689a919272c1"
+    }
+  ],
+  "facts": {
+    "title": "Bagdad Cafe",
+    "year": 1987,
+    "director": "Percy Adlon",
+    "genres": [
+      "Comedy",
+      "Drama"
+    ],
+    "runtimeMinutes": 108,
+    "countries": [
+      "Germany"
+    ],
+    "spokenLanguages": [
+      "English",
+      "German"
+    ],
+    "overview": "A German woman named Jasmin stumbles upon a dilapidated motel/diner in the middle of nowhere. Her unusual appearance and demeanor are at first suspicious to Brenda, the exasperated owner who has difficulty making ends meet. But when an unlikely magic sparks between the two women, this lonely desert outpost is transformed into a thriving and popular oasis.",
+    "keywords": []
+  },
+  "inputHash": "sha256:643248a25043b90beedb3237831085054f1c306395484308b76672d6c77ee31d"
+}

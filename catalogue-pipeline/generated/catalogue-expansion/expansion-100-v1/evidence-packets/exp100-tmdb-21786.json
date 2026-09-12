@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-21786",
+  "tmdbId": 21786,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "d81b86c003d951f6040fe00ddf0be92eb506a3d59454e8405aba90108d1a75cc"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "d81b86c003d951f6040fe00ddf0be92eb506a3d59454e8405aba90108d1a75cc"
+    }
+  ],
+  "facts": {
+    "title": "Cold Prey",
+    "year": 2006,
+    "director": "Roar Uthaug",
+    "genres": [
+      "Horror",
+      "Mystery",
+      "Thriller"
+    ],
+    "runtimeMinutes": 97,
+    "countries": [
+      "Norway"
+    ],
+    "spokenLanguages": [
+      "Norwegian"
+    ],
+    "overview": "When one of them breaks a leg, five friends snowboarding in the Norwegian mountains take shelter in an abandoned ski lodge and soon realize they’re not alone.",
+    "keywords": []
+  },
+  "inputHash": "sha256:3cce8fe4104d771f3fae63fb37ef166aa6bbfdc5ec5f6918f847f021b9a32469"
+}

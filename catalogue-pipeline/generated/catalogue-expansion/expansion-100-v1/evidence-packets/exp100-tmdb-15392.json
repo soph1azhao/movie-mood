@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-15392",
+  "tmdbId": 15392,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "a4cea0e9701efb71729cbdb663cfaac7814c921f3445b2d1ef152cfb2e3b6551"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "a4cea0e9701efb71729cbdb663cfaac7814c921f3445b2d1ef152cfb2e3b6551"
+    }
+  ],
+  "facts": {
+    "title": "Crossroads",
+    "year": 1986,
+    "director": "Walter Hill",
+    "genres": [
+      "Drama",
+      "Music",
+      "Mystery",
+      "Romance"
+    ],
+    "runtimeMinutes": 99,
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "A wanna-be blues guitar virtuoso seeks a long-lost song by legendary musician, Robert Johnson.",
+    "keywords": []
+  },
+  "inputHash": "sha256:f5baf6d068f29bef2db26493900bf3df3aef3228b4f00a813ec8ce1421d27ac5"
+}

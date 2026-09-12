@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-11782",
+  "tmdbId": 11782,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "5a0e5d102a110d6c12286d4bb185ec393ee7783f839dc1780e436f1215983702"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "5a0e5d102a110d6c12286d4bb185ec393ee7783f839dc1780e436f1215983702"
+    }
+  ],
+  "facts": {
+    "title": "Hard Boiled",
+    "year": 1992,
+    "director": "John Woo",
+    "genres": [
+      "Action",
+      "Crime",
+      "Thriller"
+    ],
+    "runtimeMinutes": 126,
+    "countries": [
+      "Hong Kong"
+    ],
+    "spokenLanguages": [
+      "Cantonese",
+      "English",
+      "Mandarin"
+    ],
+    "overview": "A cop who loses his partner in a shoot-out with gun smugglers goes on a mission to catch them. In order to get closer to the leaders of the ring he joins forces with an undercover cop who's working as a gangster hitman. They use all means of excessive force to find them.",
+    "keywords": []
+  },
+  "inputHash": "sha256:a0c889eb9cff48d3f7ce20d5b3c6ed93985163a6b6d8df3e00c5d193095a6db4"
+}

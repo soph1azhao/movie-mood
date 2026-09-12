@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-18491",
+  "tmdbId": 18491,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "b3e47a1b2bd16897456ff5a0712299f63cff3b329fd9a286fb4075380fd1fca1"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "b3e47a1b2bd16897456ff5a0712299f63cff3b329fd9a286fb4075380fd1fca1"
+    }
+  ],
+  "facts": {
+    "title": "Neon Genesis Evangelion: The End of Evangelion",
+    "year": 1997,
+    "director": "Kazuya Tsurumaki & Hideaki Anno",
+    "genres": [
+      "Action",
+      "Animation",
+      "Drama",
+      "Fantasy",
+      "Science Fiction"
+    ],
+    "runtimeMinutes": 87,
+    "countries": [
+      "Japan"
+    ],
+    "spokenLanguages": [
+      "Japanese"
+    ],
+    "overview": "SEELE orders an all-out attack on NERV, aiming to destroy the Evas before Gendo can advance his own plans for the Human Instrumentality Project. Shinji is pushed to the limits of his sanity as he is forced to decide the fate of humanity.",
+    "keywords": []
+  },
+  "inputHash": "sha256:174ba39ba796b27525f2007eab7c9d211bbc4a5e210977fcb8c5b81f6b64be35"
+}

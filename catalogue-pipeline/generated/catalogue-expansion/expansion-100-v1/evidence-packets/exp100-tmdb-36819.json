@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-36819",
+  "tmdbId": 36819,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "a882843c138560f9a87c28d4e056075c24e49994106ba4ed0d0b611d0bf82b98"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "a882843c138560f9a87c28d4e056075c24e49994106ba4ed0d0b611d0bf82b98"
+    }
+  ],
+  "facts": {
+    "title": "Time Bandits",
+    "year": 1981,
+    "director": "Terry Gilliam",
+    "genres": [
+      "Adventure",
+      "Comedy",
+      "Family",
+      "Fantasy",
+      "Science Fiction"
+    ],
+    "runtimeMinutes": 116,
+    "countries": [
+      "United Kingdom"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "Young history buff Kevin can scarcely believe it when six dwarfs emerge from his closet one night. Former employees of the Supreme Being, they've purloined a map charting all of the holes in the fabric of time and are using it to steal treasures from different historical eras. Taking Kevin with them, they variously drop in on Napoleon, Robin Hood and King Agamemnon before the Supreme Being catches up with them.",
+    "keywords": []
+  },
+  "inputHash": "sha256:13394f38c93bfdfbad03b61389c0d13938033d5320163ed8acc4639af32b0611"
+}

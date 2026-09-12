@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-13151",
+  "tmdbId": 13151,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "50c88f0543561398f7017ed6dd17b388b07ce9cea83c80286865ab814162edf6"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "50c88f0543561398f7017ed6dd17b388b07ce9cea83c80286865ab814162edf6"
+    }
+  ],
+  "facts": {
+    "title": "Scooby-Doo on Zombie Island",
+    "year": 1998,
+    "director": "Jim Stenstrum",
+    "genres": [
+      "Animation",
+      "Family",
+      "Horror",
+      "Mystery"
+    ],
+    "runtimeMinutes": 77,
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "After going their separate ways, Scooby-Doo, Shaggy, Velma, Daphne, and Fred reunite to investigate the ghost of Moonscar the pirate on a haunted bayou island, but it turns out the swashbuckler's spirit isn't the only creepy character on the island. The sleuths also meet up with cat creatures and zombies... and it looks like for the first time in their lives, these ghouls might actually be real.",
+    "keywords": []
+  },
+  "inputHash": "sha256:41b63d43800c236bce6fdf2cf7c86fbfc932d9128e54b012d2a0364876e48b90"
+}

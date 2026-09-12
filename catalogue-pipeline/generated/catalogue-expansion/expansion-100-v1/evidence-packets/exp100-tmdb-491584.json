@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-491584",
+  "tmdbId": 491584,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "7dc7db5d35f729734ef2d6bcbc04c6b2d80e907c709d60593a8c926ecc32e1c9"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "7dc7db5d35f729734ef2d6bcbc04c6b2d80e907c709d60593a8c926ecc32e1c9"
+    }
+  ],
+  "facts": {
+    "title": "Burning",
+    "year": 2018,
+    "director": "Lee Chang-dong",
+    "genres": [
+      "Drama",
+      "Mystery",
+      "Thriller"
+    ],
+    "runtimeMinutes": 148,
+    "countries": [
+      "Japan",
+      "South Korea"
+    ],
+    "spokenLanguages": [
+      "English",
+      "Korean"
+    ],
+    "overview": "Deliveryman Jong-su is out on a job when he runs into Hae-mi, a girl who once lived in his neighborhood. She asks if he'd mind looking after her cat while she's away on a trip to Africa. On her return, she introduces to Jong-su an enigmatic young man named Ben, who she met during her trip. One day Ben tells Jong-su about his most unusual hobby.",
+    "keywords": []
+  },
+  "inputHash": "sha256:576903084d46a040d70c338d3a96d19e612e7b665245c35b237008b93fe3231c"
+}

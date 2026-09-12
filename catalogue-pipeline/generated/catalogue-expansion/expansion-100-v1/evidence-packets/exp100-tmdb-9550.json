@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-9550",
+  "tmdbId": 9550,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "2d3771896c8618e29602ed9d9f7e321ec891c019d23d3a397efa47d92019e34c"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "2d3771896c8618e29602ed9d9f7e321ec891c019d23d3a397efa47d92019e34c"
+    }
+  ],
+  "facts": {
+    "title": "House of Flying Daggers",
+    "year": 2004,
+    "director": "Zhang Yimou",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Drama"
+    ],
+    "runtimeMinutes": 119,
+    "countries": [
+      "China",
+      "Hong Kong"
+    ],
+    "spokenLanguages": [
+      "Mandarin"
+    ],
+    "overview": "In 9th century China, a corrupt government wages war against a rebel army called the Flying Daggers. A romantic warrior breaks a beautiful rebel out of prison to help her rejoin her fellows, but things are not what they seem.",
+    "keywords": []
+  },
+  "inputHash": "sha256:a8d7dc479969504fe6759ab5a02b996c37f5d8f632208d5f1c685305bed5c199"
+}

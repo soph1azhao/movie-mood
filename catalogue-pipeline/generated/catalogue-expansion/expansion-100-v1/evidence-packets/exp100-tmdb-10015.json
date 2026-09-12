@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-10015",
+  "tmdbId": 10015,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "be6b1c29db8c8b03e94e6e1fbf6117158b025ff40d9fd2415103116abafcd768"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "be6b1c29db8c8b03e94e6e1fbf6117158b025ff40d9fd2415103116abafcd768"
+    }
+  ],
+  "facts": {
+    "title": "Heartbreak Ridge",
+    "year": 1986,
+    "director": "Clint Eastwood",
+    "genres": [
+      "Drama",
+      "War"
+    ],
+    "runtimeMinutes": 130,
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English",
+      "Spanish"
+    ],
+    "overview": "A hard-nosed, hard-living Marine gunnery sergeant clashes with his superiors and his ex-wife as he takes command of a spoiled recon platoon with a bad attitude.",
+    "keywords": []
+  },
+  "inputHash": "sha256:5af0122a1fe74ff9e69a19e0f3d4c1ae8c6afa4dabf25b86fb82a21879e984c5"
+}

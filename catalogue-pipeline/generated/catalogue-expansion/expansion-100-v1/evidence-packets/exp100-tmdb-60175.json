@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-60175",
+  "tmdbId": 60175,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "cc5ee678fb12fe6b6afdbc6e1c9ff96a39226a0a2fc6e313a254b6409ca78fcd"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "cc5ee678fb12fe6b6afdbc6e1c9ff96a39226a0a2fc6e313a254b6409ca78fcd"
+    }
+  ],
+  "facts": {
+    "title": "The Under-Gifted",
+    "year": 1980,
+    "director": "Claude Zidi",
+    "genres": [
+      "Comedy"
+    ],
+    "runtimeMinutes": 92,
+    "countries": [
+      "France"
+    ],
+    "spokenLanguages": [
+      "French"
+    ],
+    "overview": "The story centers around a graduating class of \"less-gifted\" students in a private Versailles high school. Only a miracle has brought the students this far along, and after a practical joke misfires and the whole school is dynamited, the students are in deep trouble. They have to present themselves in court for their punishment and it could not be worse: If they don't pass their high-school graduation exams, they go to prison!",
+    "keywords": []
+  },
+  "inputHash": "sha256:3742943ef141d25d46ffc4e3357d8d76d21c1bd5748d5ef5a4c3f1cdee94c4dc"
+}

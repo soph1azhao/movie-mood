@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-3134",
+  "tmdbId": 3134,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "ef81de49181e4a92221ceb82fa92182fc50ab0daf9c9a7a94dec67351c6e644c"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "ef81de49181e4a92221ceb82fa92182fc50ab0daf9c9a7a94dec67351c6e644c"
+    }
+  ],
+  "facts": {
+    "title": "Baise-moi",
+    "year": 2000,
+    "director": "Coralie Trinh Thi & Virginie Despentes",
+    "genres": [
+      "Crime",
+      "Drama",
+      "Thriller"
+    ],
+    "runtimeMinutes": 77,
+    "countries": [
+      "France"
+    ],
+    "spokenLanguages": [
+      "French"
+    ],
+    "overview": "Nadine and Manu are two mad women, as tidy as can be, almost perfectionists. They have several things in common: extreme sex, drugs, beer and the trigger. They find the solution to their problems with guns and beware to those who dare to get in their way!",
+    "keywords": []
+  },
+  "inputHash": "sha256:d58531f97c1dec3ab1e718e623aa4e2cd1c8af65d98b842ea2c20b028569958c"
+}

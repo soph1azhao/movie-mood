@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-2621",
+  "tmdbId": 2621,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "0ce2497d86b6ea6e0ca05878cdbd814669e2b53ed183c1eec14b58a3ffbabd2a"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "0ce2497d86b6ea6e0ca05878cdbd814669e2b53ed183c1eec14b58a3ffbabd2a"
+    }
+  ],
+  "facts": {
+    "title": "Return to Me",
+    "year": 2000,
+    "director": "Bonnie Hunt",
+    "genres": [
+      "Comedy",
+      "Romance"
+    ],
+    "runtimeMinutes": 116,
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "Dragged out on a blind date a year after his wife's tragic death, grieving architect Bob Rueland finds an unexpected spark not with his date, but with Grace, the sharp-witted waitress at a lively Irish-Italian restaurant. Unbeknownst to Bob, Grace is the recipient of his late wife's donated heart. As they grow closer, their romance offers the promise of healing and the weight of a secret that could tear them apart.",
+    "keywords": []
+  },
+  "inputHash": "sha256:af26f2951352fc18517bbef4cd62a2c539250b7bdc1b8f9ad36e7c068b3fb7f7"
+}

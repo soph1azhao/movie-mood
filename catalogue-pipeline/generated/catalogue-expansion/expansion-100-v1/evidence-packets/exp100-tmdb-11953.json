@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-11953",
+  "tmdbId": 11953,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "ae2493527a749456efe5205de621e004986c35087d9c3ceb0cb2f6b4401bf08e"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "ae2493527a749456efe5205de621e004986c35087d9c3ceb0cb2f6b4401bf08e"
+    }
+  ],
+  "facts": {
+    "title": "Kagemusha",
+    "year": 1980,
+    "director": "Akira Kurosawa",
+    "genres": [
+      "Action",
+      "Drama",
+      "History",
+      "War"
+    ],
+    "runtimeMinutes": 180,
+    "countries": [
+      "Japan",
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "Japanese"
+    ],
+    "overview": "Akira Kurosawa's lauded feudal epic presents the tale of a petty thief who is recruited to impersonate Shingen, an aging warlord, in order to avoid attacks by competing clans. When Shingen dies, his generals reluctantly agree to have the impostor take over as the powerful ruler. He soon begins to appreciate life as Shingen, but his commitment to the role is tested when he must lead his troops into battle against the forces of a rival warlord.",
+    "keywords": []
+  },
+  "inputHash": "sha256:862edb8cbfab70d3dd9d71eec3958694d1d58330ffaeabbbd19312e8065e7825"
+}

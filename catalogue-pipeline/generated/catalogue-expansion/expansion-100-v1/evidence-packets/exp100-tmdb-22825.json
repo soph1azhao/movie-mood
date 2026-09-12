@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-22825",
+  "tmdbId": 22825,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "38db8b3cd4159d2444ff1aeec5633899565e8d1cefd2768e30c484047b3e6e84"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "38db8b3cd4159d2444ff1aeec5633899565e8d1cefd2768e30c484047b3e6e84"
+    }
+  ],
+  "facts": {
+    "title": "The Box",
+    "year": 2009,
+    "director": "Richard Kelly",
+    "genres": [
+      "Science Fiction",
+      "Thriller"
+    ],
+    "runtimeMinutes": 115,
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "Norma and Arthur Lewis, a suburban couple with a young child, receive a simple wooden box as a gift, which bears fatal and irrevocable consequences. A mysterious stranger delivers the message that the box promises to bestow upon its owner $1 million with the press of a button. However pressing this button will simultaneously cause the death of another human being somewhere in the world; someone they don't know. With just 24 hours to have the box in their possession, Norma and Arthur find themselves in the cross-hairs of a startling moral dilemma and must face the true nature of their humanity.",
+    "keywords": []
+  },
+  "inputHash": "sha256:5d23ea0c5f25d3fbe45eb0f365176aaa75f1e62dd338cc2596618867ae0bb42a"
+}

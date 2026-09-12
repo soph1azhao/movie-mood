@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-693113",
+  "tmdbId": 693113,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "cf843e0c621274e10c408835ee9478e6437ddde7107ee42a2c24efa1fd8dca4a"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "cf843e0c621274e10c408835ee9478e6437ddde7107ee42a2c24efa1fd8dca4a"
+    }
+  ],
+  "facts": {
+    "title": "Midnight in the Switchgrass",
+    "year": 2021,
+    "director": "Randall Emmett",
+    "genres": [
+      "Action",
+      "Crime",
+      "Mystery",
+      "Thriller"
+    ],
+    "runtimeMinutes": 99,
+    "countries": [
+      "Puerto Rico",
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "FBI Agent Karl Helter and his partner Rebecca Lombardo are very close to busting a sex-trafficking ring. When they realize their investigation has crossed the path of a brutal serial killer, they team up with a FDLE agent to put an end to the infamous 'Truck Stop Killer'.",
+    "keywords": []
+  },
+  "inputHash": "sha256:635fd62df21d7fbcba6154fde2bdf4728c09c6fd8b0c3c55087119811c642553"
+}

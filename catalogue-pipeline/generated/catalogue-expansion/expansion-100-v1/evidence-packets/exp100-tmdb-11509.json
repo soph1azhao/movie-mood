@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-11509",
+  "tmdbId": 11509,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "4b74faed1903f948456b3f24c048a64c2d3fe1a54854fce0c967cf71bf220d8d"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "4b74faed1903f948456b3f24c048a64c2d3fe1a54854fce0c967cf71bf220d8d"
+    }
+  ],
+  "facts": {
+    "title": "Silverado",
+    "year": 1985,
+    "director": "Lawrence Kasdan",
+    "genres": [
+      "Action",
+      "Drama",
+      "Western"
+    ],
+    "runtimeMinutes": 133,
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "Four unwitting heroes cross paths on their journey to the sleepy town of Silverado. Little do they know the town where their family and friends reside has been taken over by a corrupt sheriff and a murderous posse. It's up to the sharp-shooting foursome to save the day, but first they have to break each other out of jail, and learn who their real friends are.",
+    "keywords": []
+  },
+  "inputHash": "sha256:9b728bcaaf4b8500f66ead65616f5342d09ad55c38a52da3a943af3a8ca10de9"
+}

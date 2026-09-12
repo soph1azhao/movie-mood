@@ -1,0 +1,54 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-144",
+  "tmdbId": 144,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "411e061aed19257ff56f009aa4761ee10ba911ab00813a2e742e9c456a8984e9"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "411e061aed19257ff56f009aa4761ee10ba911ab00813a2e742e9c456a8984e9"
+    }
+  ],
+  "facts": {
+    "title": "Wings of Desire",
+    "year": 1987,
+    "director": "Wim Wenders",
+    "genres": [
+      "Drama",
+      "Fantasy",
+      "Romance"
+    ],
+    "runtimeMinutes": 128,
+    "countries": [
+      "France",
+      "Germany"
+    ],
+    "spokenLanguages": [
+      "English",
+      "French",
+      "German",
+      "Hebrew",
+      "Japanese",
+      "Spanish",
+      "Turkish"
+    ],
+    "overview": "Two angels, Damiel and Cassiel, glide through the streets of Berlin, observing the bustling population, providing invisible rays of hope to the distressed but never interacting with them. When Damiel falls in love with lonely trapeze artist Marion, the angel longs to experience life in the physical world, and finds — with some words of wisdom from actor Peter Falk — that it might be possible for him to take human form.",
+    "keywords": []
+  },
+  "inputHash": "sha256:408fe7689c0db640ca3491764a4b13038cc3813aca065b86419a0d1863d490e9"
+}

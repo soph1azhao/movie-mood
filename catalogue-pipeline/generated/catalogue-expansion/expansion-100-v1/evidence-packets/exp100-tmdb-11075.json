@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-11075",
+  "tmdbId": 11075,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "40e56bc55924a04ed601cf5bfa1f1045f57be411f69e706f0b6f303815a0bd3f"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "40e56bc55924a04ed601cf5bfa1f1045f57be411f69e706f0b6f303815a0bd3f"
+    }
+  ],
+  "facts": {
+    "title": "Audition",
+    "year": 2000,
+    "director": "Takashi Miike",
+    "genres": [
+      "Drama",
+      "Horror"
+    ],
+    "runtimeMinutes": 115,
+    "countries": [
+      "Japan"
+    ],
+    "spokenLanguages": [
+      "Japanese"
+    ],
+    "overview": "Seven years after the death of his wife, widower Shigeharu seeks advice on how to find a new wife from a colleague. Taking advantage of their position as a film company, they stage an audition. Interviewing a series of women, Shigeharu is enchanted by the quiet Asami. But soon things take a twisted turn as Asami isn’t what she seems to be.",
+    "keywords": []
+  },
+  "inputHash": "sha256:1b6138a5856a1552e3a269d612a7898a7b1908f8201f0c860e570266cbc7b537"
+}

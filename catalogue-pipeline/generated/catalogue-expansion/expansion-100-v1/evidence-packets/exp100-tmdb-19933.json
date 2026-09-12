@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-19933",
+  "tmdbId": 19933,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "44d6684a2113c9ec8b0af657fb2fe2ecfd4abfb00fff993e9dc9516e139bf87c"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "44d6684a2113c9ec8b0af657fb2fe2ecfd4abfb00fff993e9dc9516e139bf87c"
+    }
+  ],
+  "facts": {
+    "title": "The Brave Little Toaster",
+    "year": 1987,
+    "director": "Jerry Rees",
+    "genres": [
+      "Adventure",
+      "Animation",
+      "Family",
+      "Fantasy"
+    ],
+    "runtimeMinutes": 90,
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "A group of dated appliances, finding themselves stranded in a summer home that their family had just sold, decide to seek out their eight year old 'master'.",
+    "keywords": []
+  },
+  "inputHash": "sha256:5f811465a05f450b26dfaac3cf9ba5225fe19ae72574fa07867567ea4ffd7a54"
+}

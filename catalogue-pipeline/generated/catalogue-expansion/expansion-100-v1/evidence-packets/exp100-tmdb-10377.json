@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-10377",
+  "tmdbId": 10377,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "305ed8c844f7af32dab58ded3a5f6119bfdcf8715bda9ad9a60828de8e31cc5b"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "305ed8c844f7af32dab58ded3a5f6119bfdcf8715bda9ad9a60828de8e31cc5b"
+    }
+  ],
+  "facts": {
+    "title": "My Cousin Vinny",
+    "year": 1992,
+    "director": "Jonathan Lynn",
+    "genres": [
+      "Comedy",
+      "Drama"
+    ],
+    "runtimeMinutes": 119,
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "Two carefree pals traveling through rural Alabama on their way back to college are mistakenly arrested and charged with murder. Fortunately, one of them has a cousin who's a lawyer - Vincent Gambini, a former auto mechanic from Brooklyn who has just passed his bar exam after his sixth try. When he arrives with his leather-clad girlfriend to try his first case, it's a real shock - for him and the Deep South!",
+    "keywords": []
+  },
+  "inputHash": "sha256:c33685d7b31cd70c7164a3440a09ac44f8a1f7e3183f0fa5dd6e12c30c9af17d"
+}

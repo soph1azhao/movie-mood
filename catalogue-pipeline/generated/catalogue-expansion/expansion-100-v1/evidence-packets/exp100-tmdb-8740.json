@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-8740",
+  "tmdbId": 8740,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "6b111c9194752095419aea9e567d36f929850d2276497be2a6c88d9176dbfdfe"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "6b111c9194752095419aea9e567d36f929850d2276497be2a6c88d9176dbfdfe"
+    }
+  ],
+  "facts": {
+    "title": "The Vanishing",
+    "year": 1988,
+    "director": "George Sluizer",
+    "genres": [
+      "Mystery",
+      "Thriller"
+    ],
+    "runtimeMinutes": 106,
+    "countries": [
+      "France",
+      "Germany",
+      "Netherlands"
+    ],
+    "spokenLanguages": [
+      "Dutch",
+      "English",
+      "French"
+    ],
+    "overview": "Rex and Saskia, a young couple in love, are on vacation when they stop at a busy service station. Saskia is abducted in broad daylight and three years pass with no answers or closure surrounding her disappearance. Rex has nearly given up all hope when he suddenly begins receiving letters from her abductor.",
+    "keywords": []
+  },
+  "inputHash": "sha256:7abd24e9f47bdbf58c9fd85332a67b3f35a237f8186cfc60901c5028edca72ca"
+}

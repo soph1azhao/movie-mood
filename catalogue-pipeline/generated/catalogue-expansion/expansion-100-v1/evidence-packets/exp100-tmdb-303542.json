@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-303542",
+  "tmdbId": 303542,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "28ea60f9170d74f1b26f873498c6d488e8d832ae7d6e1d2e10979b267b5a3b50"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "28ea60f9170d74f1b26f873498c6d488e8d832ae7d6e1d2e10979b267b5a3b50"
+    }
+  ],
+  "facts": {
+    "title": "The Invisible Boy",
+    "year": 2014,
+    "director": "Gabriele Salvatores",
+    "genres": [
+      "Family",
+      "Fantasy",
+      "Science Fiction"
+    ],
+    "runtimeMinutes": 100,
+    "countries": [
+      "France",
+      "Italy"
+    ],
+    "spokenLanguages": [
+      "Italian"
+    ],
+    "overview": "Michele is thirteen year old, shy, unpopular at school, and in love with Stella. After wearing a costume for a Halloween party, he finds out that he's invisible.",
+    "keywords": []
+  },
+  "inputHash": "sha256:e7da2e779ca70e5b5355c0aab6fc2d6c6c325c4d0c2c6b3ed74342ee5e6b077d"
+}

@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-10404",
+  "tmdbId": 10404,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "79941c94d9c274125417c27a29942f546d456fbe8732535f93a930d78e78d937"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "79941c94d9c274125417c27a29942f546d456fbe8732535f93a930d78e78d937"
+    }
+  ],
+  "facts": {
+    "title": "Raise the Red Lantern",
+    "year": 1991,
+    "director": "Zhang Yimou",
+    "genres": [
+      "Drama"
+    ],
+    "runtimeMinutes": 125,
+    "countries": [
+      "China",
+      "Hong Kong",
+      "Taiwan"
+    ],
+    "spokenLanguages": [
+      "Mandarin"
+    ],
+    "overview": "In 1920s China, 19-year-old Songlian becomes a concubine of a powerful lord and is forced to compete with his three wives for the privileges gained.",
+    "keywords": []
+  },
+  "inputHash": "sha256:e5c0e6775a8aab152cadc406dd81c4a57ad2dade49aeefbd01dfa9c8f7ac75e8"
+}

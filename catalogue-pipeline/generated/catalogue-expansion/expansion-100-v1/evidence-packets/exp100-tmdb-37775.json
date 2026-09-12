@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-37775",
+  "tmdbId": 37775,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "b167684b93871ebd7d53aa22906cdea93818696c906478596c66ba0c7b0baea3"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "b167684b93871ebd7d53aa22906cdea93818696c906478596c66ba0c7b0baea3"
+    }
+  ],
+  "facts": {
+    "title": "Bianco, rosso e Verdone",
+    "year": 1981,
+    "director": "Carlo Verdone",
+    "genres": [
+      "Comedy"
+    ],
+    "runtimeMinutes": 110,
+    "countries": [
+      "Italy"
+    ],
+    "spokenLanguages": [
+      "Italian"
+    ],
+    "overview": "Three very different Italians travel to their hometowns on election day: Pasquale, a Southern immigrant living in Munich, finds a country far removed from the one he left behind; Roman civil servant Furio's relentless nitpicking threatens to push his wife Magda over the edge; young Mimmo's journey is repeatedly interrupted by concerns about his grandmother's health.",
+    "keywords": []
+  },
+  "inputHash": "sha256:763f1a4431c260f0ef7793e34f4bf26ad27ee5f24c5ba4e87110be5eeeddf820"
+}

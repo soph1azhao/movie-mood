@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-48254",
+  "tmdbId": 48254,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "8c22715794da640d7083d42d47bcf7474fb6298ceecef5284bf1195865d7d89c"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "8c22715794da640d7083d42d47bcf7474fb6298ceecef5284bf1195865d7d89c"
+    }
+  ],
+  "facts": {
+    "title": "Ovosodo",
+    "year": 1997,
+    "director": "Paolo Virzì",
+    "genres": [
+      "Comedy",
+      "Drama"
+    ],
+    "runtimeMinutes": 100,
+    "countries": [
+      "Italy"
+    ],
+    "spokenLanguages": [
+      "Italian"
+    ],
+    "overview": "From childhood to fatherhood, Piero learns things the hard way while growing up in a working-class neighborhood of Livorno.",
+    "keywords": []
+  },
+  "inputHash": "sha256:9fe3786e567c4807a2076344a9700ed6779109c8d21301e3f1fb2ae446943eb0"
+}

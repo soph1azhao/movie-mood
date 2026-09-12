@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-10349",
+  "tmdbId": 10349,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "7121b3011f92566d1676efd868b64db788ab0b6db11d5a1606d5ead4d7a50f2c"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "7121b3011f92566d1676efd868b64db788ab0b6db11d5a1606d5ead4d7a50f2c"
+    }
+  ],
+  "facts": {
+    "title": "The Dark Half",
+    "year": 1993,
+    "director": "George A. Romero",
+    "genres": [
+      "Horror",
+      "Mystery"
+    ],
+    "runtimeMinutes": 122,
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "Following the public's realization that Thad Beaumont and George Stark are one and the same, the former stages a mock funeral, only for a series of gruesome murders to begin occurring as in his books.",
+    "keywords": []
+  },
+  "inputHash": "sha256:0a799f0347535c1e3557a3748606293e47324833f9b76c3709227efcf701c14b"
+}

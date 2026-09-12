@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-5595",
+  "tmdbId": 5595,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "27372ca0c13a1374e3d49ec65e026f4c373ddc7e5b6e26832df530736d12513d"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "27372ca0c13a1374e3d49ec65e026f4c373ddc7e5b6e26832df530736d12513d"
+    }
+  ],
+  "facts": {
+    "title": "Fermat's Room",
+    "year": 2007,
+    "director": "Luis Piedrahita & Rodrigo Sopeña",
+    "genres": [
+      "Mystery",
+      "Thriller"
+    ],
+    "runtimeMinutes": 88,
+    "countries": [
+      "Spain"
+    ],
+    "spokenLanguages": [
+      "Spanish"
+    ],
+    "overview": "Four mathematicians are imprisoned in a shrinking room; with the walls closing in, they must try anything to escape this fatal puzzle.",
+    "keywords": []
+  },
+  "inputHash": "sha256:0df71cf4de81f8cd43cd83d3e671d1dc48ef6abb84f7739d250718e979acd2fe"
+}

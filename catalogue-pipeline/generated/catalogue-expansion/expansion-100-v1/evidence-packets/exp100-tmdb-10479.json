@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-10479",
+  "tmdbId": 10479,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "e62ed894c255c9234e6632597ed1dd1f547b84507d076d748e93af43493c2463"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "e62ed894c255c9234e6632597ed1dd1f547b84507d076d748e93af43493c2463"
+    }
+  ],
+  "facts": {
+    "title": "Rules of Engagement",
+    "year": 2000,
+    "director": "William Friedkin",
+    "genres": [
+      "Drama",
+      "Thriller",
+      "War"
+    ],
+    "runtimeMinutes": 127,
+    "countries": [
+      "Germany",
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "Arabic",
+      "English"
+    ],
+    "overview": "A Marine Colonel is brought to court-martial after ordering his men to fire on demonstrators surrounding the American embassy in Yemen.",
+    "keywords": []
+  },
+  "inputHash": "sha256:13833e6ba3e9713e6cd7340e295eaff290828b41ea749f5e58675cf2b0ca7793"
+}

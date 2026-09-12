@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-538362",
+  "tmdbId": 538362,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "bd04e796d146ef767a17767e4ae6e4167858b7ab317176556ea6a4a19e1d7560"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "bd04e796d146ef767a17767e4ae6e4167858b7ab317176556ea6a4a19e1d7560"
+    }
+  ],
+  "facts": {
+    "title": "On My Skin",
+    "year": 2018,
+    "director": "Alessio Cremonini",
+    "genres": [
+      "Drama"
+    ],
+    "runtimeMinutes": 100,
+    "countries": [
+      "Italy"
+    ],
+    "spokenLanguages": [
+      "English",
+      "Italian"
+    ],
+    "overview": "The incredible true story behind the most controversial Italian court cases in recent years. Stefano Cucchi was arrested for a minor crime and mysteriously found dead during his detention. In one week's time, a family is changed forever.",
+    "keywords": []
+  },
+  "inputHash": "sha256:0d8153e9837d94a1366d2c7b442fbc25daa4617ed7ae946787c4157a8320fe55"
+}

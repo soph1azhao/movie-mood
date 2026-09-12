@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-18129",
+  "tmdbId": 18129,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "85e1af25de95493d640571d53ec29abd62b5224e544078bf14fe167f4254752e"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "85e1af25de95493d640571d53ec29abd62b5224e544078bf14fe167f4254752e"
+    }
+  ],
+  "facts": {
+    "title": "The Grifters",
+    "year": 1990,
+    "director": "Stephen Frears",
+    "genres": [
+      "Crime",
+      "Drama"
+    ],
+    "runtimeMinutes": 110,
+    "countries": [
+      "Canada",
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "A small-time conman has his loyalties torn between his estranged mother and his new girlfriend, both of whom are high-stakes grifters with their own angles to play.",
+    "keywords": []
+  },
+  "inputHash": "sha256:a0df4dc23a11a3cc3386bd03af397061cfe6c7413bbd9eccf45fd8f865657f04"
+}

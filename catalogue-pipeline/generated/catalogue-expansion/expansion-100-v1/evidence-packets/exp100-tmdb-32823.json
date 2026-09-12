@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-32823",
+  "tmdbId": 32823,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "a74dc4ebb1cbde7faf0d8dea61cc10c2231a73739a855621123d088fb110de8b"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "a74dc4ebb1cbde7faf0d8dea61cc10c2231a73739a855621123d088fb110de8b"
+    }
+  ],
+  "facts": {
+    "title": "Get Him to the Greek",
+    "year": 2010,
+    "director": "Nicholas Stoller",
+    "genres": [
+      "Adventure",
+      "Comedy",
+      "Music"
+    ],
+    "runtimeMinutes": 109,
+    "countries": [
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "Pinnacle records has the perfect plan to get their sinking company back on track: a comeback concert in LA featuring Aldous Snow, a fading rockstar who has dropped off the radar in recent years. Record company intern Aaron Green is faced with the monumental task of bringing his idol, out of control rock star Aldous Snow, back to LA for his comeback show.",
+    "keywords": []
+  },
+  "inputHash": "sha256:e2a92714829ba69ce9863e7cc235474a83a144391a7d5d2eaaa50bff6131e234"
+}

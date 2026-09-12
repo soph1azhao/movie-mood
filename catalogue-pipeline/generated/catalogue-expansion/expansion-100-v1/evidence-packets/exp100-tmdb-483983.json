@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-483983",
+  "tmdbId": 483983,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "b8e812b95122679f5e2270c858e3b2ada067439af18d5deebf3686226d691e88"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "b8e812b95122679f5e2270c858e3b2ada067439af18d5deebf3686226d691e88"
+    }
+  ],
+  "facts": {
+    "title": "Balloon",
+    "year": 2018,
+    "director": "Michael Herbig",
+    "genres": [
+      "Drama",
+      "History",
+      "Thriller"
+    ],
+    "runtimeMinutes": 125,
+    "countries": [
+      "France",
+      "Germany"
+    ],
+    "spokenLanguages": [
+      "English",
+      "German"
+    ],
+    "overview": "Two families attempt a daredevil plan to escape the GDR with a homemade hot air balloon, but it crashes just before the border. The Stasi finds traces of this attempt to escape and immediately starts investigations, while the two families are forced to build a new escape balloon. With each passing day the Stasi is closer on their heels – a nerve-wracking race against time begins.",
+    "keywords": []
+  },
+  "inputHash": "sha256:8822fbe1d11b6a6ac6af1bcc256379bd9655bc3cadbc2f63257247c76e3f20b0"
+}

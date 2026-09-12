@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-271706",
+  "tmdbId": 271706,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "148c1d18b31ed2d0e83e1b0f57d9f0dd63f83a391353e98ce9772921ac991e91"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "148c1d18b31ed2d0e83e1b0f57d9f0dd63f83a391353e98ce9772921ac991e91"
+    }
+  ],
+  "facts": {
+    "title": "Big Fish & Begonia",
+    "year": 2016,
+    "director": "Liang Xuan & Zhang Chun",
+    "genres": [
+      "Adventure",
+      "Animation",
+      "Fantasy"
+    ],
+    "runtimeMinutes": 101,
+    "countries": [
+      "China",
+      "South Korea"
+    ],
+    "spokenLanguages": [
+      "Mandarin"
+    ],
+    "overview": "Beyond the human realm, there is a magical race of beings who control the tides and the changing of the seasons. One of these beings, a young girl named Chun, seeks something more—she wants to experience the human world! At sixteen, she finally gets her chance and transforms into a dolphin in order to explore the world that has her fascinated. But she soon discovers that it's a dangerous place and nearly gets killed in a vortex. Luckily, her life is spared when a young boy sacrifices himself to save her. Moved by his kindness and courage, she uses magic to bring him back to life only to learn that this power comes at a serious price. On a new adventure, she’ll have to make her own sacrifices in order to protect his soul until it is ready to return to the human world.",
+    "keywords": []
+  },
+  "inputHash": "sha256:1004ad53ec37b239ab4d0f0edec1db2458d4abfb77d8fee2df6e35aeb02d0094"
+}

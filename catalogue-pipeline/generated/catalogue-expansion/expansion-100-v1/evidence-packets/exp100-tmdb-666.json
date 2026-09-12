@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-666",
+  "tmdbId": 666,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "408d90128b3e5645b99463b4fae134eebaa364890321724f755429390bf254d2"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "408d90128b3e5645b99463b4fae134eebaa364890321724f755429390bf254d2"
+    }
+  ],
+  "facts": {
+    "title": "Central Station",
+    "year": 1998,
+    "director": "Walter Salles",
+    "genres": [
+      "Drama"
+    ],
+    "runtimeMinutes": 111,
+    "countries": [
+      "Brazil",
+      "France"
+    ],
+    "spokenLanguages": [
+      "Portuguese"
+    ],
+    "overview": "An emotional journey of a former school teacher, who writes letters for illiterate people, and a young boy, whose mother has just died, as they search for the father he never knew.",
+    "keywords": []
+  },
+  "inputHash": "sha256:f045d9316f6e9ff691b009a88350fe062efc537d12e2b56f5e37f83d091fe0ba"
+}

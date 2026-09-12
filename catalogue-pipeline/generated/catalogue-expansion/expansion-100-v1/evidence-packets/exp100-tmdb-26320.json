@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "evidence-packet.v1",
+  "candidateId": "exp100-tmdb-26320",
+  "tmdbId": 26320,
+  "sourceProvenance": [
+    {
+      "source": "tmdb-facts",
+      "fields": [
+        "title",
+        "year",
+        "director",
+        "genres",
+        "runtimeMinutes",
+        "countries",
+        "spokenLanguages"
+      ],
+      "version": "681e0d7f54d6d2d18bb539cb3a695f364a465f807d76a2cfe912aff5cde27599"
+    },
+    {
+      "source": "tmdb-overview",
+      "fields": [
+        "overview"
+      ],
+      "version": "681e0d7f54d6d2d18bb539cb3a695f364a465f807d76a2cfe912aff5cde27599"
+    }
+  ],
+  "facts": {
+    "title": "Taking Woodstock",
+    "year": 2009,
+    "director": "Ang Lee",
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Music"
+    ],
+    "runtimeMinutes": 120,
+    "countries": [
+      "Taiwan",
+      "United States of America"
+    ],
+    "spokenLanguages": [
+      "English"
+    ],
+    "overview": "The story of Elliot Tiber and his family, who inadvertently played a pivotal role in making the famed Woodstock Music and Arts Festival into the happening that it was. When Elliot hears that a neighboring town has pulled the permit on a hippie music festival, he calls the producers thinking he could drum up some much-needed business for his parents' run-down motel. Three weeks later, half a million people are on their way to his neighbor’s farm in White Lake, New York, and Elliot finds himself swept up in a generation-defining experience that would change his life–and American culture–forever.",
+    "keywords": []
+  },
+  "inputHash": "sha256:097eb09380828fa2187ea94055d0c487154fcf523e3ef2be3cb6d4f3ce2d8fa6"
+}
