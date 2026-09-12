@@ -175,7 +175,7 @@ export async function runSemanticBatch({
   return { manifest, manifestPath, usage, staleCacheCount }
 }
 
-async function discoverLargestEvidenceSet(root) {
+export async function discoverLargestEvidenceSet(root) {
   const groups = new Map()
   async function walk(path) {
     for (const entry of await readdir(path, { withFileTypes: true })) {
