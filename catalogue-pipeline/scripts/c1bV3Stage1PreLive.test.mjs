@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { createHash } from 'node:crypto'
-import { mkdtemp, readFile, rm } from 'node:fs/promises'
+import { copyFile, mkdtemp, readFile, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { canonicalize } from './c1bV2Stage0.mjs'
@@ -18,7 +18,14 @@ import {
 } from './c1bV3Stage1PreLive.mjs'
 
 const directories = []
+const frozenPreLive = join(process.cwd(), 'catalogue-pipeline/generated/semantic/diagnostics/phase-5c-c1b-v-confirmatory.v3/pre-live-v1')
+const frozenFiles = ['exclusion-manifest.json', 'exclusion-provenance.json', 'phase5c-c1b-v3-stage1-pre-live-gate.v1.json']
 async function tempOutput() { const path = await mkdtemp(join(tmpdir(), 'c1b-v3-pre-live-')); directories.push(path); return path }
+async function frozenCopies() {
+  const outputDir = await tempOutput()
+  await Promise.all(frozenFiles.map((file) => copyFile(join(frozenPreLive, file), join(outputDir, file))))
+  return { outputDir, paths: { manifest: join(outputDir, frozenFiles[0]), provenance: join(outputDir, frozenFiles[1]), gate: join(outputDir, frozenFiles[2]) } }
+}
 afterEach(async () => Promise.all(directories.splice(0).map((path) => rm(path, { recursive: true, force: true }))))
 
 describe('C1b-V3 Stage 1C offline pre-live gate', () => {
@@ -101,54 +108,41 @@ describe('C1b-V3 Stage 1C offline pre-live gate', () => {
     expect((await verifyV3PreLiveGate({ root: process.cwd(), manifest: badManifest, provenance })).checks.exclusionManifestValid).toBe(false)
   })
 
-  it('emits only boolean credential presence and no provider WAL or live-run directory', async () => {
-    const outputDir = await tempOutput()
-    const secret = 'do-not-persist-this-secret'
+  it('rejects historical preparation from post-freeze HEAD without network, WAL, or live directory activity', async () => {
     const fetchSpy = vi.fn()
     const previousFetch = globalThis.fetch
     globalThis.fetch = fetchSpy
-    let prepared
-    try { prepared = await prepareV3PreLiveGate({ root: process.cwd(), outputDir, env: { TMDB_READ_ACCESS_TOKEN: secret } }) } finally { globalThis.fetch = previousFetch }
-    expect(prepared.gate.tmdbCredentialPresent).toBe(true)
-    expect(prepared.gate.networkCallsDuringGate).toBe(0)
-    expect(prepared.gate.providerWalIntentRecordsCreated).toBe(0)
+    try { await expect(prepareV3PreLiveGate({ root: process.cwd(), outputDir: await tempOutput(), env: {} })).rejects.toMatchObject({ code: 'PREPARATION_HEAD_MISMATCH' }) } finally { globalThis.fetch = previousFetch }
     expect(fetchSpy).not.toHaveBeenCalled()
-    for (const path of Object.values(prepared.paths)) expect(await readFile(path, 'utf8')).not.toContain(secret)
-    expect(prepared.paths.gate).not.toContain('stage1-recruitment-live-v1')
     await expect(readFile(join(process.cwd(), V3_FUTURE_LIVE_RELATIVE, 'execution.wal'), 'utf8')).rejects.toMatchObject({ code: 'ENOENT' })
-    const absent = await prepareV3PreLiveGate({ root: process.cwd(), outputDir: await tempOutput(), env: {} })
-    expect(absent.gate).toMatchObject({ tmdbCredentialPresent: false, futureAuthorizationStatus: 'BLOCKED — TMDB CREDENTIAL NOT PRESENT' })
   })
 
-  it('keeps registered V3 and V2 forensic inputs byte-identical while preparing offline artifacts', async () => {
-    const outputDir = await tempOutput()
-    const prepared = await prepareV3PreLiveGate({ root: process.cwd(), outputDir, env: {} })
-    expect(prepared.gate.checks.v2ForensicArtifactsByteIdentical).toBe(true)
-    expect(prepared.gate.checks.registeredSpecUnmodified).toBe(true)
+  it('keeps committed Stage-1C evidence and registered inputs byte-identical after freeze', async () => {
+    const gate = JSON.parse(await readFile(join(frozenPreLive, frozenFiles[2]), 'utf8'))
+    expect(gate.checks.v2ForensicArtifactsByteIdentical).toBe(true)
+    expect(gate.checks.registeredSpecUnmodified).toBe(true)
     const raw = await readFile('catalogue-pipeline/calibration/diagnostics/phase5c-c1b-v-confirmatory.v3.json')
     expect(`sha256:${createHash('sha256').update(raw).digest('hex')}`).toBe('sha256:3568b8fd4f2895ab4b9e2cdba145e501e737c784d08a948491413de47483b374')
-    expect(prepared.gate.stage1aCheckpoint).toBe(V3_STAGE1A_CHECKPOINT)
-    expect(prepared.gate.preparationBaseHead).toBe(prepared.gate.stage1bCheckpoint)
-    expect(prepared.gate.checks.implementationBytesBoundToRegisteredCheckpoints).toBe(true)
-    expect(prepared.gate.implementationBindings).toHaveLength(5)
-    expect(prepared.gate.provenanceRawSha256).toBeUndefined()
+    expect(gate.stage1aCheckpoint).toBe(V3_STAGE1A_CHECKPOINT)
+    expect(gate.preparationBaseHead).toBe(gate.stage1bCheckpoint)
+    expect(gate.checks.implementationBytesBoundToRegisteredCheckpoints).toBe(true)
+    expect(gate.implementationBindings).toHaveLength(5)
   })
 
   it('loads only the persisted frozen run configuration and never starts the runner', async () => {
-    const outputDir = await tempOutput()
-    const prepared = await prepareV3PreLiveGate({ root: process.cwd(), outputDir, env: {} })
+    const { outputDir, paths } = await frozenCopies()
     const configuration = await loadFrozenV3Stage1RunConfiguration({ root: process.cwd(), preLiveDir: outputDir })
-    expect(configuration).toMatchObject({ protocolId: V3_PROTOCOL_ID, stage: 1, invocationId: prepared.gate.invocationId, exclusionManifestHash: prepared.manifest.exclusionManifestHash, liveExecutionRequiresIndependentAuthorization: true })
-    const gate = JSON.parse(await readFile(prepared.paths.gate, 'utf8'))
+    const manifest = JSON.parse(await readFile(paths.manifest, 'utf8'))
+    const gate = JSON.parse(await readFile(paths.gate, 'utf8'))
+    expect(configuration).toMatchObject({ protocolId: V3_PROTOCOL_ID, stage: 1, invocationId: gate.invocationId, exclusionManifestHash: manifest.exclusionManifestHash, liveExecutionRequiresIndependentAuthorization: true })
     gate.invocationId = 'tampered'
-    await (await import('node:fs/promises')).writeFile(prepared.paths.gate, JSON.stringify(gate))
+    await (await import('node:fs/promises')).writeFile(paths.gate, JSON.stringify(gate))
     await expect(loadFrozenV3Stage1RunConfiguration({ root: process.cwd(), preLiveDir: outputDir })).rejects.toMatchObject({ code: 'FROZEN_RUN_CONFIGURATION_MISMATCH' })
   })
 
   it('rejects frozen gates whose forensic bindings, checks, authorization, or zero-I/O claims diverge', async () => {
-    const outputDir = await tempOutput()
-    const prepared = await prepareV3PreLiveGate({ root: process.cwd(), outputDir, env: {} })
-    const original = JSON.parse(await readFile(prepared.paths.gate, 'utf8'))
+    const { outputDir, paths } = await frozenCopies()
+    const original = JSON.parse(await readFile(paths.gate, 'utf8'))
     const mutations = [
       (gate) => { gate.stage1aCheckpoint = '0'.repeat(40) },
       (gate) => { gate.stage1bCheckpoint = '0'.repeat(40) },
@@ -162,7 +156,7 @@ describe('C1b-V3 Stage 1C offline pre-live gate', () => {
     for (const mutate of mutations) {
       const gate = structuredClone(original)
       mutate(gate)
-      await (await import('node:fs/promises')).writeFile(prepared.paths.gate, JSON.stringify(gate))
+      await (await import('node:fs/promises')).writeFile(paths.gate, JSON.stringify(gate))
       await expect(loadFrozenV3Stage1RunConfiguration({ root: process.cwd(), preLiveDir: outputDir })).rejects.toMatchObject({ code: 'FROZEN_RUN_CONFIGURATION_MISMATCH' })
     }
   })
