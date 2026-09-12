@@ -1,8 +1,9 @@
 import { readFile } from 'node:fs/promises'
+import { execFileSync } from 'node:child_process'
 import { describe, expect, it, vi } from 'vitest'
 import { canonicalize } from './c1bV2Stage0.mjs'
 import { fetchWikipediaReceptionEvidenceV2 } from '../adapters/wikipediaDescriptiveEvidenceV2.mjs'
-import { V4_IMPLEMENTATION_COMMIT, buildExecutableClosureManifest, buildTriageExposureAudit, canonicalSha256, deriveDependencyPaths } from './c1bV4Registration.mjs'
+import { V4_IMPLEMENTATION_COMMIT, buildExecutableClosureManifest, canonicalSha256, deriveDependencyPaths } from './c1bV4Registration.mjs'
 
 const diagnostics = 'catalogue-pipeline/calibration/diagnostics'
 const readJson = async (path) => JSON.parse(await readFile(path, 'utf8'))
@@ -17,11 +18,17 @@ describe('C1b-V4 static registration', () => {
     expect(stored.importEdges.every(({ importer, imported }) => stored.materialLocalSources.some(({ path }) => path === importer) && stored.materialLocalSources.some(({ path }) => path === imported))).toBe(true)
   })
 
-  it('records the bounded triage standard without claiming absolute non-exposure', async () => {
-    const stored = await readJson(`${diagnostics}/c1b-v4-triage-exposure-audit.v1.json`)
-    const derived = await buildTriageExposureAudit({ root: process.cwd() })
-    expect(canonicalize(stored)).toBe(canonicalize(derived))
+  it('preserves the frozen pre-execution triage artifact and its protocol binding', async () => {
+    const [storedBytes, protocol] = await Promise.all([
+      readFile(`${diagnostics}/c1b-v4-triage-exposure-audit.v1.json`),
+      readJson(`${diagnostics}/phase5c-c1b-v-confirmatory.v4.json`),
+    ])
+    const registeredBytes = execFileSync('git', ['show', '8b7e4875eb9ca8c6a4958b17b35735b85aa24f63:catalogue-pipeline/calibration/diagnostics/c1b-v4-triage-exposure-audit.v1.json'])
+    expect(storedBytes.equals(registeredBytes)).toBe(true)
+    const stored = JSON.parse(storedBytes.toString('utf8'))
+    expect(canonicalSha256(stored)).toBe(protocol.historicalProvenance.triageAuditReportHash)
     expect(stored).toMatchObject({ adverseEvidenceFound: false, triageExposureStatus: 'VERIFIED_NO_ADVERSE_EVIDENCE', networkCallsDuringAudit: 0 })
+    expect(stored.evidenceSourcesInspected.find(({ category }) => category === 'repository-scripts')).toMatchObject({ fileCount: 69 })
     expect(stored.epistemicStandard).toContain('absence-of-adverse-evidence')
     expect(stored.scopeLimitations.join(' ')).toContain('not proof of absolute non-exposure')
   })
