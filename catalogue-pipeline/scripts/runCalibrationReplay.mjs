@@ -297,6 +297,7 @@ export function summarizeCalibrationReplay(firstResults, secondResults, packets)
     requestCount: 0,
     cacheHits: 0,
     retries: 0,
+    malformedOutputRetries: 0,
     classificationsCompleted: 0,
     inputTokens: 0,
     outputTokens: 0,
@@ -325,10 +326,11 @@ export function summarizeCalibrationReplay(firstResults, secondResults, packets)
     usage.requestCount += entry.result.modelCalls
     usage.cacheHits += entry.result.cacheHit ? 1 : 0
     usage.retries += entry.result.retries
+    usage.malformedOutputRetries += Number(entry.result.malformedOutputRetries ?? entry.result.artifact.providerMetadata?.malformedOutputRetries ?? 0)
     usage.classificationsCompleted += entry.result.classificationsCompleted
     const providerUsage = entry.result.providerUsageMetadata ?? {}
-    usage.inputTokens += Number(providerUsage.promptTokenCount ?? 0)
-    usage.outputTokens += Number(providerUsage.candidatesTokenCount ?? 0)
+    usage.inputTokens += Number(providerUsage.promptTokenCount ?? providerUsage.prompt_tokens ?? 0)
+    usage.outputTokens += Number(providerUsage.candidatesTokenCount ?? providerUsage.completion_tokens ?? 0)
     if (providerUsage.thoughtsTokenCount !== undefined) {
       usage.reasoningTokens += Number(providerUsage.thoughtsTokenCount ?? 0)
       usage.reasoningTokensExposed = true

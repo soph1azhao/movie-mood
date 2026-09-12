@@ -38,16 +38,46 @@ describe('model provider adapter', () => {
     }))
   })
 
-  it('rejects malformed structured output without retrying', async () => {
+  it('retries malformed JSON once with the exact same structured request', async () => {
+    const generateStructured = vi.fn().mockResolvedValueOnce('{not json').mockResolvedValueOnce({ ok: true })
+    const request = { stage: 'editorial-writer', nested: { unchanged: true } }
+    const result = await runStructuredModelRequest({
+      provider: { ...provider, generateStructured },
+      request,
+      maxAttempts: 2,
+    })
+
+    expect(result.output).toEqual({ ok: true })
+    expect(result.metadata).toMatchObject({ attempts: 2, malformedOutputRetries: 1 })
+    expect(generateStructured).toHaveBeenCalledTimes(2)
+    expect(generateStructured.mock.calls[1][0]).toEqual(generateStructured.mock.calls[0][0])
+    expect(generateStructured.mock.calls[1][0]).not.toHaveProperty('repairDiagnostic')
+  })
+
+  it('retries a failed deterministic validation once and only returns the valid second generation', async () => {
+    const invalid = { ok: false, leaked: 'invalid-first-output' }
+    const generateStructured = vi.fn().mockResolvedValueOnce(invalid).mockResolvedValueOnce({ ok: true })
+    const result = await runStructuredModelRequest({
+      provider: { ...provider, generateStructured },
+      request: { stage: 'semantic-classifier' },
+      validateOutput: (output) => ({ ok: output.ok === true, hardFailures: output.ok ? [] : [{ field: 'ok', code: 'INVALID_ENUM' }] }),
+    })
+
+    expect(result.output).toEqual({ ok: true })
+    expect(result.output).not.toEqual(invalid)
+    expect(generateStructured).toHaveBeenCalledTimes(2)
+  })
+
+  it('keeps MALFORMED_MODEL_OUTPUT after two malformed generations', async () => {
     const generateStructured = vi.fn().mockResolvedValue('{not json')
 
     await expect(runStructuredModelRequest({
       provider: { ...provider, generateStructured },
       request: { stage: 'editorial-writer' },
-      maxAttempts: 3,
-    })).rejects.toMatchObject({ code: 'MALFORMED_MODEL_OUTPUT' } satisfies Partial<ModelProviderError>)
+      maxAttempts: 2,
+    })).rejects.toMatchObject({ code: 'MALFORMED_MODEL_OUTPUT', details: { attempts: 2, malformedOutputRetries: 1 } } satisfies Partial<ModelProviderError>)
 
-    expect(generateStructured).toHaveBeenCalledTimes(1)
+    expect(generateStructured).toHaveBeenCalledTimes(2)
   })
 
   it('reports the first sanitized schema validation path and keyword', async () => {
@@ -96,6 +126,12 @@ describe('model provider adapter', () => {
     expect(result.output).toEqual({ ok: true })
     expect(delayFn).toHaveBeenCalledWith(27000)
     expect(generateStructured).toHaveBeenCalledTimes(2)
+  })
+
+  it('does not retry a non-retryable provider failure', async () => {
+    const generateStructured = vi.fn().mockRejectedValue(new ModelProviderError('no retry', { retryable: false }))
+    await expect(runStructuredModelRequest({ provider: { ...provider, generateStructured }, request: { stage: 'critic' } })).rejects.toMatchObject({ code: 'MODEL_PROVIDER_FAILURE' })
+    expect(generateStructured).toHaveBeenCalledTimes(1)
   })
 
   it('keeps credentials outside committed provider config', () => {

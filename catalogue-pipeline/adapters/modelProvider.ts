@@ -7,14 +7,16 @@ export class ModelProviderError extends Error {
   retryable: boolean
   retryAfterMs?: number
   cause?: unknown
+  details?: Record<string, unknown>
 
-  constructor(message: string, { code = 'MODEL_PROVIDER_ERROR', retryable = false, retryAfterMs = undefined, cause = undefined } = {}) {
+  constructor(message: string, { code = 'MODEL_PROVIDER_ERROR', retryable = false, retryAfterMs = undefined, cause = undefined, details = undefined }: { code?: string; retryable?: boolean; retryAfterMs?: number; cause?: unknown; details?: Record<string, unknown> } = {}) {
     super(message)
     this.name = 'ModelProviderError'
     this.code = code
     this.retryable = retryable
     this.retryAfterMs = retryAfterMs
     this.cause = cause
+    this.details = details
   }
 }
 
@@ -58,6 +60,21 @@ function validationDiagnostic(failures: unknown): string {
       ? issue.code
       : 'validation'
   return ` path: ${path}; keyword: ${keyword}.`
+}
+
+function aggregateProviderUsageMetadata(entries: unknown[]): Record<string, unknown> | undefined {
+  const metadata = entries.filter(isObject)
+  if (metadata.length === 0) return undefined
+  if (metadata.length === 1) return metadata[0]
+  const aggregate: Record<string, unknown> = {}
+  for (const entry of metadata) {
+    for (const [key, value] of Object.entries(entry)) {
+      aggregate[key] = typeof value === 'number' && typeof aggregate[key] === 'number'
+        ? aggregate[key] + value
+        : value
+    }
+  }
+  return aggregate
 }
 
 export function createModelCacheKey({
@@ -114,6 +131,7 @@ export async function runStructuredModelRequest({
       modelId: string
       supportsStructuredJson: boolean
       supportsTemperature?: boolean
+      supportsMalformedOutputRepair?: boolean
     }
     generateStructured: (request: Record<string, unknown>) => Promise<unknown>
   }
@@ -128,14 +146,20 @@ export async function runStructuredModelRequest({
     })
   }
 
+  const usageEntries: unknown[] = []
+  let transportRetries = 0
+  let malformedOutputRetries = 0
+  const providerRequest = {
+    ...request,
+    responseFormat: 'json_object',
+    temperature: provider.metadata.supportsTemperature ? (request.temperature ?? 0.1) : undefined,
+  }
+
   for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
     try {
-      const rawOutput = await provider.generateStructured({
-        ...request,
-        responseFormat: 'json_object',
-        temperature: provider.metadata.supportsTemperature ? (request.temperature ?? 0.1) : undefined,
-      })
+      const rawOutput = await provider.generateStructured(providerRequest)
       const { structuredOutput: output, providerUsageMetadata } = splitProviderMetadata(normalizeJsonOutput(rawOutput))
+      if (providerUsageMetadata) usageEntries.push(providerUsageMetadata)
       const validation = validateOutput?.(output)
 
       if (validation && !validation.ok) {
@@ -152,12 +176,23 @@ export async function runStructuredModelRequest({
           modelId: provider.metadata.modelId,
           attempts: attempt,
           structuredJson: true,
-          ...(providerUsageMetadata ? { providerUsageMetadata } : {}),
+          ...(transportRetries > 0 ? { transportRetries } : {}),
+          ...(malformedOutputRetries > 0 ? { malformedOutputRetries } : {}),
+          ...(aggregateProviderUsageMetadata(usageEntries) ? { providerUsageMetadata: aggregateProviderUsageMetadata(usageEntries) } : {}),
+          ...(usageEntries.length > 1 ? { providerUsageByRequest: usageEntries } : {}),
         },
       }
     } catch (error) {
       if (error instanceof ModelProviderError && error.code === 'MALFORMED_MODEL_OUTPUT') {
-        throw error
+        if (attempt < maxAttempts) {
+          malformedOutputRetries += 1
+          continue
+        }
+        throw new ModelProviderError(error.message, {
+          code: 'MALFORMED_MODEL_OUTPUT',
+          cause: error.cause,
+          details: { attempts: attempt, malformedOutputRetries },
+        })
       }
 
       const retryable = error instanceof ModelProviderError ? error.retryable : Boolean((error as { retryable?: boolean })?.retryable)

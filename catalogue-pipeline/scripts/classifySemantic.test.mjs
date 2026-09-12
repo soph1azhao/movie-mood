@@ -1,4 +1,4 @@
-import { mkdtemp, readFile, rm } from 'node:fs/promises'
+import { mkdtemp, readFile, readdir, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { describe, expect, it, vi } from 'vitest'
@@ -192,13 +192,39 @@ describe('Phase 5 semantic classifier', () => {
     const options = { evidencePacket: packet(), provider: invalidProvider, prompt, cacheRoot: join(root, 'cache'), outputPath: join(root, 'generated', 'paddington.json') }
     try {
       await expect(classifySemanticCandidate(options)).rejects.toMatchObject({ code: 'MALFORMED_MODEL_OUTPUT', message: expect.stringContaining('path: classification.attentionDemand; keyword: INVALID_ENUM') })
-      expect(invalidProvider.generateStructured).toHaveBeenCalledTimes(1)
+      expect(invalidProvider.generateStructured).toHaveBeenCalledTimes(2)
       await expect(readFile(options.outputPath, 'utf8')).rejects.toThrow()
+      await expect(readdir(join(root, 'cache'))).rejects.toThrow()
 
       const correctedProvider = providerWith(response())
       const corrected = await classifySemanticCandidate({ ...options, provider: correctedProvider })
       expect(corrected.cacheHit).toBe(false)
       expect(correctedProvider.generateStructured).toHaveBeenCalledTimes(1)
+    } finally {
+      await rm(root, { recursive: true, force: true })
+    }
+  })
+
+  it('retries malformed output once, caches only the valid artifact, and replays from cache without a model call', async () => {
+    const root = await mkdtemp(join(tmpdir(), 'movie-mood-semantic-malformed-retry-cache-'))
+    const provider = {
+      metadata: { providerId: 'mock-provider', modelId: 'malformed-retry-model', supportsStructuredJson: true, supportsTemperature: true },
+      generateStructured: vi.fn().mockResolvedValueOnce('{not json').mockResolvedValueOnce(response()),
+    }
+    const options = { evidencePacket: packet(), provider, prompt, cacheRoot: join(root, 'cache'), outputPath: join(root, 'generated', 'paddington.json') }
+    try {
+      const first = await classifySemanticCandidate(options)
+      expect(first).toMatchObject({ cacheHit: false, modelCalls: 2, retries: 0, transportRetries: 0, malformedOutputRetries: 1 })
+      expect(provider.generateStructured).toHaveBeenCalledTimes(2)
+      expect(provider.generateStructured.mock.calls[1][0]).toEqual(provider.generateStructured.mock.calls[0][0])
+      const cacheFiles = await readdir(join(root, 'cache'))
+      expect(cacheFiles).toEqual([`${first.cacheKey}.json`])
+      expect(await readFile(options.outputPath, 'utf8')).not.toContain('{not json')
+
+      const replay = await classifySemanticCandidate(options)
+      expect(replay).toMatchObject({ cacheHit: true, modelCalls: 0, retries: 0, transportRetries: 0, malformedOutputRetries: 0 })
+      expect(provider.generateStructured).toHaveBeenCalledTimes(2)
+      expect(replay.artifact.outputHash).toBe(first.artifact.outputHash)
     } finally {
       await rm(root, { recursive: true, force: true })
     }

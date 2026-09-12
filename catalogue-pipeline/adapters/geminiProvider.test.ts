@@ -217,7 +217,7 @@ describe('Gemini model provider', () => {
     } satisfies Partial<ModelProviderError>)
   })
 
-  it('rejects malformed Gemini structured text without retrying through the provider adapter', async () => {
+  it('retries malformed Gemini structured text through bounded orchestration', async () => {
     const fetchImpl = vi.fn().mockResolvedValue(response({
       candidates: [{ content: { parts: [{ text: '{not json' }] } }],
     }))
@@ -230,9 +230,9 @@ describe('Gemini model provider', () => {
     await expect(runStructuredModelRequest({
       provider,
       request: { input: {} },
-      maxAttempts: 3,
+      maxAttempts: 2,
     })).rejects.toMatchObject({ code: 'MALFORMED_MODEL_OUTPUT' })
-    expect(fetchImpl).toHaveBeenCalledTimes(1)
+    expect(fetchImpl).toHaveBeenCalledTimes(2)
   })
 
   it('requires credentials by environment variable reference only', () => {
