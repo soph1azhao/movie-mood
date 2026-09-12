@@ -1,0 +1,39 @@
+{
+  "reportId": "c1b-v4-triage-exposure-audit.v1",
+  "protocolId": "phase-5c-c1b-v-confirmatory.v4",
+  "importedCohort": {
+    "sourceProtocolId": "phase5c-c1b-v-confirmatory.v3",
+    "candidateCount": 180,
+    "candidateRegistryRawSha256": "sha256:2755b9cb603f8fb4bdfdfe7aef46e7c44840ed3334ff9f393a45ec0db04bf11f"
+  },
+  "evidenceSourcesInspected": [
+    {
+      "category": "repository-diagnostic-definitions-and-reports",
+      "fileCount": 19
+    },
+    {
+      "category": "repository-scripts",
+      "fileCount": 69
+    },
+    {
+      "category": "historical-generated-diagnostics",
+      "fileCount": 158
+    },
+    {
+      "category": "git-history",
+      "method": "identity-field-aware comparison of all 180 numeric TMDB candidate IDs against every local Git revision patch over diagnostic, script, and generated-diagnostic paths"
+    }
+  ],
+  "candidateIdComparisonMethod": "Exact comparison of each of the 180 imported V3 numeric TMDB candidate IDs in candidateId, tmdbId, or JSON id identity-field contexts against inspected repository files and Git patch history. Identity-field scoping prevents unrelated numeric literals from becoming false exposure evidence. V3 cohort/live artifacts were excluded as source-cohort records, not exposure evidence.",
+  "inspectedRepositoryFileCount": 246,
+  "adverseEvidenceFound": false,
+  "adverseEvidence": [],
+  "triageExposureStatus": "VERIFIED_NO_ADVERSE_EVIDENCE",
+  "epistemicStandard": "No adverse evidence of candidate-specific exposure was found across available logs, scripts, and Git history. This is an absence-of-adverse-evidence standard accepted as sufficient for this study.",
+  "scopeLimitations": [
+    "The audit is limited to available repository diagnostics, scripts, historical reports, and Git history.",
+    "No shell history, filesystem atime, DNS logs, proxy logs, browser history, or unrelated machine telemetry was inspected.",
+    "The finding is absence of adverse evidence, not proof of absolute non-exposure."
+  ],
+  "networkCallsDuringAudit": 0
+}

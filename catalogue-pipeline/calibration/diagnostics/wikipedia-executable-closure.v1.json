@@ -1,0 +1,92 @@
+{
+  "manifestId": "wikipedia-executable-closure.v1",
+  "rootSemanticEntrypoint": "catalogue-pipeline/adapters/wikipediaDescriptiveEvidenceV2.mjs",
+  "dependencyDerivation": {
+    "method": "recursive-static-runtime-import-analysis-typescript-compiler-api",
+    "membershipAuthority": "derived-import-graph",
+    "typeOnlyImportsExcluded": true
+  },
+  "materialLocalSources": [
+    {
+      "path": "catalogue-pipeline/adapters/tmdbProvider.ts",
+      "gitTracked": true,
+      "rawSha256": "sha256:6cf79d520108ecfe6c77d381b1b7ceb24e44a7d39034e6d25465c95d2171ad03"
+    },
+    {
+      "path": "catalogue-pipeline/adapters/wikipediaDescriptiveEvidence.mjs",
+      "gitTracked": true,
+      "rawSha256": "sha256:cf23136fe1a59f67a4ffe2ad695391c7208aec1bdfedb6194aba18892c7fcd85"
+    },
+    {
+      "path": "catalogue-pipeline/adapters/wikipediaDescriptiveEvidenceV2.mjs",
+      "gitTracked": true,
+      "rawSha256": "sha256:609a29bbe7de7f934d9bb389bf6b6257681ac29d0629debcb4380a25fe8e4305"
+    },
+    {
+      "path": "catalogue-pipeline/scripts/wikipediaIdentityContentRiskAudit.mjs",
+      "gitTracked": true,
+      "rawSha256": "sha256:65fbc58ec443afc38d8efc47398d6957c8140c2472bedf90d00f2189db6dfb0f"
+    },
+    {
+      "path": "catalogue-pipeline/scripts/wikipediaStructuralMissingnessAudit.mjs",
+      "gitTracked": true,
+      "rawSha256": "sha256:7a80c9bc96752282aa2bef3fd72d80d383d6ae72f615e4e3ba6530470e22b2d9"
+    },
+    {
+      "path": "scripts/tmdbCore.mjs",
+      "gitTracked": true,
+      "rawSha256": "sha256:92636d772d74d0853b462de68a325ddabd331032a4a5f551db9a13929f2f6307"
+    }
+  ],
+  "importEdges": [
+    {
+      "importer": "catalogue-pipeline/adapters/tmdbProvider.ts",
+      "specifier": "../../scripts/tmdbCore.mjs",
+      "imported": "scripts/tmdbCore.mjs"
+    },
+    {
+      "importer": "catalogue-pipeline/adapters/wikipediaDescriptiveEvidence.mjs",
+      "specifier": "./tmdbProvider.ts",
+      "imported": "catalogue-pipeline/adapters/tmdbProvider.ts"
+    },
+    {
+      "importer": "catalogue-pipeline/adapters/wikipediaDescriptiveEvidenceV2.mjs",
+      "specifier": "./tmdbProvider.ts",
+      "imported": "catalogue-pipeline/adapters/tmdbProvider.ts"
+    },
+    {
+      "importer": "catalogue-pipeline/adapters/wikipediaDescriptiveEvidenceV2.mjs",
+      "specifier": "./wikipediaDescriptiveEvidence.mjs",
+      "imported": "catalogue-pipeline/adapters/wikipediaDescriptiveEvidence.mjs"
+    },
+    {
+      "importer": "catalogue-pipeline/adapters/wikipediaDescriptiveEvidenceV2.mjs",
+      "specifier": "../scripts/wikipediaIdentityContentRiskAudit.mjs",
+      "imported": "catalogue-pipeline/scripts/wikipediaIdentityContentRiskAudit.mjs"
+    },
+    {
+      "importer": "catalogue-pipeline/scripts/wikipediaIdentityContentRiskAudit.mjs",
+      "specifier": "../adapters/wikipediaDescriptiveEvidence.mjs",
+      "imported": "catalogue-pipeline/adapters/wikipediaDescriptiveEvidence.mjs"
+    },
+    {
+      "importer": "catalogue-pipeline/scripts/wikipediaIdentityContentRiskAudit.mjs",
+      "specifier": "./wikipediaStructuralMissingnessAudit.mjs",
+      "imported": "catalogue-pipeline/scripts/wikipediaStructuralMissingnessAudit.mjs"
+    },
+    {
+      "importer": "catalogue-pipeline/scripts/wikipediaStructuralMissingnessAudit.mjs",
+      "specifier": "../adapters/wikipediaDescriptiveEvidence.mjs",
+      "imported": "catalogue-pipeline/adapters/wikipediaDescriptiveEvidence.mjs"
+    }
+  ],
+  "frozenImplementationCommit": "0308ca0b2fb8c54315384d41da8871edcd2e0a84",
+  "packageManager": "pnpm@11.19.0",
+  "dependencyLockfiles": [
+    {
+      "path": "pnpm-lock.yaml",
+      "rawSha256": "sha256:64634d4814b13b203358abf5c4b366da75fae9ed4d4e5b154900e152a56d7187"
+    }
+  ],
+  "nodeEngine": ">=26.0.0"
+}

@@ -1,0 +1,14 @@
+{
+  "fixtureSetId": "c1b-v4-wikipedia-synthetic-fixtures.v1",
+  "provenanceClass": "SYNTHETIC",
+  "candidateSpecificV4WikipediaOutcome": false,
+  "networkRequired": false,
+  "fixtures": [
+    {
+      "fixtureId": "synthetic-film-2018",
+      "title": "Synthetic Film",
+      "year": 2018,
+      "purpose": "Exercise identity, structural section selection, extraction, normalization, and viability without external requests."
+    }
+  ]
+}

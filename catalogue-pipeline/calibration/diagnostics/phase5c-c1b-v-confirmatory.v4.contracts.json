@@ -1,0 +1,501 @@
+{
+  "bundleId": "phase-5c-c1b-v-confirmatory.v4.contracts",
+  "bundleVersion": 1,
+  "canonicalization": "RFC 8785 JSON Canonicalization Scheme (JCS), UTF-8, SHA-256",
+  "hashingSemantics": {
+    "perContractContentHashInput": "canonicalContent only — the value of the canonicalContent key for that contract entry",
+    "contentHashExcludedFromOwnHash": true,
+    "contractsBundleHashInput": "RFC-8785 canonical serialization of the orderedContractManifest array (id, version, contentHash triples only)"
+  },
+  "inheritedContractPolicy": {
+    "sourceBundleId": "phase-5c-c1b-v-confirmatory.v3.contracts",
+    "sourceBundleHash": "sha256:2f477ef6ba7f12e17ed5f1178026e2572f9abddf12507395121519ed03b6b738",
+    "rule": "The eight explicitly re-adopted V3 canonicalContent values have identical RFC-8785/JCS UTF-8 canonical serialization."
+  },
+  "contracts": [
+    {
+      "id": "imported-v3-cohort-contract.v4",
+      "version": 1,
+      "canonicalContent": {
+        "sourceProtocolId": "phase5c-c1b-v-confirmatory.v3",
+        "sourceClosureCommit": "2013e0f50df5ce8dc6fadd79bbf25cc63f54316e",
+        "stage1Closure": {
+          "path": "catalogue-pipeline/calibration/diagnostics/phase5c-c1b-v3-stage1-closure.v1.json",
+          "rawSha256": "sha256:d7ebf19f03486da8faa3d907924fab4c10176d3c5150c9cba8273497bd5a348c"
+        },
+        "candidateRegistry": {
+          "path": "catalogue-pipeline/generated/semantic/diagnostics/phase-5c-c1b-v-confirmatory.v3/stage1-recruitment-live-v1/candidate-registry.json",
+          "rawSha256": "sha256:2755b9cb603f8fb4bdfdfe7aef46e7c44840ed3334ff9f393a45ec0db04bf11f",
+          "candidateCount": 180
+        },
+        "carryForwardOnly": true,
+        "tmdbRecruitmentRequests": 0,
+        "rerankingAllowed": false,
+        "replenishmentAllowed": false,
+        "substitutionAllowed": false,
+        "factualRefreshAllowed": false
+      },
+      "contentHash": "sha256:57605536157034b1ebc14500b200dee7e4668d9ef11f7b1e06892d4e9fe7c731"
+    },
+    {
+      "id": "wikipedia-executable-closure-contract.v1",
+      "version": 1,
+      "canonicalContent": {
+        "manifestPath": "catalogue-pipeline/calibration/diagnostics/wikipedia-executable-closure.v1.json",
+        "manifestCanonicalSha256": "sha256:20e321c5ae662a182f688e8de28f147134705394b4256744fe9dad7b2e95194e",
+        "frozenImplementationCommit": "0308ca0b2fb8c54315384d41da8871edcd2e0a84",
+        "rootSemanticEntrypoint": "catalogue-pipeline/adapters/wikipediaDescriptiveEvidenceV2.mjs",
+        "dependencyMembershipMustBeRecursivelyDerived": true,
+        "manuallyCuratedDependencyMembershipAuthoritative": false,
+        "everyMaterialLocalDependencyMustBeGitTrackedAndHashPinned": true,
+        "everySupportedLockfileMustBeHashPinned": true,
+        "jitExecutionOrder": [
+          "acquire-stage2-RUN_LOCK",
+          "verify-executable-closure-and-provenance-under-same-lock",
+          "permit-no-mutable-semantic-policy-operation",
+          "dispatch-first-stage2-http-request",
+          "durably-complete-first-request-under-same-lock"
+        ]
+      },
+      "contentHash": "sha256:952d847deb81ac034a12c1dd1c211ce2611009450e3a0c6b0b3cab906d5dee01"
+    },
+    {
+      "id": "wikipedia-zero-overfitting-contract.v1",
+      "version": 1,
+      "canonicalContent": {
+        "triageAuditReportPath": "catalogue-pipeline/calibration/diagnostics/c1b-v4-triage-exposure-audit.v1.json",
+        "triageAuditReportHash": "sha256:8cab671bdb3be66e36d0ad1b98e9351aac5317a3a573f853a4a9fe8f2200b6db",
+        "triageExposureStatus": "VERIFIED_NO_ADVERSE_EVIDENCE",
+        "epistemicStandard": "No adverse evidence of candidate-specific exposure was found across available logs, scripts, and Git history. This is an absence-of-adverse-evidence standard accepted as sufficient for this study.",
+        "fixtureProvenancePath": "tests/fixtures/wikipedia/provenance.json",
+        "importedV3Stage2OutcomeInformationUsed": false,
+        "substantivePolicy": {
+          "identityResolution": "wikipedia-film-identity-resolution.v1",
+          "sectionFamily": "wikipedia-reception-sections.v2",
+          "extraction": "wikipedia-reception-extraction.v2",
+          "normalizationFilter": "wikipedia-reception-normalization-filter.v1",
+          "minimumEligibleNormalizedWords": 150
+        },
+        "forbiddenTuning": [
+          "rule",
+          "regex",
+          "section-hierarchy",
+          "paragraph-filter",
+          "normalization",
+          "threshold",
+          "fallback"
+        ]
+      },
+      "contentHash": "sha256:89b2a6195a18567ebe7b4e995d366475226e0338cf5239d0e67e050e9d001a2a"
+    },
+    {
+      "id": "shared-covariate-contract.v2",
+      "version": 1,
+      "canonicalContent": {
+        "covariateType": "MODEL-DERIVED SEMANTIC COVARIATES",
+        "purpose": "Freeze and reuse the three label-free Stage 4B covariates for both paired arms.",
+        "semanticDefinition": {
+          "promptId": "semantic-classifier.v3",
+          "promptRawSha256": "sha256:be63a47c80b4247e09a2271f5be63b06add6d5ac6cd2496ad40d65d409f9076b",
+          "schemaId": "semantic-output.v2",
+          "schemaRawSha256": "sha256:50d7248a00d0d5a03d17e5611f57668bdc5a78b19d904d7a2c1986c44a5b7e52"
+        },
+        "providerConfiguration": {
+          "provider": "kimi",
+          "model": "k3-256k",
+          "temperature": 1,
+          "reasoningEffort": "high",
+          "stateless": true
+        },
+        "statelessInvocationGuards": {
+          "noConversationalHistory": true,
+          "noSessionLinkage": true,
+          "noAuthorshipWording": true
+        },
+        "requiredCompletions": 24,
+        "outputs": [
+          "pace",
+          "emotionalWeight",
+          "attentionDemand"
+        ],
+        "providerVisibleInput": [
+          "factual identity",
+          "genres",
+          "runtime",
+          "countries",
+          "languages",
+          "factual source evidence"
+        ],
+        "forbiddenProviderVisibleInput": [
+          "Wikipedia",
+          "descriptive evidence",
+          "friendsGold",
+          "confidence",
+          "human rationale",
+          "rationale seed",
+          "prior arm result",
+          "prior diagnostic result",
+          "production editorial copy",
+          "situations",
+          "moods",
+          "discoveryStyle"
+        ],
+        "completionRule": "Exactly one canonical-valid completion is required per final-cohort candidate. Any transport ambiguity, missing completion, schema error, or invalid required axis is OPERATIONALLY_INCONCLUSIVE; no semantic retry, repair, replacement, or model substitution is permitted.",
+        "pairedReuseRule": "Freeze a content-hashed per-candidate snapshot before Arm0; Arm0 and Arm1 must consume the exact same snapshot hash.",
+        "dependenceDisclosure": "Stage4B covariates and friends decisions use the same configured model family; potential model-internal dependence is disclosed and is not a verdict gate."
+      },
+      "contentHash": "sha256:d4ca39a0101b5e6147a243b8afccfb7bfcd4eab61536d9f6d4d8cc0827b21334"
+    },
+    {
+      "id": "friends-classification-contract.v2",
+      "version": 1,
+      "canonicalContent": {
+        "promptId": "semantic-friends-descriptive-diagnostic.v1",
+        "promptRawSha256": "sha256:7c2238f23eed896845b00d3e8cf5d36c3a392103c69bbd976149f11b3515a26f",
+        "providerConfiguration": {
+          "provider": "kimi",
+          "model": "k3-256k",
+          "temperature": 1,
+          "reasoningEffort": "high",
+          "drawsPerArm": 3,
+          "aggregation": "strict boolean 2-of-3 majority",
+          "stateless": true
+        },
+        "outputSchema": {
+          "friendsCandidate": "boolean",
+          "compositionalRationale": "string",
+          "groundingQuote": "string|null"
+        },
+        "outputRules": {
+          "arm0GroundingQuote": "must be null",
+          "arm1GroundingQuote": "must be a verified literal normalized substring of the exact supplied excerpt",
+          "noRepair": true,
+          "noSemanticResampling": true
+        },
+        "requiredPerDraw": "One canonical-valid completion. Missing, malformed, invalid, or unknown-in-flight required draws make the experiment OPERATIONALLY_INCONCLUSIVE."
+      },
+      "contentHash": "sha256:dd9e28bbc17a5120438ae8eb3df42067bc9c33ba43e553cfd0b72567fb1750d6"
+    },
+    {
+      "id": "semantic-taxonomy.v2",
+      "version": 1,
+      "canonicalContent": {
+        "taxonomyId": "taxonomy.v2",
+        "sourcePath": "catalogue-pipeline/config/taxonomyVersion.json",
+        "sourceRawSha256": "sha256:764246e5e99066cafb87cdd9c0b1262f6386f60d5e40f5653cc0e54eb1119f8",
+        "semanticOutputSchema": {
+          "id": "semantic-output.v2",
+          "sourcePath": "catalogue-pipeline/schemas/semantic.schema.json",
+          "sourceRawSha256": "sha256:50d7248a00d0d5a03d17e5611f57668bdc5a78b19d904d7a2c1986c44a5b7e52"
+        },
+        "meaningChangeAllowed": false
+      },
+      "contentHash": "sha256:27f401884c929964ef7cdb4cc59dc9177b5a5683b964e09677061ab66e6492f4"
+    },
+    {
+      "id": "arm0-input-projection.v2",
+      "version": 1,
+      "canonicalContent": {
+        "orderedFields": [
+          "opaqueCandidateId",
+          "factual identity",
+          "genres",
+          "runtime",
+          "countries",
+          "languages",
+          "frozen pace",
+          "frozen emotionalWeight",
+          "frozen attentionDemand"
+        ],
+        "descriptiveEvidence": "absent",
+        "forbidden": [
+          "friendsGold",
+          "confidence",
+          "human rationale",
+          "rationale seed",
+          "class membership",
+          "target deficit",
+          "prior prediction",
+          "prior rationale",
+          "prior grounding quote",
+          "production situations",
+          "production editorial copy",
+          "Wikipedia excerpt",
+          "Wikipedia hash",
+          "Wikipedia source metadata"
+        ],
+        "identityRule": "The production canonical identity is allowed for Arm inference; no other prior experiment data is allowed."
+      },
+      "contentHash": "sha256:d7e360cf3ded8b1c9c94f36c00f774cf8c34a77fbf9b1a9ef96eab2ef24cd18a"
+    },
+    {
+      "id": "arm1-evidence-projection.v2",
+      "version": 1,
+      "canonicalContent": {
+        "pairedInvariant": "Arm1 provider-visible input equals Arm0 provider-visible input byte-for-byte plus exactly one appended supplementary descriptive context block.",
+        "appendPosition": "last",
+        "allowedAdditionalFields": [
+          "normalized descriptive excerpt",
+          "frozen source reference metadata required by the grounding contract"
+        ],
+        "forbiddenAdditionalFields": [
+          "friendsGold",
+          "confidence",
+          "human rationale",
+          "rationale seed",
+          "class membership",
+          "expected outcome",
+          "prior experiment outputs",
+          "replacement evidence",
+          "model-generated evidence"
+        ],
+        "nullEvidenceRule": "A final-cohort Arm1 request is permitted only for a Stage2 VIABLE candidate with a frozen excerpt."
+      },
+      "contentHash": "sha256:c1770e3843f9c3ad8e6004cc88b061223b88431734abbf2c40de2e53270f0ca5"
+    },
+    {
+      "id": "wikipedia-excerpt-projection.v2",
+      "version": 1,
+      "canonicalContent": {
+        "identityResolutionPolicy": {
+          "id": "wikipedia-film-identity-resolution.v1",
+          "sourcePath": "catalogue-pipeline/adapters/wikipediaDescriptiveEvidenceV2.mjs",
+          "sourceRawSha256": "sha256:609a29bbe7de7f934d9bb389bf6b6257681ac29d0629debcb4380a25fe8e4305"
+        },
+        "extractionPolicy": {
+          "id": "wikipedia-reception-extraction.v2",
+          "sourcePath": "catalogue-pipeline/adapters/wikipediaDescriptiveEvidence.mjs",
+          "sourceRawSha256": "sha256:cf23136fe1a59f67a4ffe2ad695391c7208aec1bdfedb6194aba18892c7fcd85"
+        },
+        "source": "English Wikipedia only",
+        "allowedPurpose": "descriptive reception context after Stage2 viability has frozen",
+        "minimumEligibleNormalizedWords": 150,
+        "noFallbacks": [
+          "Plot",
+          "alternate heading",
+          "other-language Wikipedia",
+          "alternate external source"
+        ],
+        "rawProseStorage": "ignored local cache only; committable reports retain hashes and metadata, never raw excerpt text"
+      },
+      "contentHash": "sha256:26f65ad2dc5d2a4734ca5ff1eb1a705dee85a5e2119635803d388af1aeec52f0"
+    },
+    {
+      "id": "literal-grounding-validator.v2",
+      "version": 1,
+      "canonicalContent": {
+        "validator": "verifyGroundingQuote",
+        "sourcePath": "catalogue-pipeline/scripts/friendsDescriptiveDiagnostic.mjs",
+        "sourceRawSha256": "sha256:429e0ec3a8e5ac858c4d27c3ef921a0dcf094271651abdb7274c56b6028facc2",
+        "arm0": "groundingQuote must be null",
+        "arm1": "groundingQuote must be non-empty and a literal normalized substring of the exact provider-visible normalized excerpt",
+        "failures": [
+          "missing quote",
+          "fabricated quote",
+          "normalized mismatch",
+          "quote outside supplied excerpt"
+        ],
+        "failureDisposition": "hard contract failure; no local repair, quote manufacture, or semantic retry"
+      },
+      "contentHash": "sha256:1eeb33a6e5b623f03af3965d1e5c8ac4fdbf13e0995f36df854afb1133f10851"
+    },
+    {
+      "id": "identity-canary-contract.v2",
+      "version": 1,
+      "canonicalContent": {
+        "selection": {
+          "source": "frozen final 24",
+          "trueCount": 3,
+          "falseCount": 3,
+          "preimage": "protocolId|identity-canary|canonicalId",
+          "timing": "before semantic outcomes"
+        },
+        "providerConfiguration": {
+          "provider": "kimi",
+          "model": "k3-256k",
+          "temperature": 1,
+          "reasoningEffort": "high",
+          "callsPerCandidate": 1,
+          "stateless": true
+        },
+        "visibleInputs": [
+          "opaque probe ID",
+          "genres",
+          "runtime",
+          "countries",
+          "languages",
+          "frozen Stage4B covariates",
+          "redactedNormalizedCanaryEvidence"
+        ],
+        "forbiddenInputs": [
+          "title",
+          "year",
+          "director",
+          "canonicalId",
+          "tmdbId",
+          "friendsGold",
+          "confidence",
+          "human rationale",
+          "prior prediction",
+          "prior rationale",
+          "prior grounding quote",
+          "C1b result"
+        ],
+        "redactionDictionary": {
+          "freezeTiming": "at final-cohort freeze",
+          "sources": [
+            "canonicalId",
+            "TMDB textual identity fields",
+            "title",
+            "original title",
+            "director names already present in frozen metadata",
+            "release year/date",
+            "Wikipedia page title",
+            "frozen known Wikipedia and source URLs",
+            "cast names only when already present in frozen factual snapshot"
+          ],
+          "noAdditionalTmdbCalls": true,
+          "noAdditionalCastLookup": true,
+          "noParaphrase": true
+        },
+        "normalizationAlgorithm": {
+          "appliedTo": [
+            "frozen accepted identity strings",
+            "model guessedTitle"
+          ],
+          "steps": [
+            "1. Unicode normalize using NFKC",
+            "2. Convert to Unicode lowercase using locale-independent default Unicode case conversion",
+            "3. Replace every Unicode punctuation-category code point (\\p{P}) with one ASCII space",
+            "4. Replace every Unicode whitespace sequence (\\s+) with one ASCII space",
+            "5. Trim leading and trailing ASCII spaces"
+          ],
+          "noAccentStripping": true,
+          "noTransliteration": true,
+          "noFuzzyMatching": true,
+          "noEditDistanceMatching": true,
+          "noTokenReordering": true,
+          "exactEqualityRequired": true
+        },
+        "canaryRedactionNormalization": {
+          "appliedTo": [
+            "every candidate-specific redaction-dictionary string",
+            "the exact frozen Stage-6 Arm1 Wikipedia descriptive excerpt used as the Canary redaction source"
+          ],
+          "steps": [
+            "1. Unicode normalize using NFKC",
+            "2. Convert to Unicode lowercase using locale-independent default Unicode case conversion",
+            "3. Replace every Unicode punctuation-category code point (\\p{P}) with one ASCII space",
+            "4. Replace every Unicode whitespace sequence (\\s+) with one ASCII space",
+            "5. Trim leading and trailing ASCII spaces"
+          ],
+          "normalizedSourceName": "normalizedCanaryEvidence",
+          "redactedResultName": "redactedNormalizedCanaryEvidence",
+          "providerVisibleWikipediaEvidence": "redactedNormalizedCanaryEvidence only",
+          "stage6Arm1InputMutationAllowed": false,
+          "scope": "Canary only"
+        },
+        "unicodeExecutionEnvironment": {
+          "nodeRuntimeVersion": "v26.7.0",
+          "unicodeVersion": "17.0",
+          "icuVersion": "78.3",
+          "mismatchDisposition": "CANARY_EXECUTION_ENVIRONMENT_MISMATCH before any Canary model call"
+        },
+        "redactionMatchingAlgorithm": {
+          "source": "normalizedCanaryEvidence",
+          "dictionary": "candidate-specific entries after canaryRedactionNormalization",
+          "result": "redactedNormalizedCanaryEvidence",
+          "steps": [
+            "1. Discard empty normalized dictionary entries",
+            "2. Deduplicate identical normalized dictionary entries",
+            "3. Sort entries: descending normalized Unicode code-point length; lexicographic ascending for equal lengths",
+            "4. Apply longest-first matching",
+            "5. A match start is eligible only at string start or when the immediately preceding Unicode code point is not General_Category Letter (L*) or Number (N*); a match end is eligible only at string end or when the immediately following Unicode code point is not General_Category Letter (L*) or Number (N*)",
+            "6. Replace every matched span with [REDACTED_IDENTITY]",
+            "7. Apply all replacements deterministically",
+            "8. Do not paraphrase surrounding text",
+            "9. Do not make model-assisted redaction decisions"
+          ],
+          "replacementToken": "[REDACTED_IDENTITY]",
+          "regexWordBoundaryNormative": false,
+          "noModelAssistedRedaction": true
+        },
+        "acceptedIdentitySet": "frozen TMDB title and original_title only; no post-hoc alias additions",
+        "noPostHocAliases": true,
+        "outputSchema": {
+          "guessedTitle": "string",
+          "confidence": "integer 0..100",
+          "briefBasis": "string"
+        },
+        "positiveRule": "normalized guessedTitle matches the frozen accepted identity set AND confidence >= 80",
+        "completionRule": "All six one-shot calls must be canonical-valid; no retry, replacement, denominator shrink, or model change. Any failure is CANARY_OPERATIONALLY_INCONCLUSIVE.",
+        "interpretation": {
+          "semanticVerdictMutable": false,
+          "caveatThreshold": "4/6 positive",
+          "promotionGoEffect": "Phase 6 HOLD pending a future independent strict 200..800 vote-count-band study",
+          "futureStudyAutomatic": false
+        }
+      },
+      "contentHash": "sha256:9c2e12c8e3952ef00f83837ac5eff1194c091305a81779d9a5606b51a776ebd7"
+    }
+  ],
+  "orderedContractManifest": [
+    {
+      "id": "imported-v3-cohort-contract.v4",
+      "version": 1,
+      "contentHash": "sha256:57605536157034b1ebc14500b200dee7e4668d9ef11f7b1e06892d4e9fe7c731"
+    },
+    {
+      "id": "wikipedia-executable-closure-contract.v1",
+      "version": 1,
+      "contentHash": "sha256:952d847deb81ac034a12c1dd1c211ce2611009450e3a0c6b0b3cab906d5dee01"
+    },
+    {
+      "id": "wikipedia-zero-overfitting-contract.v1",
+      "version": 1,
+      "contentHash": "sha256:89b2a6195a18567ebe7b4e995d366475226e0338cf5239d0e67e050e9d001a2a"
+    },
+    {
+      "id": "shared-covariate-contract.v2",
+      "version": 1,
+      "contentHash": "sha256:d4ca39a0101b5e6147a243b8afccfb7bfcd4eab61536d9f6d4d8cc0827b21334"
+    },
+    {
+      "id": "friends-classification-contract.v2",
+      "version": 1,
+      "contentHash": "sha256:dd9e28bbc17a5120438ae8eb3df42067bc9c33ba43e553cfd0b72567fb1750d6"
+    },
+    {
+      "id": "semantic-taxonomy.v2",
+      "version": 1,
+      "contentHash": "sha256:27f401884c929964ef7cdb4cc59dc9177b5a5683b964e09677061ab66e6492f4"
+    },
+    {
+      "id": "arm0-input-projection.v2",
+      "version": 1,
+      "contentHash": "sha256:d7e360cf3ded8b1c9c94f36c00f774cf8c34a77fbf9b1a9ef96eab2ef24cd18a"
+    },
+    {
+      "id": "arm1-evidence-projection.v2",
+      "version": 1,
+      "contentHash": "sha256:c1770e3843f9c3ad8e6004cc88b061223b88431734abbf2c40de2e53270f0ca5"
+    },
+    {
+      "id": "wikipedia-excerpt-projection.v2",
+      "version": 1,
+      "contentHash": "sha256:26f65ad2dc5d2a4734ca5ff1eb1a705dee85a5e2119635803d388af1aeec52f0"
+    },
+    {
+      "id": "literal-grounding-validator.v2",
+      "version": 1,
+      "contentHash": "sha256:1eeb33a6e5b623f03af3965d1e5c8ac4fdbf13e0995f36df854afb1133f10851"
+    },
+    {
+      "id": "identity-canary-contract.v2",
+      "version": 1,
+      "contentHash": "sha256:9c2e12c8e3952ef00f83837ac5eff1194c091305a81779d9a5606b51a776ebd7"
+    }
+  ],
+  "contractsBundleHash": "sha256:602af7c19f3845c1bb29ccdc71a232ade913eb7763ab127349141e2e78f4847a",
+  "registrationStatus": "REGISTERED"
+}
