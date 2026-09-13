@@ -2,7 +2,7 @@ import { mkdtemp, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { AUTHORIZATION_FLAG, buildSmokePreflight, CANDIDATES, launchKimiSmoke } from './runKimiK28HighSemanticSmoke.mjs'
+import { AUTHORIZATION_FLAG, buildSmokePreflight, CANDIDATES, launchKimiSmoke, providerFailureDetails } from './runKimiK28HighSemanticSmoke.mjs'
 
 afterEach(() => vi.unstubAllGlobals())
 
@@ -20,7 +20,7 @@ describe('bounded Kimi K2.8 high-effort semantic smoke runner', () => {
     const result = await launchKimiSmoke([])
     expect(result.executionAuthorized).toBe(false)
     expect(result.preflight).toMatchObject({
-      smokeId: 'kimi-k28-high-3-film-smoke-v1', providerId: 'moonshot-kimi-api', modelId: 'kimi-for-coding',
+      smokeId: 'kimi-k28-high-3-film-smoke-v2', providerId: 'moonshot-kimi-api', modelId: 'kimi-for-coding',
       reasoningEffort: 'high', outputAffectingConfiguration: { protocol: 'openai-chat-completions', reasoningEffort: 'high' },
       requestBudget: 6, maxAttemptsPerCandidate: 2, concurrency: 1,
       candidates: CANDIDATES.map((candidate) => expect.objectContaining(candidate)),
@@ -40,7 +40,7 @@ describe('bounded Kimi K2.8 high-effort semantic smoke runner', () => {
     expect(fetchImpl).not.toHaveBeenCalled()
   })
 
-  it('uses Kimi Code, low effort, serial execution, and at most two attempts per candidate', async () => {
+  it('uses Kimi Code, high effort without temperature, serial execution, and at most two attempts per candidate', async () => {
     const root = await mkdtemp(join(tmpdir(), 'kimi-k28-smoke-')); const { valid, readJsonFile } = fixtureContext(); let clock = 0
     const response = { ok: true, status: 200, json: async () => ({ choices: [{ message: { content: JSON.stringify(valid) } }] }) }
     const fetchImpl = vi.fn().mockResolvedValue(response)
@@ -52,10 +52,18 @@ describe('bounded Kimi K2.8 high-effort semantic smoke runner', () => {
       expect(fetchImpl).toHaveBeenCalledTimes(6)
       for (const call of fetchImpl.mock.calls) {
         expect(call[0]).toBe('https://api.kimi.com/coding/v1/chat/completions')
-        expect(JSON.parse(call[1].body)).toMatchObject({ model: 'kimi-for-coding', reasoning_effort: 'high', stream: false, temperature: 0.1, response_format: { type: 'json_object' } })
+        expect(JSON.parse(call[1].body)).toMatchObject({ model: 'kimi-for-coding', reasoning_effort: 'high', stream: false, response_format: { type: 'json_object' } })
+        expect(JSON.parse(call[1].body)).not.toHaveProperty('temperature')
       }
       expect(result.report).toMatchObject({ httpRequests: 6, requestBudget: 6, maxAttemptsPerCandidate: 2, concurrency: 1, counts: { completed: 0, failed: 3, malformedOutputFailures: 3, providerFailures: 0 } })
       expect(result.report.records.every((record) => record.attempts === 2)).toBe(true)
     } finally { await rm(root, { recursive: true, force: true }) }
+  })
+
+  it('reports bounded underlying HTTP diagnostics without response content', () => {
+    const underlying = Object.assign(new Error('secret response body'), { code: 'MODEL_PROVIDER_HTTP_ERROR', retryable: false, details: { httpStatus: 400 } })
+    const wrapped = Object.assign(new Error('Model provider failed.'), { code: 'MODEL_PROVIDER_FAILURE', retryable: false, cause: underlying })
+    expect(providerFailureDetails(wrapped)).toEqual({ code: 'MODEL_PROVIDER_HTTP_ERROR', wrapperCode: 'MODEL_PROVIDER_FAILURE', httpStatus: 400, retryable: false })
+    expect(JSON.stringify(providerFailureDetails(wrapped))).not.toContain('secret response body')
   })
 })

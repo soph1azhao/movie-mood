@@ -89,8 +89,10 @@ describe('Moonshot Kimi provider adapter', () => {
     await kimi.generateStructured({ input: {}, temperature: 0.1 })
     expect(JSON.parse(fetchImpl.mock.calls[0][1].body)).toMatchObject({
       model: 'kimi-for-coding', reasoning_effort: reasoningEffort, messages: [{ role: 'user' }],
-      stream: false, temperature: 0.1, response_format: { type: 'json_object' },
+      stream: false, response_format: { type: 'json_object' },
     })
+    expect(JSON.parse(fetchImpl.mock.calls[0][1].body)).not.toHaveProperty('temperature')
+    expect(kimi.metadata.supportsTemperature).toBe(false)
     expect(kimi.metadata.outputAffectingConfiguration).toEqual({ protocol: 'openai-chat-completions', reasoningEffort })
   })
 
@@ -126,13 +128,13 @@ describe('Moonshot Kimi provider adapter', () => {
   it('maps 429 with Retry-After and redacts credentials from bounded diagnostics', async () => {
     const fetchImpl = vi.fn().mockResolvedValue(response({ error: 'test-kimi-key is invalid' }, { ok: false, status: 429, headers: new Headers({ 'Retry-After': '2' }) }))
     const error = await provider(fetchImpl).generateStructured({ input: {} }).catch((value) => value as ModelProviderError)
-    expect(error).toMatchObject({ code: 'MODEL_RATE_LIMIT', retryable: true, retryAfterMs: 2000 })
+    expect(error).toMatchObject({ code: 'MODEL_RATE_LIMIT', retryable: true, retryAfterMs: 2000, details: { httpStatus: 429 } })
     expect(error.message).not.toContain('test-kimi-key')
     expect(error.message.length).toBeLessThan(600)
   })
 
   it.each([[503, true], [400, false]])('maps HTTP %i retryability', async (status, retryable) => {
-    await expect(provider(vi.fn().mockResolvedValue(response({ error: 'failure' }, { ok: false, status }))).generateStructured({ input: {} })).rejects.toMatchObject({ code: 'MODEL_PROVIDER_HTTP_ERROR', retryable } satisfies Partial<ModelProviderError>)
+    await expect(provider(vi.fn().mockResolvedValue(response({ error: 'failure' }, { ok: false, status }))).generateStructured({ input: {} })).rejects.toMatchObject({ code: 'MODEL_PROVIDER_HTTP_ERROR', retryable, details: { httpStatus: status } } satisfies Partial<ModelProviderError>)
   })
 
   it('works through classification and the canonical semantic validator', async () => {

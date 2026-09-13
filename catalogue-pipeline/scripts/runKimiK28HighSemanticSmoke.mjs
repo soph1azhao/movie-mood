@@ -6,7 +6,7 @@ import { stableHash } from '../adapters/tmdbProvider.ts'
 import { classifySemanticCandidate } from './classifySemantic.mjs'
 import { semanticCacheKeyFor } from './runSemanticBatch.mjs'
 
-export const SMOKE_ID = 'kimi-k28-high-3-film-smoke-v1'
+export const SMOKE_ID = 'kimi-k28-high-3-film-smoke-v2'
 export const AUTHORIZATION_FLAG = '--execute-authorized-kimi-smoke'
 export const MODEL_ID = 'kimi-for-coding'
 export const REASONING_EFFORT = 'high'
@@ -107,6 +107,17 @@ function usageTotals(records) {
   return totals
 }
 
+export function providerFailureDetails(error) {
+  let underlying = error
+  while (underlying?.cause && typeof underlying.cause === 'object' && typeof underlying.cause.code === 'string') underlying = underlying.cause
+  return {
+    code: underlying?.code ?? error?.code ?? 'UNKNOWN',
+    wrapperCode: error?.code ?? 'UNKNOWN',
+    httpStatus: Number.isInteger(underlying?.details?.httpStatus) ? underlying.details.httpStatus : null,
+    retryable: Boolean(underlying?.retryable ?? error?.retryable),
+  }
+}
+
 export async function runKimiSmoke({
   pipelineRoot = resolve('catalogue-pipeline'), env = process.env, fetchImpl = globalThis.fetch,
   now = () => Date.now(), readJsonFile = readJson, readTextFile = readFile, writeJsonFile = writeJson, fileExists = exists,
@@ -133,7 +144,7 @@ export async function runKimiSmoke({
       records.push({ candidateId: packet.candidateId, status: 'COMPLETED', providerRequests: httpRequests - requestsBefore, attempts: result.modelCalls, malformedOutputRetries: result.malformedOutputRetries, transportRetries: result.transportRetries, latencyMs: now() - startedAt, usage: result.providerUsageMetadata ?? null, artifactHash: result.artifact.outputHash, comparison: compareSemanticArtifacts(result.artifact, preflight.baselines.get(packet.candidateId)) })
     } catch (error) {
       const malformedOutputFailure = error?.code === 'MALFORMED_MODEL_OUTPUT'
-      records.push({ candidateId: packet.candidateId, status: 'FAILED', providerRequests: httpRequests - requestsBefore, attempts: httpRequests - requestsBefore, malformedOutputFailure, providerFailure: malformedOutputFailure ? null : { code: error?.code ?? 'UNKNOWN', retryable: Boolean(error?.retryable) }, latencyMs: now() - startedAt })
+      records.push({ candidateId: packet.candidateId, status: 'FAILED', providerRequests: httpRequests - requestsBefore, attempts: httpRequests - requestsBefore, malformedOutputFailure, providerFailure: malformedOutputFailure ? null : providerFailureDetails(error), latencyMs: now() - startedAt })
     }
   }
   const completed = records.filter((record) => record.status === 'COMPLETED')

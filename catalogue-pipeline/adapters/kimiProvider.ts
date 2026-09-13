@@ -103,13 +103,14 @@ export function createKimiProvider({
   if (!credential) throw new ModelProviderError(`Required provider credential env var is empty: ${credentialEnv}`, { code: 'MISSING_PROVIDER_CREDENTIAL' })
   const baseUrl = (endpointBaseUrl ?? env.KIMI_BASE_URL ?? KIMI_DEFAULT_BASE_URL).replace(/\/$/, '')
   const resolvedReasoningEffort: KimiReasoningEffort = thinkingMode === 'disabled' ? 'disabled' : reasoningEffort
+  const supportsTemperature = !['low', 'high', 'max'].includes(resolvedReasoningEffort)
 
   return {
     metadata: {
       providerId: KIMI_PROVIDER_ID,
       modelId: modelId.trim(),
       supportsStructuredJson: true,
-      supportsTemperature: true,
+      supportsTemperature,
       outputAffectingConfiguration: { protocol: 'openai-chat-completions', reasoningEffort: resolvedReasoningEffort },
     },
     async generateStructured(request: Record<string, unknown>) {
@@ -120,7 +121,7 @@ export function createKimiProvider({
           model: modelId.trim(),
           messages: [{ role: 'user', content: JSON.stringify(request.input) }],
           stream: false,
-          ...(typeof request.temperature === 'number' ? { temperature: request.temperature } : {}),
+          ...(supportsTemperature && typeof request.temperature === 'number' ? { temperature: request.temperature } : {}),
           response_format: { type: 'json_object' },
           ...(['low', 'high', 'max'].includes(resolvedReasoningEffort) ? { reasoning_effort: resolvedReasoningEffort } : {}),
           ...(resolvedReasoningEffort === 'disabled' ? { thinking: { type: 'disabled' } } : {}),
@@ -132,6 +133,7 @@ export function createKimiProvider({
           code: response.status === 429 ? 'MODEL_RATE_LIMIT' : 'MODEL_PROVIDER_HTTP_ERROR',
           retryable: response.status === 429 || response.status >= 500,
           retryAfterMs: response.status === 429 ? retryAfterMs(response) : undefined,
+          details: { httpStatus: response.status },
         })
       }
       await onResponseReceived?.({ status: response.status, provider: KIMI_PROVIDER_ID, model: modelId.trim(), phase: request.stage, promptVersion: request.promptVersion, schemaVersion: request.schemaVersion })
