@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "kimi-k28-low-engineering-screen-manifest.v1",
+  "runId": "kimi-k28-low-engineering-screen-v1",
+  "sourceRunId": "kimi-k28-adaptive-semantic-100-v1",
+  "selectionPolicy": "two-per-decade, five English and five non-English, genre/familiarity-diverse, High-first-pass-only.v1",
+  "providerId": "moonshot-kimi-api",
+  "modelId": "kimi-for-coding",
+  "reasoningEffort": "low",
+  "promptVersion": "semantic-classifier.v3",
+  "schemaVersionOutput": "semantic-output.v2",
+  "requestBudget": 10,
+  "maxAttemptsPerCandidate": 1,
+  "candidates": [
+    { "candidateId": "exp100-tmdb-36819", "tmdbId": 36819, "title": "Time Bandits", "year": 1981, "decade": "1980s", "familiarity": "mainstream", "language": "en", "primaryGenreId": 10751, "evidencePacketHash": "sha256:13394f38c93bfdfbad03b61389c0d13938033d5320163ed8acc4639af32b0611", "historicalEffort": "high", "historicalArtifactHash": "sha256:54ca30a86a8bcaa292eee171acf482b685fcb97ce01c06b054b87b8d9fe692d5" },
+    { "candidateId": "exp100-tmdb-666", "tmdbId": 666, "title": "Central Station", "year": 1998, "decade": "1990s", "familiarity": "mainstream", "language": "pt", "primaryGenreId": 18, "evidencePacketHash": "sha256:f045d9316f6e9ff691b009a88350fe062efc537d12e2b56f5e37f83d091fe0ba", "historicalEffort": "high", "historicalArtifactHash": "sha256:2ab66a548a7f71d73950cc4efe6be7808754962368e82a0f61fc30f307557d44" },
+    { "candidateId": "exp100-tmdb-2440", "tmdbId": 2440, "title": "Joint Security Area", "year": 2000, "decade": "2000s", "familiarity": "familiar", "language": "ko", "primaryGenreId": 18, "evidencePacketHash": "sha256:92ea1c0a3879cbfa6c3bc9b4c2f62a6853e5c0d540ba180adf47290fdeccbd4f", "historicalEffort": "high", "historicalArtifactHash": "sha256:f88adf48fa3158f8e3cedda79921578d7e741a680cde1bbf3ee8e7046d8c7f09" },
+    { "candidateId": "exp100-tmdb-486947", "tmdbId": 486947, "title": "The Guilty", "year": 2018, "decade": "2010s", "familiarity": "mainstream", "language": "da", "primaryGenreId": 53, "evidencePacketHash": "sha256:a60cbd5eb8f18b70515ff2b3b6011002cc8c8fa4e745fcfc728fd5ac69f69efd", "historicalEffort": "high", "historicalArtifactHash": "sha256:d869b34d23c581c7ea386e652a00811ee163db7cb9178fecd2a0bca365c81b59" },
+    { "candidateId": "exp100-tmdb-1156593", "tmdbId": 1156593, "title": "Your Fault", "year": 2024, "decade": "2020s", "familiarity": "mainstream", "language": "es", "primaryGenreId": 18, "evidencePacketHash": "sha256:fb23f934207f89cc9aacd7729427b8497121689117c7df007b0ea9edee65b690", "historicalEffort": "high", "historicalArtifactHash": "sha256:d9323b48f8843c374d0c0f1ccda46f9313306a60db9ef8b1092569b91c47571a" },
+    { "candidateId": "exp100-tmdb-8740", "tmdbId": 8740, "title": "The Vanishing", "year": 1988, "decade": "1980s", "familiarity": "familiar", "language": "nl", "primaryGenreId": 53, "evidencePacketHash": "sha256:7abd24e9f47bdbf58c9fd85332a67b3f35a237f8186cfc60901c5028edca72ca", "historicalEffort": "high", "historicalArtifactHash": "sha256:1df45339c7e2d1f40e694bfbab303ecb3998bb4bc05c201943d5d45de7d190fa" },
+    { "candidateId": "exp100-tmdb-11450", "tmdbId": 11450, "title": "Quiz Show", "year": 1994, "decade": "1990s", "familiarity": "mainstream", "language": "en", "primaryGenreId": 36, "evidencePacketHash": "sha256:e26197dde00025611adc7c250daf15d729eca4f1ce52c229c1478e08fa981c4b", "historicalEffort": "high", "historicalArtifactHash": "sha256:3decb69b8fc4927a104724a2e1c363637e10d67366d902359e156cc51d3ddb58" },
+    { "candidateId": "exp100-tmdb-2621", "tmdbId": 2621, "title": "Return to Me", "year": 2000, "decade": "2000s", "familiarity": "discovery", "language": "en", "primaryGenreId": 10749, "evidencePacketHash": "sha256:af26f2951352fc18517bbef4cd62a2c539250b7bdc1b8f9ad36e7c068b3fb7f7", "historicalEffort": "high", "historicalArtifactHash": "sha256:b6bc84c609af1b3014582b60d7ac601726c5d1838c9e4d816cb521a6619b70f7" },
+    { "candidateId": "exp100-tmdb-381719", "tmdbId": 381719, "title": "Peter Rabbit", "year": 2018, "decade": "2010s", "familiarity": "mainstream", "language": "en", "primaryGenreId": 16, "evidencePacketHash": "sha256:851fac4d1391c5dd4f6e29b49b5f4516f7818ca378579a4829eeb93b1ffcf69a", "historicalEffort": "high", "historicalArtifactHash": "sha256:59779a5180e212ccaa68e873b117f4f6dc4bd512e9b166b97fda7939ed71386b" },
+    { "candidateId": "exp100-tmdb-670428", "tmdbId": 670428, "title": "PG: Psycho Goreman", "year": 2020, "decade": "2020s", "familiarity": "discovery", "language": "en", "primaryGenreId": 878, "evidencePacketHash": "sha256:b4e414da96dee0ad04d18edf08b84ee224f05f3c3227e98ae4a277f6252697d0", "historicalEffort": "high", "historicalArtifactHash": "sha256:b3489f8a929a9a43686f3e13621ebf8f99169fea49b624204c0343e229e829d4" }
+  ]
+}
