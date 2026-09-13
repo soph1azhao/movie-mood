@@ -21,7 +21,8 @@ function asObject(value: unknown): Record<string, unknown> {
   return value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, unknown> : {}
 }
 
-export function buildSemanticResponseJsonSchema(sourceRefs: string[] = [], schemaVersion = 'semantic-output.v1') {
+export function buildSemanticResponseJsonSchema(sourceRefs: string[] = [], schemaVersion = 'semantic-output.v1', projectionVersion: 'legacy-v1' | 'current' = 'current') {
+  const projectedMinimum = (minLength: number) => projectionVersion === 'current' ? { minLength } : {}
   const validSourceRefs = [...new Set(sourceRefs.filter((sourceRef) => typeof sourceRef === 'string' && sourceRef.length > 0))].sort()
   const sourceRefsSchema = validSourceRefs.length > 0
     ? { type: 'array', minItems: 1, items: { type: 'string', enum: validSourceRefs } }
@@ -30,7 +31,7 @@ export function buildSemanticResponseJsonSchema(sourceRefs: string[] = [], schem
     type: 'object',
     required: schemaVersion === 'semantic-output.v2' ? ['rationale', 'sourceRefs', 'grounding'] : ['rationale', 'sourceRefs'],
     properties: {
-      rationale: { type: 'string', description: 'Local validation requires a meaningful evidence explanation of at least 12 characters.' },
+      rationale: { type: 'string', ...projectedMinimum(12), description: 'Local validation requires a meaningful evidence explanation of at least 12 characters.' },
       sourceRefs: sourceRefsSchema,
       ...(schemaVersion === 'semantic-output.v2' ? {
         grounding: {
@@ -46,12 +47,12 @@ export function buildSemanticResponseJsonSchema(sourceRefs: string[] = [], schem
                 required: ['sourceRef', 'cue'],
                 properties: {
                   sourceRef: validSourceRefs.length > 0 ? { type: 'string', enum: validSourceRefs } : { type: 'string' },
-                  cue: { type: 'string', description: 'Local validation requires a specific factual phrase, not a taxonomy label or trivial token, of at least 8 characters.' },
+                  cue: { type: 'string', ...projectedMinimum(8), description: 'Local validation requires a specific factual phrase, not a taxonomy label or trivial token, of at least 8 characters.' },
                 },
                 additionalProperties: false,
               },
             },
-            bridge: { type: 'string', description: 'Local validation requires a meaningful explanation of how multiple cues support the taxonomy judgment, at least 12 characters.' },
+            bridge: { type: 'string', ...projectedMinimum(12), description: 'Local validation requires a meaningful explanation of how multiple cues support the taxonomy judgment, at least 12 characters.' },
           },
           additionalProperties: false,
         },
@@ -101,7 +102,7 @@ export function buildSemanticResponseJsonSchema(sourceRefs: string[] = [], schem
           properties: {
             code: { type: 'string' },
             fields: { type: 'array', items: { type: 'string' } },
-            message: { type: 'string' },
+            message: { type: 'string', ...projectedMinimum(12) },
             reviewRequired: { type: 'boolean' },
           },
         },

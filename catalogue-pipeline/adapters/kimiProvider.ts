@@ -13,6 +13,7 @@ type KimiProviderOptions = {
   reasoningEffort?: KimiReasoningEffort
   outputMode?: KimiOutputMode
   semanticOutputSchemaVersion?: 'semantic-output.v2'
+  semanticOutputSchemaProjectionVersion?: 'legacy-v1' | 'current'
   /** @deprecated Use reasoningEffort: 'disabled'. */
   thinkingMode?: 'default' | 'disabled'
   credentialEnv?: string
@@ -109,6 +110,7 @@ export function createKimiProvider({
   reasoningEffort = 'default',
   outputMode = 'json_object',
   semanticOutputSchemaVersion,
+  semanticOutputSchemaProjectionVersion = 'current',
   thinkingMode = 'default',
   credentialEnv = 'KIMI_API_KEY',
   env = process.env,
@@ -131,6 +133,9 @@ export function createKimiProvider({
   if (outputMode === 'json_schema' && semanticOutputSchemaVersion !== 'semantic-output.v2') {
     throw new ModelProviderError('Kimi json_schema mode requires semantic-output.v2.', { code: 'INVALID_SEMANTIC_OUTPUT_SCHEMA_VERSION' })
   }
+  if (!['legacy-v1', 'current'].includes(semanticOutputSchemaProjectionVersion)) {
+    throw new ModelProviderError('Kimi semantic output schema projection must be legacy-v1 or current.', { code: 'INVALID_SEMANTIC_OUTPUT_SCHEMA_PROJECTION' })
+  }
   if (thinkingMode === 'disabled' && reasoningEffort !== 'default' && reasoningEffort !== 'disabled') {
     throw new ModelProviderError('Kimi thinkingMode disabled conflicts with reasoningEffort.', { code: 'CONFLICTING_REASONING_CONFIGURATION' })
   }
@@ -140,7 +145,7 @@ export function createKimiProvider({
   const baseUrl = (endpointBaseUrl ?? env.KIMI_BASE_URL ?? KIMI_DEFAULT_BASE_URL).replace(/\/$/, '')
   const resolvedReasoningEffort: KimiReasoningEffort = thinkingMode === 'disabled' ? 'disabled' : reasoningEffort
   const supportsTemperature = !['low', 'high', 'max'].includes(resolvedReasoningEffort)
-  const semanticOutputSchema = outputMode === 'json_schema' ? buildSemanticResponseJsonSchema([], semanticOutputSchemaVersion) : null
+  const semanticOutputSchema = outputMode === 'json_schema' ? buildSemanticResponseJsonSchema([], semanticOutputSchemaVersion, semanticOutputSchemaProjectionVersion) : null
   const semanticOutputSchemaHash = semanticOutputSchema ? `sha256:${stableHash(semanticOutputSchema)}` : null
   const outputAffectingConfiguration = outputMode === 'json_schema'
     ? { protocol: 'openai-chat-completions', reasoningEffort: resolvedReasoningEffort, outputMode, semanticOutputSchemaVersion, semanticOutputSchemaHash }

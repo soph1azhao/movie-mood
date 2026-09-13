@@ -41,7 +41,7 @@ function boundedUsage(value) {
 }
 
 function createProvider({ env, fetchImpl }) {
-  return createKimiProvider({ modelId: MODEL_ID, reasoningEffort: REASONING_EFFORT, outputMode: OUTPUT_MODE, semanticOutputSchemaVersion: SCHEMA_VERSION, env, fetchImpl })
+  return createKimiProvider({ modelId: MODEL_ID, reasoningEffort: REASONING_EFFORT, outputMode: OUTPUT_MODE, semanticOutputSchemaVersion: SCHEMA_VERSION, semanticOutputSchemaProjectionVersion: 'legacy-v1', env, fetchImpl })
 }
 
 export async function buildDiagnosticPreflight({ pipelineRoot = resolve('catalogue-pipeline'), fileExists = exists, readJsonFile = readJson, readTextFile = readFile } = {}) {

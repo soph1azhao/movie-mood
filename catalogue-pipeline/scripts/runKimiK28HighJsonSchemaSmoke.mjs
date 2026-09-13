@@ -34,7 +34,7 @@ async function exists(path) { try { await readFile(path); return true } catch { 
 async function readJson(path) { return JSON.parse(await readFile(path, 'utf8')) }
 async function writeJson(path, value) { await mkdir(dirname(path), { recursive: true }); const temporary = `${path}.tmp`; try { await writeFile(temporary, `${JSON.stringify(value, null, 2)}\n`); await rename(temporary, path) } catch (error) { await rm(temporary, { force: true }); throw error } }
 function paths(pipelineRoot) { const root = resolve(pipelineRoot, 'generated/semantic/smokes', SMOKE_ID); return { root, reportPath: resolve(root, 'report.json'), cacheRoot: resolve(pipelineRoot, 'cache/semantic/smokes', SMOKE_ID) } }
-function providerFor({ env, fetchImpl }) { return createKimiProvider({ modelId: MODEL_ID, reasoningEffort: REASONING_EFFORT, outputMode: OUTPUT_MODE, semanticOutputSchemaVersion: SCHEMA_VERSION, env, fetchImpl }) }
+function providerFor({ env, fetchImpl }) { return createKimiProvider({ modelId: MODEL_ID, reasoningEffort: REASONING_EFFORT, outputMode: OUTPUT_MODE, semanticOutputSchemaVersion: SCHEMA_VERSION, semanticOutputSchemaProjectionVersion: 'legacy-v1', env, fetchImpl }) }
 
 function usage(value) {
   const source = value && typeof value === 'object' ? value : {}; const result = {}

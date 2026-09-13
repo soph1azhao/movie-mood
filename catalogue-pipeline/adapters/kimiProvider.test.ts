@@ -135,9 +135,19 @@ describe('Moonshot Kimi provider adapter', () => {
     expect(JSON.stringify(schemaProvider.metadata)).not.toContain('test-kimi-key')
   })
 
+  it('identity-binds the constrained schema separately from the completed legacy projection', () => {
+    const common = { packet: packet(), promptVersion: 'semantic-classifier.v3', schemaVersion: 'semantic-output.v2' }
+    const legacy = provider(vi.fn(), { reasoningEffort: 'high', outputMode: 'json_schema', semanticOutputSchemaVersion: 'semantic-output.v2', semanticOutputSchemaProjectionVersion: 'legacy-v1' })
+    const constrained = provider(vi.fn(), { reasoningEffort: 'high', outputMode: 'json_schema', semanticOutputSchemaVersion: 'semantic-output.v2' })
+    expect(legacy.metadata.outputAffectingConfiguration.semanticOutputSchemaHash).toBe('sha256:8876dfaa86d325d3eb6b2545af31b762bfc60584fc8fab9d0d5be76f12396d20')
+    expect(constrained.metadata.outputAffectingConfiguration.semanticOutputSchemaHash).toBe('sha256:a5bacc030ad25d46a01856f6e49d6d041809683e82d2469d23ac9eae412866fc')
+    expect(semanticCacheKeyFor({ ...common, provider: legacy })).not.toBe(semanticCacheKeyFor({ ...common, provider: constrained }))
+  })
+
   it('rejects incomplete JSON Schema configuration before HTTP', () => {
     const fetchImpl = vi.fn()
     expect(() => provider(fetchImpl, { reasoningEffort: 'high', outputMode: 'json_schema' })).toThrow(/semantic-output\.v2/)
+    expect(() => provider(fetchImpl, { reasoningEffort: 'high', outputMode: 'json_schema', semanticOutputSchemaVersion: 'semantic-output.v2', semanticOutputSchemaProjectionVersion: 'typo' })).toThrow(/legacy-v1 or current/)
     expect(fetchImpl).not.toHaveBeenCalled()
   })
 
