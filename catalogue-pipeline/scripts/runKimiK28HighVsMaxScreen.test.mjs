@@ -6,7 +6,7 @@ import taxonomy from '../config/taxonomyVersion.json' with { type: 'json' }
 import anchors from '../calibration/anchors.json' with { type: 'json' }
 import boundaryCases from '../calibration/boundaryCases.json' with { type: 'json' }
 import { stableHash } from '../adapters/tmdbProvider.ts'
-import { AUTHORIZATION_FLAG, COHORT, EXECUTION_ORDER, REQUEST_BUDGET, RUN_ID, SCHEMA_HASH, buildHighVsMaxPreflight, launchKimiHighVsMaxScreen, runKimiHighVsMaxScreen } from './runKimiK28HighVsMaxScreen.mjs'
+import { AUTHORIZATION_FLAG, COHORT, EXECUTION_ORDER, REQUEST_BUDGET, RUN_ID, SCHEMA_HASH, buildHighVsMaxPreflight, launchKimiHighVsMaxScreen, pairedDeltas, runKimiHighVsMaxScreen, summarizeArm } from './runKimiK28HighVsMaxScreen.mjs'
 
 beforeEach(() => vi.stubGlobal('fetch', vi.fn(() => { throw new Error('Unexpected real network access') })))
 afterEach(() => vi.unstubAllGlobals())
@@ -40,6 +40,18 @@ describe('Kimi K2.8 High versus Max paired screen', () => {
   })
 
   it('requires the explicit authorization flag', () => expect(AUTHORIZATION_FLAG).toBe('--execute-authorized-kimi-high-vs-max'))
+
+  it('uses valid comparable denominators and excludes invalid arms from paired deltas', () => {
+    const comparison = { ordinalAgreement: { pace: { match: true }, emotionalWeight: { match: true }, attentionDemand: { match: true }, discoveryStyle: { match: false } }, moods: { jaccard: 0.5 }, situations: { jaccard: 1 } }
+    const records = [
+      { candidateId: 'little-miss-sunshine', reasoningEffort: 'high', status: 'VALID', usage: { total_tokens: 10, thinking_tokens: 2 }, latencyMs: 10, boundaryFlagCount: 2, geminiComparison: comparison },
+      { candidateId: 'little-miss-sunshine', reasoningEffort: 'max', status: 'VALID', usage: { total_tokens: 20, thinking_tokens: 4 }, latencyMs: 30, boundaryFlagCount: 3, geminiComparison: comparison },
+      { candidateId: 'rrr', reasoningEffort: 'high', status: 'MALFORMED', usage: { total_tokens: 100, thinking_tokens: 50 }, latencyMs: 100, boundaryFlagCount: null },
+      { candidateId: 'rrr', reasoningEffort: 'max', status: 'VALID', usage: { total_tokens: 300, thinking_tokens: 150 }, latencyMs: 300, boundaryFlagCount: 0, geminiComparison: comparison },
+    ]
+    expect(summarizeArm(records, 'high')).toMatchObject({ attempted: 2, valid: 1, ordinalMatches: 3, ordinalMatchesOutOf: 4, comparablePairs: 1 })
+    expect(pairedDeltas(records)).toMatchObject({ pairedCandidates: 1, meanMaxMinusHigh: { total_tokens: 10, thinking_tokens: 2, latencyMs: 20, boundaryFlags: 1 } })
+  })
 
   it('refuses baseline identity drift', async () => {
     const fixture = fixtures(); const drifted = { ...fixture, readJsonFile: async (path) => path.endsWith('manifest.json') ? { providerId: 'wrong' } : fixture.readJsonFile(path) }

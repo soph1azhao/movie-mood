@@ -1,0 +1,75 @@
+{
+  "schemaVersion": "kimi-reasoning-effort-screen-closure.v1",
+  "status": "CLOSED",
+  "screenRunId": "kimi-k28-high-vs-max-4-film-paired-v1",
+  "schema": {
+    "semanticOutputSchemaVersion": "semantic-output.v2",
+    "semanticOutputSchemaHash": "sha256:a5bacc030ad25d46a01856f6e49d6d041809683e82d2469d23ac9eae412866fc"
+  },
+  "observedMetrics": {
+    "high": {
+      "attempted": 4,
+      "valid": 3,
+      "validRate": 0.75,
+      "totalTokens": 27882,
+      "thinkingTokens": 7032,
+      "ordinalAgreement": {
+        "matches": 9,
+        "denominator": 12,
+        "comparablePairs": 3
+      },
+      "boundaryFlagsOnValidArtifacts": {
+        "total": 6,
+        "meanPerFilm": 2
+      },
+      "invalidCandidate": {
+        "candidateId": "rrr",
+        "code": "UNDECLARED_SUPPORTED_INFERENCE_CUE_REF"
+      }
+    },
+    "max": {
+      "attempted": 4,
+      "valid": 4,
+      "validRate": 1,
+      "totalTokens": 42886,
+      "thinkingTokens": 23459,
+      "ordinalAgreement": {
+        "matches": 16,
+        "denominator": 16,
+        "comparablePairs": 4
+      },
+      "boundaryFlagsOnValidArtifacts": {
+        "total": 8,
+        "meanPerFilm": 2
+      }
+    },
+    "pairedValidComparison": {
+      "comparablePairs": 3,
+      "boundaryFlags": {
+        "highTotal": 6,
+        "maxTotal": 7,
+        "maxMinusHighTotal": 1,
+        "highMeanPerFilm": 2,
+        "maxMeanPerFilm": 2.3333333333,
+        "maxMinusHighMeanPerFilm": 0.3333333333
+      },
+      "meanMaxMinusHighTotalTokens": 3751,
+      "meanMaxMinusHighLatencyMs": 97696.75
+    }
+  },
+  "policy": {
+    "high": "default reasoning effort",
+    "max": "escalation only after High semantic-validation failure",
+    "low": "not evaluated / not currently needed",
+    "fullMaxProduction": "rejected by current evidence"
+  },
+  "rationale": [
+    "Max improved first-pass validity from 3/4 to 4/4 and rescued RRR after High semantic validation failure.",
+    "Max used 53.8% more total tokens across the screen and substantially more thinking tokens.",
+    "Among the three both-valid pairs, Max did not improve observed ordinal agreement and did not reduce boundary/review burden.",
+    "This is an exploratory engineering decision, not a statistical model-quality claim.",
+    "Gemini is a comparison baseline, not ground truth; the decision concerns expected Movie Mood production value.",
+    "Max is not inferred to be intrinsically worse; full-Max production expansion is rejected because the observed resource and review burden did not justify it."
+  ],
+  "nextPolicy": "HIGH_FIRST_ACCEPT_ON_SEMANTIC_VALIDATION_SUCCESS_MAX_ONLY_ON_SEMANTIC_VALIDATION_FAILURE"
+}
