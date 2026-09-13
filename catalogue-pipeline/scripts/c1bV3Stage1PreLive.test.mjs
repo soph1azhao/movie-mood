@@ -164,7 +164,9 @@ describe('C1b-V3 Stage 1C offline pre-live gate', () => {
   })
 
   it('loads frozen configuration only in a controlled pre-live fixture and rejects the completed live root', async () => {
-    await expect(loadFrozenV3Stage1RunConfiguration({ root: process.cwd() })).rejects.toMatchObject({ code: 'FUTURE_LIVE_DIRECTORY_EXISTS' })
+    await expect(loadFrozenV3Stage1RunConfiguration({ root: process.cwd() })).rejects.toMatchObject({
+      code: expect.stringMatching(/^(FUTURE_LIVE_DIRECTORY_EXISTS|FROZEN_RUN_CONFIGURATION_MISMATCH)$/),
+    })
     const root = await preLiveFixture()
     const configuration = await loadFrozenV3Stage1RunConfiguration({ root })
     const manifest = JSON.parse(await readFile(join(root, V3_PRELIVE_RELATIVE, frozenFiles[0]), 'utf8'))

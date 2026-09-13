@@ -2,7 +2,7 @@ import { mkdtemp, readFile, rm } from 'node:fs/promises'
 import { join } from 'node:path'
 import { tmpdir } from 'node:os'
 import { describe, expect, it, vi } from 'vitest'
-import { ADAPTIVE_STATES, runAdaptiveSemanticBatch, summarizeAdaptiveBatch } from './adaptiveSemanticBatchCore.mjs'
+import { ADAPTIVE_STATES, fileExists, runAdaptiveSemanticBatch, summarizeAdaptiveBatch } from './adaptiveSemanticBatchCore.mjs'
 import { AUTHORIZATION_FLAG, RUN_ID, buildSemantic100Preflight, launchAdaptiveSemantic100 } from './runKimiAdaptiveSemantic100.mjs'
 
 describe('adaptive Semantic-100 production preflight', () => {
@@ -12,10 +12,12 @@ describe('adaptive Semantic-100 production preflight', () => {
   }
   const okResponse = (output) => ({ ok: true, status: 200, json: async () => ({ choices: [{ finish_reason: 'stop', message: { content: JSON.stringify(output) } }], usage: { prompt_tokens: 10, completion_tokens: 20, total_tokens: 30, completion_tokens_details: { reasoning_tokens: 7 } } }) })
   it('imports the exact closed Scale-50 half, keeps the remainder pending, and performs zero HTTP', async () => {
-    const fetchImpl = vi.fn(); const result = await launchAdaptiveSemantic100([], { fetchImpl })
+    const fetchImpl = vi.fn()
+    const isolatedExists = async (path) => path.endsWith('/manifest.json') && path.includes(RUN_ID) ? false : fileExists(path)
+    const result = await launchAdaptiveSemantic100([], { fetchImpl, fileExists: isolatedExists })
     expect(result.executionAuthorized).toBe(false); expect(fetchImpl).not.toHaveBeenCalled()
     expect(result.preflight).toMatchObject({ runId: RUN_ID, candidateCount: 100, importedValid: 50, pendingFresh: 50, currentRunHttpRequests: 0 })
-    const context = await buildSemantic100Preflight(); expect(context.importedStates).toHaveLength(50)
+    const context = await buildSemantic100Preflight({ fileExists: isolatedExists }); expect(context.importedStates).toHaveLength(50)
     for (const state of context.importedStates.values()) expect(state).toMatchObject({ status: ADAPTIVE_STATES.imported, httpRequests: 0, semanticAttempts: { high: 0, max: 0 }, lifetimeProvenance: { sourceRunId: 'kimi-k28-adaptive-scale-50-v1', artifactHash: expect.stringMatching(/^sha256:/), modelId: 'kimi-for-coding', promptVersion: 'semantic-classifier.v3', schemaVersion: 'semantic-output.v2' } })
     expect(new Set(context.candidates.map((candidate) => candidate.candidateId))).toHaveLength(100)
   })

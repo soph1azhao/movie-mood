@@ -36,6 +36,7 @@ export function summarizeAdaptiveBatch(manifest) {
     highSemanticFailures: generated.filter((state) => state.highSemanticFailure).length,
     maxEscalations: generated.filter((state) => state.maxEligibleAt).length,
     providerFailures: generated.filter((state) => [ADAPTIVE_STATES.retryableProviderFailure, ADAPTIVE_STATES.terminalProviderFailure].includes(state.status)).length,
+    terminalSemanticFailures: generated.filter((state) => state.status === ADAPTIVE_STATES.terminalSemanticFailure).length,
     uncertain: generated.filter((state) => state.status === ADAPTIVE_STATES.uncertain).length,
     currentRunHttpRequests: manifest.currentRunHttpRequests ?? 0,
     tokenAccountingCurrentRun: { high: usage.high, max: usage.max, combined: Object.fromEntries(usageKeys.map((key) => [key, usage.high[key] + usage.max[key]])) },
