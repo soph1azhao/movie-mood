@@ -40,7 +40,7 @@ function packet() {
 }
 
 function provider(fetchImpl: ReturnType<typeof vi.fn>, overrides: Record<string, unknown> = {}) {
-  return createKimiProvider({ modelId: 'kimi-k2.5', env: { KIMI_API_KEY: 'test-kimi-key' }, fetchImpl, ...overrides })
+  return createKimiProvider({ modelId: 'kimi-for-coding', env: { KIMI_API_KEY: 'test-kimi-key' }, fetchImpl, ...overrides })
 }
 
 beforeEach(() => vi.stubGlobal('fetch', vi.fn(() => { throw new Error('Unexpected real network access') })))
@@ -56,7 +56,7 @@ describe('Moonshot Kimi provider adapter', () => {
   it('creates stable credential-free metadata without making a request', () => {
     const fetchImpl = vi.fn()
     const kimi = provider(fetchImpl)
-    expect(kimi.metadata).toEqual({ providerId: KIMI_PROVIDER_ID, modelId: 'kimi-k2.5', supportsStructuredJson: true, supportsTemperature: true, outputAffectingConfiguration: { protocol: 'openai-chat-completions', thinkingMode: 'default' } })
+    expect(kimi.metadata).toEqual({ providerId: KIMI_PROVIDER_ID, modelId: 'kimi-for-coding', supportsStructuredJson: true, supportsTemperature: true, outputAffectingConfiguration: { protocol: 'openai-chat-completions', reasoningEffort: 'default' } })
     expect(JSON.stringify(kimi.metadata)).not.toContain('test-kimi-key')
     expect(fetchImpl).not.toHaveBeenCalled()
   })
@@ -67,8 +67,9 @@ describe('Moonshot Kimi provider adapter', () => {
     expect(fetchImpl).toHaveBeenCalledTimes(1)
     expect(fetchImpl).toHaveBeenCalledWith(`${KIMI_DEFAULT_BASE_URL}/chat/completions`, expect.objectContaining({ method: 'POST', headers: { Authorization: 'Bearer test-kimi-key', 'Content-Type': 'application/json' } }))
     const body = JSON.parse(fetchImpl.mock.calls[0][1].body)
-    expect(body).toMatchObject({ model: 'kimi-k2.5', messages: [{ role: 'user' }], stream: false, temperature: 0.1, response_format: { type: 'json_object' } })
+    expect(body).toMatchObject({ model: 'kimi-for-coding', messages: [{ role: 'user' }], stream: false, temperature: 0.1, response_format: { type: 'json_object' } })
     expect(body).not.toHaveProperty('thinking')
+    expect(body).not.toHaveProperty('reasoning_effort')
     expect(body.response_format).not.toHaveProperty('json_schema')
     expect(JSON.stringify(body)).not.toContain('test-kimi-key')
   })
@@ -79,7 +80,31 @@ describe('Moonshot Kimi provider adapter', () => {
     await kimi.generateStructured({ input: {} })
     expect(fetchImpl.mock.calls[0][0]).toBe('https://fixture.invalid/v1/chat/completions')
     expect(JSON.parse(fetchImpl.mock.calls[0][1].body).thinking).toEqual({ type: 'disabled' })
-    expect(kimi.metadata.outputAffectingConfiguration).toEqual({ protocol: 'openai-chat-completions', thinkingMode: 'disabled' })
+    expect(kimi.metadata.outputAffectingConfiguration).toEqual({ protocol: 'openai-chat-completions', reasoningEffort: 'disabled' })
+  })
+
+  it.each(['low', 'high', 'max'] as const)('sends and identity-binds reasoning effort %s', async (reasoningEffort) => {
+    const fetchImpl = vi.fn().mockResolvedValue(response(chatBody({ ok: true })))
+    const kimi = provider(fetchImpl, { reasoningEffort })
+    await kimi.generateStructured({ input: {}, temperature: 0.1 })
+    expect(JSON.parse(fetchImpl.mock.calls[0][1].body)).toMatchObject({
+      model: 'kimi-for-coding', reasoning_effort: reasoningEffort, messages: [{ role: 'user' }],
+      stream: false, temperature: 0.1, response_format: { type: 'json_object' },
+    })
+    expect(kimi.metadata.outputAffectingConfiguration).toEqual({ protocol: 'openai-chat-completions', reasoningEffort })
+  })
+
+  it('rejects invalid reasoning effort before HTTP', () => {
+    const fetchImpl = vi.fn()
+    expect(() => provider(fetchImpl, { reasoningEffort: 'medium' })).toThrow(/reasoningEffort/)
+    expect(fetchImpl).not.toHaveBeenCalled()
+  })
+
+  it('routes KIMI_BASE_URL to the Kimi Code chat completions endpoint', async () => {
+    const fetchImpl = vi.fn().mockResolvedValue(response(chatBody({ ok: true })))
+    const kimi = provider(fetchImpl, { reasoningEffort: 'low', env: { KIMI_API_KEY: 'test-kimi-key', KIMI_BASE_URL: 'https://api.kimi.com/coding/v1' } })
+    await kimi.generateStructured({ input: {} })
+    expect(fetchImpl.mock.calls[0][0]).toBe('https://api.kimi.com/coding/v1/chat/completions')
   })
 
   it('parses object JSON, ignores reasoning content, and normalizes only available usage', async () => {
@@ -115,7 +140,7 @@ describe('Moonshot Kimi provider adapter', () => {
     const fetchImpl = vi.fn().mockResolvedValue(response(chatBody(validSemanticOutput(), { prompt_tokens: 10, completion_tokens: 20, total_tokens: 30 })))
     try {
       const result = await classifySemanticCandidate({ evidencePacket: packet(), provider: provider(fetchImpl), prompt: 'fixture prompt', cacheRoot: join(root, 'cache'), outputPath: join(root, 'output.json'), createdAt: '2026-01-01T00:00:00.000Z' })
-      expect(result).toMatchObject({ cacheHit: false, modelCalls: 1, artifact: { modelProvider: KIMI_PROVIDER_ID, modelId: 'kimi-k2.5' }, providerUsageMetadata: { prompt_tokens: 10 } })
+      expect(result).toMatchObject({ cacheHit: false, modelCalls: 1, artifact: { modelProvider: KIMI_PROVIDER_ID, modelId: 'kimi-for-coding' }, providerUsageMetadata: { prompt_tokens: 10 } })
       expect(fetchImpl).toHaveBeenCalledTimes(1)
     } finally { await rm(root, { recursive: true, force: true }) }
   })
@@ -143,14 +168,15 @@ describe('Moonshot Kimi provider adapter', () => {
     expect(delayFn).toHaveBeenCalledTimes(1)
   })
 
-  it('keeps provider, model, and thinking configuration cache identities isolated', () => {
+  it('keeps provider, model, and reasoning-effort cache identities isolated', () => {
     const common = { packet: packet(), promptVersion: 'semantic-classifier.v3', schemaVersion: 'semantic-output.v2' }
     const providers = [
       provider(vi.fn()),
-      provider(vi.fn(), { thinkingMode: 'disabled' }),
-      createKimiProvider({ modelId: 'another-kimi-model', env: { KIMI_API_KEY: 'test-kimi-key' }, fetchImpl: vi.fn() }),
+      provider(vi.fn(), { reasoningEffort: 'low' }),
+      provider(vi.fn(), { reasoningEffort: 'high' }),
+      createKimiProvider({ modelId: 'k3-256k', env: { KIMI_API_KEY: 'test-kimi-key' }, fetchImpl: vi.fn() }),
       { metadata: { providerId: 'google-gemini-developer-api', modelId: 'gemini-3.6-flash' } },
     ]
-    expect(new Set(providers.map((entry) => semanticCacheKeyFor({ ...common, provider: entry }))).size).toBe(4)
+    expect(new Set(providers.map((entry) => semanticCacheKeyFor({ ...common, provider: entry }))).size).toBe(5)
   })
 })

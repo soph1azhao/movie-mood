@@ -3,8 +3,12 @@ import { resolveCredential } from './providerConfig.ts'
 
 type FetchLike = (input: string, init?: RequestInit) => Promise<Response>
 
+export type KimiReasoningEffort = 'default' | 'low' | 'high' | 'max' | 'disabled'
+
 type KimiProviderOptions = {
   modelId: string
+  reasoningEffort?: KimiReasoningEffort
+  /** @deprecated Use reasoningEffort: 'disabled'. */
   thinkingMode?: 'default' | 'disabled'
   credentialEnv?: string
   env?: Record<string, string | undefined>
@@ -74,6 +78,7 @@ function retryAfterMs(response: Response): number | undefined {
 
 export function createKimiProvider({
   modelId,
+  reasoningEffort = 'default',
   thinkingMode = 'default',
   credentialEnv = 'KIMI_API_KEY',
   env = process.env,
@@ -87,10 +92,17 @@ export function createKimiProvider({
   if (!['default', 'disabled'].includes(thinkingMode)) {
     throw new ModelProviderError('Kimi thinkingMode must be default or disabled.', { code: 'INVALID_THINKING_MODE' })
   }
+  if (!['default', 'low', 'high', 'max', 'disabled'].includes(reasoningEffort)) {
+    throw new ModelProviderError('Kimi reasoningEffort must be default, low, high, max, or disabled.', { code: 'INVALID_REASONING_EFFORT' })
+  }
+  if (thinkingMode === 'disabled' && reasoningEffort !== 'default' && reasoningEffort !== 'disabled') {
+    throw new ModelProviderError('Kimi thinkingMode disabled conflicts with reasoningEffort.', { code: 'CONFLICTING_REASONING_CONFIGURATION' })
+  }
   if (typeof fetchImpl !== 'function') throw new ModelProviderError('Kimi provider requires fetch.', { code: 'MISSING_FETCH' })
   const credential = resolveCredential({ credentialEnv, env }).trim()
   if (!credential) throw new ModelProviderError(`Required provider credential env var is empty: ${credentialEnv}`, { code: 'MISSING_PROVIDER_CREDENTIAL' })
   const baseUrl = (endpointBaseUrl ?? env.KIMI_BASE_URL ?? KIMI_DEFAULT_BASE_URL).replace(/\/$/, '')
+  const resolvedReasoningEffort: KimiReasoningEffort = thinkingMode === 'disabled' ? 'disabled' : reasoningEffort
 
   return {
     metadata: {
@@ -98,7 +110,7 @@ export function createKimiProvider({
       modelId: modelId.trim(),
       supportsStructuredJson: true,
       supportsTemperature: true,
-      outputAffectingConfiguration: { protocol: 'openai-chat-completions', thinkingMode },
+      outputAffectingConfiguration: { protocol: 'openai-chat-completions', reasoningEffort: resolvedReasoningEffort },
     },
     async generateStructured(request: Record<string, unknown>) {
       const response = await fetchImpl(`${baseUrl}/chat/completions`, {
@@ -110,7 +122,8 @@ export function createKimiProvider({
           stream: false,
           ...(typeof request.temperature === 'number' ? { temperature: request.temperature } : {}),
           response_format: { type: 'json_object' },
-          ...(thinkingMode === 'disabled' ? { thinking: { type: 'disabled' } } : {}),
+          ...(['low', 'high', 'max'].includes(resolvedReasoningEffort) ? { reasoning_effort: resolvedReasoningEffort } : {}),
+          ...(resolvedReasoningEffort === 'disabled' ? { thinking: { type: 'disabled' } } : {}),
         }),
       })
       if (!response.ok) {
