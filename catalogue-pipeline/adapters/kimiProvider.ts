@@ -1,13 +1,18 @@
 import { ModelProviderError } from './modelProvider.ts'
 import { resolveCredential } from './providerConfig.ts'
+import { stableHash } from './tmdbProvider.ts'
+import { buildSemanticResponseJsonSchema } from './geminiProvider.ts'
 
 type FetchLike = (input: string, init?: RequestInit) => Promise<Response>
 
 export type KimiReasoningEffort = 'default' | 'low' | 'high' | 'max' | 'disabled'
+export type KimiOutputMode = 'json_object' | 'json_schema'
 
 type KimiProviderOptions = {
   modelId: string
   reasoningEffort?: KimiReasoningEffort
+  outputMode?: KimiOutputMode
+  semanticOutputSchemaVersion?: 'semantic-output.v2'
   /** @deprecated Use reasoningEffort: 'disabled'. */
   thinkingMode?: 'default' | 'disabled'
   credentialEnv?: string
@@ -102,6 +107,8 @@ function retryAfterMs(response: Response): number | undefined {
 export function createKimiProvider({
   modelId,
   reasoningEffort = 'default',
+  outputMode = 'json_object',
+  semanticOutputSchemaVersion,
   thinkingMode = 'default',
   credentialEnv = 'KIMI_API_KEY',
   env = process.env,
@@ -118,6 +125,12 @@ export function createKimiProvider({
   if (!['default', 'low', 'high', 'max', 'disabled'].includes(reasoningEffort)) {
     throw new ModelProviderError('Kimi reasoningEffort must be default, low, high, max, or disabled.', { code: 'INVALID_REASONING_EFFORT' })
   }
+  if (!['json_object', 'json_schema'].includes(outputMode)) {
+    throw new ModelProviderError('Kimi outputMode must be json_object or json_schema.', { code: 'INVALID_OUTPUT_MODE' })
+  }
+  if (outputMode === 'json_schema' && semanticOutputSchemaVersion !== 'semantic-output.v2') {
+    throw new ModelProviderError('Kimi json_schema mode requires semantic-output.v2.', { code: 'INVALID_SEMANTIC_OUTPUT_SCHEMA_VERSION' })
+  }
   if (thinkingMode === 'disabled' && reasoningEffort !== 'default' && reasoningEffort !== 'disabled') {
     throw new ModelProviderError('Kimi thinkingMode disabled conflicts with reasoningEffort.', { code: 'CONFLICTING_REASONING_CONFIGURATION' })
   }
@@ -127,6 +140,11 @@ export function createKimiProvider({
   const baseUrl = (endpointBaseUrl ?? env.KIMI_BASE_URL ?? KIMI_DEFAULT_BASE_URL).replace(/\/$/, '')
   const resolvedReasoningEffort: KimiReasoningEffort = thinkingMode === 'disabled' ? 'disabled' : reasoningEffort
   const supportsTemperature = !['low', 'high', 'max'].includes(resolvedReasoningEffort)
+  const semanticOutputSchema = outputMode === 'json_schema' ? buildSemanticResponseJsonSchema([], semanticOutputSchemaVersion) : null
+  const semanticOutputSchemaHash = semanticOutputSchema ? `sha256:${stableHash(semanticOutputSchema)}` : null
+  const outputAffectingConfiguration = outputMode === 'json_schema'
+    ? { protocol: 'openai-chat-completions', reasoningEffort: resolvedReasoningEffort, outputMode, semanticOutputSchemaVersion, semanticOutputSchemaHash }
+    : { protocol: 'openai-chat-completions', reasoningEffort: resolvedReasoningEffort }
 
   return {
     metadata: {
@@ -134,7 +152,7 @@ export function createKimiProvider({
       modelId: modelId.trim(),
       supportsStructuredJson: true,
       supportsTemperature,
-      outputAffectingConfiguration: { protocol: 'openai-chat-completions', reasoningEffort: resolvedReasoningEffort },
+      outputAffectingConfiguration,
     },
     async generateStructured(request: Record<string, unknown>) {
       const response = await fetchImpl(`${baseUrl}/chat/completions`, {
@@ -145,7 +163,9 @@ export function createKimiProvider({
           messages: [{ role: 'user', content: JSON.stringify(request.input) }],
           stream: false,
           ...(supportsTemperature && typeof request.temperature === 'number' ? { temperature: request.temperature } : {}),
-          response_format: { type: 'json_object' },
+          response_format: outputMode === 'json_schema'
+            ? { type: 'json_schema', json_schema: { name: 'semantic_output_v2', strict: true, schema: semanticOutputSchema } }
+            : { type: 'json_object' },
           ...(['low', 'high', 'max'].includes(resolvedReasoningEffort) ? { reasoning_effort: resolvedReasoningEffort } : {}),
           ...(resolvedReasoningEffort === 'disabled' ? { thinking: { type: 'disabled' } } : {}),
         }),

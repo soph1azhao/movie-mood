@@ -109,6 +109,38 @@ describe('Moonshot Kimi provider adapter', () => {
     expect(fetchImpl.mock.calls[0][0]).toBe('https://api.kimi.com/coding/v1/chat/completions')
   })
 
+  it('sends K2.8 High through OpenAI-compatible JSON Schema Structured Output', async () => {
+    const fetchImpl = vi.fn().mockResolvedValue(response(chatBody({ ok: true })))
+    const kimi = provider(fetchImpl, { reasoningEffort: 'high', outputMode: 'json_schema', semanticOutputSchemaVersion: 'semantic-output.v2' })
+    await kimi.generateStructured({ input: {}, temperature: 0.1 })
+    const body = JSON.parse(fetchImpl.mock.calls[0][1].body)
+    expect(body).toMatchObject({
+      model: 'kimi-for-coding', reasoning_effort: 'high', stream: false,
+      response_format: { type: 'json_schema', json_schema: { name: 'semantic_output_v2', strict: true, schema: { type: 'object' } } },
+    })
+    expect(body).not.toHaveProperty('temperature')
+    expect(body.response_format.json_schema.schema.properties.classification.required).toContain('filterLanguages')
+    expect(kimi.metadata.outputAffectingConfiguration).toMatchObject({ outputMode: 'json_schema', semanticOutputSchemaVersion: 'semantic-output.v2', semanticOutputSchemaHash: expect.stringMatching(/^sha256:[a-f0-9]{64}$/) })
+  })
+
+  it('keeps json_object and json_schema cache identities distinct and credential-free', () => {
+    const common = { packet: packet(), promptVersion: 'semantic-classifier.v3', schemaVersion: 'semantic-output.v2' }
+    const objectProvider = provider(vi.fn(), { reasoningEffort: 'high' })
+    const schemaProvider = provider(vi.fn(), { reasoningEffort: 'high', outputMode: 'json_schema', semanticOutputSchemaVersion: 'semantic-output.v2' })
+    const repeatedSchemaProvider = provider(vi.fn(), { reasoningEffort: 'high', outputMode: 'json_schema', semanticOutputSchemaVersion: 'semantic-output.v2' })
+    const changedSchemaProvider = { metadata: { ...schemaProvider.metadata, outputAffectingConfiguration: { ...schemaProvider.metadata.outputAffectingConfiguration, semanticOutputSchemaHash: 'sha256:changed' } } }
+    expect(semanticCacheKeyFor({ ...common, provider: objectProvider })).not.toBe(semanticCacheKeyFor({ ...common, provider: schemaProvider }))
+    expect(semanticCacheKeyFor({ ...common, provider: schemaProvider })).not.toBe(semanticCacheKeyFor({ ...common, provider: changedSchemaProvider }))
+    expect(schemaProvider.metadata.outputAffectingConfiguration).toEqual(repeatedSchemaProvider.metadata.outputAffectingConfiguration)
+    expect(JSON.stringify(schemaProvider.metadata)).not.toContain('test-kimi-key')
+  })
+
+  it('rejects incomplete JSON Schema configuration before HTTP', () => {
+    const fetchImpl = vi.fn()
+    expect(() => provider(fetchImpl, { reasoningEffort: 'high', outputMode: 'json_schema' })).toThrow(/semantic-output\.v2/)
+    expect(fetchImpl).not.toHaveBeenCalled()
+  })
+
   it('parses object JSON, ignores reasoning content, and normalizes only available usage', async () => {
     const fetchImpl = vi.fn().mockResolvedValue(response(chatBody({ ok: true }, { prompt_tokens: 10, completion_tokens: 20, total_tokens: 30, completion_tokens_details: { reasoning_tokens: 7 }, prompt_tokens_details: { cached_tokens: 3 } })))
     const result = await provider(fetchImpl).generateStructured({ input: {} })

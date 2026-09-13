@@ -204,6 +204,7 @@ export async function runStructuredModelRequest({
           structuredJson: true,
           ...(transportRetries > 0 ? { transportRetries } : {}),
           ...(malformedOutputRetries > 0 ? { malformedOutputRetries } : {}),
+          ...(providerResponseDiagnostics && typeof providerResponseDiagnostics === 'object' ? { providerResponseDiagnostics } : {}),
           ...(aggregateProviderUsageMetadata(usageEntries) ? { providerUsageMetadata: aggregateProviderUsageMetadata(usageEntries) } : {}),
           ...(usageEntries.length > 1 ? { providerUsageByRequest: usageEntries } : {}),
         },

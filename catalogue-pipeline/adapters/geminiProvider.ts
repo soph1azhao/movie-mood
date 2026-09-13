@@ -1,5 +1,6 @@
 import { ModelProviderError } from './modelProvider.ts'
 import { resolveCredential } from './providerConfig.ts'
+import taxonomy from '../config/taxonomyVersion.json' with { type: 'json' }
 
 type FetchLike = (input: string, init?: RequestInit) => Promise<Response>
 
@@ -20,7 +21,7 @@ function asObject(value: unknown): Record<string, unknown> {
   return value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, unknown> : {}
 }
 
-export function buildGeminiResponseJsonSchema(sourceRefs: string[] = [], schemaVersion = 'semantic-output.v1') {
+export function buildSemanticResponseJsonSchema(sourceRefs: string[] = [], schemaVersion = 'semantic-output.v1') {
   const validSourceRefs = [...new Set(sourceRefs.filter((sourceRef) => typeof sourceRef === 'string' && sourceRef.length > 0))].sort()
   const sourceRefsSchema = validSourceRefs.length > 0
     ? { type: 'array', minItems: 1, items: { type: 'string', enum: validSourceRefs } }
@@ -69,13 +70,13 @@ export function buildGeminiResponseJsonSchema(sourceRefs: string[] = [], schemaV
         required: ['moods', 'situations', 'filterLanguages', 'pace', 'emotionalWeight', 'attentionDemand', 'discoveryStyle'],
         additionalProperties: false,
         properties: {
-          moods: { type: 'array', minItems: 1, items: { type: 'string', enum: ['funny', 'exciting', 'thoughtful', 'relaxing', 'emotional', 'suspenseful'] } },
-          situations: { type: 'array', minItems: 1, items: { type: 'string', enum: ['alone', 'date-night', 'friends', 'family', 'easy-watch'] } },
+          moods: { type: 'array', minItems: 1, items: { type: 'string', enum: taxonomy.moods } },
+          situations: { type: 'array', minItems: 1, items: { type: 'string', enum: taxonomy.situations } },
           filterLanguages: { type: 'array', minItems: 1, items: { type: 'string' } },
-          pace: { type: 'string', enum: ['slow', 'medium', 'fast'] },
-          emotionalWeight: { type: 'string', enum: ['light', 'moderate', 'heavy'] },
-          attentionDemand: { type: 'string', enum: ['easy', 'engaged', 'immersive'] },
-          discoveryStyle: { type: 'string', enum: ['familiar', 'different', 'adventurous'] },
+          pace: { type: 'string', enum: taxonomy.pace },
+          emotionalWeight: { type: 'string', enum: taxonomy.emotionalWeight },
+          attentionDemand: { type: 'string', enum: taxonomy.attentionDemand },
+          discoveryStyle: { type: 'string', enum: taxonomy.discoveryStyle },
         },
       },
       evidence: {
@@ -112,6 +113,8 @@ export function buildGeminiResponseJsonSchema(sourceRefs: string[] = [], schemaV
     },
   }
 }
+
+export const buildGeminiResponseJsonSchema = buildSemanticResponseJsonSchema
 
 function extractText(responseBody: Record<string, unknown>): string {
   const candidates = Array.isArray(responseBody.candidates) ? responseBody.candidates : []

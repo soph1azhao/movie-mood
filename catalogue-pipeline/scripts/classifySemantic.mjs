@@ -217,6 +217,7 @@ export async function classifySemanticCandidate({
       malformedOutputRetries: 0,
       classificationsCompleted: 1,
       providerUsageMetadata: artifact.providerMetadata?.providerUsageMetadata ?? null,
+      providerResponseDiagnostics: null,
       wroteArtifact,
     }
   }
@@ -284,6 +285,7 @@ export async function classifySemanticCandidate({
     malformedOutputRetries: modelResult.metadata.malformedOutputRetries ?? 0,
     classificationsCompleted: 1,
     providerUsageMetadata: modelResult.metadata.providerUsageMetadata ?? null,
+    providerResponseDiagnostics: modelResult.metadata.providerResponseDiagnostics ?? null,
     wroteArtifact,
   }
 }
