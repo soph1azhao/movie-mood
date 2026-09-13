@@ -14,7 +14,7 @@
  * Design constraints (from spec):
  *   - No copying, relabeling, or redispatch of existing valid artifacts
  *   - No new token accounting for imported records
- *   - New factual/evidence records become PENDING_HIGH only after their identities are frozen
+ *   - New factual/evidence records become PENDING_LOW only after their identities are frozen
  */
 import { mkdir, readFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
@@ -85,7 +85,7 @@ export async function buildSemanticCohortManifest({
   // Collect imported states from the prior run (all IMPORTED_VALID or freshly generated valid)
   const priorStates = Object.values(priorManifest.states ?? {})
   const priorValid = priorStates.filter(
-    (s) => [ADAPTIVE_STATES.imported, ADAPTIVE_STATES.highValid, ADAPTIVE_STATES.maxValid].includes(s.status)
+    (s) => [ADAPTIVE_STATES.imported, ADAPTIVE_STATES.lowValid, ADAPTIVE_STATES.highValid, ADAPTIVE_STATES.maxValid].includes(s.status)
   )
 
   const importedCount = priorValid.length
@@ -128,7 +128,7 @@ export async function buildSemanticCohortManifest({
       candidateId: candidate.candidateId,
       tmdbId: candidate.tmdbId,
       evidencePacketHash: packet.inputHash,
-      disposition: 'PENDING_HIGH',
+      disposition: 'PENDING_LOW',
     })
   }
 

@@ -8,7 +8,7 @@ import boundaryCases from '../calibration/boundaryCases.json' with { type: 'json
 import { createKimiProvider, KIMI_PROVIDER_ID } from '../adapters/kimiProvider.ts'
 import { stableHash } from '../adapters/tmdbProvider.ts'
 import { CLOSURE_PATH, verifyAndDeriveAdaptiveScale50Closure } from './closeKimiAdaptiveScale50.mjs'
-import { ADAPTIVE_STATES, fileExists, readJson, runAdaptiveSemanticBatch, summarizeAdaptiveBatch } from './adaptiveSemanticBatchCore.mjs'
+import { ADAPTIVE_POLICIES, ADAPTIVE_STATES, fileExists, readJson, runAdaptiveSemanticBatch, summarizeAdaptiveBatch } from './adaptiveSemanticBatchCore.mjs'
 
 export const RUN_ID = 'kimi-k28-adaptive-semantic-100-v1'
 export const AUTHORIZATION_FLAG = '--execute-authorized-semantic-100'
@@ -51,6 +51,6 @@ export async function buildSemantic100Preflight({ pipelineRoot = resolve('catalo
   return { preflight, identity: { ...identity, cohortHash }, candidates, importedStates, packets, prompt, runtime, manifest }
 }
 
-export async function runAdaptiveSemantic100(options = {}) { const context = await buildSemantic100Preflight(options); return { preflight: context.preflight, ...(await runAdaptiveSemanticBatch({ context, ...options })) } }
-export async function launchAdaptiveSemantic100(argv = process.argv.slice(2), options = {}) { const context = await buildSemantic100Preflight(options); const requestedInvocationCap = { maxFreshCandidates: optionalIntegerFlag(argv, '--max-fresh-candidates'), maxHttpRequests: optionalIntegerFlag(argv, '--max-http-requests') }; if (!argv.includes(AUTHORIZATION_FLAG)) return { executionAuthorized: false, preflight: { ...context.preflight, requestedInvocationCap } }; return { executionAuthorized: true, ...(await runAdaptiveSemanticBatch({ context, ...options, maxFreshCandidates: integerFlag(argv, '--max-fresh-candidates'), maxHttpRequests: integerFlag(argv, '--max-http-requests') })) } }
+export async function runAdaptiveSemantic100(options = {}) { const context = await buildSemantic100Preflight(options); return { preflight: context.preflight, ...(await runAdaptiveSemanticBatch({ context, ...options, policy: ADAPTIVE_POLICIES.highMax })) } }
+export async function launchAdaptiveSemantic100(argv = process.argv.slice(2), options = {}) { const context = await buildSemantic100Preflight(options); const requestedInvocationCap = { maxFreshCandidates: optionalIntegerFlag(argv, '--max-fresh-candidates'), maxHttpRequests: optionalIntegerFlag(argv, '--max-http-requests') }; if (!argv.includes(AUTHORIZATION_FLAG)) return { executionAuthorized: false, preflight: { ...context.preflight, requestedInvocationCap } }; return { executionAuthorized: true, ...(await runAdaptiveSemanticBatch({ context, ...options, policy: ADAPTIVE_POLICIES.highMax, maxFreshCandidates: integerFlag(argv, '--max-fresh-candidates'), maxHttpRequests: integerFlag(argv, '--max-http-requests') })) } }
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) launchAdaptiveSemantic100().then((result) => console.log(JSON.stringify(result, null, 2))).catch((error) => { console.error(`${error.message} [${error.code ?? 'ERROR'}]`); process.exitCode = 1 })

@@ -7,14 +7,15 @@ import anchors from '../calibration/anchors.json' with { type: 'json' }
 import boundaryCases from '../calibration/boundaryCases.json' with { type: 'json' }
 import { createKimiProvider, KIMI_PROVIDER_ID } from '../adapters/kimiProvider.ts'
 import { stableHash } from '../adapters/tmdbProvider.ts'
-import { ADAPTIVE_STATES, fileExists, readJson, runAdaptiveSemanticBatch, summarizeAdaptiveBatch } from './adaptiveSemanticBatchCore.mjs'
+import { ADAPTIVE_POLICIES, ADAPTIVE_STATES, fileExists, readJson, runAdaptiveSemanticBatch, summarizeAdaptiveBatch } from './adaptiveSemanticBatchCore.mjs'
+import { validateSemanticOutput } from './validateBatch.mjs'
 import { SCHEMA_HASH } from './runKimiAdaptiveSemantic100.mjs'
 
 export const SEMANTIC_N_AUTHORIZATION_FLAG = '--execute-authorized-semantic-n'
 export const SEMANTIC_TARGETS = Object.freeze([200, 300, 400, 500])
 export const semanticRunId = (target) => `kimi-k28-adaptive-semantic-${target}-v1`
 const sha256 = (bytes) => `sha256:${createHash('sha256').update(bytes).digest('hex')}`
-const invariantKeys = ['providerId', 'modelId', 'outputMode', 'semanticOutputSchemaVersion', 'semanticOutputSchemaHash', 'promptVersion', 'promptContentHash', 'taxonomyHash', 'calibrationAnchorsHash', 'boundaryCasesHash', 'highMaxPolicyVersion', 'highProviderConfiguration', 'maxProviderConfiguration']
+const inheritedSemanticIdentityKeys = ['providerId', 'modelId', 'outputMode', 'semanticOutputSchemaVersion', 'semanticOutputSchemaHash', 'promptVersion', 'promptContentHash', 'taxonomyHash', 'calibrationAnchorsHash', 'boundaryCasesHash']
 
 export class SemanticNError extends Error { constructor(message, { code = 'SEMANTIC_N_ERROR', details = {} } = {}) { super(message); this.name = 'SemanticNError'; this.code = code; this.details = details } }
 const fail = (message, code, details = {}) => { throw new SemanticNError(message, { code, details }) }
@@ -30,20 +31,24 @@ export async function buildSemanticNPreflight({ target, pipelineRoot = resolve('
   if (!(await exists(cohortPath)) || !(await exists(priorPath))) fail('Cohort or prior manifest is missing.', 'REQUIRED_MANIFEST_MISSING')
   const [cohort, prior, prompt] = await Promise.all([readJsonFile(cohortPath), readJsonFile(priorPath), readRawFile(resolve(pipelineRoot, 'prompts/semantic-classifier.v3.md'), 'utf8')])
   if (cohort.cohortId !== runId || cohort.priorRunId !== priorRunId || cohort.targetCount !== target || cohort.importedCount !== target - 100 || cohort.newCount !== 100 || cohort.totalCandidates !== target) fail('Cohort cadence/count identity mismatch.', 'COHORT_IDENTITY_MISMATCH')
+  const cohortIds = [...cohort.importedCandidates, ...cohort.newCandidates].map((candidate) => candidate.candidateId)
+  if (new Set(cohortIds).size !== target || cohort.importedCandidates.some((candidate) => candidate.disposition !== 'IMPORTED_VALID') || cohort.newCandidates.some((candidate) => candidate.disposition !== 'PENDING_LOW')) fail('Cohort disposition or uniqueness mismatch.', 'COHORT_IDENTITY_MISMATCH')
   const placeholder = { KIMI_API_KEY: 'offline-preflight-placeholder' }; const neverFetch = async () => fail('Preflight must never dispatch HTTP.', 'PREFLIGHT_HTTP_FORBIDDEN')
+  const low = createKimiProvider({ modelId: 'kimi-for-coding', reasoningEffort: 'low', outputMode: 'json_schema', semanticOutputSchemaVersion: 'semantic-output.v2', env: placeholder, fetchImpl: neverFetch })
   const high = createKimiProvider({ modelId: 'kimi-for-coding', reasoningEffort: 'high', outputMode: 'json_schema', semanticOutputSchemaVersion: 'semantic-output.v2', env: placeholder, fetchImpl: neverFetch })
   const max = createKimiProvider({ modelId: 'kimi-for-coding', reasoningEffort: 'max', outputMode: 'json_schema', semanticOutputSchemaVersion: 'semantic-output.v2', env: placeholder, fetchImpl: neverFetch })
-  const identity = { runId, sourceBatchId: cohort.cohortId, sourceCandidateManifestHash: cohort.cohortHash, priorRunId, providerId: KIMI_PROVIDER_ID, modelId: 'kimi-for-coding', outputMode: 'json_schema', semanticOutputSchemaVersion: 'semantic-output.v2', semanticOutputSchemaHash: SCHEMA_HASH, promptVersion: 'semantic-classifier.v3', promptContentHash: `sha256:${stableHash(prompt)}`, taxonomyHash: `sha256:${stableHash(taxonomy)}`, calibrationAnchorsHash: `sha256:${stableHash(anchors)}`, boundaryCasesHash: `sha256:${stableHash(boundaryCases)}`, highMaxPolicyVersion: 'kimi-k28-high-then-max-on-semantic-failure.v1', highProviderConfiguration: high.metadata.outputAffectingConfiguration, maxProviderConfiguration: max.metadata.outputAffectingConfiguration }
-  for (const key of invariantKeys) if (stableHash(prior[key]) !== stableHash(identity[key])) fail(`Prior semantic identity drift: ${key}.`, 'PRIOR_IDENTITY_MISMATCH', { key })
+  const identity = { runId, sourceBatchId: cohort.cohortId, sourceCandidateManifestHash: cohort.cohortHash, priorRunId, providerId: KIMI_PROVIDER_ID, modelId: 'kimi-for-coding', outputMode: 'json_schema', semanticOutputSchemaVersion: 'semantic-output.v2', semanticOutputSchemaHash: SCHEMA_HASH, promptVersion: 'semantic-classifier.v3', promptContentHash: `sha256:${stableHash(prompt)}`, taxonomyHash: `sha256:${stableHash(taxonomy)}`, calibrationAnchorsHash: `sha256:${stableHash(anchors)}`, boundaryCasesHash: `sha256:${stableHash(boundaryCases)}`, semanticPolicyVersion: ADAPTIVE_POLICIES.lowHighMax.version, lowProviderConfiguration: low.metadata.outputAffectingConfiguration, highProviderConfiguration: high.metadata.outputAffectingConfiguration, maxProviderConfiguration: max.metadata.outputAffectingConfiguration }
+  for (const key of inheritedSemanticIdentityKeys) if (stableHash(prior[key]) !== stableHash(identity[key])) fail(`Prior semantic identity drift: ${key}.`, 'PRIOR_IDENTITY_MISMATCH', { key })
   const importedStates = new Map(); const packets = new Map(); const candidates = []
   for (const candidate of cohort.importedCandidates) {
     const state = prior.states?.[candidate.candidateId]
-    if (!state || ![ADAPTIVE_STATES.imported, ADAPTIVE_STATES.highValid, ADAPTIVE_STATES.maxValid].includes(state.status) || state.tmdbId !== candidate.tmdbId || state.evidencePacketHash !== candidate.evidencePacketHash) fail('Imported state identity mismatch.', 'IMPORT_IDENTITY_MISMATCH', { candidateId: candidate.candidateId })
+    if (!state || ![ADAPTIVE_STATES.imported, ADAPTIVE_STATES.lowValid, ADAPTIVE_STATES.highValid, ADAPTIVE_STATES.maxValid].includes(state.status) || state.tmdbId !== candidate.tmdbId || state.evidencePacketHash !== candidate.evidencePacketHash) fail('Imported state identity mismatch.', 'IMPORT_IDENTITY_MISMATCH', { candidateId: candidate.candidateId })
     const provenance = state.lifetimeProvenance ?? { sourceRunId: priorRunId, artifactPath: state.artifactPath, artifactHash: state.artifactHash, evidencePacketHash: state.evidencePacketHash, validatedEffort: state.validatedEffort }
-    if (!provenance.artifactPath || !(await exists(provenance.artifactPath))) fail('Imported artifact missing.', 'IMPORT_ARTIFACT_MISSING', { candidateId: candidate.candidateId })
+    if (!provenance.artifactPath || candidate.priorArtifactHash !== provenance.artifactHash || !(await exists(provenance.artifactPath))) fail('Imported artifact missing or reference hash mismatch.', 'IMPORT_ARTIFACT_MISSING', { candidateId: candidate.candidateId })
     const raw = await readRawFile(provenance.artifactPath); const artifact = JSON.parse(raw)
-    if (artifact.outputHash !== provenance.artifactHash || artifact.movie?.candidateId !== candidate.candidateId || artifact.movie?.tmdbId !== candidate.tmdbId || artifact.evidencePacketHash !== candidate.evidencePacketHash || artifact.modelProvider !== identity.providerId || artifact.modelId !== identity.modelId || artifact.promptVersion !== identity.promptVersion || artifact.schemaVersion !== identity.semanticOutputSchemaVersion || artifact.providerConfiguration?.semanticOutputSchemaHash !== identity.semanticOutputSchemaHash) fail('Imported artifact content drift.', 'IMPORT_ARTIFACT_DRIFT', { candidateId: candidate.candidateId })
-    importedStates.set(candidate.candidateId, { candidateId: candidate.candidateId, tmdbId: candidate.tmdbId, evidencePacketHash: candidate.evidencePacketHash, status: ADAPTIVE_STATES.imported, semanticAttempts: { high: 0, max: 0 }, usage: { high: {}, max: {} }, httpRequests: 0, events: [{ type: 'IMPORTED_VALID_REFERENCE', sourceRunId: provenance.sourceRunId, artifactHash: provenance.artifactHash }], lifetimeProvenance: { ...provenance, artifactRawSha256: provenance.artifactRawSha256 ?? sha256(raw) } })
+    const validatedEffort = provenance.validatedEffort ?? state.validatedEffort
+    if (artifact.outputHash !== provenance.artifactHash || artifact.movie?.candidateId !== candidate.candidateId || artifact.movie?.tmdbId !== candidate.tmdbId || artifact.evidencePacketHash !== candidate.evidencePacketHash || artifact.modelProvider !== identity.providerId || artifact.modelId !== identity.modelId || artifact.promptVersion !== identity.promptVersion || artifact.schemaVersion !== identity.semanticOutputSchemaVersion || artifact.providerConfiguration?.semanticOutputSchemaHash !== identity.semanticOutputSchemaHash || artifact.providerConfiguration?.reasoningEffort !== validatedEffort || !validateSemanticOutput(artifact).ok) fail('Imported artifact content drift.', 'IMPORT_ARTIFACT_DRIFT', { candidateId: candidate.candidateId })
+    importedStates.set(candidate.candidateId, { candidateId: candidate.candidateId, tmdbId: candidate.tmdbId, evidencePacketHash: candidate.evidencePacketHash, status: ADAPTIVE_STATES.imported, semanticAttempts: { low: 0, high: 0, max: 0 }, usage: { low: {}, high: {}, max: {} }, httpRequests: 0, events: [{ type: 'IMPORTED_VALID_REFERENCE', sourceRunId: provenance.sourceRunId, artifactHash: provenance.artifactHash }], lifetimeProvenance: { ...provenance, validatedEffort, artifactRawSha256: provenance.artifactRawSha256 ?? sha256(raw) } })
     candidates.push({ candidateId: candidate.candidateId, tmdbId: candidate.tmdbId, evidencePacketHash: candidate.evidencePacketHash })
   }
   for (const candidate of cohort.newCandidates) {
@@ -63,7 +68,7 @@ export async function launchAdaptiveSemanticN(argv = process.argv.slice(2), opti
   const target = integerFlag(argv, '--target'); const context = await buildSemanticNPreflight({ ...options, target })
   const caps = { maxFreshCandidates: optionalIntegerFlag(argv, '--max-fresh-candidates'), maxHttpRequests: optionalIntegerFlag(argv, '--max-http-requests') }
   if (!argv.includes(SEMANTIC_N_AUTHORIZATION_FLAG)) return { executionAuthorized: false, preflight: { ...context.preflight, requestedInvocationCap: caps } }
-  return { executionAuthorized: true, ...(await runAdaptiveSemanticBatch({ context, ...options, maxFreshCandidates: integerFlag(argv, '--max-fresh-candidates'), maxHttpRequests: integerFlag(argv, '--max-http-requests') })) }
+  return { executionAuthorized: true, ...(await runAdaptiveSemanticBatch({ context, ...options, policy: ADAPTIVE_POLICIES.lowHighMax, maxFreshCandidates: integerFlag(argv, '--max-fresh-candidates'), maxHttpRequests: integerFlag(argv, '--max-http-requests') })) }
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) launchAdaptiveSemanticN().then((result) => console.log(JSON.stringify(result, null, 2))).catch((error) => { console.error(`${error.message} [${error.code ?? 'ERROR'}]`); process.exitCode = 1 })

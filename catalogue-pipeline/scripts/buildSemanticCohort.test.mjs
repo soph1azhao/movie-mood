@@ -120,9 +120,9 @@ describe('buildSemanticCohortManifest', () => {
       expect(imported.disposition).toBe('IMPORTED_VALID')
       expect(imported.priorRunId).toBe(priorRunId)
     }
-    // New candidates have PENDING_HIGH
+    // New Semantic-200+ candidates start at the Low production tier.
     for (const fresh of manifest.newCandidates) {
-      expect(fresh.disposition).toBe('PENDING_HIGH')
+      expect(fresh.disposition).toBe('PENDING_LOW')
     }
   })
 

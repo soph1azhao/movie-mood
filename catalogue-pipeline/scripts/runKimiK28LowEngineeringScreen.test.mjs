@@ -9,7 +9,7 @@ function fakePreflight(state = null) {
 }
 const okFetch = vi.fn(async () => ({ ok: true, status: 200, headers: { get: () => null }, json: async () => ({ choices: [{ finish_reason: 'stop', message: { content: '{}' } }], usage: { prompt_tokens: 10, completion_tokens: 20, total_tokens: 30, completion_tokens_details: { reasoning_tokens: 7 } } }) }))
 const validClassifier = async ({ provider, outputPath, cacheRoot }) => { expect(provider.metadata.outputAffectingConfiguration.reasoningEffort).toBe('low'); expect(outputPath).toContain('/diagnostic/artifacts/'); expect(cacheRoot).toBe('/diagnostic/cache'); const raw = await provider.generateStructured({ stage: 'semantic-classifier', schemaVersion: 'semantic-output.v2', promptVersion: 'semantic-classifier.v3', input: {}, outputSchema: {} }); return { artifact: { outputHash: 'sha256:low', classification, boundaryFlags: [] }, providerUsageMetadata: raw.providerUsageMetadata } }
-const locks = { acquireLock: vi.fn(async () => ({ path: '/diagnostic/RUN_LOCK' })), releaseLock: vi.fn(async () => {}) }
+const locks = { ensureRoot: vi.fn(async () => {}), acquireLock: vi.fn(async () => ({ path: '/diagnostic/RUN_LOCK' })), releaseLock: vi.fn(async () => {}) }
 
 describe('Kimi K2.8 Low engineering screen', () => {
   it('freezes an exact diverse ten-film High-first-pass cohort and extracts historical usage', async () => {
