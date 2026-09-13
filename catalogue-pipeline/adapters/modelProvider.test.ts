@@ -81,6 +81,17 @@ describe('model provider adapter', () => {
     expect(generateStructured).toHaveBeenCalledTimes(2)
   })
 
+  it('aggregates bounded usage across malformed attempts without adding thinking into total', async () => {
+    const firstUsage = { prompt_tokens: 10, completion_tokens: 20, thinking_tokens: 7, total_tokens: 30 }
+    const secondUsage = { prompt_tokens: 11, completion_tokens: 21, thinking_tokens: 8, total_tokens: 32 }
+    const malformed = (usage) => new ModelProviderError('malformed', { code: 'MALFORMED_MODEL_OUTPUT', details: { providerUsageMetadata: usage, providerResponseDiagnostics: { jsonParsed: false } } })
+    const generateStructured = vi.fn().mockRejectedValueOnce(malformed(firstUsage)).mockRejectedValueOnce(malformed(secondUsage))
+    const error = await runStructuredModelRequest({ provider: { ...provider, generateStructured }, request: { stage: 'semantic-classifier' }, maxAttempts: 2 }).catch((value) => value as ModelProviderError)
+    expect(error.details?.providerUsageMetadata).toEqual({ prompt_tokens: 21, completion_tokens: 41, thinking_tokens: 15, total_tokens: 62 })
+    expect(error.details?.providerUsageByRequest).toEqual([firstUsage, secondUsage])
+    expect((error.details?.providerUsageMetadata as Record<string, number>).total_tokens).toBe(30 + 32)
+  })
+
   it('reports the first sanitized schema validation path and keyword', async () => {
     const generateStructured = vi.fn().mockResolvedValue({ pace: 'turbo' })
 

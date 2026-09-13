@@ -211,6 +211,8 @@ export async function runStructuredModelRequest({
       }
     } catch (error) {
       if (error instanceof ModelProviderError && error.code === 'MALFORMED_MODEL_OUTPUT') {
+        const failedUsage = error.details?.providerUsageMetadata
+        if (failedUsage && typeof failedUsage === 'object' && !usageEntries.includes(failedUsage)) usageEntries.push(failedUsage)
         if (attempt < maxAttempts) {
           malformedOutputRetries += 1
           continue
@@ -218,7 +220,13 @@ export async function runStructuredModelRequest({
         throw new ModelProviderError(error.message, {
           code: 'MALFORMED_MODEL_OUTPUT',
           cause: error.cause,
-          details: { ...(error.details ?? {}), attempts: attempt, malformedOutputRetries },
+          details: {
+            ...(error.details ?? {}),
+            ...(aggregateProviderUsageMetadata(usageEntries) ? { providerUsageMetadata: aggregateProviderUsageMetadata(usageEntries) } : {}),
+            ...(usageEntries.length > 1 ? { providerUsageByRequest: usageEntries } : {}),
+            attempts: attempt,
+            malformedOutputRetries,
+          },
         })
       }
 
