@@ -108,6 +108,18 @@ describe('Kimi adaptive Scale-50 orchestrator', () => {
 
   it('summary separates High and Max tokens, including thinking tokens', () => {
     const manifest = { httpRequests: 2, states: { a: { status: STATES.maxValid, maxEligibleAt: 't', highSemanticFailure: {}, boundaryFlagCount: 2, latencyMs: 20, usage: { high: { prompt_tokens: 3, completion_tokens: 5, thinking_tokens: 2, total_tokens: 8 }, max: { prompt_tokens: 4, completion_tokens: 9, thinking_tokens: 6, total_tokens: 13 } } } } }
-    expect(summarizeScale50(manifest)).toMatchObject({ usage: { high: { thinking_tokens: 2, total_tokens: 8 }, max: { thinking_tokens: 6, total_tokens: 13 }, combined: { thinking_tokens: 8, total_tokens: 21 } }, counts: { maxEscalations: 1, maxRecoveries: 1 }, maxRecoveryRate: 1 })
+    expect(summarizeScale50(manifest)).toMatchObject({ usage: { high: { thinking_tokens: 2, total_tokens: 8 }, max: { thinking_tokens: 6, total_tokens: 13 }, combined: { thinking_tokens: 8, total_tokens: 21 } }, counts: { highAttempts: 0, maxEscalations: 1, maxRecoveries: 1 }, highFirstPassValidityRate: null, maxEscalationRateAmongHighAttempts: null, maxEscalationsAsFractionOfManifest: 1, maxRecoveryRate: 1 })
+  })
+
+  it('uses High-attempted rather than pending manifest candidates for operational rates', () => {
+    const highValid = (candidateId) => ({ candidateId, status: STATES.highValid, semanticAttempts: { high: 1, max: 0 }, usage: { high: {}, max: {} } })
+    const states = Object.fromEntries([
+      ['high-1', highValid('high-1')], ['high-2', highValid('high-2')], ['high-3', highValid('high-3')],
+      ['max-recovered', { candidateId: 'max-recovered', status: STATES.maxValid, semanticAttempts: { high: 1, max: 1 }, maxEligibleAt: '2026-01-01T00:00:00.000Z', highSemanticFailure: {}, usage: { high: {}, max: {} } }],
+      ...Array.from({ length: 46 }, (_, index) => [`pending-${index}`, { candidateId: `pending-${index}`, status: STATES.pendingHigh, semanticAttempts: { high: 0, max: 0 }, usage: { high: {}, max: {} } }]),
+    ])
+    const summary = summarizeScale50({ httpRequests: 5, states })
+    expect(summary).toMatchObject({ counts: { highAttempts: 4, highFirstPassValid: 3, maxEscalations: 1, maxRecoveries: 1, pendingTotal: 46 }, highFirstPassValidityRate: 0.75, maxEscalationRateAmongHighAttempts: 0.25, maxEscalationsAsFractionOfManifest: 0.02, maxRecoveryRate: 1 })
+    expect(summary).not.toHaveProperty('maxEscalationRate')
   })
 })
