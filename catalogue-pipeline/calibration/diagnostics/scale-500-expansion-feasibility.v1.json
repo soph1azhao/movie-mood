@@ -1,0 +1,292 @@
+{
+  "schemaVersion": "scale-500-expansion-feasibility.v1",
+  "auditKind": "ZERO_NETWORK_PRODUCTION_EXPANSION_FEASIBILITY",
+  "basedOnHead": "00addfcd0b82d2098ea480f7d8712fdc95f7306d",
+  "sourceCorpus": {
+    "exactSource": "catalogue-pipeline/generated/semantic/diagnostics/phase-5c-c1b-v-confirmatory.v3/stage1-recruitment-live-v1/source-snapshot.json",
+    "sourceSnapshotHash": "sha256:9422ffa827f2e1d4f18e2fa8550302af0da28bfb9915b9eb67d81512a2e1b7d9",
+    "rawSha256": "sha256:9e0b39e2bdff7bc768b90f39093124f0d4bb01a3b6eec89340fbbebe3f3032ac",
+    "totalOfflineRecords": 10375,
+    "uniqueTmdbIdentities": 10375,
+    "duplicateOccurrences": 0,
+    "selectionTimeEligibleUnique": 10356,
+    "provenance": "The expansion-100-v1 selector consumed this frozen Stage-1 TMDB discover response corpus and excluded src/data/tmdbMovieMappings.json before deterministic production-diversity selection."
+  },
+  "sourceHashes": {
+    "sourceSnapshot": "sha256:9e0b39e2bdff7bc768b90f39093124f0d4bb01a3b6eec89340fbbebe3f3032ac",
+    "stage1Closure": "sha256:d7ebf19f03486da8faa3d907924fab4c10176d3c5150c9cba8273497bd5a348c",
+    "expansionManifest": "sha256:6e3547b3b05cc5de79b183d0a1c3f138666702d328a4bda3ba72188a8fa83cb7",
+    "factualSnapshot": "sha256:446e6bb0f17643dec5b3e4293ba485c6be6c1305771ee9f317c8a9dc4a9fe639",
+    "readinessReport": "sha256:b88df3742fbca26f1ae7dba125da527bdef3c2eeb3c276ad9775bd4857b56eb7",
+    "scale50Manifest": "sha256:05b3b8b5a2819d0fbaffb6c7c98f7773ddfd87a08dc1807c2d7dc3c2b37994d6",
+    "scale50Closure": "sha256:eccbd9cf767e67887199e72f28f256a55ba3142c997eff273748bb6d4e51a507",
+    "productionMappings": "sha256:ff00f8a8482fb865d8269bcd561d8b89dfef03d1f4aaf3f4c8535afd476b2910",
+    "semanticPilotManifest": "sha256:e0a2b690bbad36d35e45fa9710e1dc67d87335425e8bb7971634344f3dbd63a0",
+    "phase5aCalibrationFacts": "sha256:b03139819405b1ae93686270d842fc6c25cd19d693afbbc07cfe7285a80effa5",
+    "prospectiveHoldouts": "sha256:65c7fbfcdbc89ee7de98fd4532baf1f932c0ba452ab2487636872081f7d99cab",
+    "c1bV3CandidateRegistry": "sha256:2755b9cb603f8fb4bdfdfe7aef46e7c44840ed3334ff9f393a45ec0db04bf11f"
+  },
+  "readiness": {
+    "detailedOfflineFactRecords": 100,
+    "uniqueDetailedFactIdentities": 100,
+    "recordsSatisfyingCurrentFactualRequirements": 100,
+    "recordsSatisfyingCurrentEvidencePacketRequirements": 100,
+    "offlineReadyUniqueForProductionCohort": 100,
+    "remainingOfflineReadyOutsideExpansion100": 0,
+    "overviewFirstPolicy": {
+      "mode": "overview-first",
+      "version": "overview-first-no-automatic-keywords.v1",
+      "automaticKeywordUse": false
+    }
+  },
+  "overlaps": {
+    "note": "Overlap counts are independently computed and are not mutually exclusive.",
+    "existingProductionCatalogue": 9,
+    "pilotCalibrationUnion": 185,
+    "pilotCalibrationScope": {
+      "semanticPilot": {
+        "universe": 12,
+        "sourceOverlap": 1
+      },
+      "phase5aCalibration": {
+        "universe": 10,
+        "sourceOverlap": 2
+      },
+      "prospectiveHoldouts": {
+        "universe": 9,
+        "sourceOverlap": 2
+      },
+      "c1bV3ConfirmatoryCandidates": {
+        "universe": 180,
+        "sourceOverlap": 180
+      },
+      "unionUniverse": 211
+    },
+    "expansion100": 100,
+    "scale50": 50,
+    "expansion100PilotCalibrationOverlap": 3,
+    "scale50PilotCalibrationOverlap": 1
+  },
+  "remainingCandidateSupply": {
+    "selectionEligibleAfterProductionFilteringAndExpansion100": 10256,
+    "selectionEligibleAfterAlsoExcludingPilotCalibration": 10077,
+    "remainingEligibleUniqueCandidates": 10077,
+    "warning": "These records contain discover metadata only. They do not satisfy the current detailed factual or evidence-packet requirements.",
+    "distributionBeforeNewAcquisition": {
+      "decade": {
+        "1980s": 886,
+        "1990s": 1289,
+        "2000s": 2281,
+        "2010s": 4058,
+        "2020s": 1842
+      },
+      "languageGroup": {
+        "English": 7191,
+        "Non-English": 3165
+      },
+      "familiarityTier": {
+        "discovery": 5727,
+        "familiar": 2683,
+        "mainstream": 1946
+      },
+      "originalLanguage": {
+        "ar": 6,
+        "bn": 1,
+        "bs": 1,
+        "ca": 2,
+        "cn": 88,
+        "cs": 2,
+        "da": 53,
+        "de": 144,
+        "dz": 1,
+        "el": 4,
+        "en": 7191,
+        "es": 321,
+        "et": 2,
+        "eu": 2,
+        "fa": 13,
+        "fi": 16,
+        "fr": 881,
+        "ga": 2,
+        "he": 4,
+        "hi": 107,
+        "hu": 8,
+        "id": 9,
+        "is": 5,
+        "it": 482,
+        "ja": 388,
+        "ka": 1,
+        "kn": 2,
+        "ko": 161,
+        "ku": 1,
+        "la": 1,
+        "lv": 1,
+        "mk": 1,
+        "ml": 3,
+        "nl": 33,
+        "no": 40,
+        "pl": 36,
+        "pt": 63,
+        "ro": 5,
+        "ru": 60,
+        "sh": 1,
+        "sr": 4,
+        "sv": 35,
+        "ta": 6,
+        "te": 5,
+        "th": 16,
+        "tn": 1,
+        "tr": 22,
+        "tt": 1,
+        "uk": 4,
+        "vi": 2,
+        "xx": 1,
+        "zh": 117
+      },
+      "primaryGenreId": {
+        "12": 327,
+        "14": 182,
+        "16": 620,
+        "18": 2300,
+        "27": 966,
+        "28": 1187,
+        "35": 2290,
+        "36": 70,
+        "37": 40,
+        "53": 505,
+        "80": 449,
+        "99": 229,
+        "878": 252,
+        "9648": 119,
+        "10402": 85,
+        "10749": 361,
+        "10751": 269,
+        "10752": 77,
+        "10770": 28
+      }
+    }
+  },
+  "scale500Feasibility": {
+    "scale500OfflineFeasible": false,
+    "eligibleOfflineCandidatesAvailable": 100,
+    "shortfallTo500": 400,
+    "missingData": [
+      "director",
+      "runtimeMinutes",
+      "countries",
+      "spokenLanguages",
+      "resolved genre names",
+      "validated deterministic factual snapshot",
+      "bound evidence-packet.v1 artifact"
+    ],
+    "minimumExternalAcquisitionRequired": "400 successful TMDB movie-detail records using the existing single-request details endpoint with appended credits/keywords; keywords may remain excluded under the overview-first evidence policy. Actual attempts may exceed 400 if selected records fail factual or grounding validation.",
+    "frozenScale500ManifestCreated": false
+  },
+  "recommendedComposition": {
+    "targetFilms": 500,
+    "includeClosedScale50Members": 50,
+    "decadeTargets": {
+      "1980s": 100,
+      "1990s": 100,
+      "2000s": 100,
+      "2010s": 100,
+      "2020s": 100
+    },
+    "languageGroupTargets": {
+      "English": 250,
+      "Non-English": 250
+    },
+    "familiarityTierTargets": {
+      "mainstream": 175,
+      "familiar": 175,
+      "discovery": 150
+    },
+    "primaryGenreRule": "Represent all 19 primary-genre IDs present in eligible supply with a floor of 10 each, then fill remaining slots by deterministic genre round-robin within decade × language-group × familiarity cells.",
+    "orderingRule": [
+      "retain all 50 closed Scale-50 members",
+      "satisfy hard decade/language/familiarity targets",
+      "rotate primary genre ID ascending within each cell",
+      "rank by vote_count descending, vote_average descending, TMDB ID ascending"
+    ],
+    "feasibilityNote": "The recorded selection-time supply exceeds every aggregate target. A final manifest remains forbidden until 400 additional candidates have complete validated facts and evidence packets."
+  },
+  "scaleNArchitecture": {
+    "validatedCapability": "Kimi K2.8 High → Max remains technically validated.",
+    "recommendation": "Extract a parameterized adaptive Scale-N orchestration core while retaining the frozen Scale-50 entrypoint, constants, state, and closure unchanged as a compatibility wrapper.",
+    "smallestRequiredChanges": [
+      "parameterize run/manifest identity, candidate count, roots, and authorization contract",
+      "generalize preflight and summaries without changing High→Max or uncertain-dispatch semantics",
+      "add manifest-bound import verification for prior valid artifacts",
+      "add batch-size-specific closure verification and bounded invocation budgets"
+    ],
+    "closedScale50Reuse": {
+      "strategy": "Reference, do not copy: future manifest members may declare an immutable prior-valid-artifact reference containing sourceRunId, candidateId, evidencePacketHash, artifactHash, and provider/prompt/schema/taxonomy identities.",
+      "verification": "The Scale-N preflight must verify the referenced closed Scale-50 closure, artifact bytes/hash, candidate/evidence identity, and exact semantic cache identity before marking the member IMPORTED_VALID with zero dispatches.",
+      "prohibitions": [
+        "no redispatch",
+        "no copied artifact with new generation provenance",
+        "no cache-key rewriting",
+        "no mutation of Scale-50 manifest, events, caches, artifacts, or closure"
+      ]
+    },
+    "maintainerAuthorizationRequiredBeforeLiveScale500": true,
+    "liveLauncherAuthorizedByThisAudit": false
+  },
+  "planningProjections": {
+    "baseline": {
+      "completedFilms": 50,
+      "httpRequests": 53,
+      "knownObservedTokens": 374105,
+      "requestsPerCompletedFilm": 1.06,
+      "knownTokensPerCompletedFilm": 7482.1
+    },
+    "targets": {
+      "100": {
+        "targetFilms": 100,
+        "additionalFilmsBeyondClosedScale50": 50,
+        "projectedTotalHttpDispatches": 106,
+        "projectedAdditionalHttpDispatches": 53,
+        "projectedKnownTokenEquivalentTotal": 748210,
+        "projectedKnownTokenEquivalentAdditional": 374105
+      },
+      "250": {
+        "targetFilms": 250,
+        "additionalFilmsBeyondClosedScale50": 200,
+        "projectedTotalHttpDispatches": 265,
+        "projectedAdditionalHttpDispatches": 212,
+        "projectedKnownTokenEquivalentTotal": 1870525,
+        "projectedKnownTokenEquivalentAdditional": 1496420
+      },
+      "500": {
+        "targetFilms": 500,
+        "additionalFilmsBeyondClosedScale50": 450,
+        "projectedTotalHttpDispatches": 530,
+        "projectedAdditionalHttpDispatches": 477,
+        "projectedKnownTokenEquivalentTotal": 3741050,
+        "projectedKnownTokenEquivalentAdditional": 3366945
+      },
+      "1000": {
+        "targetFilms": 1000,
+        "additionalFilmsBeyondClosedScale50": 950,
+        "projectedTotalHttpDispatches": 1060,
+        "projectedAdditionalHttpDispatches": 1007,
+        "projectedKnownTokenEquivalentTotal": 7482100,
+        "projectedKnownTokenEquivalentAdditional": 7107995
+      }
+    },
+    "caveat": "Engineering projections apply the closed Scale-50 averages. They are not guaranteed provider-quota consumption; one original transport-unknown dispatch has unrecovered token usage, and future content may change token and retry behavior."
+  },
+  "decision": "EXTERNAL_ACQUISITION_REQUIRED",
+  "externalCallsDuringAudit": {
+    "kimi": 0,
+    "gemini": 0,
+    "tmdb": 0,
+    "wikipedia": 0
+  },
+  "mutationsDuringAudit": {
+    "scale50Artifacts": 0,
+    "semanticOutputs": 0,
+    "providerPolicy": 0
+  },
+  "auditCanonicalSha256": "sha256:481bd9f1f65241cdb05893f0d7c57b9bf2dc1c558714e5b13486a236b301a300"
+}
