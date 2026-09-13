@@ -17,10 +17,11 @@ export const RUN_ID = 'kimi-k28-adaptive-scale-50-v1'
 export const AUTHORIZATION_FLAG = '--execute-authorized-scale-50'
 export const POLICY_VERSION = 'kimi-k28-high-then-max-on-semantic-failure.v1'
 export const SCHEMA_HASH = 'sha256:a5bacc030ad25d46a01856f6e49d6d041809683e82d2469d23ac9eae412866fc'
+export const MANUAL_REDISPATCH_REASON = 'PRIOR_TRANSPORT_OUTCOME_COULD_NOT_BE_RECOVERED'
 export const STATES = Object.freeze({
   pendingHigh: 'PENDING_HIGH', highValid: 'HIGH_VALID', highSemanticFailedMaxPending: 'HIGH_SEMANTIC_FAILED_MAX_PENDING', maxValid: 'MAX_VALID',
   retryableProviderFailure: 'RETRYABLE_PROVIDER_FAILURE', terminalProviderFailure: 'TERMINAL_PROVIDER_FAILURE', terminalSemanticFailure: 'TERMINAL_SEMANTIC_FAILURE',
-  uncertain: 'UNCERTAIN_PRIOR_DISPATCH', highResponse: 'HIGH_RESPONSE_RECEIVED', maxResponse: 'MAX_RESPONSE_RECEIVED',
+  uncertain: 'UNCERTAIN_PRIOR_DISPATCH', manualHighRedispatchAuthorized: 'MANUAL_HIGH_REDISPATCH_AUTHORIZED', highResponse: 'HIGH_RESPONSE_RECEIVED', maxResponse: 'MAX_RESPONSE_RECEIVED',
 })
 
 const MODEL_ID = 'kimi-for-coding'; const OUTPUT_MODE = 'json_schema'; const SCHEMA_VERSION = 'semantic-output.v2'; const PROMPT_VERSION = 'semantic-classifier.v3'; const MAX_TRANSPORT_ATTEMPTS = 2
@@ -75,7 +76,7 @@ export async function buildScale50Preflight({ pipelineRoot = resolve('catalogue-
     if (!knownStates.has(state?.status)) fail('Persisted Scale-50 candidate state is invalid.', 'INVALID_CANDIDATE_STATE', { candidateId, status: state?.status })
     if ((state.status === STATES.highSemanticFailedMaxPending || state.status === STATES.retryableProviderFailure && state.failedEffort === 'max') && (!state.highSemanticFailure || !state.maxEligibleAt)) fail('Max eligibility lacks a durable High semantic-failure provenance.', 'INVALID_MAX_ELIGIBILITY', { candidateId })
   }
-  const preflight = { ...identity, candidateCount: 50, validHighCacheHits: [...cache.entries()].filter(([key, value]) => key.endsWith(':high') && value.valid).length, validMaxCacheHits: [...cache.entries()].filter(([key, value]) => key.endsWith(':max') && value.valid).length, completedCandidates: stateValues.filter((state) => [STATES.highValid, STATES.maxValid].includes(state.status)).length, highPendingCandidates: stateValues.filter((state) => state.status === STATES.pendingHigh || state.status === STATES.retryableProviderFailure && state.failedEffort === 'high').length, maxEligibleCandidates: stateValues.filter((state) => state.status === STATES.highSemanticFailedMaxPending || state.status === STATES.retryableProviderFailure && state.failedEffort === 'max').length, retryableProviderFailures: stateValues.filter((state) => state.status === STATES.retryableProviderFailure).length, uncertainCandidates: stateValues.filter((state) => state.status === STATES.uncertain || /DISPATCHING|RESPONSE_RECEIVED/.test(state.status)).length, freshCandidatesRemaining: stateValues.filter((state) => state.status === STATES.pendingHigh).length, priorHttpRequests: manifest?.httpRequests ?? 0, remainingEligibleWork: stateValues.filter((state) => !terminalStates.has(state.status)).length }
+  const preflight = { ...identity, candidateCount: 50, validHighCacheHits: [...cache.entries()].filter(([key, value]) => key.endsWith(':high') && value.valid).length, validMaxCacheHits: [...cache.entries()].filter(([key, value]) => key.endsWith(':max') && value.valid).length, completedCandidates: stateValues.filter((state) => [STATES.highValid, STATES.maxValid].includes(state.status)).length, highPendingCandidates: stateValues.filter((state) => state.status === STATES.pendingHigh || state.status === STATES.retryableProviderFailure && state.failedEffort === 'high').length, maxEligibleCandidates: stateValues.filter((state) => state.status === STATES.highSemanticFailedMaxPending || state.status === STATES.retryableProviderFailure && state.failedEffort === 'max').length, retryableProviderFailures: stateValues.filter((state) => state.status === STATES.retryableProviderFailure).length, uncertainCandidates: stateValues.filter((state) => [STATES.uncertain, STATES.manualHighRedispatchAuthorized].includes(state.status) || /DISPATCHING|RESPONSE_RECEIVED/.test(state.status)).length, freshCandidatesRemaining: stateValues.filter((state) => state.status === STATES.pendingHigh).length, priorHttpRequests: manifest?.httpRequests ?? 0, remainingEligibleWork: stateValues.filter((state) => !terminalStates.has(state.status)).length }
   return { preflight, scaleManifest, prompt, packets, cache, manifest, runtime }
 }
 
@@ -86,7 +87,7 @@ async function validateAndBuildArtifact({ raw, packet, provider, prompt, cacheRo
 function providerFailure(error) { return { code: error?.code ?? 'UNKNOWN_PROVIDER_FAILURE', retryable: Boolean(error?.retryable), httpStatus: error?.details?.httpStatus ?? null } }
 function semanticFailure(error) { return { code: error?.code ?? 'MALFORMED_MODEL_OUTPUT', validation: error?.details?.providerResponseDiagnostics?.validation ?? error?.details?.firstFailure ?? null, usage: boundedUsage(error?.details?.providerUsageMetadata) } }
 
-export async function runAdaptiveScale50({ pipelineRoot = resolve('catalogue-pipeline'), env = process.env, fetchImpl = globalThis.fetch, maxFreshCandidates, maxHttpRequests, now = () => Date.now(), delayFn = (milliseconds) => new Promise((resolveDelay) => setTimeout(resolveDelay, milliseconds)), readJsonFile = readJson, readTextFile = readFile, writeJsonFile = durableJson, fileExists = exists } = {}) {
+export async function runAdaptiveScale50({ pipelineRoot = resolve('catalogue-pipeline'), env = process.env, fetchImpl = globalThis.fetch, maxFreshCandidates, maxHttpRequests, manualRecoveryCandidateId = null, maxTransportAttempts = MAX_TRANSPORT_ATTEMPTS, now = () => Date.now(), delayFn = (milliseconds) => new Promise((resolveDelay) => setTimeout(resolveDelay, milliseconds)), readJsonFile = readJson, readTextFile = readFile, writeJsonFile = durableJson, fileExists = exists } = {}) {
   if (!env.KIMI_API_KEY?.trim()) fail('KIMI_API_KEY is required for an authorized Scale-50 run.', 'MISSING_KIMI_API_KEY')
   if (!Number.isInteger(maxFreshCandidates) || maxFreshCandidates < 0 || !Number.isInteger(maxHttpRequests) || maxHttpRequests < 0) fail('Authorized Scale-50 runs require nonnegative integer candidate and HTTP caps.', 'INVALID_INVOCATION_BUDGET')
   const context = await buildScale50Preflight({ pipelineRoot, readJsonFile, readTextFile, fileExists }); const { runtime, scaleManifest, packets, prompt, cache } = context
@@ -94,16 +95,27 @@ export async function runAdaptiveScale50({ pipelineRoot = resolve('catalogue-pip
   const identityFields = ['runId', 'scaleManifestHash', 'sourceCandidateManifestHash', 'providerId', 'modelId', 'outputMode', 'semanticOutputSchemaVersion', 'semanticOutputSchemaHash', 'promptVersion', 'promptContentHash', 'taxonomyHash', 'calibrationAnchorsHash', 'boundaryCasesHash', 'highMaxPolicyVersion', 'highProviderConfiguration', 'maxProviderConfiguration']
   const durableIdentity = Object.fromEntries(identityFields.map((key) => [key, context.preflight[key]]))
   let manifest = context.manifest ?? { schemaVersion: 'kimi-adaptive-scale-run.v1', ...durableIdentity, candidateCount: 50, createdAt: new Date().toISOString(), httpRequests: 0, invocationCount: 0, states: Object.fromEntries(scaleManifest.candidates.map((candidate) => [candidate.candidateId, { candidateId: candidate.candidateId, tmdbId: candidate.tmdbId, evidencePacketHash: candidate.evidencePacketHash, status: STATES.pendingHigh, httpRequests: 0, transportRetries: 0, semanticAttempts: { high: 0, max: 0 }, usage: { high: {}, max: {} }, events: [] }])) }
+  if (manualRecoveryCandidateId) {
+    const candidate = scaleManifest.candidates.find(({ candidateId }) => candidateId === manualRecoveryCandidateId); const state = manifest.states[manualRecoveryCandidateId]
+    if (!candidate || !state || state.evidencePacketHash !== candidate.evidencePacketHash) fail('Manual recovery candidate does not match the frozen Scale-50 manifest.', 'MANUAL_RECOVERY_CANDIDATE_MISMATCH', { candidateId: manualRecoveryCandidateId })
+    if (state.status !== STATES.uncertain || state.uncertainReason !== 'TRANSPORT_OUTCOME_UNKNOWN') fail('Manual recovery requires the exact unresolved transport-uncertain state.', 'MANUAL_RECOVERY_STATE_MISMATCH', { candidateId: manualRecoveryCandidateId, status: state.status })
+    if ((state.manualRedispatches ?? 0) !== 0 || state.events?.some(({ type }) => type === 'MANUAL_REDISPATCH_AUTHORIZED')) fail('A manual redispatch was already authorized for this candidate.', 'MANUAL_REDISPATCH_ALREADY_AUTHORIZED', { candidateId: manualRecoveryCandidateId })
+    if (!state.events?.some(({ type, effort }) => type === 'HTTP_DISPATCH' && effort === 'high') || !state.events?.some(({ type, effort }) => type === 'UNCERTAIN' && effort === 'high')) fail('Manual recovery requires preserved High dispatch and uncertainty provenance.', 'MANUAL_RECOVERY_PROVENANCE_MISSING', { candidateId: manualRecoveryCandidateId })
+    state.events.push({ type: 'MANUAL_REDISPATCH_AUTHORIZED', effort: 'high', reason: MANUAL_REDISPATCH_REASON, priorStatus: STATES.uncertain, priorUncertainReason: state.uncertainReason, priorUsageRecovered: false })
+    state.unrecoveredPriorDispatch = { effort: 'high', httpRequests: state.httpRequests, usage: null, reason: state.uncertainReason }
+    state.status = STATES.manualHighRedispatchAuthorized; state.manualRedispatches = 1; state.semanticAttempts.high = (state.semanticAttempts.high ?? 0) + 1
+  }
   manifest.invocationCount += 1; const invocationStartRequests = manifest.httpRequests; let freshStarted = 0
   const persist = async () => { manifest.summary = summarizeScale50(manifest); await writeJsonFile(runtime.manifestPath, manifest) }
   await persist()
   try {
     for (const candidate of scaleManifest.candidates) {
       let state = manifest.states[candidate.candidateId]; const packet = packets.get(candidate.candidateId)
+      if (manualRecoveryCandidateId && candidate.candidateId !== manualRecoveryCandidateId) continue
       if (terminalStates.has(state.status)) continue
       if (/DISPATCHING|RESPONSE_RECEIVED/.test(state.status)) { state.status = STATES.uncertain; state.uncertainReason = 'PRIOR_PROCESS_STOPPED_AFTER_DISPATCH_BOUNDARY'; await persist(); continue }
       for (const effort of ['high', 'max']) {
-        const eligible = effort === 'high' ? state.status === STATES.pendingHigh || state.status === STATES.retryableProviderFailure && state.failedEffort === 'high' : state.status === STATES.highSemanticFailedMaxPending || state.status === STATES.retryableProviderFailure && state.failedEffort === 'max'
+        const eligible = effort === 'high' ? state.status === STATES.pendingHigh || state.status === STATES.retryableProviderFailure && state.failedEffort === 'high' || manualRecoveryCandidateId === candidate.candidateId && state.status === STATES.manualHighRedispatchAuthorized : state.status === STATES.highSemanticFailedMaxPending || state.status === STATES.retryableProviderFailure && state.failedEffort === 'max'
         if (!eligible) continue
         const cached = cache.get(`${candidate.candidateId}:${effort}`)
         if (cached.valid) { const artifact = await readJsonFile(resolve(runtime.cacheRoot, effort, `${cached.cacheKey}.json`)); state.status = effort === 'high' ? STATES.highValid : STATES.maxValid; state.cacheHit = true; state.artifactHash = artifact.outputHash; state.boundaryFlagCount = artifact.boundaryFlags?.length ?? 0; state.usage[effort] = boundedUsage(artifact.providerMetadata?.providerUsageMetadata); await persist(); break }
@@ -116,7 +128,7 @@ export async function runAdaptiveScale50({ pipelineRoot = resolve('catalogue-pip
           state.status = `${effort.toUpperCase()}_DISPATCHING_UNCERTAIN`; state.httpRequests += 1; manifest.httpRequests += 1; state.events.push({ type: 'HTTP_DISPATCH', effort, ordinal: state.httpRequests }); await persist()
           return fetchImpl(...args)
         }, async (metadata) => { responseObserved = true; state.status = effort === 'high' ? STATES.highResponse : STATES.maxResponse; state.events.push({ type: 'HTTP_RESPONSE', effort, metadata }); await persist() })
-        for (let transportAttempt = 1; transportAttempt <= MAX_TRANSPORT_ATTEMPTS && raw === null; transportAttempt += 1) {
+        for (let transportAttempt = 1; transportAttempt <= maxTransportAttempts && raw === null; transportAttempt += 1) {
           try {
             const input = buildSemanticClassifierInput({ evidencePacket: packet, prompt, promptVersion: PROMPT_VERSION })
             raw = await provider.generateStructured({ stage: 'semantic-classifier', schemaVersion: SCHEMA_VERSION, promptVersion: PROMPT_VERSION, input, outputSchema: semanticSchema, temperature: 0.1 })
@@ -126,11 +138,12 @@ export async function runAdaptiveScale50({ pipelineRoot = resolve('catalogue-pip
             const knownProviderResponse = error instanceof ModelProviderError && Number.isInteger(error.details?.httpStatus)
             if (!knownProviderResponse) { state.status = STATES.uncertain; state.uncertainReason = error?.code ?? 'TRANSPORT_OUTCOME_UNKNOWN'; state.events.push({ type: 'UNCERTAIN', effort, reason: state.uncertainReason }); await persist(); break }
             const failure = providerFailure(error); state.status = failure.retryable ? STATES.retryableProviderFailure : STATES.terminalProviderFailure; state.failedEffort = effort; state.providerFailure = failure; state.events.push({ type: 'PROVIDER_FAILURE', effort, ...failure }); await persist()
-            if (!failure.retryable || transportAttempt === MAX_TRANSPORT_ATTEMPTS || manifest.httpRequests - invocationStartRequests >= maxHttpRequests) break
+            if (!failure.retryable || transportAttempt === maxTransportAttempts || manifest.httpRequests - invocationStartRequests >= maxHttpRequests) break
             state.transportRetries += 1
             await delayFn(error.retryAfterMs ?? 250 * 2 ** (transportAttempt - 1))
           }
         }
+        if (manualRecoveryCandidateId && state.status === STATES.retryableProviderFailure) { state.status = STATES.terminalProviderFailure; state.recoveryRequestCapExhausted = true }
         if (state.status === STATES.uncertain || state.status === STATES.terminalProviderFailure || raw === null && lastError?.code !== 'MALFORMED_MODEL_OUTPUT') { state.latencyMs = (state.latencyMs ?? 0) + now() - started; await persist(); break }
         if (lastError?.code === 'MALFORMED_MODEL_OUTPUT' && raw === null) {
           const failure = semanticFailure(lastError); state.usage[effort] = failure.usage; state.latencyMs = (state.latencyMs ?? 0) + now() - started; state.events.push({ type: 'SEMANTIC_VALIDATION_FAILURE', effort, failure });
