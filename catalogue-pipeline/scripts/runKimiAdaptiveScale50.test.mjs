@@ -131,6 +131,15 @@ describe('Kimi adaptive Scale-50 orchestrator', () => {
     expect(summary).not.toHaveProperty('maxEscalationRate')
   })
 
+  it('does not count a manually recovered second High generation as first-pass valid', () => {
+    const states = Object.fromEntries([
+      ...Array.from({ length: 47 }, (_, index) => [`first-pass-${index}`, { status: STATES.highValid, semanticAttempts: { high: 1, max: 0 }, usage: { high: {}, max: {} } }]),
+      ['manual-recovery', { status: STATES.highValid, semanticAttempts: { high: 2, max: 0 }, manualRedispatches: 1, unrecoveredPriorDispatch: { effort: 'high', usage: null }, usage: { high: {}, max: {} } }],
+      ...Array.from({ length: 2 }, (_, index) => [`max-recovery-${index}`, { status: STATES.maxValid, semanticAttempts: { high: 1, max: 1 }, highSemanticFailure: {}, maxEligibleAt: `max-${index}`, usage: { high: {}, max: {} } }]),
+    ])
+    expect(summarizeScale50({ httpRequests: 53, states })).toMatchObject({ counts: { highAttempts: 50, highFirstPassValid: 47, completedTotal: 50 }, highFirstPassValidityRate: 0.94 })
+  })
+
   it('requires exact candidate-specific authorization and preflights with zero HTTP', async () => {
     const f = await uncertainRecoveryFixture(); const fetchImpl = vi.fn()
     try {
