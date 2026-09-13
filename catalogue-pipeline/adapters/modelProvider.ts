@@ -45,8 +45,26 @@ function normalizeJsonOutput(rawOutput: unknown): Record<string, unknown> {
 }
 
 function splitProviderMetadata(output: Record<string, unknown>) {
+  const providerResponseDiagnostics = output.providerResponseDiagnostics
   const { providerUsageMetadata, ...structuredOutput } = output
-  return { structuredOutput, providerUsageMetadata }
+  delete structuredOutput.providerResponseDiagnostics
+  return { structuredOutput, providerUsageMetadata, providerResponseDiagnostics }
+}
+
+function boundedValidationDiagnostics(output: Record<string, unknown>, hardFailures: unknown, providerResponseDiagnostics: unknown) {
+  const first = Array.isArray(hardFailures) && hardFailures[0] && typeof hardFailures[0] === 'object' ? hardFailures[0] as Record<string, unknown> : {}
+  const provider = providerResponseDiagnostics && typeof providerResponseDiagnostics === 'object' ? providerResponseDiagnostics as Record<string, unknown> : {}
+  return {
+    jsonParsed: provider.jsonParsed === false ? false : true,
+    topLevelJsonKeys: Array.isArray(provider.topLevelJsonKeys) ? provider.topLevelJsonKeys : Object.keys(output).sort(),
+    responseCharacterLength: typeof provider.responseCharacterLength === 'number' ? provider.responseCharacterLength : null,
+    finishReason: typeof provider.finishReason === 'string' ? provider.finishReason : null,
+    validation: {
+      code: typeof first.code === 'string' ? first.code : 'MALFORMED_MODEL_OUTPUT',
+      path: typeof first.field === 'string' ? first.field : typeof first.path === 'string' ? first.path : 'output',
+      keyword: typeof first.keyword === 'string' ? first.keyword : typeof first.code === 'string' ? first.code : 'validation',
+    },
+  }
 }
 
 function validationDiagnostic(failures: unknown): string {
@@ -162,7 +180,7 @@ export async function runStructuredModelRequest({
   for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
     try {
       const rawOutput = await provider.generateStructured(providerRequest)
-      const { structuredOutput: output, providerUsageMetadata } = splitProviderMetadata(normalizeJsonOutput(rawOutput))
+      const { structuredOutput: output, providerUsageMetadata, providerResponseDiagnostics } = splitProviderMetadata(normalizeJsonOutput(rawOutput))
       if (providerUsageMetadata) usageEntries.push(providerUsageMetadata)
       const validation = validateOutput?.(output)
 
@@ -170,6 +188,10 @@ export async function runStructuredModelRequest({
         throw new ModelProviderError(`Model provider output failed schema validation.${validationDiagnostic(validation.hardFailures)}`, {
           code: 'MALFORMED_MODEL_OUTPUT',
           cause: validation.hardFailures,
+          details: {
+            ...(providerUsageMetadata && typeof providerUsageMetadata === 'object' ? { providerUsageMetadata } : {}),
+            providerResponseDiagnostics: boundedValidationDiagnostics(output, validation.hardFailures, providerResponseDiagnostics),
+          },
         })
       }
 
@@ -195,7 +217,7 @@ export async function runStructuredModelRequest({
         throw new ModelProviderError(error.message, {
           code: 'MALFORMED_MODEL_OUTPUT',
           cause: error.cause,
-          details: { attempts: attempt, malformedOutputRetries },
+          details: { ...(error.details ?? {}), attempts: attempt, malformedOutputRetries },
         })
       }
 

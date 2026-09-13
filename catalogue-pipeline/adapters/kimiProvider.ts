@@ -25,22 +25,45 @@ function asObject(value: unknown): Record<string, unknown> {
   return value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, unknown> : {}
 }
 
-function parseStructuredContent(content: unknown): Record<string, unknown> {
+function responseDiagnostics(content: unknown, finishReason: unknown, extras: Record<string, unknown> = {}) {
+  return {
+    jsonParsed: false,
+    topLevelJsonKeys: null,
+    responseCharacterLength: typeof content === 'string' ? content.length : null,
+    finishReason: typeof finishReason === 'string' ? finishReason : null,
+    ...extras,
+  }
+}
+
+function parseStructuredContent(content: unknown, { providerUsageMetadata, finishReason }: { providerUsageMetadata?: Record<string, number>; finishReason: unknown }): { output: Record<string, unknown>; providerResponseDiagnostics: Record<string, unknown> } {
   if (typeof content !== 'string' || content.trim().length === 0) {
-    throw new ModelProviderError('Kimi returned empty structured content.', { code: 'MALFORMED_MODEL_OUTPUT' })
+    throw new ModelProviderError('Kimi returned empty structured content.', { code: 'MALFORMED_MODEL_OUTPUT', details: {
+      ...(providerUsageMetadata ? { providerUsageMetadata } : {}),
+      providerResponseDiagnostics: responseDiagnostics(content, finishReason, { parseErrorCode: 'EMPTY_STRUCTURED_CONTENT' }),
+    } })
   }
   try {
     const parsed = JSON.parse(content)
-    if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) return parsed as Record<string, unknown>
+    if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) return {
+      output: parsed as Record<string, unknown>,
+      providerResponseDiagnostics: responseDiagnostics(content, finishReason, { jsonParsed: true, topLevelJsonKeys: Object.keys(parsed).sort() }),
+    }
   } catch (cause) {
-    throw new ModelProviderError('Kimi returned invalid JSON.', { code: 'MALFORMED_MODEL_OUTPUT', cause })
+    throw new ModelProviderError('Kimi returned invalid JSON.', { code: 'MALFORMED_MODEL_OUTPUT', cause, details: {
+      ...(providerUsageMetadata ? { providerUsageMetadata } : {}),
+      providerResponseDiagnostics: responseDiagnostics(content, finishReason, { parseErrorCode: 'INVALID_JSON' }),
+    } })
   }
-  throw new ModelProviderError('Kimi returned non-object JSON.', { code: 'MALFORMED_MODEL_OUTPUT' })
+  throw new ModelProviderError('Kimi returned non-object JSON.', { code: 'MALFORMED_MODEL_OUTPUT', details: {
+    ...(providerUsageMetadata ? { providerUsageMetadata } : {}),
+    providerResponseDiagnostics: responseDiagnostics(content, finishReason, { parseErrorCode: 'NON_OBJECT_JSON' }),
+  } })
 }
 
-function extractStructuredContent(body: Record<string, unknown>): Record<string, unknown> {
+function extractStructuredContent(body: Record<string, unknown>, providerUsageMetadata?: Record<string, number>) {
   const choices = Array.isArray(body.choices) ? body.choices : []
-  return parseStructuredContent(asObject(asObject(choices[0]).message).content)
+  const choice = asObject(choices[0])
+  return parseStructuredContent(asObject(choice.message).content, { providerUsageMetadata, finishReason: choice.finish_reason })
 }
 
 function normalizedUsage(body: Record<string, unknown>): Record<string, number> | undefined {
@@ -138,9 +161,11 @@ export function createKimiProvider({
       }
       await onResponseReceived?.({ status: response.status, provider: KIMI_PROVIDER_ID, model: modelId.trim(), phase: request.stage, promptVersion: request.promptVersion, schemaVersion: request.schemaVersion })
       const body = asObject(await response.json())
-      const output = extractStructuredContent(body)
       const providerUsageMetadata = normalizedUsage(body)
-      return providerUsageMetadata ? { ...output, providerUsageMetadata } : output
+      const { output, providerResponseDiagnostics } = extractStructuredContent(body, providerUsageMetadata)
+      const result = { ...output, ...(providerUsageMetadata ? { providerUsageMetadata } : {}) }
+      Object.defineProperty(result, 'providerResponseDiagnostics', { value: providerResponseDiagnostics, enumerable: false })
+      return result
     },
   }
 }

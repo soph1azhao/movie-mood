@@ -125,6 +125,13 @@ describe('Moonshot Kimi provider adapter', () => {
     await expect(provider(vi.fn().mockResolvedValue(response(body))).generateStructured({ input: {} })).rejects.toMatchObject({ code: 'MALFORMED_MODEL_OUTPUT', message: expect.stringContaining(message) } satisfies Partial<ModelProviderError>)
   })
 
+  it('retains bounded parse diagnostics and usage without retaining malformed content', async () => {
+    const body = { choices: [{ finish_reason: 'stop', message: { content: '{not-json' } }], usage: { prompt_tokens: 10, completion_tokens: 20, total_tokens: 30, completion_tokens_details: { reasoning_tokens: 7 } } }
+    const error = await provider(vi.fn().mockResolvedValue(response(body))).generateStructured({ input: {} }).catch((value) => value as ModelProviderError)
+    expect(error).toMatchObject({ code: 'MALFORMED_MODEL_OUTPUT', details: { providerUsageMetadata: { prompt_tokens: 10, completion_tokens: 20, total_tokens: 30, thinking_tokens: 7 }, providerResponseDiagnostics: { jsonParsed: false, parseErrorCode: 'INVALID_JSON', topLevelJsonKeys: null, responseCharacterLength: 9, finishReason: 'stop' } } })
+    expect(JSON.stringify(error.details)).not.toContain('{not-json')
+  })
+
   it('maps 429 with Retry-After and redacts credentials from bounded diagnostics', async () => {
     const fetchImpl = vi.fn().mockResolvedValue(response({ error: 'test-kimi-key is invalid' }, { ok: false, status: 429, headers: new Headers({ 'Retry-After': '2' }) }))
     const error = await provider(fetchImpl).generateStructured({ input: {} }).catch((value) => value as ModelProviderError)

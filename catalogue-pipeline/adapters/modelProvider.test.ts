@@ -94,6 +94,17 @@ describe('model provider adapter', () => {
     })
   })
 
+  it('retains bounded validation diagnostics and provider usage for a terminal malformed output', async () => {
+    const generateStructured = vi.fn().mockResolvedValue({ pace: 'turbo', providerUsageMetadata: { prompt_tokens: 10, completion_tokens: 20, thinking_tokens: 7, total_tokens: 30 }, providerResponseDiagnostics: { jsonParsed: true, topLevelJsonKeys: ['pace'], responseCharacterLength: 17, finishReason: 'stop' } })
+    await expect(runStructuredModelRequest({
+      provider: { ...provider, generateStructured }, request: { stage: 'semantic-classifier' }, maxAttempts: 1,
+      validateOutput: () => ({ ok: false, hardFailures: [{ field: 'pace', code: 'INVALID_ENUM' }] }),
+    })).rejects.toMatchObject({
+      code: 'MALFORMED_MODEL_OUTPUT',
+      details: { providerUsageMetadata: { prompt_tokens: 10, completion_tokens: 20, thinking_tokens: 7, total_tokens: 30 }, providerResponseDiagnostics: { jsonParsed: true, topLevelJsonKeys: ['pace'], responseCharacterLength: 17, finishReason: 'stop', validation: { code: 'INVALID_ENUM', path: 'pace', keyword: 'INVALID_ENUM' } }, attempts: 1, malformedOutputRetries: 0 },
+    } satisfies Partial<ModelProviderError>)
+  })
+
   it('stops after the configured retry limit for transient model failures', async () => {
     const transientError = new ModelProviderError('try again', { retryable: true })
     const generateStructured = vi.fn().mockRejectedValue(transientError)
