@@ -1,6 +1,6 @@
 # Movie Mood V8.2 — Catalogue Promotion & Runtime Scale
 
-**Status:** Phase 0 implemented; later phases proposed and gated.
+**Status:** Phases 0 and 1 implemented; editorial pilot and later phases remain gated.
 
 **Baseline:** `v8.1.0`; deployed static catalogue: 41 films.
 
@@ -99,6 +99,53 @@ candidate identity
 ```
 
 Schemas must reject unknown or partial identities, missing required fields, unaccepted semantic states, mutable/unhashed source references, and approvals that do not bind to the exact reviewed bytes. Existing 41 local IDs and curated values remain stable unless separately reviewed.
+
+### 4.1 Implemented schema set
+
+Phase 1 adds:
+
+- `promotion-candidate.schema.json` — reconciled cohort identity bound to semantic, evidence, and facts hashes;
+- `editorial-artifact.schema.json` — the existing `editorial-output.v1` inside an envelope bound to semantic, evidence, and facts;
+- `critic-artifact.schema.json` — the existing `critic-output.v1` bound to semantic, evidence, facts, and the exact editorial artifact, with an explicit independence assertion;
+- `palette.schema.json` — two-color palette, poster identity/hash, algorithm version, and explicit human-override metadata;
+- `human-review.schema.json` — approve/revise/reject decision bound to every reviewed artifact and reviewed complete-record bytes;
+- `production-record.schema.json` — exact curated meaning, runtime facts, and complete upstream provenance;
+- `promotion-transaction.schema.json` — baseline, accepted hashes, proposed runtime identities, reconciliation, derived counts, and dry-run validation;
+- `promotion-manifest.schema.json` — accepted/rejected/deferred/unchanged dispositions, actual output count, and validation/benchmark hashes;
+- `production-validation-report.schema.json` — transaction-bound production checks and derived pass/fail result.
+
+`catalogue-pipeline/config/schemaVersion.json` records all Phase 1 versions. Existing `semantic.schema.json`, `editorial.schema.json`, and `critic.schema.json` remain the inner output contracts and are not weakened.
+
+### 4.2 Executable validation
+
+`catalogue-pipeline/scripts/validatePromotionContract.mjs` provides canonical key-sorted serialization and SHA-256 hashing plus pure validators for promotion candidates, editorial envelopes, critic envelopes, palettes, human decisions, approval freshness, cross-artifact identity, complete production records, promotion transactions, promotion manifests, and production-validation reports.
+
+V8.2 artifact hashes use `serializeArtifactForPersistence`: recursive stable key ordering, compact valid JSON, and exactly one terminal newline. `hashArtifact` hashes exactly those persisted bytes, and every future V8.2 artifact writer must write that representation unchanged. Historical V8.1 semantic/evidence provenance remains a `historicalSourceHash` over its original bytes; parsed-object recanonicalization is a distinct `V8.2ArtifactHash` and must never be substituted for the historical byte hash. `hashBytes` preserves this raw-byte distinction.
+
+A human approval binds semantic, evidence, facts, editorial, critic, palette, and reviewed complete-record hashes. The reviewed complete-record hash deliberately excludes only the later human-decision hash, avoiding a circular hash; the final production record then binds the resulting human-decision hash. Any source mutation makes approval freshness fail.
+
+An `approve` record cannot contain unapplied revisions. Revisions must first be incorporated into a new complete record and its artifact hashes, then that exact record must receive a new approval. `revise` and `reject` never authorize promotion.
+
+### 4.3 Critic authority
+
+Critic verdicts have these V8.2 meanings:
+
+- `hard_fail`: blocks review and promotion;
+- `needs_review`: blocks production eligibility until correction and a new critic artifact;
+- `approve_for_review`: may advance to explicit human review;
+- `candidate_for_auto_accept`: may advance to explicit human review but has no automatic promotion authority.
+
+Every verdict, including `candidate_for_auto_accept`, requires a fresh human `approve`. Critic execution must assert that writer hidden reasoning was not provided.
+
+Verdict and assessment consistency is also binding. `approve_for_review` may contain `pass` or `review` assessments but no `fail`. `candidate_for_auto_accept` requires all ten assessments to be `pass` and an empty issues array. The blocking verdicts need no further assessment-shape restriction beyond the existing critic schema.
+
+### 4.4 Dry-run transaction boundary
+
+Phase 1 assembles proposed transactions only in memory. It validates each complete record, refuses candidate-ID, local-ID, or TMDB-ID collisions, preserves every baseline identity and record hash in order, derives before/after counts from actual arrays, and deterministically serializes the result. Baseline and proposed output hashes must contain exactly `curatedMovies`, `tmdbMovieMappings`, and `tmdbMovies`.
+
+The manifest persists a candidate-ID-sorted authoritative `candidateRoster` plus its V8.2 artifact hash and the historical candidate cohort hash. Accepted, rejected, and deferred must be individually unique, pairwise disjoint, preserve roster TMDB identity, and form an exhaustive union equal to the roster. `unchanged` is the baseline runtime and does not participate in that equation. The manifest derives `outputRuntimeCount` from unchanged plus accepted records; planning targets are non-authoritative.
+
+Phase 1 implements no editorial writer, critic runner, palette generator, review UI, runtime writer, benchmark runner, provider selection, or external call. It does not modify production sources.
 
 ## 5. Phase 2 — Editorial pilot
 

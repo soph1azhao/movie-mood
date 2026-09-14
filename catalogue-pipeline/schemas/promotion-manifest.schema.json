@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "promotion-manifest.schema.json",
+  "title": "Movie Mood Promotion Manifest",
+  "type": "object",
+  "required": ["schemaVersion", "promotionVersion", "baselineCommit", "baselineRuntimeCount", "candidateCohortHash", "candidateRosterHash", "candidateRoster", "accepted", "rejected", "deferred", "unchanged", "outputRuntimeCount", "sourceHashes", "outputHashes", "validationReportHash", "benchmarkReportHashes", "createdAt"],
+  "properties": {
+    "schemaVersion": { "const": "promotion-manifest.v1" },
+    "promotionVersion": { "type": "string", "minLength": 1 },
+    "baselineCommit": { "type": "string", "minLength": 7 },
+    "baselineRuntimeCount": { "type": "integer", "minimum": 0 },
+    "candidateCohortHash": { "$ref": "#/$defs/hash" },
+    "candidateRosterHash": { "$ref": "#/$defs/hash" },
+    "candidateRoster": { "type": "array", "items": { "$ref": "#/$defs/candidateIdentity" } },
+    "accepted": { "type": "array", "items": { "$ref": "#/$defs/accepted" } },
+    "rejected": { "type": "array", "items": { "$ref": "#/$defs/disposition" } },
+    "deferred": { "type": "array", "items": { "$ref": "#/$defs/disposition" } },
+    "unchanged": { "type": "array", "items": { "$ref": "#/$defs/runtimeIdentity" } },
+    "outputRuntimeCount": { "type": "integer", "minimum": 0 },
+    "sourceHashes": { "$ref": "#/$defs/runtimeSourceHashes" },
+    "outputHashes": { "$ref": "#/$defs/runtimeSourceHashes" },
+    "validationReportHash": { "$ref": "#/$defs/hash" },
+    "benchmarkReportHashes": { "type": "array", "items": { "$ref": "#/$defs/hash" } },
+    "createdAt": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "runtimeSourceHashes": {
+      "type": "object",
+      "required": ["curatedMovies", "tmdbMovieMappings", "tmdbMovies"],
+      "properties": {
+        "curatedMovies": { "$ref": "#/$defs/hash" },
+        "tmdbMovieMappings": { "$ref": "#/$defs/hash" },
+        "tmdbMovies": { "$ref": "#/$defs/hash" }
+      },
+      "additionalProperties": false
+    },
+    "candidateIdentity": {
+      "type": "object",
+      "required": ["candidateId", "tmdbId"],
+      "properties": { "candidateId": { "type": "string", "minLength": 1 }, "tmdbId": { "type": "integer", "minimum": 1 } },
+      "additionalProperties": false
+    },
+    "runtimeIdentity": {
+      "type": "object",
+      "required": ["id", "tmdbId", "recordHash"],
+      "properties": { "id": { "type": "string", "minLength": 1 }, "tmdbId": { "type": "integer", "minimum": 1 }, "recordHash": { "$ref": "#/$defs/hash" } },
+      "additionalProperties": false
+    },
+    "accepted": {
+      "type": "object",
+      "required": ["candidateId", "tmdbId", "id", "productionRecordHash", "humanReviewDecisionHash", "sourceHashes"],
+      "properties": {
+        "candidateId": { "type": "string", "minLength": 1 },
+        "tmdbId": { "type": "integer", "minimum": 1 },
+        "id": { "type": "string", "minLength": 1 },
+        "productionRecordHash": { "$ref": "#/$defs/hash" },
+        "humanReviewDecisionHash": { "$ref": "#/$defs/hash" },
+        "sourceHashes": { "type": "object", "additionalProperties": { "$ref": "#/$defs/hash" } }
+      },
+      "additionalProperties": false
+    },
+    "disposition": {
+      "type": "object",
+      "required": ["candidateId", "tmdbId", "reason"],
+      "properties": { "candidateId": { "type": "string", "minLength": 1 }, "tmdbId": { "type": "integer", "minimum": 1 }, "reason": { "type": "string", "minLength": 1 } },
+      "additionalProperties": false
+    }
+  }
+}

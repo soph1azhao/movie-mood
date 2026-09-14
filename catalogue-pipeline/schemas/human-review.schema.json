@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "human-review.schema.json",
+  "title": "Movie Mood Human Review Decision",
+  "type": "object",
+  "required": ["schemaVersion", "candidateId", "tmdbId", "decision", "reviewer", "reviewedAt", "sourceHashes", "notes", "revisions"],
+  "properties": {
+    "schemaVersion": { "const": "human-review.v1" },
+    "candidateId": { "type": "string", "minLength": 1 },
+    "tmdbId": { "type": "integer", "minimum": 1 },
+    "decision": { "enum": ["approve", "revise", "reject"] },
+    "reviewer": { "type": "string", "minLength": 1 },
+    "reviewedAt": { "type": "string", "format": "date-time" },
+    "sourceHashes": {
+      "type": "object",
+      "required": ["semanticArtifact", "evidencePacket", "factsRecord", "editorialArtifact", "criticArtifact", "paletteArtifact", "completeRecord"],
+      "properties": {
+        "semanticArtifact": { "$ref": "#/$defs/hash" },
+        "evidencePacket": { "$ref": "#/$defs/hash" },
+        "factsRecord": { "$ref": "#/$defs/hash" },
+        "editorialArtifact": { "$ref": "#/$defs/hash" },
+        "criticArtifact": { "$ref": "#/$defs/hash" },
+        "paletteArtifact": { "$ref": "#/$defs/hash" },
+        "completeRecord": { "$ref": "#/$defs/hash" }
+      },
+      "additionalProperties": false
+    },
+    "notes": { "type": ["string", "null"] },
+    "revisions": { "type": "object" }
+  },
+  "additionalProperties": false,
+  "$defs": { "hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" } }
+}

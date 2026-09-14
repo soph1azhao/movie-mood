@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "production-validation-report.schema.json",
+  "title": "Movie Mood Production Validation Report",
+  "type": "object",
+  "required": ["schemaVersion", "promotionVersion", "transactionHash", "generatedAt", "checks", "ok", "hardFailures"],
+  "properties": {
+    "schemaVersion": { "const": "production-validation-report.v1" },
+    "promotionVersion": { "type": "string", "minLength": 1 },
+    "transactionHash": { "$ref": "#/$defs/hash" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "checks": { "type": "array", "items": { "type": "object", "required": ["name", "ok"], "properties": { "name": { "type": "string", "minLength": 1 }, "ok": { "type": "boolean" }, "details": {} } } },
+    "ok": { "type": "boolean" },
+    "hardFailures": { "type": "array" }
+  },
+  "additionalProperties": false,
+  "$defs": { "hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" } }
+}

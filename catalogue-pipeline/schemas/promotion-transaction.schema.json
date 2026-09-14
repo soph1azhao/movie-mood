@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "promotion-transaction.schema.json",
+  "title": "Movie Mood Promotion Transaction",
+  "type": "object",
+  "required": ["schemaVersion", "promotionVersion", "baseline", "proposedSourceHashes", "accepted", "proposedRuntime", "identityReconciliation", "beforeCount", "afterCount", "validationResult"],
+  "properties": {
+    "schemaVersion": { "const": "promotion-transaction.v1" },
+    "promotionVersion": { "type": "string", "minLength": 1 },
+    "baseline": {
+      "type": "object",
+      "required": ["commit", "sourceHashes", "records"],
+      "properties": {
+        "commit": { "type": "string", "minLength": 7 },
+        "sourceHashes": { "$ref": "#/$defs/runtimeSourceHashes" },
+        "records": { "type": "array", "items": { "$ref": "#/$defs/runtimeIdentity" } }
+      },
+      "additionalProperties": false
+    },
+    "proposedSourceHashes": { "$ref": "#/$defs/runtimeSourceHashes" },
+    "accepted": { "type": "array", "items": { "$ref": "#/$defs/accepted" } },
+    "proposedRuntime": { "type": "array", "items": { "$ref": "#/$defs/runtimeIdentity" } },
+    "identityReconciliation": { "type": "object" },
+    "beforeCount": { "type": "integer", "minimum": 0 },
+    "afterCount": { "type": "integer", "minimum": 0 },
+    "validationResult": { "type": "object", "required": ["ok", "hardFailures"], "properties": { "ok": { "type": "boolean" }, "hardFailures": { "type": "array" } } }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "runtimeSourceHashes": {
+      "type": "object",
+      "required": ["curatedMovies", "tmdbMovieMappings", "tmdbMovies"],
+      "properties": {
+        "curatedMovies": { "$ref": "#/$defs/hash" },
+        "tmdbMovieMappings": { "$ref": "#/$defs/hash" },
+        "tmdbMovies": { "$ref": "#/$defs/hash" }
+      },
+      "additionalProperties": false
+    },
+    "runtimeIdentity": {
+      "type": "object",
+      "required": ["id", "tmdbId", "recordHash"],
+      "properties": { "id": { "type": "string", "minLength": 1 }, "tmdbId": { "type": "integer", "minimum": 1 }, "recordHash": { "$ref": "#/$defs/hash" } },
+      "additionalProperties": false
+    },
+    "accepted": {
+      "type": "object",
+      "required": ["candidateId", "tmdbId", "id", "productionRecordHash", "humanReviewDecisionHash", "sourceHashes"],
+      "properties": {
+        "candidateId": { "type": "string", "minLength": 1 },
+        "tmdbId": { "type": "integer", "minimum": 1 },
+        "id": { "type": "string", "minLength": 1 },
+        "productionRecordHash": { "$ref": "#/$defs/hash" },
+        "humanReviewDecisionHash": { "$ref": "#/$defs/hash" },
+        "sourceHashes": { "type": "object", "additionalProperties": { "$ref": "#/$defs/hash" } }
+      },
+      "additionalProperties": false
+    }
+  }
+}

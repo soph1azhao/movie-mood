@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "editorial-artifact.schema.json",
+  "title": "Movie Mood Editorial Artifact Envelope",
+  "type": "object",
+  "required": ["schemaVersion", "candidateId", "tmdbId", "output", "sourceHashes"],
+  "properties": {
+    "schemaVersion": { "const": "editorial-artifact.v1" },
+    "candidateId": { "type": "string", "minLength": 1 },
+    "tmdbId": { "type": "integer", "minimum": 1 },
+    "output": { "$ref": "editorial.schema.json" },
+    "sourceHashes": {
+      "type": "object",
+      "required": ["semanticArtifact", "evidencePacket", "factsRecord"],
+      "properties": {
+        "semanticArtifact": { "$ref": "#/$defs/hash" },
+        "evidencePacket": { "$ref": "#/$defs/hash" },
+        "factsRecord": { "$ref": "#/$defs/hash" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$defs": { "hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" } }
+}

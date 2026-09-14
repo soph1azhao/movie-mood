@@ -4,5 +4,14 @@
   "semantic": "semantic-output.v1",
   "editorial": "editorial-output.v1",
   "critic": "critic-output.v1",
-  "reviewQueue": "review-queue.v1"
+  "reviewQueue": "review-queue.v1",
+  "promotionCandidate": "promotion-candidate.v1",
+  "editorialArtifact": "editorial-artifact.v1",
+  "criticArtifact": "critic-artifact.v1",
+  "palette": "palette-artifact.v1",
+  "humanReview": "human-review.v1",
+  "productionRecord": "production-record.v1",
+  "promotionManifest": "promotion-manifest.v1",
+  "promotionTransaction": "promotion-transaction.v1",
+  "productionValidationReport": "production-validation-report.v1"
 }

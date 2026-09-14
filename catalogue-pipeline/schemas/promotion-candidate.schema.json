@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "promotion-candidate.schema.json",
+  "title": "Movie Mood Promotion Candidate",
+  "type": "object",
+  "required": ["schemaVersion", "candidateId", "tmdbId", "cohortId", "candidateCohortHash", "sourceHashes"],
+  "properties": {
+    "schemaVersion": { "const": "promotion-candidate.v1" },
+    "candidateId": { "type": "string", "minLength": 1 },
+    "tmdbId": { "type": "integer", "minimum": 1 },
+    "cohortId": { "type": "string", "minLength": 1 },
+    "candidateCohortHash": { "$ref": "#/$defs/hash" },
+    "sourceHashes": {
+      "type": "object",
+      "required": ["semanticArtifact", "evidencePacket", "factsRecord"],
+      "properties": {
+        "semanticArtifact": { "$ref": "#/$defs/hash" },
+        "evidencePacket": { "$ref": "#/$defs/hash" },
+        "factsRecord": { "$ref": "#/$defs/hash" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$defs": { "hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" } }
+}

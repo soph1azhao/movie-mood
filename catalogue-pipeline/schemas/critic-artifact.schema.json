@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "critic-artifact.schema.json",
+  "title": "Movie Mood Critic Artifact Envelope",
+  "type": "object",
+  "required": ["schemaVersion", "candidateId", "tmdbId", "output", "sourceHashes", "independence"],
+  "properties": {
+    "schemaVersion": { "const": "critic-artifact.v1" },
+    "candidateId": { "type": "string", "minLength": 1 },
+    "tmdbId": { "type": "integer", "minimum": 1 },
+    "output": { "$ref": "critic.schema.json" },
+    "sourceHashes": {
+      "type": "object",
+      "required": ["semanticArtifact", "evidencePacket", "factsRecord", "editorialArtifact"],
+      "properties": {
+        "semanticArtifact": { "$ref": "#/$defs/hash" },
+        "evidencePacket": { "$ref": "#/$defs/hash" },
+        "factsRecord": { "$ref": "#/$defs/hash" },
+        "editorialArtifact": { "$ref": "#/$defs/hash" }
+      },
+      "additionalProperties": false
+    },
+    "independence": {
+      "type": "object",
+      "required": ["writerHiddenReasoningProvided"],
+      "properties": { "writerHiddenReasoningProvided": { "const": false } },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$defs": { "hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" } }
+}

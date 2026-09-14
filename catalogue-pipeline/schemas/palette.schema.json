@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "palette.schema.json",
+  "title": "Movie Mood Palette Artifact",
+  "type": "object",
+  "required": ["schemaVersion", "candidateId", "tmdbId", "palette", "method", "sourcePosterIdentity", "sourcePosterHash", "algorithmVersion", "override"],
+  "properties": {
+    "schemaVersion": { "const": "palette-artifact.v1" },
+    "candidateId": { "type": "string", "minLength": 1 },
+    "tmdbId": { "type": "integer", "minimum": 1 },
+    "palette": {
+      "type": "array",
+      "prefixItems": [{ "$ref": "#/$defs/color" }, { "$ref": "#/$defs/color" }],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "method": { "enum": ["poster-algorithm", "human-override"] },
+    "sourcePosterIdentity": {
+      "type": "object",
+      "required": ["posterPath"],
+      "properties": { "posterPath": { "type": ["string", "null"] } },
+      "additionalProperties": false
+    },
+    "sourcePosterHash": { "anyOf": [{ "$ref": "#/$defs/hash" }, { "type": "null" }] },
+    "algorithmVersion": { "type": "string", "minLength": 1 },
+    "override": {
+      "anyOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "required": ["reviewer", "reviewedAt", "notes", "replacesPaletteArtifactHash"],
+          "properties": {
+            "reviewer": { "type": "string", "minLength": 1 },
+            "reviewedAt": { "type": "string", "format": "date-time" },
+            "notes": { "type": "string", "minLength": 1 },
+            "replacesPaletteArtifactHash": { "$ref": "#/$defs/hash" }
+          },
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": { "properties": { "method": { "const": "poster-algorithm" } } },
+      "then": {
+        "properties": {
+          "sourcePosterIdentity": { "properties": { "posterPath": { "type": "string", "minLength": 1 } } },
+          "sourcePosterHash": { "$ref": "#/$defs/hash" },
+          "override": { "type": "null" }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "color": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
+    "hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" }
+  }
+}
