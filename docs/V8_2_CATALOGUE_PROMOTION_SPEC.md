@@ -1,6 +1,6 @@
 # Movie Mood V8.2 — Catalogue Promotion & Runtime Scale
 
-**Status:** Phases 0 and 1 implemented; editorial pilot and later phases remain gated.
+**Status:** Phases 0 and 1 implemented; Phase 2A pilot infrastructure and preflight implemented; live editorial pilot not yet executed.
 
 **Baseline:** `v8.1.0`; deployed static catalogue: 41 films.
 
@@ -149,7 +149,7 @@ Phase 1 implements no editorial writer, critic runner, palette generator, review
 
 ## 5. Phase 2 — Editorial pilot
 
-No paid provider or model is selected or authorized here. Provider/model selection is a separate gate before any external call.
+The accepted pilot configuration is the Google Gemini Developer API with `gemini-3.8-flash`, writer thinking level `low`, and critic thinking level `medium`. This is a narrow pilot configuration, not a permanent 400-film production policy. No external call is authorized by Phase 2A; the 16-film live pilot must be separately accepted and will determine whether this configuration advances to Phase 3.
 
 The deterministic Phase 0 selector proposes 16 films by greedy set coverage across mood, spoken language, era, attention demand, emotional weight, discovery style, runtime band, and genre, with `candidateId` as the tie-breaker. The exact cohort and selection features are stored in the audit report.
 
@@ -163,6 +163,24 @@ The pilot must test:
 - real card and detail-layout fit.
 
 Passing requires schema validation, hard editorial validation, independent critic review, and human review for every pilot record. Pilot failures lead to prompt, contract, or workflow revision; they do not lower thresholds.
+
+### 5.1 Phase 2A — zero-network preflight
+
+Phase 2A adds a dedicated Gemini editorial/critic adapter without changing the historical semantic Gemini adapter or its defaults. The adapter projects the existing `editorial-output.v1` and `critic-output.v1` contracts into structured JSON response schemas, locks each response to the requested candidate and TMDB identity, preserves exact usage metadata and raw responses outside runtime, and classifies response-bearing HTTP failures separately from model-output validation failures. Retries are bounded and fail closed; an ambiguous transport outcome is never silently redispatched. Requests contain no temperature, top-p, top-k, or search-grounding controls, and credentials are never persisted.
+
+The runner supports only these zero-network commands:
+
+```text
+node catalogue-pipeline/scripts/editorialPilot.mjs prepare
+node catalogue-pipeline/scripts/editorialPilot.mjs inspect
+node catalogue-pipeline/scripts/editorialPilot.mjs estimate
+```
+
+Live execution is explicit and gated: `run-writers --execute` and `run-critics --execute` require `GEMINI_API_KEY` from the environment; bare commands cannot dispatch. Requests send the exact versioned prompt through `systemInstruction` and the exact canonical input packet through `contents`. Prompt raw-byte, packet canonical-byte, schema canonical-byte, and complete-request hashes are bound to every dispatch. Each response-bearing retry is preserved and delayed using Retry-After, Google RetryInfo, provider retry messaging, or a bounded exponential fallback; ambiguous transports are never redispatched. Deterministic packets and preflight metadata are stored under `catalogue-pipeline/generated/catalogue-promotion/v8-2-editorial-pilot-v1/`. Each packet binds the authoritative historical semantic, evidence, and facts hashes while separately recording V8.2 canonical artifact hashes. The critic packet builder is created only after a hard-valid editorial artifact and forwards facts, accepted semantics, visible copy, voice guidance, and non-hard validation flags; it excludes writer notes, hidden reasoning, chain-of-thought, and provider thought content.
+
+The materialized preflight contains 16 writer calls and 16 critic calls. Writer inputs total 186,910 bytes, approximately 46,728–93,455 input tokens. Estimated critic inputs total 198,542 bytes, approximately 49,636–99,271 input tokens. Combined planned input is 385,452 bytes. Maximum configured output is 8,192 tokens per writer call and 12,288 per critic call. These are deterministic byte-based planning ranges, not provider billing or pricing data; actual usage metadata belongs in the later live manifest.
+
+The local poster-readiness audit found 400 of 400 Semantic-400 facts records and 16 of 16 pilot records with non-null `posterPath`; both null-candidate lists are empty. No posters were fetched and no palettes were generated. A future null poster must trigger a separately reviewed fallback-policy decision, never an invented poster-derived palette.
 
 ## 6. Phase 3 — Editorial production and solo review
 

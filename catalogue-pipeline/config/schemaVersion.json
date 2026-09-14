@@ -13,5 +13,9 @@
   "productionRecord": "production-record.v1",
   "promotionManifest": "promotion-manifest.v1",
   "promotionTransaction": "promotion-transaction.v1",
-  "productionValidationReport": "production-validation-report.v1"
+  "productionValidationReport": "production-validation-report.v1",
+  "editorialWriterInput": "editorial-writer-input.v1",
+  "editorialCriticInput": "editorial-critic-input.v1",
+  "editorialPilotPreflight": "editorial-pilot-preflight.v1",
+  "editorialPilotEstimate": "editorial-pilot-estimate.v1"
 }
