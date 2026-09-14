@@ -209,11 +209,13 @@ The workflow in `.github/workflows/deploy.yml` runs when changes are pushed to `
 1. GitHub checks out the repository.
 2. The workflow sets up pnpm 11 and Node 24.
 3. It installs the locked dependencies.
-4. It runs the test suite and the Vite build.
+4. It runs the deterministic runtime test suite and the Vite build.
 5. It uploads the `dist` folder as a Pages artifact.
 6. A second job deploys that artifact to GitHub Pages.
 
 The repository’s Pages source must be set to **GitHub Actions** in **Settings → Pages**. Vite uses a relative asset base so the built files work at the project URL.
+
+The Pages gate uses `pnpm test:runtime` because `src/` is the browser application being deployed. The larger `pnpm test` command also covers offline catalogue-production and historical research invariants; some of those forensic checks intentionally bind preserved local artifacts that are not part of a clean public checkout. Keeping the suites separate protects both the portable application and the maintainer research environment without treating ignored evidence as a deployment dependency.
 
 ## How to add a new movie
 

@@ -19,10 +19,12 @@ pnpm dev
 Before proposing a change, run:
 
 ```bash
-pnpm test
+pnpm test:runtime
 pnpm build
 pnpm exec tsc -b
 ```
+
+Changes to `catalogue-pipeline/` should also run the relevant focused pipeline tests. The complete `pnpm test` command is a maintainer/research validation suite and may require preserved local ignored artifacts; do not commit generated research artifacts merely to make historical checks portable.
 
 ## Product and architecture boundaries
 

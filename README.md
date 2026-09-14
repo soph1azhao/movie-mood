@@ -95,13 +95,17 @@ Vite prints the local URL, normally `http://localhost:5173`.
 
 ## Test and build
 
+Portable application and deployment checks for a fresh clone are:
+
 ```bash
-pnpm test
+pnpm test:runtime
 pnpm build
 pnpm exec tsc -b
 ```
 
-Normal development, testing, building, and deployment require no API credentials.
+`pnpm test` runs the broader maintainer and research suite, including historical `catalogue-pipeline/` checks. Some of those checks intentionally bind preserved local ignored artifacts and research state, so they are not prerequisites for deploying the application from a clean clone.
+
+Runtime development, runtime tests, building, and deployment require no provider credentials.
 
 ## Project structure
 

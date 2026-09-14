@@ -13,6 +13,7 @@
     "preview": "vite preview",
     "sync:tmdb": "tsc -p tsconfig.sync.json && node scripts/syncTmdb.mjs",
     "curate:add": "node scripts/curateAdd.mjs",
+    "test:runtime": "vitest run src",
     "test": "vitest run"
   },
   "dependencies": {
