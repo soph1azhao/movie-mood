@@ -3,7 +3,7 @@ import { tmpdir } from 'node:os'
 import { resolve } from 'node:path'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { appendWalRecord, canonicalSha256, createWalRecord, recoverWal, WAL_GENESIS_HASH } from '../scripts/c1bV2Stage0.mjs'
-import { V4_STAGE2_AUTHORIZATION, V4_STAGE2_BLOCKED, V4_STAGE2_PRELIVE_FAILED, buildCoverageResult, classifyStage2Result, createWalBackedFetch, executeStage2Candidate, projectFrozenCandidates, runV4Stage2, stage2Paths, verifyV4Stage2Jit } from './c1bV4Stage2Runner.mjs'
+import { V4_STAGE2_AUTHORIZATION, V4_STAGE2_BLOCKED, V4_STAGE2_PRELIVE_FAILED, buildCoverageResult, classifyStage2Result, createWalBackedFetch, executeStage2Candidate, lockfileResolutionIdentity, projectFrozenCandidates, runV4Stage2, stage2Paths, verifyV4Stage2Jit } from './c1bV4Stage2Runner.mjs'
 
 const temporary = []
 afterEach(async () => { await Promise.all(temporary.splice(0).map((path) => rm(path, { recursive: true, force: true }))) })
@@ -86,6 +86,11 @@ describe('C1b-V4 Stage-2 outcome and completion semantics', () => {
 
 describe('C1b-V4 Stage-2 pre-live gate and lock order', () => {
   it('passes the registered JIT gate without dispatch', async () => {
+    const frozen = Buffer.from('importers:\n  .:\n    dependencies:\n      vite:\n        specifier: latest\n        version: 8.2.2\npackages:\n  vite@8.2.2:\n    resolution: {integrity: sha512-frozen}\n')
+    const maintained = Buffer.from('importers:\n  .:\n    dependencies:\n      vite:\n        specifier: ^8.2.2\n        version: 8.2.2\npackages:\n  vite@8.2.2:\n    resolution: {integrity: sha512-frozen}\n')
+    const drifted = Buffer.from('importers:\n  .:\n    dependencies:\n      vite:\n        specifier: ^8.3.0\n        version: 8.3.0\npackages:\n  vite@8.3.0:\n    resolution: {integrity: sha512-drifted}\n')
+    expect(lockfileResolutionIdentity(maintained)).toBe(lockfileResolutionIdentity(frozen))
+    expect(lockfileResolutionIdentity(drifted)).not.toBe(lockfileResolutionIdentity(frozen))
     const paths = await tempPaths(); const result = await verifyV4Stage2Jit({ paths }); expect(result.candidates).toHaveLength(180); expect(result.closure.materialLocalSources).toHaveLength(6)
   })
 

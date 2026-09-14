@@ -44,6 +44,12 @@ export class V4Stage2Error extends Error {
 }
 const fail = (message, code, details) => { throw new V4Stage2Error(message, code, details) }
 const rawSha256 = (bytes) => `sha256:${createHash('sha256').update(bytes).digest('hex')}`
+// The registered raw hash preserves the exact V4-era lockfile. For later repository
+// maintenance, importer `specifier` text is not part of the resolved dependency
+// graph: pnpm records the selected versions, integrity and dependency edges
+// elsewhere in the lockfile. Excluding only those lines lets an equivalent range
+// replace `latest` without making the historical V4 environment unreproducible.
+export const lockfileResolutionIdentity = (bytes) => rawSha256(Buffer.from(Buffer.from(bytes).toString('utf8').replace(/^[ \t]+specifier:[^\r\n]*(?:\r?\n|$)/gmu, ''), 'utf8'))
 const exists = async (path) => { try { await readFile(path); return true } catch (error) { if (error.code === 'ENOENT') return false; throw error } }
 const readJson = async (path) => JSON.parse(await readFile(path, 'utf8'))
 const gitFile = (root, commit, path) => execFileSync('git', ['show', `${commit}:${path}`], { cwd: root, maxBuffer: 64 * 1024 * 1024 })
@@ -97,7 +103,8 @@ export async function verifyV4Stage2Jit({ root = process.cwd(), paths = stage2Pa
   }
   for (const lockfile of closure.dependencyLockfiles) {
     const current = await readFile(resolve(root, lockfile.path)); const frozen = gitFile(root, V4_IMPLEMENTATION_COMMIT, lockfile.path)
-    if (rawSha256(current) !== lockfile.rawSha256 || rawSha256(frozen) !== lockfile.rawSha256) fail(`Frozen lockfile mismatch: ${lockfile.path}`, 'LOCKFILE_HASH_MISMATCH')
+    if (rawSha256(frozen) !== lockfile.rawSha256) fail(`Frozen lockfile mismatch: ${lockfile.path}`, 'LOCKFILE_HASH_MISMATCH')
+    if (lockfileResolutionIdentity(current) !== lockfileResolutionIdentity(frozen)) fail(`Frozen lockfile resolution mismatch: ${lockfile.path}`, 'LOCKFILE_HASH_MISMATCH')
   }
   const requiredMajor = Number(/^>=(\d+)\.0\.0$/u.exec(closure.nodeEngine)?.[1])
   if (!Number.isInteger(requiredMajor) || Number(process.versions.node.split('.')[0]) < requiredMajor) fail('Node engine is incompatible.', 'NODE_ENGINE_MISMATCH')

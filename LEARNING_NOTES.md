@@ -1,6 +1,6 @@
 # Movie Mood learning notes
 
-This is a small React and TypeScript app. The main pieces fit together like this:
+Movie Mood is a static React and TypeScript application backed by a larger offline catalogue-production toolchain. The browser experience and the maintainer pipeline deliberately remain separate.
 
 ```text
 index.html → src/main.tsx → src/App.tsx
@@ -24,7 +24,7 @@ The **Another three** button advances the recommendation offset by three. It use
 
 Changing the mood, situation, filters, attention preference, discovery preference, or dealbreakers resets the recommendation offset to the beginning.
 
-V4 adds **Help me choose** when a normal three-movie slate is visible. This opens Decision Mode for the current three movies without changing the recommendation pool.
+The current experience offers two routes from a three-film slate: choose a film directly with **That’s the one**, or use **Help me choose** for a more deliberate comparison. Neither route changes the recommendation pool.
 
 ## How viewing situations work
 
@@ -135,15 +135,15 @@ The **More like this** button switches the recommendations area into a related-f
 
 A similar result can become the next seed by clicking **More like this** again. **Back to recommendations** clears `similarToMovieId` and returns to the ordinary mood-first flow.
 
-## How V4 Decision Mode works
+## How the current decision flow works
 
-`src/App.tsx` stores the active V4 decision state in `decisionState`. The state can be:
+`src/App.tsx` stores the active decision state in `decisionState`. The state can be:
 
 - `three-slate`, with the three current movie IDs
 - `duel`, with two finalist movie IDs and optional source-slate context
 - `pick`, with the chosen movie ID and enough context for **Change my mind**
 
-`src/components/DecisionMode.tsx` renders the decision screens:
+`src/components/DecisionMode.tsx` renders the decision screens. It may first show a selective comparison companion when the three films have useful differentiators; otherwise it advances without inventing a comparison. The user can then narrow the slate manually. The remaining screens are:
 
 - three cards with concise relative cues
 - a two-finalist duel
@@ -154,11 +154,11 @@ The comparison rules live in `src/utils/decision.ts`. They use existing movie me
 
 Changing the mood, situation, filters, discovery preferences, current view, or recommendation slate exits Decision Mode. This keeps the decision state tied to the context that produced it.
 
-## How V4 URLs and sharing work
+## How decision URLs and sharing work
 
-`src/utils/urlCodec.ts` turns a V4 decision state into a query string and decodes it back on page load.
+`src/utils/urlCodec.ts` turns the current decision state into a query string and decodes it back on page load. Its current codec version preserves compatibility with earlier V4 decision links.
 
-A valid V4 decision URL can restore:
+A valid decision URL can restore:
 
 - the selected mood
 - the optional situation
@@ -168,7 +168,7 @@ A valid V4 decision URL can restore:
 
 The decoder validates URL-controlled values before using them. Unknown mood values, invalid filter values, and stale movie IDs degrade safely instead of being trusted.
 
-While Decision Mode is active, `App` keeps the URL synchronized with the current V4 state using `history.replaceState`. Returning to normal browsing clears the V4 decision query.
+While Decision Mode is active, `App` keeps the URL synchronized with the current state using `history.replaceState`. Returning to normal browsing clears the decision query.
 
 The Tonight’s Pick ticket has a share button. It uses the browser’s native share sheet when available. If not, it copies the current V4 URL to the clipboard and announces the result with an accessible status message.
 
@@ -208,9 +208,10 @@ The workflow in `.github/workflows/deploy.yml` runs when changes are pushed to `
 
 1. GitHub checks out the repository.
 2. The workflow sets up pnpm 11 and Node 24.
-3. It installs the locked dependencies and runs the Vite build.
-4. It uploads the `dist` folder as a Pages artifact.
-5. A second job deploys that artifact to GitHub Pages.
+3. It installs the locked dependencies.
+4. It runs the test suite and the Vite build.
+5. It uploads the `dist` folder as a Pages artifact.
+6. A second job deploys that artifact to GitHub Pages.
 
 The repository’s Pages source must be set to **GitHub Actions** in **Settings → Pages**. Vite uses a relative asset base so the built files work at the project URL.
 
@@ -236,9 +237,9 @@ The repository’s Pages source must be set to **GitHub Actions** in **Settings 
 5. Reset the recommendation offset when the filter changes.
 6. Run `pnpm run build`.
 
-## How to add a new mood
+## How to change the mood taxonomy
 
-New moods are postponed beyond V2, but the code path is:
+Changing the six-mood taxonomy is a product decision, not routine catalogue maintenance. If an accepted product specification calls for that change, the code path is:
 
 1. Add the new mood ID to the `Mood` union in `src/types/movie.ts`.
 2. Add its label, icon, and short note to the `moods` array in `src/components/CategorySelector.tsx`.
@@ -260,6 +261,14 @@ New moods are postponed beyond V2, but the code path is:
 7. Run `pnpm test` and `pnpm build`.
 
 The `TMDB_READ_ACCESS_TOKEN` is read from the process environment only and is never printed, committed, or exposed to the browser. Normal build, test, and dev do not require a token.
+
+## What V8.1 teaches about offline catalogue production
+
+The deployed site and the production pipeline have different responsibilities. The site currently ships 41 curated films as static data. Separately, the V8.1 pipeline has produced 400 validated semantic records for future catalogue expansion. Completing an offline record does not deploy it automatically.
+
+The pipeline treats output identity, provenance, resumability, request budgets, and ambiguous transport outcomes as first-class data. Factual snapshots and evidence packets are created before semantic classification; validated records can be imported immutably into later cohorts; and an uncertain dispatch stops rather than silently retrying. These constraints make expensive maintainer-time work inspectable and recoverable without moving provider calls into the browser.
+
+The broader lesson is that generated semantic data belongs in an offline, reviewable production system. Runtime recommendation behavior should consume accepted artifacts, not call a model or factual API on demand.
 
 ### Tonight's Action
 
