@@ -517,9 +517,196 @@ export async function recordHumanDecision({
 }
 
 /**
+ * Returns raw immutable historical human decisions without overlays.
+ */
+export async function getHistoricalScaleTranche2HumanDecisions({ repoRoot }) {
+  const outDir = root(repoRoot)
+  const decisionPath = path.join(outDir, 'human-review-decisions.v1.json')
+  return readJson(decisionPath)
+}
+
+/**
+ * Resolves effective human review decisions by overlaying approved corrections onto the historical ledger.
+ * Fails closed on stale hashes, missing operator approval, duplicate corrections, or out-of-scope changes.
+ */
+export async function resolveEffectiveScaleTranche2HumanDecisions({
+  repoRoot,
+  decisionsData = null,
+  correctionData = null,
+  proposalData = null,
+}) {
+  const outDir = root(repoRoot)
+  const decisionPath = path.join(outDir, 'human-review-decisions.v1.json')
+  const correctionPath = path.join(outDir, 'human-review-adjudication-correction.v1.json')
+  const proposalPath = path.join(outDir, 'human-review-adjudication-correction-proposal.v1.json')
+
+  const ledger = decisionsData || (await readJson(decisionPath))
+
+  if (!correctionData && !existsSync(correctionPath)) {
+    return {
+      schemaVersion: 'scale-tranche-2-effective-human-adjudications.v1',
+      trancheId: TRANCHE_ID,
+      historicalLedgerHash: hashArtifact(ledger),
+      effectiveResolutionMode: 'PURE_HISTORICAL_NO_CORRECTIONS',
+      correctionsApplied: [],
+      records: ledger.records.map((r) => ({
+        candidateId: r.candidateId,
+        tmdbId: r.tmdbId,
+        decision: r.decision,
+        severity: r.severity,
+        affectedFields: [...r.affectedFields],
+        reason: r.reason,
+        reviewedArtifactHash: r.reviewedArtifactHash,
+        replacementCopy: r.replacementCopy,
+        historicalAdjudication: {
+          decision: r.decision,
+          severity: r.severity,
+          affectedFields: [...r.affectedFields],
+          reason: r.reason,
+          reviewedArtifactHash: r.reviewedArtifactHash,
+        },
+        effectiveAdjudication: {
+          decision: r.decision,
+          severity: r.severity,
+          affectedFields: [...r.affectedFields],
+          reason: r.reason,
+          reviewedArtifactHash: r.reviewedArtifactHash,
+        },
+        isCorrected: false,
+      })),
+      counts: ledger.counts,
+      humanDecisionsMade: ledger.humanDecisionsMade,
+    }
+  }
+
+  const correction = correctionData || (await readJson(correctionPath))
+  const proposal = proposalData || (existsSync(proposalPath) ? await readJson(proposalPath) : null)
+
+  // Fail-closed invariant checks
+  // 1. Correction must be approved by human operator
+  if (
+    correction.approvalStatus !== 'APPROVED' ||
+    correction.effective !== true ||
+    correction.approvalAuthority !== 'HUMAN_OPERATOR'
+  ) {
+    throw new Error('Adjudication correction rejected: missing explicit human operator approval')
+  }
+
+  // 2. Bound decision ledger hash must match current ledger
+  const currentLedgerHash = hashArtifact(ledger)
+  if (correction.historicalDecisionsLedgerBinding?.fullDecisionLedgerHash !== currentLedgerHash) {
+    throw new Error(
+      `Stale decision ledger hash in correction: expected ${currentLedgerHash}, got ${correction.historicalDecisionsLedgerBinding?.fullDecisionLedgerHash}`
+    )
+  }
+
+  // 3. Stale proposal hash check
+  if (proposal && correction.proposalBinding?.proposalHash) {
+    const currentProposalHash = hashArtifact(proposal)
+    if (correction.proposalBinding.proposalHash !== currentProposalHash) {
+      throw new Error(
+        `Stale proposal hash in correction: expected ${currentProposalHash}, got ${correction.proposalBinding.proposalHash}`
+      )
+    }
+  }
+
+  // 4. Candidate must be recognized and restricted strictly to Guardians
+  const targetCandidateId = 'scale500-tmdb-354556'
+  if (correction.candidateId !== targetCandidateId) {
+    throw new Error(`Correction touches unauthorized candidate: ${correction.candidateId}`)
+  }
+
+  const historicalRecord = ledger.records.find((r) => r.candidateId === targetCandidateId)
+  if (!historicalRecord) {
+    throw new Error(`Correction target candidate ${targetCandidateId} not found in historical decision ledger`)
+  }
+
+  // 5. Stale original decision hash check
+  const currentRecordHash = hashArtifact(historicalRecord)
+  if (correction.historicalDecisionsLedgerBinding?.historicalDecisionRecordHash !== currentRecordHash) {
+    throw new Error(
+      `Stale original decision record hash: expected ${currentRecordHash}, got ${correction.historicalDecisionsLedgerBinding?.historicalDecisionRecordHash}`
+    )
+  }
+
+  // 6. Decision and severity cannot exceed authorized proposal
+  if (proposal) {
+    if (
+      correction.effectiveAdjudication?.decision !== proposal.proposedAdjudication?.decision ||
+      correction.effectiveAdjudication?.severity !== proposal.proposedAdjudication?.severity
+    ) {
+      throw new Error('Correction effective decision/severity exceeds authorized proposal')
+    }
+  }
+
+  // Build effective records view
+  const effectiveRecords = ledger.records.map((r) => {
+    const isTarget = r.candidateId === targetCandidateId
+    const effectiveAdjudication = isTarget
+      ? {
+          decision: correction.effectiveAdjudication.decision,
+          severity: correction.effectiveAdjudication.severity,
+          affectedFields: [...correction.effectiveAdjudication.affectedFields],
+          reason: correction.effectiveAdjudication.reason,
+          reviewedArtifactHash: r.reviewedArtifactHash,
+        }
+      : {
+          decision: r.decision,
+          severity: r.severity,
+          affectedFields: [...r.affectedFields],
+          reason: r.reason,
+          reviewedArtifactHash: r.reviewedArtifactHash,
+        }
+
+    return {
+      candidateId: r.candidateId,
+      tmdbId: r.tmdbId,
+      decision: effectiveAdjudication.decision,
+      severity: effectiveAdjudication.severity,
+      affectedFields: effectiveAdjudication.affectedFields,
+      reason: effectiveAdjudication.reason,
+      reviewedArtifactHash: r.reviewedArtifactHash,
+      replacementCopy: r.replacementCopy,
+      historicalAdjudication: {
+        decision: r.decision,
+        severity: r.severity,
+        affectedFields: [...r.affectedFields],
+        reason: r.reason,
+        reviewedArtifactHash: r.reviewedArtifactHash,
+      },
+      effectiveAdjudication,
+      isCorrected: isTarget,
+    }
+  })
+
+  return {
+    schemaVersion: 'scale-tranche-2-effective-human-adjudications.v1',
+    trancheId: TRANCHE_ID,
+    historicalLedgerHash: currentLedgerHash,
+    effectiveResolutionMode: 'OVERLAY_APPROVED_CORRECTIONS',
+    correctionBinding: {
+      path: rel(repoRoot, correctionPath),
+      correctionHash: hashArtifact(correction),
+    },
+    correctionsApplied: [
+      {
+        candidateId: targetCandidateId,
+        tmdbId: 354556,
+        correctionType: correction.correctionType,
+        historicalAffectedFields: historicalRecord.affectedFields,
+        effectiveAffectedFields: correction.effectiveAdjudication.affectedFields,
+      },
+    ],
+    records: effectiveRecords,
+    counts: ledger.counts,
+    humanDecisionsMade: ledger.humanDecisionsMade,
+  }
+}
+
+/**
  * Post-review analysis: Reveals queue bases for analytical evaluation without altering decisions.
  */
-export async function analyzeScaleTranche2HumanDecisions({ repoRoot }) {
+export async function analyzeScaleTranche2HumanDecisions({ repoRoot, useEffective = true }) {
   const outDir = root(repoRoot)
   const decisionPath = path.join(outDir, 'human-review-decisions.v1.json')
   const blindPacketPath = path.join(outDir, 'human-review-blind-packets.v1.json')
@@ -527,7 +714,7 @@ export async function analyzeScaleTranche2HumanDecisions({ repoRoot }) {
   const routingPath = path.join(outDir, 'routing-manifest.json')
   const auditPath = path.join(outDir, 'audit-manifest.json')
 
-  const [ledger, blindPackets, queue, routing, audit] = await Promise.all([
+  const [rawLedger, blindPackets, queue, routing, audit] = await Promise.all([
     readJson(decisionPath),
     readJson(blindPacketPath),
     readJson(queuePath),
@@ -535,18 +722,24 @@ export async function analyzeScaleTranche2HumanDecisions({ repoRoot }) {
     readJson(auditPath),
   ])
 
-  const validation = validateHumanReviewDecisions(ledger, blindPackets)
+  const validation = validateHumanReviewDecisions(rawLedger, blindPackets)
   if (!validation.ok) {
     throw new Error(`Decisions ledger is invalid: ${validation.failures.join('; ')}`)
   }
 
-  const pending = ledger.records.filter((r) => r.decision === 'PENDING')
+  const pending = rawLedger.records.filter((r) => r.decision === 'PENDING')
   if (pending.length > 0) {
     throw new Error(`Cannot finalize review analysis: ${pending.length} decisions are still PENDING`)
   }
 
+  const effectiveView = useEffective
+    ? await resolveEffectiveScaleTranche2HumanDecisions({ repoRoot, decisionsData: rawLedger })
+    : null
+  const activeRecords = effectiveView ? effectiveView.records : rawLedger.records
+
   const queueById = new Map(queue.records.map((r) => [r.candidateId, r]))
-  const decisionsById = new Map(ledger.records.map((r) => [r.candidateId, r]))
+  const decisionsById = new Map(activeRecords.map((r) => [r.candidateId, r]))
+  const rawDecisionsById = new Map(rawLedger.records.map((r) => [r.candidateId, r]))
   const routingById = new Map(routing.records.map((r) => [r.candidateId, r]))
 
   // 1. Audit sample evaluation (exactly 30 candidates)
@@ -598,7 +791,7 @@ export async function analyzeScaleTranche2HumanDecisions({ repoRoot }) {
   }
 
   // 3. Targeted repair plan
-  const revisions = ledger.records.filter((d) => d.decision === 'REVISE')
+  const revisions = activeRecords.filter((d) => d.decision === 'REVISE')
   const targetedRepairPlan = revisions.map((d) => {
     const routeRec = routingById.get(d.candidateId)
     const blindRec = blindPackets.records.find((r) => r.candidateId === d.candidateId)
@@ -885,6 +1078,68 @@ export async function runInteractiveReview({ repoRoot }) {
   }
 }
 
+/**
+ * Creates and persists the deterministic 19-record targeted repair plan using effective adjudications.
+ * Protects whyWatch for Guardians byte-for-byte in untouchedFieldHashes.
+ */
+export async function buildScaleTranche2TargetedRepairPlan({ repoRoot }) {
+  const analysis = await analyzeScaleTranche2HumanDecisions({ repoRoot, useEffective: true })
+  const outDir = root(repoRoot)
+  const planPath = path.join(outDir, 'targeted-editorial-repair-plan.v1.json')
+
+  const decisionPath = path.join(outDir, 'human-review-decisions.v1.json')
+  const correctionPath = path.join(outDir, 'human-review-adjudication-correction.v1.json')
+  const pausePath = path.join(outDir, 'scale-tranche-2-governance-pause.v1.json')
+
+  const [decisionData, correctionData, pauseData] = await Promise.all([
+    readJson(decisionPath),
+    readJson(correctionPath),
+    readJson(pausePath),
+  ])
+
+  const repairPlanArtifact = {
+    schemaVersion: 'targeted-editorial-repair-plan.v1',
+    trancheId: TRANCHE_ID,
+    status: 'TARGETED_REPAIR_PLAN_CORRECTED_AWAITING_REPAIR_AUTHORIZATION',
+    governanceState: 'PAUSED_FOR_SEVERE_AUDIT_MISS',
+    repairExecutionAllowed: false,
+    revisionCount: analysis.targetedRepairPlan.revisionCount,
+    bindings: {
+      humanReviewDecisionLedgerHash: hashArtifact(decisionData),
+      approvedCorrectionHash: hashArtifact(correctionData),
+      governancePauseHash: hashArtifact(pauseData),
+    },
+    invariants: {
+      candidateCountMustBe19: analysis.targetedRepairPlan.revisionCount === 19,
+      allRecordsRequireHumanClosure: analysis.targetedRepairPlan.records.every(
+        (r) => r.postRepairHumanClosureRequired === true
+      ),
+      guardiansWhyWatchProtected:
+        analysis.targetedRepairPlan.records.find((r) => r.candidateId === 'scale500-tmdb-354556')
+          ?.untouchedFieldHashes?.whyWatch ===
+        'sha256:6629a58c81f4942118216a391a50989f4f46904ee5fe379d03df1bf20d18d31c',
+      guardiansAffectedFieldsCuriosityHookOnly:
+        JSON.stringify(
+          analysis.targetedRepairPlan.records.find((r) => r.candidateId === 'scale500-tmdb-354556')
+            ?.affectedFields
+        ) === '["curiosityHook"]',
+    },
+    methodologyNote:
+      'Targeted repairs cannot be executed while governance is PAUSED_FOR_SEVERE_AUDIT_MISS. Future confirmatory validation requires independent prospective blinded holdout evaluation.',
+    records: analysis.targetedRepairPlan.records,
+  }
+
+  await writeCanonical(planPath, repairPlanArtifact)
+
+  return {
+    ok: true,
+    outPath: rel(repoRoot, planPath),
+    hash: hashArtifact(repairPlanArtifact),
+    revisionCount: repairPlanArtifact.revisionCount,
+    artifact: repairPlanArtifact,
+  }
+}
+
 // CLI entrypoint
 const isDirectRun = process.argv[1] && import.meta.url === new URL(`file://${path.resolve(process.argv[1])}`).href
 if (isDirectRun) {
@@ -899,6 +1154,18 @@ if (isDirectRun) {
   } else if (args.includes('--analyze')) {
     analyzeScaleTranche2HumanDecisions({ repoRoot })
       .then((res) => console.log(JSON.stringify(res, null, 2)))
+      .catch((err) => {
+        console.error(err.stack || err.message)
+        process.exitCode = 1
+      })
+  } else if (args.includes('--repair-plan')) {
+    buildScaleTranche2TargetedRepairPlan({ repoRoot })
+      .then((res) => {
+        console.log('Successfully generated targeted repair plan artifact:')
+        console.log('Path:', res.outPath)
+        console.log('Hash:', res.hash)
+        console.log('Revision count:', res.revisionCount)
+      })
       .catch((err) => {
         console.error(err.stack || err.message)
         process.exitCode = 1

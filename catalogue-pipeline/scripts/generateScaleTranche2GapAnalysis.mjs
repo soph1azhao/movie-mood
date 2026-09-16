@@ -2,6 +2,7 @@ import { readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { hashArtifact, hashBytes, serializeArtifactForPersistence } from './validatePromotionContract.mjs'
+import { resolveEffectiveScaleTranche2HumanDecisions } from './scaleTranche2HumanReview.mjs'
 
 export async function buildScaleTranche2GapAnalysis({ repoRoot }) {
   const base = path.join(repoRoot, 'catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-2')
@@ -712,18 +713,314 @@ export async function buildScaleTranche2GapAnalysis({ repoRoot }) {
   }
 }
 
+/**
+ * Stage 4: Generate superseding verifier gap analysis v1.1 reflecting approved Guardians correction.
+ * Does NOT overwrite v1.
+ */
+export async function buildScaleTranche2GapAnalysisV11({ repoRoot }) {
+  const base = path.join(repoRoot, 'catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-2')
+  const v1Path = path.join(base, 'scale-tranche-2-verifier-gap-analysis.v1.json')
+  const correctionPath = path.join(base, 'human-review-adjudication-correction.v1.json')
+
+  const [audit, effectiveDecisions, routing, blind, v1Data, correctionData] = await Promise.all([
+    readFile(path.join(base, 'audit-manifest.json'), 'utf8').then(JSON.parse),
+    resolveEffectiveScaleTranche2HumanDecisions({ repoRoot }),
+    readFile(path.join(base, 'routing-manifest.json'), 'utf8').then(JSON.parse),
+    readFile(path.join(base, 'human-review-blind-packets.v1.json'), 'utf8').then(JSON.parse),
+    readFile(v1Path, 'utf8').then(JSON.parse),
+    readFile(correctionPath, 'utf8').then(JSON.parse),
+  ])
+
+  const v1Hash = hashArtifact(v1Data)
+  const correctionHash = hashArtifact(correctionData)
+
+  const CATEGORY_TAXONOMY = [
+    'unsupported concrete detail / over-concretization',
+    'unsupported plot mechanism',
+    'premature reveal / spoiler implication',
+    'external franchise lore import',
+    'unsupported geographic specificity',
+    'unsupported nationality/language specificity',
+    'unsupported genre/category specificity',
+    'character motive sharpening',
+    'relationship sharpening',
+    'factual substitution',
+    'unsupported urgency/deadline',
+    'unsupported setting/location',
+    'pretraining/external-world leakage',
+  ]
+
+  // Clone v1 annotations and update Guardians
+  const v11Annotations = JSON.parse(JSON.stringify(v1Data.records.reduce((acc, r) => {
+    acc[r.candidateId] = r.analystAnnotations
+    return acc
+  }, {})))
+
+  v11Annotations['scale500-tmdb-354556'] = {
+    status: 'REVISED_MISS',
+    defectCategories: ['unsupported concrete detail / over-concretization'],
+    responsibility: 'BOTH',
+    diagnosis: {
+      observedFailure:
+        "The whyWatch assertion of 'Russian-language' is authorized by facts.spokenLanguages: ['Russian'] (prior reviewer defect finding removed by approved human correction). The curiosityHook asserts the operatives lived in secrecy for 'decades', whereas the authorized overview states 'for years', overstating duration under Standard A'.",
+      contractEvidence:
+        'facts.spokenLanguages authorizes Russian-language. Schema v1.1 includes SCENE_OR_SCRIPT_LEVEL_EXTERNAL_DETAIL for duration discrepancies.',
+      possibleMechanisms: [
+        "Hypothesis: The verifier model missed the quantitative discrepancy between 'years' and 'decades'.",
+      ],
+      causalConfidence: 'HIGH',
+    },
+  }
+
+  const auditCandidates = audit.candidateIds
+  const decisionsById = new Map(effectiveDecisions.records.map((r) => [r.candidateId, r]))
+  const routingById = new Map(routing.records.map((r) => [r.candidateId, r]))
+  const blindById = new Map(blind.records.map((r) => [r.candidateId, r]))
+
+  const joinedRecords = []
+  let directWriterCount = 0
+  let structuralRepairCount = 0
+
+  for (const cid of auditCandidates) {
+    const dec = decisionsById.get(cid)
+    const route = routingById.get(cid)
+    const bl = blindById.get(cid)
+
+    const isStructuralRepair = route.finalEditorialArtifactPath.includes('structural-repairs')
+    if (isStructuralRepair) structuralRepairCount += 1
+    else directWriterCount += 1
+
+    const writerOutPath = path.join(base, 'execution/scale-tranche-2/writers', cid, 'output.json')
+    const repairOutPath = path.join(base, 'execution/scale-tranche-2/structural-repairs', cid, 'output.json')
+    const verifierInPath = path.join(base, 'execution/scale-tranche-2/risk-verifiers', cid, 'risk-input.json')
+    const verifierOutPath = path.join(base, 'execution/scale-tranche-2/risk-verifiers', cid, 'output.json')
+
+    const [writerOut, verifierIn, verifierOut] = await Promise.all([
+      readFile(writerOutPath, 'utf8').then(JSON.parse),
+      readFile(verifierInPath, 'utf8').then(JSON.parse),
+      readFile(verifierOutPath, 'utf8').then(JSON.parse),
+    ])
+
+    let repairOut = null
+    try {
+      repairOut = JSON.parse(await readFile(repairOutPath, 'utf8'))
+    } catch {
+      // not repaired
+    }
+
+    const isMiss = dec.decision === 'REVISE'
+    const annotation = isMiss
+      ? v11Annotations[cid]
+      : {
+          status: 'CLEAN_TRUE_NEGATIVE',
+          defectCategories: [],
+          responsibility: null,
+          diagnosis: {
+            observedFailure: null,
+            contractEvidence: 'Visible copy strictly adheres to authorized source packet and copy constraints.',
+            possibleMechanisms: [],
+            causalConfidence: 'HIGH',
+          },
+        }
+
+    joinedRecords.push({
+      candidateId: cid,
+      tmdbId: dec.tmdbId,
+      title: bl.facts.title,
+      computedFacts: {
+        routingDisposition: route.routingStatus,
+        finalEditorialOrigin: isStructuralRepair ? 'STRUCTURAL_REPAIR' : 'DIRECT_WRITER',
+        finalEditorialArtifactPath: route.finalEditorialArtifactPath,
+        finalEditorialArtifactHash: route.finalEditorialArtifactHash,
+        humanDecision: dec.decision,
+        humanSeverity: dec.severity,
+        affectedFields: dec.affectedFields,
+        humanReason: dec.reason,
+        reviewedArtifactHash: dec.reviewedArtifactHash,
+        verifierRiskLevel: verifierOut.riskLevel,
+        verifierIssues: verifierOut.issues,
+        verifierSourceBoundarySatisfied: verifierOut.sourceBoundarySatisfied,
+        sourceOverviewLength: bl.facts.overview?.length || 0,
+        sourceGenreCount: bl.facts.genres?.length || 0,
+        sourceKeywordsCount: bl.facts.keywords?.length || 0,
+        allowedKeywordsCount: verifierIn.allowedSourceMaterial.keywords?.length || 0,
+        writerCopy: writerOut.copy,
+        structuralRepairCopy: repairOut?.copy || null,
+        visibleEditorialCopy: bl.visibleEditorialCopy,
+        sourceFacts: {
+          director: bl.facts.director,
+          year: bl.facts.year,
+          runtimeMinutes: bl.facts.runtimeMinutes,
+          countries: bl.facts.countries,
+          spokenLanguages: bl.facts.spokenLanguages || [],
+          genres: bl.facts.genres || [],
+          keywords: bl.facts.keywords || [],
+          overview: bl.facts.overview,
+          allowedSourceMaterial: verifierIn.allowedSourceMaterial,
+        },
+      },
+      analystAnnotations: annotation,
+    })
+  }
+
+  // Aggregate category counts across misses
+  const categoryCounts = {}
+  for (const c of CATEGORY_TAXONOMY) categoryCounts[c] = 0
+  for (const r of joinedRecords) {
+    if (r.analystAnnotations?.defectCategories) {
+      for (const cat of r.analystAnnotations.defectCategories) {
+        categoryCounts[cat] = (categoryCounts[cat] || 0) + 1
+      }
+    }
+  }
+
+  // Aggregate affected fields counts across misses in the 30 audit records
+  const affectedFieldCounts = { curiosityHook: 0, whyWatch: 0, description: 0, vibeSummary: 0 }
+  for (const r of joinedRecords) {
+    if (r.computedFacts?.affectedFields) {
+      for (const f of r.computedFacts.affectedFields) {
+        affectedFieldCounts[f] = (affectedFieldCounts[f] || 0) + 1
+      }
+    }
+  }
+
+  // Aggregate across all 19 REVISE records in tranche
+  const totalTrancheRevisionAffectedFieldCounts = { curiosityHook: 0, whyWatch: 0, description: 0, vibeSummary: 0 }
+  for (const r of effectiveDecisions.records) {
+    if (r.decision === 'REVISE' && r.affectedFields) {
+      for (const f of r.affectedFields) {
+        totalTrancheRevisionAffectedFieldCounts[f] = (totalTrancheRevisionAffectedFieldCounts[f] || 0) + 1
+      }
+    }
+  }
+  const totalTrancheFieldInstances = Object.values(totalTrancheRevisionAffectedFieldCounts).reduce((a, b) => a + b, 0)
+
+  // Aggregate responsibility breakdown
+  const responsibilityCounts = {
+    BOTH: 0,
+    GOVERNANCE_CONTRACT_MISMATCH: 0,
+    WRITER_GENERATION_ERROR: 0,
+    VERIFIER_DETECTION_ERROR: 0,
+    SOURCE_PACKET_LIMITATION: 0,
+    UNCLEAR: 0,
+  }
+  for (const r of joinedRecords) {
+    if (r.analystAnnotations?.responsibility) {
+      responsibilityCounts[r.analystAnnotations.responsibility] =
+        (responsibilityCounts[r.analystAnnotations.responsibility] || 0) + 1
+    }
+  }
+
+  const resultV11 = {
+    schemaVersion: 'scale-tranche-2-verifier-gap-analysis.v1.1',
+    trancheId: 'SCALE_TRANCHE_2',
+    datasetClassification: 'RETROSPECTIVE_DEVELOPMENT_SET',
+    supersedes: {
+      path: 'catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-2/scale-tranche-2-verifier-gap-analysis.v1.json',
+      hash: v1Hash,
+      reason:
+        'Application of human-operator-approved adjudication correction for scale500-tmdb-354556 (Guardians), removing reviewer perception defect finding on whyWatch ("Russian-language") while retaining curiosityHook defect ("decades").',
+    },
+    approvedCorrectionBinding: {
+      path: 'catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-2/human-review-adjudication-correction.v1.json',
+      hash: correctionHash,
+    },
+    sampleIntegrity: v1Data.sampleIntegrity,
+    pipelineOriginBreakdown: v1Data.pipelineOriginBreakdown,
+    adjudicationSummary: {
+      ...v1Data.adjudicationSummary,
+      note: 'Candidate decision and severity counts remain strictly unchanged under effective adjudication.',
+    },
+    annotationProvenance: {
+      annotationPolicy: 'A_PRIME_PRODUCTION_MATERIALITY_V1_RETROSPECTIVE_AUDIT',
+      annotationVersion: 'v1.1-source-only-superseding',
+      annotationBasis:
+        'Effective human review decisions with approved correction overlay, evaluated strictly against authorized source packets without external film knowledge.',
+    },
+    defectCharacterization: {
+      categoryCounts,
+      affectedFieldCounts,
+      responsibilityCounts,
+      totalTrancheRevisionAffectedFieldCounts: {
+        ...totalTrancheRevisionAffectedFieldCounts,
+        totalFieldInstances: totalTrancheFieldInstances,
+      },
+    },
+    exploratoryAssociations: {
+      ...v1Data.exploratoryAssociations,
+      fieldConcentration: {
+        curiosityHookMissCount: `${affectedFieldCounts.curiosityHook}/16 (62.5% of misses)`,
+        whyWatchMissCount: `${affectedFieldCounts.whyWatch}/16 (31.25% of misses)`,
+        descriptionMissCount: `${affectedFieldCounts.description}/16 (31.25% of misses)`,
+        vibeSummaryMissCount: `${affectedFieldCounts.vibeSummary}/16 (6.25% of misses)`,
+      },
+    },
+    severeCaseStudy: v1Data.severeCaseStudy,
+    contractGapAssessment: v1Data.contractGapAssessment,
+    containmentStrategies: v1Data.containmentStrategies,
+    retrospectiveDevelopmentSetDesign: {
+      ...v1Data.retrospectiveDevelopmentSetDesign,
+      dataset: {
+        sampleSize: 30,
+        positiveLabels: 16,
+        negativeLabels: 14,
+        frozenHash: hashArtifact(joinedRecords),
+      },
+      validationRequirement:
+        'Any prospective claim of general verifier reliability requires an independent prospective blinded holdout in a subsequent tranche.',
+    },
+    t3GovernanceImplications: v1Data.t3GovernanceImplications,
+    records: joinedRecords,
+  }
+
+  const outPath = path.join(base, 'scale-tranche-2-verifier-gap-analysis.v1.1.json')
+  await writeFile(outPath, serializeArtifactForPersistence(resultV11))
+
+  return {
+    ok: true,
+    outPath: path.relative(repoRoot, outPath).split(path.sep).join('/'),
+    hash: hashArtifact(resultV11),
+    summary: {
+      totalRecords: joinedRecords.length,
+      directWriterCount,
+      structuralRepairCount,
+      approveClean: 14,
+      reviseMisses: 16,
+      severeMisses: 1,
+      categoryCounts,
+      affectedFieldCounts,
+      totalTrancheRevisionAffectedFieldCounts,
+      responsibilityCounts,
+    },
+  }
+}
+
 // CLI
 if (process.argv[1] && import.meta.url === new URL(`file://${path.resolve(process.argv[1])}`).href) {
   const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
-  buildScaleTranche2GapAnalysis({ repoRoot })
-    .then((res) => {
-      console.log('Successfully generated gap analysis artifact:')
-      console.log('Path:', res.outPath)
-      console.log('Hash:', res.hash)
-      console.log('Summary:', JSON.stringify(res.summary, null, 2))
-    })
-    .catch((err) => {
-      console.error(err.stack || err.message)
-      process.exitCode = 1
-    })
+  const args = process.argv.slice(2)
+  if (args.includes('--v1-only')) {
+    buildScaleTranche2GapAnalysis({ repoRoot })
+      .then((res) => {
+        console.log('Successfully generated gap analysis artifact (v1):')
+        console.log('Path:', res.outPath)
+        console.log('Hash:', res.hash)
+      })
+      .catch((err) => {
+        console.error(err.stack || err.message)
+        process.exitCode = 1
+      })
+  } else {
+    buildScaleTranche2GapAnalysisV11({ repoRoot })
+      .then((res) => {
+        console.log('Successfully generated gap analysis artifact (v1.1):')
+        console.log('Path:', res.outPath)
+        console.log('Hash:', res.hash)
+        console.log('Summary:', JSON.stringify(res.summary, null, 2))
+      })
+      .catch((err) => {
+        console.error(err.stack || err.message)
+        process.exitCode = 1
+      })
+  }
 }
