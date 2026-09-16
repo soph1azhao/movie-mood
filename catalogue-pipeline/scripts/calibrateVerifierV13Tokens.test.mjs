@@ -117,6 +117,20 @@ test('5. CLI entrypoint: unauthorized invocation fails closed with 0 calls', asy
   }
 })
 
+export function assertCountTokensProviderContract(requestBody) {
+  assert.ok(requestBody && typeof requestBody === 'object', 'CountTokens request body must be an object')
+  assert.ok(requestBody.generateContentRequest, 'CountTokens request body must contain generateContentRequest')
+  const genReq = requestBody.generateContentRequest
+  assert.equal(
+    genReq.model,
+    'models/gemini-3.8-flash',
+    'CountTokensRequest.generate_content_request.model must be specified as models/gemini-3.8-flash'
+  )
+  assert.ok(Array.isArray(genReq.contents), 'generateContentRequest must contain contents array')
+  assert.ok(genReq.systemInstruction, 'generateContentRequest must contain systemInstruction')
+  assert.ok(genReq.generationConfig, 'generateContentRequest must contain generationConfig')
+}
+
 test('6. Complete calibration run: per-record persistence before next dispatch, manifest correctness, leakage zero', async () => {
   let callsMade = 0
   const interceptedBodies = []
@@ -129,6 +143,7 @@ test('6. Complete calibration run: per-record persistence before next dispatch, 
     assert.ok(!url.includes(':generateContent'), 'generateContent must never be called')
 
     const body = JSON.parse(options.body)
+    assertCountTokensProviderContract(body)
     interceptedBodies.push(body)
 
     // Verification of per-record persistence before subsequent dispatch:
@@ -617,4 +632,74 @@ test('15. Cross-runner request-hash parity: 30/30 canonical requests and request
   }
 
   assert.equal(parityCount, 30, 'All 30 cohort records must match exactly across calibration and replay runners')
+})
+
+test('16. Provider contract mock enforces model in generateContentRequest and fails closed if omitted', async () => {
+  // 1. Direct negative assertion: omission of model fails contract check
+  const invalidBodyWithoutModel = {
+    generateContentRequest: {
+      contents: [{ role: 'user', parts: [{ text: 'test' }] }],
+      systemInstruction: { parts: [{ text: 'prompt' }] },
+      generationConfig: { temperature: 0 },
+    },
+  }
+
+  assert.throws(
+    () => assertCountTokensProviderContract(invalidBodyWithoutModel),
+    /CountTokensRequest\.generate_content_request\.model must be specified/
+  )
+
+  // 2. Mock fetch simulating live Google API contract (rejects HTTP 400 when model is missing)
+  const strictGoogleApiMockFetch = async (url, options) => {
+    const body = JSON.parse(options.body)
+    if (!body?.generateContentRequest?.model) {
+      return {
+        ok: false,
+        status: 400,
+        text: async () =>
+          JSON.stringify({
+            error: {
+              code: 400,
+              message: '* CountTokensRequest.generate_content_request.model: model is not specified\n',
+              status: 'INVALID_ARGUMENT',
+            },
+          }),
+      }
+    }
+    return {
+      ok: true,
+      status: 200,
+      text: async () => JSON.stringify({ totalTokens: 3200 }),
+    }
+  }
+
+  // The corrected runner must satisfy the strict Google API mock
+  try {
+    const res = await runVerifierV13TokenizerCalibration({
+      env: {
+        CALIBRATE_VERIFIER_V13_TOKENS_AUTHORIZATION: CALIBRATE_V13_TOKENS_AUTHORIZATION_TOKEN,
+        GEMINI_API_KEY: 'test-key-mock',
+      },
+      fetchImpl: strictGoogleApiMockFetch,
+      calibrationDir: testTempCalibrationDir,
+      tokenManifestPath: testTempManifestPath,
+      maxRecords: 1,
+      repoRoot,
+    })
+
+    assert.equal(res.ok, false)
+    assert.equal(res.status, 'CALIBRATION_INTERRUPTED')
+    assert.equal(res.completedRecords, 1)
+
+    // Verify candidate state on disk is COMPLETED, not HTTP_ERROR_TERMINAL
+    const candidateDir = path.join(testTempCalibrationDir, 'scale500-tmdb-2604')
+    const state = JSON.parse(await readFile(path.join(candidateDir, 'calibration-state.json'), 'utf8'))
+    assert.equal(state.calibrationState, 'COMPLETED')
+    assert.equal(state.countedInputTokens, 3200)
+  } finally {
+    try {
+      await rm(testTempCalibrationDir, { recursive: true, force: true })
+      await rm(testTempManifestPath, { force: true })
+    } catch {}
+  }
 })

@@ -331,9 +331,10 @@ export async function runVerifierV13TokenizerCalibration({
     })
 
     // Prepare countTokens dispatch
-    const countEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:countTokens`
+    const countEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(req.requestMetadata.modelId)}:countTokens`
     const countBody = {
       generateContentRequest: {
+        model: `models/${req.requestMetadata.modelId}`,
         contents: req.body.contents,
         systemInstruction: req.body.systemInstruction,
         generationConfig: req.body.generationConfig,
