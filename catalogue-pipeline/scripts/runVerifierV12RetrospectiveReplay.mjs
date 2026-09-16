@@ -1,10 +1,11 @@
 import { existsSync } from 'node:fs'
-import { readFile, writeFile, mkdir, rename } from 'node:fs/promises'
+import { readFile, writeFile, mkdir, rename, readdir } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { createHash } from 'node:crypto'
 import { hashArtifact, hashBytes, serializeArtifactForPersistence } from './validatePromotionContract.mjs'
 import { validateVerifierV12CandidatePayload } from './validateVerifierV12Contract.mjs'
+import { buildGemini38Request } from '../adapters/geminiEditorialProvider.mjs'
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 
@@ -125,6 +126,7 @@ export const NON_RETRYABLE_ERROR_CODES = Object.freeze(new Set([
   'HTTP_502_BAD_GATEWAY',
   'HTTP_504',
   'HTTP_504_GATEWAY_TIMEOUT',
+  'NETWORK_ERROR',
   'SCHEMA_VALID_POOR_SEMANTIC_ANSWER',
   'SEMANTIC_VALIDATION_FAILURE',
   'VALID_LOW_RISK_ON_DEFECT',
@@ -173,7 +175,9 @@ export async function verifyHashes({ repoRoot: root = repoRoot, expectedHashes =
     try {
       const parsed = JSON.parse(raw.toString('utf8'))
       canonicalHash = hashArtifact(parsed)
-    } catch {}
+    } catch (parseErr) {
+      canonicalHash = null
+    }
     return { rawHash, canonicalHash }
   }
 
@@ -199,17 +203,25 @@ export async function verifyHashes({ repoRoot: root = repoRoot, expectedHashes =
 
   check('protocol', 'canonical', results.protocol.canonicalHash, expectedHashes.protocol.canonical)
   check('protocol', 'raw', results.protocol.rawHash, expectedHashes.protocol.raw)
+
   check('cohort', 'canonical', results.cohort.canonicalHash, expectedHashes.cohort.canonical)
   check('cohort', 'raw', results.cohort.rawHash, expectedHashes.cohort.raw)
+
   check('protocolMd', 'raw', results.protocolMd.rawHash, expectedHashes.protocolMd.raw)
+
   check('candidatePrompt', 'raw', results.candidatePrompt.rawHash, expectedHashes.candidatePrompt.raw)
+
   check('candidateSchema', 'canonical', results.candidateSchema.canonicalHash, expectedHashes.candidateSchema.canonical)
   check('candidateSchema', 'raw', results.candidateSchema.rawHash, expectedHashes.candidateSchema.raw)
+
   check('candidateManifest', 'canonical', results.candidateManifest.canonicalHash, expectedHashes.candidateManifest.canonical)
   check('candidateManifest', 'raw', results.candidateManifest.rawHash, expectedHashes.candidateManifest.raw)
+
   check('candidateAddendum', 'canonical', results.candidateAddendum.canonicalHash, expectedHashes.candidateAddendum.canonical)
   check('candidateAddendum', 'raw', results.candidateAddendum.rawHash, expectedHashes.candidateAddendum.raw)
+
   check('candidateValidator', 'raw', results.candidateValidator.rawHash, expectedHashes.candidateValidator.raw)
+
   check('pricingMetadata', 'canonical', results.pricingMetadata.canonicalHash, expectedHashes.pricingMetadata.canonical)
   check('pricingMetadata', 'raw', results.pricingMetadata.rawHash, expectedHashes.pricingMetadata.raw)
 
@@ -283,6 +295,8 @@ export function buildVerifierV12ReplayPacket(riskInput) {
 
   return packet
 }
+
+export const buildSevenSurfacePacket = buildVerifierV12ReplayPacket
 
 export async function verifyCohortIntegrity({ repoRoot: root = repoRoot } = {}) {
   const cohortRaw = await readFile(COHORT_MANIFEST_PATH, 'utf8')
@@ -380,7 +394,15 @@ export function calculateCallCost({ inputTokens = 0, outputTokens = 0, thinkingT
   }
 }
 
-export function checkPreDispatchAffordability({ accumulatedCost = 0, nextCallEstimate = 0.015, costCeiling = FROZEN_CALL_LIMITS.costCeilingUsd } = {}) {
+// Conservative pre-dispatch next-call cost estimate derived from frozen historical Scale Tranche 2 risk-verifier metadata
+// (scale500-tmdb-9386: promptTokens=904, thoughtsTokens=3714, candidatesTokens=147 => $0.01515675)
+export const FROZEN_HISTORICAL_NEXT_CALL_COST_ESTIMATE_USD = 0.01515675
+
+export function checkPreDispatchAffordability({
+  accumulatedCost = 0,
+  nextCallEstimate = FROZEN_HISTORICAL_NEXT_CALL_COST_ESTIMATE_USD,
+  costCeiling = FROZEN_CALL_LIMITS.costCeilingUsd,
+} = {}) {
   return accumulatedCost + nextCallEstimate <= costCeiling
 }
 
@@ -404,6 +426,182 @@ export function shouldRetryError({
   return RETRYABLE_ERROR_CODES.has(errorCode)
 }
 
+export function extractVerifierText(rawText) {
+  if (typeof rawText !== 'string' || !rawText.trim()) return null
+  let json
+  try {
+    json = JSON.parse(rawText)
+  } catch (err) {
+    return rawText
+  }
+  if (json && typeof json === 'object' && Array.isArray(json.candidates)) {
+    const candidate = json.candidates[0]
+    const parts = candidate?.content?.parts
+    if (Array.isArray(parts)) {
+      const textPart = parts.find((p) => typeof p?.text === 'string')
+      if (textPart) {
+        return textPart.text
+      }
+    }
+    return null
+  }
+  return rawText
+}
+
+function isDeepEqual(a, b) {
+  if (a === b) return true
+  if (a === null || b === null || typeof a !== 'object' || typeof b !== 'object') return false
+  if (Array.isArray(a) !== Array.isArray(b)) return false
+  if (Array.isArray(a)) {
+    if (a.length !== b.length) return false
+    for (let i = 0; i < a.length; i += 1) {
+      if (!isDeepEqual(a[i], b[i])) return false
+    }
+    return true
+  }
+  const keysA = Object.keys(a)
+  const keysB = Object.keys(b)
+  if (keysA.length !== keysB.length) return false
+  for (const key of keysA) {
+    if (!Object.prototype.hasOwnProperty.call(b, key) || !isDeepEqual(a[key], b[key])) return false
+  }
+  return true
+}
+
+export function validateJsonSchema(data, schema, basePath = '') {
+  const errors = []
+  if (!schema || typeof schema !== 'object') return { valid: true, errors: [] }
+
+  if ('const' in schema) {
+    if (!isDeepEqual(data, schema.const)) {
+      errors.push(`${basePath || 'root'}: expected const ${JSON.stringify(schema.const)}, got ${JSON.stringify(data)}`)
+    }
+  }
+
+  if (schema.type) {
+    const expectedTypes = Array.isArray(schema.type) ? schema.type : [schema.type]
+    const actualType = Array.isArray(data)
+      ? 'array'
+      : data === null
+        ? 'null'
+        : typeof data
+
+    let typeMatches = false
+    for (const t of expectedTypes) {
+      if (t === 'integer' && typeof data === 'number' && Number.isInteger(data)) {
+        typeMatches = true
+        break
+      }
+      if (t === actualType) {
+        typeMatches = true
+        break
+      }
+    }
+    if (!typeMatches) {
+      errors.push(`${basePath || 'root'}: expected type ${expectedTypes.join('|')}, got ${actualType}`)
+      return { valid: false, errors }
+    }
+  }
+
+  if (Array.isArray(schema.enum)) {
+    if (!schema.enum.includes(data)) {
+      errors.push(`${basePath || 'root'}: value ${JSON.stringify(data)} is not in enum [${schema.enum.join(', ')}]`)
+    }
+  }
+
+  if (typeof data === 'string') {
+    if (typeof schema.minLength === 'number' && data.length < schema.minLength) {
+      errors.push(`${basePath || 'root'}: string length ${data.length} is less than minLength ${schema.minLength}`)
+    }
+    if (typeof schema.maxLength === 'number' && data.length > schema.maxLength) {
+      errors.push(`${basePath || 'root'}: string length ${data.length} is greater than maxLength ${schema.maxLength}`)
+    }
+  }
+
+  if (data !== null && typeof data === 'object' && !Array.isArray(data)) {
+    if (Array.isArray(schema.required)) {
+      for (const reqProp of schema.required) {
+        if (data[reqProp] === undefined) {
+          errors.push(`${basePath ? basePath + '.' + reqProp : reqProp}: missing required property`)
+        }
+      }
+    }
+
+    if (schema.additionalProperties === false) {
+      const allowedProps = new Set(Object.keys(schema.properties || {}))
+      for (const key of Object.keys(data)) {
+        if (!allowedProps.has(key)) {
+          errors.push(`${basePath ? basePath + '.' + key : key}: prohibited additional property`)
+        }
+      }
+    }
+
+    if (schema.properties && typeof schema.properties === 'object') {
+      for (const [propName, propSchema] of Object.entries(schema.properties)) {
+        if (data[propName] !== undefined) {
+          const subRes = validateJsonSchema(data[propName], propSchema, basePath ? `${basePath}.${propName}` : propName)
+          if (!subRes.valid) {
+            errors.push(...subRes.errors)
+          }
+        }
+      }
+    }
+  }
+
+  if (Array.isArray(data)) {
+    if (typeof schema.minItems === 'number' && data.length < schema.minItems) {
+      errors.push(`${basePath || 'root'}: array length ${data.length} is less than minItems ${schema.minItems}`)
+    }
+    if (typeof schema.maxItems === 'number' && data.length > schema.maxItems) {
+      errors.push(`${basePath || 'root'}: array length ${data.length} is greater than maxItems ${schema.maxItems}`)
+    }
+
+    if (schema.uniqueItems) {
+      const seen = new Set()
+      for (let i = 0; i < data.length; i += 1) {
+        const repr = typeof data[i] === 'object' ? JSON.stringify(data[i]) : String(data[i])
+        if (seen.has(repr)) {
+          errors.push(`${basePath}[${i}]: duplicate item in array with uniqueItems: true`)
+        }
+        seen.add(repr)
+      }
+    }
+
+    if (schema.items && typeof schema.items === 'object') {
+      for (let i = 0; i < data.length; i += 1) {
+        const itemRes = validateJsonSchema(data[i], schema.items, `${basePath}[${i}]`)
+        if (!itemRes.valid) {
+          errors.push(...itemRes.errors)
+        }
+      }
+    }
+  }
+
+  if (Array.isArray(schema.allOf)) {
+    for (let i = 0; i < schema.allOf.length; i += 1) {
+      const subRes = validateJsonSchema(data, schema.allOf[i], basePath)
+      if (!subRes.valid) {
+        errors.push(...subRes.errors)
+      }
+    }
+  }
+
+  if (schema.if && typeof schema.if === 'object' && schema.then && typeof schema.then === 'object') {
+    const ifRes = validateJsonSchema(data, schema.if, basePath)
+    if (ifRes.valid) {
+      const thenRes = validateJsonSchema(data, schema.then, basePath)
+      if (!thenRes.valid) {
+        errors.push(...thenRes.errors)
+      }
+    }
+  }
+
+  return {
+    valid: errors.length === 0,
+    errors,
+  }
+}
+
 export function classifyOutputDisposition({
   transportError = null,
   rawText = null,
@@ -419,9 +617,19 @@ export function classifyOutputDisposition({
     }
   }
 
+  const verifierText = extractVerifierText(rawText)
+  if (verifierText === null) {
+    return {
+      disposition: 'MALFORMED_JSON',
+      error: 'Empty or null verifier text',
+      isFailure: true,
+      isValid: false,
+    }
+  }
+
   let parsed
   try {
-    parsed = JSON.parse(rawText)
+    parsed = JSON.parse(verifierText)
     if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
       return {
         disposition: 'MALFORMED_JSON',
@@ -440,16 +648,15 @@ export function classifyOutputDisposition({
   }
 
   if (schema && typeof schema === 'object') {
-    const required = schema.required || []
-    for (const prop of required) {
-      if (parsed[prop] === undefined) {
-        return {
-          disposition: 'SCHEMA_INVALID',
-          error: `Missing required property '${prop}'`,
-          isFailure: true,
-          isValid: false,
-          parsed,
-        }
+    const schemaRes = validateJsonSchema(parsed, schema)
+    if (!schemaRes.valid) {
+      return {
+        disposition: 'SCHEMA_INVALID',
+        errors: schemaRes.errors,
+        error: schemaRes.errors.join('; '),
+        isFailure: true,
+        isValid: false,
+        parsed,
       }
     }
   }
@@ -492,7 +699,7 @@ export function computeTwoLayerEvaluation({ records = [] } = {}) {
   let totalHumanReviewRoutingBurdenCount = 0
 
   for (const record of records) {
-    const humanDecision = record.humanDecision
+    const humanDecision = record.humanDecision // 'APPROVE' or 'REVISE'
     const isDefect = humanDecision === 'REVISE'
     const disposition = record.disposition
 
@@ -536,9 +743,12 @@ export function computeTwoLayerEvaluation({ records = [] } = {}) {
     invalidOrFailureCount,
     validOutputRate: totalRecords > 0 ? validOutputCount / totalRecords : 0,
     confusionMatrix: { TP: tp, FN: fn, FP: fp, TN: tn },
+    apparentSensitivity: tp + fn > 0 ? tp / (tp + fn) : null,
     apparentDefectSensitivity: tp + fn > 0 ? tp / (tp + fn) : null,
     apparentSpecificity: tn + fp > 0 ? tn / (tn + fp) : null,
+    apparentPPV: tp + fp > 0 ? tp / (tp + fp) : null,
     apparentPpv: tp + fp > 0 ? tp / (tp + fp) : null,
+    apparentNPV: tn + fn > 0 ? tn / (tn + fn) : null,
     apparentNpv: tn + fn > 0 ? tn / (tn + fn) : null,
     apparentFalsePositiveRate: tn + fp > 0 ? fp / (tn + fp) : null,
   }
@@ -554,9 +764,150 @@ export function computeTwoLayerEvaluation({ records = [] } = {}) {
     cleanOverRoutingRate: totalClean > 0 ? cleanOverRoutingCount / totalClean : 0,
     totalHumanReviewRoutingBurdenCount,
     totalHumanReviewRoutingBurdenRate: totalRecords > 0 ? totalHumanReviewRoutingBurdenCount / totalRecords : 0,
+    defectiveContained: defectContainmentCount,
+    defectiveAutoPassed: totalDefects - defectContainmentCount,
+    cleanAutoPassed: cleanAutoPassCount,
+    cleanOverRouted: cleanOverRoutingCount,
+    totalHumanReviewRoutingBurden: totalHumanReviewRoutingBurdenCount,
   }
 
   return { layerA, layerB }
+}
+
+export function computeSeverityBreakdown({ records = [], cohortRecords = [] } = {}) {
+  const minorRecords = cohortRecords.filter((c) => c.humanDecision === 'REVISE' && c.severity === 'MINOR')
+  const severeRecords = cohortRecords.filter((c) => c.humanDecision === 'REVISE' && c.severity === 'SEVERE')
+
+  const recordsByCandidate = new Map(records.map((r) => [r.candidateId, r]))
+
+  let minorValidHighRisk = 0
+  let minorValidLowRisk = 0
+  let minorInvalidOrFailure = 0
+
+  for (const c of minorRecords) {
+    const r = recordsByCandidate.get(c.candidateId)
+    const disp = r?.disposition
+    if (disp === 'VALID_HIGH_RISK') minorValidHighRisk += 1
+    else if (disp === 'VALID_LOW_RISK') minorValidLowRisk += 1
+    else minorInvalidOrFailure += 1
+  }
+
+  const severeRecord = severeRecords[0]
+  let severeCaseOutcome = 'UNKNOWN'
+  if (severeRecord) {
+    const r = recordsByCandidate.get(severeRecord.candidateId)
+    const disp = r?.disposition
+    severeCaseOutcome = disp === 'VALID_LOW_RISK'
+      ? 'KNOWN_SEVERE_FAILURE_PASSED_CANDIDATE'
+      : (disp ? 'SEVERE_DEFECT_FLAGGED_OR_CONTAINED' : 'UNEXECUTED')
+  }
+
+  return {
+    reviseMinor: {
+      total: minorRecords.length,
+      validHighRisk: minorValidHighRisk,
+      validLowRisk: minorValidLowRisk,
+      invalidOrFailure: minorInvalidOrFailure,
+    },
+    reviseSevere: {
+      total: severeRecords.length,
+      candidateId: severeRecord?.candidateId || 'scale500-tmdb-14283',
+      severeCaseOutcome,
+    },
+  }
+}
+
+export function analyzeIssueConcordance({ records = [], cohortRecords = [] } = {}) {
+  const recordsByCandidate = new Map(records.map((r) => [r.candidateId, r]))
+  const candidateConcordance = []
+  const analysisReviewQueue = []
+
+  let totalHumanDefects = 0
+  let matchesHumanDefectCount = 0
+  let partialMatchCount = 0
+  let missedHumanDefectCount = 0
+
+  for (const cohortRecord of cohortRecords) {
+    const candidateId = cohortRecord.candidateId
+    const record = recordsByCandidate.get(candidateId)
+    const humanDecision = cohortRecord.humanDecision
+    const humanFields = Array.isArray(cohortRecord.effectiveAffectedFields) ? cohortRecord.effectiveAffectedFields : []
+
+    const issues = (record?.payload?.issues && Array.isArray(record.payload.issues))
+      ? record.payload.issues
+      : []
+
+    const modelFields = issues.map((i) => i.affectedField || i.field).filter(Boolean)
+
+    if (humanDecision === 'REVISE') {
+      totalHumanDefects += humanFields.length
+      for (const hField of humanFields) {
+        if (modelFields.includes(hField)) {
+          matchesHumanDefectCount += 1
+          candidateConcordance.push({
+            candidateId,
+            humanField: hField,
+            concordance: 'MATCHES_HUMAN_DEFECT',
+          })
+        } else if (modelFields.length > 0) {
+          partialMatchCount += 1
+          candidateConcordance.push({
+            candidateId,
+            humanField: hField,
+            concordance: 'PARTIAL_MATCH',
+            modelFields,
+          })
+          analysisReviewQueue.push({
+            candidateId,
+            reason: 'Model flagged defects on different fields than human effective affected field',
+            humanField: hField,
+            modelFields,
+          })
+        } else {
+          missedHumanDefectCount += 1
+          candidateConcordance.push({
+            candidateId,
+            humanField: hField,
+            concordance: 'MISSED_HUMAN_DEFECT',
+          })
+        }
+      }
+
+      for (const issue of issues) {
+        const field = issue.affectedField || issue.field
+        if (!humanFields.includes(field)) {
+          analysisReviewQueue.push({
+            candidateId,
+            reason: 'Additional model issue on defective candidate not in effectiveAffectedFields',
+            issue,
+          })
+        }
+      }
+    } else {
+      if (issues.length > 0) {
+        for (const issue of issues) {
+          analysisReviewQueue.push({
+            candidateId,
+            reason: 'Model flagged issue on clean (APPROVE) candidate',
+            issue,
+            requiresManualReview: true,
+          })
+        }
+      }
+    }
+  }
+
+  return {
+    candidateConcordance,
+    analysisReviewQueue,
+    summary: {
+      totalHumanDefects,
+      matchesHumanDefectCount,
+      partialMatchCount,
+      missedHumanDefectCount,
+      analysisReviewQueueSize: analysisReviewQueue.length,
+    },
+  }
 }
 
 export function evaluateSevereSafetyGate({ records = [] } = {}) {
@@ -596,10 +947,6 @@ export function checkSystemicInvalidStop({ records = [] } = {}) {
   }
 }
 
-// ---------------------------------------------------------------------------
-// Candidate execution state machine
-// ---------------------------------------------------------------------------
-
 export const CANDIDATE_STATES = Object.freeze({
   NOT_STARTED: 'NOT_STARTED',
   PRE_DISPATCH: 'PRE_DISPATCH',
@@ -609,366 +956,598 @@ export const CANDIDATE_STATES = Object.freeze({
   AMBIGUOUS_DISPATCH_STATE: 'AMBIGUOUS_DISPATCH_STATE',
 })
 
-function candidateLedgerPath({ candidateId, executionDir } = {}) {
-  return path.join(executionDir, `${candidateId}.ledger.json`)
-}
+export function normalizeTransportOutcome({
+  response = null,
+  status = null,
+  ok = null,
+  rawText = '',
+  error = null,
+  modelConfig = FROZEN_MODEL_CONFIG,
+} = {}) {
+  const resolvedStatus = status ?? response?.status ?? null
+  const resolvedOk = ok ?? response?.ok ?? (resolvedStatus === 200)
 
-function candidateRawResponsePath({ candidateId, executionDir, attempt = 1 } = {}) {
-  return path.join(executionDir, `${candidateId}.raw-response.attempt${attempt}.json`)
-}
+  let usageMetadata = null
+  let parsedBody = null
+  if (typeof rawText === 'string' && rawText.trim().length > 0) {
+    try {
+      parsedBody = JSON.parse(rawText)
+      if (parsedBody && typeof parsedBody === 'object') {
+        usageMetadata = parsedBody.usageMetadata || null
+      }
+    } catch (parseErr) {
+      parsedBody = null
+    }
+  }
 
-export async function loadExecutionState({ candidateId, executionDir } = {}) {
-  const p = candidateLedgerPath({ candidateId, executionDir })
-  if (!existsSync(p)) return null
-  try {
-    return JSON.parse(await readFile(p, 'utf8'))
-  } catch {
-    return null
+  let transportCategory
+  let retryable
+  let transportOutcome
+
+  if (error) {
+    transportOutcome = 'NETWORK_ERROR'
+    const message = String(error?.message || '')
+    const code = String(error?.code || '')
+    const isTimeout = error?.name === 'AbortError' || code === 'ETIMEDOUT' || /timeout/i.test(message)
+    const isConnReset = code === 'ECONNRESET' || /connection reset/i.test(message)
+
+    if (isTimeout) {
+      transportCategory = 'NETWORK_TIMEOUT'
+      retryable = true
+    } else if (isConnReset) {
+      transportCategory = 'CONNECTION_RESET'
+      retryable = true
+    } else {
+      transportCategory = 'NETWORK_ERROR'
+      retryable = false
+    }
+  } else if (resolvedStatus === 200) {
+    transportOutcome = 'SUCCESS'
+    transportCategory = 'HTTP_200'
+    retryable = false
+  } else if (resolvedStatus === 429) {
+    transportOutcome = 'HTTP_ERROR'
+    transportCategory = 'HTTP_429'
+    retryable = true
+  } else if (resolvedStatus === 500) {
+    transportOutcome = 'HTTP_ERROR'
+    transportCategory = 'HTTP_500'
+    retryable = true
+  } else if (resolvedStatus === 503) {
+    transportOutcome = 'HTTP_ERROR'
+    transportCategory = 'HTTP_503'
+    retryable = true
+  } else if (resolvedStatus === 502) {
+    transportOutcome = 'HTTP_ERROR'
+    transportCategory = 'HTTP_502'
+    retryable = false
+  } else if (resolvedStatus === 504) {
+    transportOutcome = 'HTTP_ERROR'
+    transportCategory = 'HTTP_504'
+    retryable = false
+  } else {
+    transportOutcome = 'HTTP_ERROR'
+    transportCategory = `HTTP_${resolvedStatus}`
+    retryable = false
+  }
+
+  return {
+    ok: resolvedOk,
+    status: resolvedStatus,
+    rawText: typeof rawText === 'string' ? rawText : '',
+    providerMetadata: {
+      provider: modelConfig.provider,
+      modelId: modelConfig.modelId,
+    },
+    usageMetadata,
+    transportOutcome,
+    transportCategory,
+    retryable,
+    error: error ? { message: error.message, code: error.code || null } : null,
   }
 }
 
-export async function saveExecutionState({ candidateId, executionDir, state } = {}) {
-  const p = candidateLedgerPath({ candidateId, executionDir })
-  await mkdir(executionDir, { recursive: true })
-  await writeFile(p, `${serializeArtifactForPersistence(state)}\n`, 'utf8')
-}
+export function createVerifierV12ProviderDispatch({
+  apiKey = process.env.GEMINI_API_KEY,
+  fetchImpl = globalThis.fetch,
+  modelConfig = FROZEN_MODEL_CONFIG,
+  promptText = null,
+  schema = null,
+  repoRoot: root = repoRoot,
+} = {}) {
+  return async function verifierV12ProviderDispatch(packet) {
+    if (!apiKey) {
+      const err = new Error('GEMINI_API_KEY is required for verifier v1.2 provider dispatch.')
+      err.code = 'MISSING_CREDENTIAL'
+      throw err
+    }
 
-export async function persistRawResponse({ candidateId, executionDir, rawText, attempt = 1 } = {}) {
-  const finalPath = candidateRawResponsePath({ candidateId, executionDir, attempt })
-  if (existsSync(finalPath)) {
-    const err = new Error(`Raw response already exists for candidate ${candidateId} attempt ${attempt}. Refusing to overwrite.`)
-    err.code = 'RAW_RESPONSE_EXISTS'
-    throw err
-  }
-  await mkdir(executionDir, { recursive: true })
-  await writeFile(finalPath, rawText, 'utf8')
-}
+    const resolvedPrompt = promptText || (await readFile(path.join(root, 'catalogue-pipeline/candidates/source-boundary-risk-verifier.v1.2.md'), 'utf8'))
+    const resolvedSchema = schema || JSON.parse(await readFile(path.join(root, 'catalogue-pipeline/candidates/source-boundary-risk-verifier.v1.2.schema.json'), 'utf8'))
 
-// ---------------------------------------------------------------------------
-// Real provider dispatch factory
-// ---------------------------------------------------------------------------
+    const request = buildGemini38Request({
+      modelId: modelConfig.modelId,
+      promptText: resolvedPrompt,
+      input: packet,
+      responseSchema: resolvedSchema,
+      thinkingLevel: modelConfig.thinkingLevel,
+      maxOutputTokens: modelConfig.maxOutputTokens,
+    })
+    request.body.generationConfig.temperature = modelConfig.temperature
 
-export function createRealProviderDispatch({ apiKey, schema, promptText, modelConfig = FROZEN_MODEL_CONFIG } = {}) {
-  if (!apiKey) {
-    throw new Error('createRealProviderDispatch requires apiKey')
-  }
+    let response
+    try {
+      response = await fetchImpl(request.endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-goog-api-key': apiKey,
+        },
+        body: JSON.stringify(request.body),
+      })
+    } catch (err) {
+      return normalizeTransportOutcome({
+        error: err,
+        modelConfig,
+      })
+    }
 
-  return async function providerDispatch({ packet, candidateId, tmdbId }) {
-    const request = buildCandidateV12GeminiRequest({
-      promptText,
-      packet,
-      schema,
+    const status = response.status
+    const ok = response.ok
+    const rawText = await response.text()
+
+    return normalizeTransportOutcome({
+      response,
+      status,
+      ok,
+      rawText,
       modelConfig,
     })
-
-    const response = await fetch(request.endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-goog-api-key': apiKey },
-      body: JSON.stringify(request.body),
-    })
-
-    const rawText = await response.text()
-    let usageMetadata = null
-    try {
-      const parsed = JSON.parse(rawText)
-      usageMetadata = parsed.usageMetadata || null
-    } catch {}
-
-    return {
-      ok: response.ok,
-      status: response.status,
-      rawText,
-      rawResponseHash: sha256Bytes(Buffer.from(rawText, 'utf8')),
-      requestMetadata: request.requestMetadata,
-      usageMetadata,
-    }
   }
 }
 
-// ---------------------------------------------------------------------------
-// Per-candidate execution
-// ---------------------------------------------------------------------------
-
-function classifyProviderErrorCode(err) {
-  if (!err) return 'UNKNOWN'
-  const msg = String(err.message || err)
-  if (msg.includes('ECONNRESET') || msg.includes('connection reset')) return 'CONNECTION_RESET'
-  if (msg.includes('ETIMEDOUT') || msg.includes('timeout')) return 'NETWORK_TIMEOUT'
-  if (msg.includes('ENOTFOUND') || msg.includes('getaddrinfo')) return 'NETWORK_TIMEOUT'
-  return 'PROVIDER_FAILURE'
+export function getCandidateExecutionPaths({ executionDir = EXECUTION_DIR, candidateId } = {}) {
+  if (!candidateId) throw new Error('candidateId is required.')
+  const candidateDir = path.join(executionDir, candidateId)
+  const attemptsDir = path.join(candidateDir, 'attempts')
+  const ledgerPath = path.join(candidateDir, 'ledger.json')
+  return { candidateDir, attemptsDir, ledgerPath }
 }
 
-function classifyHttpErrorCode(status) {
-  if (status === 429) return 'HTTP_429'
-  if (status === 500) return 'HTTP_500'
-  if (status === 502) return 'HTTP_502'
-  if (status === 503) return 'HTTP_503'
-  if (status === 504) return 'HTTP_504'
-  return 'PROVIDER_FAILURE'
+export function formatAttemptArtifactName(attemptNumber) {
+  return `attempt-${String(attemptNumber).padStart(3, '0')}.raw.json`
 }
 
-export async function executeCandidate({
+async function atomicWriteFile(targetPath, content) {
+  const dir = path.dirname(targetPath)
+  await mkdir(dir, { recursive: true })
+  const tempPath = `${targetPath}.tmp.${Date.now()}.${Math.random().toString(36).slice(2)}`
+  await writeFile(tempPath, content, 'utf8')
+  await rename(tempPath, targetPath)
+}
+
+async function atomicWriteJson(targetPath, data) {
+  const content = `${serializeArtifactForPersistence(data)}\n`
+  await atomicWriteFile(targetPath, content)
+}
+
+export async function executeSingleCandidateAttempt({
   record,
-  promptText,
-  schema,
+  packet,
+  attemptNumber = 1,
+  executionDir = EXECUTION_DIR,
   providerDispatch,
-  executionDir,
-  state,
-  costState,
-  counters,
-  systemicInvalidCount,
-  repoRoot: execRepoRoot = repoRoot,
+  repoRoot: root = repoRoot,
 } = {}) {
-  const { candidateId, tmdbId, sourceRiskInputByteHash, sourceRiskInputPath } = record
+  const candidateId = record?.candidateId || packet?.candidateId
+  if (!candidateId) throw new Error('candidateId is required for candidate attempt.')
+  if (typeof providerDispatch !== 'function') throw new Error('providerDispatch function is required.')
 
-  // 1. Verify source risk-input hash
-  const fullInputPath = path.isAbsolute(sourceRiskInputPath)
-    ? sourceRiskInputPath
-    : path.join(execRepoRoot, sourceRiskInputPath)
-  const rawBytes = await readFile(fullInputPath)
-  const actualHash = sha256Bytes(rawBytes)
-  if (actualHash !== sourceRiskInputByteHash) {
-    const err = new Error(`Risk input byte hash mismatch for candidate ${candidateId}`)
-    err.code = 'STOP_HASH_MISMATCH'
+  const { candidateDir, attemptsDir, ledgerPath } = getCandidateExecutionPaths({ executionDir, candidateId })
+  const artifactName = formatAttemptArtifactName(attemptNumber)
+  const attemptArtifactPath = path.join(attemptsDir, artifactName)
+  const relativeArtifactPath = path.join('attempts', artifactName)
+
+  // Fail closed if attempt artifact already exists
+  if (existsSync(attemptArtifactPath)) {
+    const err = new Error(`Attempt artifact already exists at ${attemptArtifactPath}; refusing overwrite (fail closed).`)
+    err.code = 'ATTEMPT_ARTIFACT_EXISTS'
     throw err
   }
 
-  // 2. Build leakage-clean seven-surface packet
-  const riskInput = JSON.parse(rawBytes.toString('utf8'))
-  const packet = buildVerifierV12ReplayPacket(riskInput)
+  await mkdir(attemptsDir, { recursive: true })
 
-  // 3. Check existing execution state
-  let existingState = await loadExecutionState({ candidateId, executionDir })
-  if (existingState && existingState.state === CANDIDATE_STATES.COMPLETED) {
-    return { state: existingState, skipped: true }
-  }
-  if (existingState && existingState.state === CANDIDATE_STATES.AMBIGUOUS_DISPATCH_STATE) {
-    const err = new Error(`Candidate ${candidateId} is in AMBIGUOUS_DISPATCH_STATE. Manual resolution required.`)
-    err.code = 'AMBIGUOUS_DISPATCH_STATE'
-    throw err
-  }
-  // Crash safety: if a previous run died in DISPATCH_STARTED without persisting a response,
-  // we must NOT redispatch. Mark ambiguous and surface to orchestrator.
-  if (existingState && existingState.state === CANDIDATE_STATES.DISPATCH_STARTED) {
-    const ambiguousState = {
-      ...existingState,
-      state: CANDIDATE_STATES.AMBIGUOUS_DISPATCH_STATE,
-      error: 'Recovered from DISPATCH_STARTED crash: outcome unknown',
-      completedAt: new Date().toISOString(),
-    }
-    await saveExecutionState({ candidateId, executionDir, state: ambiguousState })
-    const err = new Error(`Candidate ${candidateId} recovered from AMBIGUOUS_DISPATCH_STATE (crash during dispatch). Manual resolution required.`)
-    err.code = 'AMBIGUOUS_DISPATCH_STATE'
-    throw err
-  }
-
-  // 4-6. Verify caps
-  if (counters.totalCalls >= FROZEN_CALL_LIMITS.maxTheoreticalCalls) {
-    const err = new Error(`Total call cap reached (${FROZEN_CALL_LIMITS.maxTheoreticalCalls}).`)
-    err.code = 'STOP_CALL_CAP'
-    throw err
-  }
-  if (!checkPreDispatchAffordability({ accumulatedCost: costState.accumulatedCost })) {
-    const err = new Error(`Cost cap would be exceeded (accumulated $${costState.accumulatedCost.toFixed(4)}).`)
-    err.code = 'STOP_COST_CAP'
-    throw err
-  }
-
-  // 7. Persist PRE_DISPATCH state
-  const preDispatchState = {
+  // Read existing ledger if present
+  let ledger = {
     candidateId,
-    tmdbId,
-    state: CANDIDATE_STATES.PRE_DISPATCH,
-    attempts: 0,
-    retries: 0,
+    state: CANDIDATE_STATES.NOT_STARTED,
+    currentAttempt: attemptNumber,
+    terminalAttempt: null,
+    attempts: [],
     disposition: null,
-    inputHash: actualHash,
-    packetHash: sha256Bytes(Buffer.from(serializeArtifactForPersistence(packet), 'utf8')),
-    cost: { inputCost: 0, outputCost: 0, totalCost: 0 },
-    tokens: { inputTokens: 0, outputTokens: 0, thinkingTokens: 0 },
-    rawResponseHash: null,
-    parsedOutputHash: null,
-    validationFailures: null,
-    startedAt: new Date().toISOString(),
+    ambiguous: false,
   }
-  await saveExecutionState({ candidateId, executionDir, state: preDispatchState })
 
-  // Dispatch loop
-  let attempt = 0
-  let retries = 0
-  let lastDisposition = null
-  let lastRawText = null
-  let lastRawHash = null
-  let lastRequestMeta = null
-  let lastTokens = { inputTokens: 0, outputTokens: 0, thinkingTokens: 0 }
-
-  while (attempt < FROZEN_CALL_LIMITS.maxRetriesPerCandidate + 1) {
-    attempt += 1
-
-    // 8. Mark DISPATCH_STARTED before provider request
-    await saveExecutionState({
-      candidateId,
-      executionDir,
-      state: { ...preDispatchState, state: CANDIDATE_STATES.DISPATCH_STARTED, attempt, retries },
-    })
-
-    let dispatchResult
+  if (existsSync(ledgerPath)) {
     try {
-      dispatchResult = await providerDispatch({ packet, candidateId, tmdbId })
-    } catch (err) {
-      const errorCode = classifyProviderErrorCode(err)
-      lastDisposition = { disposition: 'PROVIDER_FAILURE', error: err.message, errorCode, isFailure: true, isValid: false }
-
-      if (shouldRetryError({ errorCode, candidateRetries: retries, batchRetries: counters.batchRetries, totalCalls: counters.totalCalls })) {
-        retries += 1
-        counters.batchRetries += 1
-        await saveExecutionState({
-          candidateId,
-          executionDir,
-          state: { ...preDispatchState, state: CANDIDATE_STATES.DISPATCH_STARTED, attempt, retries, lastErrorCode: errorCode },
-        })
-        continue
-      }
-
-      const terminalState = {
-        ...preDispatchState,
-        state: CANDIDATE_STATES.COMPLETED,
-        attempt, retries,
-        disposition: 'PROVIDER_FAILURE', error: err.message, errorCode,
-        completedAt: new Date().toISOString(),
-      }
-      await saveExecutionState({ candidateId, executionDir, state: terminalState })
-      return { state: terminalState, skipped: false }
+      ledger = JSON.parse(await readFile(ledgerPath, 'utf8'))
+    } catch (readErr) {
+      const err = new Error(`Corrupted ledger for ${candidateId}: ${readErr.message}`)
+      err.code = 'CORRUPTED_LEDGER'
+      throw err
     }
 
-    counters.totalCalls += 1
-    lastRawText = dispatchResult.rawText
-    lastRawHash = dispatchResult.rawResponseHash
-    lastRequestMeta = dispatchResult.requestMetadata
-
-    // Check HTTP-level errors (non-ok response)
-    if (!dispatchResult.ok) {
-      const httpErrorCode = classifyHttpErrorCode(dispatchResult.status)
-      lastDisposition = { disposition: 'PROVIDER_FAILURE', error: `HTTP ${dispatchResult.status}`, errorCode: httpErrorCode, isFailure: true, isValid: false }
-
-      if (shouldRetryError({ errorCode: httpErrorCode, candidateRetries: retries, batchRetries: counters.batchRetries, totalCalls: counters.totalCalls })) {
-        retries += 1
-        counters.batchRetries += 1
-        await saveExecutionState({
-          candidateId,
-          executionDir,
-          state: { ...preDispatchState, state: CANDIDATE_STATES.DISPATCH_STARTED, attempt, retries, lastErrorCode: httpErrorCode },
-        })
-        continue
-      }
-
-      const terminalState = {
-        ...preDispatchState,
-        state: CANDIDATE_STATES.COMPLETED,
-        attempt, retries,
-        disposition: 'PROVIDER_FAILURE', error: `HTTP ${dispatchResult.status}`, errorCode: httpErrorCode,
-        rawResponseHash: lastRawHash,
-        completedAt: new Date().toISOString(),
-      }
-      await saveExecutionState({ candidateId, executionDir, state: terminalState })
-      return { state: terminalState, skipped: false }
+    if (ledger.state === CANDIDATE_STATES.COMPLETED) {
+      const err = new Error(`Candidate ${candidateId} is already COMPLETED; cannot redispatch.`)
+      err.code = 'ALREADY_COMPLETED'
+      throw err
     }
 
-    // 10. Persist raw response immediately (immutable per attempt)
-    await persistRawResponse({ candidateId, executionDir, rawText: dispatchResult.rawText, attempt })
-
-    // Update state to RESPONSE_PERSISTED
-    await saveExecutionState({
-      candidateId,
-      executionDir,
-      state: { ...preDispatchState, state: CANDIDATE_STATES.RESPONSE_PERSISTED, attempt, retries, rawResponseHash: lastRawHash },
-    })
-
-    // 11-12. Parse/validate/classify
-    const disposition = classifyOutputDisposition({ rawText: dispatchResult.rawText, schema })
-
-    // Extract tokens if available
-    if (dispatchResult.usageMetadata) {
-      lastTokens = {
-        inputTokens: dispatchResult.usageMetadata.inputTokenCount || 0,
-        outputTokens: dispatchResult.usageMetadata.outputTokenCount || 0,
-        thinkingTokens: dispatchResult.usageMetadata.thoughtsTokenCount || 0,
-      }
+    if (ledger.state === CANDIDATE_STATES.AMBIGUOUS_DISPATCH_STATE) {
+      const err = new Error(`Candidate ${candidateId} is in AMBIGUOUS_DISPATCH_STATE; cannot redispatch.`)
+      err.code = 'AMBIGUOUS_DISPATCH_STATE'
+      throw err
     }
-
-    // 13. Update cost
-    const callCost = calculateCallCost(lastTokens)
-    costState.accumulatedCost += callCost.totalCost
-
-    lastDisposition = disposition
-
-    // Check retryability
-    if (disposition.isFailure) {
-      const errorCode = disposition.disposition === 'MALFORMED_JSON' ? 'MALFORMED_JSON' : disposition.disposition
-      if (shouldRetryError({ errorCode, candidateRetries: retries, batchRetries: counters.batchRetries, totalCalls: counters.totalCalls })) {
-        retries += 1
-        counters.batchRetries += 1
-        await saveExecutionState({
-          candidateId,
-          executionDir,
-          state: { ...preDispatchState, state: CANDIDATE_STATES.DISPATCH_STARTED, attempt, retries, lastErrorCode: errorCode },
-        })
-        continue
-      }
-    }
-
-    // Terminal valid or non-retryable invalid
-    const terminalState = {
-      ...preDispatchState,
-      state: CANDIDATE_STATES.COMPLETED,
-      attempt, retries,
-      disposition: disposition.disposition,
-      riskLevel: disposition.riskLevel || null,
-      validationFailures: disposition.failures || null,
-      rawResponseHash: lastRawHash,
-      parsedOutputHash: disposition.payload ? sha256Bytes(Buffer.from(serializeArtifactForPersistence(disposition.payload), 'utf8')) : null,
-      cost: { inputCost: callCost.inputCost, outputCost: callCost.outputCost, totalCost: callCost.totalCost },
-      tokens: lastTokens,
-      requestMetadata: lastRequestMeta,
-      completedAt: new Date().toISOString(),
-    }
-    await saveExecutionState({ candidateId, executionDir, state: terminalState })
-
-    if (disposition.disposition === 'SCHEMA_INVALID' || disposition.disposition === 'SEMANTICALLY_INVALID') {
-      systemicInvalidCount.count += 1
-    }
-
-    return { state: terminalState, skipped: false }
   }
 
-  // Exhausted retries without terminal — mark ambiguous
-  const ambiguousState = {
-    ...preDispatchState,
-    state: CANDIDATE_STATES.AMBIGUOUS_DISPATCH_STATE,
-    attempt, retries,
-    disposition: lastDisposition ? lastDisposition.disposition : 'PROVIDER_FAILURE',
-    rawResponseHash: lastRawHash,
-    error: 'Retries exhausted without terminal disposition',
-    completedAt: new Date().toISOString(),
+  // 1. NOT_STARTED -> PRE_DISPATCH
+  ledger.state = CANDIDATE_STATES.PRE_DISPATCH
+  ledger.currentAttempt = attemptNumber
+  await atomicWriteJson(ledgerPath, ledger)
+
+  // 2. PRE_DISPATCH -> DISPATCH_STARTED immediately before awaiting provider
+  ledger.state = CANDIDATE_STATES.DISPATCH_STARTED
+  await atomicWriteJson(ledgerPath, ledger)
+
+  // 3. Await provider dispatch
+  let transportResult
+  try {
+    transportResult = await providerDispatch(packet)
+  } catch (err) {
+    // Process interruption or unhandled crash in dispatch
+    throw err
   }
-  await saveExecutionState({ candidateId, executionDir, state: ambiguousState })
-  return { state: ambiguousState, skipped: false }
+
+  // 4. Persist immutable raw response artifact BEFORE semantic interpretation
+  if (existsSync(attemptArtifactPath)) {
+    const err = new Error(`Attempt artifact already exists at ${attemptArtifactPath}; refusing overwrite.`)
+    err.code = 'ATTEMPT_ARTIFACT_EXISTS'
+    throw err
+  }
+
+  const rawTextContent = typeof transportResult.rawText === 'string' ? transportResult.rawText : ''
+  const rawResponseHash = sha256Bytes(Buffer.from(rawTextContent, 'utf8'))
+
+  // Write attempt raw file atomically
+  await atomicWriteFile(attemptArtifactPath, rawTextContent)
+
+  // 5. DISPATCH_STARTED -> RESPONSE_PERSISTED
+  const attemptRecord = {
+    attemptNumber,
+    state: CANDIDATE_STATES.RESPONSE_PERSISTED,
+    artifactPath: relativeArtifactPath,
+    rawResponseHash,
+    status: transportResult.status,
+    ok: transportResult.ok,
+    transportOutcome: transportResult.transportOutcome,
+    transportCategory: transportResult.transportCategory,
+    retryable: transportResult.retryable,
+  }
+
+  const existingAttempts = Array.isArray(ledger.attempts) ? ledger.attempts : []
+  const attemptIndex = existingAttempts.findIndex((a) => a.attemptNumber === attemptNumber)
+  if (attemptIndex >= 0) {
+    existingAttempts[attemptIndex] = attemptRecord
+  } else {
+    existingAttempts.push(attemptRecord)
+  }
+
+  ledger.attempts = existingAttempts
+  ledger.state = CANDIDATE_STATES.RESPONSE_PERSISTED
+  await atomicWriteJson(ledgerPath, ledger)
+
+  return {
+    candidateId,
+    attemptNumber,
+    state: CANDIDATE_STATES.RESPONSE_PERSISTED,
+    artifactPath: attemptArtifactPath,
+    rawResponseHash,
+    transportResult,
+    ledger,
+  }
 }
 
-// ---------------------------------------------------------------------------
-// Mode 1 replay orchestrator
-// ---------------------------------------------------------------------------
+export async function inspectCandidateResumeState({
+  candidateId,
+  executionDir = EXECUTION_DIR,
+} = {}) {
+  const { attemptsDir, ledgerPath } = getCandidateExecutionPaths({ executionDir, candidateId })
+
+  if (!existsSync(ledgerPath)) {
+    return {
+      candidateId,
+      state: CANDIDATE_STATES.NOT_STARTED,
+      canDispatch: true,
+      resumeAction: 'DISPATCH_NEW_ATTEMPT',
+      nextAttemptNumber: 1,
+    }
+  }
+
+  let ledger
+  try {
+    ledger = JSON.parse(await readFile(ledgerPath, 'utf8'))
+  } catch (err) {
+    return {
+      candidateId,
+      state: CANDIDATE_STATES.AMBIGUOUS_DISPATCH_STATE,
+      canDispatch: false,
+      resumeAction: 'STOP_AMBIGUOUS',
+      reason: `Corrupted ledger: ${err.message}`,
+    }
+  }
+
+  if (ledger.state === CANDIDATE_STATES.COMPLETED) {
+    return {
+      candidateId,
+      state: CANDIDATE_STATES.COMPLETED,
+      canDispatch: false,
+      resumeAction: 'ALREADY_COMPLETED',
+      terminalAttempt: ledger.terminalAttempt,
+      disposition: ledger.disposition,
+    }
+  }
+
+  if (ledger.state === CANDIDATE_STATES.AMBIGUOUS_DISPATCH_STATE) {
+    return {
+      candidateId,
+      state: CANDIDATE_STATES.AMBIGUOUS_DISPATCH_STATE,
+      canDispatch: false,
+      resumeAction: 'STOP_AMBIGUOUS',
+      reason: ledger.ambiguousReason || 'Previous ambiguous dispatch state',
+    }
+  }
+
+  if (ledger.state === CANDIDATE_STATES.DISPATCH_STARTED) {
+    const attemptArtifact = path.join(attemptsDir, formatAttemptArtifactName(ledger.currentAttempt || 1))
+    if (!existsSync(attemptArtifact)) {
+      ledger.state = CANDIDATE_STATES.AMBIGUOUS_DISPATCH_STATE
+      ledger.ambiguous = true
+      ledger.ambiguousReason = `Crash uncertainty: DISPATCH_STARTED for attempt ${ledger.currentAttempt || 1} without durable response persistence.`
+      await atomicWriteJson(ledgerPath, ledger)
+
+      return {
+        candidateId,
+        state: CANDIDATE_STATES.AMBIGUOUS_DISPATCH_STATE,
+        canDispatch: false,
+        resumeAction: 'STOP_AMBIGUOUS',
+        reason: ledger.ambiguousReason,
+      }
+    }
+
+    ledger.state = CANDIDATE_STATES.RESPONSE_PERSISTED
+    await atomicWriteJson(ledgerPath, ledger)
+    return {
+      candidateId,
+      state: CANDIDATE_STATES.RESPONSE_PERSISTED,
+      canDispatch: false,
+      canInterpret: true,
+      resumeAction: 'CONTINUE_INTERPRETATION',
+      attemptNumber: ledger.currentAttempt,
+    }
+  }
+
+  if (ledger.state === CANDIDATE_STATES.RESPONSE_PERSISTED) {
+    return {
+      candidateId,
+      state: CANDIDATE_STATES.RESPONSE_PERSISTED,
+      canDispatch: false,
+      canInterpret: true,
+      resumeAction: 'CONTINUE_INTERPRETATION',
+      attemptNumber: ledger.currentAttempt,
+    }
+  }
+
+  if (ledger.state === CANDIDATE_STATES.PRE_DISPATCH) {
+    return {
+      candidateId,
+      state: CANDIDATE_STATES.PRE_DISPATCH,
+      canDispatch: true,
+      resumeAction: 'START_DISPATCH',
+      nextAttemptNumber: ledger.currentAttempt || 1,
+    }
+  }
+
+  return {
+    candidateId,
+    state: ledger.state || CANDIDATE_STATES.NOT_STARTED,
+    canDispatch: false,
+    resumeAction: 'STOP_UNKNOWN',
+    reason: `Unrecognized ledger state: ${ledger.state}`,
+  }
+}
+
+export async function markCandidateCompleted({
+  candidateId,
+  executionDir = EXECUTION_DIR,
+  terminalAttempt = 1,
+  disposition = null,
+} = {}) {
+  const { ledgerPath } = getCandidateExecutionPaths({ executionDir, candidateId })
+  if (!existsSync(ledgerPath)) {
+    throw new Error(`Cannot mark completed: ledger not found for candidate ${candidateId}`)
+  }
+  const ledger = JSON.parse(await readFile(ledgerPath, 'utf8'))
+  ledger.state = CANDIDATE_STATES.COMPLETED
+  ledger.terminalAttempt = terminalAttempt
+  ledger.disposition = disposition
+  await atomicWriteJson(ledgerPath, ledger)
+  return ledger
+}
+
+export async function reconstructExecutionCounters({
+  executionDir = EXECUTION_DIR,
+  cohort = null,
+} = {}) {
+  const state = {
+    primaryCalls: 0,
+    technicalRetries: 0,
+    totalExternalCalls: 0,
+    accumulatedCost: 0,
+    tokens: {
+      inputTokens: 0,
+      outputTokens: 0,
+      thinkingTokens: 0,
+      totalTokens: 0,
+    },
+    terminalDispositionCounts: {
+      PROVIDER_FAILURE: 0,
+      MALFORMED_JSON: 0,
+      SCHEMA_INVALID: 0,
+      SEMANTICALLY_INVALID: 0,
+      VALID_LOW_RISK: 0,
+      VALID_HIGH_RISK: 0,
+    },
+    systemicInvalidCount: 0,
+    candidateStates: new Map(),
+    completedRecords: [],
+  }
+
+  if (!existsSync(executionDir)) {
+    return state
+  }
+
+  const entries = await readdir(executionDir, { withFileTypes: true })
+  const candidateDirs = entries.filter((e) => e.isDirectory())
+
+  for (const dirEnt of candidateDirs) {
+    const candidateId = dirEnt.name
+    const candidateDir = path.join(executionDir, candidateId)
+    const ledgerPath = path.join(candidateDir, 'ledger.json')
+    const attemptsDir = path.join(candidateDir, 'attempts')
+
+    if (!existsSync(ledgerPath)) continue
+
+    let ledger
+    try {
+      ledger = JSON.parse(await readFile(ledgerPath, 'utf8'))
+    } catch (err) {
+      const error = new Error(`Corrupted ledger for candidate ${candidateId}: ${err.message}`)
+      error.code = 'CORRUPTED_LEDGER'
+      throw error
+    }
+
+    const attempts = Array.isArray(ledger.attempts) ? ledger.attempts : []
+
+    if (existsSync(attemptsDir)) {
+      const attemptFiles = (await readdir(attemptsDir)).filter((f) => f.endsWith('.raw.json'))
+      for (const file of attemptFiles) {
+        const matchingAttempt = attempts.find((a) => path.basename(a.artifactPath) === file)
+        if (!matchingAttempt) {
+          const error = new Error(`Attempt artifact ${file} exists on disk without ledger entry for candidate ${candidateId}`)
+          error.code = 'LEDGER_ARTIFACT_DISAGREEMENT'
+          throw error
+        }
+      }
+    }
+
+    for (const attempt of attempts) {
+      const attemptArtifactPath = path.isAbsolute(attempt.artifactPath)
+        ? attempt.artifactPath
+        : path.join(candidateDir, attempt.artifactPath)
+
+      if (!existsSync(attemptArtifactPath)) {
+        const error = new Error(`Attempt artifact missing at ${attemptArtifactPath} for candidate ${candidateId}`)
+        error.code = 'LEDGER_ARTIFACT_DISAGREEMENT'
+        throw error
+      }
+
+      const fileContent = await readFile(attemptArtifactPath, 'utf8')
+      const actualHash = sha256Bytes(Buffer.from(fileContent, 'utf8'))
+
+      if (actualHash !== attempt.rawResponseHash) {
+        const error = new Error(`Persisted attempt artifact hash mismatch for candidate ${candidateId} attempt ${attempt.attemptNumber}. Expected ${attempt.rawResponseHash}, got ${actualHash}`)
+        error.code = 'PERSISTED_ARTIFACT_HASH_MISMATCH'
+        throw error
+      }
+
+      if (attempt.attemptNumber === 1) {
+        state.primaryCalls += 1
+      } else {
+        state.technicalRetries += 1
+      }
+      state.totalExternalCalls += 1
+
+      let usage = attempt.usageMetadata
+      if (!usage && fileContent.trim()) {
+        try {
+          const parsed = JSON.parse(fileContent)
+          usage = parsed?.usageMetadata || null
+        } catch (parseErr) {
+          usage = null
+        }
+      }
+
+      const inTokens = usage?.promptTokenCount || 0
+      const outTokens = usage?.candidatesTokenCount || 0
+      const thinkTokens = usage?.thoughtsTokenCount || 0
+      const callCost = calculateCallCost({
+        inputTokens: inTokens,
+        outputTokens: outTokens,
+        thinkingTokens: thinkTokens,
+      })
+
+      state.tokens.inputTokens += inTokens
+      state.tokens.outputTokens += outTokens
+      state.tokens.thinkingTokens += thinkTokens
+      state.tokens.totalTokens += inTokens + outTokens + thinkTokens
+      state.accumulatedCost += callCost.totalCost
+    }
+
+    state.candidateStates.set(candidateId, ledger)
+
+    if (ledger.state === CANDIDATE_STATES.COMPLETED) {
+      const disposition = ledger.disposition
+      if (disposition && state.terminalDispositionCounts[disposition] !== undefined) {
+        state.terminalDispositionCounts[disposition] += 1
+      }
+      if (disposition === 'SCHEMA_INVALID' || disposition === 'SEMANTICALLY_INVALID') {
+        state.systemicInvalidCount += 1
+      }
+      state.completedRecords.push({
+        candidateId,
+        disposition: ledger.disposition,
+        terminalAttempt: ledger.terminalAttempt,
+      })
+    }
+  }
+
+  return state
+}
+
+export const loadExecutionState = reconstructExecutionCounters
+export const saveExecutionState = async (dir, state) => {
+  await atomicWriteJson(path.join(dir, 'execution-ledger.json'), state)
+}
+
+export function requestMode2Execution() {
+  const err = new Error('Mode 2 execution is strictly unavailable: Retrospective development replay operates under Mode 1 only.')
+  err.code = 'MODE_2_UNAVAILABLE'
+  throw err
+}
 
 export async function runMode1Replay({
   env = process.env,
-  providerDispatch = null,
+  providerDispatch,
   executionDir = EXECUTION_DIR,
-  repoRootOverride = repoRoot,
-  promptText = null,
-  schema = null,
+  repoRoot: root = repoRoot,
   cohortManifest = null,
+  costCeiling = FROZEN_CALL_LIMITS.costCeilingUsd,
+  nextCallEstimate = FROZEN_HISTORICAL_NEXT_CALL_COST_ESTIMATE_USD,
+  maxTechnicalRetriesBatch = FROZEN_CALL_LIMITS.maxTechnicalRetriesBatch,
+  maxTheoreticalCalls = FROZEN_CALL_LIMITS.maxTheoreticalCalls,
+  maxRetriesPerCandidate = FROZEN_CALL_LIMITS.maxRetriesPerCandidate,
+  systemicInvalidThreshold = 6,
 } = {}) {
-  // Authorization gate
   const auth = verifyExecutionAuthorization({ env })
   if (!auth.authorized) {
     const err = new Error(`Replay execution blocked: ${auth.reason}. ${auth.detail}`)
@@ -976,242 +1555,431 @@ export async function runMode1Replay({
     throw err
   }
 
-  // Preflight
-  await verifyHashes({ repoRoot: repoRootOverride })
-  resolveModelConfiguration({ env })
-
-  // Use injected cohort manifest if provided, otherwise verify from frozen file
-  let cohort
-  if (cohortManifest) {
-    cohort = {
-      ok: true,
-      cohortSize: cohortManifest.cohortSize,
-      records: cohortManifest.records,
-      recordAudits: cohortManifest.records.map((r) => ({
-        candidateId: r.candidateId,
-        tmdbId: r.tmdbId,
-        humanDecision: r.humanDecision,
-        severity: r.severity,
-        hashValid: true,
-        packetSurfacesValid: true,
-        leakageClean: true,
-      })),
-    }
-  } else {
-    cohort = await verifyCohortIntegrity({ repoRoot: repoRootOverride })
+  if (typeof providerDispatch !== 'function') {
+    const err = new Error('providerDispatch function is required for runMode1Replay.')
+    err.code = 'PROVIDER_DISPATCH_REQUIRED'
+    throw err
   }
 
-  // Load prompt + schema if not injected
-  const prompt = promptText || (await readFile(CANDIDATE_PROMPT_PATH, 'utf8'))
-  const validationSchema = schema || JSON.parse(await readFile(CANDIDATE_SCHEMA_PATH, 'utf8'))
-
-  // Provider dispatch
-  const dispatch = providerDispatch || createRealProviderDispatch({
-    apiKey: env.GEMINI_API_KEY,
-    schema: validationSchema,
-    promptText: prompt,
-  })
-
-  // Execution dir
   await mkdir(executionDir, { recursive: true })
 
-  const costState = { accumulatedCost: 0 }
-  const counters = { totalCalls: 0, batchRetries: 0 }
-  const systemicInvalidCount = { count: 0 }
-  const results = []
+  const resolvedPrompt = await readFile(path.join(root, 'catalogue-pipeline/candidates/source-boundary-risk-verifier.v1.2.md'), 'utf8')
+  const resolvedSchema = JSON.parse(await readFile(path.join(root, 'catalogue-pipeline/candidates/source-boundary-risk-verifier.v1.2.schema.json'), 'utf8'))
 
+  let cohort = cohortManifest
+  if (!cohort) {
+    const cohortRaw = await readFile(COHORT_MANIFEST_PATH, 'utf8')
+    cohort = JSON.parse(cohortRaw)
+  }
+
+  const state = await reconstructExecutionCounters({
+    executionDir,
+    cohort,
+  })
+
+  // Check for pre-existing AMBIGUOUS_DISPATCH_STATE in candidate ledgers
   for (const record of cohort.records) {
-    // Systemic invalid stop check BEFORE dispatch
-    if (systemicInvalidCount.count >= 6) {
-      results.push({
-        candidateId: record.candidateId,
-        state: CANDIDATE_STATES.NOT_STARTED,
-        disposition: null,
-        stoppedByRule: 'STOP_IF_SCHEMA_OR_SEMANTIC_INVALID_COUNT_GTE_6',
-        systemicInvalidCount: systemicInvalidCount.count,
-      })
-      continue
-    }
-
-    // Cost cap check BEFORE dispatch
-    if (!checkPreDispatchAffordability({ accumulatedCost: costState.accumulatedCost })) {
-      results.push({
-        candidateId: record.candidateId,
-        state: CANDIDATE_STATES.NOT_STARTED,
-        disposition: null,
-        stoppedByRule: 'STOP_COST_CAP',
-        accumulatedCost: costState.accumulatedCost,
-      })
-      continue
-    }
-
-    // Total call cap check BEFORE dispatch
-    if (counters.totalCalls >= FROZEN_CALL_LIMITS.maxTheoreticalCalls) {
-      results.push({
-        candidateId: record.candidateId,
-        state: CANDIDATE_STATES.NOT_STARTED,
-        disposition: null,
-        stoppedByRule: 'STOP_CALL_CAP',
-        totalCalls: counters.totalCalls,
-      })
-      continue
-    }
-
-    try {
-      const result = await executeCandidate({
-        record,
-        promptText: prompt,
-        schema: validationSchema,
-        providerDispatch: dispatch,
-        executionDir,
-        state: {},
-        costState,
-        counters,
-        systemicInvalidCount,
-        repoRoot: repoRootOverride,
-      })
-
-      results.push({
-        candidateId: record.candidateId,
-        state: result.state.state,
-        disposition: result.state.disposition,
-        skipped: result.skipped || false,
-        attempts: result.state.attempt || 0,
-        retries: result.state.retries || 0,
-        cost: result.state.cost || { totalCost: 0 },
-        tokens: result.state.tokens || { inputTokens: 0, outputTokens: 0, thinkingTokens: 0 },
-        rawResponseHash: result.state.rawResponseHash || null,
-        validationFailures: result.state.validationFailures || null,
-      })
-
-      // Post-response cost enforcement
-      if (!checkPostResponseCap({ accumulatedCost: costState.accumulatedCost })) {
-        const remainingIdx = cohort.records.indexOf(record)
-        for (let j = remainingIdx + 1; j < cohort.records.length; j += 1) {
-          results.push({
-            candidateId: cohort.records[j].candidateId,
-            state: CANDIDATE_STATES.NOT_STARTED,
-            disposition: null,
-            stoppedByRule: 'STOP_COST_CAP',
-          })
-        }
-        break
-      }
-    } catch (err) {
-      if (err.code === 'AMBIGUOUS_DISPATCH_STATE') {
-        results.push({
-          candidateId: record.candidateId,
-          state: CANDIDATE_STATES.AMBIGUOUS_DISPATCH_STATE,
-          disposition: null,
-          error: err.message,
-        })
-        break
-      }
-      if (err.code === 'STOP_RETRY_CAP' || err.code === 'STOP_CALL_CAP' || err.code === 'STOP_COST_CAP') {
-        results.push({
-          candidateId: record.candidateId,
-          state: CANDIDATE_STATES.NOT_STARTED,
-          disposition: null,
-          stoppedByRule: err.code,
-        })
-        const remainingIdx = cohort.records.indexOf(record)
-        for (let j = remainingIdx + 1; j < cohort.records.length; j += 1) {
-          results.push({
-            candidateId: cohort.records[j].candidateId,
-            state: CANDIDATE_STATES.NOT_STARTED,
-            disposition: null,
-            stoppedByRule: err.code,
-          })
-        }
-        break
-      }
+    const resume = await inspectCandidateResumeState({
+      candidateId: record.candidateId,
+      executionDir,
+    })
+    if (resume.state === CANDIDATE_STATES.AMBIGUOUS_DISPATCH_STATE) {
+      const err = new Error(`Replay blocked: Candidate ${record.candidateId} is in AMBIGUOUS_DISPATCH_STATE (${resume.reason || 'Crash recovery'}).`)
+      err.code = 'AMBIGUOUS_DISPATCH_STATE'
       throw err
     }
   }
 
-  // Build evaluation
-  const evaluationRecords = results
-    .filter((r) => r.disposition)
-    .map((r) => ({
-      candidateId: r.candidateId,
-      humanDecision: cohort.records.find((c) => c.candidateId === r.candidateId)?.humanDecision || 'APPROVE',
-      disposition: r.disposition,
-    }))
+  let stoppingRule = null
+  const candidateResults = []
 
-  const twoLayer = computeTwoLayerEvaluation({ records: evaluationRecords })
-  const severeCase = evaluateSevereSafetyGate({ records: evaluationRecords })
-  const systemicStop = checkSystemicInvalidStop({ records: evaluationRecords })
+  for (const cohortRecord of cohort.records) {
+    const candidateId = cohortRecord.candidateId
 
-  const finalReport = {
-    status: results.some((r) => r.state === CANDIDATE_STATES.AMBIGUOUS_DISPATCH_STATE)
-      ? 'AMBIGUOUS'
-      : systemicStop.triggered
-        ? 'STOPPED'
-        : 'COMPLETE',
-    mode: 'MODE_1_OPTION_A_ONLY',
-    candidatesAttempted: results.filter((r) => !r.skipped).length,
-    candidatesCompleted: results.filter((r) => r.state === CANDIDATE_STATES.COMPLETED).length,
-    candidatesSkipped: results.filter((r) => r.skipped).length,
-    candidatesRemaining: results.filter((r) => r.state === CANDIDATE_STATES.NOT_STARTED).length,
-    primaryCalls: counters.totalCalls - counters.batchRetries,
-    retries: counters.batchRetries,
-    totalExternalCalls: counters.totalCalls,
-    inputTokens: results.reduce((s, r) => s + (r.tokens?.inputTokens || 0), 0),
-    outputTokens: results.reduce((s, r) => s + (r.tokens?.outputTokens || 0), 0),
-    thinkingTokens: results.reduce((s, r) => s + (r.tokens?.thinkingTokens || 0), 0),
-    totalCostUsd: Number(costState.accumulatedCost.toFixed(6)),
-    dispositionCounts: results.reduce((acc, r) => {
-      if (r.disposition) acc[r.disposition] = (acc[r.disposition] || 0) + 1
-      return acc
-    }, {}),
-    systemicInvalidGate: {
-      triggered: systemicStop.triggered,
-      invalidCount: systemicStop.invalidCount,
-      threshold: systemicStop.threshold,
-    },
-    severeCaseOutcome: severeCase.evaluated ? {
-      outcome: severeCase.severeSafetyOutcome,
-      disposition: severeCase.disposition,
-      governanceEffect: severeCase.governanceEffect,
-    } : null,
-    validOutputPerformance: {
-      validOutputCount: twoLayer.layerA.validOutputCount,
-      invalidOrFailureCount: twoLayer.layerA.invalidOrFailureCount,
-      validOutputRate: twoLayer.layerA.validOutputRate,
-      confusionMatrix: twoLayer.layerA.confusionMatrix,
-      apparentSensitivity: twoLayer.layerA.apparentDefectSensitivity,
-      apparentSpecificity: twoLayer.layerA.apparentSpecificity,
-      apparentPpv: twoLayer.layerA.apparentPpv,
-      apparentNpv: twoLayer.layerA.apparentNpv,
-      apparentFalsePositiveRate: twoLayer.layerA.apparentFalsePositiveRate,
-    },
-    failClosedContainment: {
-      defectContainmentCount: twoLayer.layerB.defectContainmentCount,
-      defectContainmentRate: twoLayer.layerB.defectContainmentRate,
-      cleanAutoPassCount: twoLayer.layerB.cleanAutoPassCount,
-      cleanAutoPassRate: twoLayer.layerB.cleanAutoPassRate,
-      cleanOverRoutingCount: twoLayer.layerB.cleanOverRoutingCount,
-      cleanOverRoutingRate: twoLayer.layerB.cleanOverRoutingRate,
-      humanReviewRoutingBurdenCount: twoLayer.layerB.totalHumanReviewRoutingBurdenCount,
-      humanReviewRoutingBurdenRate: twoLayer.layerB.totalHumanReviewRoutingBurdenRate,
-    },
-    executionDir,
-    records: results,
+    const initialResume = await inspectCandidateResumeState({
+      candidateId,
+      executionDir,
+    })
+
+    if (initialResume.state === CANDIDATE_STATES.COMPLETED) {
+      const { ledgerPath, attemptsDir } = getCandidateExecutionPaths({ executionDir, candidateId })
+      const ledger = JSON.parse(await readFile(ledgerPath, 'utf8'))
+      let payload = null
+      if (ledger.terminalAttempt) {
+        try {
+          const attemptFile = path.join(attemptsDir, formatAttemptArtifactName(ledger.terminalAttempt))
+          if (existsSync(attemptFile)) {
+            const raw = await readFile(attemptFile, 'utf8')
+            const vText = extractVerifierText(raw)
+            if (vText) payload = JSON.parse(vText)
+          }
+        } catch (readErr) {
+          payload = null
+        }
+      }
+
+      candidateResults.push({
+        candidateId,
+        humanDecision: cohortRecord.humanDecision,
+        severity: cohortRecord.severity,
+        disposition: ledger.disposition,
+        terminalAttempt: ledger.terminalAttempt,
+        payload,
+        skipped: true,
+      })
+      continue
+    }
+
+    if (initialResume.state === CANDIDATE_STATES.AMBIGUOUS_DISPATCH_STATE) {
+      const err = new Error(`Replay blocked: Candidate ${candidateId} is in AMBIGUOUS_DISPATCH_STATE.`)
+      err.code = 'AMBIGUOUS_DISPATCH_STATE'
+      throw err
+    }
+
+    if (state.systemicInvalidCount >= systemicInvalidThreshold) {
+      stoppingRule = 'STOP_IF_SCHEMA_OR_SEMANTIC_INVALID_COUNT_GTE_6'
+      break
+    }
+    if (state.totalExternalCalls >= maxTheoreticalCalls) {
+      stoppingRule = 'STOP_IF_CALLS_EXCEED_CAP'
+      break
+    }
+    if (state.accumulatedCost > costCeiling) {
+      stoppingRule = 'STOP_IF_COST_EXCEEDS_CEILING'
+      break
+    }
+
+    let candidateFinished = false
+    let persistedAttemptToInterpret = null
+    let nextAttemptToDispatch = null
+    let lastFailureDisposition = 'PROVIDER_FAILURE'
+
+    if (initialResume.state === CANDIDATE_STATES.RESPONSE_PERSISTED) {
+      persistedAttemptToInterpret = initialResume.attemptNumber || 1
+    } else if (initialResume.state === CANDIDATE_STATES.PRE_DISPATCH) {
+      nextAttemptToDispatch = initialResume.nextAttemptNumber || 1
+    } else {
+      nextAttemptToDispatch = 1
+    }
+
+    while (!candidateFinished) {
+      // 1. Dispatch step
+      if (nextAttemptToDispatch !== null) {
+        const attemptNumber = nextAttemptToDispatch
+        nextAttemptToDispatch = null
+        const dispatchType = attemptNumber === 1 ? 'PRIMARY' : 'TECHNICAL_RETRY'
+
+        if (state.totalExternalCalls >= maxTheoreticalCalls) {
+          stoppingRule = 'STOP_IF_CALLS_EXCEED_CAP'
+          break
+        }
+
+        if (dispatchType === 'PRIMARY') {
+          if (state.accumulatedCost + nextCallEstimate > costCeiling) {
+            stoppingRule = 'STOP_IF_COST_EXCEEDS_CEILING'
+            break
+          }
+        } else {
+          const candidateRetries = attemptNumber - 1
+          if (candidateRetries > maxRetriesPerCandidate || state.technicalRetries >= maxTechnicalRetriesBatch) {
+            await markCandidateCompleted({
+              candidateId,
+              executionDir,
+              terminalAttempt: attemptNumber - 1,
+              disposition: lastFailureDisposition,
+            })
+            state.terminalDispositionCounts[lastFailureDisposition] =
+              (state.terminalDispositionCounts[lastFailureDisposition] || 0) + 1
+            candidateResults.push({
+              candidateId,
+              humanDecision: cohortRecord.humanDecision,
+              severity: cohortRecord.severity,
+              disposition: lastFailureDisposition,
+              terminalAttempt: attemptNumber - 1,
+            })
+            candidateFinished = true
+            break
+          }
+
+          if (state.accumulatedCost + nextCallEstimate > costCeiling) {
+            stoppingRule = 'STOP_IF_COST_EXCEEDS_CEILING'
+            await markCandidateCompleted({
+              candidateId,
+              executionDir,
+              terminalAttempt: attemptNumber - 1,
+              disposition: lastFailureDisposition,
+            })
+            state.terminalDispositionCounts[lastFailureDisposition] =
+              (state.terminalDispositionCounts[lastFailureDisposition] || 0) + 1
+            candidateResults.push({
+              candidateId,
+              humanDecision: cohortRecord.humanDecision,
+              severity: cohortRecord.severity,
+              disposition: lastFailureDisposition,
+              terminalAttempt: attemptNumber - 1,
+            })
+            candidateFinished = true
+            break
+          }
+        }
+
+        let riskInput = cohortRecord.riskInput
+        if (!riskInput && cohortRecord.sourceRiskInputPath) {
+          const fullPath = path.isAbsolute(cohortRecord.sourceRiskInputPath)
+            ? cohortRecord.sourceRiskInputPath
+            : path.join(root, cohortRecord.sourceRiskInputPath)
+          riskInput = JSON.parse(await readFile(fullPath, 'utf8'))
+        }
+        const packet = buildVerifierV12ReplayPacket(riskInput)
+
+        const attemptExec = await executeSingleCandidateAttempt({
+          record: cohortRecord,
+          packet,
+          attemptNumber,
+          executionDir,
+          providerDispatch,
+          repoRoot: root,
+        })
+
+        if (dispatchType === 'PRIMARY') {
+          state.primaryCalls += 1
+        } else {
+          state.technicalRetries += 1
+        }
+        state.totalExternalCalls += 1
+
+        const usage = attemptExec.transportResult?.usageMetadata
+        const inTokens = usage?.promptTokenCount || 0
+        const outTokens = usage?.candidatesTokenCount || 0
+        const thinkTokens = usage?.thoughtsTokenCount || 0
+        const callCost = calculateCallCost({
+          inputTokens: inTokens,
+          outputTokens: outTokens,
+          thinkingTokens: thinkTokens,
+        })
+        state.tokens.inputTokens += inTokens
+        state.tokens.outputTokens += outTokens
+        state.tokens.thinkingTokens += thinkTokens
+        state.tokens.totalTokens += inTokens + outTokens + thinkTokens
+        state.accumulatedCost += callCost.totalCost
+
+        persistedAttemptToInterpret = attemptNumber
+      }
+
+      // 2. Inspection step
+      if (persistedAttemptToInterpret !== null) {
+        const attemptNumber = persistedAttemptToInterpret
+        persistedAttemptToInterpret = null
+
+        const { attemptsDir, ledgerPath } = getCandidateExecutionPaths({ executionDir, candidateId })
+        const rawText = await readFile(path.join(attemptsDir, formatAttemptArtifactName(attemptNumber)), 'utf8')
+        const currentLedger = JSON.parse(await readFile(ledgerPath, 'utf8'))
+        const attemptEntry = currentLedger.attempts.find((a) => a.attemptNumber === attemptNumber)
+
+        const costBreachedNow = state.accumulatedCost > costCeiling
+
+        if (!attemptEntry?.ok && attemptEntry?.transportOutcome !== 'SUCCESS') {
+          const isRetryable = attemptEntry?.retryable || RETRYABLE_ERROR_CODES.has(attemptEntry?.transportCategory)
+          lastFailureDisposition = 'PROVIDER_FAILURE'
+
+          if (isRetryable && !costBreachedNow) {
+            const candidateRetries = attemptNumber
+            const canRetry = candidateRetries <= maxRetriesPerCandidate &&
+                             state.technicalRetries < maxTechnicalRetriesBatch &&
+                             state.totalExternalCalls < maxTheoreticalCalls &&
+                             (state.accumulatedCost + nextCallEstimate <= costCeiling)
+            if (canRetry) {
+              currentLedger.state = CANDIDATE_STATES.PRE_DISPATCH
+              currentLedger.currentAttempt = attemptNumber + 1
+              await atomicWriteJson(ledgerPath, currentLedger)
+
+              nextAttemptToDispatch = attemptNumber + 1
+              continue
+            }
+          }
+
+          await markCandidateCompleted({
+            candidateId,
+            executionDir,
+            terminalAttempt: attemptNumber,
+            disposition: 'PROVIDER_FAILURE',
+          })
+          state.terminalDispositionCounts.PROVIDER_FAILURE += 1
+          candidateResults.push({
+            candidateId,
+            humanDecision: cohortRecord.humanDecision,
+            severity: cohortRecord.severity,
+            disposition: 'PROVIDER_FAILURE',
+            terminalAttempt: attemptNumber,
+          })
+          candidateFinished = true
+          if (costBreachedNow) stoppingRule = 'STOP_IF_COST_EXCEEDS_CEILING'
+          break
+        }
+
+        const dispResult = classifyOutputDisposition({
+          rawText,
+          schema: resolvedSchema,
+          semanticValidator: validateVerifierV12CandidatePayload,
+        })
+
+        if (dispResult.disposition === 'MALFORMED_JSON') {
+          lastFailureDisposition = 'MALFORMED_JSON'
+          if (!costBreachedNow) {
+            const candidateRetries = attemptNumber
+            const canRetry = candidateRetries <= maxRetriesPerCandidate &&
+                             state.technicalRetries < maxTechnicalRetriesBatch &&
+                             state.totalExternalCalls < maxTheoreticalCalls &&
+                             (state.accumulatedCost + nextCallEstimate <= costCeiling)
+            if (canRetry) {
+              currentLedger.state = CANDIDATE_STATES.PRE_DISPATCH
+              currentLedger.currentAttempt = attemptNumber + 1
+              await atomicWriteJson(ledgerPath, currentLedger)
+
+              nextAttemptToDispatch = attemptNumber + 1
+              continue
+            }
+          }
+
+          await markCandidateCompleted({
+            candidateId,
+            executionDir,
+            terminalAttempt: attemptNumber,
+            disposition: 'MALFORMED_JSON',
+          })
+          state.terminalDispositionCounts.MALFORMED_JSON += 1
+          candidateResults.push({
+            candidateId,
+            humanDecision: cohortRecord.humanDecision,
+            severity: cohortRecord.severity,
+            disposition: 'MALFORMED_JSON',
+            terminalAttempt: attemptNumber,
+          })
+          candidateFinished = true
+          if (costBreachedNow) stoppingRule = 'STOP_IF_COST_EXCEEDS_CEILING'
+          break
+        }
+
+        const finalDisp = dispResult.disposition
+        await markCandidateCompleted({
+          candidateId,
+          executionDir,
+          terminalAttempt: attemptNumber,
+          disposition: finalDisp,
+        })
+        state.terminalDispositionCounts[finalDisp] = (state.terminalDispositionCounts[finalDisp] || 0) + 1
+        if (finalDisp === 'SCHEMA_INVALID' || finalDisp === 'SEMANTICALLY_INVALID') {
+          state.systemicInvalidCount += 1
+        }
+
+        candidateResults.push({
+          candidateId,
+          humanDecision: cohortRecord.humanDecision,
+          severity: cohortRecord.severity,
+          disposition: finalDisp,
+          terminalAttempt: attemptNumber,
+          payload: dispResult.payload || null,
+        })
+        candidateFinished = true
+        if (costBreachedNow) stoppingRule = 'STOP_IF_COST_EXCEEDS_CEILING'
+        break
+      }
+    }
+
+    if (stoppingRule) break
   }
 
-  // Persist final report
-  await writeFile(
-    path.join(executionDir, 'final-report.json'),
-    `${serializeArtifactForPersistence(finalReport)}\n`,
-    'utf8',
-  )
+  const twoLayer = computeTwoLayerEvaluation({ records: candidateResults })
+  const severeSafety = evaluateSevereSafetyGate({ records: candidateResults })
+  const severityBreakdown = computeSeverityBreakdown({ records: candidateResults, cohortRecords: cohort.records })
+  const concordance = analyzeIssueConcordance({ records: candidateResults, cohortRecords: cohort.records })
+  const systemicInvalid = checkSystemicInvalidStop({ records: candidateResults })
+
+  const ledgerReport = {
+    manifestId: 'verifier-v1.2-retrospective-replay-ledger.v1',
+    governanceState: 'PAUSED_FOR_SEVERE_AUDIT_MISS',
+    protocolRawByteHash: FROZEN_EXPECTED_HASHES.protocol.raw,
+    protocolCanonicalByteHash: FROZEN_EXPECTED_HASHES.protocol.canonical,
+    cohortManifestRawByteHash: FROZEN_EXPECTED_HASHES.cohort.raw,
+    cohortManifestCanonicalByteHash: FROZEN_EXPECTED_HASHES.cohort.canonical,
+    candidatePromptRawByteHash: FROZEN_EXPECTED_HASHES.candidatePrompt.raw,
+    candidateSchemaRawByteHash: FROZEN_EXPECTED_HASHES.candidateSchema.raw,
+    modelConfiguration: FROZEN_MODEL_CONFIG,
+    stoppingRule: stoppingRule || (systemicInvalid.triggered ? systemicInvalid.rule : null),
+    callAccounting: {
+      primaryCallsPlanned: FROZEN_CALL_LIMITS.primaryCallsPlanned,
+      primaryCalls: state.primaryCalls,
+      technicalRetries: state.technicalRetries,
+      totalExternalCalls: state.totalExternalCalls,
+      maxTechnicalRetriesBatch: FROZEN_CALL_LIMITS.maxTechnicalRetriesBatch,
+      maxTheoreticalCalls: FROZEN_CALL_LIMITS.maxTheoreticalCalls,
+    },
+    tokens: state.tokens,
+    accumulatedCostUsd: state.accumulatedCost,
+    costCeilingUsd: costCeiling,
+    dispositionCounts: state.terminalDispositionCounts,
+    systemicInvalidCount: state.systemicInvalidCount,
+    candidates: candidateResults,
+    twoLayerEvaluation: twoLayer,
+    severeSafetyGate: severeSafety,
+    severityBreakdown,
+    issueConcordance: concordance,
+  }
+
+  const finalReport = {
+    status: stoppingRule ? 'STOPPED' : (candidateResults.length === cohort.records.length ? 'COMPLETE' : 'PARTIAL'),
+    stoppingRule: stoppingRule || (systemicInvalid.triggered ? systemicInvalid.rule : null),
+    governanceState: 'PAUSED_FOR_SEVERE_AUDIT_MISS',
+    candidatesPlanned: cohort.records.length,
+    candidatesCompleted: candidateResults.length,
+    primaryCalls: state.primaryCalls,
+    technicalRetries: state.technicalRetries,
+    totalExternalCalls: state.totalExternalCalls,
+    tokens: state.tokens,
+    accumulatedCostUsd: state.accumulatedCost,
+    dispositionCounts: state.terminalDispositionCounts,
+    systemicInvalidCount: state.systemicInvalidCount,
+    validOutputPerformance: twoLayer.layerA,
+    failClosedContainment: twoLayer.layerB,
+    severeCaseOutcome: severeSafety.severeSafetyOutcome,
+    severityBreakdown,
+    issueConcordanceSummary: concordance.summary,
+  }
+
+  await atomicWriteJson(path.join(executionDir, 'execution-ledger.json'), ledgerReport)
+  await atomicWriteJson(path.join(executionDir, 'final-report.json'), finalReport)
 
   return finalReport
 }
 
-// ---------------------------------------------------------------------------
-// Preflight and dry-run (unchanged)
-// ---------------------------------------------------------------------------
+export async function runReplayExecution({
+  env = process.env,
+  providerDispatch = null,
+  executionDir = EXECUTION_DIR,
+  repoRoot: root = repoRoot,
+  cohortManifest = null,
+} = {}) {
+  const auth = verifyExecutionAuthorization({ env })
+  if (!auth.authorized) {
+    const err = new Error(`Replay execution blocked: ${auth.reason}. ${auth.detail}`)
+    err.code = 'EXECUTION_NOT_AUTHORIZED'
+    throw err
+  }
+
+  if (!providerDispatch) {
+    const err = new Error('Live retrospective replay execution is blocked: Real model/API calls are prohibited in Phase B. A new explicit human authorization is required after Phase B is checkpointed.')
+    err.code = 'LIVE_REPLAY_NOT_YET_AUTHORIZED'
+    throw err
+  }
+
+  return runMode1Replay({
+    env,
+    providerDispatch,
+    executionDir,
+    repoRoot: root,
+    cohortManifest,
+  })
+}
 
 export async function runPreflight({ repoRoot: root = repoRoot, env = process.env } = {}) {
   const hashes = await verifyHashes({ repoRoot: root })
@@ -1261,25 +2029,6 @@ export async function runDryRun({
   }
 
   return dryRunReport
-}
-
-// ---------------------------------------------------------------------------
-// CLI entry point
-// ---------------------------------------------------------------------------
-
-export async function runReplayExecution({
-  env = process.env,
-  providerDispatch = null,
-  executionDir = EXECUTION_DIR,
-} = {}) {
-  const auth = verifyExecutionAuthorization({ env })
-  if (!auth.authorized) {
-    const err = new Error(`Replay execution blocked: ${auth.reason}. ${auth.detail}`)
-    err.code = 'EXECUTION_NOT_AUTHORIZED'
-    throw err
-  }
-
-  return runMode1Replay({ env, providerDispatch, executionDir })
 }
 
 async function main() {
