@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "artifactId": "source-boundary-risk-verifier.v1.2.materialization-addendum.v1",
+  "title": "Candidate Verifier v1.2 Source-Evidence Materialization Addendum",
+  "status": "MATERIALIZATION_CLARIFICATION",
+  "governanceState": "PAUSED_FOR_SEVERE_AUDIT_MISS",
+  "boundSpecifications": {
+    "authorityModel": {
+      "path": "catalogue-pipeline/specs/source-boundary-authority-model.v1.json",
+      "canonicalArtifactHash": "sha256:a2b44aa6831c404fdb80d85040992ccdfeeca3d0552891e4c176853f9d48c6dd",
+      "byteHash": "sha256:234b91f17ba9928be851f67fd48efba7fbaa543af10d08665ccae7124183ec5f"
+    },
+    "schemaSpec": {
+      "path": "catalogue-pipeline/specs/source-boundary-risk-verifier.v1.2.schema-spec.json",
+      "canonicalArtifactHash": "sha256:504bc9e389da934e607302fb7ce0b7058711c1ae1cd519a794fe3ae4b44eca28",
+      "byteHash": "sha256:e4d27540f7f0cdc9452d517a87a153cd64c5a2ac83dd0d52aa86a0faf8ea6d5c"
+    },
+    "contractSpec": {
+      "path": "catalogue-pipeline/specs/source-boundary-risk-verifier.v1.2.spec.md",
+      "byteHash": "sha256:b12a45f2c1171deb7aab40095532c00e8ed12f444e363ec2529b3315a0b480ff"
+    }
+  },
+  "clarificationScope": {
+    "target": "issues.items.sourceEvidence",
+    "classification": "MATERIALIZATION_CLARIFICATION",
+    "isPolicyChange": false,
+    "isSpecificationReplacement": false
+  },
+  "explanation": {
+    "context": "The accepted schema specification (source-boundary-risk-verifier.v1.2.schema-spec.json) specified checkedAuthoritySources: string[] but omitted a dedicated structured field to capture the observed authority value, conflict, or absence required by the accepted contract specification (source-boundary-risk-verifier.v1.2.spec.md).",
+    "clarification": "The schema-spec omitted a structured representation for the accepted prose requirement that verifier issues bind inspected authority to observed support/absence/conflict. Candidate sourceEvidence materializes that already-accepted auditability requirement.",
+    "exactCandidateFieldAdded": {
+      "field": "sourceEvidence",
+      "location": "issues.items.properties.sourceEvidence",
+      "required": true,
+      "itemSchema": {
+        "source": "string (required)",
+        "supportFound": "boolean (required)",
+        "value": "any (optional)",
+        "conflictingValue": "any (optional)",
+        "notes": "string (optional)"
+      }
+    }
+  },
+  "nonEffects": {
+    "noNewRiskCategory": true,
+    "noNewClaimClass": true,
+    "noRoutingChange": true,
+    "noMaterialityPolicyChange": true,
+    "noModelBehaviorClaim": true
+  }
+}
