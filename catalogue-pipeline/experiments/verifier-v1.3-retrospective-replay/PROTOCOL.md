@@ -1,9 +1,9 @@
 # Verifier v1.3 Retrospective Development Replay Protocol
 
-**Protocol Identifier**: `verifier-v1.3-retrospective-development-replay.v1`  
-**Protocol Status**: `PREREGISTERED_NOT_EXECUTED`  
-**Governance State**: `PAUSED_FOR_SEVERE_AUDIT_MISS`  
-**Dataset Classification**: `RETROSPECTIVE_DEVELOPMENT_SET`  
+**Protocol Identifier**: `verifier-v1.3-retrospective-development-replay.v1`
+**Protocol Status**: `PREREGISTERED_NOT_EXECUTED`
+**Governance State**: `PAUSED_FOR_SEVERE_AUDIT_MISS`
+**Dataset Classification**: `RETROSPECTIVE_DEVELOPMENT_SET`
 **Evaluation Scope**: Development-set diagnostic evaluation of an execution-instrument repair. NOT prospective validation, confirmation, or production authorization.
 
 ---
