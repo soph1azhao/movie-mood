@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-25237\",\n    \"tmdbId\": 25237\n  },\n  \"copy\": {\n    \"description\": \"After German forces invade his Belarusian village, young Flyora defies his family to join Resistance fighters in the forest, only to return alongside a girl named Glasha and discover his community has been massacred.\",\n    \"whyWatch\": \"Elem Klimov directs an immersive historical war drama that confronts the nightmarish reality of survival, balancing devastating emotional weight with deliberate visual rigor.\",\n    \"curiosityHook\": \"Left alone in the wake of total devastation, how does Flyora endure as the brutal debris of war turns survival into a desperate struggle between hope and despair?\",\n    \"vibeSummary\": \"Heavy, slow, and deeply immersive. A grueling wartime experience suited for solitary, focused viewing.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"German invasion of Belarus village\",\n        \"Flyora leaving against his family's wishes to join the Resistance\",\n        \"Flyora meeting Glasha in the forest\",\n        \"Flyora returning home to find his family and villagers massacred\",\n        \"Flyora struggling to survive amidst the debris of war\"\n      ],\n      \"excludedMaterial\": [\n        \"Specific later battle outcomes\",\n        \"Subsequent character deaths\",\n        \"Third-act encounters\",\n        \"Ending sequence and final fate of Flyora or Glasha\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPVsmAjt/m02sBXNU2TJLkKiiqF4JJO21FS2rFjxCLVFdzg+yI97SGw5Lc0Vvibhi8GlWOyY4i9XLPqbhD9yjszNbm+zT1r/Nfm/YDM3GRLuP0XNaJu7Xn0ICc5Q4DwAEp"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2607,
+    "candidatesTokenCount": 417,
+    "totalTokenCount": 3024,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2607
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "mf6pasq_HK6Cz7IP4pnvqQY"
+}

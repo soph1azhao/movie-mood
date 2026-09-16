@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-13150\",\n    \"tmdbId\": 13150\n  },\n  \"copy\": {\n    \"description\": \"In a multi-generational New York policing dynasty, investigator Ray Tierney is assigned a corruption case that points directly toward his own brother-in-law, putting his family's code against the entire department.\",\n    \"whyWatch\": \"Director Gavin O'Connor grounds this 130-minute crime mystery in the agonizing friction between institutional loyalty and blood ties, giving procedural stakes a heavy moral charge.\",\n    \"curiosityHook\": \"When a case threatens to dismantle both his family's legacy and the NYPD, how far can Ray follow the evidence without destroying his own bloodline?\",\n    \"vibeSummary\": \"Heavy, suspenseful crime drama with a steady investigative pace, best suited for focused solo viewing.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Ray Tierney as investigator\",\n        \"The Tierneys as a multi-generational NYPD family\",\n        \"Corruption case involving his brother-in-law\",\n        \"Testing of family moral codes and risk to the NYPD legacy\"\n      ],\n      \"excludedMaterial\": [\n        \"Case resolution or specific culprit revelations beyond the premise\",\n        \"Character deaths or third-act betrayals\",\n        \"Ultimate outcome for the Tierney family legacy\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPAqzomQw0Mvp7vWDmHljh8lzgjjsTwatloFyWdNyg8dJ2itaQyL5kggR/4gDlZ338WRfv/bkSQvNnkYh6TVgkwpT/deLApFv+bPEnIEIhponMh3n+k5TKgBHL1E3rVW7i"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2951,
+    "candidatesTokenCount": 405,
+    "totalTokenCount": 3356,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2951
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "-_-paoqEKaLXz7IPu-yLqA8"
+}

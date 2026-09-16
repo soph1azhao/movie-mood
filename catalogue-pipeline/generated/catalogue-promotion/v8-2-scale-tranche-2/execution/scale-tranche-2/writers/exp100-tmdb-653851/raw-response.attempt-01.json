@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"exp100-tmdb-653851\",\n    \"tmdbId\": 653851\n  },\n  \"copy\": {\n    \"description\": \"Directed by J.D. Dillard, this historical drama follows two elite US Navy fighter pilots as they navigate high-stakes combat during the Korean War, forging a fateful bond tested by aerial duty.\",\n    \"whyWatch\": \"Anchored by harrowing aerial tension and deep emotional stakes, it offers a grounded, classic look at devotion and camaraderie under severe wartime pressure.\",\n    \"curiosityHook\": \"What extreme sacrifices in the skies turned these two Korean War aviators into the Navy's most celebrated wingmen?\",\n    \"vibeSummary\": \"Heavy, suspenseful historical drama with a deliberate pace and engaged emotional weight.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Korean War setting\",\n        \"Two elite US Navy fighter pilots\",\n        \"Initial combat camaraderie and danger\",\n        \"General premise of sacrifice and brotherhood\"\n      ],\n      \"excludedMaterial\": [\n        \"Specific details of their final missions\",\n        \"Which pilot dies or is shot down\",\n        \"Exact third-act rescue attempts\",\n        \"Historical post-war revelations\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPZquG1qviJmsTZLk5UOuCh5lqS5U+2I/KcShcQA72jSZVpCdI4mGnZtX0vWqHsRTVqiEho+1ADa5uSyDtQLBLATBvEazT2aEMQZVLGB+9dseR3HQDreUPhBb8J+rrbuRl"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2732,
+    "candidatesTokenCount": 375,
+    "totalTokenCount": 3107,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2732
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "r_6papnOCZehz7IPsNuRqQ8"
+}

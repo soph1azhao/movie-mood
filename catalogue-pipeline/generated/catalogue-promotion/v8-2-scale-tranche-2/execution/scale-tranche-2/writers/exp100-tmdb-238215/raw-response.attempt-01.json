@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"exp100-tmdb-238215\",\n    \"tmdbId\": 238215\n  },\n  \"copy\": {\n    \"description\": \"Weary of his daily routine in his family's generational New York repair shop, Max Simkin unearths a magical heirloom that lets him step into the lives of his customers and experience the city from new perspectives.\",\n    \"whyWatch\": \"Directed by Tom McCarthy, this offbeat fable blends comedy and urban drama, using a whimsical body-swapping conceit to explore identity and quiet self-discovery.\",\n    \"curiosityHook\": \"When an ordinary cobbler gains the power to inhabit anyone whose shoes he mends, what will living as other people reveal about his own life?\",\n    \"vibeSummary\": \"Engaged and thoughtful, mixing gentle fantasy with comedic warmth and grounded drama for an introspective solo watch.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Max Simkin's role repairing shoes in a generational New York shop\",\n        \"Disenchantment with daily life\",\n        \"Discovery of the magical heirloom\",\n        \"Stepping into customers' lives and perspectives\"\n      ],\n      \"excludedMaterial\": [\n        \"Specific customer subplots or criminal entanglements\",\n        \"Gang leader encounters\",\n        \"Third-act resolutions\",\n        \"Endings or final revelations regarding the heirloom\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIP46BJM1b7GGvv8nI0OaUlznPL1qswRTeR790JN+uv8RmU36DIRcxcszvojG4lvzn+nPI3By89UyDVc8qPa2gathbN0j9EIuTooPYph34snvrzxEkQlag8uOpAdH1lNwB8"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2736,
+    "candidatesTokenCount": 411,
+    "totalTokenCount": 3147,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2736
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "8_6pasaAKrSFz7IP0Iux2Qo"
+}

@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-399366\",\n    \"tmdbId\": 399366\n  },\n  \"copy\": {\n    \"description\": \"In Sergio G. Sánchez's mystery thriller, a young man and his three younger siblings try to shelter together in a sprawling rural manor, only to find themselves tormented by an ominous presence.\",\n    \"whyWatch\": \"A deliberate blend of horror, mystery, and heavy drama, this haunted-estate tale builds dread through classic suspense and protective sibling bonds.\",\n    \"curiosityHook\": \"What sinister force lingers within the rambling walls of the manor, and can the siblings withstand whatever is stalking them?\",\n    \"vibeSummary\": \"Heavy, suspenseful, and steadily paced; best suited for an attentive solo watch immersed in quiet dread.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Four siblings living together in a sprawling manor\",\n        \"Sinister presence tormenting the household\",\n        \"Sergio G. Sánchez directing\",\n        \"Horror, mystery, thriller genre framework\",\n        \"Engaged, suspenseful, heavy solitary viewing tone\"\n      ],\n      \"excludedMaterial\": [\n        \"Mother's death or backstory details\",\n        \"Identity or origin of the presence or intruder\",\n        \"Specific plot twists, reveals, or third-act events\",\n        \"Fate of any sibling\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPg7xEQ5mXtcYHruqzxa8fdJf8KZEWmPTAX2ts1H9RovtdDgsivraHzmrZ67/R/9hvkAxN40bZZhDNDyjva9Y3WnsVXQ7j0AED0lQRor1KZORUHPWHOlt2L20MKV4v3AMN"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2517,
+    "candidatesTokenCount": 406,
+    "totalTokenCount": 2923,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2517
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "oP-paoTYBrvUz7IP3cXG0As"
+}

@@ -185,7 +185,7 @@ test('15. Guardrail consistency: hardModelCallCap >= theoreticalMaximumModelCall
   // theoreticalMaximumModelCalls = writer max + structural repair max + verifier max
   const expectedSum = g.writerCallsMaximum + g.structuralRepairCallsMaximum + g.riskVerifierCallsMaximum
   assert.equal(g.theoreticalMaximumModelCalls, expectedSum)
-  assert.equal(g.theoreticalMaximumModelCalls, 450)
+  assert.equal(g.theoreticalMaximumModelCalls, 451)
 
   // hardModelCallCap >= theoreticalMaximumModelCalls
   assert.ok(g.hardModelCallCap >= g.theoreticalMaximumModelCalls, `hardModelCallCap (${g.hardModelCallCap}) must be >= theoreticalMaximumModelCalls (${g.theoreticalMaximumModelCalls})`)
@@ -205,7 +205,7 @@ test('16. Cost ceiling guardrail logic covers theoretical worst-case model calls
   // Cost ceiling covers pessimistic theoretical cost (all 150 repairs used)
   assert.ok(g.costCeilingUSD >= g.pessimisticTheoreticalUSD, `costCeilingUSD ($${g.costCeilingUSD}) must be >= pessimisticTheoreticalUSD ($${g.pessimisticTheoreticalUSD})`)
   assert.equal(g.costCeilingUSD, 2.00)
-  assert.equal(g.pessimisticTheoreticalUSD, 1.591)
+  assert.equal(g.pessimisticTheoreticalUSD, 1.595)
 })
 
 test('17. Fail-closed behavior: hardModelCallCap below theoretical maximum throws error', async () => {
@@ -217,27 +217,29 @@ test('17. Fail-closed behavior: hardModelCallCap below theoretical maximum throw
     auditSeed: 'seed',
     selectedCandidateIds: Array.from({ length: 150 }, (_, i) => `c-${i}`),
     cohortManifestHash: 'sha256:dummy',
-    writerCallsMaximum: 150,
+    normalWriterCallCap: 150,
+    ambiguousRecoveryWriterCallCap: 1,
+    writerCallsMaximum: 151,
     structuralRepairCallsMaximum: 150,
     riskVerifierCallsMaximum: 150,
   }
 
-  // 400 is below 450 -> must throw
+  // 400 is below 451 -> must throw
   assert.throws(() => buildExecutionPlan({
     ...basePlanArgs,
     hardModelCallCap: 400,
-  }), /hardModelCallCap \(400\) must be at least theoreticalMaximumModelCalls \(450\)/)
+  }), /hardModelCallCap \(400\) must be at least theoreticalMaximumModelCalls \(451\)/)
 
-  // 449 is below 450 -> must throw
+  // 450 is below 451 -> must throw
   assert.throws(() => buildExecutionPlan({
     ...basePlanArgs,
-    hardModelCallCap: 449,
-  }), /hardModelCallCap \(449\) must be at least theoreticalMaximumModelCalls \(450\)/)
+    hardModelCallCap: 450,
+  }), /hardModelCallCap \(450\) must be at least theoreticalMaximumModelCalls \(451\)/)
 
-  // 450 is equal to 450 -> must succeed
+  // 451 is equal to 451 -> must succeed
   assert.doesNotThrow(() => buildExecutionPlan({
     ...basePlanArgs,
-    hardModelCallCap: 450,
+    hardModelCallCap: 451,
   }))
 })
 

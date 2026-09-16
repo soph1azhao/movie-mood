@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"exp100-tmdb-10404\",\n    \"tmdbId\": 10404\n  },\n  \"copy\": {\n    \"description\": \"In 1920s China, nineteen-year-old Songlian enters a powerful master's estate as a concubine, finding herself forced into a calculated rivalry against his three existing wives for status and household privilege.\",\n    \"whyWatch\": \"Zhang Yimou orchestrates a heavy, emotionally charged period drama exploring the oppressive costs of survival and scarce favor within an insular household.\",\n    \"curiosityHook\": \"As daily privileges are tied to one man's favor, what tactics must Songlian adopt to navigate three entrenched rivals who already understand the game?\",\n    \"vibeSummary\": \"A thoughtful, emotionally heavy drama centered on claustrophobic household rivalry and deliberate psychological friction.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Setting in 1920s China\",\n        \"Songlian being a 19-year-old concubine\",\n        \"Entering the household of a powerful lord\",\n        \"Forced competition with three wives for privileges and status\"\n      ],\n      \"excludedMaterial\": [\n        \"Any mention of character madness, executions, or deaths\",\n        \"Specific plot betrayals, illnesses, or third-act outcomes\",\n        \"The conclusion of the wives' rivalry and ultimate fates\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIP9jBg9O3Pf1js/L4zUBDxOiSp1GqVsFnJ5mbC5o4pUpGx/4WeM52oDU85JjBysCKXMwyprq70cJVHaP6sr2rEkG8wAvcTFtWMIwNUxkUqT5z3ceGnSvr549UPvBdGvG9c"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2817,
+    "candidatesTokenCount": 412,
+    "totalTokenCount": 3229,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2817
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "Bf2pav2oCs3iz7IPq6CieQ"
+}

@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-256040\",\n    \"tmdbId\": 256040\n  },\n  \"copy\": {\n    \"description\": \"Raised in a secluded village, the exceptionally gifted Shivudu crosses paths with warrior princess Avanthika and ventures forth to liberate an imprisoned queen, unearthing his own forgotten heritage along the way.\",\n    \"whyWatch\": \"Directed by S. S. Rajamouli, this sweeping action epic blends propulsive heroic momentum with rich emotional drama, staging a high-stakes rescue fueled by ancient kingdom intrigue.\",\n    \"curiosityHook\": \"Shivudu steps forward to free a queen held captive for twenty-five years, but the mission inevitably forces the revelation of where he truly comes from.\",\n    \"vibeSummary\": \"Exciting, fast-moving, and emotionally weighty. An engaged, high-energy spectacle built for shared viewing with friends or family.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Shivudu raised as a foundling with exceptional gifts\",\n        \"Meeting warrior princess Avanthika\",\n        \"The mission to rescue a queen captive for 25 years\",\n        \"Shivudu discovering his own origins during the journey\",\n        \"Direction by S. S. Rajamouli and ancient kingdom action-drama setting\"\n      ],\n      \"excludedMaterial\": [\n        \"Specific details of Shivudu's true lineage and royal identity\",\n        \"Bāhubali backstory and flashbacks beyond initial premise\",\n        \"Climax, resolutions, and cliffhangers\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIP93QYmxCArp46oBoI5naiH5/bBEvNVkuNvEco5cTldt8eyILE3XQBQSRevp/5FvNc3yC6uDq4U8ETr4VqLllZlKriDvhI4Rm+vd43IXvCgJDCcqEWiVI2/nFRZHNCKN1t"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 3032,
+    "candidatesTokenCount": 442,
+    "totalTokenCount": 3474,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3032
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "qP-paqbeJ4TSz7IPrI60qQ8"
+}

@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-407451\",\n    \"tmdbId\": 407451\n  },\n  \"copy\": {\n    \"description\": \"Following her scientist father's sudden disappearance, young Meg embarks on an interstellar search alongside her brother and friend after three mysterious beings send them voyaging across space.\",\n    \"whyWatch\": \"Directed by Ava DuVernay, this imaginative adventure blends family drama with sweeping cosmic fantasy, delivering an earnest, visually driven quest across space.\",\n    \"curiosityHook\": \"What cosmic truths await across the stars, and where will the trail to Meg's missing father lead?\",\n    \"vibeSummary\": \"An exciting, medium-paced family space quest balancing adventurous wonder with moderate emotional stakes.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"disappearance of Meg's scientist father\",\n        \"three peculiar beings dispatching Meg, her brother, and friend\",\n        \"journey into space on a search mission\",\n        \"Ava DuVernay direction\",\n        \"family adventure and science fiction genre framing\"\n      ],\n      \"excludedMaterial\": [\n        \"fate of the father\",\n        \"specific destinations or planetary encounters\",\n        \"identities and true nature of the beings\",\n        \"third-act resolutions and ending\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPyzS5+zZ9R13vu+1RjlfMN4gKT91dj95NhagnOYv6NA9U2+1gwrQSaytl1dsRDTjEXu7RWnNRde2LFTllLqm+Xoq9UXEvoY1YsvS4w6ckZWQcyOj9+MGN96SLxOYy4Kh4"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2461,
+    "candidatesTokenCount": 391,
+    "totalTokenCount": 2852,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2461
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "Nf2parcnhO3Psg_BiOZA"
+}

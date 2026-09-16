@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-15152\",\n    \"tmdbId\": 15152\n  },\n  \"copy\": {\n    \"description\": \"In 1955, French secret agent OSS 117 heads to Cairo to look into the mysterious disappearance of his fellow operative and close friend Jack Jefferson, quickly blundering into a dense web of international intrigue.\",\n    \"whyWatch\": \"Directed by Michel Hazanavicius, this stylish action-comedy combines globe-trotting 1950s espionage with quick, witty humor and dynamic mid-century intrigue.\",\n    \"curiosityHook\": \"What happened to Jack Jefferson in Cairo, and how deep does the conspiracy go once OSS 117 begins asking questions?\",\n    \"vibeSummary\": \"Fast-moving, light, and exciting retro espionage comedy that delivers brisk fun without heavy emotional drag.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Setting in 1955 Cairo\",\n        \"Protagonist Hubert Bonisseur de La Bath / OSS 117\",\n        \"Disappearance of fellow spy and best friend Jack Jefferson\",\n        \"Initial plunge into international intrigue\"\n      ],\n      \"excludedMaterial\": [\n        \"Specific conspirators or villains unmasked\",\n        \"Resolution of Jack Jefferson's disappearance\",\n        \"Third-act action set pieces and climax\",\n        \"Final fate of OSS 117 and mission outcome\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPxmyAJ/B5mjyL1l6pRO86PPmwujov536BbSny9Q9cHrMGUjXV6lntenK/dHm9pk/dHkV2METSVBUezeYnEfZbjOj3dCcUdk1MSKDm3Owyrn9lTMvgulL0vjLYjgKfEc21"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2608,
+    "candidatesTokenCount": 420,
+    "totalTokenCount": 3028,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2608
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "Wv-papjZN7uhz7IPsePRsQc"
+}

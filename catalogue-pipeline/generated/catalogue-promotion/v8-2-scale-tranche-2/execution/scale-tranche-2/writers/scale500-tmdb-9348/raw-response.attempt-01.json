@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-9348\",\n    \"tmdbId\": 9348\n  },\n  \"copy\": {\n    \"description\": \"After SETI scientists follow extraterrestrial instructions to splice alien genetic code with human DNA, they produce Sil, an alluring hybrid who swiftly morphs into an armour-plated killing machine.\",\n    \"whyWatch\": \"Roger Donaldson fuses speculative bio-thriller curiosity with fast-escalating sci-fi horror, staging a lethal cat-and-mouse threat powered by terrifying rapid transformations.\",\n    \"curiosityHook\": \"When an intercepted interstellar transmission teaches human scientists how to engineer an alien hybrid, can they survive the lethal organism they brought to life?\",\n    \"vibeSummary\": \"Suspenseful, kinetic sci-fi horror balancing high-stakes thrills with an adventurous, engaged watch.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"SETI project alien DNA transmission\",\n        \"human-alien DNA splicing premise\",\n        \"Sil's character and dual nature as a beautiful woman and armored killing machine\",\n        \"initial conflict of creating a deadly hybrid\"\n      ],\n      \"excludedMaterial\": [\n        \"escape details\",\n        \"hunt outcomes\",\n        \"specific character deaths\",\n        \"third-act transformations\",\n        \"ending resolution\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPByfVaDw5w42YoQpzad4sbP0BdJsjGLJnYRZC1M0A1bIF0xm+qoRq+m4QdmSsrNcBLSfh+pposqBy4ztIm93bnfn900IIpMDwM6H9rolVWsozIVCFK6PXrV6PUZdxGz9j"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2799,
+    "candidatesTokenCount": 391,
+    "totalTokenCount": 3190,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2799
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "yv6pasbmL4TSz7IPrI60qQ8"
+}

@@ -1,0 +1,32 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"riskLevel\": \"LOW_RISK\",\n  \"riskCategories\": [],\n  \"issues\": [],\n  \"sourceBoundarySatisfied\": true\n}",
+            "thoughtSignature": "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"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 869,
+    "candidatesTokenCount": 37,
+    "totalTokenCount": 1367,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 869
+      }
+    ],
+    "thoughtsTokenCount": 461,
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "Tf6pauqsCr6Hz7IPurnt8Ak"
+}

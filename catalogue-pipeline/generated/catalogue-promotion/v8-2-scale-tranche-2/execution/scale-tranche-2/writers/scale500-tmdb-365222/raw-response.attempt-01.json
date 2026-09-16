@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-365222\",\n    \"tmdbId\": 365222\n  },\n  \"copy\": {\n    \"description\": \"In 1950s Hong Kong, Master Ip is forced into action when brutal gangsters directed by a crooked property developer launch an aggressive bid to seize control of the city.\",\n    \"whyWatch\": \"Wilson Yip delivers a fast-moving martial arts drama that pairs kinetic combat choreography with genuine emotional weight and high-stakes neighborhood conflict.\",\n    \"curiosityHook\": \"When ruthless developers send violent crews to claim the city, can Master Ip's principled defense halt an organized criminal syndicate?\",\n    \"vibeSummary\": \"Exciting and fast-paced martial arts action grounded by personal drama, built for an engaging watch alone or with friends.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"1950s Hong Kong setting\",\n        \"Master Ip as central subject\",\n        \"crooked property developer and gangsters making a play to take over the city\",\n        \"Master Ip taking a stand against the syndicate\"\n      ],\n      \"excludedMaterial\": [\n        \"resolution of the property dispute\",\n        \"fight outcomes and specific climactic duels\",\n        \"third-act character fates or late revelations\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPCoS4dyBUy8XfqcDwTfSwPH7D+DD220KBShZz/xt3n30UQ4VmWIIporH/gNzbmW/NVAKgfSJmQD9AK8i24fyO6W5079jUdgaWee1xfQVk5D8iooFVAR9WZxeNuJY9TAHy"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2652,
+    "candidatesTokenCount": 389,
+    "totalTokenCount": 3041,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2652
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "lf6paovVC6OHz7IPp9OO-QQ"
+}

@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-535167\",\n    \"tmdbId\": 535167\n  },\n  \"copy\": {\n    \"description\": \"Facing an expanding Sun that threatens extinction within a century, humanity bands together to build colossal planetary thrusters and propel Earth itself across space toward a distant solar system.\",\n    \"whyWatch\": \"Director Frant Gwo delivers grand-scale apocalyptic science fiction, grounding a high-stakes planetary voyage in urgent collective survival and relentless kinetic energy.\",\n    \"curiosityHook\": \"When survival requires dislodging the entire globe from orbit, what hazards await a civilization traveling through deep space?\",\n    \"vibeSummary\": \"Fast-paced and suspenseful sci-fi spectacle with heavy extinction stakes, perfect for engaged group viewing.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Expanding Sun extinction threat\",\n        \"United mankind's planetary thruster plan\",\n        \"Journey across space toward a new home light-years away\",\n        \"Underground cities and frozen Earth premise\",\n        \"High-stakes action, drama, and survival pace\"\n      ],\n      \"excludedMaterial\": [\n        \"Jupiter gravitational crisis specifics and outcomes\",\n        \"Late-stage mission sacrifices and character deaths\",\n        \"Resolution of the journey to the new home\",\n        \"Third-act tactical solutions and final outcomes\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPCovoI/EOOmNK/SmlhhNUOQql/QDHwp0uJ6PDTKyIRBOHoh8O5+d4/tJ+0ypqlRzmo98yjkPvaTqth7GO3hGGFmcbJszXBlAdZ5/GFr7yg/XRrJpzuaBjsIVuNikV10QM"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2886,
+    "candidatesTokenCount": 404,
+    "totalTokenCount": 3290,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2886
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "5_yparOEFqOJz7IP6YqDgAU"
+}

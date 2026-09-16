@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-11351\",\n    \"tmdbId\": 11351\n  },\n  \"copy\": {\n    \"description\": \"Stranded on an empty stretch of road after their bus breaks down, a squad of high school athletes finds themselves cornered by a lethal adversary they cannot hope to defeat.\",\n    \"whyWatch\": \"Delivering lean, suspenseful creature-feature dread, this isolated survival horror pits a vulnerable group against an unrelenting predatory force in a desperate standoff.\",\n    \"curiosityHook\": \"Cut off from help on a desolate highway, how can a team of teenagers outlast a foe that seems completely impossible to beat?\",\n    \"vibeSummary\": \"Tense, contained horror paced with steady suspense and moderate emotional weight, built for an engaged night in with friends.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"high school athletic team stranded on a deserted road\",\n        \"broken down bus premise\",\n        \"encountering an undefeatable lethal adversary\",\n        \"survival horror stakes\"\n      ],\n      \"excludedMaterial\": [\n        \"identity or lore of the creature beyond what is in the overview\",\n        \"specific character deaths\",\n        \"farm or scarecrow subplots\",\n        \"ending or final outcomes\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPKoT6WY4BZM+jm1WO5WxIhl16LgutaIHTeQGeg9m6TbxLKhv0iMxEASWZG8oMBlQVfqYRQyvPnl+YJXdvqAEA+E5Q0TM1kYQmAwBEj0+LAOVSLt0RccVuSXZh21KIqpIp"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2430,
+    "candidatesTokenCount": 385,
+    "totalTokenCount": 2815,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2430
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "1f6patqJFPiHz7IPt7iNsQE"
+}

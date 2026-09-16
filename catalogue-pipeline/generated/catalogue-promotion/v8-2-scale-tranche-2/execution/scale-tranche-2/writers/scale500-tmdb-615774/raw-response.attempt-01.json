@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-615774\",\n    \"tmdbId\": 615774\n  },\n  \"copy\": {\n    \"description\": \"After winning an all-expense-paid tropical vacation, Scooby-Doo and the Mystery Inc. gang arrive at a resort that looks disturbingly familiar. When zombies storm their hotel, an old nightmare resurfaces.\",\n    \"whyWatch\": \"Clocking in at a breezy 80 minutes, it mixes playful comedy with lively cartoon suspense, delivering a comfortable, retro mystery tailored for low-stress family viewing.\",\n    \"curiosityHook\": \"What connects this seemingly random prize getaway to the gang's prior brush with the undead?\",\n    \"vibeSummary\": \"Lighthearted, mildly spooky, and fast-moving, it offers an easygoing animated watch built for family night.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Vacation prize setup and arrival at Zombie Island\",\n        \"Recognition of the island from a past mystery\",\n        \"Zombies attacking the hotel and interrupting the getaway\"\n      ],\n      \"excludedMaterial\": [\n        \"Culprit identities or motivations behind the contest\",\n        \"Resolution of the zombie mystery\",\n        \"Third-act encounters and final fate of the island\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-overview\",\n        \"tmdb-facts\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIP/YMgBA8YMNXHCL37222gR/uGlpAqiX8kO0g7xgO9esFG/22EehbA0czjELrhOEehAI3mYp6F73GWl5AhSh+rkJRJEapHuBkCJVPtMQ0j8D29eamTJYWFPe0qkymJHiOO"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2675,
+    "candidatesTokenCount": 386,
+    "totalTokenCount": 3061,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2675
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "qhaqarqaLoyEz7IPyIS62AM"
+}

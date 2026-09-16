@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"exp100-tmdb-672647\",\n    \"tmdbId\": 672647\n  },\n  \"copy\": {\n    \"description\": \"Trapped together inside a repeating day, two teenagers embark on a quest to track down every fleeting, wondrous detail that makes their endless cycle feel complete.\",\n    \"whyWatch\": \"Directed by Ian Samuels, this fantasy romance brings thoughtful warmth to the time-loop premise, turning an infinite loop into an observant look at fleeting joy.\",\n    \"curiosityHook\": \"Can finding every quiet, perfect moment inside a single day bring real meaning to two teens stuck repeating it?\",\n    \"vibeSummary\": \"Thoughtful and emotionally grounded fantasy romance; easy-going, steady pace ideal for a relaxed date-night watch.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Two teenagers caught in an endless time loop\",\n        \"Quest to locate every small perfect moment within the repeating day\",\n        \"Fantasy romance tone and compact 99-minute runtime\"\n      ],\n      \"excludedMaterial\": [\n        \"End of the loop or escape mechanisms\",\n        \"Third-act relationship developments\",\n        \"Resolutions of personal backstories or thematic secrets\",\n        \"Final fate of either teenager\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPfWe5SI1rTjJKWV3Ku72aP22tD03uIBagAQFNl+GNvBkh3/ZO/HJM36KDIaodjI9Zvg5kR4d5FCgabB+lmMjF+mh1n5aCVk3Jtymk3nmEhuZ/EPN2H4SUlOnBI/hqmzgt"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2927,
+    "candidatesTokenCount": 382,
+    "totalTokenCount": 3309,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2927
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "VP6papCXIpbWz7IPxYqeyAM"
+}

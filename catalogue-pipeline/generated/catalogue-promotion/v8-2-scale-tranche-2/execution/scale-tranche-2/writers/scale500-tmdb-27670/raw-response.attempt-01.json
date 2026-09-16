@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-27670\",\n    \"tmdbId\": 27670\n  },\n  \"copy\": {\n    \"description\": \"Two twentieth-century friends suddenly find themselves displaced into the year 1492, navigating an unfamiliar era while meeting a charming local teen and hatching a bold plan to meddle with history.\",\n    \"whyWatch\": \"Directed by Roberto Benigni and Massimo Troisi, this Italian comedy blends playful fantasy and historical misadventure into an inventive, lighthearted time-travel romp.\",\n    \"curiosityHook\": \"Stranded centuries before their own era, can these two ordinary companions actually change the course of history without unraveling their own path?\",\n    \"vibeSummary\": \"Light and funny fantasy comedy with a steady pace, engaging historical confusion, and an easygoing spirit ideal for watching with friends.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Two friends displaced from the 20th century to 1492\",\n        \"Encountering a charming teen\",\n        \"Attempting to alter historical events\",\n        \"Comedy and fantasy genre framing\",\n        \"Roberto Benigni and Massimo Troisi as directors\"\n      ],\n      \"excludedMaterial\": [\n        \"Specific plot resolution of their historical intervention\",\n        \"Whether they successfully alter history\",\n        \"How or if they return to their time\",\n        \"Later narrative twists or third-act developments\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIP3iMfjzLh2gxgkiUuxkHEZK9wTrD8HrpmsW1EblXuMD8u+ceNE9c5rTZhDNksCHdsKDoww1+DeU7oS8ilrKU+ENaniXzT3ExWclQdUJQ50r7t8FZgHo0Dc6dFuoItJLdY"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2430,
+    "candidatesTokenCount": 421,
+    "totalTokenCount": 2851,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2430
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "d_2paqz3NfDrz7IPyuaGyAI"
+}

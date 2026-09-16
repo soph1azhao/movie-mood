@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-354556\",\n    \"tmdbId\": 354556\n  },\n  \"copy\": {\n    \"description\": \"During the Cold War, the organization Patriot assembled a superhero squad from across Soviet republics. Forced underground for years, the hidden team is called back into the open when grave new threats emerge.\",\n    \"whyWatch\": \"Clocking in at a lean 89 minutes, it offers a brisk, Russian-language action-fantasy alternate take on the classic superhero ensemble formula with playful sci-fi energy.\",\n    \"curiosityHook\": \"After decades living in complete secrecy, can these forgotten operatives pull together and handle the modern crisis waiting for them?\",\n    \"vibeSummary\": \"Fast-paced, lighthearted, and exciting, making for an effortless, popcorn-ready squad adventure.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Creation of the superhero squad by the Patriot organization during the Cold War\",\n        \"Members hailing from different Soviet republics\",\n        \"Heroes hiding their identities for years until hard times force their return\"\n      ],\n      \"excludedMaterial\": [\n        \"Specific villain identities or origins\",\n        \"Climactic battle details\",\n        \"Character deaths or late casualties\",\n        \"Resolution of the crisis\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPeAI/kNXsjdow68xg0YMID14bbCAAyBAZKZpiJQpQIeNOsGHkv6lwHmVuJbMYKUCiX/rndE6s5epU9PPwAZBXE4HCUUI3RyXSYHbA7UM44O8UFKWsNOC20MkcwPVerH94"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2900,
+    "candidatesTokenCount": 389,
+    "totalTokenCount": 3289,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2900
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "GACqaoXhHdHTz7IPla7dsAo"
+}

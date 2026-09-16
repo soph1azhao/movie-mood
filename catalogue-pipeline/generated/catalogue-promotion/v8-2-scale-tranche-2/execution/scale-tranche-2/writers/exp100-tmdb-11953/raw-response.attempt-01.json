@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"exp100-tmdb-11953\",\n    \"tmdbId\": 11953\n  },\n  \"copy\": {\n    \"description\": \"In Akira Kurosawa's feudal epic, a petty thief is recruited to double for the aging warlord Shingen. After Shingen dies, reluctant generals preserve the ruse, thrusting the double into command against rival clans.\",\n    \"whyWatch\": \"Kurosawa frames power and persona through a high-stakes deception, matching grand martial scale with the heavy moral weight of a thief forced into leadership.\",\n    \"curiosityHook\": \"Can an untrained rogue uphold an entire dynasty's survival when rival armies force him onto an active battlefield?\",\n    \"vibeSummary\": \"Heavy, thoughtful, and suspenseful; a long-form feudal war drama built for focused solo viewing.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Petty thief recruited as double for warlord Shingen\",\n        \"Shingen's death and generals' reluctant decision to maintain the imposture\",\n        \"Rival clan threat and impending requirement to lead troops into battle\",\n        \"Director Akira Kurosawa, 1980 release, 180-minute runtime\"\n      ],\n      \"excludedMaterial\": [\n        \"Battlefield outcomes and tactical developments\",\n        \"Eventual exposure or resolution of the impersonation\",\n        \"Third-act events, casualties, and ending details\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPfMVDK3m/lbzZa3+B7HZQZAe/YlV64TK53aLyOg1uAfOIzgmtCszMaLTN0XsQChe2KSewV3AvB1bz2e6QJQ/LGInOohbljWpieLLh3Rdw6rQpdPZcsB2Ur7K0uStetv96"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2964,
+    "candidatesTokenCount": 422,
+    "totalTokenCount": 3386,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2964
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "jf-parkxiYTPsg_NvozxAg"
+}

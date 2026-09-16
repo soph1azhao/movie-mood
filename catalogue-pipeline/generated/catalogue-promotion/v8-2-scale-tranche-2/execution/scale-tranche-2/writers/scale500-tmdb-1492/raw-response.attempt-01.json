@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-1492\",\n    \"tmdbId\": 1492\n  },\n  \"copy\": {\n    \"description\": \"Ridley Scott’s sweeping historical drama follows Christopher Columbus on his ambitious voyage across the ocean to the New World, tracing the expedition’s profound and turbulent impact on the indigenous people he encounters.\",\n    \"whyWatch\": \"Scott mounts a massive, visual voyage across uncharted waters, balancing the adrenaline of ocean exploration with the weighty, complicated human fallout of early imperial contact.\",\n    \"curiosityHook\": \"When Columbus finally sights land, the wonder of discovering a new continent quickly collides with the heavy, inescapable consequences awaiting the people who already live there.\",\n    \"vibeSummary\": \"Immersive, solemn, and grandly staged, offering measured pacing and deep dramatic weight best suited for focused solo viewing.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Christopher Columbus' voyage of discovery to the New World\",\n        \"Initial contact and effects on indigenous populations\",\n        \"Historical epic drama and adventure tone directed by Ridley Scott\"\n      ],\n      \"excludedMaterial\": [\n        \"Later narrative outcomes\",\n        \"Specific third-act historical resolutions and fates\",\n        \"Unstated biographical plot details\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPab4NeDTlvTxyICGhb+KV7sW6j+gciI5UqDM0xMOXNikwMI+/Xa546w6gycivoN6pS7MSWcD48/65K1w5IULojAegZZY9SdSFsyNGFTRADkLCKt1X/pOI93rCKo3JQlsR"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2603,
+    "candidatesTokenCount": 379,
+    "totalTokenCount": 2982,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2603
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "8_-pauDuFODjz7IP5Nr8QA"
+}

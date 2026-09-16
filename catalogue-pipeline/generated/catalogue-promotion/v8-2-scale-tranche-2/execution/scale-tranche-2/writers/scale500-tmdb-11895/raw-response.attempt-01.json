@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-11895\",\n    \"tmdbId\": 11895\n  },\n  \"copy\": {\n    \"description\": \"When an audacious crime ring hits local banks and jewelers, the city calls in its familiar squad of officers to crack the spree using their peculiar individual talents and an exceptional dose of luck.\",\n    \"whyWatch\": \"Directed by Peter Bonerz, this brisk 84-minute sequel delivers breezy crime-caper antics and lighthearted ensemble teamwork tailored for easy group viewing.\",\n    \"curiosityHook\": \"Facing an organized syndicate targeting the city's wealthiest targets, how far can unconventional policing and sheer luck actually take the squad?\",\n    \"vibeSummary\": \"Lighthearted and effortless, this caper comedy pairs an easygoing pace with uncomplicated, feel-good ensemble humor.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Squad called in to face a gang robbing banks and jewelers\",\n        \"Use of individual talents and luck against the crooks\",\n        \"Peter Bonerz direction and 84-minute runtime\",\n        \"Crime comedy setup and light tone\"\n      ],\n      \"excludedMaterial\": [\n        \"Identity or mastermind of the crime gang\",\n        \"Specific third-act operations or climax details\",\n        \"Final fate of the gang or academy squad\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPHqvunbV3Ezd5GBHP2dqBwfp20bhLOri0FvR9EIjzxMsuAPCjoUGyDOsVn49NxNj7w1fOdlpioBW093kVdgaOrvE3Q6sYCY3PQS9w/ww7F3j6fs0QiO1oJlVfdK1R4+62"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2763,
+    "candidatesTokenCount": 401,
+    "totalTokenCount": 3164,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2763
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "df-parXwLfyGz7IPqYqimQM"
+}

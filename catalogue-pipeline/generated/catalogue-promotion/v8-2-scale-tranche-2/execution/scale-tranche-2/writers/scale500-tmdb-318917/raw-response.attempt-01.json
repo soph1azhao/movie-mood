@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-318917\",\n    \"tmdbId\": 318917\n  },\n  \"copy\": {\n    \"description\": \"After waking up in present-day Berlin at the site of his former bunker, Adolf Hitler finds himself mistaken for an eccentric comedian and catapulted into sudden media fame.\",\n    \"whyWatch\": \"Director David Wnendt mines sharp comic friction from a high-concept premise that uses viral celebrity culture to explore an unthinkable modern return.\",\n    \"curiosityHook\": \"When the modern public mistakes him for a provocative performer, how far can a resurrected dictator rise before anyone notices?\",\n    \"vibeSummary\": \"A biting, medium-paced German comedy balancing sharp laughs with provocative, thoughtful bite.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Hitler reawakening in modern Berlin at former bunker site\",\n        \"Mistaken identity as a comedian\",\n        \"Rapid rise as a media phenomenon\",\n        \"Comedy genre and satirical tone\"\n      ],\n      \"excludedMaterial\": [\n        \"Later media stunts or plot climaxes\",\n        \"Third-act revelations or resolution\",\n        \"Specific late-story outcomes and consequences\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPatysKoqgl+dANFR1tNJTKZMF5AYiqtR52q1eXPY0SIscwJ3RiC1gE+4DTfwoRCMwryB9hkaYrZDojU9INrVxgVc73/PzPiGpCsONhQrp0cxbSZkILmzRYcyCoW4INQbz"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2848,
+    "candidatesTokenCount": 370,
+    "totalTokenCount": 3218,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2848
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "OACqauy3N-qfz7IP2c-9mAc"
+}

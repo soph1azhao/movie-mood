@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-902\",\n    \"tmdbId\": 902\n  },\n  \"copy\": {\n    \"description\": \"In a surrealist society, an aging scientist abducts local children to steal their dreams, desperate to halt his own decay in a strange, stylized world directed by Jean-Pierre Jeunet and Marc Caro.\",\n    \"whyWatch\": \"Jeunet and Caro craft an inventive blend of fantasy, sci-fi, and adventure, turning a dark, fable-like premise into an atmospheric, thought-provoking European vision.\",\n    \"curiosityHook\": \"Can a desperate scientist truly reverse time by siphoning innocence, or does harvesting dreams carry volatile consequences?\",\n    \"vibeSummary\": \"Moody, suspenseful dark fantasy in French; measured pace requiring engaged attention for its surreal world.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Surrealist society setting\",\n        \"Scientist kidnapping children to steal dreams\",\n        \"Aging process motivation\",\n        \"Fantasy, sci-fi, and adventure genre blend\",\n        \"Jean-Pierre Jeunet and Marc Caro directing credit\"\n      ],\n      \"excludedMaterial\": [\n        \"Identity of clones or origins\",\n        \"Third-act rescue developments\",\n        \"Fate of the scientist\",\n        \"Specific late-story plot twists or resolution\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPKR7k/h3O7wtnEHDf7XVIAylWHqhMAoIKv77/gvdcnSAgA5+dQ8IPQhUgr8tLICHwhTtGq2IbyCK7ItQlI6bfIlI8qC55qUeUbQaasJ0L6vK8CEe9SR4aiimHsbqo9q0G"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2948,
+    "candidatesTokenCount": 399,
+    "totalTokenCount": 3347,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2948
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "lv2paqPBH72Hz7IPuaWUoQ8"
+}

@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"exp100-tmdb-20992\",\n    \"tmdbId\": 20992\n  },\n  \"copy\": {\n    \"description\": \"Arriving in Petersburg to build a fresh life with his successful brother, Danila discovers Victor is in hiding from mob fallout—and gets steered into executing a lethal contract hit in his place.\",\n    \"whyWatch\": \"Aleksei Balabanov crafts a grounded, tense Russian crime drama where family loyalty turns hazardous, balancing grim street-level suspense with heavy emotional consequence.\",\n    \"curiosityHook\": \"Seeking a fresh start with his brother, Danila is pushed into the line of fire. Will he realize what Victor is hiding before the hit is carried out?\",\n    \"vibeSummary\": \"Grim, suspenseful Russian crime drama with heavy emotional weight, measured pacing, and steady engagement suited for solitary viewing.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Danila arriving in Petersburg to start a new life\",\n        \"Victor secretly being a contract killer in hiding\",\n        \"Victor convincing Danila to assassinate a Chechen mob boss in his place\",\n        \"Setting, genre elements, and tonal weight\"\n      ],\n      \"excludedMaterial\": [\n        \"Whether Danila completes the assassination\",\n        \"Any confrontation between the brothers\",\n        \"Later plot reversals, deaths, or ending events\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPztQ5CWIYZU76dtUqyLgrqVXdtm4Hcbu2LN2uJToPNgzNhEtN1HwQeat9iMs2o5XhN12cfRosT8AgB3hk7mwu9UE47GUnKQxGjOxefoF4Aj3i/BG5PgNvf7HhwNeUUjLH"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2760,
+    "candidatesTokenCount": 405,
+    "totalTokenCount": 3165,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2760
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "f_-pasyAJaesz7IPgrrIiA0"
+}

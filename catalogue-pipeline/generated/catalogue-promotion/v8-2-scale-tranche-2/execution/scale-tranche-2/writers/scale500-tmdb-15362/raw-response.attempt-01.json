@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-15362\",\n    \"tmdbId\": 15362\n  },\n  \"copy\": {\n    \"description\": \"After two decades of daring criminal exploits that won him national notoriety and headlines, French outlaw Jacques Mesrine grapples with mounting paranoia and isolation as authorities prepare for a final reckoning.\",\n    \"whyWatch\": \"Jean-François Richet balances high-stakes crime thrills with the heavy psychological toll of celebrity and unchecked ambition, delivering a gripping portrait of notoriety unraveling.\",\n    \"curiosityHook\": \"As France's most famous outlaw feeds on public fascination, can his calculated charisma survive escalating pressure from the law?\",\n    \"vibeSummary\": \"Tense, character-driven crime drama with high emotional stakes and deliberate, suspenseful pacing.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Mesrine's two decades of criminal feats\",\n        \"His public adoration and media appetite\",\n        \"Growing paranoia, isolation, and legal confrontation\",\n        \"Director Jean-François Richet and genre classifications\"\n      ],\n      \"excludedMaterial\": [\n        \"Specific details of his death or final ambush\",\n        \"Exact confrontation scenes or tactical outcomes\",\n        \"Post-climax resolutions\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPQWjOIHDaVhal3yBTfzBTSpZCJ8LufbTyJ2FNnZ9H2cT+U8NLCz7acA1ITqEL6/9N3LsXe0MVi5RVjnxm4r+5SW8WuXvMHQiyNMfKFJsNA/6nzx5BIWoZkpo9JiwmEURA"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2816,
+    "candidatesTokenCount": 379,
+    "totalTokenCount": 3195,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2816
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "5v6paqv1He3Uz7IP4abhgQM"
+}

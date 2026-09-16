@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-347201\",\n    \"tmdbId\": 347201\n  },\n  \"copy\": {\n    \"description\": \"Frustrated by the constant absence of his father, Seventh Hokage Naruto, skilled ninja Boruto Uzumaki seeks out Naruto's longtime friend Sasuke and asks to become his apprentice as a new generation steps forward.\",\n    \"whyWatch\": \"Hiroyuki Yamashita delivers a fast, vibrant ninja adventure that balances playful humor, family friction, and kinetic fantasy action across a crisp 95 minutes.\",\n    \"curiosityHook\": \"Can training under his father's closest friend help Boruto step out from the Seventh Hokage's looming shadow?\",\n    \"vibeSummary\": \"Fast-paced and exciting, this animated fantasy keeps the emotional stakes accessible and lively for an effortless watch with friends or family.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Boruto's identity as Naruto's son and his brash personality\",\n        \"Naruto's duties as Seventh Hokage causing his absence\",\n        \"Boruto seeking out Sasuke to become his apprentice\",\n        \"The premise of a new generation rising\"\n      ],\n      \"excludedMaterial\": [\n        \"Chunin exam outcomes or specific opponents\",\n        \"Late-film villain identities and motives\",\n        \"Third-act battles or rescues\",\n        \"Final reconciliation details or ending resolution\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPtLTrxWONZUCuR9D5CazshFE8XK0AU+YDjTBhfXa795eeZ4xVX47ziUpzHW3qnwhjzRmOdtBnF6WAgi/Cx2jo88HRDmEzy1Srb/IEx2MiEYli+sQxHOJ2ikZOWZ0Xq2Cf"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2764,
+    "candidatesTokenCount": 419,
+    "totalTokenCount": 3183,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2764
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "wf2patHoLPyGz7IPqYqimQM"
+}

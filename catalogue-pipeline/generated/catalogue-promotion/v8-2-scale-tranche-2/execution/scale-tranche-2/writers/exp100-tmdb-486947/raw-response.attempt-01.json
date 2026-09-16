@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"exp100-tmdb-486947\",\n    \"tmdbId\": 486947\n  },\n  \"copy\": {\n    \"description\": \"Demoted to emergency dispatch duty, police officer Asger Holm answers a call from an abducted woman. Confined to his desk, he must rely entirely on the phone line to orchestrate a rescue.\",\n    \"whyWatch\": \"Gustav Möller delivers a tight 85-minute Danish thriller that turns an isolated desk into an urgent, high-stakes crime drama driven purely by vocal cues.\",\n    \"curiosityHook\": \"With only a phone line linking him to a panicked victim, can a desk-bound dispatcher piece together the truth in time to save her?\",\n    \"vibeSummary\": \"Fast-paced and emotionally heavy, this claustrophobic suspense drama demands focused attention in an intense solo watch.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Asger Holm demoted to alarm dispatcher\",\n        \"Confined to desk work at a police station\",\n        \"Phone call from a panicked, kidnapped woman\",\n        \"Race against time using only the phone as a tool\",\n        \"Danish thriller directed by Gustav Möller\",\n        \"85-minute runtime\"\n      ],\n      \"excludedMaterial\": [\n        \"Identity or motives of the kidnapper\",\n        \"Identity or background of the woman\",\n        \"Reason behind Asger's demotion or suspension outcome\",\n        \"Plot twists, late-game revelations, or final rescue outcome\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPvPHsz4aQkVP2tZgWA2sVbLu7sNil56YFiMBlwpSA4LPn1BPSTgDq5OdUs5Azgb0dK1IX2YL6ubOOv21zsP6Fu46ogxBgFekls+m82Udbvn8rv2GwV05RuQQxfIQv+1JZ"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2700,
+    "candidatesTokenCount": 442,
+    "totalTokenCount": 3142,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2700
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "yv2paoPtB6esz7IPgrrIiA0"
+}

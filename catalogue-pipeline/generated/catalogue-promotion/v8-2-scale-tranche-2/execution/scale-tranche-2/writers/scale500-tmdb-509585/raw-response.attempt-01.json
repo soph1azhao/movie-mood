@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-509585\",\n    \"tmdbId\": 509585\n  },\n  \"copy\": {\n    \"description\": \"On a flight from Berlin to Paris, terrorists attempt to seize the aircraft, leaving a soft-spoken American co-pilot fighting to protect the passengers and crew under extreme pressure.\",\n    \"whyWatch\": \"Director Patrick Vollrath crafts an intensely focused in-flight thriller that transforms an urgent airborne crisis into a compact, human-scale battle of nerves.\",\n    \"curiosityHook\": \"As the cockpit becomes a high-stakes standoff, the co-pilot begins to forge an unexpected connection with one of the hijackers.\",\n    \"vibeSummary\": \"Fast-moving, immersive, and relentlessly tense, delivering compact suspense ideal for focused solo viewing.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Berlin-Paris flight setting\",\n        \"attempted hijacking premise\",\n        \"soft-spoken American co-pilot protagonist\",\n        \"struggle to protect crew and passengers\",\n        \"unfolding connection with a hijacker\"\n      ],\n      \"excludedMaterial\": [\n        \"final fate of passengers and crew\",\n        \"resolution of the hijacking\",\n        \"specific character casualties\",\n        \"third-act developments and ending\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPIPmnjfLCdu5JTwk7IO5aRrvOb5p11Q6mIbGG4E7GFsy+2bcUhgDi+f3yzzReY8tX8fb5AVG+56LaT725iNaND359CA2qBGJFwDENfO4PaU/eTdifrhP0Ixgr5VaopZ3u"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2660,
+    "candidatesTokenCount": 391,
+    "totalTokenCount": 3051,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2660
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "3_6paozEE5yJz7IPwInPgAk"
+}

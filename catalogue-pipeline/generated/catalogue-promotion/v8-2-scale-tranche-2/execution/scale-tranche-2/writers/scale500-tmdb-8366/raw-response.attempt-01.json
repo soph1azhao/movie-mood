@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-8366\",\n    \"tmdbId\": 8366\n  },\n  \"copy\": {\n    \"description\": \"After a swindler sells him a saloon and vanishes with the cash, Apache Chief Abahachi and his partner Ranger must quickly repay the Shoshones before pursuit escalates across the frontier.\",\n    \"whyWatch\": \"Directed by Michael Herbig, this fast German adventure sends frontier tropes into full-blown farce across an energetic 85 minutes.\",\n    \"curiosityHook\": \"With furious lenders bearing down and their pockets empty, the duo must rapidly scheme a way out of an escalating debt.\",\n    \"vibeSummary\": \"Lighthearted, brisk, and easy to follow, playing out as a lively comic romp ideal for a quick laugh with friends.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Abahachi and Ranger's partnership as peacekeepers in the Wild West\",\n        \"Borrowing money from the Shoshone Indians for a saloon\",\n        \"Santa Maria's betrayal and theft of the funds\",\n        \"The Shoshones pursuing them for repayment\"\n      ],\n      \"excludedMaterial\": [\n        \"Resolution of the debt\",\n        \"Eventual capture or fate of Santa Maria\",\n        \"Third-act chases or climactic confrontations\",\n        \"Ending and story resolution\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPiWlYJ3i4DkXAxz/zltncGH/jOzofJZ9WNiBTJR8dBwJ26F0y6QWwajPGyAVxk5IYfdfzRd/JZc1mqaKQsX1/PVt8EhP7rtB3xS67xjmLYItgEUE21aCw5tF1IfU3+iqW"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 3047,
+    "candidatesTokenCount": 403,
+    "totalTokenCount": 3450,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3047
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "kP2pavC-ErbXz7IPzofygQI"
+}

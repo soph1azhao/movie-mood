@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-83389\",\n    \"tmdbId\": 83389\n  },\n  \"copy\": {\n    \"description\": \"In 1963 Yokohama, high school students Umi and Shun form a close bond amid Japan's postwar renewal, only for a buried secret from their shared past to threaten their blossoming connection.\",\n    \"whyWatch\": \"Directed by Goro Miyazaki, this tender period drama captures the bittersweet optimism of a nation in flux through an evocative and deeply felt high school bond.\",\n    \"curiosityHook\": \"As postwar optimism sweeps Yokohama, what forgotten truth from Umi and Shun's origins stands between them?\",\n    \"vibeSummary\": \"Thoughtful, emotional, and moderately paced, balancing tender teen drama with postwar historical reflection.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Setting in 1963 Yokohama during postwar recovery ahead of the 1964 Olympics\",\n        \"High school students Umi and Shun developing a close bond\",\n        \"Initial conflict of a buried secret from their past threatening to pull them apart\",\n        \"Director Goro Miyazaki and animation period drama genres\"\n      ],\n      \"excludedMaterial\": [\n        \"Nature of the buried secret\",\n        \"Parentage and hidden identity specifics\",\n        \"Resolution of Umi and Shun's relationship\",\n        \"Clubhouse preservation outcome and third-act developments\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPggbG7mbRaKB9pU9qjdL/tf3s+9Buu38ySMH9RKprUHGVFplCI7Kzg8OqqMn4mrCoZcSPvksv7fWRkG4LD3De80GAlFuBDnsH290LEL+8BCKAFsZ/d2+/gCWOQ/l3lPtE"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2879,
+    "candidatesTokenCount": 416,
+    "totalTokenCount": 3295,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2879
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "uf-pau-FNZyJz7IPwInPgAk"
+}

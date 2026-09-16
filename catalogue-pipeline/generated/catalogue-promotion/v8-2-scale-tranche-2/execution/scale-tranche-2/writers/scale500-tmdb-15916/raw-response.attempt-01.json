@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-15916\",\n    \"tmdbId\": 15916\n  },\n  \"copy\": {\n    \"description\": \"Amid the silent ruins of an uncanny city, a young girl guards a fragile, oversized egg. Her solitary routine shifts when she encounters a wandering boy who is pursuing an elusive bird glimpsed only in a dream.\",\n    \"whyWatch\": \"Directed by Mamoru Oshii, this haunting Japanese fantasy weaves science fiction and mystery into a singular, deliberately paced visual meditation built around profound symbolism.\",\n    \"curiosityHook\": \"What rests inside the massive egg she protects so fiercely, and how does it connect to the dream bird the wandering boy is searching for across the desolate city?\",\n    \"vibeSummary\": \"Slow, contemplative, and deeply atmospheric. An immersive art-house anime best experienced solo in focused quiet.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"girl guarding a large egg in ruined city\",\n        \"encounter and bond with the boy seeking a bird from a dream\",\n        \"starting atmosphere and premise elements\"\n      ],\n      \"excludedMaterial\": [\n        \"nature or fate of the egg\",\n        \"resolution of the boy's search\",\n        \"ending and third-act revelations\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPJQoDlTDDeCQXIswzfbGSZqQ8jHu1YCYqoOSQ3oJ/OAo0kgXaIG/uaSnRy2vXhshjMqqlehowUHfsjQwWUfYKbOgQijSaBrEqfGO8mL/Pu18qUv2fwuwRm1QMILknT+ub"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2644,
+    "candidatesTokenCount": 383,
+    "totalTokenCount": 3027,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2644
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "Nv-papm7OMzUz7IPkP2PuAM"
+}

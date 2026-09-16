@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"exp100-tmdb-15392\",\n    \"tmdbId\": 15392\n  },\n  \"copy\": {\n    \"description\": \"Directed by Walter Hill, this musical drama follows an aspiring blues guitar virtuoso on a determined search to uncover a legendary, long-lost song attributed to the iconic musician Robert Johnson.\",\n    \"whyWatch\": \"It weaves blues mythology, drama, and romance into a distinct mystery driven by artistic obsession and the timeless lore of Robert Johnson.\",\n    \"curiosityHook\": \"Can an ambitious young guitarist actually track down a lost piece of musical history, or will the legendary song remain out of reach?\",\n    \"vibeSummary\": \"A steady, thoughtful drama with an engaging musical pulse, balancing mystery, romance, and moderate emotional weight.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"aspiring blues guitarist protagonist\",\n        \"quest to find a long-lost Robert Johnson song\",\n        \"director Walter Hill\",\n        \"genres: Drama, Music, Mystery, Romance\"\n      ],\n      \"excludedMaterial\": [\n        \"climax guitar duel details\",\n        \"deal with the devil plot resolutions\",\n        \"fate of companions or romantic outcomes\",\n        \"ending resolution of the search\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPwZzJTA8T/PsmdKAN2hNpSIf24NclRyG7iIa31eIsHGK0UTElFWXTSPaV9kRAg/ng5bo0TY4d/90DtPEQFYTuG18hnHvXU3Mb1LUC5nym/KNvq9oj/SiTalREe7Z7nfTL"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2969,
+    "candidatesTokenCount": 380,
+    "totalTokenCount": 3349,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2969
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "pf-paq_nBPutz7IPvYenmQY"
+}

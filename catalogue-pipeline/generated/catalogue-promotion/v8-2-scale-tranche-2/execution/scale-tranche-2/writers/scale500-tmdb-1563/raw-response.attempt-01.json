@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-1563\",\n    \"tmdbId\": 1563\n  },\n  \"copy\": {\n    \"description\": \"In Chris Marker's documentary, a woman narrates the letters and reflections of an unseen world traveler, examining memory and time through footage gathered across Japan, Guinea-Bissau, Iceland, and San Francisco.\",\n    \"whyWatch\": \"Marker constructs an unhurried, poetic travelogue where disparate global images and thoughtful interior monologues coalesce into a mesmerizing reflection on human remembrance.\",\n    \"curiosityHook\": \"How do fragmented images from radically different corners of the earth converge into a single traveler's inner meditation on how we remember?\",\n    \"vibeSummary\": \"Slow, contemplative, and deeply immersive; an essayistic documentary best suited for quiet, solitary viewing.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Chris Marker as director\",\n        \"Documentary genre and poetic travelogue nature\",\n        \"Female narrator reading the thoughts and letters of an unseen world traveler\",\n        \"Meditations on time and memory\",\n        \"Locations: Japan, Guinea-Bissau, Iceland, San Francisco\"\n      ],\n      \"excludedMaterial\": [\n        \"Specific later thematic conclusions or ending revelations\",\n        \"Invented narrative plot points or fictional character drama\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPDCQRCy9cVQuoTCd2iT065sZZiNqF9d3xh8pL0LC0Y8PW14EcatR1g3RXwe4bTEMPpWFzwP0GbK6SehGq0qP/eBlLncw0tA2OsaF4QHn3uq3gjDebP0mVft6hxAMjxB0A"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2682,
+    "candidatesTokenCount": 391,
+    "totalTokenCount": 3073,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2682
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "e_2patKqLoDmz7IPzYmJmQo"
+}

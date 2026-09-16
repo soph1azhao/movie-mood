@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-14282\",\n    \"tmdbId\": 14282\n  },\n  \"copy\": {\n    \"description\": \"Wandering mercenary ninja Jubei hires out his lethal talents across Japan. But when a violent conspiracy targeting the government crosses his solitary path, his drifting life—and his survival—fall under immediate threat.\",\n    \"whyWatch\": \"Directed by Yoshiaki Kawajiri, this 1993 animated action feature fuses dark fantasy and horror into a relentless, kinetic clash powered by mortal danger and stylized combat.\",\n    \"curiosityHook\": \"When a rogue plot threatens the entire government, can a lone swordsman's mercenary code keep him alive against forces bent on total upheaval?\",\n    \"vibeSummary\": \"Fast-paced, suspenseful, and dark. A high-energy animated horror-action hybrid built for focused late-night viewing.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Jubei's wandering mercenary status\",\n        \"The plot to overthrow the government\",\n        \"Action, dark fantasy, and horror genre tones\",\n        \"Immediate mortal danger setup\"\n      ],\n      \"excludedMaterial\": [\n        \"Identity of conspirators or demons\",\n        \"Specific late-stage battle outcomes\",\n        \"Climactic revelations and resolution\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPZbYSki7nNTVUqtwvD/yGBNJzNIUb4MiVTnhSon6WPXfi4Ux6HOktctbgzBWfmZA/8ZRv7IjqRxQuFoE4YXouTXBFxAD2v3N6yG+DXbjeLjm4+IGxkGhXQZuI85ShN1I7"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2669,
+    "candidatesTokenCount": 395,
+    "totalTokenCount": 3064,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2669
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "Jf6pauDwJPXQz7IP9qvgoA8"
+}

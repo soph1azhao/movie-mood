@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"exp100-tmdb-496450\",\n    \"tmdbId\": 496450\n  },\n  \"copy\": {\n    \"description\": \"When a guardian of magical jewels grants superpowers to an awkward girl and a popular boy, the pair must defend Paris under a strict condition: neither can ever discover who the other really is.\",\n    \"whyWatch\": \"Jeremy Zag delivers a brisk animated fantasy balancing kinetic superhero spectacle with the romantic friction of two partners concealing their true selves.\",\n    \"curiosityHook\": \"Can two young heroes pull off world-saving teamwork when their own sworn secrecy keeps them entirely in the dark?\",\n    \"vibeSummary\": \"Fast, colorful family fantasy packed with exciting superhero action and engaging romantic tension.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Awkward girl and popular boy transformed into superheroes by a guardian of magical jewels\",\n        \"Setting of Paris\",\n        \"Requirement of strict secrecy regarding their real identities\",\n        \"Action, romance, and fantasy genre dynamics\"\n      ],\n      \"excludedMaterial\": [\n        \"Identity reveals between the leads\",\n        \"Villain motives, identity, or defeat\",\n        \"Third-act resolutions or romantic conclusions\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIP7EiFM2j2BE5IlBxtEqbl8aVinQ4TH3Cg1ulznQ6UjOmACAs6DTHFKhXMT1tMi7kNg+JpC4b/A5ZDXTe/d+xbGSTHlyulVQ7QwZeFHUCKadMUT4+j4iBsbszl/pnrjqbO"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 3270,
+    "candidatesTokenCount": 374,
+    "totalTokenCount": 3644,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3270
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "tf6pat-nEKGJz7IP0birgQE"
+}

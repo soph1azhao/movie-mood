@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-26610\",\n    \"tmdbId\": 26610\n  },\n  \"copy\": {\n    \"description\": \"Investigating a homicide in northern Norway's perpetual daylight, detective Jonas accidentally kills his partner during a botched arrest, framing the runaway suspect while trying to bury his own fatal mistake.\",\n    \"whyWatch\": \"Erik Skjoldbjærg trades shadowy noir for blinding midnight sun, turning a standard procedural hunt into a tense, guilt-ridden moral unraveling that offers no darkness to hide in.\",\n    \"curiosityHook\": \"Under a sun that never sets, can an unraveling detective catch a killer while keeping his own deadly secret hidden?\",\n    \"vibeSummary\": \"Bleak, sun-bleached psychological suspense with a steady pace and heavy emotional weight, suited for focused solo viewing.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Detectives Jonas and Erik arrive in northern Norway for a homicide investigation\",\n        \"Botched arrest leads to Jonas accidentally shooting Erik\",\n        \"Suspect escapes and Jonas frames the fugitive for Erik's death\",\n        \"Jonas hunts the killer while dealing with insomnia and guilt under the midnight sun\"\n      ],\n      \"excludedMaterial\": [\n        \"Identity or eventual fate of the killer\",\n        \"Ultimate resolution of the cover-up\",\n        \"Third-act revelations or climax\",\n        \"Final fate of Jonas\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPCIvDKaGPCuRxCd9sBGa/r2F74bzrAXLvNMmy/CM0Chqenbe5OcgTA9hdVAFBxu8eGdjZkEaOKBzm4+DWCss2lmbfPgpgqZmlfMn9UEbfkhCtdXLK3q4dSUYM6QyrH1Hf"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2734,
+    "candidatesTokenCount": 419,
+    "totalTokenCount": 3153,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2734
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "6f-papTYHI7oz7IPqane-QE"
+}

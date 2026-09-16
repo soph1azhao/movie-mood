@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-9425\",\n    \"tmdbId\": 9425\n  },\n  \"copy\": {\n    \"description\": \"Cast out after being defeated by a new generation of genetically engineered warriors, veteran Sergeant Todd is left for dead on a remote waste planet, where he takes shelter among peaceful crash survivors.\",\n    \"whyWatch\": \"Paul W. S. Anderson stages a lean, fast-paced science fiction showdown pitting weathered combat experience against ruthless engineered replacements.\",\n    \"curiosityHook\": \"Left behind as obsolete, can a solitary veteran hold off the very force designed to replace him when they arrive to wipe out the settlement?\",\n    \"vibeSummary\": \"A fast, suspenseful sci-fi action ride with high stakes and moderate emotional weight, ideal for an engaged solo watch.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Sergeant Todd is a veteran soldier replaced by genetically engineered troops\",\n        \"Dumped on a waste planet and presumed dead\",\n        \"Shelters with peaceful crash survivors\",\n        \"The new soldiers arrive to eliminate the colony and he must defend it\"\n      ],\n      \"excludedMaterial\": [\n        \"Climactic battle results\",\n        \"Survival status of the colony or specific survivors\",\n        \"Todd's ultimate fate or later reversals\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPWSY/6MDGSdZzLneJURwKNbEINZSGxMfyzSfyskJQ3JeUJm2LPCtd5mXOddcs3aisGdkbTITUhCpvmmYGZCrEmfr0oY16J/FF9o4690X9sazJjc+VxBi4Lg09hciJG58t"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2640,
+    "candidatesTokenCount": 393,
+    "totalTokenCount": 3033,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2640
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "cf6pao7zGeucz7IPgO2GqQM"
+}

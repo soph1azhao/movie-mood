@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-11479\",\n    \"tmdbId\": 11479\n  },\n  \"copy\": {\n    \"description\": \"Seeking a divorce to remarry, trader Stephen tracks his ex-wife to the Amazon, only to discover a son he never knew existed. When the boy longs to see Paris, Stephen reluctantly brings him home for a brief visit.\",\n    \"whyWatch\": \"Directed by Hervé Palud, this breezy French family comedy blends classic fish-out-of-water humor with genuine warmth as jungle life collides head-on with urban routine.\",\n    \"curiosityHook\": \"Raised deep in the Amazon, how will young Mimi-Siku handle the towering rush and strange rules of the French capital?\",\n    \"vibeSummary\": \"Lighthearted, comic, and warm-spirited, offering an accessible 90-minute family clash of cultures.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Stephen travels to the Amazon to get a divorce from his ex-wife Patricia so he can marry Charlotte.\",\n        \"Stephen discovers he has a son, Mimi-Siku, raised in the jungle.\",\n        \"Stephen reluctantly agrees to take Mimi-Siku to Paris for a few days.\",\n        \"Fish-out-of-water comedy setup in Paris.\"\n      ],\n      \"excludedMaterial\": [\n        \"Resolution of Stephen's engagement to Charlotte\",\n        \"Third-act events and climax in Paris\",\n        \"Final fate of Mimi-Siku and his relationship with his parents\",\n        \"Specific late-story gags or ending scenes\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-overview\",\n        \"tmdb-facts\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPP6lqxPvxkQbsKcq1GlhctOw75cQMke6lsRkYZoFR1OerucWZIlHsRqy28RCxswzXDZbVG9fIfs9pnX++0LUbAb/+YRXUpeZxanQj/qe9rZQflrnpfsZLIQC9NrwBmnMy"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2923,
+    "candidatesTokenCount": 455,
+    "totalTokenCount": 3378,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2923
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "8vepatTlEfiHz7IPt7iNsQE"
+}

@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-9613\",\n    \"tmdbId\": 9613\n  },\n  \"copy\": {\n    \"description\": \"After moving into a halfway house, a mentally fragile man begins to slip back into an internal world shaped by his illness, meticulously reliving an unresolved chapter of his childhood.\",\n    \"whyWatch\": \"Directed by David Cronenberg, this deliberate psychological thriller swaps sudden shocks for quiet, methodical tension and heavy emotional depth.\",\n    \"curiosityHook\": \"As memory and delusion begin to blur within the halfway house, what truth is waiting inside the childhood events he cannot stop revisiting?\",\n    \"vibeSummary\": \"Slow, somber, and deeply suspenseful. A demanding solo watch focused on an unraveling interior world.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"A mentally disturbed man moving into a halfway house\",\n        \"Protagonist gradually slipping into an illness-created inner realm\",\n        \"Replaying a key part of his childhood\",\n        \"Director David Cronenberg\",\n        \"Mystery and thriller genre classifications\"\n      ],\n      \"excludedMaterial\": [\n        \"Resolutions to the childhood memories\",\n        \"Third-act revelations or twists\",\n        \"Outcomes of his illness or residency\",\n        \"Specific crimes, identities, or culpability details\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPsVIF8m5CcNpA/XQxO+xhubja/0/7kK/D8tRgrdJuycOGkWGXuc0yIQdYl3VhLL47g1MZGanYSFtO0Y72roypMTEc1xOQAAePe1pzFocCx75CIXe8LzPx2jwoKR32ZoSN"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2596,
+    "candidatesTokenCount": 395,
+    "totalTokenCount": 2991,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2596
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "sf-pasPCD_iHz7IPt7iNsQE"
+}

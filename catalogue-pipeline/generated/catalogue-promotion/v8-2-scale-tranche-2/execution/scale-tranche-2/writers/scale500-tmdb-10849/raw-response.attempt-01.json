@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-10849\",\n    \"tmdbId\": 10849\n  },\n  \"copy\": {\n    \"description\": \"During the Great Depression, New Jersey waitress Cecilia escapes her dreary life through the local cinema. After losing her job, she returns repeatedly to watch dashing archaeologist Tom Baxter on the silver screen.\",\n    \"whyWatch\": \"Woody Allen blends romantic comedy and fantasy into a poignant reflection on cinematic escapism, delivering a clever, heartfelt look at what happens when film devotion runs deep.\",\n    \"curiosityHook\": \"When Cecilia spends her days fixated on the dashing hero of the same adventure film, the boundary between the movie house and her reality begins to blur.\",\n    \"vibeSummary\": \"Thoughtful, funny romantic fantasy at a gentle medium pace, balancing Depression-era melancholy with playful charm.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Cecilia works as a waitress in New Jersey during the Great Depression\",\n        \"Her life is dreary and mundane, with movies serving as her sole escape\",\n        \"She loses her job and visits the cinema repeatedly to see 'The Purple Rose of Cairo'\",\n        \"She repeatedly watches archaeologist Tom Baxter on screen\"\n      ],\n      \"excludedMaterial\": [\n        \"Tom Baxter stepping off the screen into the real world\",\n        \"The actor Gil Shepherd arriving in town to resolve the situation\",\n        \"Cecilia's romantic dilemma between the fictional character and the actor\",\n        \"The ending and final choices Cecilia makes\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPoBKMSj1fdFfb7AQCXxC9uaM3cN4xNsxl13VAM2pmKxQ4Nq+lxQvG5ztO0mLfkoeQEz05+gia8bp+RkcBnqHGT7Z1Zh8xGokf5tns2311p0nPQcwaIfqpjMIL8XRW3htN"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2803,
+    "candidatesTokenCount": 437,
+    "totalTokenCount": 3240,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2803
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "s_2paq_dGKOHz7IPp9OO-QQ"
+}

@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-14283\",\n    \"tmdbId\": 14283\n  },\n  \"copy\": {\n    \"description\": \"Crafted in 1681 by Italian master Bussotti, a singular red violin crosses continents over three centuries. In modern Montreal, an appraiser examines the storied instrument ahead of auction, unearthing its fraught past.\",\n    \"whyWatch\": \"Director François Girard frames an ambitious, multi-era drama around one instrument, weaving romance and mystery into a rich tapestry marked by artistic passion and quiet tragedy.\",\n    \"curiosityHook\": \"As an appraiser pieces together its path across Austria, England, and China, what dark secret from its 1681 creation left a trail of misfortune?\",\n    \"vibeSummary\": \"Thoughtful, suspenseful, and emotionally heavy; a sweeping multi-language drama suited for patient, attentive viewing.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Crafting of the violin by Bussotti in 1681 Italy\",\n        \"Journey across Austria, England, China, and Canada leaving beauty and tragedy\",\n        \"Montreal auction appraisal investigation led by Samuel L. Jackson's character\",\n        \"Multi-century, multi-language mystery and romance framework\"\n      ],\n      \"excludedMaterial\": [\n        \"Specific origin and composition of the violin's red varnish\",\n        \"Outcomes of the Montreal auction and modern theft plot\",\n        \"Fate of individual historical owners across the vignettes\",\n        \"Final disposition of the instrument\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIP2AMWBOnOMyxun1OnEYJJpHeIQff1TKP6yMzcop6uCmQpES+W7sFIqkqptYEnaX9rTior5qd+V/YNcEOkGXcH5jWSF5zfb4LESQHE6zzig6jPxJyC22m4x+RyyfB6pKzT"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2911,
+    "candidatesTokenCount": 444,
+    "totalTokenCount": 3355,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2911
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "Df-pauSoJa3jz7IP_OylqAE"
+}

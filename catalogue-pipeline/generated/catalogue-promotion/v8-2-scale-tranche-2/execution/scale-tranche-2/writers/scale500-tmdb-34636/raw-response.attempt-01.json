@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-34636\",\n    \"tmdbId\": 34636\n  },\n  \"copy\": {\n    \"description\": \"Transported back to the magical realm of Fantasia, young Bastian discovers the world he once rescued faces a new threat: the evil sorceress Xayide and a creeping Emptiness that forces him to reunite with the warrior Atreyu.\",\n    \"whyWatch\": \"Directed by George T. Miller, this brisk 90-minute fantasy adventure delivers an exciting, nostalgic return to a beloved storybook realm with clear stakes for family viewing.\",\n    \"curiosityHook\": \"With Fantasia crumbling under Xayide's dark influence, Bastian and Atreyu must confront the returning Emptiness before the world disappears entirely.\",\n    \"vibeSummary\": \"Exciting and familiar family fantasy with a steady pace and moderate peril, offering an engaging yet easy-watch quest.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Bastian returning to Fantasia\",\n        \"The threat of the evil sorceress Xayide\",\n        \"Bastian reuniting with Atreyu\",\n        \"Facing the Emptiness once more\"\n      ],\n      \"excludedMaterial\": [\n        \"Resolution of the battle with Xayide\",\n        \"The fate of Fantasia or the characters\",\n        \"Third-act twists and endings\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPH1ZqzDjTiAjZapjitXBnzdfu/eNXAo9oiWwBoW3SGBqSZEtsIuRAzmXwcVVcrvtd6xr79lpXK5OFzPSr2PovVxG7+/Sf2J4fYJVk7UNJ++agQvUZEXSFlJbh84uY80tf"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2927,
+    "candidatesTokenCount": 413,
+    "totalTokenCount": 3340,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2927
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "R_2pasKeNebFz7IP38rt2AI"
+}

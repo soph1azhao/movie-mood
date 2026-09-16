@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-18079\",\n    \"tmdbId\": 18079\n  },\n  \"copy\": {\n    \"description\": \"In Buenos Aires, two grifters team up to pull off a lucrative swindle, attempting to sell forged rare stamps known as the \\\"Nine Queens\\\" to a wealthy collector.\",\n    \"whyWatch\": \"Fabián Bielinsky's taut Argentine crime thriller pulls you into an intricate game of deception where every handshake and glance carries hidden stakes.\",\n    \"curiosityHook\": \"Can two opportunistic hustlers keep their fragile partnership together long enough to cash in on a counterfeit fortune?\",\n    \"vibeSummary\": \"Suspenseful and tightly wound, this sharp con-artist drama demands steady focus and pays off with mounting tension.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Two con artists teaming up\",\n        \"Targeting a stamp collector with counterfeit rare stamps known as the 'nine queens'\",\n        \"Crime drama thriller genre framing and Buenos Aires/Argentine setting\",\n        \"Initial conflict of pulling off the swindle\"\n      ],\n      \"excludedMaterial\": [\n        \"Twist endings and late-stage reversals\",\n        \"Revealing whether the scam succeeds or fails\",\n        \"Double crosses or true allegiances unmasked later\",\n        \"Specific third-act resolutions\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPUJueryqf9EYJ4Z90crI1fbR5U0pLdCscwTvqsFfaji19GiOtvc2J2Qi4pE/pLH+YWaEer+v3AnXwvWwP0h0g8oLAIcYzn/sAAeqV8+SsSvVz+lA+bCL0VQ/ESGfoL936"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2572,
+    "candidatesTokenCount": 400,
+    "totalTokenCount": 2972,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2572
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "ov6paqTEBvyGz7IPqYqimQM"
+}

@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-11973\",\n    \"tmdbId\": 11973\n  },\n  \"copy\": {\n    \"description\": \"In October 1962, American discovery of Soviet missile bases established in Cuba triggers a high-stakes Cold War standoff, plunging leadership into a fraught nuclear showdown directed by Roger Donaldson.\",\n    \"whyWatch\": \"Roger Donaldson directs a gripping, history-rooted thriller where every calculated political move and diplomatic calculation carries the threat of catastrophic escalation.\",\n    \"curiosityHook\": \"When surveillance reveals Soviet missile installations just off American shores, how do leaders navigate the razor-thin margin between diplomacy and global conflict?\",\n    \"vibeSummary\": \"A tense, deliberate historical thriller with heavy emotional weight, demanding engaged focus across its 145-minute runtime.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Premise and setup of the 1962 Cuban Missile Crisis\",\n        \"Discovery of Soviet missile bases in Cuba by Americans\",\n        \"Nuclear standoff between the United States and the USSR\",\n        \"Cold War political and diplomatic tension\",\n        \"Director Roger Donaldson and historical thriller genre details\"\n      ],\n      \"excludedMaterial\": [\n        \"Specific resolution of the crisis\",\n        \"Backchannel negotiations and final diplomatic deals\",\n        \"Third-act events, outcomes, or historical aftermath\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIP+SQpW5R8ev1tW06PyDMwm7MT0cVZuNDzg+CLTM5gBxz0s0O3JScp7IvLIsZoRf0olgGYL2iJ1MJJs57/LlCorA0VQtRskAgj8JyC3PzQg1DxODFNZhom9+K3Xt5y7qo9"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2629,
+    "candidatesTokenCount": 405,
+    "totalTokenCount": 3034,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2629
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "kf-paumiK4Wsz7IPjYvx8Aw"
+}

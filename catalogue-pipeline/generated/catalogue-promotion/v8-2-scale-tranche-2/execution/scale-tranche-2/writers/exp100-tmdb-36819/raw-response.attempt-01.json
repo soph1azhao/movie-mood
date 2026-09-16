@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"exp100-tmdb-36819\",\n    \"tmdbId\": 36819\n  },\n  \"copy\": {\n    \"description\": \"When six rogue dwarfs burst from his bedroom closet with a stolen cosmic map, young history buff Kevin gets swept into an era-hopping heist across the centuries, pursued by their former master, the Supreme Being.\",\n    \"whyWatch\": \"Director Terry Gilliam turns a fantastical time-travel romp into a witty, fast-paced adventure that tumbles delightfully through myth and legend.\",\n    \"curiosityHook\": \"Armed with a cosmic blueprint of time's greatest cracks, can this unruly crew outrun the Supreme Being while plundering history's treasures?\",\n    \"vibeSummary\": \"Exciting, humorous, and delightfully brisk, this inventive fantasy offers an engaging adventure great for friends or family.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Young history buff Kevin meets six dwarfs emerging from his closet\",\n        \"Dwarfs are former employees of the Supreme Being with a stolen map of time holes\",\n        \"They loot treasures across historical eras including Napoleon, Robin Hood, and King Agamemnon\",\n        \"The Supreme Being is pursuing them\"\n      ],\n      \"excludedMaterial\": [\n        \"Major third-act confrontations and final fates\",\n        \"Resolution of the pursuit by the Supreme Being\",\n        \"Ultimate outcome of the stolen map or ending sequences\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPt58JF2vV4eGJPLmpRIR/JB129KeiKFQ9MclFP4CUcelpHGSzvglesrbHlcRYMrpg4t0NDfgllRvIo4bFD4okeWrq2r3ZX5aQ+a+pw73+fxSEXNo0QEFhJur5qmIiTPsi"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2965,
+    "candidatesTokenCount": 417,
+    "totalTokenCount": 3382,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2965
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "GPipas3EMu2fz7IPlpXNkQQ"
+}

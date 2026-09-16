@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-27813\",\n    \"tmdbId\": 27813\n  },\n  \"copy\": {\n    \"description\": \"Carrying a large wicker basket that hides his severely deformed, formerly conjoined twin brother, a young man arrives in the city seeking bloody vengeance against the doctors who separated them against their will.\",\n    \"whyWatch\": \"Frank Henenlotter blends grotesque horror with pitch-black comedy, delivering a singular revenge tale driven by macabre brotherly devotion and pure midnight-movie energy.\",\n    \"curiosityHook\": \"What happens when the hidden brother inside the basket is finally unleashed against the surgeons who cut them apart?\",\n    \"vibeSummary\": \"Grimy, suspenseful horror-comedy with heavy undertones, balancing shocking absurdity with a steady, focused pace.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"A young man carrying a large basket\",\n        \"The basket hides his deformed, formerly conjoined twin brother\",\n        \"The brothers seek revenge on the doctors who separated them against their will\",\n        \"Horror and comedy genre pairing directed by Frank Henenlotter\"\n      ],\n      \"excludedMaterial\": [\n        \"Identity of victims or how the revenge plays out in detail\",\n        \"Later plot twists or third-act developments\",\n        \"Ending and eventual fate of either brother\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIP3qMHiprQrAV34ksPzm353IeN/CNaRQcUYXHFc0h/wbpyDcdCUcNyWkJd9TesRimNWGiYxM8K8WUx7I0j8lMKLZmOKFeD4QaqZCx/i8MGpfG5tU4QUKdysCsN7nUHcTL2"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2552,
+    "candidatesTokenCount": 404,
+    "totalTokenCount": 2956,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2552
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "bP6paoCELNLgz7IP6qjRoQQ"
+}

@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-39148\",\n    \"tmdbId\": 39148\n  },\n  \"copy\": {\n    \"description\": \"In this retold origin, Goku crosses paths with Bulma and Kame-Sen'nin under new circumstances, quickly drawing the attention of the Red Ribbon Army, who actively hunt him down instead of waiting to be found.\",\n    \"whyWatch\": \"Directed by Shigeyasu Yamauchi, this brisk 80-minute animated fantasy flips the classic pursuit dynamic into a fast-paced, exciting collision with an encroaching army.\",\n    \"curiosityHook\": \"With the Red Ribbon Army actively hunting Goku from the start, how will these newly formed alliances withstand being tracked down so early?\",\n    \"vibeSummary\": \"Fast-moving fantasy adventure, moderate stakes, and vibrant animated excitement built for engaged group viewing.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"retelling of Dragon Ball's origin\",\n        \"different take on the meeting of Goku, Bulma, and Kame-Sen'nin\",\n        \"Red Ribbon Army hunting Goku rather than Goku finding them\",\n        \"adventure and fantasy genres\",\n        \"80-minute runtime and Japanese animation directed by Shigeyasu Yamauchi\"\n      ],\n      \"excludedMaterial\": [\n        \"climax or final battle outcomes\",\n        \"character fates or later deaths\",\n        \"later weapon or martial arts reveals\",\n        \"third-act resolutions\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPbpqXwf9z4oSMRro7WGxqVOqTHWIdA0PDKPDrmpDxse7JyGccxGRXWkMIbrLv7e9oFySnHbFZj9a1scwKmXEAZ4M6ZUBbCJFsUWQSbf1oKBBgVZN/+jV5Z+wyChjgnZHw"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2647,
+    "candidatesTokenCount": 429,
+    "totalTokenCount": 3076,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2647
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "h_6pav2UB-qfz7IP2c-9mAc"
+}

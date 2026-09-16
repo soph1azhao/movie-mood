@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-13257\",\n    \"tmdbId\": 13257\n  },\n  \"copy\": {\n    \"description\": \"Shocked by his mother's sudden wedding announcement, a young man rushes back home to stop her from marrying his former gym teacher, a notorious schoolyard tyrant who made growing up unbearable.\",\n    \"whyWatch\": \"Craig Gillespie steers this brisk, funny collision between lingering adolescent dread and family obligations, offering an easygoing comedy of petty vengeance.\",\n    \"curiosityHook\": \"Can a grown son successfully dismantle his mother's romance when the groom-to-be is the exact same authority figure who once ruled his school days?\",\n    \"vibeSummary\": \"Light, funny, and low-demand, delivering an accessible comedy paced for a relaxed watch with friends.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Mother's wedding announcement\",\n        \"Protagonist returning home to stop the wedding\",\n        \"Fiancé is protagonist's old gym teacher who tormented students\",\n        \"Craig Gillespie direction\",\n        \"Comedy and romance genre setup\"\n      ],\n      \"excludedMaterial\": [\n        \"Whether the wedding is prevented\",\n        \"Eventual resolution between son and teacher\",\n        \"Late relationship decisions\",\n        \"Third-act resolutions and ending\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPORqaR5LSvWJqrCDu73/IMBpIEdD6l/U8xK3fGDwA7ymHfwDwciN5Rp9CuXdloDk5LL6JgbigWweV/OboTYT38YfoB3+qkXCeuZ3oqCxw0D8vTIP4lQMz4/J5zUdrs4pa"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2540,
+    "candidatesTokenCount": 398,
+    "totalTokenCount": 2938,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2540
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "uP2paualE66Cz7IP4pnvqQY"
+}

@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-9386\",\n    \"tmdbId\": 9386\n  },\n  \"copy\": {\n    \"description\": \"Haunted by his failure to save Kennedy decades earlier, veteran Secret Service agent Frank Horrigan returns to presidential protection duty when an elusive assassin calling himself \\\"Booth\\\" targets the current commander-in-chief.\",\n    \"whyWatch\": \"Wolfgang Petersen directs a sharp, high-pressure cat-and-mouse thriller that pairs propulsive action with the heavy emotional toll of long-carried guilt.\",\n    \"curiosityHook\": \"When a calculating stalker deliberately targets the one agent still carrying the weight of Dallas, survival becomes a battle of wills.\",\n    \"vibeSummary\": \"Tense, fast-paced political thriller with heavy emotional stakes, demanding engaged focus for an exciting cat-and-mouse duel.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Frank Horrigan's past failure during the Kennedy assassination\",\n        \"The emergence of a new assassin calling himself Booth\",\n        \"Horrigan returning to protection detail to stop the threat\",\n        \"The premise of confronting past guilt through a current presidential threat\"\n      ],\n      \"excludedMaterial\": [\n        \"Booth's true identity and background\",\n        \"Third-act climax and assassination attempts\",\n        \"Eventual fates of Horrigan, the President, or Booth\",\n        \"Plot twists and specific investigation revelations\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIP1TIFVmZD2x1GE35Z7mZWQX9qiO8/XqhTR1LmBBk/+MaGOVwSEp2qJ6xe781hoFUUhvXfWo52go4chrJf6mUxY7MZUuPm1obYOt4ywodt8+ww5sCGbmMLb1qMyMi802Ft"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2686,
+    "candidatesTokenCount": 422,
+    "totalTokenCount": 3108,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2686
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "Lf6parGpGdCJz7IPhcirgAw"
+}

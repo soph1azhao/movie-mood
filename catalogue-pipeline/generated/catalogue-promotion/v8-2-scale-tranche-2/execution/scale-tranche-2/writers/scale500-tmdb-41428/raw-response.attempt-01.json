@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-41428\",\n    \"tmdbId\": 41428\n  },\n  \"copy\": {\n    \"description\": \"After striking a tormented metal fetishist with their car and hiding the body, a Japanese businessman and his girlfriend try to move on, only for him to suffer a vicious curse that turns his flesh to iron.\",\n    \"whyWatch\": \"Shinya Tsukamoto's 67-minute cyberpunk horror delivers a ferocious, heavy collision of industrial nightmare and bodily mutation, built for viewers seeking uncompromising intensity.\",\n    \"curiosityHook\": \"When a hit-and-run cover-up triggers a terrifying biological shift, how far will the metal spread before the man completely disappears?\",\n    \"vibeSummary\": \"Heavy, suspenseful, and aggressively strange, demanding focused attention for a compact late-night solo watch.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Businessman and girlfriend hit-and-run accident\",\n        \"Disposal of the victim's body\",\n        \"Metal fetishist background\",\n        \"Onset of the iron-flesh curse\",\n        \"Director Shinya Tsukamoto and 67-minute runtime\"\n      ],\n      \"excludedMaterial\": [\n        \"Resolution of the transformation\",\n        \"Climactic confrontation between characters\",\n        \"Third-act events and final fate of Tokyo or the protagonist\",\n        \"Ending outcomes\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPuLrk0NvQNK0U11ZnhARvoBM5MBmrVp6LwE01t6yImU1LcHbdCQAEsqyuXWnuRne1GDxIE1sT2AOkhYlYZYaU15XdJkIhYrF7zmBfqFyUNKnXEtNH/I5J+Z6QiInGjyV3"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2682,
+    "candidatesTokenCount": 416,
+    "totalTokenCount": 3098,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2682
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "e_-pau3lDIbRz7IPn6bvoA8"
+}

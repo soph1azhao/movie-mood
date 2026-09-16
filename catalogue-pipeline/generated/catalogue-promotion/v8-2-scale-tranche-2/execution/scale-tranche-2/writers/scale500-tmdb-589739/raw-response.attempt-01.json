@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-589739\",\n    \"tmdbId\": 589739\n  },\n  \"copy\": {\n    \"description\": \"When a father unexpectedly has to take over styling his young daughter Zuri's hair before a special occasion, an everyday routine turns into an unruly challenge against locks that have a mind of their own.\",\n    \"whyWatch\": \"At seven lively minutes, this animated family comedy delivers genuine father-daughter warmth and brisk comic timing with zero viewing friction.\",\n    \"curiosityHook\": \"Can a completely unprepared dad master a high-stakes morning routine when his daughter's hair refuses to cooperate?\",\n    \"vibeSummary\": \"Lighthearted, tender, and effortlessly fast, offering an easy burst of family comedy.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Dad stepping in for mom\",\n        \"Styling daughter Zuri's hair for a big event\",\n        \"The locks having a mind of their own / morning routine challenge\",\n        \"Animated comedic and family tone\"\n      ],\n      \"excludedMaterial\": [\n        \"Specific resolution of the styling challenge\",\n        \"Where mom is or reasons for her absence\",\n        \"Third-act events and final ending\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPDHkDHAcBEXSO3QdgNbC2bOPhDH7x2Fn2b8+sKCRFWV322M06NA8vQt03BS/ES0y6r0gZgN5Rq6aKuopRBQffdG3gUaAWJJpMrMqYCNFztcV+9V7NalpZIl4Jgkrs54gq"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2618,
+    "candidatesTokenCount": 380,
+    "totalTokenCount": 2998,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2618
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "nf6papnSN-Otz7IP9ezqoAc"
+}

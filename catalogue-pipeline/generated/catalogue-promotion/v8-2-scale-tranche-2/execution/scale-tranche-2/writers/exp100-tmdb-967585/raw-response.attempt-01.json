@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"exp100-tmdb-967585\",\n    \"tmdbId\": 967585\n  },\n  \"copy\": {\n    \"description\": \"Ready to propose to Flo, Greg faces a crisis: his eccentric parents could derail everything. To protect the wedding, he reopens his alibi agency with old accomplices to hire presentable stand-ins.\",\n    \"whyWatch\": \"Directed by Philippe Lacheau, this French comedy leans into classic farce, escalating a pre-wedding dilemma into a swift, lighthearted scheme built on elaborate cover-ups.\",\n    \"curiosityHook\": \"Can Greg stage the ultimate deception with substitute parents before his fiancée discovers his old habits never truly stopped?\",\n    \"vibeSummary\": \"Light, comedic, and easy to follow, delivering steady, accessible farce across a breezy 88-minute runtime.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Greg's proposal to Flo\",\n        \"Closing and reopening of Alibi.com\",\n        \"Crooked father and ex-charm actress mother\",\n        \"Scheme to hire fake parents with former accomplices\"\n      ],\n      \"excludedMaterial\": [\n        \"Wedding outcome\",\n        \"Whether Flo uncovers the truth\",\n        \"Specific third-act twists or resolutions\",\n        \"Identity of hired actors beyond the premise\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPwNtzdMwmCdjS+p1bHJLtHRxAvt2JNmXcDdHTRoKNIfCnAxWRboXJJyUntGyHOatYzIHj8eWvLsO34VEYlxYeExa0NvuOlEgkskBhl/8U6icc/xG5QTUqZF/wlKK9O9wC"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2772,
+    "candidatesTokenCount": 401,
+    "totalTokenCount": 3173,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2772
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "rf-paq2XHPCez7IPmsu76Qc"
+}

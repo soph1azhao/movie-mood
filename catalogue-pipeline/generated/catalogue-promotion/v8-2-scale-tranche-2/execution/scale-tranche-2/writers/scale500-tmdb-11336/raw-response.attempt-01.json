@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-11336\",\n    \"tmdbId\": 11336\n  },\n  \"copy\": {\n    \"description\": \"After a devastating car crash puts schoolteacher Johnny Smith in a five-year coma, he awakens to discover an unsettling new power: physical contact lets him see the past, present, and future of anyone he touches.\",\n    \"whyWatch\": \"David Cronenberg directs this thoughtful supernatural thriller, grounding high-concept psychic visions in profound personal loss and escalating suspense.\",\n    \"curiosityHook\": \"Waking into a life stolen by time is shock enough, but what happens when a single touch reveals horrific fates you might be able to prevent?\",\n    \"vibeSummary\": \"Somber, suspenseful sci-fi drama paced with deliberate tension and heavy emotional stakes, ideal for focused late-night viewing.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Johnny Smith car accident and five-year coma\",\n        \"Johnny waking up with psychic visions triggered by physical touch\",\n        \"Director David Cronenberg\",\n        \"Core genres of horror, science fiction, and thriller\"\n      ],\n      \"excludedMaterial\": [\n        \"Specific vision targets or political plotlines\",\n        \"Murder investigations or sheriff collaboration details\",\n        \"Third-act assassination plot or sacrifices\",\n        \"Ending and character deaths\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPo18aC9g9qV1qQzj4I8tmNPo5iHkTYQ1Fqlvx2DvQC4290JqHlZ5AdiklLfzYqyn7z5xsy3JVRvq9jNaOfxQZD7rnnXYDv7snXZgsDbOqpM3ksTzxuBKoTHljwdVjmwYl"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2736,
+    "candidatesTokenCount": 402,
+    "totalTokenCount": 3138,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2736
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "_vepapKEBIWtz7IP7dbuoQ8"
+}

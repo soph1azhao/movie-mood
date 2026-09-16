@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-36670\",\n    \"tmdbId\": 36670\n  },\n  \"copy\": {\n    \"description\": \"Secret agent James Bond returns to action when the nefarious organization SPECTRE steals two atomic warheads. Tasked with stopping the mastermind Largo, 007 must navigate a high-stakes scheme of global nuclear blackmail.\",\n    \"whyWatch\": \"Directed by Irvin Kershner, this globetrotting 1983 spy thriller delivers fast-paced action, classic espionage tension, and an entangled alliance fueled by personal revenge.\",\n    \"curiosityHook\": \"Can 007 thwart Largo's atomic scheme before time runs out, especially once the villain's vengeful girlfriend Domino enters the fray?\",\n    \"vibeSummary\": \"Exciting and suspenseful spy adventure with fast pacing, globe-trotting stakes, and engaged action suited for friends.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"James Bond returning as secret agent 007\",\n        \"Confrontation with the evil organization SPECTRE\",\n        \"Largo stealing two atomic warheads for nuclear blackmail\",\n        \"Domino being Largo's girlfriend, falling for Bond, and seeking revenge\",\n        \"Director Irvin Kershner and 1983 release context\"\n      ],\n      \"excludedMaterial\": [\n        \"Resolution of the nuclear blackmail threat\",\n        \"Third-act confrontations and final battle outcomes\",\n        \"Fate of Largo or Domino\",\n        \"Specific late-plot reversals or death scenes\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIP3V/wogJDCkoXkuQIt5YzcNTgFAvcpfoP7WwwskyNgErjf9WNCtxTxRQM59IpOuz5tcMXnLTrHhdwCothqm26CaluaA7A2ApZbs7D9OFi1Wt3wZgA3+BEBJ/bLNU4lFpS"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2921,
+    "candidatesTokenCount": 447,
+    "totalTokenCount": 3368,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2921
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "BvipasDtGZbWz7IPxYqeyAM"
+}

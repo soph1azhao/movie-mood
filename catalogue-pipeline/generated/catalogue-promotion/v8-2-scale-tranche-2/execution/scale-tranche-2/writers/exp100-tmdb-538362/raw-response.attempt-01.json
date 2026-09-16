@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"exp100-tmdb-538362\",\n    \"tmdbId\": 538362\n  },\n  \"copy\": {\n    \"description\": \"Arrested for a minor infraction in Italy, Stefano Cucchi is taken into custody, sparking a devastating week of detention that erupts into one of the country's most fiercely contested real-life court cases.\",\n    \"whyWatch\": \"Director Alessio Cremonini delivers a rigorous, deeply human biographical drama that confronts institutional controversy through an intimate family tragedy.\",\n    \"curiosityHook\": \"What happened behind closed doors during one fateful week in custody to shatter a family and ignite a nationwide legal reckoning?\",\n    \"vibeSummary\": \"Heavy, somber, and demanding full emotional focus, this Italian legal drama offers a thoughtful, unsparing solitary watch.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Stefano Cucchi's arrest for a minor crime\",\n        \"Detention circumstances and the mysterious death in custody\",\n        \"The subsequent controversial Italian legal battle and lasting impact on his family\",\n        \"Alessio Cremonini's direction and the drama genre context\"\n      ],\n      \"excludedMaterial\": [\n        \"Specific culprits or individual blame assignments not in the packet\",\n        \"Detailed autopsy findings or graphic intermediate custody events not provided\",\n        \"Final trial verdicts or resolution outcomes\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPDZtnVE9RBYKFLc0kP7mwDH65u3EHZ4pX5bUIavJC7GqHLP7xEn6wwOmKu8c8Y2goj3ZgOLaD8xtBme8UtobgCftX6mFN5TfJNLp69ZK5SZmvReDbeclX95ChuMSNoK3r"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2683,
+    "candidatesTokenCount": 407,
+    "totalTokenCount": 3090,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2683
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "r_2pasPuAvSFz7IP95yruA8"
+}

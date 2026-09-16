@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-14249\",\n    \"tmdbId\": 14249\n  },\n  \"copy\": {\n    \"description\": \"After twelve years in the Navy, Jay Cochran visits Mexico to unwind at the estate of Tiburon Mendez, a shady and influential businessman. The stay turns precarious when Cochran meets Mendez's captivating wife, Miryea.\",\n    \"whyWatch\": \"Directed by Tony Scott, this 1990 thriller blends romantic obsession with looming danger, delivering high-stakes suspense set against an alluring, high-society Mexican backdrop.\",\n    \"curiosityHook\": \"When mutual attraction sparks inside the guarded compound of a ruthless host, the boundary between leisure and mortal peril begins to dissolve.\",\n    \"vibeSummary\": \"Steamy, suspenseful, and emotionally heavy, moving at a measured pace that demands engaged attention.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Jay Cochran leaving the Navy after 12 years\",\n        \"Vacationing in Mexico at Tiburon Mendez's mansion\",\n        \"Past hunting trip connection in Alaska\",\n        \"Mendez being a powerful and shady businessman\",\n        \"Cochran's encounter with and attraction to Miryea Mendez\",\n        \"Tony Scott direction and 1990 release year\"\n      ],\n      \"excludedMaterial\": [\n        \"Affair discovery or confrontation specifics\",\n        \"Violent retribution or revenge killing details\",\n        \"Injuries, deaths, or third-act resolutions\",\n        \"Late relationship outcomes\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPhxcntWrQ511NubBOIniSm9UwtoOkucQFCEtMo6++GdK6OUlEssrfRddyloH0F1YgB3UbOJPGrzq4qaq+7TPtD0WslwQO7Db5xz/DIRLOmBqgwiDScoM6jbbaQWLSvIaX"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 3074,
+    "candidatesTokenCount": 442,
+    "totalTokenCount": 3516,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3074
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "7f-pauS6JfbUz7IP6OLx4As"
+}

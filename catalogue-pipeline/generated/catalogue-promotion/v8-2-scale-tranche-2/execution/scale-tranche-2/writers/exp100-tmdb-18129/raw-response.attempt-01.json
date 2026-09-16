@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"exp100-tmdb-18129\",\n    \"tmdbId\": 18129\n  },\n  \"copy\": {\n    \"description\": \"In Stephen Frears's crime drama, a small-time conman finds his loyalties fractured between his estranged mother and his girlfriend, two high-stakes grifters operating with their own dangerous angles.\",\n    \"whyWatch\": \"Watch it for an engrossing, sharp-edged crime portrait where every gesture is calculated and familial ties offer no protection against high-stakes deceit.\",\n    \"curiosityHook\": \"Caught between an estranged mother and a calculating girlfriend, which angle will pull him under first?\",\n    \"vibeSummary\": \"A deliberate, suspenseful neo-noir offering measured drama and steady tension built for focused solo viewing.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Small-time conman premise\",\n        \"Conflict between estranged mother and girlfriend\",\n        \"Both women being high-stakes grifters with separate angles\",\n        \"Crime drama tone and neo-noir atmosphere\",\n        \"Director Stephen Frears\"\n      ],\n      \"excludedMaterial\": [\n        \"Outcomes of the grifts\",\n        \"Betrayals and late-film reversals\",\n        \"Third-act character fates or deaths\",\n        \"Resolution of the familial conflict\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIP3iNkpx0Pm4PUJtj1Tya8mQHcMHFcpLlFF7dHkUBoCI07UbYqRSIourEaGWA8sINXJhgyf2kv7I6k65MoVLHylGa9qgF7OH7XWWzqPSDDHxvwP/Kbh83Mf+7FJmSMVD8/"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2853,
+    "candidatesTokenCount": 397,
+    "totalTokenCount": 3250,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2853
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "Mf-patShO5bWz7IPxYqeyAM"
+}

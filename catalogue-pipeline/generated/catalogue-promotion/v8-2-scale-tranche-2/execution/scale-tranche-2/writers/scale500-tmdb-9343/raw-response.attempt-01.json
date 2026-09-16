@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-9343\",\n    \"tmdbId\": 9343\n  },\n  \"copy\": {\n    \"description\": \"Driven by an ambition to build an opera house in the Peruvian Amazon, dreamer Fitzcarraldo mounts a daring expedition into an uncharted jungle territory to secure a fortune in rubber.\",\n    \"whyWatch\": \"Director Werner Herzog channels monumental ambition into a sprawling, immersive drama where culture and untamed wilderness collide.\",\n    \"curiosityHook\": \"Can an audacious artistic dream survive an unforgiving trek through the heart of the rainforest?\",\n    \"vibeSummary\": \"An immersive, thoughtful adventure with steady momentum, tailored for dedicated solo viewing.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Fitzcarraldo's dream of building an opera house in Iquitos\",\n        \"The Peruvian Amazon setting\",\n        \"The quest to harvest rubber in an unexplored rainforest region to finance the project\",\n        \"Werner Herzog's direction and dramatic adventure tone\"\n      ],\n      \"excludedMaterial\": [\n        \"Details of late-stage expedition setbacks or successes\",\n        \"Third-act plot resolutions\",\n        \"Specific outcomes of the rubber enterprise and opera house endeavor\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIP2bLbrDLHIKx5ImCNj3LQAA8C3RrzxS8Iw/5Xg0Z9VLfQ4A6F697gfLS23kqX924Yxaft7fWWTnX/eiKaFNQxz4IPDHSsOk0UteDf0puLkKvRrlliZNSJ8L6FaAMROMSn"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2773,
+    "candidatesTokenCount": 373,
+    "totalTokenCount": 3146,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2773
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "Q_2patiCKO3Uz7IP4abhgQM"
+}

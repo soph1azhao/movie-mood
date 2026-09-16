@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-9642\",\n    \"tmdbId\": 9642\n  },\n  \"copy\": {\n    \"description\": \"Tasked with turning the chief's pampered nephew Justforkix into a warrior, Asterix and Obelix face an unexpected crisis when visiting Vikings kidnap the boy, forcing a perilous rescue expedition north to Norway.\",\n    \"whyWatch\": \"This energetic 78-minute animated romp pairs brisk comedy with classic buddy dynamics, offering vibrant adventure that moves swiftly from Gaulish antics to Nordic shores.\",\n    \"curiosityHook\": \"When fierce Vikings snatch the untested nephew away to their homeland, can Asterix and Obelix reach him before his lack of warrior skills seals his fate?\",\n    \"vibeSummary\": \"Brisk and lighthearted; an easy, upbeat animated rescue adventure built for family viewing with friends.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Asterix and Obelix tasked with making Justforkix a warrior\",\n        \"Justforkix is the chief's lazy nephew\",\n        \"Vikings kidnap Justforkix and bring him to Norway\",\n        \"Asterix and Obelix journey to Norway on a rescue mission\"\n      ],\n      \"excludedMaterial\": [\n        \"Outcome of the rescue mission\",\n        \"Whether Justforkix becomes a warrior\",\n        \"Specific events or confrontations in Norway\",\n        \"Climactic resolution and ending\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPjFuqcuTSMWiZbdMl8fnWK0QbI0terHomUy2gWi8yG6Uesq2oGQ4uX9VpZRmclnZV27Rn/Ury13HOcSAzRZ+2EhsDVYCS1Ldwc7nKhJQwMqJYg5uBye+ODwm0WeYTxsno"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2893,
+    "candidatesTokenCount": 419,
+    "totalTokenCount": 3312,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2893
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "Ov2paum8IP6hz7IPh_3XkQk"
+}

@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-10389\",\n    \"tmdbId\": 10389\n  },\n  \"copy\": {\n    \"description\": \"After receiving a cornea transplant to regain her sight, a blind violinist begins seeing restless spirits, driving her to uncover the history of the organ and the fate of its former host.\",\n    \"whyWatch\": \"Directed by Oxide and Danny Pang, this cross-regional Asian horror combines chilling supernatural imagery with an emotionally grounded search for truth.\",\n    \"curiosityHook\": \"Her new vision was supposed to restore her life, but whose terrifying memories are lingering behind her eyes?\",\n    \"vibeSummary\": \"A steady, suspenseful horror that balances ghostly unease with an engaging, tragic mystery best experienced alone.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Violinist protagonist regaining sight via cornea transplant\",\n        \"Protagonist seeing ghosts through new eyes\",\n        \"Initial quest to trace cornea origin and donor fate\",\n        \"Atmospheric suspense and emotional undertone\"\n      ],\n      \"excludedMaterial\": [\n        \"Identity or specific tragedy of the donor discovered later\",\n        \"Any later plot twists, climax events, or ending\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPhg5Mixi+5O7+f0rYV63KUhkeLT4Hx0ZTrIQeaWpR4ZN+Sycx8fwO2uNGswFVOM1CVsgUNFYXkRO0vqH2z4y3i2gFP423zCm7y+lN+N9sgHxxVQ1eTudRgqIBUhdXiqLV"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2679,
+    "candidatesTokenCount": 367,
+    "totalTokenCount": 3046,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2679
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "jf6paprkN6OJz7IP6YqDgAU"
+}

@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-110\",\n    \"tmdbId\": 110\n  },\n  \"copy\": {\n    \"description\": \"After accidentally injuring a dog, part-time model Valentine meets its detached owner, a retired judge. When she discovers he routinely eavesdrops on his neighbors, an improbable connection begins to form.\",\n    \"whyWatch\": \"Director Krzysztof Kieślowski crafts an intimate, slow-burning drama that folds quiet suspense and genuine emotional warmth into an unconventional moral encounter.\",\n    \"curiosityHook\": \"What begins as an uneasy confrontation shifts the moment Valentine catches the reclusive judge secretly wiretapping private neighborhood conversations.\",\n    \"vibeSummary\": \"Thoughtful, deliberate, and emotionally resonant French drama laced with quiet, voyeuristic mystery.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Valentine running over the dog and keeping it\",\n        \"The retired judge's initial indifference\",\n        \"The discovery of the judge eavesdropping on his neighbors' phone calls\",\n        \"The emergence of an unlikely bond between the two characters\"\n      ],\n      \"excludedMaterial\": [\n        \"Content or consequences of the intercepted phone calls\",\n        \"Later developments involving the neighbors\",\n        \"Late relationship progression and resolutions\",\n        \"Third-act events or conclusion\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPyluPzdaYqGD5Iq+qDnkatRf8Hh1wFRET4nBqzOOtyGhoP14N0CN8VnLXRaH1PKkFmVk41MM0RCWi5SSt93AJ1BZa4rHSguhB8/lqt/2/O/avR/uKL71gQEsVK1aVabel"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2882,
+    "candidatesTokenCount": 389,
+    "totalTokenCount": 3271,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2882
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "_v2pauDcC7ihz7IPnc2LiA4"
+}

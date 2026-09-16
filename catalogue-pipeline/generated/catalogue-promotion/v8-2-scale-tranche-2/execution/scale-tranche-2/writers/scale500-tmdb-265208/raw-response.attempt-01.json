@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-265208\",\n    \"tmdbId\": 265208\n  },\n  \"copy\": {\n    \"description\": \"In Las Vegas, a skilled bodyguard battling a severe gambling habit runs afoul of the local mob, forcing him to risk everything on one desperate final move to settle the score.\",\n    \"whyWatch\": \"Simon West delivers a lean, 92-minute action thriller that channels classic Vegas grit with fast pacing, sharp suspense, and relentless mob-fueled friction.\",\n    \"curiosityHook\": \"When your lethal talents make you a target and the mob closes in, how do you pull off an all-or-nothing gamble to walk away clean?\",\n    \"vibeSummary\": \"Fast, exciting, and tense; a compact 92-minute neon crime thriller built for an engaging watch solo or with friends.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Las Vegas bodyguard premise\",\n        \"Protagonist's lethal skills and gambling problem\",\n        \"Trouble with the mob and high-stakes final play\",\n        \"Simon West direction and 92-minute runtime\"\n      ],\n      \"excludedMaterial\": [\n        \"Third-act resolutions\",\n        \"Outcome of the final play\",\n        \"Specific casualties or mob identities\",\n        \"Ending details\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIP/laRjEWOg5Ff0g4UeKXVwzo27WNR44gIcciP2adErPUrAGw7DdryBS+j/q/J2JvkkajJoVTix4G2omrXZXk//hapHT9LengQCLsg0jnV/Dn3UkkX+TFo//5XOTMpN49m"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2763,
+    "candidatesTokenCount": 401,
+    "totalTokenCount": 3164,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2763
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "LP-paq2yFIiJz7IP09CqiQM"
+}

@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"exp100-tmdb-8010\",\n    \"tmdbId\": 8010\n  },\n  \"copy\": {\n    \"description\": \"Now mortal and nearing the end of his life, Connor MacLeod is haunted by resurfacing memories of the planet Zeist, just as his vengeful old enemy, General Katana, plots his ultimate destruction.\",\n    \"whyWatch\": \"Director Russell Mulcahy takes the fantasy saga into bold science-fiction territory, delivering fast-moving action and high-stakes adventure with persistent suspense.\",\n    \"curiosityHook\": \"As MacLeod faces his own mortality, what lingering secret from planet Zeist brings General Katana across worlds to finish him off?\",\n    \"vibeSummary\": \"Fast-paced, suspenseful sci-fi fantasy with exciting action, moderate emotional stakes, and energetic spectacle perfect for friends.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Connor MacLeod is mortal and an old man near death\",\n        \"Resurfacing memories of his past on planet Zeist\",\n        \"General Katana is a vengeful enemy plotting to destroy him\",\n        \"Director Russell Mulcahy\",\n        \"Genre blend of fantasy, action, adventure, and science fiction\"\n      ],\n      \"excludedMaterial\": [\n        \"Details of the shield or environmental plot not present in packet\",\n        \"Outcome of Katana's attack\",\n        \"Return of past allies or specific resurrection mechanisms\",\n        \"Resolution of MacLeod's mortality or fate\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPsVxwY53cw7NdH2Gfl68kPKggLvz+j5YJYkeUlzYWF+q100ZFkOV5O9/KSC+44Y9cNULG2ov8IRtOxb0gfzEdjMNsXyXOpjCUaGx90Onn6Iqr+zTD5IUUEYu4zrpwq+AM"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2810,
+    "candidatesTokenCount": 435,
+    "totalTokenCount": 3245,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2810
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "8f2pasXIBceGz7IPjZKPmAU"
+}

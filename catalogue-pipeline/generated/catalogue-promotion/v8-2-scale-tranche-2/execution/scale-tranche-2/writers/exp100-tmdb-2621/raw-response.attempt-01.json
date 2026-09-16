@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"exp100-tmdb-2621\",\n    \"tmdbId\": 2621\n  },\n  \"copy\": {\n    \"description\": \"A year after his wife's death, grieving architect Bob Rueland goes on a blind date and instead falls for Grace, a sharp-witted waitress who unknowingly received his late wife's donated heart.\",\n    \"whyWatch\": \"Directed by Bonnie Hunt, this romantic comedy grounds its lively restaurant courtship in profound grief and poignant hope, balancing genuine laughter with tender emotional stakes.\",\n    \"curiosityHook\": \"As an unexpected connection begins to heal them both, an unspoken truth about Grace's heart hangs between them, threatening to unravel everything.\",\n    \"vibeSummary\": \"Warm and heartfelt comedy-romance with heavy emotional undercurrents, moving at an easy, engaging pace ideal for date night.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Bob Rueland's grief a year after his wife's tragic death\",\n        \"The blind date setting at a lively Irish-Italian restaurant\",\n        \"Spark with sharp-witted waitress Grace\",\n        \"Grace being the recipient of the late wife's donated heart\",\n        \"Initial conflict that their romance carries the weight of a secret\"\n      ],\n      \"excludedMaterial\": [\n        \"The revelation scene of how or when Bob learns about the heart\",\n        \"Grace's reaction to finding out Bob's identity\",\n        \"Late-film relationship breakups or reconciliations\",\n        \"Resolution or ending\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPPNEmR7aTdh4K7MLxS5LJvVh8WxSgXxStuL5wFH15c+dYAY3a8DT1hRVDzwRXEk8rROLsF0ogfqeColojqkGRk2tDYnvB23axLVrts29O5ODwgmZzw23MzLpHjEerS+Uh"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 3031,
+    "candidatesTokenCount": 443,
+    "totalTokenCount": 3474,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3031
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "oP2papPGGtSFz7IPq6zhqAI"
+}

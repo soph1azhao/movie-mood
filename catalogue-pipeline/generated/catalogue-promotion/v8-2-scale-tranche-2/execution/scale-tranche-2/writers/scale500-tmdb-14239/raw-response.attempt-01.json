@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-14239\",\n    \"tmdbId\": 14239\n  },\n  \"copy\": {\n    \"description\": \"While imprisoned for murder, cartoonist Jack Deebs invents Cool World, only to be pulled into the animated realm by his creation, Holli Would, who plots to seduce him into granting her real life.\",\n    \"whyWatch\": \"Ralph Bakshi blends live action and animation into an offbeat, fast-moving fantasy chase driven by hard-boiled detectives, sharp comedy, and distinct adult cartoon noir.\",\n    \"curiosityHook\": \"When animated femme fatale Holli schemes to reach the human world, can detective Frank Harris stop flesh from yielding to ink?\",\n    \"vibeSummary\": \"Fast, wild, and comedically charged, offering an unconventional animated noir chase that stays light on its feet.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Jack Deebs imprisoned for murder and creating Cool World\",\n        \"Holli Would transporting Jack into the doodle world to seduce him\",\n        \"Frank Harris cautioning Jack about the rule against noid-doodle relations\",\n        \"Initial cross-world setup and dynamic between human and cartoon\"\n      ],\n      \"excludedMaterial\": [\n        \"Resolution of the Las Vegas chase\",\n        \"Specific fate of either world\",\n        \"Final fates of Jack, Frank, or Holli\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPDFpzcyIt2r/qUWPeIhZ/2I5HhX/4Tngrmw2WzEMVhm52koktmEAcVEA3OCaMSJB9v4NzhF5XjOAos/JBVeXJKa7BmJxuEcotOuYmUrWYPjXUN7RELXNp0Yb85ly5CnfW"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2844,
+    "candidatesTokenCount": 413,
+    "totalTokenCount": 3257,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2844
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "LQCqau7VFYusz7IPi6fAkAk"
+}

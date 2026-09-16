@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-75629\",\n    \"tmdbId\": 75629\n  },\n  \"copy\": {\n    \"description\": \"Fourteen years after Third Impact, Shinji Ikari awakens unaged in a devastated world where NERV is dismantled, his former allies have turned hostile, and he must navigate a new battle alongside the enigmatic Kaworu.\",\n    \"whyWatch\": \"A fast-moving, emotionally heavy sci-fi drama that plunges into apocalyptic dread, pitting former comrades against each other in intense, high-stakes animated warfare.\",\n    \"curiosityHook\": \"Awakening into a ruined future where your friends are now foes, whom can you trust when the next clash could end everything?\",\n    \"vibeSummary\": \"Immersive and heavy sci-fi action filled with dread, suspenseful escalations, and brisk, concentrated apocalyptic conflict.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Shinji awakens fourteen years later unaged to a ruined Earth\",\n        \"NERV dismantled and former allies turned against him\",\n        \"Shinji befriends enigmatic Kaworu Nagisa\",\n        \"Ongoing battles against angels and former allies escalating toward apocalyptic stakes\"\n      ],\n      \"excludedMaterial\": [\n        \"Specific third-act resolutions or catastrophic outcomes\",\n        \"Hidden origins or true identities of Kaworu and others\",\n        \"Later casualties, deaths, or definitive relationship endings\",\n        \"Final fate of the world and ultimate battle results\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPS3+YNfxC2GPW2EopxQYICdyQVx89FjxCrkGi7c6v6zb+vcyW/kQPO0RtcCUVmhQRA0m51iRcJLGbnAe/O/2l913HMyS8XWQ1yf4bWXCRi/kkQdmfTZw9HQt/XvrG8Jb6"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 3246,
+    "candidatesTokenCount": 428,
+    "totalTokenCount": 3674,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3246
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "7P2parXbGIOHz7IPn_iS0A8"
+}

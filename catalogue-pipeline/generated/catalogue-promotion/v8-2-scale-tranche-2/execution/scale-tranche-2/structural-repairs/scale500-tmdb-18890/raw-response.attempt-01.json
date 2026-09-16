@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-18890\",\n    \"tmdbId\": 18890\n  },\n  \"copy\": {\n    \"description\": \"Fed a special cereal by time-traveler Captain New Eyes, intelligent prehistoric dinosaurs visit New York City to grant children's wishes, soon crossing paths with the Captain's evil brother, Professor Screweyes.\",\n    \"whyWatch\": \"At a breezy 71 minutes, this animated family adventure delivers an inventive science-fiction premise full of playful city detours and exciting classic villainy.\",\n    \"curiosityHook\": \"Can these gentle prehistoric giants navigate modern New York and reach the Museum of Natural History before Professor Screweyes derails their mission?\",\n    \"vibeSummary\": \"Lighthearted, briskly paced animated adventure with low viewing demand and plenty of colorful family charm.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Captain New Eyes traveling back in time and feeding dinosaurs Brain Grain cereal\",\n        \"Dinosaurs becoming intelligent and non-violent\",\n        \"Journey to New York City to grant children's wishes\",\n        \"Planned meeting with Dr. Bleeb at the Museum of Natural History\",\n        \"Detours with new children friends and encountering Professor Screweyes\"\n      ],\n      \"excludedMaterial\": [\n        \"Resolution of the conflict with Professor Screweyes\",\n        \"Late-stage plot turns or circus developments beyond the initial encounter\",\n        \"Third-act resolutions and ending fates of the dinosaurs and children\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-overview\",\n        \"tmdb-facts\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPJPGab3iIPvk4/f5R7aqfurefy0P4N/DFfDcL/qZ6EYzy1IC/mbbHJ9ngcrrQXzZHyV4mEGLdrV5H9UOWz33kM9rIjFo1U2y/B/JQ6wFn64WV1fBckoyJDGQ9MduAY+pk"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 3281,
+    "candidatesTokenCount": 433,
+    "totalTokenCount": 3714,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3281
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "Yv2patbXM-Djz7IP5Nr8QA"
+}

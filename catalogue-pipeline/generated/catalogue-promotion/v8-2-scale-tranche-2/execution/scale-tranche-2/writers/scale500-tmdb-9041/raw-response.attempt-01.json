@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-9041\",\n    \"tmdbId\": 9041\n  },\n  \"copy\": {\n    \"description\": \"After moving to a small French village, Elle strikes up a romance with Pin-Pon, an infatuated local mechanic. But beneath the summer heat, she harbors a calculating, personal motive of her own.\",\n    \"whyWatch\": \"Jean Becker directs a simmering, character-driven French mystery that blends small-town drama with psychological tension and an undercurrent of lingering, heavy stakes.\",\n    \"curiosityHook\": \"Elle readily accepts the advances of an obsessed mechanic, but the real mystery is the concealed purpose driving her into his life.\",\n    \"vibeSummary\": \"A steady, emotionally heavy French crime drama fueled by quiet obsession and simmering suspense, best absorbed in focused solo viewing.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Elle Wieck moves to a small French village\",\n        \"Pin-Pon is a quiet young mechanic obsessed with Elle\",\n        \"Elle starts dating Pin-Pon\",\n        \"Elle harbors an ulterior motive for the relationship\",\n        \"Small-town French setting and summer atmosphere\"\n      ],\n      \"excludedMaterial\": [\n        \"Elle's specific hidden past or family history\",\n        \"Details of the underlying crime or rape trauma\",\n        \"Eventual revenge targets or murder outcomes\",\n        \"Third-act revelations and ending\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPKgHrS63maRflp4QNNG6dRYf3H1UqXo5ScGuSf+Y8czXaMks1ftkabSfjy/T0cjvQunWimKPs809ToFh4tIWB3Me5MgaV4XMUdGf2Ol4ClhPgSdscXlTUoVS+lCM0bgpj"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2951,
+    "candidatesTokenCount": 417,
+    "totalTokenCount": 3368,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2951
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "I_2pari3E8eGz7IPjZKPmAU"
+}

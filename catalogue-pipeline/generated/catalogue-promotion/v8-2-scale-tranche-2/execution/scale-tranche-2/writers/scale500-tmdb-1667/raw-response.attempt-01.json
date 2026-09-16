@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-1667\",\n    \"tmdbId\": 1667\n  },\n  \"copy\": {\n    \"description\": \"In Antarctica, thousands of emperor penguins march seventy miles across ice and bitter winter winds to breed, trading off ocean treks and egg protection to keep their offspring alive.\",\n    \"whyWatch\": \"Luc Jacquet pairs intimate parental devotion with striking polar vistas, crafting a wildlife portrait that balances dramatic survival stakes with warmth and humor.\",\n    \"curiosityHook\": \"As storms rage and predators circle, the parents must trade duties across frozen miles—leaving the fragile egg's survival hanging on precise timing.\",\n    \"vibeSummary\": \"Deliberate and visually sweeping, balancing polar survival tension with accessible, family-friendly warmth.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Antarctica breeding march premise\",\n        \"70-mile trek in freezing winter\",\n        \"parent penguins taking turns guarding eggs and seeking food\",\n        \"threat of storms and predators\",\n        \"Luc Jacquet direction\"\n      ],\n      \"excludedMaterial\": [\n        \"specific chick survival rates or outcomes\",\n        \"individual penguin fates or deaths\",\n        \"resolution of the breeding cycle\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPmz+GO0UxDz4IIMuyP34xF1BJlYrZ8FnQhtMaCRN8RN9xHSPC0mJOELa3Ws0BjG3fm7ptFZ4Fwt4w5E3PGEw8I7Nu1i9ad0Ti8Ot9UzSK/xwj+vj1z5FCWLnhE6zPgiOA"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2975,
+    "candidatesTokenCount": 374,
+    "totalTokenCount": 3349,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2975
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "HgCqarW8EbbXz7IPzofygQI"
+}

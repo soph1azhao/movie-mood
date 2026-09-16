@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-578189\",\n    \"tmdbId\": 578189\n  },\n  \"copy\": {\n    \"description\": \"After rookie cop and Army veteran Alicia West inadvertently records corrupt fellow officers committing murder on her body camera, she becomes the target of both dirty police and vengeful criminals on the streets.\",\n    \"whyWatch\": \"Deon Taylor delivers a fast, hard-hitting crime thriller that turns a high-stakes evidence race into a relentless, tension-fueled fight for survival.\",\n    \"curiosityHook\": \"Trapped between corrupt officers hunting the camera and vengeful locals closing in, who can she rely on to help get the truth out alive?\",\n    \"vibeSummary\": \"Fast-paced and suspenseful action thriller with sharp institutional danger and relentless street-level pursuit.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Alicia West is an Army veteran and rookie cop\",\n        \"Body cam captures corrupt cops committing murder\",\n        \"Dual pursuit by criminals seeking revenge and police covering up the footage\",\n        \"Teaming up with one willing community member\"\n      ],\n      \"excludedMaterial\": [\n        \"Identity of conspirators beyond corrupt cops\",\n        \"Climax or third-act resolution\",\n        \"Ultimate fate of the body cam footage\",\n        \"Character deaths or late survival outcomes\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPTr7Omil9GzLcjOsTulz+uKkUTxjdUmU9qZ7+hZGgI57+DhL1wfYU/5JkOS1IlUkxvkdU7MV8W2fxFsFVbmEDnCJQLoUqCepZ51BxzWlcZ0TQ6a81oGWNpgS+Z81Ym1MB"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2864,
+    "candidatesTokenCount": 404,
+    "totalTokenCount": 3268,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2864
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "gf6pap2MB7Gcz7IP-JTVwA8"
+}

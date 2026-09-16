@@ -1,0 +1,32 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"riskLevel\": \"LOW_RISK\",\n  \"riskCategories\": [],\n  \"issues\": [],\n  \"sourceBoundarySatisfied\": true\n}",
+            "thoughtSignature": "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"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 895,
+    "candidatesTokenCount": 37,
+    "totalTokenCount": 1489,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 895
+      }
+    ],
+    "thoughtsTokenCount": 557,
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "Z_-par8To4fPsg-n0475BA"
+}

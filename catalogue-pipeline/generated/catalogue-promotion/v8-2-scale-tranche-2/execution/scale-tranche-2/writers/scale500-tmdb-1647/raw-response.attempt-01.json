@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-1647\",\n    \"tmdbId\": 1647\n  },\n  \"copy\": {\n    \"description\": \"At the CIA's secluded training facility known as the Farm, a sharp recruit faces grueling preparation where instinct is tested and survival means questioning every ally.\",\n    \"whyWatch\": \"Roger Donaldson crafts a sharp, suspenseful spy thriller driven by the constant psychological friction of high-stakes intelligence training.\",\n    \"curiosityHook\": \"When every lesson teaches you to suspect everyone around you, how do you know which test is real?\",\n    \"vibeSummary\": \"Tense, paranoid, and steadily paced action-thriller viewing built on suspicion and sharp focus.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"CIA recruit enters the Farm\",\n        \"Secret training grounds context\",\n        \"Initial environment of suspicion where nobody can be trusted\"\n      ],\n      \"excludedMaterial\": [\n        \"Specific mole reveals or hidden loyalties\",\n        \"Target missions outside the Farm\",\n        \"Final confrontations and third-act twists\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPSlQFexcnexSkA/2EHdeLwjrz7FuosNzsgiwyml2QN1NGWOgwMJbdR5M73A3aROe3VjoOo5MnrG9iKFCHnDLh2uq6Ucmpvp0jyA/lKNxOq1rTVAveH+riDFx3LC+7ssTt"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2661,
+    "candidatesTokenCount": 344,
+    "totalTokenCount": 3005,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2661
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "7fypaoKMCaOHz7IPp9OO-QQ"
+}

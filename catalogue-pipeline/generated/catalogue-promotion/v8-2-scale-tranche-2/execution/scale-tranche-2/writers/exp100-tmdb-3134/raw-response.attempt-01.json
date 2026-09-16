@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"exp100-tmdb-3134\",\n    \"tmdbId\": 3134\n  },\n  \"copy\": {\n    \"description\": \"Bonded by drugs, sex, and meticulous habits, Nadine and Manu navigate a volatile reality where every obstacle is met with gunfire. Directed by Coralie Trinh Thi and Virginie Despentes, this French crime thriller moves fast.\",\n    \"whyWatch\": \"At a lean 77 minutes, it delivers an abrasive, uncompromising crime thriller driven by lethal impulse and raw defiance, bypassing conventional storytelling limits.\",\n    \"curiosityHook\": \"When two perfectionists decide firearms are the only answer to their grievances, how far does their volatile crusade go?\",\n    \"vibeSummary\": \"Heavy, rapid, and fiercely tense; an intense solo watch defined by uncompromising grit and danger.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Nadine and Manu as central characters\",\n        \"Their shared lifestyle and reliance on guns to solve problems\",\n        \"77-minute runtime\",\n        \"Directed by Coralie Trinh Thi & Virginie Despentes\",\n        \"French language crime, drama, and thriller genres\"\n      ],\n      \"excludedMaterial\": [\n        \"Specific victims and later deaths\",\n        \"Ending and eventual fate of Nadine and Manu\",\n        \"Third-act developments and late reversals\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIP5QS2ElejNbup8Toy8LCw1qyHvI29XWM5qiqP5G6IiOh866kzpyJV5pxBv0V9BfVtie99yDz5tV1S/dvyONhN1mWqcsY9mt62IDJZEg8x1clPGPx6LFTmRSXDYnqK+vfH"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2832,
+    "candidatesTokenCount": 403,
+    "totalTokenCount": 3235,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2832
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "EvipaqDHIIyEz7IPyIS62AM"
+}

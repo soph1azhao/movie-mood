@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-71524\",\n    \"tmdbId\": 71524\n  },\n  \"copy\": {\n    \"description\": \"En route to the Berlin Olympics, French boxer Jo Cavalier meets a young Jewish orphan in peril, abandoning his athletic ambitions to launch a wild, high-stakes escape to the Swiss border.\",\n    \"whyWatch\": \"Director Gérard Oury turns a wartime chase into a kinetic, good-humored adventure fueled by quick wits, classic comic escapism, and spirited camaraderie.\",\n    \"curiosityHook\": \"With Nazi forces closing in, Jo must rely on an old World War I adversary to steer a desperate family across guarded frontiers.\",\n    \"vibeSummary\": \"Fast-paced, exciting, and lightly comic, balancing wartime tension with crowd-pleasing action.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Jo Cavalier traveling to the Berlin Olympics\",\n        \"encounter with Simon Rosenblum and his family\",\n        \"danger of Nazi persecution\",\n        \"Jo risking his shot at Olympic glory to stage an escape to Switzerland\",\n        \"aid from an old WWI German officer friend\"\n      ],\n      \"excludedMaterial\": [\n        \"success or failure of the Swiss border crossing\",\n        \"third-act complications\",\n        \"resolution of the escape\",\n        \"fate of the family and German officer\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPgGxOKep3OLKm0osfNbsTV5e8E6nl5wDAO2QvysiFbT4IfiHU5CXPTsw56DTnjcRHAqvHcF+yAmwBS4NL3dKgmIHY9qIAuR50jVwa2yQH8zLqhaW7wKDIdVAtmgugddxo"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2820,
+    "candidatesTokenCount": 407,
+    "totalTokenCount": 3227,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2820
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "cf-paoD9AuOtz7IP9ezqoAc"
+}

@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-11802\",\n    \"tmdbId\": 11802\n  },\n  \"copy\": {\n    \"description\": \"After an unmanned space shuttle crashes on an uncharted planet, NASA launches a trio of astronaut chimpanzees straight through a wormhole to investigate the alien world in Kirk DeMicco's animated sci-fi comedy.\",\n    \"whyWatch\": \"Clocking in at an energetic 81 minutes, this family-friendly adventure pairs colorful sci-fi exploration with lighthearted comedy for a breezy, quick-moving watch.\",\n    \"curiosityHook\": \"What awaits the primate crew once they navigate deep space and touch down on an unknown world?\",\n    \"vibeSummary\": \"Fast-paced, cheerful, and low-demand, blending playful sci-fi peril with light comic warmth for family movie night.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"unmanned space shuttle crash on an uncharted planet\",\n        \"NASA launching three chimpanzee astronauts into a wormhole\",\n        \"animated family comedy adventure premise and director Kirk DeMicco\"\n      ],\n      \"excludedMaterial\": [\n        \"inhabitants of the uncharted planet\",\n        \"specific villain or tyrannical plots\",\n        \"mission outcomes or rescue results\",\n        \"late-stage reversals or ending\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPlhDS0R5LJ6uR5voYppand93eqoCak5DVvVtlqpLfLWkO24kU0j/HqGm6BCYJZlQ58Dl4gVIGnbzxn5V0dA/bQSdWZDOR09zbCIk0JYiWcwl9fLnfwAz3Q45RDpBpETQg"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2650,
+    "candidatesTokenCount": 394,
+    "totalTokenCount": 3044,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2650
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "Qv-papSPLrbXz7IPzofygQI"
+}

@@ -24,12 +24,22 @@ export const COHORT_SEED_ID = 'movie-mood-v8.2-scale-tranche-2-v1'
 export const AUDIT_SEED_ID = 'movie-mood-v8.2-scale-tranche-2-audit-v1'
 export const AUDIT_RATE = 0.20
 export const PRIOR_DEFERRED_ID = 'exp100-tmdb-1156593'
-export const THEORETICAL_MAXIMUM_MODEL_CALLS = 450
+export const NORMAL_WRITER_CALL_CAP = 150
+export const AMBIGUOUS_RECOVERY_WRITER_CALL_CAP = 1
+export const EFFECTIVE_WRITER_CALL_CAP = NORMAL_WRITER_CALL_CAP + AMBIGUOUS_RECOVERY_WRITER_CALL_CAP // 151
+export const STRUCTURAL_REPAIR_CALL_CAP = 150
+export const RISK_VERIFIER_CALL_CAP = 150
+
+export const THEORETICAL_MAXIMUM_MODEL_CALLS =
+  NORMAL_WRITER_CALL_CAP +
+  AMBIGUOUS_RECOVERY_WRITER_CALL_CAP +
+  STRUCTURAL_REPAIR_CALL_CAP +
+  RISK_VERIFIER_CALL_CAP // 451
 export const EXPECTED_MODEL_CALLS = 310
-export const HARD_MODEL_CALL_CAP = 450
+export const HARD_MODEL_CALL_CAP = THEORETICAL_MAXIMUM_MODEL_CALLS // 451
 export const COST_CEILING_USD = 2.00
 export const EMPIRICAL_EXPECTED_USD = 1.074
-export const PESSIMISTIC_THEORETICAL_USD = 1.591
+export const PESSIMISTIC_THEORETICAL_USD = 1.595
 
 export const outputRoot = (repoRoot) => path.join(repoRoot, 'catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-2')
 const readJson = async (filePath) => JSON.parse(await readFile(filePath, 'utf8'))
@@ -259,9 +269,11 @@ export async function buildScaleTranche2Artifacts({ repoRoot, persist = true } =
     pessimisticTheoreticalUSD: PESSIMISTIC_THEORETICAL_USD,
     expectedModelCalls: EXPECTED_MODEL_CALLS,
     hardModelCallCap: HARD_MODEL_CALL_CAP,
-    writerCallsMaximum: TRANCHE_SIZE,
-    structuralRepairCallsMaximum: TRANCHE_SIZE,
-    riskVerifierCallsMaximum: TRANCHE_SIZE,
+    normalWriterCallCap: NORMAL_WRITER_CALL_CAP,
+    ambiguousRecoveryWriterCallCap: AMBIGUOUS_RECOVERY_WRITER_CALL_CAP,
+    writerCallsMaximum: EFFECTIVE_WRITER_CALL_CAP,
+    structuralRepairCallsMaximum: STRUCTURAL_REPAIR_CALL_CAP,
+    riskVerifierCallsMaximum: RISK_VERIFIER_CALL_CAP,
     writerPromptVersion: 'editorial-writer.v1.1',
     writerPromptPath: relative(repoRoot, writerPromptPath),
     writerPromptHash: sourceArtifactHashes.writerPrompt,

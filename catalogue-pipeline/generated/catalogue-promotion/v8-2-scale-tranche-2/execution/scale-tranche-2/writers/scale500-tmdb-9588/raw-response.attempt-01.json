@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-9588\",\n    \"tmdbId\": 9588\n  },\n  \"copy\": {\n    \"description\": \"Hired by an Australian land baron under the guise of shooting dingoes, American rifleman Matt Quigley rebels when the true human quarry is revealed, triggering a lethal cat-and-mouse chase across the rugged Outback.\",\n    \"whyWatch\": \"Simon Wincer retools the Western frontier into an expansive Australian survival pursuit, powered by sharpshooting tension, moral clarity, and escalating open-country suspense.\",\n    \"curiosityHook\": \"With a ruthless cattle baron hunting him down and only an erratic expatriate by his side, can one rifleman survive the untamed territory?\",\n    \"vibeSummary\": \"Exciting and suspenseful, this Outback chase moves at a steady clip with engaged focus and moderate grit.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"American rifleman Matt Quigley accepts a contract to cull dingoes\",\n        \"Australian land baron Elliott Marston targets indigenous aborigines instead\",\n        \"Quigley rejects the mission and flees\",\n        \"Cat-and-mouse pursuit across Australia involving Crazy Cora\"\n      ],\n      \"excludedMaterial\": [\n        \"Final shootout outcomes\",\n        \"Deaths of Marston or Cora\",\n        \"Third-act resolutions\",\n        \"Climactic survival specifics\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPWcbmmISIH20aF1KBkDyQ6tf6oewELXsACUpdhD5ZLGgcYLl+JrS2KeJCCAC1r0pmQ9GG7n5MXy7cCeVGmPfxqizsl84smQuZzsUlWj47wSKqX0FX+zPhpoiF7SrMU8Ft"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2811,
+    "candidatesTokenCount": 412,
+    "totalTokenCount": 3223,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2811
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "PP-papTkBtHTz7IPla7dsAo"
+}

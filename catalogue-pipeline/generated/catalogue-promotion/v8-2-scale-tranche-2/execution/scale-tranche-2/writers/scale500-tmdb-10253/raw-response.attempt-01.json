@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-10253\",\n    \"tmdbId\": 10253\n  },\n  \"copy\": {\n    \"description\": \"Bound to a 16th-century warrior's spirit, Ethan tracks down Sarah, the reincarnated soul of his ancient love, just as monstrous dragons descend upon modern Los Angeles in a fierce hunt for the couple.\",\n    \"whyWatch\": \"Director Shim Hyung-rae orchestrates a brisk, 90-minute spectacle fusing ancient Korean legend with high-octane creature-feature destruction in modern urban streets.\",\n    \"curiosityHook\": \"Can two reincarnated souls survive an ancient grudge when legendary beasts tear through a contemporary city to find them?\",\n    \"vibeSummary\": \"Fast-paced, suspenseful, and action-heavy, blending fantasy spectacle with the relentless energy of a creature invasion.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Ethan carries the spirit of a 16th-century Korean warrior\",\n        \"Ethan finds Sarah, the reincarnated spirit of the warrior's beloved\",\n        \"Dragons invade modern Los Angeles hunting their souls\",\n        \"Directed by Shim Hyung-rae\",\n        \"Fast-paced creature fantasy action runtime of 90 minutes\"\n      ],\n      \"excludedMaterial\": [\n        \"Major battle outcomes\",\n        \"Third-act resolutions\",\n        \"Final fate of Ethan or Sarah\",\n        \"Ultimate fate of the dragons\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPeBrdUsJTty8HswTK9moAMC2treZQQ0EKkWHsYQijqV5L9JJ/dpM7x2AGWaH+cseTvrZ+uCJQUb70EKCksww2c+STQfWiFrBCCkRjdQIUMEabLlD6a6M17Bv0tLOkj1yZ"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2954,
+    "candidatesTokenCount": 427,
+    "totalTokenCount": 3381,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2954
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "IgCqatS5C72Hz7IPuaWUoQ8"
+}

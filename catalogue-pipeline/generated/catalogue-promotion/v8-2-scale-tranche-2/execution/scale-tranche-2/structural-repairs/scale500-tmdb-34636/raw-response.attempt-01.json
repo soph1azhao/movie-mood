@@ -1,0 +1,32 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-34636\",\n    \"tmdbId\": 34636\n  },\n  \"copy\": {\n    \"description\": \"Transported back to Fantasia, Bastian discovers the world he once saved faces a new threat: the evil sorceress Xayide and a creeping Emptiness, forcing him to join up with Atreyu once more.\",\n    \"whyWatch\": \"Directed by George T. Miller, this brisk 90-minute fantasy adventure delivers an exciting, nostalgic return to a beloved storybook realm with clear stakes for family viewing.\",\n    \"curiosityHook\": \"With Fantasia crumbling under Xayide's dark influence, Bastian and Atreyu must confront the returning Emptiness before the world disappears entirely.\",\n    \"vibeSummary\": \"Exciting and familiar family fantasy with a steady pace and moderate peril, offering an engaging yet easy-watch quest.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Bastian returning to Fantasia\",\n        \"The threat of the evil sorceress Xayide\",\n        \"Bastian reuniting with Atreyu\",\n        \"Facing the Emptiness once more\"\n      ],\n      \"excludedMaterial\": [\n        \"Resolution of the battle with Xayide\",\n        \"The fate of Fantasia or the characters\",\n        \"Third-act twists and endings\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EqEICp4IARFNMg+qZM81VixIHxBgjVdwqjWfpZBlhqKELdk07Zb2OPJZ5+Gq+l0b7KNy/RD6KChO0x6JDdpEVYSRmr0MCLhO3+JmcLtbzmE3TStGYVJi10OK58p5kNw8IYTbYLc63fQCK1J5vIG6VKeCrqbyRe7cuxYeJxD3x8hyDPcTjCk6+bqTfFqaNv0ddMlqECGu/2MCi9+zxwAVAT8mVyey4aKZzCM+UZXwgR33cHkamr7F+4V1ZvdbHjUVQNID1bkdbVpJz0J4aNWaaDU1Ts38RtsW4Xnl4y38gxNClB9PgUSu8GL/BTx9/b6Rr2T7bLfF6RbXCCW1y4+Dmhduhf1l0HI+kAbKyItPiZglWluoc3T0Em87SmCxRIEtv4ze+AtzZ86TFzwLFbRR8kvtkV8ImZH4ztwYzKANz1zTCG8kEai3grHKw5d36yqqLDh0KW9WxD/jDJtoZSi6xYBbH0UsJfUXqz8h8Q2ugLbndI3uCO3DgNBwgTLoY1zUhf+qbLF8IiC+ahs48XvDt1Es/cBHukNhsXLfhY6qcXlWff+pQYTDzY7Pt+o0B/u97Go9/J5qqIoDLy52ux7d5rp3dA/2Y23Ekeqi8h8TRMEtRJ3BP6MFOmJq1pfsw11lcCjipU58MIdrHYB03PA/tCwrJdmmm5wD01nHq2coPMKJJdhdSJpteAsZ5Mgs0Vh9gwhScWKZi08N07EyuCVC7iTKCZ4qhWJvQIi1GNrLlEZVMRrV548rrDEvYBlkXHuVfPaDnU2F32lxXcpZ/G3kZa19yFCH73FUQZ2uqx4R0J1XSfoLGPm/cnWCBDxHzeuHNC7xH0QbyLpGfBBwqxA50AmyDx3i7hB7b77So2rHYBP/RukDRp20787QN1unOZQISvVlrTD63Ccy6xDmbEpvj1fWGAliyPa92ZQywFDJ9FAbu4X64N50WEAg8SyqtHLIi5ONeqNLer1rmpA1OeGqNx5V7kRF4XTiRlm8AXFSyqqgBYBnKYpccB60r2/g6mq6NS7zALHw0zfl5mXc+bOZ8L4kCZH18N2n4Vza4gAOgNc0chE04RuWW3OVL/s87EK4s5pdMXMp1/78RoVohijkEn0Ca9ExZIQuaIi0BfjMatiFs2P1XYm6RANByCVTxBm6pmjHH32XccmQUX4N5DqaE7trIFLYltewIsW1fL3VIgS9/EuSLmcvE3IRSEOXTeWtN1lBHZDPBcXQJF78fUk5PMNxeQxxzuYGOfYc0xhnB3pUqPQhCgbu2U5Zp8tpexUuyTDQKOqOXbZK+bgUZ/PotM4QUpkOfqvfmZQRp19p8ucF0o0extXlrOCpvV1ZtNJ/Nty5P5+LNTGz/k2o8gTrPlbQf5uCIJRyN0Pvt9P23rKRRKY/4DcFHhe2k7NESwg6GWc6ug=="
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 3409,
+    "candidatesTokenCount": 409,
+    "totalTokenCount": 4068,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3409
+      }
+    ],
+    "thoughtsTokenCount": 250,
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "TP2paoIqvYXPsg_Ok4TADA"
+}

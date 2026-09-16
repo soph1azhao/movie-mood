@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"exp100-tmdb-776797\",\n    \"tmdbId\": 776797\n  },\n  \"copy\": {\n    \"description\": \"Amid a sudden viral pandemic, the streets descend into sadistic violence and madness. Rob Jabbaz directs as a separated young couple attempts to reunite while infected citizens carry out unspeakable depravities.\",\n    \"whyWatch\": \"Director Rob Jabbaz takes a familiar infection premise and drives it into punishing, fast-paced territory, turning a couple's desperate reunion into a tense survival gauntlet.\",\n    \"curiosityHook\": \"As an outbreak unleashes pure cruelty across the city, can two people hold onto their sanity long enough to find one another alive?\",\n    \"vibeSummary\": \"Unrelenting, brutally heavy horror fueled by rapid escalation, intense suspense, and an overwhelming sense of collapse.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Rob Jabbaz as director\",\n        \"viral pandemic causing cruelty and depravity\",\n        \"separated young couple attempting to reunite\",\n        \"fast pace, heavy emotional weight, suspenseful tone\"\n      ],\n      \"excludedMaterial\": [\n        \"late-stage plot turns\",\n        \"ultimate survival or fate of the couple\",\n        \"origin or cure of the virus\",\n        \"third-act encounters\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPtYR9Fs042AU9ogasA0BqzpAUZvSN+8OUWFyp8JNTnT2Av7mVbG2yEUnkFtuvlaPUJ1IWHatwJ5AGedVzU+ueICn+b2nBtkL7/0G15Rd10F8VWCBYnI9C35DLYhCQUUcS"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2752,
+    "candidatesTokenCount": 400,
+    "totalTokenCount": 3152,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2752
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "Vv-pasmXC9SFz7IPq6zhqAI"
+}

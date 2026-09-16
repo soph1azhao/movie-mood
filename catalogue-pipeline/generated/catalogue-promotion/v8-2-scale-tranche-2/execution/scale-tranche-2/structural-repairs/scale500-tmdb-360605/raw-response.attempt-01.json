@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-360605\",\n    \"tmdbId\": 360605\n  },\n  \"copy\": {\n    \"description\": \"When teen Cleo's school science experiment spirals out of control, the unexpected fallout leaves her popular older sister Molly completely invisible, sparking a frantic scramble to navigate everyday life.\",\n    \"whyWatch\": \"Directed by Paul Hoen, this brisk 78-minute fantasy-comedy offers an easy, fast-paced family adventure shaped by lighthearted mishap and playful sisterly chaos.\",\n    \"curiosityHook\": \"With a high school routine to maintain and an unintended vanish, how long can two very different sisters keep an invisible reality under wraps?\",\n    \"vibeSummary\": \"Light, energetic fantasy-comedy with an easygoing rhythm that fits a lively movie night with family or friends.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Cleo's school science project going awry\",\n        \"Molly becoming invisible\",\n        \"The sisters' relationship and initial fallout\"\n      ],\n      \"excludedMaterial\": [\n        \"Methods used to reverse the invisibility\",\n        \"Third-act resolutions\",\n        \"Late relationship outcomes or ending revelations\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPSmSwYQJDAtmDDRtoQmgYlXMiHfP9lc00KhevfSQbA5RWjGRPrQizSYe1dt6/Hy1nfUJONp933RUBUAkQ7MjZkQPcmCMsRZaBC9Tvjz9vTrgfd376niHuXlXuuk2vBbj4"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 3104,
+    "candidatesTokenCount": 374,
+    "totalTokenCount": 3478,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3104
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "ef6parGeD4usz7IPi6fAkAk"
+}

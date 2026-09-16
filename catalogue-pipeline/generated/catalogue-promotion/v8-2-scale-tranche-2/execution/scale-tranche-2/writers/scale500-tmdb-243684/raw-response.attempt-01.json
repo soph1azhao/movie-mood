@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-243684\",\n    \"tmdbId\": 243684\n  },\n  \"copy\": {\n    \"description\": \"Directed by Jason Reitman, this comedy-drama tracks a group of high school students and their parents as the internet reshapes their daily communication, self-image, and romantic lives.\",\n    \"whyWatch\": \"Reitman examines modern digital intimacy with a steady, thoughtful balance of domestic comedy and emotional consequence across multiple generations.\",\n    \"curiosityHook\": \"As screens permeate every home, both teenagers and adults face how online personas alter who they are behind closed doors.\",\n    \"vibeSummary\": \"Thoughtful and emotionally grounded; an unhurried, observant ensemble drama suited for solitary or family viewing.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Ensemble of high school teenagers and their parents\",\n        \"The impact of the internet on communication, self-image, and love lives\",\n        \"Tone and genre setup: comedy-drama directed by Jason Reitman\"\n      ],\n      \"excludedMaterial\": [\n        \"Specific third-act resolutions or late relationship outcomes\",\n        \"Individual character secrets or hidden identities not in the overview\",\n        \"Climactic crises or later narrative turns\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-overview\",\n        \"tmdb-facts\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPzxrGpjb9RI+H4LKB9SS9cv0RkgDwZltI7z6+sI5efF606v9uHUx9+QShpsDEJM9uWbLqfb94DU+AHHxnU2HXY7rYRE0r09tZVTyB4DCbL04JcxV2zxioMvt47YCJOrns"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2644,
+    "candidatesTokenCount": 388,
+    "totalTokenCount": 3032,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2644
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "Hf2patK3JoOHz7IPn_iS0A8"
+}

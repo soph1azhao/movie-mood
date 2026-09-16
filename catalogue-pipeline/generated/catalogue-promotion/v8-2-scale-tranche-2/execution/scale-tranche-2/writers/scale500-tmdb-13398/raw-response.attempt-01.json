@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-13398\",\n    \"tmdbId\": 13398\n  },\n  \"copy\": {\n    \"description\": \"On Christmas Eve in Tokyo, three homeless companions discover an abandoned newborn in the trash. Rather than walk away, the unlikely trio resolves to protect the infant and track down its missing parents.\",\n    \"whyWatch\": \"Director Satoshi Kon balances genuine humor and urban hardship in a focused 92-minute animated adventure driven by an unlikely bond formed on the city's snowy margins.\",\n    \"curiosityHook\": \"What drove a parent to abandon a baby on Christmas Eve, and can three people living on the streets navigate Tokyo to find them?\",\n    \"vibeSummary\": \"A warm, thoughtful comedy-drama that keeps a steady, engaging pace while exploring high personal stakes without becoming overwhelming.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Tokyo Christmas Eve setting\",\n        \"Three homeless characters finding an abandoned infant in the trash\",\n        \"The decision to search for the newborn's parents\",\n        \"Animation, comedy, and drama genre elements\",\n        \"Satoshi Kon direction\"\n      ],\n      \"excludedMaterial\": [\n        \"Identity of the parents or reasons for abandonment\",\n        \"Specific plot twists and late-stage encounters during the search\",\n        \"Third-act climax or resolution of the baby's custody\",\n        \"Fate of the three companions\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPkUwJSQZkljrjtUp6SwL5L9nC9rhmrjd9g+QAN/4Zt4wrE2hKqK/7huSPx/8yes4f850tRRaKi9EkTHWNzJyWf5t02caRpioeAe5v3t//Jx8A7yK40InSZfuIUZ+7hhjG"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 3098,
+    "candidatesTokenCount": 419,
+    "totalTokenCount": 3517,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3098
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "7fepauebN9Lgz7IP6qjRoQQ"
+}

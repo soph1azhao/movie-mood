@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-9367\",\n    \"tmdbId\": 9367\n  },\n  \"copy\": {\n    \"description\": \"Hoping to carry on his family's musical trade, an itinerant mariachi arrives in a Mexican border town seeking work, only to be mistaken for an armed hitman carrying weapons in an identical guitar case.\",\n    \"whyWatch\": \"Clocking in at a breathless 81 minutes, Robert Rodriguez's action thriller delivers pure kinetic momentum, turning a simple case of mistaken identity into a taut, dusty chase.\",\n    \"curiosityHook\": \"With a ruthless drug lord's hit squad hunting him across town, how long can an innocent musician survive a lethal manhunt meant for a killer?\",\n    \"vibeSummary\": \"Fast-paced, suspenseful action with moderate stakes and a stripped-down, gritty border-town atmosphere.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"mariachi arriving in town seeking work\",\n        \"family musical tradition\",\n        \"hitman Azul carrying concealed guns in a guitar case\",\n        \"mistaken identity by a local drug lord and his henchmen\",\n        \"town manhunt and chase premise\"\n      ],\n      \"excludedMaterial\": [\n        \"climactic confrontation\",\n        \"fate of Azul\",\n        \"ultimate outcome of the mariachi or his pursuit\",\n        \"later character deaths or third-act twists\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPAvylSHtVzxsfJQ81+ag2j7Clmf7EvD3gNEI54B1Fuwvn2Hpzj/7IAZGr5UYpqn/VED/F2CiGh0KkE3I1fkrFSA8puNz+pMpNmf3+pRLueRqQJHwfIGXc7kXKZXZ8ucXc"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2950,
+    "candidatesTokenCount": 418,
+    "totalTokenCount": 3368,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2950
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "9vepao38H_yGz7IPqYqimQM"
+}

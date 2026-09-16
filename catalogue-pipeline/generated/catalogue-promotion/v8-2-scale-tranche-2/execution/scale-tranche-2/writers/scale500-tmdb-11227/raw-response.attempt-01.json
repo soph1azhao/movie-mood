@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-11227\",\n    \"tmdbId\": 11227\n  },\n  \"copy\": {\n    \"description\": \"In Luc Besson's romantic fantasy-comedy, an inept scam artist finds an unexpected lifeline when an alluring, enigmatic woman steps into his life to help him pull his scattered world together.\",\n    \"whyWatch\": \"Clocking in at a brisk 91 minutes, it blends playful comedy with heartfelt romantic fantasy, offering an offbeat, stylish detour through a peculiar fateful encounter.\",\n    \"curiosityHook\": \"She appears precisely when his luck is running out, raising the question of whether their meeting is serendipity or something calculated.\",\n    \"vibeSummary\": \"A medium-paced, humorous fantasy romance with moderate emotional weight that makes for an easy, engaging evening watch.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Inept scam artist protagonist\",\n        \"Meeting with a beautiful and mysterious woman who helps him get his game together\",\n        \"The open question of whether their encounter is pure coincidence\",\n        \"Genre blending of comedy, drama, romance, and fantasy\",\n        \"Director Luc Besson, 91-minute runtime, French origin and French/Spanish dialogue\"\n      ],\n      \"excludedMaterial\": [\n        \"True supernatural nature or identity of the woman\",\n        \"Resolution of the coincidence question\",\n        \"Third-act revelations and endings\",\n        \"Specific late-story scam outcomes or final relationship status\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPqXMzQqydKui+EXAmS/X4je34SgDbeSlbsLU41Eh2vW4cHErikaAKvbFUPZ5RFgLstygj9F7t+bmuSa44k7OhQO+Qn4cFl5csn2uo64L5t11iwdxVQrTWX3VjczOU7//f"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2901,
+    "candidatesTokenCount": 433,
+    "totalTokenCount": 3334,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2901
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "Bv6patPZLoudz7IPxOLauAE"
+}

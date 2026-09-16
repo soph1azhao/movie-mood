@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-477018\",\n    \"tmdbId\": 477018\n  },\n  \"copy\": {\n    \"description\": \"Hired to translate the eagerly anticipated final volume of a global bestselling trilogy, nine linguists are sequestered inside a luxurious underground bunker to keep the literary sensation under complete lock and key.\",\n    \"whyWatch\": \"Régis Roinsard turns a publishing deadline into a sleek, multilingual mystery-thriller, trapping an ensemble cast in an opulent pressure cooker built on secrets and intellect.\",\n    \"curiosityHook\": \"Locked beneath the surface with the manuscript of the year, how secure can a high-stakes secret remain among nine rivals confined together?\",\n    \"vibeSummary\": \"A tense, stylish, and thoughtful locked-room thriller that demands steady attention without crushing emotional weight.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Nine translators hired for the final book of a bestselling trilogy\",\n        \"Confinement within a luxurious bunker to protect the manuscript\",\n        \"Régis Roinsard's direction and mystery-thriller genre frame\",\n        \"Multilingual ensemble premise\"\n      ],\n      \"excludedMaterial\": [\n        \"Identity of any leakers or blackmailers\",\n        \"Plot leaks, ransom demands, or manuscript theft details\",\n        \"Character deaths, betrayals, or physical violence\",\n        \"Climax, third-act reversals, and ending\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPu5XP8Id0u2Ebt02lHk8xG7uYXAfuJ5JZt7ZHOhnu/qqQ8N/h2Efx0gjDNg+bPX7zSOeDDpmHs3/SKjQDpOwkxBRO1ieSO8QileasBr3Sga1Co1R+lwyFaPOxCX73ESEE"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2668,
+    "candidatesTokenCount": 422,
+    "totalTokenCount": 3090,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2668
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "0f6pap3MB_Cez7IPmsu76Qc"
+}

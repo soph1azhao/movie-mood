@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-6312\",\n    \"tmdbId\": 6312\n  },\n  \"copy\": {\n    \"description\": \"In 18th-century France, Chevalier de Fronsac and his companion Mani are dispatched by the King to the Gévaudan province, tasked with hunting down a mysterious beast responsible for hundreds of violent deaths.\",\n    \"whyWatch\": \"Director Christophe Gans combines historical drama, horror, and action into a stylish, expansive mystery that treats its beast hunt with ambitious cinematic scale.\",\n    \"curiosityHook\": \"Sent into a terrified province, two royal investigators must discover whether hundreds have fallen to an ordinary predator or something far more sinister.\",\n    \"vibeSummary\": \"Suspenseful and exciting historical horror; demands engaged attention over a deliberate, medium-paced mystery.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Chevalier de Fronsac and Mani sent by the King\",\n        \"Setting in 18th-century France, Gévaudan province\",\n        \"Investigation into hundreds of killings by a mysterious beast\",\n        \"Director Christophe Gans and genre hybridity (action, adventure, horror, history)\"\n      ],\n      \"excludedMaterial\": [\n        \"True nature, origin, or identity of the beast\",\n        \"Conspiracy details or mastermind revelations\",\n        \"Late-game deaths, survival outcomes, or climax events\",\n        \"Third-act resolutions\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPtGzRd29iJbJO2/kDROQa+K2hrRM7zd3FB9dEmxxsonN7tHgKsKy9Jb9TsszZUIWLpBPVrm5SvhHnU5vXPJega6BOLFs3URpFlbjMmG6eluE91mTFY2ms9QuSRP9lbEor"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 3119,
+    "candidatesTokenCount": 420,
+    "totalTokenCount": 3539,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3119
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "-PypatiBHq6Cz7IP7pmCWQ"
+}

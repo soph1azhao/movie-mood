@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-13926\",\n    \"tmdbId\": 13926\n  },\n  \"copy\": {\n    \"description\": \"Stuck in the clearance corner of Eben's Bikes, a lonely unicycle named Red passes the quiet hours by imagining a grand circus act alongside a clown owner, hoping to escape his forgotten corner.\",\n    \"whyWatch\": \"Directed by John Lasseter, this dialogue-free four-minute animated short balances whimsical circus spectacle with a surprisingly poignant meditation on longing and isolation.\",\n    \"curiosityHook\": \"When the imagined roar of circus applause dissolves into the sound of falling rain, what remains for a forgotten unicycle waiting out his fate?\",\n    \"vibeSummary\": \"Poignant, quiet, and reflective. An easy four-minute watch with moderate emotional resonance, suitable for solitary or family viewing.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Red is a unicycle stuck in the clearance corner of Eben's Bikes\",\n        \"Red is lonely and imagines a circus clown owner and a show-stealing juggling routine\",\n        \"The applause gives way to rainfall as reality intrudes\",\n        \"Red sits in the corner awaiting his fate\",\n        \"Direction by John Lasseter, wordless format, 4-minute runtime\"\n      ],\n      \"excludedMaterial\": [\n        \"Any later plot events beyond the dream-reality transition\",\n        \"Resolution of Red's ultimate fate or future owners\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPt2skZv9SydEB7BoTdzRcCcmr1DcERRHgUIJx9xaOpQiarnqyU8qZSkATvnQDxdM+AQ41oqBo0savBoxfecltLETu3GqJ5GW/6QpITfd1BZVGywVozHDoEkZZ8ynGsaoB"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2585,
+    "candidatesTokenCount": 427,
+    "totalTokenCount": 3012,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2585
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "W_6patXFAq2sz7IPlvfTwAY"
+}

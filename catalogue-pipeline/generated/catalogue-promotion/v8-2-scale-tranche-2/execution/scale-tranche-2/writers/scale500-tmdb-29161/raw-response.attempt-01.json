@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-29161\",\n    \"tmdbId\": 29161\n  },\n  \"copy\": {\n    \"description\": \"Transferred to a remote Swiss boarding school, an American girl with a strange ability to communicate with insects finds herself drawn into an investigation when a string of brutal murders shakes the campus.\",\n    \"whyWatch\": \"Directed by Dario Argento, this horror-thriller balances an uncanny supernatural gift against the steadily mounting suspense of a gruesome murder mystery.\",\n    \"curiosityHook\": \"Can an affinity with swarming insects uncover the predator stalking an elite European boarding school?\",\n    \"vibeSummary\": \"Eerie and suspenseful, with an offbeat premise and steady, engaged investigative pacing best suited for a solitary night.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"girl transferred to Swiss boarding school\",\n        \"ability to communicate with insects\",\n        \"presence of a string of murders and investigation\",\n        \"director Dario Argento and horror/thriller genre\"\n      ],\n      \"excludedMaterial\": [\n        \"identity or motive of the killer\",\n        \"later deaths\",\n        \"third-act developments\",\n        \"ending\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPW6FBIEZ/CZ7eaMqEA+zor0DwtGA2p4/8cy4FDqbNNMLA4NbHPjGqKkgOhzgoRZz/2iKNLsFllX/q54oelib5eSE6L2Q4yDrkwTi2hlq1ldH8A1hLYT2cItwoUkaBoQ0D"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2578,
+    "candidatesTokenCount": 370,
+    "totalTokenCount": 2948,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2578
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "4_2patvvIoWsz7IPjYvx8Aw"
+}

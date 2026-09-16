@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"exp100-tmdb-2023\",\n    \"tmdbId\": 2023\n  },\n  \"copy\": {\n    \"description\": \"In 1890, a Pony Express courier and his trusty horse, Hidalgo, journey across the ocean to Arabia to take part in a perilous, high-stakes endurance race across unforgiving desert terrain.\",\n    \"whyWatch\": \"Directed by Joe Johnston, this cross-continental adventure blends classical Western grit with an epic racing contest built on sheer speed and perilous open-air stakes.\",\n    \"curiosityHook\": \"Can an American courier and his mustang survive a grueling desert contest against elite rivals for a massive prize?\",\n    \"vibeSummary\": \"Fast-paced and exciting, this sprawling historical adventure delivers active perils and contest momentum.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"1890 setting\",\n        \"Pony Express courier and his horse Hidalgo\",\n        \"Travel to Arabia to enter a dangerous contest race with a massive prize\",\n        \"Western and Adventure genre elements directed by Joe Johnston\"\n      ],\n      \"excludedMaterial\": [\n        \"Race winner or final outcomes\",\n        \"Third-act survival twists\",\n        \"Unannounced character deaths or betrayals\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPI94lCyzD7eBl9pNM57uNatIpyJcm1eVNDnn8c+dzteC6Ncvf5yIxccLW9kNNdGuPINFzwNIcqwWGpPNA5uv1pH9sD6vXo70iw7xCt2alfUkWyrzMt9S/6eNa9ZYLN35J"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2626,
+    "candidatesTokenCount": 379,
+    "totalTokenCount": 3005,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2626
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "b_2pauafCoHQz7IPm_iYgAc"
+}

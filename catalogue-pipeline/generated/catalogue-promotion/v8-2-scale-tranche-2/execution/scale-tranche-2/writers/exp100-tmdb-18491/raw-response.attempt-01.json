@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"exp100-tmdb-18491\",\n    \"tmdbId\": 18491\n  },\n  \"copy\": {\n    \"description\": \"As SEELE launches an all-out assault on NERV to eliminate the Evas before Gendo can trigger the Human Instrumentality Project, a shattered Shinji is pushed to his absolute brink with humanity's fate in his hands.\",\n    \"whyWatch\": \"Directed by Hideaki Anno and Kazuya Tsurumaki, this relentless 87-minute animated drama fuses intense sci-fi combat with an unsparing, high-stakes psychological breakdown.\",\n    \"curiosityHook\": \"With competing factions clashing over the ultimate fate of human existence, what choice can a fractured mind make under siege?\",\n    \"vibeSummary\": \"Heavy, immersive, and fast-paced; a solitary apocalyptic drama defined by urgent action and psychological tension.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"SEELE's assault on NERV\",\n        \"Targeting the Evas to stop Gendo's Human Instrumentality Project plans\",\n        \"Shinji pushed to the limits of his sanity while deciding humanity's fate\",\n        \"Japanese anime/animation, sci-fi, drama, and action elements from 1997\"\n      ],\n      \"excludedMaterial\": [\n        \"Resolution of the Human Instrumentality Project\",\n        \"Shinji's final decision and outcome for humanity\",\n        \"Character deaths or third-act revelations\",\n        \"Specific late-stage surrealist scenes or ending events\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIP80Nsc2bqMEU7brRNyoWsNisA8Cl77xQB+XliCR8oUvSsMG6Hl3cb5ru/CEcLkrengl6S5W5GZHfhcTiLN4zb8YS5Iqwr25k7tiknUZxvMxpCvwke1CtI0u1BmnTT29VF"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2907,
+    "candidatesTokenCount": 450,
+    "totalTokenCount": 3357,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2907
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "RP6paoilHqLXz7IPu-yLqA8"
+}

@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-9096\",\n    \"tmdbId\": 9096\n  },\n  \"copy\": {\n    \"description\": \"Deep in the Amazon, an eccentric scientist rejects his new female research assistant, but the pair must set friction aside when approaching bulldozers jeopardize their search for a breakthrough cancer cure.\",\n    \"whyWatch\": \"Director John McTiernan pairs remote jungle adventure with romantic drama, turning a fraught medical race into an engaging two-hander charged with high environmental stakes.\",\n    \"curiosityHook\": \"Can two clashing researchers unlock a life-saving medical secret before approaching machinery tears down the rainforest canopy around them?\",\n    \"vibeSummary\": \"An earnest, medium-paced romantic adventure with moderate emotional weight and steady visual atmosphere, built for engaged date-night viewing.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Amazon jungle setting\",\n        \"eccentric scientist and female research assistant dynamic\",\n        \"initial conflict and prejudice\",\n        \"search for a cancer cure\",\n        \"encroaching bulldozers threatening their work\"\n      ],\n      \"excludedMaterial\": [\n        \"resolution of the cancer cure\",\n        \"late-stage relationship outcomes\",\n        \"fate of the rainforest and confrontation with bulldozers\",\n        \"ending details\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPJqS7D6+XDHaMeOTpOUTRBgQcUvBZ/GWyIWdfq3Thx6hE3K3HmnuAjUMBbeut1ly+jqsJrjINTWJLQexK1FuJSg+nmIrRmLVdwdtwKF7a9dJy2g7E/BgorK5fA2lSNBLl"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2588,
+    "candidatesTokenCount": 388,
+    "totalTokenCount": 2976,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2588
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "S_6pary2Cfmfz7IPr_2QgAQ"
+}

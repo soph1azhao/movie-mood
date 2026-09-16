@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-10220\",\n    \"tmdbId\": 10220\n  },\n  \"copy\": {\n    \"description\": \"After losing his bankroll to gangster Teddy KGB, skilled poker player Mike McDermott promises to walk away. But when his newly released friend Worm resurfaces buried in debt, Mike is dragged back to the underground tables.\",\n    \"whyWatch\": \"Directed by John Dahl, this crime drama delivers calculated suspense as high-stakes card play collides with dangerous underworld debts and tested loyalties.\",\n    \"curiosityHook\": \"With dangerous creditors closing in on Worm's massive debts, Mike must risk everything he walked away from on the turn of a card.\",\n    \"vibeSummary\": \"A steady, suspenseful neo-noir crime drama that balances thoughtful tactical play with gritty underground tension.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Mike McDermott's loss to Teddy KGB\",\n        \"Mike's promise to Jo to quit\",\n        \"Lester 'Worm' Murphy's release from prison and debts\",\n        \"Mike acting as co-guarantor and returning to poker\"\n      ],\n      \"excludedMaterial\": [\n        \"Outcome of later poker matches\",\n        \"Resolution of Worm's debts\",\n        \"Final fate of Teddy KGB or Mike\",\n        \"Late-film relationship outcomes with Jo\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-overview\",\n        \"tmdb-facts\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPXQ+dzEhr9CwVig8xeVWbiQ3lfTdImcl3hPVC/pAdizsnXA6P8uKY2fOcscqoHHz6+o/+4jRihNWPr6loPUEPSdUSqQtud3ni8GDRgsK/RbnMAdSfrex295reBZM/o+hn"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2944,
+    "candidatesTokenCount": 408,
+    "totalTokenCount": 3352,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2944
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "_vypavnWLoWtz7IP7dbuoQ8"
+}

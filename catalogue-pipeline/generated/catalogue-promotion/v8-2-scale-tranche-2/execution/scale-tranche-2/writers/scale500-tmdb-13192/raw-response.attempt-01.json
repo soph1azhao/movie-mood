@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-13192\",\n    \"tmdbId\": 13192\n  },\n  \"copy\": {\n    \"description\": \"Inspired by the music of Michael Jackson, this fantastical anthology translates hit songs from the iconic 1987 album Bad into a kinetic series of inventive, imaginative visual set pieces.\",\n    \"whyWatch\": \"Directed across distinct visions, it delivers an energetic spectacle where dance-pop anthems transform into playful, dynamic cinematic vignettes.\",\n    \"curiosityHook\": \"How will each beloved track from Bad take shape when reimagined as an unpredictable fantasy sequence?\",\n    \"vibeSummary\": \"Fast-paced, light, and exciting, offering an easy-watching burst of musical fantasy ideal for friends or family.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Premise of imaginative interpretations of Michael Jackson's hit songs from the 1987 album Bad\",\n        \"Anthology fantasy format directed by Colin Chilvers, Will Vinton, Jerry Kramer, and Jim Blashfield\",\n        \"Fast pace, light tone, and accessible family or friend group viewing context\"\n      ],\n      \"excludedMaterial\": [\n        \"Specific late-act narrative resolutions or transformations\",\n        \"Unlisted plot twists, character fates, or villain climaxes\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIP0fkwIIJMY6+858NYtNbKs4BU4fyNibPyMjIGn+HhvlGCUtL4e8+Rb8Zr36s/QyeOFxP1eLEj5QtZKTqcqMjD+37iP/BSg2u+5/ck+p9Bupvf85aeaP5PcH3my0r81/1p"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2787,
+    "candidatesTokenCount": 391,
+    "totalTokenCount": 3178,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2787
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "IP6papalM7SFz7IP0Iux2Qo"
+}

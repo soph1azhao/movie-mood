@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-15789\",\n    \"tmdbId\": 15789\n  },\n  \"copy\": {\n    \"description\": \"Max wants to impress his high school crush, but his plans are abruptly derailed when his well-meaning father, Goofy, whisks him away on an unexpected cross-country road trip packed with chaotic mishaps.\",\n    \"whyWatch\": \"This energetic animated comedy balances slapstick road-trip adventure with an honest father-son dynamic, delivering genuine warmth in a brisk 78-minute journey.\",\n    \"curiosityHook\": \"With a high-stakes date hanging in the balance, can Max survive his dad's old-school vacation before their clashing agendas derail the journey entirely?\",\n    \"vibeSummary\": \"Lighthearted, fast-paced, and warm, this breezy animated family adventure offers easy laughs with gentle emotional weight.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Goofy and teenage son Max\",\n        \"Max's crush and school situation\",\n        \"Goofy's sudden cross-country road trip\",\n        \"Max's disrupted date plans\",\n        \"Father-son conflict between old-school parenting and independence\"\n      ],\n      \"excludedMaterial\": [\n        \"Resolution of the road trip\",\n        \"Specific concert or destination climax events\",\n        \"Whether Max reunites with his crush or how his lie plays out\",\n        \"Final third-act emotional reconciliation specifics\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIP2UVB0nxf/phx1/hVrjNbgt2So8Oy9k9M5sI5y15VQoEDyoV3WIPj4zavlbfeI/8+PhAb9lKT3ORpRJEv1p9F5L0IBbfj6JlNwrS5+XxAwBe/szeTjxvjHXEpNrOzBJkq"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2875,
+    "candidatesTokenCount": 428,
+    "totalTokenCount": 3303,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2875
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "0v-pauLAKebFz7IP38rt2AI"
+}

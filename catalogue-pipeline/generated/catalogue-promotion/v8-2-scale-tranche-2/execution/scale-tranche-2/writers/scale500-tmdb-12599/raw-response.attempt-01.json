@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-12599\",\n    \"tmdbId\": 12599\n  },\n  \"copy\": {\n    \"description\": \"When a rogue collector schemes to capture the Legendary Pokémon Lugia, the balance of nature collapses, forcing Ash Ketchum and his companions into a worldwide crisis directed by Kunihiko Yuyama.\",\n    \"whyWatch\": \"Director Kunihiko Yuyama stages a brisk, exciting fantasy adventure where grand environmental stakes meet the classic energy of an accessible anime quest.\",\n    \"curiosityHook\": \"With nature's equilibrium fracturing across the globe, can Ash intervene before Lugia is captured?\",\n    \"vibeSummary\": \"Exciting, steady-paced anime adventure built on accessible family stakes and high fantasy spectacle.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Lawrence III's scheme to capture Lugia\",\n        \"The upset balance of nature\",\n        \"Ash Ketchum and his friends trying to save the world\",\n        \"Director Kunihiko Yuyama\",\n        \"Genres and production facts from packet\"\n      ],\n      \"excludedMaterial\": [\n        \"Specific battle resolutions\",\n        \"Lugia's fate or ultimate rescue mechanics\",\n        \"Third-act plot events and climax outcomes\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPtvfKChTv6ZMQh9C4+BcOR7+f4ROEZpkn3mUnXgtBkLKRhHZvqcA+yX0Zs/NwezN3YUIpNe6/JkvKZQjBhQWfWQd6G7yVTrFEQAO09X8SKvSJ55g6wDgwRfzvuud2xHtU"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2529,
+    "candidatesTokenCount": 383,
+    "totalTokenCount": 2912,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2529
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "x_6parG4Bfutz7IPvYenmQY"
+}

@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-37768\",\n    \"tmdbId\": 37768\n  },\n  \"copy\": {\n    \"description\": \"Painfully shy salesman Sergio struggles to sell music contracts across Rome until his total lack of customers forces him to seek help from a peer named Nadia in Carlo Verdone's 1982 comedy.\",\n    \"whyWatch\": \"Verdone turns everyday workplace awkwardness into an easygoing, lighthearted Italian comedy that stays warm and accessible throughout.\",\n    \"curiosityHook\": \"Unable to close a single sale on his own, Sergio must rely on Nadia—leaving it open whether her guidance will fix his pitch or complicate it.\",\n    \"vibeSummary\": \"Light, funny, and undemanding, offering an easy-paced Italian comedy fit for relaxed watching.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Sergio Benvenuti's shyness and failure to land music contract customers\",\n        \"Setting in Rome\",\n        \"Sergio reaching out to Nadia for assistance\",\n        \"Carlo Verdone directing, 1982 release year, Italian comedy context\"\n      ],\n      \"excludedMaterial\": [\n        \"Subsequent plot developments after reaching out to Nadia\",\n        \"Romantic or professional outcomes between Sergio and Nadia\",\n        \"Later misadventures, character identities, or final resolutions\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPH15DIgGxaNIGlVacxixInaZ+wF1oVyF8H9j5pNwqhSWyC6fCJbOESDoqAD0InKhSht6rTZKtGqUZx2kjjGRmXZIe6RMBYWY0hcSoy/OnWsRae/91ctGVk2YNm3UePoQV"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2576,
+    "candidatesTokenCount": 403,
+    "totalTokenCount": 2979,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2576
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "__6pavG_D9CJz7IPhcirgAw"
+}

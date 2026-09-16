@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-314405\",\n    \"tmdbId\": 314405\n  },\n  \"copy\": {\n    \"description\": \"In Matteo Garrone's dark fairy tale, three neighboring kingdoms unravel through extreme obsessions: a desperate queen risks all for a child, a king chases a hidden voice, and another neglects his daughter for a flea.\",\n    \"whyWatch\": \"Blending grotesque horror with baroque fantasy, this rich anthology offers an atmospheric, slow-burning dive into the unsettling costs of royal desire and dark folklore.\",\n    \"curiosityHook\": \"What devastating price will each ruler pay when their unchecked desires and surreal obsessions spiral out of control?\",\n    \"vibeSummary\": \"Deliberate, lavish, and deeply unsettling, this dark fantasy demands engaged, solitary viewing.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Premise of three royal storylines from overview: Queen of Selvascura risking everything for motherhood, King of Roccaforte falling in love with a mysterious girl's voice, King of Altomonte obsessed with a flea and neglecting his daughter\",\n        \"Director Matteo Garrone\",\n        \"Genre blend of fantasy, horror, and romance\"\n      ],\n      \"excludedMaterial\": [\n        \"Resolutions to the three quests\",\n        \"Identity of the mysterious singing girl\",\n        \"Fate of the neglected daughter\",\n        \"Consequences of the Queen's magical childbearing\",\n        \"Third-act climaxes and endings\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPUmuY5dgUb85Dzh6rMs8cavIumQb9nt8UWSZxwXc+tEvpE4FYZ6rWBqJ1YYCQkwGV7xB2ZlqYZzy87kLx9E8Sl6EkUIJoUkmAwsUXcJzRux0bsDBKaJ8SI/bPdrWyLBm1"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2795,
+    "candidatesTokenCount": 434,
+    "totalTokenCount": 3229,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2795
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "MgCqauSlJrGcz7IP-JTVwA8"
+}

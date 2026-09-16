@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-2604\",\n    \"tmdbId\": 2604\n  },\n  \"copy\": {\n    \"description\": \"Paralyzed during the Vietnam War, Ron Kovic returns home to face profound physical trauma, rising disillusionment, and a nation that leaves him feeling betrayed by the cause he served.\",\n    \"whyWatch\": \"Oliver Stone directs a weighty biographical drama that transforms personal sacrifice and wartime trauma into a passionate awakening for civil rights and peace.\",\n    \"curiosityHook\": \"When the patriotic ideals he fought for collapse upon his return home, how does one veteran channel deep betrayal into national defiance?\",\n    \"vibeSummary\": \"Heavy, thoughtful, and deliberately paced, offering an emotionally demanding drama best experienced with focused attention.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Ron Kovic paralyzed in the Vietnam War\",\n        \"Feeling betrayed by the country he fought for\",\n        \"Becoming an anti-war and pro-human rights political activist\",\n        \"Oliver Stone's direction and biographical drama framework\"\n      ],\n      \"excludedMaterial\": [\n        \"Specific third-act protest events\",\n        \"Climactic political speeches\",\n        \"Detailed resolution of his personal rehabilitation\",\n        \"Final post-war outcomes\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIP+Gnkxe4Bzjj7GDtNTxuGEntW0xz/GNxMOpxRVplSPVS2Z9Gvoenwe3DGnVBOItW7RwP12Fn8IcNdR49JZg8u0T2PIyzX+2EhCxHA3pu5ztmshZBjULmB1h5MWuXKl0uU"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2716,
+    "candidatesTokenCount": 385,
+    "totalTokenCount": 3101,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2716
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "7P6parHmE72Fz7IPzpOEwAw"
+}

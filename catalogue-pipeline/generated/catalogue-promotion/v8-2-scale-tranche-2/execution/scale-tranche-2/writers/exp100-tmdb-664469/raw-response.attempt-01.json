@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"exp100-tmdb-664469\",\n    \"tmdbId\": 664469\n  },\n  \"copy\": {\n    \"description\": \"In the 1930s, three close friends—a doctor, a nurse, and an attorney—witness a murder and are immediately treated as prime suspects, pulling them into a sprawling, outrageous conspiracy across American history.\",\n    \"whyWatch\": \"David O. Russell blends period mystery, fast comedic energy, and drama to turn an escalating historical scheme into a stylish, star-driven investigation.\",\n    \"curiosityHook\": \"Framed for a crime they only saw happen, how deep must three loyal companions dig before uncovering who engineered the scheme?\",\n    \"vibeSummary\": \"Suspenseful yet playful period mystery that balances moderate emotional weight with an engaging, steady pace.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"1930s setting\",\n        \"trio of doctor, nurse, attorney who are friends\",\n        \"witnessing a murder and becoming suspects\",\n        \"uncovering an outrageous plot in American history\",\n        \"director David O. Russell\",\n        \"comedy, drama, mystery genres\"\n      ],\n      \"excludedMaterial\": [\n        \"identity of the actual murderer\",\n        \"specific culprits behind the conspiracy\",\n        \"resolution of the investigation\",\n        \"climax or ending revelations\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIP3uiW1dHrEocVl+6KqimDlLy+k30v70gvjX04U8YK1tpTbGFM7JKBeoVjl+DbwDl3UCX1AVgDzN5WfTybdH2actXQk4akR7xQyPV4Ip6BfYwe1ZlkZVz0g97bwZc9zJ/m"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2696,
+    "candidatesTokenCount": 414,
+    "totalTokenCount": 3110,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2696
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "Ef2pasbeEomEz7IPzb6M8QI"
+}

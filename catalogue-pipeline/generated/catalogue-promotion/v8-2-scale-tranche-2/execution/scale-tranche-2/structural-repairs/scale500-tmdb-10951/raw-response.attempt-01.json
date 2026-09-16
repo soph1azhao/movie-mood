@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-10951\",\n    \"tmdbId\": 10951\n  },\n  \"copy\": {\n    \"description\": \"Inspired by a romantic message found in a bottle, Taiwanese villager Ah Bu travels to Hong Kong in search of true love, only to encounter unexpected twists, a charming new spark, and pursuit from back home.\",\n    \"whyWatch\": \"Vincent Kok Tak-Chiu blends energetic martial arts action and lighthearted romantic comedy, offering a fun adventure packed with playful complications and cross-border chase.\",\n    \"curiosityHook\": \"When Ah Bu's quest for an ideal romance takes an immediate detour in Hong Kong, can a sudden connection with the dashing Chi Wu withstand the chaotic arrival of her past?\",\n    \"vibeSummary\": \"Light, funny, and lively action-romance that keeps a steady pace, making for a fun, engaging night with friends or a partner.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Ah Bu finds a bottled romantic message in Taiwan\",\n        \"Ah Bu journeys to Hong Kong seeking romance\",\n        \"Encounter with Albert and discovery that he is gay\",\n        \"Meeting the dashing Chi Wu\",\n        \"Ah Bu's boyfriend arrives from Taiwan in pursuit\"\n      ],\n      \"excludedMaterial\": [\n        \"Resolution of the romantic relationships\",\n        \"Climactic showdowns and fight outcomes\",\n        \"Endings and return to Taiwan specifics\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPSASYrA8Fe0FrZzYDxwinycSMhi9PiCVi0A1MXORcaWUC0BZcxdgXbilEac4fFVs//OK9n/WBZMh4DJOgQCaQ1INJ7v5KPiFyd9qE4FbGQxBeqym58L4DtuE/4m2X6dNR"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 3394,
+    "candidatesTokenCount": 424,
+    "totalTokenCount": 3818,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3394
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "bf-pavS2A66Cz7IP4pnvqQY"
+}

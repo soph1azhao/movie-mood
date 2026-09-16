@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-846\",\n    \"tmdbId\": 846\n  },\n  \"copy\": {\n    \"description\": \"After being pulled off the FBI's X Files unit, Mulder and Scully confront shadowy government forces while tracking a clandestine plot that points toward the alien colonization of Earth.\",\n    \"whyWatch\": \"Director Rob Bowman expands the investigation to a cinematic canvas, delivering a tense, plot-driven mystery where institutional secrecy clashes with existential discovery.\",\n    \"curiosityHook\": \"With their official backing severed, how do two sidelined agents expose a hidden faction before an extraterrestrial takeover becomes inevitable?\",\n    \"vibeSummary\": \"A steady, suspenseful sci-fi thriller driven by conspiratorial tension, rewarding engaged and solitary late-night viewing.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Mulder and Scully removed from X Files cases\",\n        \"Fight against shadowy government elements\",\n        \"Conspiracy involving potential alien colonization of Earth\",\n        \"Initial investigation setup and thriller atmosphere\"\n      ],\n      \"excludedMaterial\": [\n        \"Identity of conspirators or specific Syndicate figures\",\n        \"Specific plot twists regarding alien biology or virus details\",\n        \"Third-act rescue and resolution\",\n        \"Ultimate fate of the X Files division\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPed3s41pYbX9UcXJZACSuCNkJc+4ZoYd510r2KS5llXaXEI1re2KYeh7GniAooHrrDrLv2oJk6dedP/22G0elxWe7npxJNUeLUbGv/wto9nDN+ztq+/HncvIpAhnc/1C+"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2659,
+    "candidatesTokenCount": 385,
+    "totalTokenCount": 3044,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2659
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "-v6papjuJPXQz7IP9qvgoA8"
+}

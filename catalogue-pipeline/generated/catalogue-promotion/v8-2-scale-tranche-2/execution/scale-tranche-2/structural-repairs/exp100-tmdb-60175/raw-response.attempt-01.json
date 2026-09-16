@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"exp100-tmdb-60175\",\n    \"tmdbId\": 60175\n  },\n  \"copy\": {\n    \"description\": \"At a private Versailles school, a class of struggling underachievers accidentally dynamites the building during a prank. Hauled into court, they face an ultimatum: pass their graduation exams or go to prison.\",\n    \"whyWatch\": \"Claude Zidi delivers an undemanding French farce packed with broad laughs and escalating absurdity, turning high-school scholastic desperation into a breezy comic romp.\",\n    \"curiosityHook\": \"With zero study habits and prison awaiting them if they fail, how will these hopeless students survive their final exams?\",\n    \"vibeSummary\": \"Lighthearted, fast-moving school farce that makes for a low-demand, laugh-out-loud watch with friends.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"underachieving graduating class at a private Versailles school\",\n        \"misfired prank that dynamites the school\",\n        \"court ultimatum requiring them to pass exams or face prison\"\n      ],\n      \"excludedMaterial\": [\n        \"cheating schemes and exam solutions\",\n        \"court outcomes and final exam results\",\n        \"third-act events and resolution\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPRZ6ZsmR3J1PdFwReX7ReSANmOYRo5Wf+joXwl+5aFGO+RYvsjb9tV2iz75ly5UBZ9WxpYzPQzpSKkvmZyL1TIJb5zO1U/opSUrFVmu9NYzEndOYOBwepa0+um6S21qn8"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 3309,
+    "candidatesTokenCount": 381,
+    "totalTokenCount": 3690,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3309
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "FACqaviXFczUz7IPkP2PuAM"
+}

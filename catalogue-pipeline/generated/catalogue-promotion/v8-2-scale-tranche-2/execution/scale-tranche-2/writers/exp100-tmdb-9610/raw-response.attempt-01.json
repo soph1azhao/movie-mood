@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"exp100-tmdb-9610\",\n    \"tmdbId\": 9610\n  },\n  \"copy\": {\n    \"description\": \"Hired by Queen Taramis to guide a young princess and her bodyguard on a perilous quest for the magical Horn of Dagoth, Conan embarks across sword-and-sorcery lands unaware of a deadly scheme awaiting their return.\",\n    \"whyWatch\": \"Richard Fleischer balances classic fantasy combat with dynamic swordplay, pitting a colorful band of eccentric allies against supernatural perils at an exhilarating, fast pace.\",\n    \"curiosityHook\": \"Conan's mission seems straightforward, but Queen Taramis has secretly marked both him and the princess for betrayal once the magical horn is found.\",\n    \"vibeSummary\": \"Fast, exciting sword-and-sorcery adventure with spirited comic relief, built for an easygoing watch with friends.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Conan hired by Queen Taramis\",\n        \"Quest to retrieve the magic Horn of Dagoth\",\n        \"Princess and bodyguard companions\",\n        \"Secret plot to sacrifice the princess and betray Conan\",\n        \"Allies including wizard Akiro, warrior woman Zula, and Malak\",\n        \"Battles against mortal and supernatural foes\"\n      ],\n      \"excludedMaterial\": [\n        \"Resolution of Taramis's betrayal\",\n        \"Fate of the princess and bodyguard\",\n        \"Final battle outcomes\",\n        \"Third-act events and climax\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIP9PNpOyffeSlmb9/QDrkxQ4gO5zlL+0BbuaOXYBxIzKRHJFq+R4ci+T1JXZbD+9hO1zppd1VY8XGq2Yk4L6Zo0V7N9tW4jXTnTPHxD0dOEMymQjpQH6iWykC+ek81E3Mp"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2993,
+    "candidatesTokenCount": 435,
+    "totalTokenCount": 3428,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2993
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "Z_6pasK2A6yDz7IPh_anyQM"
+}

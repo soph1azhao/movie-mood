@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-42994\",\n    \"tmdbId\": 42994\n  },\n  \"copy\": {\n    \"description\": \"Three years in the making, this Japanese science-fiction anthology presents three back-to-back animated stories helmed by directors Katsuhiro Otomo, Kōji Morimoto, and Tensai Okamura.\",\n    \"whyWatch\": \"Experience three distinct directorial perspectives exploring speculative science fiction and fantasy across a cohesive, fast-moving animated trilogy.\",\n    \"curiosityHook\": \"How will three distinct visionary directors tackle speculative worlds across back-to-back animated visions?\",\n    \"vibeSummary\": \"Thoughtful yet exciting sci-fi animation that demands engaged attention without excessive emotional weight.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"Three back-to-back sci-fi anime films\",\n        \"Directed by Katsuhiro Otomo, Kōji Morimoto, and Tensai Okamura\",\n        \"Three years in the making\",\n        \"Science fiction and fantasy animation\"\n      ],\n      \"excludedMaterial\": [\n        \"Specific individual segment plot details not provided in the overview\",\n        \"Endings and plot twists of each short\",\n        \"Later narrative reveals\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIP+xGc8QBdaNLZHuyvRizrbj7p48wWK8UIo5WeXpjlRlKgEj1/8Wnp3J5dkHSCkBlBTd85opNlUB4+BeCEUyj7ZB3y2pI9mK2r1deve6dBdnAN8llFStOBncBnE2n3bi0q"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2910,
+    "candidatesTokenCount": 380,
+    "totalTokenCount": 3290,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2910
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "3_2paof-EomEz7IPzb6M8QI"
+}

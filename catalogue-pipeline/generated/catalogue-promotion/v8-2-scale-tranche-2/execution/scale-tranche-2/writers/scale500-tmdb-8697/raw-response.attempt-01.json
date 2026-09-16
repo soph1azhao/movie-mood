@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "{\n  \"schemaVersion\": \"editorial-output.v1\",\n  \"promptVersion\": \"editorial-writer.v1\",\n  \"voiceGuideVersion\": \"voice.v2\",\n  \"movie\": {\n    \"candidateId\": \"scale500-tmdb-8697\",\n    \"tmdbId\": 8697\n  },\n  \"copy\": {\n    \"description\": \"After a corrupt CIA agent causes a devastating helicopter crash in South Africa, an amnesiac commando is nursed by a local tribe and must piece together his forgotten identity alongside an enigmatic reporter.\",\n    \"whyWatch\": \"Directed by Jackie Chan and Benny Chan, this fast-paced action-comedy combines globe-trotting intrigue and physical stunts with lighthearted suspense that keeps you engaged.\",\n    \"curiosityHook\": \"With no memory of his real past, can the stranded agent untangle his identity before the conspirators who betrayed him close in?\",\n    \"vibeSummary\": \"Fast, exciting, and lightly comic, delivering brisk action-adventure thrills with an engaging mystery.\"\n  },\n  \"writerNotes\": {\n    \"spoilerBoundary\": {\n      \"allowedMaterial\": [\n        \"corrupt CIA agent Morgan causes helicopter crash in South Africa\",\n        \"sole survivor suffers severe amnesia and is nursed by a native tribe who call him Whoami\",\n        \"hero teams up with reporter Christine to uncover his past and hunt the turncoat\",\n        \"genres: action, adventure, comedy, thriller\"\n      ],\n      \"excludedMaterial\": [\n        \"ultimate fate of Morgan or his cohorts\",\n        \"specific true identity revelations\",\n        \"third-act stunts and climactic confrontations\",\n        \"resolutions of Christine's motives\"\n      ],\n      \"sourceRefs\": [\n        \"tmdb-facts\",\n        \"tmdb-overview\"\n      ]\n    }\n  }\n}",
+            "thoughtSignature": "EmcKZQERTTIPHueP6+v5nq63PdfhNEHnV06pE+PwprU8v+MFgGu7hlYoit/VtJCik96Lfnjb+e1NBSyrlCg50xca7QnjNDOK9WAho3DldL0LBIo/8RPKBe/03tjTFTpz+PKZL8TkLLTs"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 3122,
+    "candidatesTokenCount": 419,
+    "totalTokenCount": 3541,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3122
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "DfipaqTUH83iz7IPq6CieQ"
+}
