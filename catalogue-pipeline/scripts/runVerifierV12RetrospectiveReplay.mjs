@@ -1,10 +1,11 @@
 import { existsSync } from 'node:fs'
-import { readFile, writeFile, mkdir } from 'node:fs/promises'
+import { readFile, writeFile, mkdir, rename } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { createHash } from 'node:crypto'
 import { hashArtifact, hashBytes, serializeArtifactForPersistence } from './validatePromotionContract.mjs'
 import { validateVerifierV12CandidatePayload } from './validateVerifierV12Contract.mjs'
+import { buildGemini38Request } from '../adapters/geminiEditorialProvider.mjs'
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 
@@ -291,6 +292,8 @@ export function buildVerifierV12ReplayPacket(riskInput) {
 
   return packet
 }
+
+export const buildSevenSurfacePacket = buildVerifierV12ReplayPacket
 
 export async function verifyCohortIntegrity({ repoRoot: root = repoRoot } = {}) {
   const cohortRaw = await readFile(COHORT_MANIFEST_PATH, 'utf8')
@@ -604,6 +607,441 @@ export function checkSystemicInvalidStop({ records = [] } = {}) {
   }
 }
 
+export const CANDIDATE_STATES = Object.freeze({
+  NOT_STARTED: 'NOT_STARTED',
+  PRE_DISPATCH: 'PRE_DISPATCH',
+  DISPATCH_STARTED: 'DISPATCH_STARTED',
+  RESPONSE_PERSISTED: 'RESPONSE_PERSISTED',
+  COMPLETED: 'COMPLETED',
+  AMBIGUOUS_DISPATCH_STATE: 'AMBIGUOUS_DISPATCH_STATE',
+})
+
+export function normalizeTransportOutcome({
+  response = null,
+  status = null,
+  ok = null,
+  rawText = '',
+  error = null,
+  modelConfig = FROZEN_MODEL_CONFIG,
+} = {}) {
+  const resolvedStatus = status ?? response?.status ?? null
+  const resolvedOk = ok ?? response?.ok ?? (resolvedStatus === 200)
+
+  let usageMetadata = null
+  let parsedBody = null
+  if (typeof rawText === 'string' && rawText.trim().length > 0) {
+    try {
+      parsedBody = JSON.parse(rawText)
+      if (parsedBody && typeof parsedBody === 'object') {
+        usageMetadata = parsedBody.usageMetadata || null
+      }
+    } catch {}
+  }
+
+  let transportCategory
+  let retryable
+  let transportOutcome
+
+  if (error) {
+    transportOutcome = 'NETWORK_ERROR'
+    const message = String(error?.message || '')
+    const code = String(error?.code || '')
+    const isTimeout = error?.name === 'AbortError' || code === 'ETIMEDOUT' || /timeout/i.test(message)
+    const isConnReset = code === 'ECONNRESET' || /connection reset/i.test(message)
+
+    if (isTimeout) {
+      transportCategory = 'NETWORK_TIMEOUT'
+      retryable = true
+    } else if (isConnReset) {
+      transportCategory = 'CONNECTION_RESET'
+      retryable = true
+    } else {
+      transportCategory = 'NETWORK_ERROR'
+      retryable = true
+    }
+  } else if (resolvedStatus === 200) {
+    transportOutcome = 'SUCCESS'
+    transportCategory = 'HTTP_200'
+    retryable = false
+  } else if (resolvedStatus === 429) {
+    transportOutcome = 'HTTP_ERROR'
+    transportCategory = 'HTTP_429'
+    retryable = true
+  } else if (resolvedStatus === 500) {
+    transportOutcome = 'HTTP_ERROR'
+    transportCategory = 'HTTP_500'
+    retryable = true
+  } else if (resolvedStatus === 503) {
+    transportOutcome = 'HTTP_ERROR'
+    transportCategory = 'HTTP_503'
+    retryable = true
+  } else if (resolvedStatus === 502) {
+    transportOutcome = 'HTTP_ERROR'
+    transportCategory = 'HTTP_502'
+    retryable = false
+  } else if (resolvedStatus === 504) {
+    transportOutcome = 'HTTP_ERROR'
+    transportCategory = 'HTTP_504'
+    retryable = false
+  } else {
+    transportOutcome = 'HTTP_ERROR'
+    transportCategory = `HTTP_${resolvedStatus}`
+    retryable = false
+  }
+
+  return {
+    ok: resolvedOk,
+    status: resolvedStatus,
+    rawText: typeof rawText === 'string' ? rawText : '',
+    providerMetadata: {
+      provider: modelConfig.provider,
+      modelId: modelConfig.modelId,
+    },
+    usageMetadata,
+    transportOutcome,
+    transportCategory,
+    retryable,
+    error: error ? { message: error.message, code: error.code || null } : null,
+  }
+}
+
+export function createVerifierV12ProviderDispatch({
+  apiKey = process.env.GEMINI_API_KEY,
+  fetchImpl = globalThis.fetch,
+  modelConfig = FROZEN_MODEL_CONFIG,
+  promptText = null,
+  schema = null,
+  repoRoot: root = repoRoot,
+} = {}) {
+  return async function verifierV12ProviderDispatch(packet) {
+    if (!apiKey) {
+      const err = new Error('GEMINI_API_KEY is required for verifier v1.2 provider dispatch.')
+      err.code = 'MISSING_CREDENTIAL'
+      throw err
+    }
+
+    const resolvedPrompt = promptText || (await readFile(path.join(root, 'catalogue-pipeline/candidates/source-boundary-risk-verifier.v1.2.md'), 'utf8'))
+    const resolvedSchema = schema || JSON.parse(await readFile(path.join(root, 'catalogue-pipeline/candidates/source-boundary-risk-verifier.v1.2.schema.json'), 'utf8'))
+
+    const request = buildGemini38Request({
+      modelId: modelConfig.modelId,
+      promptText: resolvedPrompt,
+      input: packet,
+      responseSchema: resolvedSchema,
+      thinkingLevel: modelConfig.thinkingLevel,
+      maxOutputTokens: modelConfig.maxOutputTokens,
+    })
+    request.body.generationConfig.temperature = modelConfig.temperature
+
+    let response
+    try {
+      response = await fetchImpl(request.endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-goog-api-key': apiKey,
+        },
+        body: JSON.stringify(request.body),
+      })
+    } catch (err) {
+      return normalizeTransportOutcome({
+        error: err,
+        modelConfig,
+      })
+    }
+
+    const status = response.status
+    const ok = response.ok
+    const rawText = await response.text()
+
+    return normalizeTransportOutcome({
+      response,
+      status,
+      ok,
+      rawText,
+      modelConfig,
+    })
+  }
+}
+
+export function getCandidateExecutionPaths({ executionDir = EXECUTION_DIR, candidateId } = {}) {
+  if (!candidateId) throw new Error('candidateId is required.')
+  const candidateDir = path.join(executionDir, candidateId)
+  const attemptsDir = path.join(candidateDir, 'attempts')
+  const ledgerPath = path.join(candidateDir, 'ledger.json')
+  return { candidateDir, attemptsDir, ledgerPath }
+}
+
+export function formatAttemptArtifactName(attemptNumber) {
+  return `attempt-${String(attemptNumber).padStart(3, '0')}.raw.json`
+}
+
+async function atomicWriteFile(targetPath, content) {
+  const dir = path.dirname(targetPath)
+  await mkdir(dir, { recursive: true })
+  const tempPath = `${targetPath}.tmp.${Date.now()}.${Math.random().toString(36).slice(2)}`
+  await writeFile(tempPath, content, 'utf8')
+  await rename(tempPath, targetPath)
+}
+
+async function atomicWriteJson(targetPath, data) {
+  const content = `${serializeArtifactForPersistence(data)}\n`
+  await atomicWriteFile(targetPath, content)
+}
+
+export async function executeSingleCandidateAttempt({
+  record,
+  packet,
+  attemptNumber = 1,
+  executionDir = EXECUTION_DIR,
+  providerDispatch,
+  repoRoot: root = repoRoot,
+} = {}) {
+  const candidateId = record?.candidateId || packet?.candidateId
+  if (!candidateId) throw new Error('candidateId is required for candidate attempt.')
+  if (typeof providerDispatch !== 'function') throw new Error('providerDispatch function is required.')
+
+  const { candidateDir, attemptsDir, ledgerPath } = getCandidateExecutionPaths({ executionDir, candidateId })
+  const artifactName = formatAttemptArtifactName(attemptNumber)
+  const attemptArtifactPath = path.join(attemptsDir, artifactName)
+  const relativeArtifactPath = path.join('attempts', artifactName)
+
+  // Fail closed if attempt artifact already exists
+  if (existsSync(attemptArtifactPath)) {
+    const err = new Error(`Attempt artifact already exists at ${attemptArtifactPath}; refusing overwrite (fail closed).`)
+    err.code = 'ATTEMPT_ARTIFACT_EXISTS'
+    throw err
+  }
+
+  await mkdir(attemptsDir, { recursive: true })
+
+  // Read existing ledger if present
+  let ledger = {
+    candidateId,
+    state: CANDIDATE_STATES.NOT_STARTED,
+    currentAttempt: attemptNumber,
+    terminalAttempt: null,
+    attempts: [],
+    disposition: null,
+    ambiguous: false,
+  }
+
+  if (existsSync(ledgerPath)) {
+    try {
+      ledger = JSON.parse(await readFile(ledgerPath, 'utf8'))
+    } catch (readErr) {
+      const err = new Error(`Corrupted ledger for ${candidateId}: ${readErr.message}`)
+      err.code = 'CORRUPTED_LEDGER'
+      throw err
+    }
+
+    if (ledger.state === CANDIDATE_STATES.COMPLETED) {
+      const err = new Error(`Candidate ${candidateId} is already COMPLETED; cannot redispatch.`)
+      err.code = 'ALREADY_COMPLETED'
+      throw err
+    }
+
+    if (ledger.state === CANDIDATE_STATES.AMBIGUOUS_DISPATCH_STATE) {
+      const err = new Error(`Candidate ${candidateId} is in AMBIGUOUS_DISPATCH_STATE; cannot redispatch.`)
+      err.code = 'AMBIGUOUS_DISPATCH_STATE'
+      throw err
+    }
+  }
+
+  // 1. NOT_STARTED -> PRE_DISPATCH
+  ledger.state = CANDIDATE_STATES.PRE_DISPATCH
+  ledger.currentAttempt = attemptNumber
+  await atomicWriteJson(ledgerPath, ledger)
+
+  // 2. PRE_DISPATCH -> DISPATCH_STARTED immediately before awaiting provider
+  ledger.state = CANDIDATE_STATES.DISPATCH_STARTED
+  await atomicWriteJson(ledgerPath, ledger)
+
+  // 3. Await provider dispatch
+  let transportResult
+  try {
+    transportResult = await providerDispatch(packet)
+  } catch (err) {
+    // Process interruption or unhandled crash in dispatch
+    throw err
+  }
+
+  // 4. Persist immutable raw response artifact BEFORE semantic interpretation
+  if (existsSync(attemptArtifactPath)) {
+    const err = new Error(`Attempt artifact already exists at ${attemptArtifactPath}; refusing overwrite.`)
+    err.code = 'ATTEMPT_ARTIFACT_EXISTS'
+    throw err
+  }
+
+  const rawTextContent = typeof transportResult.rawText === 'string' ? transportResult.rawText : ''
+  const rawResponseHash = sha256Bytes(Buffer.from(rawTextContent, 'utf8'))
+
+  // Write attempt raw file atomically
+  await atomicWriteFile(attemptArtifactPath, rawTextContent)
+
+  // 5. DISPATCH_STARTED -> RESPONSE_PERSISTED
+  const attemptRecord = {
+    attemptNumber,
+    state: CANDIDATE_STATES.RESPONSE_PERSISTED,
+    artifactPath: relativeArtifactPath,
+    rawResponseHash,
+    status: transportResult.status,
+    ok: transportResult.ok,
+    transportOutcome: transportResult.transportOutcome,
+    transportCategory: transportResult.transportCategory,
+    retryable: transportResult.retryable,
+  }
+
+  const existingAttempts = Array.isArray(ledger.attempts) ? ledger.attempts : []
+  const attemptIndex = existingAttempts.findIndex((a) => a.attemptNumber === attemptNumber)
+  if (attemptIndex >= 0) {
+    existingAttempts[attemptIndex] = attemptRecord
+  } else {
+    existingAttempts.push(attemptRecord)
+  }
+
+  ledger.attempts = existingAttempts
+  ledger.state = CANDIDATE_STATES.RESPONSE_PERSISTED
+  await atomicWriteJson(ledgerPath, ledger)
+
+  return {
+    candidateId,
+    attemptNumber,
+    state: CANDIDATE_STATES.RESPONSE_PERSISTED,
+    artifactPath: attemptArtifactPath,
+    rawResponseHash,
+    transportResult,
+    ledger,
+  }
+}
+
+export async function inspectCandidateResumeState({
+  candidateId,
+  executionDir = EXECUTION_DIR,
+} = {}) {
+  const { attemptsDir, ledgerPath } = getCandidateExecutionPaths({ executionDir, candidateId })
+
+  if (!existsSync(ledgerPath)) {
+    return {
+      candidateId,
+      state: CANDIDATE_STATES.NOT_STARTED,
+      canDispatch: true,
+      resumeAction: 'DISPATCH_NEW_ATTEMPT',
+      nextAttemptNumber: 1,
+    }
+  }
+
+  let ledger
+  try {
+    ledger = JSON.parse(await readFile(ledgerPath, 'utf8'))
+  } catch (err) {
+    return {
+      candidateId,
+      state: CANDIDATE_STATES.AMBIGUOUS_DISPATCH_STATE,
+      canDispatch: false,
+      resumeAction: 'STOP_AMBIGUOUS',
+      reason: `Corrupted ledger: ${err.message}`,
+    }
+  }
+
+  if (ledger.state === CANDIDATE_STATES.COMPLETED) {
+    return {
+      candidateId,
+      state: CANDIDATE_STATES.COMPLETED,
+      canDispatch: false,
+      resumeAction: 'ALREADY_COMPLETED',
+      terminalAttempt: ledger.terminalAttempt,
+      disposition: ledger.disposition,
+    }
+  }
+
+  if (ledger.state === CANDIDATE_STATES.AMBIGUOUS_DISPATCH_STATE) {
+    return {
+      candidateId,
+      state: CANDIDATE_STATES.AMBIGUOUS_DISPATCH_STATE,
+      canDispatch: false,
+      resumeAction: 'STOP_AMBIGUOUS',
+      reason: ledger.ambiguousReason || 'Previous ambiguous dispatch state',
+    }
+  }
+
+  if (ledger.state === CANDIDATE_STATES.DISPATCH_STARTED) {
+    const attemptArtifact = path.join(attemptsDir, formatAttemptArtifactName(ledger.currentAttempt || 1))
+    if (!existsSync(attemptArtifact)) {
+      ledger.state = CANDIDATE_STATES.AMBIGUOUS_DISPATCH_STATE
+      ledger.ambiguous = true
+      ledger.ambiguousReason = `Crash uncertainty: DISPATCH_STARTED for attempt ${ledger.currentAttempt || 1} without durable response persistence.`
+      await atomicWriteJson(ledgerPath, ledger)
+
+      return {
+        candidateId,
+        state: CANDIDATE_STATES.AMBIGUOUS_DISPATCH_STATE,
+        canDispatch: false,
+        resumeAction: 'STOP_AMBIGUOUS',
+        reason: ledger.ambiguousReason,
+      }
+    }
+
+    ledger.state = CANDIDATE_STATES.RESPONSE_PERSISTED
+    await atomicWriteJson(ledgerPath, ledger)
+    return {
+      candidateId,
+      state: CANDIDATE_STATES.RESPONSE_PERSISTED,
+      canDispatch: false,
+      canInterpret: true,
+      resumeAction: 'CONTINUE_INTERPRETATION',
+      attemptNumber: ledger.currentAttempt,
+    }
+  }
+
+  if (ledger.state === CANDIDATE_STATES.RESPONSE_PERSISTED) {
+    return {
+      candidateId,
+      state: CANDIDATE_STATES.RESPONSE_PERSISTED,
+      canDispatch: false,
+      canInterpret: true,
+      resumeAction: 'CONTINUE_INTERPRETATION',
+      attemptNumber: ledger.currentAttempt,
+    }
+  }
+
+  if (ledger.state === CANDIDATE_STATES.PRE_DISPATCH) {
+    return {
+      candidateId,
+      state: CANDIDATE_STATES.PRE_DISPATCH,
+      canDispatch: true,
+      resumeAction: 'START_DISPATCH',
+      nextAttemptNumber: ledger.currentAttempt || 1,
+    }
+  }
+
+  return {
+    candidateId,
+    state: ledger.state || CANDIDATE_STATES.NOT_STARTED,
+    canDispatch: false,
+    resumeAction: 'STOP_UNKNOWN',
+    reason: `Unrecognized ledger state: ${ledger.state}`,
+  }
+}
+
+export async function markCandidateCompleted({
+  candidateId,
+  executionDir = EXECUTION_DIR,
+  terminalAttempt = 1,
+  disposition = null,
+} = {}) {
+  const { ledgerPath } = getCandidateExecutionPaths({ executionDir, candidateId })
+  if (!existsSync(ledgerPath)) {
+    throw new Error(`Cannot mark completed: ledger not found for candidate ${candidateId}`)
+  }
+  const ledger = JSON.parse(await readFile(ledgerPath, 'utf8'))
+  ledger.state = CANDIDATE_STATES.COMPLETED
+  ledger.terminalAttempt = terminalAttempt
+  ledger.disposition = disposition
+  await atomicWriteJson(ledgerPath, ledger)
+  return ledger
+}
+
 export async function runPreflight({ repoRoot: root = repoRoot, env = process.env } = {}) {
   const hashes = await verifyHashes({ repoRoot: root })
   const model = resolveModelConfiguration({ env })
@@ -664,7 +1102,9 @@ export async function runReplayExecution({
     throw err
   }
 
-  throw new Error('Replay execution is not implemented in this dry-run / preflight task.')
+  const err = new Error('Replay execution is blocked: Phase A implements transport, attempt persistence, and crash recovery only. Full 30-record replay execution loop belongs to Phase B.')
+  err.code = 'PHASE_B_EXECUTION_NOT_YET_MATERIALIZED'
+  throw err
 }
 
 async function main() {
