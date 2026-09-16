@@ -1,9 +1,12 @@
+import { existsSync } from 'node:fs'
 import { readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { hashArtifact, serializeArtifactForPersistence } from './validatePromotionContract.mjs'
 
 export const OPTION_B_RULE_VERSION = 'v1.1-deterministic-development'
+export const HISTORICAL_OPTION_B_V1_HASH =
+  'sha256:fb5cd364bcdf2f57c8d4edde71c9fff025b1500611ec15690a5be42a6a66c143'
 
 // Generic controlled vocabularies (no film titles, character names, or candidate IDs)
 export const GENERIC_VOCABULARIES = Object.freeze({
@@ -537,10 +540,16 @@ export async function runScaleTranche2OptionBEvaluation({ repoRoot, version = 'v
       readFile(priorV1Path, 'utf8').then(JSON.parse),
       readFile(correctionPath, 'utf8').then(JSON.parse),
     ])
+    const priorV1Hash = hashArtifact(priorV1)
+    if (priorV1Hash !== HISTORICAL_OPTION_B_V1_HASH) {
+      throw new Error(
+        `Option B v1.1 supersession binding failure: expected prior v1 hash ${HISTORICAL_OPTION_B_V1_HASH}, got ${priorV1Hash}`
+      )
+    }
     supersessionBindings = {
       supersedes: {
         path: 'catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-2/scale-tranche-2-option-b-development-evaluation.v1.json',
-        hash: hashArtifact(priorV1),
+        hash: priorV1Hash,
         reason:
           'Re-evaluation against effective human review adjudications following human-operator-approved correction.',
       },
@@ -739,6 +748,17 @@ export async function runScaleTranche2OptionBEvaluation({ repoRoot, version = 'v
       ? 'scale-tranche-2-option-b-development-evaluation.v1.1.json'
       : 'scale-tranche-2-option-b-development-evaluation.v1.json'
   const outPath = path.join(base, outFileName)
+  if (version === 'v1') {
+    if (existsSync(outPath)) {
+      const existingRaw = await readFile(outPath, 'utf8')
+      const existingHash = hashArtifact(JSON.parse(existingRaw))
+      if (existingHash !== HISTORICAL_OPTION_B_V1_HASH) {
+        throw new Error(
+          `Cannot overwrite historical Option B v1 evaluation artifact: expected ${HISTORICAL_OPTION_B_V1_HASH}, got ${existingHash}`
+        )
+      }
+    }
+  }
   await writeFile(outPath, serializeArtifactForPersistence(evaluationArtifact))
 
   return {
@@ -754,6 +774,39 @@ export async function runScaleTranche2OptionBEvaluation({ repoRoot, version = 'v
 }
 
 /**
+ * Historical Option B v1 runner:
+ * Reads and verifies the frozen pre-correction historical v1 evaluation artifact.
+ * Fails closed if the artifact hash does not match HISTORICAL_OPTION_B_V1_HASH.
+ * Never allows overwriting the historical v1 artifact with mismatched bytes.
+ */
+export async function runScaleTranche2OptionBEvaluationV1({ repoRoot, allowOverwrite = false }) {
+  const base = path.join(repoRoot, 'catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-2')
+  const v1Path = path.join(base, 'scale-tranche-2-option-b-development-evaluation.v1.json')
+  if (existsSync(v1Path)) {
+    const raw = await readFile(v1Path, 'utf8')
+    const v1 = JSON.parse(raw)
+    const h = hashArtifact(v1)
+    if (h !== HISTORICAL_OPTION_B_V1_HASH) {
+      throw new Error(`Historical Option B v1 hash mismatch: expected ${HISTORICAL_OPTION_B_V1_HASH}, got ${h}`)
+    }
+    if (allowOverwrite) {
+      throw new Error('Historical Option B v1 artifact is frozen and cannot be overwritten')
+    }
+    return {
+      ok: true,
+      outPath: path.relative(repoRoot, v1Path).split(path.sep).join('/'),
+      hash: h,
+      candidateRoutingMetrics: v1.candidateRoutingApparentPerformance?.metrics,
+      confusion: v1.candidateRoutingApparentPerformance?.confusionMatrix || v1.apparentPerformance?.confusionMatrix,
+      concordanceCounts: v1.hitLevelConcordance?.concordanceCounts,
+      severeDetected: v1.candidateRoutingApparentPerformance?.severeCaseStatus?.detectedByOptionB ?? false,
+      artifact: v1
+    }
+  }
+  throw new Error('Historical Option B v1 artifact missing')
+}
+
+/**
  * Stage 5 helper: explicitly run Option B evaluation v1.1.
  */
 export async function runScaleTranche2OptionBEvaluationV11({ repoRoot }) {
@@ -765,9 +818,10 @@ if (process.argv[1] && import.meta.url === new URL(`file://${path.resolve(proces
   const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
   const args = process.argv.slice(2)
   const version = args.includes('--v1-only') ? 'v1' : 'v1.1'
-  runScaleTranche2OptionBEvaluation({ repoRoot, version })
+  const runner = version === 'v1' ? runScaleTranche2OptionBEvaluationV1 : runScaleTranche2OptionBEvaluationV11
+  runner({ repoRoot })
     .then((res) => {
-      console.log(`Successfully generated Option B development evaluation artifact (${version}):`)
+      console.log(`Successfully verified/generated Option B development evaluation artifact (${version}):`)
       console.log('Path:', res.outPath)
       console.log('Hash:', res.hash)
       console.log('Confusion:', JSON.stringify(res.confusion))

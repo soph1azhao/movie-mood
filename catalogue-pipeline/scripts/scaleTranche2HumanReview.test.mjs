@@ -24,7 +24,11 @@ import {
   verifyApprovalTarget,
 } from './applyScaleTranche2AdjudicationCorrection.mjs'
 import { buildScaleTranche2GapAnalysisV11 } from './generateScaleTranche2GapAnalysis.mjs'
-import { runScaleTranche2OptionBEvaluationV11 } from './evaluateScaleTranche2DeterministicBoundaryRules.mjs'
+import {
+  HISTORICAL_OPTION_B_V1_HASH,
+  runScaleTranche2OptionBEvaluationV1,
+  runScaleTranche2OptionBEvaluationV11,
+} from './evaluateScaleTranche2DeterministicBoundaryRules.mjs'
 import { hashArtifact, hashBytes } from './validatePromotionContract.mjs'
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
@@ -826,7 +830,7 @@ test('39. Supersession bindings in gap analysis v1.1 and Option B v1.1 are exact
   const optBV11 = await readJson(path.join(outDir, 'scale-tranche-2-option-b-development-evaluation.v1.1.json'))
   assert.equal(
     optBV11.supersedes.hash,
-    'sha256:6950ec7d2b1659b8784887c0186f8cb01261a6c78c33e1dc9fc8ba7de1b04949'
+    HISTORICAL_OPTION_B_V1_HASH
   )
   assert.equal(
     optBV11.verifierGapAnalysisBinding.hash,
@@ -915,4 +919,47 @@ test('43. Blinded holdout terminology is strictly enforced', async () => {
   assert.ok(
     optBV11.methodologicalCaveats.some((c) => c.includes('independent prospective blinded holdout'))
   )
+})
+
+test('44. Option B v1 historical semantics frozen with exact expected hash', async () => {
+  const v1Path = path.join(outDir, 'scale-tranche-2-option-b-development-evaluation.v1.json')
+  const v1 = await readJson(v1Path)
+  const h = hashArtifact(v1)
+  assert.equal(h, HISTORICAL_OPTION_B_V1_HASH)
+  assert.equal(h, 'sha256:fb5cd364bcdf2f57c8d4edde71c9fff025b1500611ec15690a5be42a6a66c143')
+})
+
+test('45. Distinct output paths for v1 and v1.1; running v1.1 never rewrites v1', async () => {
+  const v1Path = path.join(outDir, 'scale-tranche-2-option-b-development-evaluation.v1.json')
+  const v1Before = await readFile(v1Path)
+
+  const res11 = await runScaleTranche2OptionBEvaluationV11({ repoRoot })
+  assert.equal(res11.outPath, 'catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-2/scale-tranche-2-option-b-development-evaluation.v1.1.json')
+
+  const v1After = await readFile(v1Path)
+  assert.ok(v1Before.equals(v1After), 'Running v1.1 must not mutate v1')
+})
+
+test('46. Historical artifact overwrite fails closed', async () => {
+  await assert.rejects(
+    async () => {
+      await runScaleTranche2OptionBEvaluationV1({ repoRoot, allowOverwrite: true })
+    },
+    /frozen and cannot be overwritten/i
+  )
+})
+
+test('47. Option B v1 runner does not consume approved correction overlays', async () => {
+  const res1 = await runScaleTranche2OptionBEvaluationV1({ repoRoot })
+  assert.equal(res1.hash, HISTORICAL_OPTION_B_V1_HASH)
+  assert.equal(res1.artifact.supersedes, undefined)
+  assert.equal(res1.artifact.approvedCorrectionBinding, undefined)
+})
+
+test('48. Option B v1.1 supersedes documented pre-correction v1 hash and binds correction', async () => {
+  const optBV11 = await readJson(path.join(outDir, 'scale-tranche-2-option-b-development-evaluation.v1.1.json'))
+  assert.equal(optBV11.supersedes.hash, HISTORICAL_OPTION_B_V1_HASH)
+  assert.equal(optBV11.supersedes.hash, 'sha256:fb5cd364bcdf2f57c8d4edde71c9fff025b1500611ec15690a5be42a6a66c143')
+  assert.equal(optBV11.approvedCorrectionBinding.hash, 'sha256:3a3b486dc8d39a3fa49d3aa907b4718674ce1b0d7907e67f47e4f00fe963783e')
+  assert.equal(optBV11.verifierGapAnalysisBinding.hash, 'sha256:70a0adb731f9a3bdb00be18e6fde58590c9922312f342ef926488b39819bf0ae')
 })
