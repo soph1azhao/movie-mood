@@ -1,0 +1,259 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "specificationId": "source-boundary-authority-model.v1",
+  "title": "Movie Mood Source-Boundary Authority Model v1",
+  "description": "Deterministic machine-readable authority matrix defining authorized source surfaces, claim classes, assertion semantics, and resolution rules for Option A Verifier v1.2.",
+  "status": "SPECIFICATION_ONLY",
+  "operationalFlags": {
+    "isSpecificationOnly": true,
+    "notActivePrompt": true,
+    "notActiveSchema": true,
+    "noModelBehaviorValidation": true,
+    "governanceState": "PAUSED_FOR_SEVERE_AUDIT_MISS"
+  },
+  "lineageBindings": {
+    "verifierGapAnalysisV11": {
+      "path": "catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-2/scale-tranche-2-verifier-gap-analysis.v1.1.json",
+      "hash": "sha256:70a0adb731f9a3bdb00be18e6fde58590c9922312f342ef926488b39819bf0ae"
+    },
+    "optionBEvaluationV1": {
+      "path": "catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-2/scale-tranche-2-option-b-development-evaluation.v1.json",
+      "hash": "sha256:fb5cd364bcdf2f57c8d4edde71c9fff025b1500611ec15690a5be42a6a66c143"
+    },
+    "optionBEvaluationV11": {
+      "path": "catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-2/scale-tranche-2-option-b-development-evaluation.v1.1.json",
+      "hash": "sha256:04e6c4b6328f1dd24da7bbde3f5127a31812c5894f535a93ba2b0b27a3656b32"
+    },
+    "approvedGuardiansCorrection": {
+      "path": "catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-2/human-review-adjudication-correction.v1.json",
+      "hash": "sha256:3a3b486dc8d39a3fa49d3aa907b4718674ce1b0d7907e67f47e4f00fe963783e"
+    },
+    "activeVerifierV11Prompt": {
+      "path": "catalogue-pipeline/prompts/source-boundary-risk-verifier.v1.1.md",
+      "hash": "sha256:361df6c2f5ca6feb3567c092e3f7bc5de7396f48b52e7a6c8afc9dbf00768123"
+    },
+    "activeVerifierV11Schema": {
+      "path": "catalogue-pipeline/schemas/source-boundary-risk-verifier.v1.1.schema.json",
+      "hash": "sha256:9e0647d3753e482ad23780725020f6bebb408486ba663596c0bb0fe562b06120"
+    }
+  },
+  "authoritySurfaces": {
+    "PACKET_FACTS": {
+      "description": "Structured scalar and array metadata explicitly bound in packet facts.",
+      "fields": {
+        "director": {
+          "authorizedClaimTypes": ["DIRECT_PACKET_FACT"],
+          "prohibitions": ["Does not authorize personal background, character motives, or narrative events."]
+        },
+        "year": {
+          "authorizedClaimTypes": ["DIRECT_PACKET_FACT"],
+          "prohibitions": ["Does not authorize plot era unless corroborated by synopsis."]
+        },
+        "runtime": {
+          "authorizedClaimTypes": ["DIRECT_PACKET_FACT", "QUANTITATIVE_CLAIM"],
+          "prohibitions": ["Does not authorize pacing or story duration claims beyond duration of viewing."]
+        },
+        "countries": {
+          "authorizedClaimTypes": ["NATIONALITY_OR_PRODUCTION_COUNTRY"],
+          "rules": [
+            "Authorizes production country context (e.g. 'French-Austrian co-production').",
+            "STRICT PROHIBITION: countries does NOT authorize spoken language.",
+            "STRICT PROHIBITION: countries does NOT authorize story setting/location.",
+            "STRICT PROHIBITION: Multi-country lists do NOT authorize collapsing into a single-country nationality descriptor."
+          ]
+        },
+        "spokenLanguages": {
+          "authorizedClaimTypes": ["LANGUAGE_CLAIM"],
+          "rules": [
+            "Authorizes explicit language claims (e.g. facts.spokenLanguages=['Russian'] authorizes 'Russian-language').",
+            "STRICT PROHIBITION: spokenLanguages does NOT authorize story setting/location.",
+            "STRICT PROHIBITION: spokenLanguages does NOT authorize production country."
+          ]
+        },
+        "genres": {
+          "authorizedClaimTypes": ["GENRE_OR_SUBGENRE"],
+          "rules": [
+            "Authorizes high-level genre categories explicitly present in facts.genres.",
+            "STRICT PROHIBITION: Does not authorize ungrounded subgenres (e.g. 'neo-noir' is not authorized by 'Drama'/'Crime')."
+          ]
+        }
+      }
+    },
+    "SYNOPSIS_AND_ALLOWED_STORY_MATERIAL": {
+      "description": "Authorized narrative story material from overview and explicitly supplied descriptive evidence.",
+      "fields": ["allowedSourceMaterial.overview", "allowedSourceMaterial.keywords", "allowedSourceMaterial.descriptiveEvidence"],
+      "authorizedClaimTypes": [
+        "STORY_SETUP_FACT",
+        "LOCATION_OR_SETTING",
+        "CHARACTER_RELATIONSHIP",
+        "CHARACTER_MOTIVE_OR_GOAL",
+        "CAUSAL_OR_STORY_MECHANISM",
+        "TEMPORAL_OR_DURATION_CONSTRAINT",
+        "QUANTITATIVE_CLAIM"
+      ],
+      "rules": [
+        "Authorizes setup premise, starting situation, initial conflict, and explicitly stated story elements.",
+        "STRICT PROHIBITION: Unstated mechanisms, hidden origins, unrevealed motives, later plot turns, or unseen backstories are strictly unauthorized."
+      ]
+    },
+    "ACCEPTED_SEMANTIC_CLASSIFICATION": {
+      "description": "Experiential dimensions characterizing the viewer's psychological interaction with the film.",
+      "fields": ["pace", "emotionalWeight", "attentionDemand", "discoveryStyle", "moods", "situations"],
+      "authorizedClaimTypes": ["VIEWING_EXPERIENCE_INFERENCE", "ATMOSPHERIC_OR_STYLISTIC_LANGUAGE"],
+      "rules": [
+        "Authorizes experiential and tonal framing from the viewer's perspective (e.g. 'tense atmosphere', 'deliberate pacing', 'somber weight').",
+        "STRICT PROHIBITION: NEVER authorizes new plot facts, character backstories, unseen story events, physical settings, or external lore."
+      ]
+    },
+    "GROUNDED_SEMANTIC_EVIDENCE_AND_BOUNDARY_FLAGS": {
+      "description": "Negative constraints and spoiler boundary cutoff instructions.",
+      "fields": ["semanticBoundaryFlags.setupCutoff", "semanticBoundaryFlags.spoilerBoundaries"],
+      "authorizedClaimTypes": [],
+      "rules": [
+        "Functions as negative constraint defining prohibited later revelations and plot turns."
+      ]
+    },
+    "EXTERNAL_KNOWLEDGE": {
+      "description": "Parametric pretraining knowledge, franchise lore, adaptation history, real-world facts, actor trivia, and unprovided plot developments.",
+      "status": "NEVER_AUTHORITATIVE",
+      "rules": [
+        "STRICT PROHIBITION: External truth alone NEVER authorizes a detail. Even if a claim is 100% historically, factually, or lore-accurate in the real world, if absent from the packet it is UNAUTHORIZED."
+      ]
+    }
+  },
+  "claimClassDefinitions": {
+    "DIRECT_PACKET_FACT": {
+      "description": "Metadata claims explicitly present in packet facts (director, year, runtime).",
+      "allowedSources": ["PACKET_FACTS.director", "PACKET_FACTS.year", "PACKET_FACTS.runtime"],
+      "disallowedSources": ["EXTERNAL_KNOWLEDGE", "ACCEPTED_SEMANTIC_CLASSIFICATION"],
+      "inferenceTolerance": "EXACT_OR_EQUIVALENT",
+      "materialityConsequence": "MATERIAL_FACTUAL_CONFLICT"
+    },
+    "LANGUAGE_CLAIM": {
+      "description": "Claims asserting the spoken language of the film or dialogue.",
+      "allowedSources": ["PACKET_FACTS.spokenLanguages", "SYNOPSIS_AND_ALLOWED_STORY_MATERIAL"],
+      "disallowedSources": ["PACKET_FACTS.countries", "EXTERNAL_KNOWLEDGE"],
+      "inferenceTolerance": "STRICT_LEXICAL_OR_ARRAY_MEMBER",
+      "materialityConsequence": "UNAUTHORIZED_SOURCE_BOUNDARY_CLAIM"
+    },
+    "NATIONALITY_OR_PRODUCTION_COUNTRY": {
+      "description": "Claims asserting production country origin or co-production nationality.",
+      "allowedSources": ["PACKET_FACTS.countries"],
+      "disallowedSources": ["PACKET_FACTS.spokenLanguages", "EXTERNAL_KNOWLEDGE"],
+      "inferenceTolerance": "PRESERVES_CO_PRODUCTION_COMPOSITION",
+      "materialityConsequence": "UNAUTHORIZED_SOURCE_BOUNDARY_CLAIM"
+    },
+    "GENRE_OR_SUBGENRE": {
+      "description": "Claims classifying the film's genre or specific subgenre.",
+      "allowedSources": ["PACKET_FACTS.genres", "SYNOPSIS_AND_ALLOWED_STORY_MATERIAL"],
+      "disallowedSources": ["ACCEPTED_SEMANTIC_CLASSIFICATION", "EXTERNAL_KNOWLEDGE"],
+      "inferenceTolerance": "EXACT_GENRE_OR_DIRECTLY_GROUNDED_SYNOPSIS_TROPE",
+      "materialityConsequence": "UNRESOLVED_SOURCE_GROUNDING_CONFLICT"
+    },
+    "STORY_SETUP_FACT": {
+      "description": "Claims asserting core narrative setup, initial situation, concrete story-context/event details, or subject identity.",
+      "allowedSources": ["SYNOPSIS_AND_ALLOWED_STORY_MATERIAL"],
+      "disallowedSources": ["EXTERNAL_KNOWLEDGE", "ACCEPTED_SEMANTIC_CLASSIFICATION"],
+      "inferenceTolerance": "CONSERVATIVE_PARAPHRASE_ONLY",
+      "materialityConsequence": "UNAUTHORIZED_SOURCE_BOUNDARY_CLAIM"
+    },
+    "LOCATION_OR_SETTING": {
+      "description": "Claims asserting physical, geographic, spatial, or environmental setting.",
+      "allowedSources": ["SYNOPSIS_AND_ALLOWED_STORY_MATERIAL"],
+      "disallowedSources": ["PACKET_FACTS.countries", "PACKET_FACTS.spokenLanguages", "EXTERNAL_KNOWLEDGE"],
+      "inferenceTolerance": "EXPLICIT_SOURCE_LOCATION_ONLY",
+      "materialityConsequence": "SCENE_OR_SCRIPT_LEVEL_EXTERNAL_DETAIL"
+    },
+    "CHARACTER_RELATIONSHIP": {
+      "description": "Claims asserting personal, professional, romantic, familial, or adversarial relationships.",
+      "allowedSources": ["SYNOPSIS_AND_ALLOWED_STORY_MATERIAL"],
+      "disallowedSources": ["EXTERNAL_KNOWLEDGE", "ACCEPTED_SEMANTIC_CLASSIFICATION"],
+      "inferenceTolerance": "EXPLICIT_SOURCE_RELATIONSHIP_ONLY",
+      "materialityConsequence": "RELATIONSHIP_OR_CHARACTER_MOTIVE"
+    },
+    "CHARACTER_MOTIVE_OR_GOAL": {
+      "description": "Claims asserting psychological drivers, objectives, revenge plans, or hidden intentions.",
+      "allowedSources": ["SYNOPSIS_AND_ALLOWED_STORY_MATERIAL"],
+      "disallowedSources": ["EXTERNAL_KNOWLEDGE", "ACCEPTED_SEMANTIC_CLASSIFICATION"],
+      "inferenceTolerance": "EXPLICIT_SOURCE_MOTIVE_ONLY",
+      "materialityConsequence": "RELATIONSHIP_OR_CHARACTER_MOTIVE"
+    },
+    "CAUSAL_OR_STORY_MECHANISM": {
+      "description": "Claims asserting plot devices, supernatural rules, technological gadgets, or causal chains.",
+      "allowedSources": ["SYNOPSIS_AND_ALLOWED_STORY_MATERIAL"],
+      "disallowedSources": ["EXTERNAL_KNOWLEDGE", "ACCEPTED_SEMANTIC_CLASSIFICATION"],
+      "inferenceTolerance": "EXPLICIT_SOURCE_MECHANISM_ONLY",
+      "materialityConsequence": "CONCRETE_STORY_OR_SUPERNATURAL_MECHANISM"
+    },
+    "TEMPORAL_OR_DURATION_CONSTRAINT": {
+      "description": "Claims asserting time spans, countdowns, finite deadlines, or durations.",
+      "allowedSources": ["SYNOPSIS_AND_ALLOWED_STORY_MATERIAL", "PACKET_FACTS.runtime"],
+      "disallowedSources": ["ACCEPTED_SEMANTIC_CLASSIFICATION", "EXTERNAL_KNOWLEDGE"],
+      "inferenceTolerance": "SCALE_CONSISTENT_NO_OVERSTATEMENT",
+      "materialityConsequence": "MATERIAL_FACTUAL_CONFLICT"
+    },
+    "QUANTITATIVE_CLAIM": {
+      "description": "Claims asserting specific counts, measurements, or numerical attributes.",
+      "allowedSources": ["PACKET_FACTS", "SYNOPSIS_AND_ALLOWED_STORY_MATERIAL"],
+      "disallowedSources": ["EXTERNAL_KNOWLEDGE"],
+      "inferenceTolerance": "EXACT_OR_AUTHORIZED_ROUNDING",
+      "materialityConsequence": "MATERIAL_FACTUAL_CONFLICT"
+    },
+    "FRANCHISE_OR_EXTERNAL_LORE": {
+      "description": "Claims asserting comic-book backstory, sequel/prequel ties, adaptation origins, or real-world events.",
+      "allowedSources": ["SYNOPSIS_AND_ALLOWED_STORY_MATERIAL"],
+      "disallowedSources": ["EXTERNAL_KNOWLEDGE"],
+      "inferenceTolerance": "ZERO_TOLERANCE_FOR_EXTERNAL_LORE",
+      "materialityConsequence": "FRANCHISE_OR_EXTERNAL_LORE"
+    },
+    "SPOILER_OR_LATER_REVEAL": {
+      "description": "Claims revealing plot twists, mid-story shifts, third-act resolutions, or ending states.",
+      "allowedSources": ["GROUNDED_SEMANTIC_EVIDENCE_AND_BOUNDARY_FLAGS"],
+      "disallowedSources": ["ALL"],
+      "inferenceTolerance": "ZERO_TOLERANCE_SETUP_ONLY",
+      "materialityConsequence": "SPOILER_OR_LATER_REVEAL"
+    },
+    "HIDDEN_IDENTITY_OR_ORIGIN": {
+      "description": "Claims revealing secret identities, undisclosed parentage, hidden origins, or covert history.",
+      "allowedSources": ["SYNOPSIS_AND_ALLOWED_STORY_MATERIAL"],
+      "disallowedSources": ["EXTERNAL_KNOWLEDGE"],
+      "inferenceTolerance": "ZERO_TOLERANCE_FOR_UNSTATED_SECRETS",
+      "materialityConsequence": "HIDDEN_IDENTITY_OR_ORIGIN"
+    },
+    "VIEWING_EXPERIENCE_INFERENCE": {
+      "description": "Subjective characterization of viewer engagement, pace, attention, or emotional response.",
+      "allowedSources": ["ACCEPTED_SEMANTIC_CLASSIFICATION"],
+      "disallowedSources": ["EXTERNAL_KNOWLEDGE"],
+      "inferenceTolerance": "CONSISTENT_WITH_CLASSIFICATION_TOKENS",
+      "materialityConsequence": "UNSUPPORTED_COMPARATIVE_OR_META_CLAIM"
+    },
+    "ATMOSPHERIC_OR_STYLISTIC_LANGUAGE": {
+      "description": "Tonal adjectives describing sensory or mood register without factual assertions.",
+      "allowedSources": ["ACCEPTED_SEMANTIC_CLASSIFICATION", "SYNOPSIS_AND_ALLOWED_STORY_MATERIAL"],
+      "disallowedSources": ["EXTERNAL_KNOWLEDGE"],
+      "inferenceTolerance": "PERMITTED_IF_NO_CONCRETE_FACT_ASSERTED",
+      "materialityConsequence": "UNSUPPORTED_COMPARATIVE_OR_META_CLAIM"
+    },
+    "SPECULATIVE_HOOK_PREMISE": {
+      "description": "Presuppositions embedded in interrogative hooks or mystery framings.",
+      "allowedSources": ["SYNOPSIS_AND_ALLOWED_STORY_MATERIAL"],
+      "disallowedSources": ["EXTERNAL_KNOWLEDGE", "ACCEPTED_SEMANTIC_CLASSIFICATION"],
+      "inferenceTolerance": "ALL_PRESUPPOSITIONS_MUST_BE_SOURCE_GROUNDED",
+      "materialityConsequence": "SPECULATIVE_HOOK_PREMISE"
+    }
+  },
+  "assertionSemantics": {
+    "interrogativePremises": {
+      "principle": "Syntactic question marks do not grant immunity from verification.",
+      "rule": "A question such as 'What dark secret caused X?' presupposes that (a) a dark secret exists, and (b) that secret caused X. Both propositions are factual claims requiring source grounding in allowedSourceMaterial."
+    },
+    "factualModifiers": {
+      "principle": "Adjectives and compound noun modifiers convey verifiable factual claims.",
+      "rule": "Modifiers like 'renowned swordsman', 'snowy streets', 'Russian-language', or 'neo-noir' assert status, weather/location, language, or subgenre. They must be evaluated against the relevant authorized surface."
+    },
+    "idiomaticMechanisms": {
+      "principle": "Idiomatic expressions that introduce concrete stakes, goals, or time limits are factual claims.",
+      "rule": "Expressions such as 'before supplies run out', 'to settle the score', or 'keep under wraps' assert concrete deadlines, revenge motives, or conspiracies. If an ordinary viewer would understand the phrase as describing in-story facts, it requires explicit source support."
+    }
+  }
+}

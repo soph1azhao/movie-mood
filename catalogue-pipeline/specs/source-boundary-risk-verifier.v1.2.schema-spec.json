@@ -1,0 +1,260 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "source-boundary-risk-verifier.v1.2.schema-spec",
+  "title": "Source Boundary Risk Verifier Semantic Output Specification v1.2",
+  "description": "Specification for model-generated semantic judgment and evidence output under Option A v1.2 contract hardening. SPECIFICATION ONLY — NOT ACTIVE SCHEMA.",
+  "status": "SPECIFICATION_ONLY",
+  "metadata": {
+    "isSpecificationOnly": true,
+    "notActiveSchema": true,
+    "noModelBehaviorValidation": true,
+    "supersedesSchema": "catalogue-pipeline/schemas/source-boundary-risk-verifier.v1.1.schema.json",
+    "supersedesSchemaHash": "sha256:9e0647d3753e482ad23780725020f6bebb408486ba663596c0bb0fe562b06120",
+    "governanceState": "PAUSED_FOR_SEVERE_AUDIT_MISS"
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "riskLevel",
+    "riskCategories",
+    "issues",
+    "sourceBoundarySatisfied"
+  ],
+  "properties": {
+    "riskLevel": {
+      "type": "string",
+      "enum": ["LOW_RISK", "HIGH_RISK"]
+    },
+    "riskCategories": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "SPOILER_OR_LATER_REVEAL",
+          "HIDDEN_IDENTITY_OR_ORIGIN",
+          "RELATIONSHIP_OR_CHARACTER_MOTIVE",
+          "CONCRETE_STORY_OR_SUPERNATURAL_MECHANISM",
+          "FRANCHISE_OR_EXTERNAL_LORE",
+          "SCENE_OR_SCRIPT_LEVEL_EXTERNAL_DETAIL",
+          "MATERIAL_FACTUAL_CONFLICT",
+          "UNRESOLVED_SOURCE_GROUNDING_CONFLICT",
+          "UNSUPPORTED_COMPARATIVE_OR_META_CLAIM",
+          "SPECULATIVE_HOOK_PREMISE",
+          "UNAUTHORIZED_SOURCE_BOUNDARY_CLAIM"
+        ]
+      }
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "category",
+          "field",
+          "claimSpan",
+          "normalizedClaim",
+          "claimType",
+          "checkedAuthoritySources",
+          "authorityResolution",
+          "materialityRationale"
+        ],
+        "properties": {
+          "category": {
+            "type": "string",
+            "enum": [
+              "SPOILER_OR_LATER_REVEAL",
+              "HIDDEN_IDENTITY_OR_ORIGIN",
+              "RELATIONSHIP_OR_CHARACTER_MOTIVE",
+              "CONCRETE_STORY_OR_SUPERNATURAL_MECHANISM",
+              "FRANCHISE_OR_EXTERNAL_LORE",
+              "SCENE_OR_SCRIPT_LEVEL_EXTERNAL_DETAIL",
+              "MATERIAL_FACTUAL_CONFLICT",
+              "UNRESOLVED_SOURCE_GROUNDING_CONFLICT",
+              "UNSUPPORTED_COMPARATIVE_OR_META_CLAIM",
+              "SPECULATIVE_HOOK_PREMISE",
+              "UNAUTHORIZED_SOURCE_BOUNDARY_CLAIM"
+            ]
+          },
+          "field": {
+            "type": "string",
+            "enum": ["description", "whyWatch", "curiosityHook", "vibeSummary"]
+          },
+          "claimSpan": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Exact text substring excerpted from the copy containing the claim."
+          },
+          "normalizedClaim": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Concise factual proposition asserted or presupposed by the claim."
+          },
+          "claimType": {
+            "type": "string",
+            "enum": [
+              "DIRECT_PACKET_FACT",
+              "LANGUAGE_CLAIM",
+              "NATIONALITY_OR_PRODUCTION_COUNTRY",
+              "GENRE_OR_SUBGENRE",
+              "STORY_SETUP_FACT",
+              "LOCATION_OR_SETTING",
+              "CHARACTER_RELATIONSHIP",
+              "CHARACTER_MOTIVE_OR_GOAL",
+              "CAUSAL_OR_STORY_MECHANISM",
+              "TEMPORAL_OR_DURATION_CONSTRAINT",
+              "QUANTITATIVE_CLAIM",
+              "FRANCHISE_OR_EXTERNAL_LORE",
+              "SPOILER_OR_LATER_REVEAL",
+              "HIDDEN_IDENTITY_OR_ORIGIN",
+              "VIEWING_EXPERIENCE_INFERENCE",
+              "ATMOSPHERIC_OR_STYLISTIC_LANGUAGE",
+              "SPECULATIVE_HOOK_PREMISE"
+            ]
+          },
+          "checkedAuthoritySources": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            },
+            "description": "Authority surfaces checked in packet facts, overview, keywords, or boundary flags."
+          },
+          "authorityResolution": {
+            "type": "string",
+            "enum": [
+              "UNSUPPORTED_MISSING_AUTHORITY",
+              "CONTRADICTED_BY_AUTHORITY",
+              "DISALLOWED_AUTHORITY_SOURCE"
+            ],
+            "description": "Resolution classification of why authority was unsatisfied."
+          },
+          "materialityRationale": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Why this issue represents a material source-boundary violation rather than harmless style."
+          }
+        }
+      }
+    },
+    "lowRiskCoverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "allVisibleFieldsAudited",
+        "interrogativePremisesAudited",
+        "factualModifiersAudited",
+        "packetFactsAudited",
+        "settingAndLocationAudited",
+        "characterMotivesAndRelationshipsAudited",
+        "storyMechanismsAndConstraintsAudited",
+        "externalLoreAndBackstoryAudited",
+        "spoilerAndRevealBoundariesAudited",
+        "viewingExperienceInferenceAudited",
+        "summaryRationale"
+      ],
+      "properties": {
+        "allVisibleFieldsAudited": {
+          "type": "boolean",
+          "const": true
+        },
+        "interrogativePremisesAudited": {
+          "type": "boolean",
+          "const": true
+        },
+        "factualModifiersAudited": {
+          "type": "boolean",
+          "const": true
+        },
+        "packetFactsAudited": {
+          "type": "boolean",
+          "const": true
+        },
+        "settingAndLocationAudited": {
+          "type": "boolean",
+          "const": true
+        },
+        "characterMotivesAndRelationshipsAudited": {
+          "type": "boolean",
+          "const": true
+        },
+        "storyMechanismsAndConstraintsAudited": {
+          "type": "boolean",
+          "const": true
+        },
+        "externalLoreAndBackstoryAudited": {
+          "type": "boolean",
+          "const": true
+        },
+        "spoilerAndRevealBoundariesAudited": {
+          "type": "boolean",
+          "const": true
+        },
+        "viewingExperienceInferenceAudited": {
+          "type": "boolean",
+          "const": true
+        },
+        "summaryRationale": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "sourceBoundarySatisfied": {
+      "type": "boolean"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "riskLevel": {
+            "const": "LOW_RISK"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "lowRiskCoverage"
+        ],
+        "properties": {
+          "riskCategories": {
+            "maxItems": 0
+          },
+          "issues": {
+            "maxItems": 0
+          },
+          "sourceBoundarySatisfied": {
+            "const": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "riskLevel": {
+            "const": "HIGH_RISK"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "riskCategories": {
+            "minItems": 1
+          },
+          "issues": {
+            "minItems": 1
+          },
+          "sourceBoundarySatisfied": {
+            "const": false
+          }
+        }
+      }
+    }
+  ],
+  "x-deterministicConsistencyRules": [
+    "unique(issue.category values) == set(riskCategories)"
+  ]
+}
