@@ -1,6 +1,6 @@
 # Movie Mood V8.2 — Catalogue Promotion & Runtime Scale
 
-**Status:** Phases 0 and 1 implemented; Phase 2A pilot infrastructure and preflight implemented; live editorial pilot not yet executed.
+**Status:** Production-scale editorial governance reconciled through SCALE_TRANCHE_1; palette generation and final promotion remain pending.
 
 **Baseline:** `v8.1.0`; deployed static catalogue: 41 films.
 
@@ -9,6 +9,19 @@
 > Streaming platforms help you find more movies. Movie Mood helps you choose one.
 
 > Movie Mood owns meaning. TMDB owns facts.
+
+## Production-scale governance supersession — 2026-09-15
+
+This dated amendment is the current authority for V8.2 production-scale authorization. The earlier Phase 0/1 contract and pilot language is preserved below as historical v1 traceability, but any statement requiring every promoted film to receive individual human approval or every production record to contain a critic artifact is superseded at production scale by `RISK_BASED_HUMAN_REVIEW_AND_AUDIT` and `promotion-authorization.v2`.
+
+Under the v2 authorization contract, a record can follow exactly one of two authorizing paths:
+
+- `RISK_BASED_AUTO_ELIGIBLE` requires the complete deterministic chain: passing structural and production validation, complete provenance, a valid final editorial artifact, `AUTO_ELIGIBLE` routing, a `LOW_RISK` source-boundary result, satisfied source boundaries, no unresolved grounding conflict, `NOT_REQUIRED` human review, `NOT_SAMPLED` audit status, no severe audit miss, an unpaused tranche, and cleared editorial status.
+- `HUMAN_APPROVED` is mandatory for high-risk, verifier-unavailable, audit-sampled, and targeted-repair records. Approval must bind the final editorial artifact actually eligible for promotion; a repaired record cannot inherit approval of superseded pre-repair copy.
+
+Model output alone never authorizes promotion. The source-boundary verifier's `LOW_RISK` result is only one part of the auto path. Critic v1/v1.1 evidence remains preserved and may be optional provenance, but its presence is not a universal v2 prerequisite and it is insufficient as sole production authority. Historical `validateProductionRecord(...)`, `validateHumanReviewDecision(...)`, `production-record.v1`, `human-review.v1`, `promotion-manifest.v1`, and `promotion-transaction.v1` behavior remains unchanged for replay and traceability; those v1 contracts must not be applied as the production-scale v2 authorization rule.
+
+The canonical active governance is `catalogue-pipeline/generated/catalogue-promotion/v8-2-editorial-pilot-v1/review/v8-2-scalable-promotion-governance.v1.json`. The v2 executable contract is `catalogue-pipeline/scripts/validatePromotionAuthorizationV2.mjs`, with schema `catalogue-pipeline/schemas/promotion-authorization.v2.schema.json`. Accepted counts continue to derive from actual accepted records; deferred candidates remain in cohort accounting.
 
 ## 1. Goal
 

@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "production-record.v2.schema.json",
+  "title": "Complete Movie Mood Production Record v2",
+  "type": "object",
+  "required": ["schemaVersion", "candidateId", "tmdbId", "curatedMovie", "facts", "provenance"],
+  "properties": {
+    "schemaVersion": { "const": "production-record.v2" },
+    "candidateId": { "type": "string", "minLength": 1 },
+    "tmdbId": { "type": "integer", "minimum": 1 },
+    "curatedMovie": {
+      "type": "object",
+      "required": ["id", "tmdbId", "moods", "situations", "filterLanguages", "pace", "emotionalWeight", "attentionDemand", "discoveryStyle", "description", "whyWatch", "curiosityHook", "vibeSummary", "palette"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "tmdbId": { "type": "integer", "minimum": 1 },
+        "moods": { "type": "array", "minItems": 1, "items": { "enum": ["funny", "exciting", "thoughtful", "relaxing", "emotional", "suspenseful"] } },
+        "situations": { "type": "array", "minItems": 1, "items": { "enum": ["alone", "date-night", "friends", "family", "easy-watch"] } },
+        "filterLanguages": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "pace": { "enum": ["slow", "medium", "fast"] },
+        "emotionalWeight": { "enum": ["light", "moderate", "heavy"] },
+        "attentionDemand": { "enum": ["easy", "engaged", "immersive"] },
+        "discoveryStyle": { "enum": ["familiar", "different", "adventurous"] },
+        "description": { "type": "string", "minLength": 80, "maxLength": 220 },
+        "whyWatch": { "type": "string", "minLength": 60, "maxLength": 180 },
+        "curiosityHook": { "type": "string", "minLength": 50, "maxLength": 170 },
+        "vibeSummary": { "type": "string", "minLength": 45, "maxLength": 150 },
+        "palette": { "type": "array", "prefixItems": [{ "$ref": "#/$defs/color" }, { "$ref": "#/$defs/color" }], "minItems": 2, "maxItems": 2 }
+      },
+      "additionalProperties": false
+    },
+    "facts": {
+      "type": "object",
+      "required": ["tmdbId", "title", "year", "director", "countries", "spokenLanguages", "genres", "runtimeMinutes", "posterPath"],
+      "properties": {
+        "tmdbId": { "type": "integer", "minimum": 1 },
+        "title": { "type": "string", "minLength": 1 },
+        "year": { "type": "integer", "minimum": 1878 },
+        "director": { "type": "string", "minLength": 1 },
+        "countries": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "spokenLanguages": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "genres": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "runtimeMinutes": { "type": "integer", "minimum": 1 },
+        "posterPath": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["promotionCandidateHash", "semanticArtifactHash", "evidencePacketHash", "factsRecordHash", "finalEditorialArtifactHash", "paletteArtifactHash"],
+      "properties": {
+        "promotionCandidateHash": { "$ref": "#/$defs/hash" },
+        "semanticArtifactHash": { "$ref": "#/$defs/hash" },
+        "evidencePacketHash": { "$ref": "#/$defs/hash" },
+        "factsRecordHash": { "$ref": "#/$defs/hash" },
+        "finalEditorialArtifactHash": { "$ref": "#/$defs/hash" },
+        "paletteArtifactHash": { "$ref": "#/$defs/hash" },
+        "criticArtifactHash": { "$ref": "#/$defs/hash" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "color": { "type": "string", "pattern": "^#[0-9a-f]{6}$" }
+  }
+}

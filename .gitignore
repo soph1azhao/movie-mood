@@ -6,3 +6,4 @@ dist-sync/
 *.local
 .env
 .env.*
+catalogue-pipeline/generated/**/poster-cache/

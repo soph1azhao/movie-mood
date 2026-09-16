@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "promotion-authorization.v2.schema.json",
+  "title": "Movie Mood Risk-Based Promotion Authorization",
+  "type": "object",
+  "required": ["schemaVersion", "candidateId", "tmdbId", "governanceVersion", "validationStatus", "structuralValidationStatus", "provenanceStatus", "finalEditorialArtifactStatus", "riskRoutingStatus", "riskLayer", "humanReviewStatus", "auditStatus", "editorialClosureStatus", "productionValidationStatus", "promotionDisposition", "authorizationMode", "trancheGate", "sourceHashes"],
+  "properties": {
+    "schemaVersion": { "const": "promotion-authorization.v2" },
+    "candidateId": { "type": "string", "minLength": 1 },
+    "tmdbId": { "type": "integer", "minimum": 1 },
+    "governanceVersion": { "const": "v8-2-scalable-promotion-governance.v1" },
+    "validationStatus": { "const": "PASS" },
+    "structuralValidationStatus": { "const": "PASS" },
+    "provenanceStatus": { "const": "COMPLETE" },
+    "finalEditorialArtifactStatus": { "const": "VALID" },
+    "riskRoutingStatus": { "enum": ["AUTO_ELIGIBLE", "HUMAN_REVIEW_REQUIRED", "QUARANTINED"] },
+    "riskLayer": {
+      "type": "object",
+      "required": ["semanticResult", "sourceBoundarySatisfied", "unresolvedGroundingConflict"],
+      "properties": {
+        "semanticResult": { "enum": ["LOW_RISK", "HIGH_RISK", "UNAVAILABLE"] },
+        "sourceBoundarySatisfied": { "type": "boolean" },
+        "unresolvedGroundingConflict": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "humanReviewStatus": { "enum": ["NOT_REQUIRED", "REQUIRED_PENDING", "APPROVED", "REVISED_APPROVED", "REJECTED"] },
+    "auditStatus": { "enum": ["NOT_SAMPLED", "SAMPLED_PENDING", "AUDITED_PASS", "AUDITED_FAIL"] },
+    "editorialClosureStatus": { "const": "CLEARED" },
+    "productionValidationStatus": { "const": "PASS" },
+    "promotionDisposition": { "const": "ELIGIBLE" },
+    "authorizationMode": { "enum": ["RISK_BASED_AUTO_ELIGIBLE", "HUMAN_APPROVED"] },
+    "reviewBasis": { "enum": ["HIGH_RISK", "VERIFIER_UNAVAILABLE", "AUDIT_SAMPLE", "TARGETED_REPAIR_CLOSURE"] },
+    "humanApproval": {
+      "type": ["object", "null"],
+      "properties": {
+        "approvalArtifactHash": { "$ref": "#/$defs/hash" },
+        "reviewedEditorialArtifactHash": { "$ref": "#/$defs/hash" },
+        "approvalKind": { "enum": ["HUMAN_REVIEW_DECISION", "TARGETED_REPAIR_HUMAN_CLOSURE"] }
+      },
+      "required": ["approvalArtifactHash", "reviewedEditorialArtifactHash", "approvalKind"],
+      "additionalProperties": false
+    },
+    "trancheGate": {
+      "type": "object",
+      "required": ["severeAuditMissCount", "pauseCurrentTranche"],
+      "properties": {
+        "severeAuditMissCount": { "const": 0 },
+        "pauseCurrentTranche": { "const": false }
+      },
+      "additionalProperties": false
+    },
+    "sourceHashes": {
+      "type": "object",
+      "required": ["governanceArtifact", "promotionCandidate", "finalEditorialArtifact", "riskLayerArtifact", "productionRecord"],
+      "properties": {
+        "governanceArtifact": { "const": "sha256:7d6a46d3fde76f4bd578fb17a168f5c87fa65c2fb2d25519fb5d88b72886a43e" },
+        "promotionCandidate": { "$ref": "#/$defs/hash" },
+        "finalEditorialArtifact": { "$ref": "#/$defs/hash" },
+        "riskLayerArtifact": { "$ref": "#/$defs/hash" },
+        "productionRecord": { "$ref": "#/$defs/hash" },
+        "criticArtifact": { "anyOf": [{ "$ref": "#/$defs/hash" }, { "type": "null" }] }
+      },
+      "additionalProperties": false
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "authorizationMode": { "const": "RISK_BASED_AUTO_ELIGIBLE" } }, "required": ["authorizationMode"] },
+      "then": {
+        "properties": {
+          "riskRoutingStatus": { "const": "AUTO_ELIGIBLE" },
+          "riskLayer": {
+            "properties": {
+              "semanticResult": { "const": "LOW_RISK" },
+              "sourceBoundarySatisfied": { "const": true },
+              "unresolvedGroundingConflict": { "const": false }
+            }
+          },
+          "humanReviewStatus": { "const": "NOT_REQUIRED" },
+          "auditStatus": { "const": "NOT_SAMPLED" },
+          "humanApproval": { "type": "null" }
+        },
+        "not": { "required": ["reviewBasis"] }
+      }
+    },
+    {
+      "if": { "properties": { "authorizationMode": { "const": "HUMAN_APPROVED" } }, "required": ["authorizationMode"] },
+      "then": {
+        "required": ["reviewBasis", "humanApproval"],
+        "properties": { "humanReviewStatus": { "enum": ["APPROVED", "REVISED_APPROVED"] }, "humanApproval": { "type": "object" } }
+      }
+    },
+    {
+      "if": { "properties": { "authorizationMode": { "const": "HUMAN_APPROVED" }, "reviewBasis": { "const": "HIGH_RISK" } }, "required": ["authorizationMode", "reviewBasis"] },
+      "then": {
+        "properties": {
+          "riskRoutingStatus": { "const": "HUMAN_REVIEW_REQUIRED" },
+          "riskLayer": { "properties": { "semanticResult": { "const": "HIGH_RISK" }, "sourceBoundarySatisfied": { "const": false } } },
+          "auditStatus": { "const": "NOT_SAMPLED" },
+          "humanApproval": { "properties": { "approvalKind": { "const": "HUMAN_REVIEW_DECISION" } } }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "authorizationMode": { "const": "HUMAN_APPROVED" }, "reviewBasis": { "const": "VERIFIER_UNAVAILABLE" } }, "required": ["authorizationMode", "reviewBasis"] },
+      "then": {
+        "properties": {
+          "riskRoutingStatus": { "const": "HUMAN_REVIEW_REQUIRED" },
+          "riskLayer": { "properties": { "semanticResult": { "const": "UNAVAILABLE" }, "sourceBoundarySatisfied": { "const": false } } },
+          "auditStatus": { "const": "NOT_SAMPLED" },
+          "humanApproval": { "properties": { "approvalKind": { "const": "HUMAN_REVIEW_DECISION" } } }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "authorizationMode": { "const": "HUMAN_APPROVED" }, "reviewBasis": { "const": "AUDIT_SAMPLE" } }, "required": ["authorizationMode", "reviewBasis"] },
+      "then": {
+        "properties": {
+          "riskRoutingStatus": { "const": "AUTO_ELIGIBLE" },
+          "riskLayer": { "properties": { "semanticResult": { "const": "LOW_RISK" }, "sourceBoundarySatisfied": { "const": true }, "unresolvedGroundingConflict": { "const": false } } },
+          "auditStatus": { "const": "AUDITED_PASS" },
+          "humanApproval": { "properties": { "approvalKind": { "const": "HUMAN_REVIEW_DECISION" } } }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "authorizationMode": { "const": "HUMAN_APPROVED" }, "reviewBasis": { "const": "TARGETED_REPAIR_CLOSURE" } }, "required": ["authorizationMode", "reviewBasis"] },
+      "then": {
+        "properties": {
+          "riskRoutingStatus": { "enum": ["AUTO_ELIGIBLE", "HUMAN_REVIEW_REQUIRED"] },
+          "riskLayer": { "properties": { "semanticResult": { "const": "LOW_RISK" }, "sourceBoundarySatisfied": { "const": true }, "unresolvedGroundingConflict": { "const": false } } },
+          "humanReviewStatus": { "const": "REVISED_APPROVED" },
+          "humanApproval": { "properties": { "approvalKind": { "const": "TARGETED_REPAIR_HUMAN_CLOSURE" } } }
+        },
+        "allOf": [
+          {
+            "if": { "properties": { "riskRoutingStatus": { "const": "AUTO_ELIGIBLE" } }, "required": ["riskRoutingStatus"] },
+            "then": { "properties": { "auditStatus": { "const": "AUDITED_PASS" } } }
+          },
+          {
+            "if": { "properties": { "riskRoutingStatus": { "const": "HUMAN_REVIEW_REQUIRED" } }, "required": ["riskRoutingStatus"] },
+            "then": { "properties": { "auditStatus": { "const": "NOT_SAMPLED" } } }
+          }
+        ]
+      }
+    }
+  ],
+  "additionalProperties": false,
+  "$defs": { "hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" } }
+}
