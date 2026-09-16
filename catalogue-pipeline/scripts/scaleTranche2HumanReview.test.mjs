@@ -348,3 +348,125 @@ test('12. Targeted repair plan contains exactly 19 records with untouched field 
     }
   }
 })
+
+test('13. Verifier gap analysis: deterministic byte-for-byte replay and no timestamp', async () => {
+  const { buildScaleTranche2GapAnalysis } = await import('./generateScaleTranche2GapAnalysis.mjs')
+  const res1 = await buildScaleTranche2GapAnalysis({ repoRoot })
+  const bytes1 = await readFile(path.join(repoRoot, res1.outPath))
+
+  const res2 = await buildScaleTranche2GapAnalysis({ repoRoot })
+  const bytes2 = await readFile(path.join(repoRoot, res2.outPath))
+
+  assert.equal(res1.hash, res2.hash)
+  assert.equal(Buffer.compare(bytes1, bytes2), 0, 'Artifact bytes must be 100% identical on repeated generation')
+
+  const parsed = JSON.parse(bytes1.toString('utf8'))
+  assert.equal(parsed.timestamp, undefined, 'Canonical artifact must not contain wall-clock timestamp')
+})
+
+test('14. Verifier gap analysis: structural-repair origin derived correctly (25 direct, 5 repair)', async () => {
+  const { buildScaleTranche2GapAnalysis } = await import('./generateScaleTranche2GapAnalysis.mjs')
+  const res = await buildScaleTranche2GapAnalysis({ repoRoot })
+
+  assert.equal(res.summary.directWriterCount, 25)
+  assert.equal(res.summary.structuralRepairCount, 5)
+  assert.equal(res.summary.totalRecords, 30)
+
+  const parsed = JSON.parse(await readFile(path.join(repoRoot, res.outPath), 'utf8'))
+  const repairs = parsed.records.filter((r) => r.computedFacts.finalEditorialOrigin === 'STRUCTURAL_REPAIR')
+  assert.equal(repairs.length, 5)
+  for (const r of repairs) {
+    assert.ok(r.computedFacts.finalEditorialArtifactPath.includes('structural-repairs'))
+  }
+})
+
+test('15. Verifier gap analysis: computed facts vs analyst annotations separation and provenance', async () => {
+  const { buildScaleTranche2GapAnalysis } = await import('./generateScaleTranche2GapAnalysis.mjs')
+  const res = await buildScaleTranche2GapAnalysis({ repoRoot })
+  const parsed = JSON.parse(await readFile(path.join(repoRoot, res.outPath), 'utf8'))
+
+  assert.ok(parsed.annotationProvenance)
+  assert.equal(parsed.annotationProvenance.annotationPolicy, 'A_PRIME_PRODUCTION_MATERIALITY_V1_RETROSPECTIVE_AUDIT')
+
+  for (const r of parsed.records) {
+    assert.ok(r.computedFacts, `Candidate ${r.candidateId} must have computedFacts`)
+    assert.ok(r.analystAnnotations, `Candidate ${r.candidateId} must have analystAnnotations`)
+    assert.ok(r.computedFacts.routingDisposition)
+    assert.ok(r.computedFacts.humanDecision)
+    assert.ok(r.computedFacts.sourceFacts)
+  }
+})
+
+test('16. Verifier gap analysis: no external-film contamination in severe case or explanations', async () => {
+  const { buildScaleTranche2GapAnalysis } = await import('./generateScaleTranche2GapAnalysis.mjs')
+  const res = await buildScaleTranche2GapAnalysis({ repoRoot })
+  const rawText = (await readFile(path.join(repoRoot, res.outPath))).toString('utf8')
+  const parsed = JSON.parse(rawText)
+
+  // Scope to severe case study text and all analyst annotations
+  const severeText = JSON.stringify(parsed.severeCaseStudy)
+  const annotationsText = JSON.stringify(parsed.records.map((r) => r.analystAnnotations))
+
+  assert.equal(severeText.includes('blood'), false, 'Must not reference blood in Red Violin analysis')
+  assert.equal(severeText.includes('wife'), false, 'Must not reference dead wife in Red Violin analysis')
+  assert.equal(severeText.includes('Samuel L. Jackson'), false, 'Must not reference actor names in Red Violin analysis')
+  assert.equal(annotationsText.includes('Battousai'), false, 'Must not reference manga character names in annotations')
+  assert.equal(annotationsText.includes('Sandor'), false, 'Must not reference real-world letter author names in annotations')
+
+  const severe = parsed.severeCaseStudy
+  assert.equal(severe.candidateId, 'scale500-tmdb-14283')
+  assert.ok(severe.sourceOnlyFindings.darkSecretFinding.includes('dark secret'))
+  assert.ok(severe.sourceOnlyFindings.auctionFinding.includes('auction'))
+})
+
+test('17. Verifier gap analysis: causal mechanisms marked explicitly as hypotheses', async () => {
+  const { buildScaleTranche2GapAnalysis } = await import('./generateScaleTranche2GapAnalysis.mjs')
+  const res = await buildScaleTranche2GapAnalysis({ repoRoot })
+  const parsed = JSON.parse(await readFile(path.join(repoRoot, res.outPath), 'utf8'))
+
+  const misses = parsed.records.filter((r) => r.analystAnnotations.status === 'REVISED_MISS')
+  assert.equal(misses.length, 16)
+
+  for (const m of misses) {
+    const diag = m.analystAnnotations.diagnosis
+    assert.ok(diag.observedFailure, `Miss ${m.candidateId} must have observedFailure`)
+    assert.ok(diag.contractEvidence, `Miss ${m.candidateId} must have contractEvidence`)
+    assert.ok(Array.isArray(diag.possibleMechanisms) && diag.possibleMechanisms.length > 0)
+    for (const h of diag.possibleMechanisms) {
+      assert.ok(h.startsWith('Hypothesis:'), `Mechanism "${h}" must start with "Hypothesis:"`)
+    }
+    assert.ok(['LOW', 'MEDIUM', 'HIGH'].includes(diag.causalConfidence))
+  }
+})
+
+test('18. Verifier gap analysis: prompt strategy empirical evaluation status and development set semantics', async () => {
+  const { buildScaleTranche2GapAnalysis } = await import('./generateScaleTranche2GapAnalysis.mjs')
+  const res = await buildScaleTranche2GapAnalysis({ repoRoot })
+  const parsed = JSON.parse(await readFile(path.join(repoRoot, res.outPath), 'utf8'))
+
+  assert.equal(parsed.datasetClassification, 'RETROSPECTIVE_DEVELOPMENT_SET')
+
+  // Strategy A (prompt hardening) must be specification-evaluable, not empirical zero-call
+  const stratA = parsed.containmentStrategies.find((s) => s.id === 'STRATEGY_A_VERIFIER_CONTRACT_HARDENING')
+  assert.equal(stratA.evaluationStatus, 'OFFLINE_SPECIFICATION_EVALUABLE')
+  assert.equal(stratA.empiricalStatus, 'EMPIRICAL_MODEL_BEHAVIOR_REQUIRES_CONTROLLED_REPLAY')
+
+  // Strategy B (deterministic rules) can be empirically replayed
+  const stratB = parsed.containmentStrategies.find((s) => s.id === 'STRATEGY_B_DETERMINISTIC_PRE_VERIFIER_BOUNDARY_CHECKS')
+  assert.equal(stratB.evaluationStatus, 'EMPIRICALLY_EVALUABLE_OFFLINE_ZERO_CALL')
+
+  // Development set notes must acknowledge lack of untouched validation status
+  const devSet = parsed.retrospectiveDevelopmentSetDesign
+  assert.ok(devSet.natureOfEvaluation.includes('APPARENT_RETROSPECTIVE_PERFORMANCE'))
+  assert.ok(devSet.validationRequirement.includes('independent blinded validation records'))
+})
+
+test('19. Governance pause artifact remains PAUSED and blocking', async () => {
+  const pausePath = path.join(repoRoot, 'catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-2/scale-tranche-2-governance-pause.v1.json')
+  const pause = JSON.parse(await readFile(pausePath, 'utf8'))
+  assert.equal(pause.status, 'PAUSED')
+  assert.equal(pause.trigger, 'SEVERE_RANDOM_AUDIT_MISS')
+  assert.equal(pause.governanceEffects.promotionFinalizationAllowed, false)
+  assert.equal(pause.governanceEffects.targetedRepairExecutionAllowed, false)
+  assert.equal(pause.governanceEffects.runtimePromotionAllowed, false)
+})
