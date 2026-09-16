@@ -1,0 +1,229 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "protocolId": "verifier-v1.3-retrospective-development-replay.v1",
+  "title": "Candidate Verifier v1.3 Retrospective Development Replay Protocol",
+  "status": "PREREGISTERED_NOT_EXECUTED",
+  "governanceState": "PAUSED_FOR_SEVERE_AUDIT_MISS",
+  "datasetClassification": "RETROSPECTIVE_DEVELOPMENT_SET",
+  "researchQuestion": "When Candidate Verifier v1.3 (with execution-instrument repairs: 6144 maxOutputTokens, provider-compatible structural responseJsonSchema, deterministic local semantic validation, and corrected cost guards) is applied to the frozen T2 retrospective development cohort, does it eliminate MAX_TOKENS truncations and schema invalidity while preserving v1.2 semantic verification capability?",
+  "boundCandidate": {
+    "prompt": {
+      "path": "catalogue-pipeline/candidates/source-boundary-risk-verifier.v1.3.md",
+      "byteHash": "sha256:93c9a185620012609998ad8e58e4c68c9c945fd100820f2cc93c64385cdd402b"
+    },
+    "schema": {
+      "path": "catalogue-pipeline/candidates/source-boundary-risk-verifier.v1.3.schema.json",
+      "byteHash": "sha256:aa73ad6463e47c835186f8f2705f5c46167cd053ec43c1a0d72014ccc68c26dc",
+      "canonicalArtifactHash": "sha256:e8f0c2395214e00c62b7b3135bab59d6dcd5386fac43ea6e5a020671c93f29d4"
+    },
+    "validator": {
+      "path": "catalogue-pipeline/scripts/validateVerifierV13Contract.mjs",
+      "byteHash": "sha256:258c1520779fd147bf9c4aaa1c31c385d1da1fbd0f4835d381e30f767efab5b6"
+    },
+    "manifest": {
+      "path": "catalogue-pipeline/candidates/source-boundary-risk-verifier.v1.3.manifest.json",
+      "byteHash": "sha256:275af55b830bd58ad466bb8d61401b94d0649d0f66316e72d3c354050cd785ad"
+    },
+    "operationalFlags": {
+      "active": false,
+      "productionAuthorized": false,
+      "empiricalBehaviorValidated": false
+    }
+  },
+  "boundCohort": {
+    "manifestPath": "catalogue-pipeline/experiments/verifier-v1.2-retrospective-replay/cohort-manifest.v1.json",
+    "canonicalArtifactHash": "sha256:63f83cc9863f455597e1a0141f7c0f5a56bbb7923ed1c9502d9e2235c7c2e45c",
+    "cohortSize": 30,
+    "composition": {
+      "approve": 14,
+      "reviseMinor": 15,
+      "reviseSevere": 1,
+      "reject": 0
+    },
+    "effectiveAdjudicationSource": "catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-2/scale-tranche-2-verifier-gap-analysis.v1.1.json",
+    "effectiveAdjudicationCanonicalHash": "sha256:70a0adb731f9a3bdb00be18e6fde58590c9922312f342ef926488b39819bf0ae"
+  },
+  "leakageControl": {
+    "leakageFirewallAction": "FAIL_CLOSED_ON_LEAKAGE",
+    "cohortManifestModelUsage": "COHORT_MANIFEST_FOR_ANALYSIS_ONLY_NEVER_PASSED_TO_MODEL",
+    "modelInputConstructionSource": "sourceRiskInputPath",
+    "modelVisibleSurfacesOnly": [
+      "facts",
+      "acceptedSemanticClassification",
+      "semanticBoundaryFlags",
+      "allowedSourceMaterial",
+      "spoilerBoundaryRules",
+      "copyConstraints",
+      "visibleEditorialCopy"
+    ],
+    "strictlyForbiddenSurfaces": [
+      "humanDecision",
+      "humanReason",
+      "humanSeverity",
+      "affectedFields",
+      "retrospectiveDefectTaxonomy",
+      "verifierGapAnnotations",
+      "optionBAdjudicationLabels",
+      "expectedAnswer",
+      "severeCaseLabels",
+      "auditSampleStatus",
+      "decision",
+      "severity",
+      "analystAnnotations",
+      "auditMembership"
+    ]
+  },
+  "replayModes": {
+    "mode1": {
+      "modeId": "MODE_1_OPTION_A_ONLY",
+      "status": "PRIMARY_REPLAY_MODE",
+      "description": "Candidate v1.3 receives historical T2 verifier risk input only. Measures pure semantic verifier behavior under repaired execution instrument.",
+      "deterministicLintFindings": false
+    }
+  },
+  "modelConfiguration": {
+    "provider": "google-gemini-developer-api",
+    "modelId": "gemini-3.8-flash",
+    "temperature": 0.0,
+    "temperatureNote": "temperature fixed at 0.0; model output is not assumed byte-deterministic across API calls",
+    "thinkingLevel": "medium",
+    "maxOutputTokens": 6144,
+    "structuredOutputMode": "RESPONSE_SCHEMA_ENFORCED",
+    "timeoutMs": 30000,
+    "maxTechnicalRetriesPerCandidate": 2,
+    "retryableErrors": [
+      "HTTP_429_RATE_LIMIT",
+      "HTTP_500_SERVER_ERROR",
+      "HTTP_503_SERVICE_UNAVAILABLE",
+      "NETWORK_TIMEOUT",
+      "CONNECTION_RESET",
+      "MALFORMED_JSON_STRING"
+    ],
+    "nonRetryableErrors": [
+      "HTTP_502",
+      "HTTP_504",
+      "NETWORK_ERROR",
+      "SCHEMA_INVALID",
+      "SEMANTICALLY_INVALID",
+      "VALID_LOW_RISK_ON_DEFECT",
+      "VALID_HIGH_RISK_ON_CLEAN"
+    ],
+    "networkErrorDefinition": "0-byte persisted attempt artifact; physical cause unknown"
+  },
+  "callAccounting": {
+    "primaryCallsPlanned": 30,
+    "maxTechnicalRetriesBatch": 10,
+    "maxTheoreticalCalls": 40,
+    "governedPreDispatchCostCeilingUsd": 1.10,
+    "frozenNextCallCostReserveUsd": 0.026100,
+    "costPricingBinding": {
+      "status": "LOCALLY_FROZEN_BOUND",
+      "currency": "USD",
+      "standardPricesPerMillionTokens": {
+        "input": 0.75,
+        "outputIncludingThinking": 3.75
+      },
+      "costEstimatorFormula": "inputTokens / 1e6 * 0.75 + (outputTokens + (thinkingTokens ?? 0)) / 1e6 * 3.75",
+      "preDispatchGuardrail": "accumulatedActualCost + frozenNextCallCostReserveUsd <= governedPreDispatchCostCeilingUsd"
+    },
+    "batchRetryPolicy": {
+      "maxTechnicalRetriesBatch": 10,
+      "exhaustionBehavior": "RETRY_DISABLED_FOR_REMAINDER_OF_BATCH; untouched primary candidates continue"
+    },
+    "hardStopRules": [
+      "STOP_IF_CALL_COUNT_EXCEEDS_CAP",
+      "STOP_IF_COST_EXCEEDS_CEILING",
+      "STOP_IF_LEAKAGE_DETECTED",
+      "STOP_IF_HASH_MISMATCH",
+      "STOP_MODEL_CONFIG_MISMATCH",
+      "STOP_IF_SCHEMA_OR_SEMANTIC_INVALID_COUNT_GTE_6",
+      "STOP_ON_SEVERE_CANDIDATE_LOW_RISK_ESCAPE",
+      "STOP_IF_UNEXPECTED_PROMPT_DRIFT"
+    ],
+    "systemicSchemaFailureRule": {
+      "ruleId": "STOP_IF_SCHEMA_OR_SEMANTIC_INVALID_COUNT_GTE_6",
+      "thresholdCount": 6,
+      "thresholdPercentage": ">=20% of 30-record cohort",
+      "includedDispositions": [
+        "SCHEMA_INVALID",
+        "SEMANTICALLY_INVALID"
+      ],
+      "excludedDispositions": [
+        "PROVIDER_FAILURE",
+        "MALFORMED_JSON_STRING"
+      ],
+      "definition": "Halts replay immediately if cumulative count of SCHEMA_INVALID + SEMANTICALLY_INVALID reaches 6 across the cohort."
+    }
+  },
+  "outputValidationPipeline": {
+    "step1": "JSON.parse() of response text",
+    "step2": "Schema validation against source-boundary-risk-verifier.v1.3.schema.json",
+    "step3": "Semantic validation against validateVerifierV13CandidatePayload",
+    "failClosedRule": "Invalid or unparseable outputs map to failure dispositions and are never coerced into LOW_RISK."
+  },
+  "evaluationFramework": {
+    "dispositionClasses": [
+      "VALID_HIGH_RISK",
+      "VALID_LOW_RISK",
+      "INVALID_OR_PROVIDER_FAILURE"
+    ],
+    "invalidOrFailureSubtypes": [
+      "PROVIDER_FAILURE",
+      "MALFORMED_JSON",
+      "SCHEMA_INVALID",
+      "SEMANTICALLY_INVALID"
+    ],
+    "layerA_SemanticVerifierPerformance": {
+      "layerId": "VALID_OUTPUT_APPARENT_RETROSPECTIVE_PERFORMANCE",
+      "question": "Did the verifier return a valid semantic judgment?",
+      "scope": "Evaluated strictly on valid outputs (disposition in [VALID_HIGH_RISK, VALID_LOW_RISK]). Failures and invalid outputs are excluded from the semantic confusion matrix and reported separately.",
+      "groundTruthBasis": "Effective human review decisions with approved Guardians correction",
+      "positiveDefinition": "Human REVISE (N=16 total in cohort: 15 minor, 1 severe)",
+      "negativeDefinition": "Human APPROVE (N=14 total in cohort)",
+      "confusionMatrixDefinitions": {
+        "TP": "Human REVISE + VALID_HIGH_RISK",
+        "FN": "Human REVISE + VALID_LOW_RISK",
+        "FP": "Human APPROVE + VALID_HIGH_RISK",
+        "TN": "Human APPROVE + VALID_LOW_RISK"
+      }
+    },
+    "layerB_OperationalFailClosedContainment": {
+      "layerId": "FAIL_CLOSED_OPERATIONAL_CONTAINMENT",
+      "question": "Would the system prevent unsafe automatic passage?",
+      "routingSimulation": {
+        "VALID_HIGH_RISK": "HUMAN_REVIEW_REQUIRED",
+        "INVALID_OR_PROVIDER_FAILURE": "HUMAN_REVIEW_REQUIRED / FAIL_CLOSED",
+        "VALID_LOW_RISK": "AUTO_ELIGIBLE_SIMULATION"
+      },
+      "prohibition": "Operational containment due to failure/invalid output MUST NEVER be described as semantic defect detection or true positive."
+    },
+    "severityAnalysis": {
+      "severeCaseCandidateId": "scale500-tmdb-14283",
+      "severeCaseOutcomeMetric": "SEVERE_CASE_OUTCOME",
+      "governanceSafetyGateTrigger": "If scale500-tmdb-14283 receives VALID_LOW_RISK, record KNOWN_SEVERE_FAILURE_PASSED_CANDIDATE and STOP ENTIRE REPLAY BEFORE NEXT DISPATCH."
+    }
+  },
+  "prospectiveHoldoutFirewall": {
+    "firewallActive": true,
+    "policy": "No prospective holdout records may be selected, sampled, exposed, or annotated during development replay. Prospective confirmation requires independent blinded holdout protocol preregistration."
+  },
+  "experimentSafetyConfirmations": {
+    "candidateActive": false,
+    "productionAuthorized": false,
+    "runtimePromotionAuthorized": false,
+    "productionRoutingMutated": false,
+    "networkCallsAuthorized": 0,
+    "modelCallsAuthorized": 0,
+    "countTokensCallsAuthorized": 0
+  },
+  "terminology": {
+    "primaryClassification": "RETROSPECTIVE_DEVELOPMENT_REPLAY_V1_3",
+    "performanceMetrics": "APPARENT_RETROSPECTIVE_PERFORMANCE",
+    "prohibitedTerms": [
+      "validation",
+      "confirmation",
+      "prospective performance",
+      "production readiness"
+    ]
+  }
+}

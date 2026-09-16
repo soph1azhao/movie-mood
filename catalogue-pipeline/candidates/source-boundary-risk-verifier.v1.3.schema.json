@@ -1,0 +1,235 @@
+{
+  "$id": "source-boundary-risk-verifier.v1.3",
+  "title": "Source Boundary Risk Verifier Semantic Output v1.3",
+  "description": "Candidate semantic output schema for Verifier v1.3 under execution-instrument repair. CANDIDATE ONLY — NOT ACTIVE SCHEMA.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "riskLevel",
+    "riskCategories",
+    "issues",
+    "sourceBoundarySatisfied",
+    "lowRiskCoverage"
+  ],
+  "properties": {
+    "riskLevel": {
+      "type": "string",
+      "enum": [
+        "LOW_RISK",
+        "HIGH_RISK"
+      ]
+    },
+    "riskCategories": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "SPOILER_OR_LATER_REVEAL",
+          "HIDDEN_IDENTITY_OR_ORIGIN",
+          "RELATIONSHIP_OR_CHARACTER_MOTIVE",
+          "CONCRETE_STORY_OR_SUPERNATURAL_MECHANISM",
+          "FRANCHISE_OR_EXTERNAL_LORE",
+          "SCENE_OR_SCRIPT_LEVEL_EXTERNAL_DETAIL",
+          "MATERIAL_FACTUAL_CONFLICT",
+          "UNRESOLVED_SOURCE_GROUNDING_CONFLICT",
+          "UNSUPPORTED_COMPARATIVE_OR_META_CLAIM",
+          "SPECULATIVE_HOOK_PREMISE",
+          "UNAUTHORIZED_SOURCE_BOUNDARY_CLAIM"
+        ]
+      }
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "category",
+          "field",
+          "claimSpan",
+          "normalizedClaim",
+          "claimType",
+          "checkedAuthoritySources",
+          "sourceEvidence",
+          "authorityResolution",
+          "materialityRationale"
+        ],
+        "properties": {
+          "category": {
+            "type": "string",
+            "enum": [
+              "SPOILER_OR_LATER_REVEAL",
+              "HIDDEN_IDENTITY_OR_ORIGIN",
+              "RELATIONSHIP_OR_CHARACTER_MOTIVE",
+              "CONCRETE_STORY_OR_SUPERNATURAL_MECHANISM",
+              "FRANCHISE_OR_EXTERNAL_LORE",
+              "SCENE_OR_SCRIPT_LEVEL_EXTERNAL_DETAIL",
+              "MATERIAL_FACTUAL_CONFLICT",
+              "UNRESOLVED_SOURCE_GROUNDING_CONFLICT",
+              "UNSUPPORTED_COMPARATIVE_OR_META_CLAIM",
+              "SPECULATIVE_HOOK_PREMISE",
+              "UNAUTHORIZED_SOURCE_BOUNDARY_CLAIM"
+            ]
+          },
+          "field": {
+            "type": "string",
+            "enum": [
+              "description",
+              "whyWatch",
+              "curiosityHook",
+              "vibeSummary"
+            ]
+          },
+          "claimSpan": {
+            "type": "string",
+            "description": "Exact text substring excerpted from the copy containing the claim."
+          },
+          "normalizedClaim": {
+            "type": "string",
+            "description": "Concise factual proposition asserted or presupposed by the claim."
+          },
+          "claimType": {
+            "type": "string",
+            "enum": [
+              "DIRECT_PACKET_FACT",
+              "LANGUAGE_CLAIM",
+              "NATIONALITY_OR_PRODUCTION_COUNTRY",
+              "GENRE_OR_SUBGENRE",
+              "STORY_SETUP_FACT",
+              "LOCATION_OR_SETTING",
+              "CHARACTER_RELATIONSHIP",
+              "CHARACTER_MOTIVE_OR_GOAL",
+              "CAUSAL_OR_STORY_MECHANISM",
+              "TEMPORAL_OR_DURATION_CONSTRAINT",
+              "QUANTITATIVE_CLAIM",
+              "FRANCHISE_OR_EXTERNAL_LORE",
+              "SPOILER_OR_LATER_REVEAL",
+              "HIDDEN_IDENTITY_OR_ORIGIN",
+              "VIEWING_EXPERIENCE_INFERENCE",
+              "ATMOSPHERIC_OR_STYLISTIC_LANGUAGE",
+              "SPECULATIVE_HOOK_PREMISE"
+            ]
+          },
+          "checkedAuthoritySources": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            },
+            "description": "Authority surfaces checked in packet facts, overview, keywords, or boundary flags."
+          },
+          "sourceEvidence": {
+            "type": "array",
+            "minItems": 1,
+            "description": "Concrete machine-auditable evidence from checked authority surfaces showing supporting value, conflicting value, or explicit absence of support.",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "source",
+                "supportFound"
+              ],
+              "properties": {
+                "source": {
+                  "type": "string",
+                  "description": "Exact path or name of the authority surface checked (e.g. 'facts.spokenLanguages', 'allowedSourceMaterial.overview')."
+                },
+                "supportFound": {
+                  "type": "boolean",
+                  "description": "True if the source authorized/supported the claim; false if support was missing or contradicted."
+                },
+                "value": {
+                  "description": "The exact source value, array, or excerpt found on the surface, if applicable."
+                },
+                "conflictingValue": {
+                  "description": "The conflicting source value or excerpt that contradicts the claim, if applicable."
+                },
+                "notes": {
+                  "type": "string",
+                  "description": "Optional concise note explaining the source finding."
+                }
+              }
+            }
+          },
+          "authorityResolution": {
+            "type": "string",
+            "enum": [
+              "UNSUPPORTED_MISSING_AUTHORITY",
+              "CONTRADICTED_BY_AUTHORITY",
+              "DISALLOWED_AUTHORITY_SOURCE",
+              "UNRESOLVED",
+              "SUPPORTED"
+            ],
+            "description": "Resolution classification of why authority was unsatisfied."
+          },
+          "materialityRationale": {
+            "type": "string",
+            "description": "Why this issue represents a material source-boundary violation rather than harmless style."
+          }
+        }
+      }
+    },
+    "sourceBoundarySatisfied": {
+      "type": "boolean"
+    },
+    "lowRiskCoverage": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "allVisibleFieldsAudited",
+            "interrogativePremisesAudited",
+            "factualModifiersAudited",
+            "packetFactsAudited",
+            "settingAndLocationAudited",
+            "characterMotivesAndRelationshipsAudited",
+            "storyMechanismsAndConstraintsAudited",
+            "externalLoreAndBackstoryAudited",
+            "spoilerAndRevealBoundariesAudited",
+            "viewingExperienceInferenceAudited",
+            "summaryRationale"
+          ],
+          "properties": {
+            "allVisibleFieldsAudited": {
+              "type": "boolean"
+            },
+            "interrogativePremisesAudited": {
+              "type": "boolean"
+            },
+            "factualModifiersAudited": {
+              "type": "boolean"
+            },
+            "packetFactsAudited": {
+              "type": "boolean"
+            },
+            "settingAndLocationAudited": {
+              "type": "boolean"
+            },
+            "characterMotivesAndRelationshipsAudited": {
+              "type": "boolean"
+            },
+            "storyMechanismsAndConstraintsAudited": {
+              "type": "boolean"
+            },
+            "externalLoreAndBackstoryAudited": {
+              "type": "boolean"
+            },
+            "spoilerAndRevealBoundariesAudited": {
+              "type": "boolean"
+            },
+            "viewingExperienceInferenceAudited": {
+              "type": "boolean"
+            },
+            "summaryRationale": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  }
+}
