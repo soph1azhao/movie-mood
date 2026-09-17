@@ -1,0 +1,425 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "activity": "VERIFIER_V1_3_LOW_THINKING_TECHNICAL_RECONCILIATION",
+  "classification": "RETROSPECTIVE_TECHNICAL_DEVELOPMENT_RECONCILIATION",
+  "dataset": "RETROSPECTIVE_DEVELOPMENT_SET",
+  "governanceState": "PAUSED_FOR_SEVERE_AUDIT_MISS",
+  "governanceExclusions": [
+    "not semantic validation",
+    "not prospective validation",
+    "not confirmation",
+    "not production validation",
+    "not production readiness"
+  ],
+  "lineage": {
+    "parentRetrospectiveReplayEvidenceCommit": "4fb22ef",
+    "parentRetrospectiveReconciliationCommit": "196b08089e0faa02b4841a6ef4f2ebc4ed13da31",
+    "lowThinkingPreregistrationCommit": "af0192a9f722ed36f90507c3b8450a46471757d0",
+    "lowThinkingHarnessCommit": "929dd6fdc9b0e2fa460d3c45fe1ba2665be7d12f",
+    "lowThinkingExecutionEvidenceCommit": "3f8d4ed",
+    "lowThinkingFreezeManifestSha256": "sha256:4832807c5f33cd1f49cd582b38e20769e792b83832118e57dc87f5a8f80a0de2",
+    "protocolSha256": "sha256:aa1dfcfd460ea573ae0dc7c0a8598d634a4920e431edb6f5cb37c371e3f52f89",
+    "cohortSha256": "sha256:aacdaebe5673753a7b01263a1c09cac8c83d338d7825fd1ce837e7d4cca3d163",
+    "runnerSha256": "sha256:2259dfb9c680c885d13dd1e030d776af0a05a74d8c5e1ad2012432416f13e85d",
+    "runnerTestSha256": "sha256:dc13e9e8768e7a13f11d17afd4c08ed96a7533edb41e24d2ed1ee80a2c28dec9",
+    "candidatePromptSha256": "sha256:93c9a185620012609998ad8e58e4c68c9c945fd100820f2cc93c64385cdd402b",
+    "candidateSchemaSha256": "sha256:aa73ad6463e47c835186f8f2705f5c46167cd053ec43c1a0d72014ccc68c26dc",
+    "sourceBindings": {
+      "lowThinkingFreezeManifestPath": "catalogue-pipeline/experiments/verifier-v1.3-low-thinking-technical-ablation/execution-evidence-freeze.v1.json",
+      "lowThinkingExecutionLedgerPath": "catalogue-pipeline/experiments/verifier-v1.3-low-thinking-technical-ablation/execution/execution-ledger.json",
+      "lowThinkingExecutionLedgerSha256": "sha256:eb6c648f10be8771a0f859fec638148eea7ee72e70b943d10c6c2536b5f02096",
+      "parentReplayExecutionLedgerPath": "catalogue-pipeline/experiments/verifier-v1.3-retrospective-replay/execution/execution-ledger.json",
+      "parentReplayExecutionLedgerSha256": "sha256:9a1e0098935807935d9124a148b92f5363bade6516d80f742f3e160fead76888"
+    }
+  },
+  "question": "Did changing Gemini 3.8 Flash from thinkingLevel=medium to thinkingLevel=low reduce/eliminate MAX_TOKENS serialization failure on the four previously failure-prone retrospective development records, holding all other registered request-generation parameters constant?",
+  "cohortSelection": {
+    "cohortClassification": "FAILURE_ENRICHED_POST_OUTCOME_TECHNICAL_COHORT",
+    "cohortSize": 4,
+    "candidateIds": [
+      "scale500-tmdb-13398",
+      "scale500-tmdb-1563",
+      "scale500-tmdb-127533",
+      "scale500-tmdb-9725"
+    ],
+    "selectionRationale": "Selected specifically because each candidate had previously exhibited at least one MAX_TOKENS serialization failure under Candidate Verifier v1.3 with thinkingLevel=medium.",
+    "conditionalityNotice": "All technical findings, comparisons, and mechanisms are strictly conditional on this failure-enriched retrospective development cohort."
+  },
+  "frozenConfiguration": {
+    "requestBodyControl": "Only thinkingConfig.thinkingLevel changed from medium to low; all prompt, schema, temperature, maxOutputTokens, and packet inputs held identical.",
+    "executionOrchestrationDifference": {
+      "mediumParentReplay": "Allowed up to 2 technical retries per candidate (up to 3 total attempts).",
+      "lowTechnicalAblation": "Preregistered 0 retries (exactly 1 attempt per candidate)."
+    },
+    "comparisonSeparationNotice": "The first-attempt 4-vs-4 comparison is the controlled comparison that isolates thinkingLevel. All-attempt calls/retries are descriptive operational history and are not a single-variable causal comparison.",
+    "heldConstant": {
+      "modelId": "gemini-3.8-flash",
+      "temperature": 0,
+      "maxOutputTokens": 6144,
+      "timeoutMs": 30000,
+      "promptPath": "catalogue-pipeline/candidates/source-boundary-risk-verifier.v1.3.md",
+      "schemaPath": "catalogue-pipeline/candidates/source-boundary-risk-verifier.v1.3.schema.json",
+      "candidatePackets": "Byte-identical source risk-input payloads",
+      "noFewShotExamples": true,
+      "noPromptModifications": true,
+      "noSemanticThresholdChanges": true
+    },
+    "registeredRequestHashes": {
+      "scale500-tmdb-13398": {
+        "mediumBaseline": "sha256:1dfd81a569174db5220fdb92172c2ea3a09781b7f3a6a13c6e98c10ae689e519",
+        "lowAblation": "sha256:9aa1293d58b4d5a12d9801fa00aae8d74ed46064ec88de6355069ac41f4c3bbd"
+      },
+      "scale500-tmdb-1563": {
+        "mediumBaseline": "sha256:185cb8e8c321efa6a43e7b4ce009d41af304250b40f06e90f7874fddcc1414cb",
+        "lowAblation": "sha256:5b53b8298baf0c093972716c19a456d5fd944460ecc6bb60d29ab9e849f0649d"
+      },
+      "scale500-tmdb-127533": {
+        "mediumBaseline": "sha256:76f19e24f8136ed85a7eb2c5288665ab0c990f9d47143395d242d12ec31eaf03",
+        "lowAblation": "sha256:c44a482d1973dba1039486c56d538dd9efc717cf36ebe328154e594774f90de5"
+      },
+      "scale500-tmdb-9725": {
+        "mediumBaseline": "sha256:4c31042bc944b96efeaaa74657f236248a9b75387200e67cb794633f3c7bb956",
+        "lowAblation": "sha256:707e79ac34d152e61505601e382bcb24e758b681c2f0caf5e539f4b26286d7a2"
+      }
+    }
+  },
+  "mediumBaseline": {
+    "sourceCommit": "4fb22ef",
+    "pricingReconstructionAccountingNote": "Historical parent records omitted reported thoughtsTokenCount from callCostUsd. For equitable cross-condition pricing comparison, medium costs are reconstructed directly from frozen raw usage metadata using the identical pricing formula: promptTokenCount * 0.75e-6 + (candidatesTokenCount + thoughtsTokenCount) * 3.75e-6 (/bin/zsh.75/MTok input, .75/MTok candidate output + reported thinking).",
+    "frozenParentRecordedAccountingCostUsd": 0.03874275,
+    "frozenParentRecordedAccountingNote": "This historical field is preserved for lineage fidelity but is not used for cross-condition pricing comparison because the parent callCostUsd omitted reported thinking-token usage.",
+    "firstAttemptPricingReconstructedCostSumUsd": 0.10178925,
+    "allAttemptsPricingReconstructedCostSumUsd": 0.2687415,
+    "candidateRecords": {
+      "scale500-tmdb-13398": {
+        "attemptCount": 2,
+        "terminalDisposition": "VALID_HIGH_RISK",
+        "parentRecordedAccountingTotalCostUsd": 0.00709875,
+        "pricingReconstructedTotalCostUsd": 0.039645,
+        "attempts": [
+          {
+            "attemptIndex": 1,
+            "finishReason": "MAX_TOKENS",
+            "technicalSerializationSuccess": false,
+            "attemptDisposition": "MALFORMED_JSON_STRING",
+            "promptTokenCount": 3260,
+            "thoughtsTokenCount": 5900,
+            "candidatesTokenCount": 228,
+            "totalTokenCount": 9388,
+            "parentRecordedAccountingCostUsd": 0.0033,
+            "pricingReconstructedCostUsd": 0.025425
+          },
+          {
+            "attemptIndex": 2,
+            "finishReason": "STOP",
+            "technicalSerializationSuccess": true,
+            "attemptDisposition": "VALID_HIGH_RISK",
+            "promptTokenCount": 3260,
+            "thoughtsTokenCount": 2779,
+            "candidatesTokenCount": 361,
+            "totalTokenCount": 6400,
+            "parentRecordedAccountingCostUsd": 0.00379875,
+            "pricingReconstructedCostUsd": 0.01422
+          }
+        ],
+        "specialCaseNote": "scale500-tmdb-13398 attempt 1 was malformed due to MAX_TOKENS; registered retry 1 (attempt 2) recovered to VALID_HIGH_RISK."
+      },
+      "scale500-tmdb-1563": {
+        "attemptCount": 3,
+        "terminalDisposition": "MALFORMED_JSON_STRING",
+        "parentRecordedAccountingTotalCostUsd": 0.010026,
+        "pricingReconstructedTotalCostUsd": 0.076341,
+        "attempts": [
+          {
+            "attemptIndex": 1,
+            "finishReason": "MAX_TOKENS",
+            "technicalSerializationSuccess": false,
+            "attemptDisposition": "MALFORMED_JSON_STRING",
+            "promptTokenCount": 3281,
+            "thoughtsTokenCount": 5894,
+            "candidatesTokenCount": 236,
+            "totalTokenCount": 9411,
+            "parentRecordedAccountingCostUsd": 0.00334575,
+            "pricingReconstructedCostUsd": 0.02544825
+          },
+          {
+            "attemptIndex": 2,
+            "finishReason": "MAX_TOKENS",
+            "technicalSerializationSuccess": false,
+            "attemptDisposition": "MALFORMED_JSON_STRING",
+            "promptTokenCount": 3281,
+            "thoughtsTokenCount": 5896,
+            "candidatesTokenCount": 233,
+            "totalTokenCount": 9410,
+            "parentRecordedAccountingCostUsd": 0.0033345,
+            "pricingReconstructedCostUsd": 0.0254445
+          },
+          {
+            "attemptIndex": 3,
+            "finishReason": "MAX_TOKENS",
+            "technicalSerializationSuccess": false,
+            "attemptDisposition": "MALFORMED_JSON_STRING",
+            "promptTokenCount": 3281,
+            "thoughtsTokenCount": 5894,
+            "candidatesTokenCount": 236,
+            "totalTokenCount": 9411,
+            "parentRecordedAccountingCostUsd": 0.00334575,
+            "pricingReconstructedCostUsd": 0.02544825
+          }
+        ]
+      },
+      "scale500-tmdb-127533": {
+        "attemptCount": 3,
+        "terminalDisposition": "MALFORMED_JSON_STRING",
+        "parentRecordedAccountingTotalCostUsd": 0.01056075,
+        "pricingReconstructedTotalCostUsd": 0.07639575,
+        "attempts": [
+          {
+            "attemptIndex": 1,
+            "finishReason": "MAX_TOKENS",
+            "technicalSerializationSuccess": false,
+            "attemptDisposition": "MALFORMED_JSON_STRING",
+            "promptTokenCount": 3307,
+            "thoughtsTokenCount": 5900,
+            "candidatesTokenCount": 228,
+            "totalTokenCount": 9435,
+            "parentRecordedAccountingCostUsd": 0.00333525,
+            "pricingReconstructedCostUsd": 0.02546025
+          },
+          {
+            "attemptIndex": 2,
+            "finishReason": "MAX_TOKENS",
+            "technicalSerializationSuccess": false,
+            "attemptDisposition": "MALFORMED_JSON_STRING",
+            "promptTokenCount": 3307,
+            "thoughtsTokenCount": 5761,
+            "candidatesTokenCount": 369,
+            "totalTokenCount": 9437,
+            "parentRecordedAccountingCostUsd": 0.003864,
+            "pricingReconstructedCostUsd": 0.02546775
+          },
+          {
+            "attemptIndex": 3,
+            "finishReason": "MAX_TOKENS",
+            "technicalSerializationSuccess": false,
+            "attemptDisposition": "MALFORMED_JSON_STRING",
+            "promptTokenCount": 3307,
+            "thoughtsTokenCount": 5895,
+            "candidatesTokenCount": 235,
+            "totalTokenCount": 9437,
+            "parentRecordedAccountingCostUsd": 0.0033615,
+            "pricingReconstructedCostUsd": 0.02546775
+          }
+        ]
+      },
+      "scale500-tmdb-9725": {
+        "attemptCount": 3,
+        "terminalDisposition": "MALFORMED_JSON_STRING",
+        "parentRecordedAccountingTotalCostUsd": 0.01105725,
+        "pricingReconstructedTotalCostUsd": 0.07635975,
+        "attempts": [
+          {
+            "attemptIndex": 1,
+            "finishReason": "MAX_TOKENS",
+            "technicalSerializationSuccess": false,
+            "attemptDisposition": "MALFORMED_JSON_STRING",
+            "promptTokenCount": 3291,
+            "thoughtsTokenCount": 5900,
+            "candidatesTokenCount": 230,
+            "totalTokenCount": 9421,
+            "parentRecordedAccountingCostUsd": 0.00333075,
+            "pricingReconstructedCostUsd": 0.02545575
+          },
+          {
+            "attemptIndex": 2,
+            "finishReason": "MAX_TOKENS",
+            "technicalSerializationSuccess": false,
+            "attemptDisposition": "MALFORMED_JSON_STRING",
+            "promptTokenCount": 3291,
+            "thoughtsTokenCount": 5617,
+            "candidatesTokenCount": 512,
+            "totalTokenCount": 9420,
+            "parentRecordedAccountingCostUsd": 0.00438825,
+            "pricingReconstructedCostUsd": 0.025452
+          },
+          {
+            "attemptIndex": 3,
+            "finishReason": "MAX_TOKENS",
+            "technicalSerializationSuccess": false,
+            "attemptDisposition": "MALFORMED_JSON_STRING",
+            "promptTokenCount": 3291,
+            "thoughtsTokenCount": 5897,
+            "candidatesTokenCount": 232,
+            "totalTokenCount": 9420,
+            "parentRecordedAccountingCostUsd": 0.00333825,
+            "pricingReconstructedCostUsd": 0.025452
+          }
+        ]
+      }
+    },
+    "forensicExpectationsVerified": {
+      "mediumMalformedWereMaxTokensTruncation": true,
+      "reportedHiddenThinkingRangeTokens": "5617-5900",
+      "candidateOutputRangeTokens": "228-512",
+      "allMalformedAttemptsCount": 10,
+      "totalAttemptsAcrossCohort": 11
+    }
+  },
+  "lowThinkingResult": {
+    "sourceCommit": "3f8d4ed",
+    "candidatesCompleted": 4,
+    "confirmedCalls": 4,
+    "retriesConsumed": 0,
+    "technicalSerializationSuccessCount": 4,
+    "serializationSuccessRate": 1,
+    "maxTokensCount": 0,
+    "exactRawDerivedCostSumUsd": 0.01412925,
+    "ledgerAccumulatedCostUsd": 0.01413,
+    "candidateRecords": {
+      "scale500-tmdb-13398": {
+        "attemptCount": 1,
+        "finishReason": "STOP",
+        "technicalOutcome": "SERIALIZATION_SUCCESS",
+        "technicalSerializationSuccess": true,
+        "observationalDisposition": "VALID_HIGH_RISK",
+        "promptTokenCount": 3260,
+        "thinkingTokenFieldPresent": false,
+        "candidatesTokenCount": 402,
+        "totalTokenCount": 3662,
+        "callCostUsd": 0.0039525
+      },
+      "scale500-tmdb-1563": {
+        "attemptCount": 1,
+        "finishReason": "STOP",
+        "technicalOutcome": "SERIALIZATION_SUCCESS",
+        "technicalSerializationSuccess": true,
+        "observationalDisposition": "VALID_LOW_RISK",
+        "promptTokenCount": 3281,
+        "thinkingTokenFieldPresent": false,
+        "candidatesTokenCount": 249,
+        "totalTokenCount": 3530,
+        "callCostUsd": 0.0033945
+      },
+      "scale500-tmdb-127533": {
+        "attemptCount": 1,
+        "finishReason": "STOP",
+        "technicalOutcome": "SERIALIZATION_SUCCESS",
+        "technicalSerializationSuccess": true,
+        "observationalDisposition": "VALID_LOW_RISK",
+        "promptTokenCount": 3307,
+        "thinkingTokenFieldPresent": false,
+        "candidatesTokenCount": 276,
+        "totalTokenCount": 3583,
+        "callCostUsd": 0.00351525
+      },
+      "scale500-tmdb-9725": {
+        "attemptCount": 1,
+        "finishReason": "STOP",
+        "technicalOutcome": "SERIALIZATION_SUCCESS",
+        "technicalSerializationSuccess": true,
+        "observationalDisposition": "VALID_LOW_RISK",
+        "promptTokenCount": 3291,
+        "thinkingTokenFieldPresent": false,
+        "candidatesTokenCount": 213,
+        "totalTokenCount": 3504,
+        "callCostUsd": 0.003267
+      }
+    }
+  },
+  "firstAttemptComparison": {
+    "comparisonType": "CLEANEST_CONTROLLED_FIRST_ATTEMPT_PAIRWISE_COMPARISON",
+    "cohortSize": 4,
+    "mediumFirstAttemptSerializationSuccessCount": 0,
+    "mediumFirstAttemptSerializationSuccessRate": 0,
+    "lowFirstAttemptSerializationSuccessCount": 4,
+    "lowFirstAttemptSerializationSuccessRate": 1,
+    "absoluteDifferenceCount": 4,
+    "absoluteDifferenceRate": 1,
+    "statisticalGeneralizationCaveat": "Absolute difference applies strictly within this four-record cohort. No population confidence intervals or general reliability estimates are computed or implied."
+  },
+  "maxTokensComparison": {
+    "firstAttemptControlled": {
+      "mediumFirstAttemptMaxTokens": "4/4",
+      "mediumFirstAttemptMaxTokensCount": 4,
+      "mediumFirstAttemptMaxTokensRate": 1,
+      "lowFirstAttemptMaxTokens": "0/4",
+      "lowFirstAttemptMaxTokensCount": 0,
+      "lowFirstAttemptMaxTokensRate": 0,
+      "absoluteDifference": -4
+    },
+    "allAttemptsOperationalHistory": {
+      "mediumAllAttemptsCount": 11,
+      "mediumAllAttemptsMaxTokensCount": 10,
+      "mediumAllAttemptsMaxTokensRate": 0.9090909090909091,
+      "lowAllAttemptsCount": 4,
+      "lowAllAttemptsMaxTokensCount": 0,
+      "lowAllAttemptsMaxTokensRate": 0
+    },
+    "separationNote": "First-attempt controlled comparison is kept strictly separate from all-attempt operational retry history."
+  },
+  "controlledCostComparison": {
+    "comparisonScope": "FIRST_ATTEMPT_CONTROLLED_COMPARISON",
+    "pricingFormula": "promptTokenCount * $0.75/MTok + (candidatesTokenCount + thoughtsTokenCount) * $3.75/MTok",
+    "mediumFirstAttemptPricingReconstructedCostUsd": 0.10178925,
+    "lowFirstAttemptPricingReconstructedCostUsd": 0.01412925,
+    "costDifferenceUsd": -0.08766,
+    "relativeCostReductionPercentage": 86.11911375710108,
+    "conditionalityNotice": "This first-attempt cost comparison is conditional on the retrospective failure-enriched cohort and is not a general cost estimate."
+  },
+  "tokenBudgetForensics": {
+    "mediumReportedUsage": "Medium malformed attempts reported 5617-5900 thoughtsTokenCount out of 6144 maxOutputTokens budget ceiling, leaving only 228-512 candidate output tokens before MAX_TOKENS truncation.",
+    "lowReportedUsage": "No thinking/thoughts token field was reported.",
+    "lowTotalTokenAccounting": "For all four low-thinking calls, totalTokenCount equaled promptTokenCount + candidatesTokenCount exactly.",
+    "mechanismAssessment": "Lowering thinkingLevel from medium to low coincided with the absence of the previously large reported thinking/thoughts-token usage and left sufficient output generation budget (213-402 candidate tokens utilized of 6144 maximum) for complete structured JSON serialization.",
+    "causalLanguageCaution": "This descriptive assessment reflects a controlled request configuration delta on a retrospectively selected four-record cohort."
+  },
+  "operationalHistory": {
+    "characterization": "DESCRIPTIVE_AND_ORCHESTRATION_CONFOUNDED",
+    "orchestrationCaveat": "Do NOT attribute the full calls/retries/all-attempt cost delta solely to thinkingLevel because retry policies differed between conditions (medium parent replay permitted up to 2 retries per candidate, while low technical ablation preregistered 0 retries). All four low first attempts succeeded observationally, requiring zero retries.",
+    "mediumCohortAllAttempts": {
+      "externalCalls": 11,
+      "technicalRetries": 7,
+      "terminalMalformedResults": 3,
+      "providerTransportFailures": 0,
+      "pricingReconstructedCostUsd": 0.2687415,
+      "frozenParentRecordedCostUsd": 0.03874275
+    },
+    "lowCohortAllAttempts": {
+      "externalCalls": 4,
+      "technicalRetries": 0,
+      "terminalMalformedResults": 0,
+      "providerTransportFailures": 0,
+      "pricingReconstructedCostUsd": 0.01412925,
+      "ledgerAccumulatedCostUsd": 0.01413
+    }
+  },
+  "technicalConclusion": {
+    "primaryStatement": "Within this four-record failure-enriched retrospective development cohort, changing the frozen Gemini 3.8 Flash verifier from medium to low thinking changed first-attempt serialization from the frozen medium-thinking result to 4/4 successful serialization, with no MAX_TOKENS outcomes in the low-thinking run.",
+    "mechanisticStatement": "The observed mechanism is consistent with reduced thinking-token budget consumption leaving sufficient generation budget for the structured JSON response.",
+    "prohibitedConclusions": [
+      "low thinking is 100% reliable",
+      "low thinking is generally superior",
+      "low thinking improves semantic accuracy",
+      "the verifier is production ready",
+      "governance can be unpaused"
+    ]
+  },
+  "limitations": [
+    "N = 4",
+    "retrospectively selected",
+    "failure-enriched",
+    "selected on prior technical outcome",
+    "not representative of catalogue population",
+    "no independent semantic evaluation",
+    "no prospective holdout",
+    "no semantic tuning tested",
+    "no inference about semantic sensitivity/specificity",
+    "cannot estimate general serialization reliability"
+  ],
+  "governanceConsequence": {
+    "engineeringSignificance": "Technical result may support a future engineering decision about thinking-level configuration.",
+    "auditMissResolution": "It does NOT resolve the prior semantic audit miss.",
+    "governanceState": "PAUSED_FOR_SEVERE_AUDIT_MISS",
+    "promotionAuthorizationCreated": false
+  }
+}
