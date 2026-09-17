@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schemaVersion": "p2-2-protocol.v1",
+  "activity": "VERIFIER_V14_P2_2_REVIEW_EXECUTION_HARNESS",
+  "classification": "RETROSPECTIVE_SEMANTIC_DEVELOPMENT_REVIEW_INFRASTRUCTURE",
+  "governanceState": "PAUSED_FOR_SEVERE_AUDIT_MISS",
+  "frozenLineageBindings": {
+    "p1PreregistrationCommit": "deda014",
+    "p1PromptSha256": "sha256:a2fe3ef32f5b417544276401d5b520274fc77ef97753da61c253032b3f1e0d7f",
+    "p1ProtocolSha256": "sha256:7ccef839cc7bf434156881f6d8c12130a8d5e444e6038a95c50df8572c7c0f4d",
+    "p21FreezeCommit": "6f4437452d3a39e248b17a151f1589139962a933",
+    "p21FreezeManifestSha256": "sha256:eac6fa41efa1fb36c85b150417782e6a74cfdb57a0122945be0489118c31d9cd",
+    "p21ReviewOrderSha256": "sha256:758c9775e7e3171c68a50313c2720d4b8f696e6467f9801f12332391dc6213ed",
+    "p21ProtocolSha256": "sha256:dd6873615efbdd2d2014cc6b54e17aadf1c60fb9f33d68fefc2e5bd457b24120",
+    "legacyHoldoutRetirementSha256": "sha256:f3b8d6a0dd58cdfa1ed772e925ab297169ef6191771cad118bd4c522fed67d5f",
+    "historicalFirewallDiagnosticSha256": "sha256:ce523484b1a3b7033958828634de5fc2d5317cc168e49a726c3fa4b39b3496b7"
+  },
+  "reviewSequenceInvariants": {
+    "totalEligiblePool": 184,
+    "targetClean": 30,
+    "targetDefectPositive": 30,
+    "minSevereDefectPositive": 6,
+    "sequentialCandidateSelection": true,
+    "noSkipping": true,
+    "noParallelReview": true,
+    "noSeveritySearch": true,
+    "noModelRiskPrioritization": true,
+    "noEarlyCohortSelection": true,
+    "authoritativeHumanAdjudicator": "Sophia Zhao",
+    "advisoryReviewers": [
+      "GEMINI",
+      "CLAUDE"
+    ],
+    "byteIdenticalBlindPacketRequired": true,
+    "bothAdvisoriesRequiredBeforeHuman": true,
+    "quotaHiddenFromHumanBundle": true
+  },
+  "candidateStates": [
+    "PENDING",
+    "PACKET_FROZEN",
+    "GEMINI_PENDING",
+    "GEMINI_VALID",
+    "GEMINI_INVALID",
+    "CLAUDE_PENDING",
+    "CLAUDE_VALID",
+    "CLAUDE_INVALID",
+    "REVIEW_PAUSED_PENDING_ADVISORY",
+    "READY_FOR_HUMAN_ADJUDICATION",
+    "HUMAN_ADJUDICATION_PENDING",
+    "HUMAN_ADJUDICATED",
+    "QA_PENDING",
+    "COMPLETE"
+  ],
+  "stoppingRule": {
+    "cleanFloor": 30,
+    "defectPositiveFloor": 30,
+    "severeFloor": 6,
+    "evaluatorExhaustionStatus": "VERIFIER_V14_P2_REVIEW_POOL_INSUFFICIENT"
+  },
+  "operationalInvariants": {
+    "frozenPromptAndPolicyBindings": {
+      "geminiPreliminaryPromptSha256": "sha256:e822b0eef3c9d0b0ece2365aa884593cd3de2eefafd50a3aa3ef2b77cf0847a5",
+      "claudePreliminaryPromptSha256": "sha256:de665f3e3157ccbbf896d6af2ae86e7c7e83fc2501e1be069ba50613d4d70628",
+      "materialityPolicySha256": "sha256:21661892df4d1b009341b6d34de3bf5ad1ae17e3447abbdace15e1c31a5b843c"
+    },
+    "callerPromptOverridesForbidden": true,
+    "callerPolicyOverridesForbidden": true,
+    "explicitModelIdentityRequired": true,
+    "exactModelConfigurationDeferredToP23": true,
+    "versionedImmutableAdvisoryAttempts": true,
+    "noClobberEvidence": true,
+    "authoritativeArtifactChainVerification": true,
+    "crashReconciliationOnlyFromVerifiedEvidence": true,
+    "persistedStateTransitions": true,
+    "retryPolicyDeferredToP23": true
+  },
+  "schemaBindings": {
+    "reviewSessionLedgerSchema": "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/review-session-ledger.schema.v1.json",
+    "humanReviewBundleSchema": "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/human-review-bundle.schema.v1.json",
+    "preliminaryAdvisoryReviewSchema": "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/preliminary-advisory-review.schema.v1.json",
+    "preliminaryAdvisoryRecordSchema": "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/preliminary-advisory-record.schema.v1.json",
+    "humanAdjudicationRecordSchema": "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/human-adjudication-record.schema.v1.json",
+    "blindHumanReviewPacketSchema": "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/blind-human-review-packet.schema.v1.json"
+  }
+}
+
