@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "activity": "VERIFIER_V1_4_PROMPT_EXPOSURE_LINT",
+  "verdict": "PROMPT_EXPOSURE_LINT_PASS",
+  "blockingMatchCount": 0,
+  "reviewRequiredMatchCount": 0,
+  "prompt": {
+    "path": "catalogue-pipeline/candidates/source-boundary-risk-verifier.v1.4.md",
+    "sha256": "sha256:a2fe3ef32f5b417544276401d5b520274fc77ef97753da61c253032b3f1e0d7f"
+  },
+  "taxonomy": {
+    "path": "catalogue-pipeline/experiments/verifier-v1.3-retrospective-replay/semantic-false-negative-taxonomy.v1.json",
+    "sha256": "sha256:b551f5b7aff4ebb8552308858af832e2fc216d5d7eb7d3afc748ad2113e4bf8a"
+  },
+  "exposurePolicy": {
+    "path": "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/development-exposure-policy.v1.json",
+    "sha256": "sha256:b5e9b655644bb0af931bd151b99b9bada8e21f0a8add2a9d8a52ad826b7bb04b"
+  },
+  "checksPerformed": [
+    "exposedCandidateIdsAbsent",
+    "exposedMovieTitlesAbsent",
+    "exposedCharacterProperNounsAbsent",
+    "curatedDistinctivePhrasesAbsent",
+    "normalizedContiguousFourGramsAudited"
+  ],
+  "blockingMatches": [],
+  "reviewRequiredMatches": []
+}

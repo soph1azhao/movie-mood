@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "policyId": "verifier-v1.4-development-exposure-policy.v1",
+  "activity": "VERIFIER_V1_4_SEMANTIC_INTERVENTION_PAIRED_DEVELOPMENT",
+  "classification": "RETROSPECTIVE_SEMANTIC_DEVELOPMENT_EVALUATION",
+  "governanceState": "PAUSED_FOR_SEVERE_AUDIT_MISS",
+  "p2ExposureLedgerReconciliationRequired": true,
+  "purpose": "Define candidate exclusion classes and bind historically exposed development records to prevent development leakage into v1.4 evaluation.",
+  "exposedCohorts": {
+    "v13ReplayCohort": {
+      "cohortSize": 30,
+      "manifestPath": "catalogue-pipeline/experiments/verifier-v1.2-retrospective-replay/cohort-manifest.v1.json",
+      "manifestSha256": "sha256:63f83cc9863f455597e1a0141f7c0f5a56bbb7923ed1c9502d9e2235c7c2e45c",
+      "exposureStatus": "DEVELOPMENT_EXPOSED",
+      "policy": "All 30 candidates from the historical v1.3 retrospective replay cohort are development-exposed and strictly ineligible for future independent v1.4 evaluation."
+    },
+    "sevenSemanticFalseNegatives": {
+      "cohortSize": 7,
+      "candidateIds": [
+        "scale500-tmdb-2604",
+        "scale500-tmdb-360605",
+        "scale500-tmdb-509585",
+        "scale500-tmdb-354556",
+        "scale500-tmdb-40662",
+        "scale500-tmdb-16804",
+        "scale500-tmdb-27670"
+      ],
+      "taxonomyArtifactPath": "catalogue-pipeline/experiments/verifier-v1.3-retrospective-replay/semantic-false-negative-taxonomy.v1.json",
+      "taxonomyArtifactSha256": "sha256:b551f5b7aff4ebb8552308858af832e2fc216d5d7eb7d3afc748ad2113e4bf8a",
+      "exposureStatus": "DEVELOPMENT_EXPOSED",
+      "policy": "These exact seven records were inspected in failure taxonomy construction and must not be used as independent evidence of semantic improvement."
+    },
+    "fourTechnicalAblationCandidates": {
+      "cohortSize": 4,
+      "candidateIds": [
+        "scale500-tmdb-13398",
+        "scale500-tmdb-1563",
+        "scale500-tmdb-127533",
+        "scale500-tmdb-9725"
+      ],
+      "manifestPath": "catalogue-pipeline/experiments/verifier-v1.3-low-thinking-technical-ablation/ablation-cohort.v1.json",
+      "manifestSha256": "sha256:aacdaebe5673753a7b01263a1c09cac8c83d338d7825fd1ce837e7d4cca3d163",
+      "exposureStatus": "DEVELOPMENT_EXPOSED",
+      "policy": "These four candidates were failure-enriched and inspected during the technical ablation, rendering them ineligible for independent semantic evaluation."
+    },
+    "developmentFixtures": {
+      "exposureStatus": "DEVELOPMENT_EXPOSED",
+      "p2ExposureLedgerReconciliationRequired": true,
+      "policy": "Any candidate previously used in unit tests, prompt development, or manual verification fixtures is strictly ineligible. No candidate may become evaluation-eligible until P2 reconciles all prior manually inspected/test/development candidate IDs into a complete exclusion ledger. The generic developmentFixtures policy is not itself proof that all fixture IDs have been enumerated."
+    }
+  },
+  "prospectiveHoldoutFirewall": {
+    "status": "RESERVED_PROSPECTIVE_DO_NOT_ACCESS",
+    "policy": "The prospective semantic holdout is strictly sealed and must never be accessed, read, parsed, or evaluated during retrospective development."
+  },
+  "evaluationEligibilityRules": {
+    "rule1": "Candidates must be drawn from unexposed retrospective editorial tranches.",
+    "rule2": "Candidates must have accepted human adjudication (DEFECT_POSITIVE or CLEAN).",
+    "rule3": "Evaluation cohort must contain exactly 30 DEFECT_POSITIVE and 30 CLEAN records.",
+    "rule4": "Defect-positive cohort must include at least 6 severe defect cases.",
+    "rule5": "Selection must be deterministic from an eligible pool using a preregistered random seed.",
+    "rule6": "P1 does not select or inspect any evaluation candidate."
+  }
+}

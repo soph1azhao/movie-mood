@@ -1,0 +1,255 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "protocolId": "source-boundary-risk-verifier.v1.4-semantic-development.r1",
+  "title": "Candidate Verifier v1.4 Semantic Intervention Paired Development Protocol",
+  "status": "PREREGISTERED_PHASE_P1",
+  "activity": "VERIFIER_V1_4_SEMANTIC_INTERVENTION_PAIRED_DEVELOPMENT",
+  "classification": "RETROSPECTIVE_SEMANTIC_DEVELOPMENT_EVALUATION",
+  "dataset": "INDEPENDENT_RETROSPECTIVE_DEVELOPMENT_SET",
+  "governanceState": "PAUSED_FOR_SEVERE_AUDIT_MISS",
+  "governanceConsequence": {
+    "strongestPossibleAdvancement": "ELIGIBLE_TO_PREREGISTER_PROSPECTIVE_SEMANTIC_VALIDATION",
+    "unpausePolicy": "Governance does not unpause even if all development gates pass.",
+    "governanceExclusions": [
+      "not prospective validation",
+      "not confirmation",
+      "not production validation",
+      "not production readiness",
+      "not promotion authorization"
+    ]
+  },
+  "lineage": {
+    "v13ExecutionEvidenceCommit": "4fb22ef",
+    "v13RetrospectiveReconciliationCommit": "196b08089e0faa02b4841a6ef4f2ebc4ed13da31",
+    "lowThinkingTechnicalReconciliationCommit": "eade852",
+    "semanticFnTaxonomyCommit": "3e7c803",
+    "semanticFnTaxonomySha256": "sha256:b551f5b7aff4ebb8552308858af832e2fc216d5d7eb7d3afc748ad2113e4bf8a",
+    "v13Prompt": {
+      "path": "catalogue-pipeline/candidates/source-boundary-risk-verifier.v1.3.md",
+      "sha256": "sha256:93c9a185620012609998ad8e58e4c68c9c945fd100820f2cc93c64385cdd402b"
+    },
+    "v13Schema": {
+      "path": "catalogue-pipeline/candidates/source-boundary-risk-verifier.v1.3.schema.json",
+      "sha256": "sha256:aa73ad6463e47c835186f8f2705f5c46167cd053ec43c1a0d72014ccc68c26dc"
+    },
+    "v13Validator": {
+      "path": "catalogue-pipeline/scripts/validateVerifierV13Contract.mjs",
+      "sha256": "sha256:258c1520779fd147bf9c4aaa1c31c385d1da1fbd0f4835d381e30f767efab5b6"
+    },
+    "v14Prompt": {
+      "path": "catalogue-pipeline/candidates/source-boundary-risk-verifier.v1.4.md",
+      "sha256": "sha256:a2fe3ef32f5b417544276401d5b520274fc77ef97753da61c253032b3f1e0d7f"
+    },
+    "developmentExposurePolicy": {
+      "path": "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/development-exposure-policy.v1.json",
+      "sha256": "sha256:b5e9b655644bb0af931bd151b99b9bada8e21f0a8add2a9d8a52ad826b7bb04b"
+    },
+    "promptExposureLint": {
+      "path": "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/prompt-exposure-lint.v1.json",
+      "sha256": "sha256:5b5eb8c2075b9dab8c8591a12d7055ef82f3a0bc194a029f451c5a8ef926a055"
+    }
+  },
+  "estimand": {
+    "definition": "The incremental semantic effect of Candidate Verifier v1.4 source-boundary instructions relative to v1.3 instructions, conditional on Gemini 3.8 Flash operating with thinkingLevel=low.",
+    "thinkingLevelBaseline": "Low thinking is a fixed engineering baseline. This study does NOT estimate the independent effect of thinking level."
+  },
+  "controlledVariables": {
+    "provider": "google-gemini-developer-api",
+    "modelId": "gemini-3.8-flash",
+    "temperature": 0,
+    "maxOutputTokens": 6144,
+    "timeoutMs": 30000,
+    "schemaPath": "catalogue-pipeline/candidates/source-boundary-risk-verifier.v1.3.schema.json",
+    "validatorPath": "catalogue-pipeline/scripts/validateVerifierV13Contract.mjs",
+    "fewShotExamples": "none",
+    "automaticRetries": 0,
+    "semanticRequestDelta": "v1.3 prompt bytes vs v1.4 prompt bytes. Arm A_PRIME uses byte-identical prompt/request construction to Arm A."
+  },
+  "experimentalDesign": {
+    "arms": {
+      "armA": {
+        "role": "FRESH_CONCURRENT_V13_SEMANTIC_BASELINE",
+        "promptPath": "catalogue-pipeline/candidates/source-boundary-risk-verifier.v1.3.md",
+        "promptSha256": "sha256:93c9a185620012609998ad8e58e4c68c9c945fd100820f2cc93c64385cdd402b",
+        "thinkingLevel": "low"
+      },
+      "armAPrime": {
+        "role": "BYTE_IDENTICAL_V13_LOW_REPEATABILITY_CONTROL",
+        "promptPath": "catalogue-pipeline/candidates/source-boundary-risk-verifier.v1.3.md",
+        "promptSha256": "sha256:93c9a185620012609998ad8e58e4c68c9c945fd100820f2cc93c64385cdd402b",
+        "thinkingLevel": "low"
+      },
+      "armB": {
+        "role": "V14_SEMANTIC_INTERVENTION",
+        "promptPath": "catalogue-pipeline/candidates/source-boundary-risk-verifier.v1.4.md",
+        "promptSha256": "sha256:a2fe3ef32f5b417544276401d5b520274fc77ef97753da61c253032b3f1e0d7f",
+        "thinkingLevel": "low"
+      }
+    },
+    "cohortSpecification": {
+      "targetCohortSize": 60,
+      "defectPositiveCount": 30,
+      "cleanCount": 30,
+      "minimumSevereCount": 6,
+      "plannedTotalCalls": 180,
+      "automaticRetries": 0,
+      "p1CandidateSelectionStatus": "NO_EVALUATION_COHORT_SELECTED_IN_P1",
+      "p1SelectionNotice": "P1 freezes the protocol, prompt, firewall, and lint only. Candidates are not yet selected or inspected."
+    }
+  },
+  "methodologicalLimitations": {
+    "bundledIntervention": "v1.4 is evaluated as one bundled semantic prompt intervention. The study cannot identify which individual rule caused any later improvement or degradation. No component-level causal claim is permitted. A future focused ablation may be separately preregistered.",
+    "thinkingLevelInteraction": "Results apply only to v1.4 under thinkingLevel=low. Failure of v1.4-low would not prove that the semantic principles are universally ineffective. Prompt x thinking-level interaction is outside this study.",
+    "balancedCohortPrevalenceCaveat": "The 30/30 class balance is constructed. Sensitivity and specificity are legitimate development operating characteristics. PPV, NPV, review burden, positive-call rate, and all prevalence-dependent quantities must be marked CONSTRUCTED_COHORT_DESCRIPTIVE_ONLY and cannot be interpreted as production prevalence estimates."
+  },
+  "evaluationFramework": {
+    "repeatabilityControl": {
+      "metric": "A_A_PRIME_AGREEMENT",
+      "overallAgreementFloor": 0.9,
+      "defectPositiveAgreementFloor": 0.9,
+      "cleanAgreementFloor": 0.9,
+      "armAPrimeTechnicalInvalidMax": 0.05,
+      "minPairwiseValidAAPrimeDefectPositives": 28,
+      "minPairwiseValidAAPrimeCleans": 28,
+      "failureDisposition": "INCONCLUSIVE_TECHNICAL_OR_STOCHASTIC_INSTABILITY",
+      "technicalInvalidAccounting": "Technical-invalid outputs are reported separately and cannot be converted into semantic LOW or HIGH. Semantic agreement is evaluated only where both outputs are valid."
+    },
+    "layerA": {
+      "title": "VALID_PAIRED_SEMANTICS",
+      "scope": "Evaluated exclusively on records where BOTH Arm A and Arm B produced valid semantic outputs.",
+      "invalidHandling": "Technical-invalid outcomes are NEVER semantic TPs.",
+      "defectPositiveTransitions": {
+        "rescue": "Arm A LOW -> Arm B HIGH",
+        "regression": "Arm A HIGH -> Arm B LOW",
+        "persistentDetection": "Arm A HIGH -> Arm B HIGH",
+        "persistentEscape": "Arm A LOW -> Arm B LOW"
+      },
+      "cleanTransitions": {
+        "introducedFalsePositive": "Arm A LOW -> Arm B HIGH",
+        "repairedFalsePositive": "Arm A HIGH -> Arm B LOW",
+        "persistentClean": "Arm A LOW -> Arm B LOW",
+        "persistentFalsePositive": "Arm A HIGH -> Arm B HIGH"
+      }
+    },
+    "layerB": {
+      "title": "ALL_RECORD_FAIL_CLOSED_ROUTING",
+      "scope": "Evaluates full operational routing where all technical-invalid outcomes route to human review.",
+      "inflationProhibition": "Layer B must never be used to inflate semantic sensitivity.",
+      "reportedMetrics": [
+        "reviewBurden",
+        "defectContainment",
+        "cleanUnnecessaryRouting",
+        "technicalFailureRouting",
+        "escapedDefects"
+      ]
+    }
+  },
+  "technicalCompletenessGate": {
+    "armATechnicalInvalidMax": 0.05,
+    "armBTechnicalInvalidMax": 0.05,
+    "armAPrimeTechnicalInvalidMax": 0.05,
+    "minPairwiseValidABDefectPositives": 28,
+    "minPairwiseValidABCleans": 28,
+    "minPairwiseValidAAPrimeDefectPositives": 28,
+    "minPairwiseValidAAPrimeCleans": 28,
+    "semanticComparisonFailureDisposition": "INCONCLUSIVE",
+    "repeatabilityControlFailureDisposition": "INCONCLUSIVE_TECHNICAL_OR_STOCHASTIC_INSTABILITY",
+    "governancePrinciple": "A/B technical completeness governs semantic treatment comparison, and A/A_PRIME technical completeness governs repeatability interpretation.",
+    "automaticRetries": 0
+  },
+  "statisticalPlan": {
+    "defectPositiveComparison": {
+      "method": "ONE_SIDED_EXACT_MCNEMAR_TEST",
+      "alternative": "v1.4 produces more rescues than regressions (rescues > regressions)",
+      "alpha": 0.05,
+      "pValueComparator": "LT",
+      "requiredPValueStrictlyLessThan": 0.05,
+      "confidenceIntervalMethod": "95% Wilson score confidence intervals for sensitivity"
+    },
+    "cleanComparison": {
+      "confidenceIntervalMethod": "95% Wilson score confidence intervals for specificity",
+      "reportedQuantities": [
+        "introducedFalsePositiveCount",
+        "repairedFalsePositiveCount",
+        "netCleanHarm = introducedFalsePositives - repairedFalsePositives"
+      ],
+      "equivalenceCaveat": "Do NOT treat failure to reject a significance test as proof of specificity equivalence."
+    }
+  },
+  "advancementGates": {
+    "combinationRule": "STRICT_LOGICAL_AND",
+    "compensatoryPassingPermitted": false,
+    "gateA_Repeatability": {
+      "overallAgreementMin": 0.9,
+      "defectPositiveAgreementMin": 0.9,
+      "cleanAgreementMin": 0.9,
+      "armAPrimeTechnicalInvalidMax": 0.05,
+      "minPairwiseValidAAPrimePositives": 28,
+      "minPairwiseValidAAPrimeCleans": 28
+    },
+    "gateB_TechnicalIntegrity": {
+      "armATechnicalInvalidMax": 0.05,
+      "armBTechnicalInvalidMax": 0.05,
+      "minPairwiseValidPositives": 28,
+      "minPairwiseValidCleans": 28
+    },
+    "gateC_SensitivityFloor": {
+      "armBValidPairSensitivityMin": 0.75
+    },
+    "gateD_PairedDefectImprovement": {
+      "minNetDefectGain": 5,
+      "pValueComparator": "LT",
+      "requiredPValueStrictlyLessThan": 0.05
+    },
+    "gateE_SpecificityFloor": {
+      "armBValidPairSpecificityMin": 0.85
+    },
+    "gateF_AntiOverflagging": {
+      "maxIntroducedFalsePositives": 2,
+      "maxNetCleanHarm": 2
+    },
+    "gateG_SevereSafety": {
+      "minCohortSevereCount": 6,
+      "maxArmBSevereSemanticEscapes": 0,
+      "policyNote": "Any severe escape blocks automatic advancement and requires case review. This is a DEVELOPMENT SAFETY POLICY, not statistical proof of zero population risk."
+    }
+  },
+  "providerExecutionControl": {
+    "schedulePermutations": {
+      "exactAllocationPerPermutation": 10,
+      "totalPermutations": 6,
+      "totalPlannedRecords": 60,
+      "quotas": {
+        "A-A_PRIME-B": 10,
+        "A-B-A_PRIME": 10,
+        "A_PRIME-A-B": 10,
+        "A_PRIME-B-A": 10,
+        "B-A-A_PRIME": 10,
+        "B-A_PRIME-A": 10
+      },
+      "enforcementNote": "P2/P3 schedule construction must satisfy these exact counts. P1 freezes the quota but does not construct the schedule."
+    },
+    "targetExecutionWindowHours": 2,
+    "callAuditRecords": [
+      "requestTimestamp",
+      "responseTimestamp",
+      "modelIdentifier",
+      "requestHash",
+      "rawResponseHash"
+    ],
+    "modelVersionChangeRule": "If provider model version changes mid-run, execution halts immediately with INCONCLUSIVE_PROVIDER_MODEL_MUTATION.",
+    "versionDriftMitigation": "Near-contemporaneous triplet interleaving within short execution window minimizes provider version drift."
+  },
+  "cohortFirewall": {
+    "policyBinding": "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/development-exposure-policy.v1.json",
+    "p2ExposureLedgerReconciliationRequired": true,
+    "reconciliationPolicy": "No candidate may become evaluation-eligible until P2 reconciles all prior manually inspected/test/development candidate IDs into a complete exclusion ledger.",
+    "excludedExposedSets": [
+      "sevenSemanticFalseNegatives (DEVELOPMENT_EXPOSED)",
+      "v13ReplayCohort (DEVELOPMENT_EXPOSED)",
+      "fourTechnicalAblationCandidates (DEVELOPMENT_EXPOSED)",
+      "priorDevelopmentFixtures (DEVELOPMENT_EXPOSED)"
+    ],
+    "prospectiveHoldout": "RESERVED_PROSPECTIVE_DO_NOT_ACCESS"
+  }
+}
