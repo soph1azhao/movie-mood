@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "registrationId": "verifier-v1.3-execution-harness-r1.v1",
+  "title": "Candidate Verifier v1.3 Execution-Harness R1 Registration Addendum",
+  "status": "EXECUTION_HARNESS_REGISTERED",
+  "governanceState": "PAUSED_FOR_SEVERE_AUDIT_MISS",
+  "activity": "RETROSPECTIVE_DEVELOPMENT_REPLAY_V1_3",
+  "instrumentClassification": "EXECUTION_HARNESS_REPAIR_ONLY",
+  "instrumentRevision": "v1.3-EXECUTION-HARNESS-R1.2.1",
+  "initialRegisteredAt": "2026-09-17T02:34:00.000Z",
+  "reboundAt": "2026-09-17T03:00:01.000Z",
+  "parentProtocolLineage": {
+    "protocolId": "verifier-v1.3-retrospective-development-replay.v1",
+    "protocolPath": "catalogue-pipeline/experiments/verifier-v1.3-retrospective-replay/protocol.v1.json",
+    "protocolByteHash": "sha256:d481ed8ba04473fda7b5a39c34a5592d2faa98af06501f782d965268aed5cdf5"
+  },
+  "boundCandidateSemantics": {
+    "candidateId": "source-boundary-risk-verifier.v1.3",
+    "semanticDelta": "ZERO",
+    "prompt": {
+      "path": "catalogue-pipeline/candidates/source-boundary-risk-verifier.v1.3.md",
+      "byteHash": "sha256:93c9a185620012609998ad8e58e4c68c9c945fd100820f2cc93c64385cdd402b"
+    },
+    "schema": {
+      "path": "catalogue-pipeline/candidates/source-boundary-risk-verifier.v1.3.schema.json",
+      "byteHash": "sha256:aa73ad6463e47c835186f8f2705f5c46167cd053ec43c1a0d72014ccc68c26dc"
+    },
+    "validator": {
+      "path": "catalogue-pipeline/scripts/validateVerifierV13Contract.mjs",
+      "byteHash": "sha256:258c1520779fd147bf9c4aaa1c31c385d1da1fbd0f4835d381e30f767efab5b6"
+    }
+  },
+  "boundFrozenCohort": {
+    "manifestPath": "catalogue-pipeline/experiments/verifier-v1.2-retrospective-replay/cohort-manifest.v1.json",
+    "canonicalArtifactHash": "sha256:63f83cc9863f455597e1a0141f7c0f5a56bbb7923ed1c9502d9e2235c7c2e45c",
+    "cohortSize": 30
+  },
+  "boundFrozenTokenCalibration": {
+    "manifestPath": "catalogue-pipeline/experiments/verifier-v1.3-retrospective-replay/verifier-v1.3-tokencounts.v1.json",
+    "byteHash": "sha256:ab14416a966625d02bb3ed8d3d5ada8ac68db47ecfe1e917c159aea324e9b84a",
+    "calibrationRequired": true,
+    "calibratedCohortSize": 30,
+    "requestHashParityVerified": "30/30"
+  },
+  "boundExecutionHarness": {
+    "runnerPath": "catalogue-pipeline/scripts/runVerifierV13RetrospectiveReplay.mjs",
+    "runnerByteHash": "sha256:3976a45b6e0655599c97bb560d6463ff78715a68b676225d117113a5f7382690",
+    "liveEntrypoints": [
+      "catalogue-pipeline/scripts/runVerifierV13RetrospectiveReplay.mjs preflight",
+      "catalogue-pipeline/scripts/runVerifierV13RetrospectiveReplay.mjs dry-run",
+      "catalogue-pipeline/scripts/runVerifierV13RetrospectiveReplay.mjs run"
+    ]
+  },
+  "harnessInvariants": {
+    "tokenCalibrationRequired": true,
+    "transportTimeoutMs": 30000,
+    "transportTimeoutClassification": "NETWORK_TIMEOUT",
+    "durableLifecycleStates": [
+      "NOT_STARTED",
+      "PRE_DISPATCH",
+      "DISPATCH_STARTED",
+      "RESPONSE_PERSISTED",
+      "COMPLETED",
+      "AMBIGUOUS_DISPATCH_STATE"
+    ],
+    "rawResponsePersistedBeforeInterpretation": true,
+    "ambiguousDispatchStopWithoutRedispatch": true,
+    "completedAttemptRefusesOverwrite": true,
+    "crashResumeCounterReconstruction": true,
+    "governedPreDispatchCostCeilingUsd": 1.10,
+    "retryLimits": {
+      "maxTechnicalRetriesPerCandidate": 2,
+      "maxTechnicalRetriesBatch": 10,
+      "maxTotalCalls": 40
+    },
+    "retryPolicyOnBatchExhaustion": "RETRY_DISABLED_FOR_REMAINDER_OF_BATCH; untouched primaries continue",
+    "offlinePreflightAndDryRunImplemented": true,
+    "prospectiveHoldoutUntouched": true
+  }
+}
