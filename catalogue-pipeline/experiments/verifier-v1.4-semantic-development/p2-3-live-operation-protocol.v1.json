@@ -1,0 +1,255 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schemaVersion": "p2-3-live-operation-protocol.v1",
+  "activity": "VERIFIER_V14_P2_3_MANUAL_ADVISORY_INGESTION_REGISTRATION",
+  "classification": "RETROSPECTIVE_SEMANTIC_DEVELOPMENT_EVALUATION",
+  "governanceState": "PAUSED_FOR_SEVERE_AUDIT_MISS",
+  "p23PreregistrationStatus": "READY_FOR_FREEZE",
+  "candidate1ExecutionAuthorized": false,
+  "frozenLineageBindings": {
+    "p1PreregistrationCommit": "deda014",
+    "p1PromptSha256": "sha256:a2fe3ef32f5b417544276401d5b520274fc77ef97753da61c253032b3f1e0d7f",
+    "p1ProtocolSha256": "sha256:7ccef839cc7bf434156881f6d8c12130a8d5e444e6038a95c50df8572c7c0f4d",
+    "p21FreezeCommit": "6f4437452d3a39e248b17a151f1589139962a933",
+    "p21FreezeManifestSha256": "sha256:eac6fa41efa1fb36c85b150417782e6a74cfdb57a0122945be0489118c31d9cd",
+    "p21ReviewOrderSha256": "sha256:758c9775e7e3171c68a50313c2720d4b8f696e6467f9801f12332391dc6213ed",
+    "p21ProtocolSha256": "sha256:dd6873615efbdd2d2014cc6b54e17aadf1c60fb9f33d68fefc2e5bd457b24120",
+    "p22FreezeCommit": "a6391a7b32b36b22157783e8e3f17c91f313fb6f",
+    "p22FreezeManifestSha256": "sha256:2e6112da08f8e4db880cb546447b86bf0be9f4cd36ec31ac5d937e646b158070",
+    "p22ProtocolSha256": "sha256:ae9a2e24b64819f21f12fb3bf70ceeaeec6175c66bd9cf6b6605255d1416818b",
+    "legacyHoldoutRetirementSha256": "sha256:f3b8d6a0dd58cdfa1ed772e925ab297169ef6191771cad118bd4c522fed67d5f",
+    "historicalFirewallDiagnosticSha256": "sha256:ce523484b1a3b7033958828634de5fc2d5317cc168e49a726c3fa4b39b3496b7",
+    "qaSeedSha256": "sha256:b20227e977b450a8639dfa1890b2031db543ee0ff4dc3359721c338295e3ab16",
+    "geminiPromptSha256": "sha256:e822b0eef3c9d0b0ece2365aa884593cd3de2eefafd50a3aa3ef2b77cf0847a5",
+    "claudePromptSha256": "sha256:de665f3e3157ccbbf896d6af2ae86e7c7e83fc2501e1be069ba50613d4d70628",
+    "materialityPolicySha256": "sha256:21661892df4d1b009341b6d34de3bf5ad1ae17e3447abbdace15e1c31a5b843c"
+  },
+  "manualAdvisoryChannels": {
+    "gemini": {
+      "reviewer": "GEMINI",
+      "channel": "MANUAL_CONSUMER_UI",
+      "service": "Gemini",
+      "accountTier": "CONSUMER_UI",
+      "modelIdentityRule": "Record exact model label visibly exposed by UI at review time; if none exposed, record 'UNKNOWN_NOT_EXPOSED'. Do not invent or infer an API model ID.",
+      "fallbackModelIdentity": "UNKNOWN_NOT_EXPOSED",
+      "advisoryRole": "PRELIMINARY_ADVISORY_ONLY"
+    },
+    "claude": {
+      "reviewer": "CLAUDE",
+      "channel": "MANUAL_CONSUMER_UI",
+      "service": "Claude",
+      "accountTier": "FREE",
+      "modelIdentityRule": "Record exact model label visibly exposed by Claude UI at review time; if none exposed, record 'UNKNOWN_NOT_EXPOSED'. Do not translate consumer UI session into an Anthropic API model ID.",
+      "fallbackModelIdentity": "UNKNOWN_NOT_EXPOSED",
+      "advisoryRole": "PRELIMINARY_ADVISORY_ONLY"
+    }
+  },
+  "copyReadyPayloadSpecification": {
+    "description": "Deterministic copy-ready review payload prepared by Movie Mood before manual submission.",
+    "requiredBindings": [
+      "candidateId",
+      "blindPacketSha256",
+      "blindPacketContent",
+      "reviewerPromptText",
+      "reviewerPromptSha256",
+      "materialityPolicySha256",
+      "reviewerIdentity",
+      "reviewSequenceIndex"
+    ],
+    "payloadImmutabilityRule": "The payload presented for manual copying must be strictly deterministic and unedited. No human editing of prompt text or blind packet content is permitted before submission. If the payload is modified, HARD STOP."
+  },
+  "manualSubmissionWorkflow": {
+    "description": "Governed procedure for manual preliminary advisory generation and collection.",
+    "steps": [
+      "1. Movie Mood prepares Gemini copy-ready payload bound to frozen prompt and blind packet.",
+      "2. Sophia opens a NEW Gemini consumer conversation/session where practical.",
+      "3. Sophia pastes the payload verbatim into Gemini.",
+      "4. Sophia does not add semantic clarification, commentary, or correction.",
+      "5. Sophia copies the complete Gemini response verbatim.",
+      "6. Movie Mood ingests the raw response into candidate directory attempts ledger.",
+      "7. Movie Mood prepares Claude copy-ready payload bound to frozen prompt and blind packet.",
+      "8. Sophia opens a NEW Claude consumer conversation/session where practical.",
+      "9. Sophia pastes the payload verbatim into Claude.",
+      "10. Sophia does not add semantic clarification, commentary, or correction.",
+      "11. Sophia copies the complete Claude response verbatim.",
+      "12. Movie Mood ingests the raw response into candidate directory attempts ledger.",
+      "13. Gemini and Claude must not see each other's responses (strict reviewer isolation).",
+      "14. Sophia must not see or use one advisory to alter the prompt or payload sent to the other."
+    ]
+  },
+  "rawResponseIngestionSpecification": {
+    "requiredEvidenceFields": [
+      "candidateId",
+      "reviewer",
+      "channel",
+      "service",
+      "visibleModelLabel",
+      "modelIdentityStatus",
+      "submissionTimestamp",
+      "ingestionTimestamp",
+      "blindPacketSha256",
+      "reviewPromptSha256",
+      "materialityPolicySha256",
+      "rawResponse",
+      "rawResponseSha256",
+      "validation",
+      "attemptOrdinal"
+    ],
+    "allowedModelIdentityStatuses": [
+      "EXPOSED",
+      "UNKNOWN_NOT_EXPOSED"
+    ],
+    "rawPersistenceRule": "The RAW pasted response text/bytes must be persisted to disk before parsing or validation. No normalization, trimming, semantic rewriting, or JSON repair is permitted prior to hashing and persistence."
+  },
+  "copyOrIngestErrorPolicy": {
+    "category": "USER_COPY_OR_INGEST_ERROR",
+    "definition": "Operational error during manual copy/paste ingestion (e.g., partial response copied, clipboard truncation, accidental text insertion, wrong candidate response pasted).",
+    "remedyRule": "A confirmed copy/ingest error may be corrected without consuming the model semantic retry allowance, provided the underlying model response is still available, no new model generation occurs, the correction is explicitly logged, and the original bad ingestion record is preserved or clearly superseded without silent overwrite.",
+    "antiAbuseRule": "Must NOT be used to excuse malformed JSON or schema invalidity genuinely produced by the model."
+  },
+  "manualRetryPolicy": {
+    "maxModelGeneratedAttemptsPerReviewerPerCandidate": 2,
+    "categories": {
+      "MALFORMED_JSON": {
+        "retryAllowed": true,
+        "maxAdditionalModelGeneratedAttempts": 1,
+        "description": "Model output failed JSON parsing. Exactly one new model submission permitted."
+      },
+      "SCHEMA_INVALID": {
+        "retryAllowed": true,
+        "maxAdditionalModelGeneratedAttempts": 1,
+        "description": "Model output failed preliminary advisory schema validation. Exactly one new model submission permitted."
+      },
+      "SERVICE_UNAVAILABLE_OR_RATE_LIMITED": {
+        "retryAllowed": false,
+        "action": "PAUSE",
+        "description": "Consumer UI unavailable or rate-limited. Pause candidate review; same frozen payload may be manually resubmitted later when service is restored."
+      },
+      "BINDING_INVALID": {
+        "retryAllowed": false,
+        "action": "HARD_STOP",
+        "description": "Integrity breach in packet or prompt hash binding. Hard stop for investigation."
+      },
+      "VALID": {
+        "retryAllowed": false,
+        "action": "PROCEED_TO_ENVELOPE"
+      }
+    },
+    "immutableAttemptRule": "Every model-generated attempt remains permanent, immutable operational evidence in the candidate attempts ledger."
+  },
+  "bothAdvisoriesRequiredPolicy": {
+    "rule": "BOTH_PRELIMINARY_ADVISORIES_REQUIRED_BEFORE_PRIMARY_HUMAN_ADJUDICATION",
+    "description": "Human adjudication is blocked until exactly one valid Gemini advisory and exactly one valid Claude advisory are validated and bound to the same candidateId, same blind packet, and correct frozen prompt/policy hashes.",
+    "pauseStatus": "REVIEW_PAUSED_PENDING_ADVISORY",
+    "singleAdvisoryAdjudicationForbidden": true
+  },
+  "humanAuthorityAndBlindingPolicy": {
+    "geminiRole": "PRELIMINARY_ADVISORY_ONLY",
+    "claudeRole": "PRELIMINARY_ADVISORY_ONLY",
+    "authoritativeAdjudicator": "Sophia Zhao",
+    "aiModelsDoNotVote": true,
+    "aiModelsDoNotDetermineGroundTruth": true,
+    "aiDisagreementIsQaMetadataOnly": true,
+    "humanBundleBlinding": {
+      "hidesPriorLabels": true,
+      "hidesCandidateVerifierPredictions": true,
+      "hidesHistoricalVerifierRisks": true,
+      "hidesCohortQuotaPressure": true,
+      "hidesRecruitmentTarget": true,
+      "hidesFinalCohortMembership": true
+    }
+  },
+  "humanCommitSemantics": {
+    "commitPoint": "Completion of atomic disk write of candidateId/human/adjudication-record.v1.json followed by successful validation against human-adjudication-record.schema.v1.json.",
+    "authoritativeSource": "Disk file candidateId/human/adjudication-record.v1.json",
+    "preCommitCrashRecovery": "Candidate state remains READY_FOR_HUMAN_ADJUDICATION; bundle must be re-presented to Sophia Zhao.",
+    "postCommitCrashRecovery": "Candidate state reconstructed as HUMAN_ADJUDICATED from immutable disk record; Sophia Zhao is NEVER re-prompted."
+  },
+  "provisionalStoppingAndQaContinuation": {
+    "stoppingCriteria": {
+      "minClean": 30,
+      "minDefectPositive": 30,
+      "minSevereDefectPositive": 6
+    },
+    "loopSteps": [
+      "1. Review candidates sequentially in frozen review order from blind-review-order.v1.json (index 1 to 184).",
+      "2. Check provisional threshold: CLEAN >= 30, DEFECT_POSITIVE >= 30, SEVERE >= 6.",
+      "3. When provisional threshold is met, halt primary review and trigger QA audit.",
+      "4. Perform second-review QA on all SEVERE adjudications and deterministic 25% of all NON-SEVERE adjudications in the stopped pool.",
+      "5. Reconcile QA disagreements under A_PRIME_PRODUCTION_MATERIALITY_V1 and commit any necessary corrections via adjudication-correction-protocol.v1.json.",
+      "6. Recompute corrected counts. If corrected counts satisfy CLEAN >= 30, DEFECT_POSITIVE >= 30, SEVERE >= 6, proceed to final evaluation cohort construction.",
+      "7. If corrected counts fall below any threshold, resume primary review at the very next unreviewed candidate in the EXACT SAME frozen order.",
+      "8. Expand the QA sample deterministically as the pool grows, retaining all previously audited records.",
+      "9. Repeat until corrected counts stabilize or the 184-candidate pool is exhausted.",
+      "10. If 184-candidate pool is exhausted without satisfying thresholds, halt with VERIFIER_V14_P2_REVIEW_POOL_INSUFFICIENT (feasibility failure)."
+    ],
+    "orderingConstraints": {
+      "noReordering": true,
+      "noSeveritySearch": true,
+      "noCandidateSkipping": true
+    }
+  },
+  "qaSamplingScope": {
+    "severeCoverage": "100_PERCENT",
+    "nonSevereCoverage": "CEIL_25_PERCENT",
+    "nonSevereFormula": "ceil(0.25 * nonSevereCompletedCount)",
+    "seedSha256": "sha256:b20227e977b450a8639dfa1890b2031db543ee0ff4dc3359721c338295e3ab16",
+    "rankingFunction": "SHA256(qaSeedSha256Hex + '\\n' + candidateId)",
+    "sampleExpansionRule": "When review pool expands, retain all previously audited non-severe candidates and append newly qualifying candidates in deterministic rank order until new ceil(0.25 * N) target is met.",
+    "sampleSource": "ALL_COMPLETED_ADJUDICATIONS_IN_STOPPED_POOL",
+    "evaluationCohortOnlySamplingForbidden": true
+  },
+  "finalEvaluationCohortConstruction": {
+    "formalDesignation": "PREREGISTERED_SEVERITY_STRATIFIED_FINAL_EVALUATION_COHORT_CONSTRUCTION",
+    "totalCohortN": 60,
+    "targetCleanCount": 30,
+    "targetDefectPositiveCount": 30,
+    "minSevereInCohort": 6,
+    "selectionAlgorithm": {
+      "cleanSelection": "Select earliest 30 corrected CLEAN records in frozen review order.",
+      "defectSelection": {
+        "step1": "Select earliest 30 corrected DEFECT_POSITIVE records in frozen review order.",
+        "step2": "Count corrected SEVERE records within the first 30 defect records.",
+        "step3": "If severe count >= 6, the defect cohort is complete.",
+        "step4": "If severe count < 6, replace the latest non-severe defect records among those first 30 with the earliest subsequent corrected severe defect records from the completed review pool until the cohort contains exactly 6 severe records.",
+        "step5": "If insufficient severe records exist in the completed review pool, the cohort cannot be constructed; resume sequential review if candidates remain, or fail feasibility if pool is exhausted."
+      }
+    },
+    "noDiscretionarySubstitutions": true,
+    "stratificationDeclaration": "Review/recruitment remains completely content-blind and non-enriched. The final evaluation cohort construction uses preregistered severity stratification."
+  },
+  "truthSeparationBoundary": {
+    "correctedHumanTruthHashFrozenBeforeModelExecution": true,
+    "labelFreeEvaluationCohortExport": "evaluation-cohort.v1.json",
+    "modelRunnerTruthAccessForbidden": true,
+    "modelOutputsFrozenBeforeTruthUnblinded": true
+  },
+  "candidate1PilotProtocol": {
+    "candidateId": "exp100-tmdb-672647",
+    "reviewSequenceIndex": 1,
+    "retrospectiveTranche": "SCALE_TRANCHE_2",
+    "pilotPurpose": "Validate live manual operational mechanics only (payload generation, manual submission, raw ingestion, schema validation, bundle generation, and human record persistence) on a bounded single candidate.",
+    "executionSteps": [
+      "1. Verify P1, P2.1, P2.2, and P2.3 hashes.",
+      "2. Construct and freeze Candidate #1 blind packet.",
+      "3. Generate Gemini copy-ready payload.",
+      "4. HARD STOP for manual Gemini submission.",
+      "5. Ingest Gemini raw response.",
+      "6. Validate and persist Gemini advisory envelope.",
+      "7. Generate Claude copy-ready payload.",
+      "8. HARD STOP for manual Claude submission.",
+      "9. Ingest Claude raw response.",
+      "10. Validate and persist Claude advisory envelope.",
+      "11. Construct human review bundle.",
+      "12. HARD STOP before human adjudication.",
+      "13. Present bundle to Sophia Zhao.",
+      "14. Sophia Zhao renders authoritative adjudication.",
+      "15. Persist human adjudication record atomically.",
+      "16. Verify complete cryptographic evidence chain.",
+      "17. HARD STOP for operational audit before Candidate #2 authorization."
+    ],
+    "automaticContinuationToCandidate2Forbidden": true,
+    "candidate1IsRealGroundTruth": true,
+    "discardingCandidate1AsSyntheticForbidden": true
+  }
+}

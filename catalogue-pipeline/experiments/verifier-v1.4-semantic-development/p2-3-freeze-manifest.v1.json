@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "activity": "VERIFIER_V14_P2_3_MANUAL_ADVISORY_FREEZE_MANIFEST",
+  "classification": "RETROSPECTIVE_SEMANTIC_DEVELOPMENT_MANUAL_ADVISORY_PREREGISTRATION",
+  "governanceState": "PAUSED_FOR_SEVERE_AUDIT_MISS",
+  "schemaVersion": "p2-3-freeze-manifest.v1",
+  "timestamp": "2026-09-17T12:45:00.000Z",
+  "totalBoundFiles": 12,
+  "frozenBindings": {
+    "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/adjudication-correction-protocol.v1.json": "sha256:d3fe9f47e5803b7899816e294da2aed027fdf34af180642b147016d4e8e6a3fd",
+    "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/blind-review-order.v1.json": "sha256:758c9775e7e3171c68a50313c2720d4b8f696e6467f9801f12332391dc6213ed",
+    "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/p2-2-freeze-manifest.v1.json": "sha256:2e6112da08f8e4db880cb546447b86bf0be9f4cd36ec31ac5d937e646b158070",
+    "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/p2-3-acceptance-matrix.v1.md": "sha256:f64c4f62338480a832e3eb604bdf4d6c1b4dc523dd8747732b698cbcccc6f794",
+    "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/p2-3-live-operation-protocol.v1.json": "sha256:03e5cc0202c4e88bd65e33cc7c117e3408e808d542d9261753020def824cce28",
+    "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/p2-3.test.mjs": "sha256:a4aa59d7b693ee79f0af92921d23c714438e181f712b40bfed00f97d60d53254",
+    "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/preliminary-advisory-record.schema.v1.json": "sha256:1a25512855be58986f75edc439c7061b60f5efbf3ad1b03aa569454a7c8a3cb8",
+    "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/preliminary-advisory-review.schema.v1.json": "sha256:295532a37fac6e46f8b9ed212e543635339035c4457ac5d0b0a2f93b6f949627",
+    "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/review-prompts/verifier-v14-claude-preliminary.v1.md": "sha256:de665f3e3157ccbbf896d6af2ae86e7c7e83fc2501e1be069ba50613d4d70628",
+    "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/review-prompts/verifier-v14-gemini-preliminary.v1.md": "sha256:e822b0eef3c9d0b0ece2365aa884593cd3de2eefafd50a3aa3ef2b77cf0847a5",
+    "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/second-review-qa-protocol.v1.json": "sha256:1feb3eaf3747a8e42e549a4a85d9fe7bc553fc6b01c9a0f4bcf00cc966cd7ce0",
+    "catalogue-pipeline/generated/catalogue-promotion/v8-2-editorial-pilot-v1/scale-tranche-1/human-review-materiality-policy.v1.json": "sha256:21661892df4d1b009341b6d34de3bf5ad1ae17e3447abbdace15e1c31a5b843c"
+  }
+}
