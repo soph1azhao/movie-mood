@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "activity": "VERIFIER_V14_CANDIDATE1_MANUAL_PILOT_AUTHORIZATION_AMENDMENT",
+  "classification": "POST_FREEZE_OPERATIONAL_AUTHORIZATION_AMENDMENT",
+  "methodStatement": "NO_METHOD_CHANGE",
+  "schemaVersion": "p2-4-candidate1-authorization-amendment.v1",
+  "timestamp": "2026-09-17T15:52:00.000Z",
+  "originalP24FreezeCommit": "9d73c3f2f25cf6c0a04b003f04186e2016084096",
+  "originalP24ImplementationSha256": "sha256:d43772907784ab2188745b49ac6f913278b9d3f8e028d8ab651f67d336d7a17f",
+  "originalP24TestSha256": "sha256:34f0d298cb3b2cc1c16b187cbc209ee36b27d1c72fd826450f3d454b040248fa",
+  "originalP24ReadinessSha256": "sha256:513838228cd9bc47e3f41788dd12f023ceef3be4222c00003a4543d9f2a9ea54",
+  "amendedOperatorSha256": "sha256:ab56cdb1aa3f04a39f7ec405956f2d88293d792698b32e5b911fe41d9779ad40",
+  "amendedTestSha256": "sha256:7a4ce5b18442855ecf97ec177eb8cfc8faf5f7577dce8a516fb036174e375797",
+  "candidate1PilotAuthorizationSha256": "sha256:783dad4f3dcd356a91a54d52a4628d8929fd171b59c469030b501c9e9e0586d4",
+  "p23FreezeManifestSha256": "sha256:b8eb3fde3203f6736a4d5b3a98f71fe50de70866b060614432f1b9a1757335d3"
+}

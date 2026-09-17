@@ -88,6 +88,73 @@ export function buildManualSubmissionPayload({
   }
 }
 
+export function validateCandidate1PilotAuthorization({ p2Dir = defaultP2Dir, authorizationPath } = {}) {
+  const authFile = authorizationPath || path.join(p2Dir, 'p2-4-candidate1-pilot-authorization.v1.json')
+  if (!fs.existsSync(authFile)) {
+    throw new Error(`PILOT_NOT_AUTHORIZED: Candidate #1 pilot authorization artifact is absent (${authFile})`)
+  }
+
+  let authData
+  try {
+    authData = JSON.parse(fs.readFileSync(authFile, 'utf8'))
+  } catch (err) {
+    throw new Error(`PILOT_AUTHORIZATION_INVALID: Failed to parse authorization JSON: ${err.message}`)
+  }
+
+  if (authData.activity !== 'VERIFIER_V14_CANDIDATE1_MANUAL_PILOT_AUTHORIZATION') {
+    throw new Error(`PILOT_AUTHORIZATION_INVALID: Invalid activity '${authData.activity}'`)
+  }
+  if (authData.candidateId !== 'exp100-tmdb-672647') {
+    throw new Error(`PILOT_AUTHORIZATION_INVALID: Candidate ID '${authData.candidateId}' does not match expected Candidate #1 'exp100-tmdb-672647'`)
+  }
+  if (authData.reviewSequenceIndex !== 1) {
+    throw new Error(`PILOT_AUTHORIZATION_INVALID: reviewSequenceIndex '${authData.reviewSequenceIndex}' must equal 1`)
+  }
+  if (authData.authorized !== true) {
+    throw new Error(`PILOT_AUTHORIZATION_INVALID: authorized must be true (got ${authData.authorized})`)
+  }
+  if (authData.automaticCandidate2Authorization !== false) {
+    throw new Error(`PILOT_AUTHORIZATION_INVALID: automaticCandidate2Authorization must be false (got ${authData.automaticCandidate2Authorization})`)
+  }
+
+  const p23ManifestPath = path.join(p2Dir, 'p2-3-freeze-manifest.v1.json')
+  if (!fs.existsSync(p23ManifestPath)) {
+    throw new Error(`PILOT_AUTHORIZATION_INVALID: P2.3 freeze manifest not found at ${p23ManifestPath}`)
+  }
+  const actualP23Sha = sha256(fs.readFileSync(p23ManifestPath))
+  const expectedP23Sha = 'sha256:b8eb3fde3203f6736a4d5b3a98f71fe50de70866b060614432f1b9a1757335d3'
+  if (authData.p23FreezeManifestSha256 !== expectedP23Sha || actualP23Sha !== expectedP23Sha) {
+    throw new Error(`PILOT_AUTHORIZATION_INVALID: P2.3 freeze manifest SHA mismatch`)
+  }
+
+  const expectedP24FreezeCommit = '9d73c3f2f25cf6c0a04b003f04186e2016084096'
+  if (authData.p24FreezeCommit !== expectedP24FreezeCommit) {
+    throw new Error(`PILOT_AUTHORIZATION_INVALID: p24FreezeCommit '${authData.p24FreezeCommit}' does not match '${expectedP24FreezeCommit}'`)
+  }
+
+  const expectedP24ImplSha = 'sha256:d43772907784ab2188745b49ac6f913278b9d3f8e028d8ab651f67d336d7a17f'
+  if (authData.p24ImplementationSha256 !== expectedP24ImplSha) {
+    throw new Error(`PILOT_AUTHORIZATION_INVALID: p24ImplementationSha256 mismatch`)
+  }
+
+  const expectedP24TestSha = 'sha256:34f0d298cb3b2cc1c16b187cbc209ee36b27d1c72fd826450f3d454b040248fa'
+  if (authData.p24TestSha256 !== expectedP24TestSha) {
+    throw new Error(`PILOT_AUTHORIZATION_INVALID: p24TestSha256 mismatch`)
+  }
+
+  const readinessPath = path.join(p2Dir, 'p2-4-manual-ingestion-readiness.v1.json')
+  if (!fs.existsSync(readinessPath)) {
+    throw new Error(`PILOT_AUTHORIZATION_INVALID: P2.4 readiness artifact not found at ${readinessPath}`)
+  }
+  const actualReadinessSha = sha256(fs.readFileSync(readinessPath))
+  const expectedReadinessSha = 'sha256:513838228cd9bc47e3f41788dd12f023ceef3be4222c00003a4543d9f2a9ea54'
+  if (authData.p24ReadinessSha256 !== expectedReadinessSha || actualReadinessSha !== expectedReadinessSha) {
+    throw new Error(`PILOT_AUTHORIZATION_INVALID: p24ReadinessSha256 mismatch`)
+  }
+
+  return authData
+}
+
 /**
  * Command 1: Prepare manual review payload.
  */
@@ -99,6 +166,7 @@ export function prepareManualPayload({
   reviewOrder = null,
   repoRoot = defaultRepoRoot,
   p2Dir = defaultP2Dir,
+  authorizationPath = null,
 }) {
   if (!candidateId || typeof candidateId !== 'string') {
     throw new Error('INVALID_ARGUMENT: candidateId is required')
@@ -164,7 +232,7 @@ export function prepareManualPayload({
         cleanCount++
       } else if (humanRecord.finalDecision === 'REVISE') {
         defectPositiveCount++
-        if (humanRecord.finalSeverity === 'SEVERE') {
+        if (humanRecord.finalSeverity === 'SEVERE_DEFECT') {
           severeCount++
         }
       }
@@ -174,9 +242,8 @@ export function prepareManualPayload({
       candidateStates[cId] = {
         candidateId: cId,
         reviewSequenceIndex: seqIndex,
-        status: 'READY_FOR_HUMAN_ADJUDICATION',
+        status: 'HUMAN_BUNDLE_PREPARED',
       }
-      break
     } else if (fs.existsSync(geminiPath) && fs.existsSync(claudePath)) {
       candidateStates[cId] = {
         candidateId: cId,
@@ -238,13 +305,12 @@ export function prepareManualPayload({
   // Live pilot gate: candidate #1 execution authorization check on production root
   const defaultExecutionRoot = path.join(p2Dir, 'review-execution')
   if (path.resolve(executionRoot) === path.resolve(defaultExecutionRoot)) {
-    const p23Protocol = JSON.parse(fs.readFileSync(path.join(p2Dir, 'p2-3-live-operation-protocol.v1.json'), 'utf8'))
-    const readinessPath = path.join(p2Dir, 'p2-4-manual-ingestion-readiness.v1.json')
-    const readiness = fs.existsSync(readinessPath) ? JSON.parse(fs.readFileSync(readinessPath, 'utf8')) : null
-    const authorized = p23Protocol.candidate1ExecutionAuthorized === true || (readiness && readiness.candidate1ExecutionAuthorized === true)
-    if (!authorized) {
-      throw new Error(`PILOT_NOT_AUTHORIZED: Candidate #1 execution is not authorized (candidate1ExecutionAuthorized: false)`)
+    if (candidateId !== 'exp100-tmdb-672647') {
+      throw new Error(
+        `PILOT_NOT_AUTHORIZED: Candidate execution on production root is only authorized for Candidate #1 (exp100-tmdb-672647). Candidate '${candidateId}' is not authorized.`
+      )
     }
+    validateCandidate1PilotAuthorization({ p2Dir, authorizationPath })
   }
 
   const reviewSequenceIndex = orderEntry.reviewSequenceIndex || selection.sequenceIndex

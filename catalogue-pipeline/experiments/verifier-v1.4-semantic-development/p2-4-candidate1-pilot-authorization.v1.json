@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "activity": "VERIFIER_V14_CANDIDATE1_MANUAL_PILOT_AUTHORIZATION",
+  "candidateId": "exp100-tmdb-672647",
+  "reviewSequenceIndex": 1,
+  "authorized": true,
+  "automaticCandidate2Authorization": false,
+  "p23FreezeManifestSha256": "sha256:b8eb3fde3203f6736a4d5b3a98f71fe50de70866b060614432f1b9a1757335d3",
+  "p24FreezeCommit": "9d73c3f2f25cf6c0a04b003f04186e2016084096",
+  "p24ImplementationSha256": "sha256:d43772907784ab2188745b49ac6f913278b9d3f8e028d8ab651f67d336d7a17f",
+  "p24TestSha256": "sha256:34f0d298cb3b2cc1c16b187cbc209ee36b27d1c72fd826450f3d454b040248fa",
+  "p24ReadinessSha256": "sha256:513838228cd9bc47e3f41788dd12f023ceef3be4222c00003a4543d9f2a9ea54"
+}

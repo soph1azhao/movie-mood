@@ -12,6 +12,7 @@ import {
   ingestManualResponse,
   getManualCandidateStatus,
   buildManualHumanBundle,
+  validateCandidate1PilotAuthorization,
   main as runManualReviewCli,
 } from '../../scripts/runVerifierV14ManualReview.mjs'
 
@@ -999,12 +1000,17 @@ test('R2.3. Direct CLI path enforces sequence and rejects review-order bypass fl
   }
 })
 
-test('R2.4. Production CLI Candidate #1 live pilot gate rejects execution when candidate1ExecutionAuthorized is false', () => {
+test('R2.4. Production CLI Candidate #1 live pilot gate enforces authorization artifact and sequence constraints', () => {
   const prodExecutionRoot = path.join(p2Dir, 'review-execution')
 
-  // Calling prepare on real Candidate #1 against production root MUST reject with PILOT_NOT_AUTHORIZED
+  // When authorization artifact is absent, Candidate #1 MUST reject with PILOT_NOT_AUTHORIZED
   assert.throws(
-    () => prepareManualPayload({ candidateId: 'exp100-tmdb-672647', reviewer: 'GEMINI', executionRoot: prodExecutionRoot }),
+    () => prepareManualPayload({
+      candidateId: 'exp100-tmdb-672647',
+      reviewer: 'GEMINI',
+      executionRoot: prodExecutionRoot,
+      authorizationPath: path.join(p2Dir, 'nonexistent-pilot-auth.json'),
+    }),
     /PILOT_NOT_AUTHORIZED/
   )
 
@@ -1302,3 +1308,337 @@ test('R3.6. Simulated crash between original archival and corrected canonical in
   }
 })
 
+// ============================================================
+// AMENDMENT: Candidate #1 Pilot Authorization Bridge Tests
+// ============================================================
+
+test('AUTH.1. Authorization artifact absent -> Candidate #1 blocked with PILOT_NOT_AUTHORIZED', () => {
+  const fakeAuthPath = path.join(p2Dir, 'nonexistent-pilot-authorization.json')
+  assert.throws(
+    () => validateCandidate1PilotAuthorization({ p2Dir, authorizationPath: fakeAuthPath }),
+    /PILOT_NOT_AUTHORIZED.*Candidate #1 pilot authorization artifact is absent/
+  )
+})
+
+test('AUTH.2. Valid artifact -> Candidate #1 production prepare passes authorization gate', () => {
+  const auth = validateCandidate1PilotAuthorization({ p2Dir })
+  assert.equal(auth.activity, 'VERIFIER_V14_CANDIDATE1_MANUAL_PILOT_AUTHORIZATION')
+  assert.equal(auth.candidateId, 'exp100-tmdb-672647')
+  assert.equal(auth.reviewSequenceIndex, 1)
+  assert.equal(auth.authorized, true)
+  assert.equal(auth.automaticCandidate2Authorization, false)
+})
+
+test('AUTH.3. Wrong candidateId in authorization artifact is rejected with PILOT_AUTHORIZATION_INVALID', () => {
+  const tempDir = makeTempDir('p24-test-auth-wrong-id-')
+  try {
+    const validAuth = JSON.parse(fs.readFileSync(path.join(p2Dir, 'p2-4-candidate1-pilot-authorization.v1.json'), 'utf8'))
+    const invalidAuth = { ...validAuth, candidateId: 'scale500-tmdb-999999' }
+    const authFile = path.join(tempDir, 'invalid-auth.json')
+    fs.writeFileSync(authFile, JSON.stringify(invalidAuth, null, 2), 'utf8')
+
+    assert.throws(
+      () => validateCandidate1PilotAuthorization({ p2Dir, authorizationPath: authFile }),
+      /PILOT_AUTHORIZATION_INVALID.*Candidate ID 'scale500-tmdb-999999' does not match expected Candidate #1/
+    )
+  } finally {
+    cleanTempDir(tempDir)
+  }
+})
+
+test('AUTH.4. Wrong reviewSequenceIndex is rejected with PILOT_AUTHORIZATION_INVALID', () => {
+  const tempDir = makeTempDir('p24-test-auth-wrong-seq-')
+  try {
+    const validAuth = JSON.parse(fs.readFileSync(path.join(p2Dir, 'p2-4-candidate1-pilot-authorization.v1.json'), 'utf8'))
+    const invalidAuth = { ...validAuth, reviewSequenceIndex: 2 }
+    const authFile = path.join(tempDir, 'invalid-auth.json')
+    fs.writeFileSync(authFile, JSON.stringify(invalidAuth, null, 2), 'utf8')
+
+    assert.throws(
+      () => validateCandidate1PilotAuthorization({ p2Dir, authorizationPath: authFile }),
+      /PILOT_AUTHORIZATION_INVALID.*reviewSequenceIndex '2' must equal 1/
+    )
+  } finally {
+    cleanTempDir(tempDir)
+  }
+})
+
+test('AUTH.5. Wrong P2.3 manifest SHA is rejected with PILOT_AUTHORIZATION_INVALID', () => {
+  const tempDir = makeTempDir('p24-test-auth-wrong-p23-')
+  try {
+    const validAuth = JSON.parse(fs.readFileSync(path.join(p2Dir, 'p2-4-candidate1-pilot-authorization.v1.json'), 'utf8'))
+    const invalidAuth = { ...validAuth, p23FreezeManifestSha256: 'sha256:0000000000000000000000000000000000000000000000000000000000000000' }
+    const authFile = path.join(tempDir, 'invalid-auth.json')
+    fs.writeFileSync(authFile, JSON.stringify(invalidAuth, null, 2), 'utf8')
+
+    assert.throws(
+      () => validateCandidate1PilotAuthorization({ p2Dir, authorizationPath: authFile }),
+      /PILOT_AUTHORIZATION_INVALID.*P2.3 freeze manifest SHA mismatch/
+    )
+  } finally {
+    cleanTempDir(tempDir)
+  }
+})
+
+test('AUTH.6. Wrong P2.4 implementation/test/readiness bindings are rejected with PILOT_AUTHORIZATION_INVALID', () => {
+  const tempDir = makeTempDir('p24-test-auth-wrong-p24-')
+  try {
+    const validAuth = JSON.parse(fs.readFileSync(path.join(p2Dir, 'p2-4-candidate1-pilot-authorization.v1.json'), 'utf8'))
+
+    // 1. Wrong freeze commit
+    const authWrongCommit = { ...validAuth, p24FreezeCommit: '0000000000000000000000000000000000000000' }
+    const file1 = path.join(tempDir, 'auth1.json')
+    fs.writeFileSync(file1, JSON.stringify(authWrongCommit, null, 2), 'utf8')
+    assert.throws(
+      () => validateCandidate1PilotAuthorization({ p2Dir, authorizationPath: file1 }),
+      /PILOT_AUTHORIZATION_INVALID.*p24FreezeCommit/
+    )
+
+    // 2. Wrong implementation SHA
+    const authWrongImpl = { ...validAuth, p24ImplementationSha256: 'sha256:0000000000000000000000000000000000000000000000000000000000000000' }
+    const file2 = path.join(tempDir, 'auth2.json')
+    fs.writeFileSync(file2, JSON.stringify(authWrongImpl, null, 2), 'utf8')
+    assert.throws(
+      () => validateCandidate1PilotAuthorization({ p2Dir, authorizationPath: file2 }),
+      /PILOT_AUTHORIZATION_INVALID.*p24ImplementationSha256/
+    )
+
+    // 3. Wrong test SHA
+    const authWrongTest = { ...validAuth, p24TestSha256: 'sha256:0000000000000000000000000000000000000000000000000000000000000000' }
+    const file3 = path.join(tempDir, 'auth3.json')
+    fs.writeFileSync(file3, JSON.stringify(authWrongTest, null, 2), 'utf8')
+    assert.throws(
+      () => validateCandidate1PilotAuthorization({ p2Dir, authorizationPath: file3 }),
+      /PILOT_AUTHORIZATION_INVALID.*p24TestSha256/
+    )
+
+    // 4. Wrong readiness SHA
+    const authWrongReadiness = { ...validAuth, p24ReadinessSha256: 'sha256:0000000000000000000000000000000000000000000000000000000000000000' }
+    const file4 = path.join(tempDir, 'auth4.json')
+    fs.writeFileSync(file4, JSON.stringify(authWrongReadiness, null, 2), 'utf8')
+    assert.throws(
+      () => validateCandidate1PilotAuthorization({ p2Dir, authorizationPath: file4 }),
+      /PILOT_AUTHORIZATION_INVALID.*p24ReadinessSha256/
+    )
+  } finally {
+    cleanTempDir(tempDir)
+  }
+})
+
+test('AUTH.7. authorized: false is rejected with PILOT_AUTHORIZATION_INVALID', () => {
+  const tempDir = makeTempDir('p24-test-auth-not-authorized-')
+  try {
+    const validAuth = JSON.parse(fs.readFileSync(path.join(p2Dir, 'p2-4-candidate1-pilot-authorization.v1.json'), 'utf8'))
+    const invalidAuth = { ...validAuth, authorized: false }
+    const authFile = path.join(tempDir, 'invalid-auth.json')
+    fs.writeFileSync(authFile, JSON.stringify(invalidAuth, null, 2), 'utf8')
+
+    assert.throws(
+      () => validateCandidate1PilotAuthorization({ p2Dir, authorizationPath: authFile }),
+      /PILOT_AUTHORIZATION_INVALID.*authorized must be true/
+    )
+  } finally {
+    cleanTempDir(tempDir)
+  }
+})
+
+test('AUTH.8. automaticCandidate2Authorization: true is rejected with PILOT_AUTHORIZATION_INVALID', () => {
+  const tempDir = makeTempDir('p24-test-auth-cand2-auto-')
+  try {
+    const validAuth = JSON.parse(fs.readFileSync(path.join(p2Dir, 'p2-4-candidate1-pilot-authorization.v1.json'), 'utf8'))
+    const invalidAuth = { ...validAuth, automaticCandidate2Authorization: true }
+    const authFile = path.join(tempDir, 'invalid-auth.json')
+    fs.writeFileSync(authFile, JSON.stringify(invalidAuth, null, 2), 'utf8')
+
+    assert.throws(
+      () => validateCandidate1PilotAuthorization({ p2Dir, authorizationPath: authFile }),
+      /PILOT_AUTHORIZATION_INVALID.*automaticCandidate2Authorization must be false/
+    )
+  } finally {
+    cleanTempDir(tempDir)
+  }
+})
+
+test('AUTH.9. Candidate #2 and later candidates remain blocked even when Candidate #1 authorization artifact is valid', () => {
+  const prodExecutionRoot = path.join(p2Dir, 'review-execution')
+
+  // When Candidate #1 is unadjudicated, Candidate #2 throws OUT_OF_ORDER_EXECUTION
+  assert.throws(
+    () => prepareManualPayload({ candidateId: 'scale500-tmdb-18912', reviewer: 'GEMINI', executionRoot: prodExecutionRoot }),
+    /OUT_OF_ORDER_EXECUTION/
+  )
+
+  // Later candidate in review order throws OUT_OF_ORDER_EXECUTION
+  assert.throws(
+    () => prepareManualPayload({ candidateId: 'scale500-tmdb-11802', reviewer: 'GEMINI', executionRoot: prodExecutionRoot }),
+    /OUT_OF_ORDER_EXECUTION/
+  )
+
+  // Unknown candidate throws CANDIDATE_NOT_FOUND
+  assert.throws(
+    () => prepareManualPayload({ candidateId: 'unknown-candidate-xyz', reviewer: 'GEMINI', executionRoot: prodExecutionRoot }),
+    /CANDIDATE_NOT_FOUND/
+  )
+})
+
+test('AUTH.10. Candidate #1 execution directory remains strictly absent and untouched', () => {
+  const prodExecutionRoot = path.join(p2Dir, 'review-execution')
+  assert.equal(fs.existsSync(prodExecutionRoot), false)
+  assert.equal(fs.existsSync(path.join(prodExecutionRoot, 'exp100-tmdb-672647')), false)
+})
+
+test('AUTH.11. Production-path Candidate #1 integration in isolated temp fixture passes authorization gate and prepares payload', () => {
+  const tempP2Dir = makeTempDir('p24-scope-proof-c1-')
+  try {
+    // Mirror required governed input artifacts into isolated temp fixture
+    const filesToCopy = [
+      'blind-review-order.v1.json',
+      'blind-review-eligible-pool.v1.json',
+      'p2-3-freeze-manifest.v1.json',
+      'p2-3-live-operation-protocol.v1.json',
+      'p2-4-manual-ingestion-readiness.v1.json',
+      'p2-4-candidate1-pilot-authorization.v1.json',
+    ]
+    for (const f of filesToCopy) {
+      fs.copyFileSync(path.join(p2Dir, f), path.join(tempP2Dir, f))
+    }
+
+    const tempProdExecRoot = path.join(tempP2Dir, 'review-execution')
+
+    // Call production prepareManualPayload with candidate #1 on the fixture's production root
+    const prep = prepareManualPayload({
+      candidateId: 'exp100-tmdb-672647',
+      reviewer: 'GEMINI',
+      executionRoot: tempProdExecRoot,
+      p2Dir: tempP2Dir,
+    })
+
+    assert.ok(prep.copyReadyText.includes('exp100-tmdb-672647'))
+    assert.ok(prep.payloadSha256.startsWith('sha256:'))
+
+    // Verify files created inside temp fixture
+    const c1Dir = path.join(tempProdExecRoot, 'exp100-tmdb-672647')
+    assert.ok(fs.existsSync(path.join(c1Dir, 'blind-packet.v1.json')))
+    assert.ok(fs.existsSync(path.join(c1Dir, 'manual/gemini/attempt-01/submission-payload.v1.txt')))
+
+    // Verify canonical repo review-execution directory remains strictly absent
+    const canonicalProdRoot = path.join(p2Dir, 'review-execution')
+    assert.equal(fs.existsSync(canonicalProdRoot), false)
+  } finally {
+    cleanTempDir(tempP2Dir)
+  }
+})
+
+test('AUTH.12. Candidate #2 remains hard-blocked with PILOT_NOT_AUTHORIZED after Candidate #1 reaches durable human adjudication', () => {
+  const tempP2Dir = makeTempDir('p24-scope-proof-c2-')
+  try {
+    // Mirror required governed input artifacts into isolated temp fixture
+    const filesToCopy = [
+      'blind-review-order.v1.json',
+      'blind-review-eligible-pool.v1.json',
+      'p2-3-freeze-manifest.v1.json',
+      'p2-3-live-operation-protocol.v1.json',
+      'p2-4-manual-ingestion-readiness.v1.json',
+      'p2-4-candidate1-pilot-authorization.v1.json',
+    ]
+    for (const f of filesToCopy) {
+      fs.copyFileSync(path.join(p2Dir, f), path.join(tempP2Dir, f))
+    }
+
+    const tempProdExecRoot = path.join(tempP2Dir, 'review-execution')
+
+    // 1. Prepare Candidate #1 for Gemini and Claude
+    prepareManualPayload({
+      candidateId: 'exp100-tmdb-672647',
+      reviewer: 'GEMINI',
+      executionRoot: tempProdExecRoot,
+      p2Dir: tempP2Dir,
+    })
+    prepareManualPayload({
+      candidateId: 'exp100-tmdb-672647',
+      reviewer: 'CLAUDE',
+      executionRoot: tempProdExecRoot,
+      p2Dir: tempP2Dir,
+    })
+
+    // 2. Ingest valid Gemini and Claude responses
+    const validOpinion = {
+      preliminaryDecision: 'APPROVE',
+      preliminarySeverity: null,
+      affectedFields: [],
+      issueSummaries: [],
+      claimSpan: 'none',
+      sourceEvidence: [{ source: 'facts.overview', supportFound: true }],
+      sourceBoundaryReason: 'Strictly factual synthetic movie data',
+      confidence: 'HIGH',
+      advisoryOnly: true,
+    }
+    const geminiRespFile = path.join(tempP2Dir, 'gemini-resp.json')
+    fs.writeFileSync(geminiRespFile, JSON.stringify(validOpinion, null, 2), 'utf8')
+    const geminiIngest = ingestManualResponse({
+      candidateId: 'exp100-tmdb-672647',
+      reviewer: 'GEMINI',
+      responseFilePath: geminiRespFile,
+      executionRoot: tempProdExecRoot,
+      p2Dir: tempP2Dir,
+    })
+    assert.equal(geminiIngest.disposition, 'VALID')
+
+    const claudeRespFile = path.join(tempP2Dir, 'claude-resp.json')
+    fs.writeFileSync(claudeRespFile, JSON.stringify(validOpinion, null, 2), 'utf8')
+    const claudeIngest = ingestManualResponse({
+      candidateId: 'exp100-tmdb-672647',
+      reviewer: 'CLAUDE',
+      responseFilePath: claudeRespFile,
+      executionRoot: tempProdExecRoot,
+      p2Dir: tempP2Dir,
+    })
+    assert.equal(claudeIngest.disposition, 'VALID')
+
+    // 3. Build human bundle for Candidate #1
+    const bundleRes = buildManualHumanBundle({
+      candidateId: 'exp100-tmdb-672647',
+      executionRoot: tempProdExecRoot,
+      p2Dir: tempP2Dir,
+    })
+    assert.equal(bundleRes.bundle.candidateId, 'exp100-tmdb-672647')
+
+    // 4. Persist durable human adjudication record for Candidate #1
+    const humanDir = path.join(tempProdExecRoot, 'exp100-tmdb-672647', 'human')
+    fs.mkdirSync(humanDir, { recursive: true })
+    const humanRecord = {
+      candidateId: 'exp100-tmdb-672647',
+      blindPacketHash: bundleRes.bundle.blindPacketSha256,
+      geminiAdvisoryRecordSha256: bundleRes.bundle.geminiAdvisoryEnvelopeSha256,
+      claudeAdvisoryRecordSha256: bundleRes.bundle.claudeAdvisoryEnvelopeSha256,
+      adjudicator: 'Sophia Zhao',
+      finalDecision: 'APPROVE',
+      finalSeverity: null,
+      affectedFields: [],
+      materialIssues: [],
+      humanRationale: 'Verified approved synthetic Candidate #1',
+      agreementPattern: 'BOTH_AI_AGREE_WITH_HUMAN',
+      adjudicationTimestamp: new Date().toISOString(),
+    }
+    fs.writeFileSync(path.join(humanDir, 'adjudication-record.v1.json'), JSON.stringify(humanRecord, null, 2), 'utf8')
+
+    // 5. Attempt production prepare on Candidate #2 (scale500-tmdb-18912)
+    // Candidate #2 is now the sequentially allowable candidate (sequence index 2),
+    // but the Candidate #1 pilot authorization MUST NOT authorize it.
+    assert.throws(
+      () => prepareManualPayload({
+        candidateId: 'scale500-tmdb-18912',
+        reviewer: 'GEMINI',
+        executionRoot: tempProdExecRoot,
+        p2Dir: tempP2Dir,
+      }),
+      /PILOT_NOT_AUTHORIZED.*only authorized for Candidate #1/
+    )
+
+    // Verify canonical repo review-execution directory remains strictly absent
+    const canonicalProdRoot = path.join(p2Dir, 'review-execution')
+    assert.equal(fs.existsSync(canonicalProdRoot), false)
+  } finally {
+    cleanTempDir(tempP2Dir)
+  }
+})
