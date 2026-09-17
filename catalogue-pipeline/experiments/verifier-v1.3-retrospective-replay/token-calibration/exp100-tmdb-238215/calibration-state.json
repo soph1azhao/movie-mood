@@ -1,0 +1,8 @@
+{
+  "candidateId": "exp100-tmdb-238215",
+  "tmdbId": 238215,
+  "requestHash": "sha256:b150e76f1e8c68f7cf051664d9a6233b971b87005446422abc2f595f6992c876",
+  "countedInputTokens": 3355,
+  "calibrationState": "COMPLETED",
+  "completedAt": "2026-09-16T23:00:13.113Z"
+}

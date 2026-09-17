@@ -1,0 +1,6 @@
+{
+  "candidateId": "scale500-tmdb-360605",
+  "status": 200,
+  "rawText": "{\n  \"totalTokens\": 3213,\n  \"promptTokensDetails\": [\n    {\n      \"modality\": \"TEXT\",\n      \"tokenCount\": 3213\n    }\n  ]\n}\n",
+  "persistedAt": "2026-09-16T23:00:09.324Z"
+}

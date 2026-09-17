@@ -1,0 +1,6 @@
+{
+  "candidateId": "exp100-tmdb-238215",
+  "status": 200,
+  "rawText": "{\n  \"totalTokens\": 3355,\n  \"promptTokensDetails\": [\n    {\n      \"modality\": \"TEXT\",\n      \"tokenCount\": 3355\n    }\n  ]\n}\n",
+  "persistedAt": "2026-09-16T23:00:13.111Z"
+}

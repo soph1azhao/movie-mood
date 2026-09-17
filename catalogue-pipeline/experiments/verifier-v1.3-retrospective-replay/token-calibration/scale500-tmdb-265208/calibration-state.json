@@ -1,0 +1,8 @@
+{
+  "candidateId": "scale500-tmdb-265208",
+  "tmdbId": 265208,
+  "requestHash": "sha256:e7031a383bfc139694f1a6b2fb6e963c03b11ab01e2493eba8187829cf5fd61e",
+  "countedInputTokens": 3259,
+  "calibrationState": "COMPLETED",
+  "completedAt": "2026-09-16T23:00:13.885Z"
+}

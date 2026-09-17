@@ -1,0 +1,9 @@
+{
+  "candidateId": "scale500-tmdb-2604",
+  "tmdbId": 2604,
+  "requestHash": "sha256:7595f26d28f147aca43be5bf40169d722c627b13a69fc9d383f93a5909bfcccf",
+  "calibrationState": "HTTP_ERROR_TERMINAL",
+  "status": 400,
+  "error": "{\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"* CountTokensRequest.generate_content_request.model: model is not specified\\n\",\n    \"status\": \"INVALID_ARGUMENT\"\n  }\n}\n",
+  "failedAt": "2026-09-16T22:52:14.397Z"
+}
