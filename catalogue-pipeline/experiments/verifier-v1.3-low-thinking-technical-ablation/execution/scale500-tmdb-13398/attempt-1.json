@@ -1,0 +1,83 @@
+{
+  "candidateId": "scale500-tmdb-13398",
+  "attemptIndex": 1,
+  "requestHash": "sha256:9aa1293d58b4d5a12d9801fa00aae8d74ed46064ec88de6355069ac41f4c3bbd",
+  "httpStatus": 200,
+  "technicalOutcome": "SERIALIZATION_SUCCESS",
+  "technicalSerializationSuccess": true,
+  "finishReason": "STOP",
+  "callCostUsd": 0.0039525,
+  "usageMetadata": {
+    "promptTokenCount": 3260,
+    "candidatesTokenCount": 402,
+    "totalTokenCount": 3662,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3260
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "rawResponseSha256": "sha256:4b0a00b8521975be1c719166b408eb10560d02eb3b042092d6d085056d4eb0dc",
+  "rawTextLength": 2402,
+  "extractedText": "{\n  \"riskLevel\": \"HIGH_RISK\",\n  \"riskCategories\": [\n    \"SCENE_OR_SCRIPT_LEVEL_EXTERNAL_DETAIL\"\n  ],\n  \"issues\": [\n    {\n      \"category\": \"SCENE_OR_SCRIPT_LEVEL_EXTERNAL_DETAIL\",\n      \"field\": \"whyWatch\",\n      \"claimSpan\": \"snowy margins\",\n      \"normalizedClaim\": \"The story takes place in snowy streets or snowy margins of the city.\",\n      \"claimType\": \"LOCATION_OR_SETTING\",\n      \"checkedAuthoritySources\": [\n        \"allowedSourceMaterial.overview\",\n        \"facts.keywords\"\n      ],\n      \"sourceEvidence\": [\n        {\n          \"source\": \"allowedSourceMaterial.overview\",\n          \"supportFound\": false,\n          \"value\": \"On Christmas Eve, three homeless people living on the streets of Tokyo discover a newborn baby among the trash and set out to find its parents.\",\n          \"notes\": \"Mentions Christmas Eve and streets of Tokyo, but makes no mention of snow or snowy weather.\"\n        },\n        {\n          \"source\": \"facts.keywords\",\n          \"supportFound\": false,\n          \"value\": [\"adult animation\", \"alcoholic\", \"anime\", \"baby\", \"blunt\", \"christmas\", \"compassionate\", \"depressed\", \"drag queen\", \"holiday\", \"tokyo, japan\"],\n          \"notes\": \"No snow keyword present.\"\n        }\n      ],\n      \"authorityResolution\": \"UNSUPPORTED_MISSING_AUTHORITY\",\n      \"materialityRationale\": \"Asserting specific weather or physical environmental conditions ('snowy') introduces external scene-level details not authorized by the provided source packet.\"\n    }\n  ],\n  \"sourceBoundarySatisfied\": false,\n  \"lowRiskCoverage\": null\n}",
+  "parsed": {
+    "riskLevel": "HIGH_RISK",
+    "riskCategories": [
+      "SCENE_OR_SCRIPT_LEVEL_EXTERNAL_DETAIL"
+    ],
+    "issues": [
+      {
+        "category": "SCENE_OR_SCRIPT_LEVEL_EXTERNAL_DETAIL",
+        "field": "whyWatch",
+        "claimSpan": "snowy margins",
+        "normalizedClaim": "The story takes place in snowy streets or snowy margins of the city.",
+        "claimType": "LOCATION_OR_SETTING",
+        "checkedAuthoritySources": [
+          "allowedSourceMaterial.overview",
+          "facts.keywords"
+        ],
+        "sourceEvidence": [
+          {
+            "source": "allowedSourceMaterial.overview",
+            "supportFound": false,
+            "value": "On Christmas Eve, three homeless people living on the streets of Tokyo discover a newborn baby among the trash and set out to find its parents.",
+            "notes": "Mentions Christmas Eve and streets of Tokyo, but makes no mention of snow or snowy weather."
+          },
+          {
+            "source": "facts.keywords",
+            "supportFound": false,
+            "value": [
+              "adult animation",
+              "alcoholic",
+              "anime",
+              "baby",
+              "blunt",
+              "christmas",
+              "compassionate",
+              "depressed",
+              "drag queen",
+              "holiday",
+              "tokyo, japan"
+            ],
+            "notes": "No snow keyword present."
+          }
+        ],
+        "authorityResolution": "UNSUPPORTED_MISSING_AUTHORITY",
+        "materialityRationale": "Asserting specific weather or physical environmental conditions ('snowy') introduces external scene-level details not authorized by the provided source packet."
+      }
+    ],
+    "sourceBoundarySatisfied": false,
+    "lowRiskCoverage": null
+  },
+  "schemaValidation": {
+    "valid": true,
+    "errors": []
+  },
+  "semanticValidation": {
+    "ok": true,
+    "failures": []
+  },
+  "observationalDisposition": "VALID_HIGH_RISK"
+}

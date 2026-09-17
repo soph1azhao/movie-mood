@@ -1,0 +1,14 @@
+{
+  "candidateId": "scale500-tmdb-127533",
+  "state": "COMPLETED",
+  "attemptCount": 1,
+  "requestHash": "sha256:c44a482d1973dba1039486c56d538dd9efc717cf36ebe328154e594774f90de5",
+  "technicalOutcome": "SERIALIZATION_SUCCESS",
+  "technicalSerializationSuccess": true,
+  "callCostUsd": 0.0035152499999999997,
+  "observational": {
+    "schemaValid": true,
+    "semanticValid": true,
+    "disposition": "VALID_LOW_RISK"
+  }
+}

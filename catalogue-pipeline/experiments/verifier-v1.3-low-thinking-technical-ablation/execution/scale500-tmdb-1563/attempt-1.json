@@ -1,0 +1,53 @@
+{
+  "candidateId": "scale500-tmdb-1563",
+  "attemptIndex": 1,
+  "requestHash": "sha256:5b53b8298baf0c093972716c19a456d5fd944460ecc6bb60d29ab9e849f0649d",
+  "httpStatus": 200,
+  "technicalOutcome": "SERIALIZATION_SUCCESS",
+  "technicalSerializationSuccess": true,
+  "finishReason": "STOP",
+  "callCostUsd": 0.0033945,
+  "usageMetadata": {
+    "promptTokenCount": 3281,
+    "candidatesTokenCount": 249,
+    "totalTokenCount": 3530,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3281
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "rawResponseSha256": "sha256:43dbea211af3f25b36346f43e552033df05f5a768afa654adbc0b797d4ec3a60",
+  "rawTextLength": 1791,
+  "extractedText": "{\n  \"riskLevel\": \"LOW_RISK\",\n  \"riskCategories\": [],\n  \"issues\": [],\n  \"sourceBoundarySatisfied\": true,\n  \"lowRiskCoverage\": {\n    \"allVisibleFieldsAudited\": true,\n    \"interrogativePremisesAudited\": true,\n    \"factualModifiersAudited\": true,\n    \"packetFactsAudited\": true,\n    \"settingAndLocationAudited\": true,\n    \"characterMotivesAndRelationshipsAudited\": true,\n    \"storyMechanismsAndConstraintsAudited\": true,\n    \"externalLoreAndBackstoryAudited\": true,\n    \"spoilerAndRevealBoundariesAudited\": true,\n    \"viewingExperienceInferenceAudited\": true,\n    \"summaryRationale\": \"All factual elements (director Chris Marker, documentary genre, narrator setup, mentioned locations of Japan, Guinea-Bissau, Iceland, and San Francisco) match authorized packet facts and overview. The interrogative hook and experiential descriptions strictly reflect authorized semantic classifications (immersive, slow, thoughtful, solitary) and setup premise without asserting ungrounded plot mechanisms or external lore.\"\n  }\n}",
+  "parsed": {
+    "riskLevel": "LOW_RISK",
+    "riskCategories": [],
+    "issues": [],
+    "sourceBoundarySatisfied": true,
+    "lowRiskCoverage": {
+      "allVisibleFieldsAudited": true,
+      "interrogativePremisesAudited": true,
+      "factualModifiersAudited": true,
+      "packetFactsAudited": true,
+      "settingAndLocationAudited": true,
+      "characterMotivesAndRelationshipsAudited": true,
+      "storyMechanismsAndConstraintsAudited": true,
+      "externalLoreAndBackstoryAudited": true,
+      "spoilerAndRevealBoundariesAudited": true,
+      "viewingExperienceInferenceAudited": true,
+      "summaryRationale": "All factual elements (director Chris Marker, documentary genre, narrator setup, mentioned locations of Japan, Guinea-Bissau, Iceland, and San Francisco) match authorized packet facts and overview. The interrogative hook and experiential descriptions strictly reflect authorized semantic classifications (immersive, slow, thoughtful, solitary) and setup premise without asserting ungrounded plot mechanisms or external lore."
+    }
+  },
+  "schemaValidation": {
+    "valid": true,
+    "errors": []
+  },
+  "semanticValidation": {
+    "ok": true,
+    "failures": []
+  },
+  "observationalDisposition": "VALID_LOW_RISK"
+}

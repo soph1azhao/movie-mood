@@ -1,0 +1,48 @@
+{
+  "activity": "VERIFIER_V1_3_LOW_THINKING_TECHNICAL_ABLATION",
+  "classification": "TECHNICAL_DEVELOPMENT_ABLATION",
+  "status": "COMPLETED",
+  "governanceState": "PAUSED_FOR_SEVERE_AUDIT_MISS",
+  "totalCandidates": 4,
+  "completedCandidates": 4,
+  "confirmedExternalCalls": 4,
+  "newExternalCallsThisInvocation": 4,
+  "totalExternalCalls": 4,
+  "accumulatedCostUsd": 0.01413,
+  "costCeilingUsd": 0.15,
+  "primaryEndpoint": {
+    "metric": "serializationSuccessRate",
+    "technicalSerializationSuccessCount": 4,
+    "serializationSuccessRate": 1
+  },
+  "candidateSummaries": [
+    {
+      "candidateId": "scale500-tmdb-13398",
+      "state": "COMPLETED",
+      "technicalOutcome": "SERIALIZATION_SUCCESS",
+      "technicalSerializationSuccess": true,
+      "callCostUsd": 0.0039525
+    },
+    {
+      "candidateId": "scale500-tmdb-1563",
+      "state": "COMPLETED",
+      "technicalOutcome": "SERIALIZATION_SUCCESS",
+      "technicalSerializationSuccess": true,
+      "callCostUsd": 0.0033945
+    },
+    {
+      "candidateId": "scale500-tmdb-127533",
+      "state": "COMPLETED",
+      "technicalOutcome": "SERIALIZATION_SUCCESS",
+      "technicalSerializationSuccess": true,
+      "callCostUsd": 0.0035152499999999997
+    },
+    {
+      "candidateId": "scale500-tmdb-9725",
+      "state": "COMPLETED",
+      "technicalOutcome": "SERIALIZATION_SUCCESS",
+      "technicalSerializationSuccess": true,
+      "callCostUsd": 0.003267
+    }
+  ]
+}

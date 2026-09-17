@@ -1,0 +1,159 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "activity": "VERIFIER_V1_3_LOW_THINKING_TECHNICAL_ABLATION",
+  "classification": "TECHNICAL_DEVELOPMENT_ABLATION",
+  "dataset": "RETROSPECTIVE_DEVELOPMENT_SET",
+  "governanceState": "PAUSED_FOR_SEVERE_AUDIT_MISS",
+  "governanceExclusions": [
+    "not prospective validation",
+    "not confirmation",
+    "not semantic validation",
+    "not production validation",
+    "not production readiness"
+  ],
+  "lineage": {
+    "preregistrationCommit": "af0192a9f722ed36f90507c3b8450a46471757d0",
+    "harnessCommit": "929dd6fdc9b0e2fa460d3c45fe1ba2665be7d12f",
+    "runnerSha256": "sha256:2259dfb9c680c885d13dd1e030d776af0a05a74d8c5e1ad2012432416f13e85d",
+    "runnerTestSha256": "sha256:dc13e9e8768e7a13f11d17afd4c08ed96a7533edb41e24d2ed1ee80a2c28dec9",
+    "protocolSha256": "sha256:aa1dfcfd460ea573ae0dc7c0a8598d634a4920e431edb6f5cb37c371e3f52f89",
+    "cohortSha256": "sha256:aacdaebe5673753a7b01263a1c09cac8c83d338d7825fd1ce837e7d4cca3d163"
+  },
+  "executionSummary": {
+    "status": "COMPLETED",
+    "model": "gemini-3.8-flash",
+    "thinkingLevel": "low",
+    "maxOutputTokens": 6144,
+    "temperature": 0,
+    "candidates": 4,
+    "confirmedExternalCalls": 4,
+    "retries": 0,
+    "technicalSerializationSuccessCount": 4,
+    "serializationSuccessRate": 1,
+    "exactRawDerivedCostSumUsd": 0.01412925,
+    "ledgerAccumulatedCostUsd": 0.01413,
+    "ledgerCostAccountingNote": "The ledger value is the governed six-decimal cumulative rounded value; the exact sum of the four raw-derived per-call costs is 0.01412925.",
+    "governedCostCeilingUsd": 0.15
+  },
+  "technicalInterpretationBoundary": {
+    "cohortNature": "The four-candidate cohort is failure-enriched and retrospectively selected because each candidate had previously exhibited at least one MAX_TOKENS serialization failure under medium thinking.",
+    "conditionality": "Therefore 4/4 serialization success is conditional on this failure-enriched retrospective development cohort.",
+    "prohibitedInterpretations": [
+      "100% general verifier serialization reliability",
+      "population serialization reliability",
+      "future catalogue reliability",
+      "semantic accuracy",
+      "production readiness"
+    ],
+    "supportedTechnicalStatement": "Under the frozen Gemini 3.8 Flash verifier configuration, changing thinkingLevel from medium to low yielded first-attempt serialization success on all four previously failure-prone retrospective development records."
+  },
+  "tokenForensics": {
+    "diagnosticSummary": "No thinking/thoughts token field was present, and totalTokenCount equaled promptTokenCount + candidatesTokenCount for all four calls.",
+    "candidates": {
+      "scale500-tmdb-13398": {
+        "promptTokenCount": 3260,
+        "candidatesTokenCount": 402,
+        "totalTokenCount": 3662,
+        "thinkingTokenField": "absent",
+        "finishReason": "STOP",
+        "callCostUsd": 0.0039525
+      },
+      "scale500-tmdb-1563": {
+        "promptTokenCount": 3281,
+        "candidatesTokenCount": 249,
+        "totalTokenCount": 3530,
+        "thinkingTokenField": "absent",
+        "finishReason": "STOP",
+        "callCostUsd": 0.0033945
+      },
+      "scale500-tmdb-127533": {
+        "promptTokenCount": 3307,
+        "candidatesTokenCount": 276,
+        "totalTokenCount": 3583,
+        "thinkingTokenField": "absent",
+        "finishReason": "STOP",
+        "callCostUsd": 0.0035152499999999997
+      },
+      "scale500-tmdb-9725": {
+        "promptTokenCount": 3291,
+        "candidatesTokenCount": 213,
+        "totalTokenCount": 3504,
+        "thinkingTokenField": "absent",
+        "finishReason": "STOP",
+        "callCostUsd": 0.003267
+      }
+    }
+  },
+  "governedExecutionFileHashes": [
+    {
+      "relativePath": "execution/execution-ledger.json",
+      "sha256": "sha256:eb6c648f10be8771a0f859fec638148eea7ee72e70b943d10c6c2536b5f02096"
+    },
+    {
+      "relativePath": "execution/scale500-tmdb-127533/attempt-1.json",
+      "sha256": "sha256:260ab22f58635bc4b53ede3d3c0afe8060b400acbf6d7793b19b4a0410f0b6a0"
+    },
+    {
+      "relativePath": "execution/scale500-tmdb-127533/attempt-1.raw.json",
+      "sha256": "sha256:331d2ea941940438d2ed67b8319f91a4721fe39f06d5bb664df3dd46ed5bb4f3"
+    },
+    {
+      "relativePath": "execution/scale500-tmdb-127533/candidate-state.json",
+      "sha256": "sha256:0822125ddfdb90a72064f30e48f3ec255986a716fe11d9e6886c017aea24449d"
+    },
+    {
+      "relativePath": "execution/scale500-tmdb-13398/attempt-1.json",
+      "sha256": "sha256:4a366b79bb535f61c40fdfd1832a3eeec82a4f781d74d35f70987a29e4848066"
+    },
+    {
+      "relativePath": "execution/scale500-tmdb-13398/attempt-1.raw.json",
+      "sha256": "sha256:1bccb339ceb917bf402954ee82cb9a468bf2bf718369d46b402e80fe930ad31b"
+    },
+    {
+      "relativePath": "execution/scale500-tmdb-13398/candidate-state.json",
+      "sha256": "sha256:6d42d7e41fecd697ae924596ca56c996e91d3b7ad34f24915448ad26014c3353"
+    },
+    {
+      "relativePath": "execution/scale500-tmdb-1563/attempt-1.json",
+      "sha256": "sha256:b94295bb824f9872ca2e261a79f299d314a1fe1b724b1a020d29303876f978dc"
+    },
+    {
+      "relativePath": "execution/scale500-tmdb-1563/attempt-1.raw.json",
+      "sha256": "sha256:b7640f9da017d32cd6fd0007d840c90dfade6f907284b6271633ac65751d05b0"
+    },
+    {
+      "relativePath": "execution/scale500-tmdb-1563/candidate-state.json",
+      "sha256": "sha256:8431ba19ee6db11c34bebf3175a99ca31790b0720c5e03db79e50cc98c85fdea"
+    },
+    {
+      "relativePath": "execution/scale500-tmdb-9725/attempt-1.json",
+      "sha256": "sha256:7e238dba1b713728a49fec3d55a99cafb35fbcb38944bfa24fd3b3ad1b6777f5"
+    },
+    {
+      "relativePath": "execution/scale500-tmdb-9725/attempt-1.raw.json",
+      "sha256": "sha256:3d25ef3b3b73515f6cc3db2bd036057ff95b244a1a5aaa7e09999f4b569a907f"
+    },
+    {
+      "relativePath": "execution/scale500-tmdb-9725/candidate-state.json",
+      "sha256": "sha256:281a2b5b29f71af2944beee9203613b527a6aefcd13b92ca9cc647f4787d2835"
+    }
+  ],
+  "innerRawResponseHashes": {
+    "scale500-tmdb-13398": "sha256:4b0a00b8521975be1c719166b408eb10560d02eb3b042092d6d085056d4eb0dc",
+    "scale500-tmdb-1563": "sha256:43dbea211af3f25b36346f43e552033df05f5a768afa654adbc0b797d4ec3a60",
+    "scale500-tmdb-127533": "sha256:43e59a98840a33bc58413425dfb83efd58dc476c0dfaaa19e55b465660d25066",
+    "scale500-tmdb-9725": "sha256:416f50819f26a87b557db25fb305b7408c981539c3283388678084b0e29f1d32"
+  },
+  "integrityAudit": {
+    "integrityAuditVerdict": "EXECUTION_EVIDENCE_INTEGRITY_PASS",
+    "verifiedGovernedFiles": 13,
+    "verifiedRawResponses": 4,
+    "verifiedDerivedAttempts": 4,
+    "verifiedCandidateStates": 4,
+    "confirmedExternalCalls": 4,
+    "retries": 0,
+    "networkCallsDuringAudit": 0,
+    "humanLabelsAccessed": false,
+    "prospectiveHoldoutAccessed": false
+  }
+}

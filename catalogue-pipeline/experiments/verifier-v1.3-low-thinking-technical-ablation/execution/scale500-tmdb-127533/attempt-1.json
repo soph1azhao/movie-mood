@@ -1,0 +1,53 @@
+{
+  "candidateId": "scale500-tmdb-127533",
+  "attemptIndex": 1,
+  "requestHash": "sha256:c44a482d1973dba1039486c56d538dd9efc717cf36ebe328154e594774f90de5",
+  "httpStatus": 200,
+  "technicalOutcome": "SERIALIZATION_SUCCESS",
+  "technicalSerializationSuccess": true,
+  "finishReason": "STOP",
+  "callCostUsd": 0.0035152499999999997,
+  "usageMetadata": {
+    "promptTokenCount": 3307,
+    "candidatesTokenCount": 276,
+    "totalTokenCount": 3583,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3307
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "rawResponseSha256": "sha256:43e59a98840a33bc58413425dfb83efd58dc476c0dfaaa19e55b465660d25066",
+  "rawTextLength": 1871,
+  "extractedText": "{\n  \"riskLevel\": \"LOW_RISK\",\n  \"riskCategories\": [],\n  \"issues\": [],\n  \"sourceBoundarySatisfied\": true,\n  \"lowRiskCoverage\": {\n    \"allVisibleFieldsAudited\": true,\n    \"interrogativePremisesAudited\": true,\n    \"factualModifiersAudited\": true,\n    \"packetFactsAudited\": true,\n    \"settingAndLocationAudited\": true,\n    \"characterMotivesAndRelationshipsAudited\": true,\n    \"storyMechanismsAndConstraintsAudited\": true,\n    \"externalLoreAndBackstoryAudited\": true,\n    \"spoilerAndRevealBoundariesAudited\": true,\n    \"viewingExperienceInferenceAudited\": true,\n    \"summaryRationale\": \"All factual elements across visible fields directly trace to authorized sources: Kenshin Himura's role as an ex-assassin wielding an inverted sword to defend the needy without killing after the Bakumatsu war (1868 Japan) aligns precisely with the overview and facts. Director attribution to Keishi Otomo matches packet metadata. The curiosity hook interrogative premise remains grounded in the authorized non-lethal sword premise without introducing ungrounded twists, deadlines, or external manga lore.\"\n  }\n}",
+  "parsed": {
+    "riskLevel": "LOW_RISK",
+    "riskCategories": [],
+    "issues": [],
+    "sourceBoundarySatisfied": true,
+    "lowRiskCoverage": {
+      "allVisibleFieldsAudited": true,
+      "interrogativePremisesAudited": true,
+      "factualModifiersAudited": true,
+      "packetFactsAudited": true,
+      "settingAndLocationAudited": true,
+      "characterMotivesAndRelationshipsAudited": true,
+      "storyMechanismsAndConstraintsAudited": true,
+      "externalLoreAndBackstoryAudited": true,
+      "spoilerAndRevealBoundariesAudited": true,
+      "viewingExperienceInferenceAudited": true,
+      "summaryRationale": "All factual elements across visible fields directly trace to authorized sources: Kenshin Himura's role as an ex-assassin wielding an inverted sword to defend the needy without killing after the Bakumatsu war (1868 Japan) aligns precisely with the overview and facts. Director attribution to Keishi Otomo matches packet metadata. The curiosity hook interrogative premise remains grounded in the authorized non-lethal sword premise without introducing ungrounded twists, deadlines, or external manga lore."
+    }
+  },
+  "schemaValidation": {
+    "valid": true,
+    "errors": []
+  },
+  "semanticValidation": {
+    "ok": true,
+    "failures": []
+  },
+  "observationalDisposition": "VALID_LOW_RISK"
+}
