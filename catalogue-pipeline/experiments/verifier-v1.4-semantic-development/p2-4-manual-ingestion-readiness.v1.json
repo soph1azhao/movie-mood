@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "activity": "VERIFIER_V14_P2_4_MANUAL_INGESTION_READINESS",
+  "classification": "RETROSPECTIVE_SEMANTIC_DEVELOPMENT_MANUAL_INGESTION_READINESS",
+  "governanceState": "PAUSED_FOR_SEVERE_AUDIT_MISS",
+  "status": "READY_FOR_INDEPENDENT_AUDIT",
+  "candidate1ExecutionAuthorized": false,
+  "schemaVersion": "p2-4-manual-ingestion-readiness.v1",
+  "timestamp": "2026-09-17T15:17:00.000Z",
+  "frozenLineageBindings": {
+    "p1FreezeCommit": "deda014",
+    "p21FreezeCommit": "6f4437452d3a39e248b17a151f1589139962a933",
+    "p22FreezeCommit": "a6391a7b32b36b22157783e8e3f17c91f313fb6f",
+    "p23ManualAdvisoryFreezeCommit": "0f01a0caac59411522067007f971e69e342d2f7a",
+    "p23FreezeManifestSha256": "sha256:b8eb3fde3203f6736a4d5b3a98f71fe50de70866b060614432f1b9a1757335d3"
+  },
+  "p24BoundImplementation": {
+    "catalogue-pipeline/scripts/runVerifierV14ManualReview.mjs": "sha256:d43772907784ab2188745b49ac6f913278b9d3f8e028d8ab651f67d336d7a17f",
+    "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/p2-4.test.mjs": "sha256:34f0d298cb3b2cc1c16b187cbc209ee36b27d1c72fd826450f3d454b040248fa"
+  },
+  "verificationSummary": {
+    "totalP24Tests": 29,
+    "p24TestsPassing": 29,
+    "p23TestsPassing": 15,
+    "p22TestsPassing": 27,
+    "p21TestsPassing": 45,
+    "liveModelCalls": 0,
+    "networkCalls": 0,
+    "candidate1Executed": false,
+    "candidate1DirectoryPresent": false
+  }
+}
