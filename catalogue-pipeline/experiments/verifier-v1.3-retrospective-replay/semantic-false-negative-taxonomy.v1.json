@@ -1,0 +1,667 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "activity": "VERIFIER_V1_3_SEMANTIC_FALSE_NEGATIVE_TAXONOMY",
+  "classification": "RETROSPECTIVE_DEVELOPMENT_FAILURE_ANALYSIS",
+  "dataset": "RETROSPECTIVE_DEVELOPMENT_SET",
+  "governanceState": "PAUSED_FOR_SEVERE_AUDIT_MISS",
+  "governanceExclusions": [
+    "not prospective validation",
+    "not confirmation",
+    "not production validation",
+    "not production readiness",
+    "not promotion authorization"
+  ],
+  "lineage": {
+    "parentReplayEvidenceCommit": "4fb22ef",
+    "retrospectiveReconciliationCommit": "196b08089e0faa02b4841a6ef4f2ebc4ed13da31",
+    "technicalAblationClosureCommit": "eade852",
+    "boundArtifacts": {
+      "retrospectiveReconciliation": {
+        "path": "catalogue-pipeline/experiments/verifier-v1.3-retrospective-replay/retrospective-reconciliation.v1.json",
+        "sha256": "sha256:553682aba547787787c65e6bfa2f7fb96e531d0d0d690f0737f08659dce1c18a"
+      },
+      "cohortManifest": {
+        "path": "catalogue-pipeline/experiments/verifier-v1.2-retrospective-replay/cohort-manifest.v1.json",
+        "sha256": "sha256:63f83cc9863f455597e1a0141f7c0f5a56bbb7923ed1c9502d9e2235c7c2e45c"
+      },
+      "protocol": {
+        "path": "catalogue-pipeline/experiments/verifier-v1.3-retrospective-replay/protocol.v1.json",
+        "sha256": "sha256:d481ed8ba04473fda7b5a39c34a5592d2faa98af06501f782d965268aed5cdf5"
+      },
+      "executionEvidenceFreeze": {
+        "path": "catalogue-pipeline/experiments/verifier-v1.3-retrospective-replay/execution-evidence-freeze.v1.json",
+        "sha256": "sha256:8b738b05c4f35b7ff2e3d11592ef683e0b79e6f3ebf1004d9f0bf791be6d03a5"
+      },
+      "humanReviewDecisions": {
+        "path": "catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-2/human-review-decisions.v1.json",
+        "sha256": "sha256:60b9b6ab4ce7b56925f8715414ac8d634febe23f289ca3fc50baa38dc001f9bf"
+      },
+      "humanReviewAdjudicationCorrection": {
+        "path": "catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-2/human-review-adjudication-correction.v1.json",
+        "sha256": "sha256:3a3b486dc8d39a3fa49d3aa907b4718674ce1b0d7907e67f47e4f00fe963783e"
+      },
+      "gapAnalysis": {
+        "path": "catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-2/scale-tranche-2-verifier-gap-analysis.v1.1.json",
+        "sha256": "sha256:70a0adb731f9a3bdb00be18e6fde58590c9922312f342ef926488b39819bf0ae"
+      }
+    }
+  },
+  "cohort": {
+    "cohortSize": 7,
+    "candidateIds": [
+      "scale500-tmdb-2604",
+      "scale500-tmdb-360605",
+      "scale500-tmdb-509585",
+      "scale500-tmdb-354556",
+      "scale500-tmdb-40662",
+      "scale500-tmdb-16804",
+      "scale500-tmdb-27670"
+    ],
+    "cohortDescription": "The exact cohort of seven valid retrospective semantic false negatives identified in Candidate Verifier v1.3 replay, excluding malformed outputs."
+  },
+  "cases": [
+    {
+      "candidateId": "scale500-tmdb-2604",
+      "title": "Born on the Fourth of July",
+      "tmdbId": 2604,
+      "developmentStatus": "DEVELOPMENT_EXPOSED",
+      "evidenceReconstruction": {
+        "sourceRiskInputPath": "catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-2/execution/scale-tranche-2/risk-verifiers/scale500-tmdb-2604/risk-input.json",
+        "sourceRiskInputByteHash": "sha256:3a85107b1c252c54a8619efe00a124af687045938ff77a22ddd3a17983b67d16",
+        "sourceOverview": "Paralyzed in the Vietnam war, Ron Kovic becomes an anti-war and pro-human rights political activist after feeling betrayed by the country he fought for.",
+        "allowedSourceMaterial": {
+          "keywords": [],
+          "overview": "Paralyzed in the Vietnam war, Ron Kovic becomes an anti-war and pro-human rights political activist after feeling betrayed by the country he fought for.",
+          "sourceRefs": [
+            "tmdb-facts",
+            "tmdb-overview"
+          ]
+        },
+        "factsKeywords": [
+          "1950s",
+          "1960s",
+          "1970s",
+          "anti war",
+          "based on memoir or autobiography",
+          "based on true story",
+          "biography",
+          "desert",
+          "drunkenness",
+          "fourth of july",
+          "post-traumatic stress disorder (ptsd)",
+          "vietnam veteran",
+          "vietnam war",
+          "wheelchair"
+        ],
+        "visibleEditorialCopy": {
+          "curiosityHook": "When the patriotic ideals he fought for collapse upon his return home, how does one veteran channel deep betrayal into national defiance?",
+          "description": "Paralyzed during the Vietnam War, Ron Kovic returns home to face profound physical trauma, rising disillusionment, and a nation that leaves him feeling betrayed by the cause he served.",
+          "vibeSummary": "Heavy, thoughtful, and deliberately paced, offering an emotionally demanding drama best experienced with focused attention.",
+          "whyWatch": "Oliver Stone directs a weighty biographical drama that transforms personal sacrifice and wartime trauma into a passionate awakening for civil rights and peace."
+        },
+        "humanGroundTruth": {
+          "decision": "REVISE",
+          "severity": "MINOR",
+          "affectedFields": [
+            "whyWatch"
+          ],
+          "adjudicationCorrectionApplied": false,
+          "acceptedAdjudicationRationale": "Director \"Oliver Stone\" and runtime \"145 minutes\" match exactly, and the Description and Curiosity hook accurately reflect the authorized overview (paralysis in Vietnam, disillusionment, feeling betrayed by his country). However, the Why-watch field states Kovic's activism becomes \"a passionate awakening for civil rights and peace\" — the authorized overview specifically states he becomes an \"anti-war and pro-human rights\" activist. \"Civil rights\" is a distinct political cause (typically referring to domestic racial/social equality movements) from \"human rights,\" and substituting one for the other materially mischaracterizes the authorized fact. Recommend correcting \"civil rights\" to \"human rights\" to match the authorized overview precisely."
+        },
+        "verifierExecution": {
+          "attemptDisposition": "VALID_LOW_RISK",
+          "technicalOutcome": "SERIALIZATION_SUCCESS",
+          "riskLevel": "LOW_RISK",
+          "sourceBoundarySatisfied": true,
+          "issuesCount": 0,
+          "lowRiskCoverageSummaryRationale": "All factual claims, character arcs, and directorial attributions across description, whyWatch, curiosityHook, and vibeSummary are fully grounded in the authorized overview, packet metadata, and semantic classifications."
+        }
+      },
+      "observedDefectPattern": {
+        "ungroundedElement": "civil rights and peace (whyWatch)",
+        "authorizedCounterpart": "anti-war and pro-human rights political activist (overview)",
+        "observedDefectClasses": [
+          "FACTUAL_SUBSTITUTION"
+        ],
+        "observedDefectSummary": "The editorial copy states Kovic's activism becomes \"a passionate awakening for civil rights and peace\", whereas the authorized overview specifically states he becomes an \"anti-war and pro-human rights\" activist. \"Civil rights\" (domestic constitutional/social equality) is a distinct political cause from universal \"human rights\"."
+      },
+      "hypothesizedVerifierMissMechanism": {
+        "evidenceStatus": "INFERENTIAL_DEVELOPMENT_HYPOTHESIS",
+        "hypothesizedCategories": [
+          "PLAUSIBLE_SEMANTIC_EQUIVALENCE_OVERGENERALIZATION",
+          "HUMAN_MODEL_ONTOLOGY_MISMATCH"
+        ],
+        "mechanismRationale": "The verifier output rationale stated that all factual claims and character arcs were fully grounded in the overview. A plausible development hypothesis is that the verifier evaluated \"civil rights\" and \"human rights\" as semantically equivalent progressive activist causes. The frozen outputs do not establish whether the miss arose from representation-level synonymy, decision thresholding, or another internal factor."
+      },
+      "recoverabilityAnalysis": {
+        "signalRecoverability": "CLEARLY_RECOVERABLE_FROM_EXISTING_INPUT",
+        "interventionHypothesis": {
+          "promptClarification": "PLAUSIBLE_BUT_UNTESTED",
+          "structuredDecisionRule": "PLAUSIBLE_BUT_UNTESTED",
+          "newEvidenceFields": "NOT_INDICATED_BY_CURRENT_FAILURE_ANALYSIS",
+          "schemaChange": "NOT_INDICATED_BY_CURRENT_FAILURE_ANALYSIS"
+        },
+        "recoverabilityRationale": "The discrepancy between the visible editorial copy and the authorized source packet is directly observable by comparing the supplied source packet and editorial copy on existing text surfaces."
+      }
+    },
+    {
+      "candidateId": "scale500-tmdb-360605",
+      "title": "Invisible Sister",
+      "tmdbId": 360605,
+      "developmentStatus": "DEVELOPMENT_EXPOSED",
+      "evidenceReconstruction": {
+        "sourceRiskInputPath": "catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-2/execution/scale-tranche-2/risk-verifiers/scale500-tmdb-360605/risk-input.json",
+        "sourceRiskInputByteHash": "sha256:a940bf52f1d4bc7038c8234d7000731691a067833aefca76f1b7fb94e49f5a3e",
+        "sourceOverview": "Teenager Cleo's school science project goes quite awry, causing her popular older sister Molly to go invisible.",
+        "allowedSourceMaterial": {
+          "keywords": [],
+          "overview": "Teenager Cleo's school science project goes quite awry, causing her popular older sister Molly to go invisible.",
+          "sourceRefs": [
+            "tmdb-facts",
+            "tmdb-overview"
+          ]
+        },
+        "factsKeywords": [],
+        "visibleEditorialCopy": {
+          "curiosityHook": "With a high school routine to maintain and an unintended vanish, how long can two very different sisters keep an invisible reality under wraps?",
+          "description": "When teen Cleo's school science experiment spirals out of control, the unexpected fallout leaves her popular older sister Molly completely invisible, sparking a frantic scramble to navigate everyday life.",
+          "vibeSummary": "Light, energetic fantasy-comedy with an easygoing rhythm that fits a lively movie night with family or friends.",
+          "whyWatch": "Directed by Paul Hoen, this brisk 78-minute fantasy-comedy offers an easy, fast-paced family adventure shaped by lighthearted mishap and playful sisterly chaos."
+        },
+        "humanGroundTruth": {
+          "decision": "REVISE",
+          "severity": "MINOR",
+          "affectedFields": [
+            "curiosityHook"
+          ],
+          "adjudicationCorrectionApplied": false,
+          "acceptedAdjudicationRationale": "Director \"Paul Hoen\" and runtime \"78 minutes\" both match the authorized basis exactly, and the Description accurately restates the overview (Cleo's science project, Molly's invisibility). However, the Curiosity hook introduces a specific plot mechanism/goal — that the sisters are trying to \"keep an invisible reality under wraps\" (i.e., conceal Molly's condition from others) — which is not stated anywhere in the authorized overview. The source only establishes the setup (the experiment causes invisibility); it says nothing about secrecy, concealment, or a \"maintain the routine while hiding it\" structure. This is an invented narrative mechanism presented as fact. Recommend revising the hook to focus on the stated setup (adjusting to sudden invisibility) without asserting a concealment plot that isn't authorized."
+        },
+        "verifierExecution": {
+          "attemptDisposition": "VALID_LOW_RISK",
+          "technicalOutcome": "SERIALIZATION_SUCCESS",
+          "riskLevel": "LOW_RISK",
+          "sourceBoundarySatisfied": true,
+          "issuesCount": 0,
+          "lowRiskCoverageSummaryRationale": "All editorial claims in the visible copy remain strictly grounded in the authorized overview, packet facts (director Paul Hoen, 78-minute runtime, genres Comedy/Fantasy/Adventure), and accepted semantic classifications without introducing ungrounded story mechanisms, real-world lore, or spoiler reveals."
+        }
+      },
+      "observedDefectPattern": {
+        "ungroundedElement": "keep an invisible reality under wraps (curiosityHook)",
+        "authorizedCounterpart": "Cleo's school science project goes quite awry, causing her popular older sister Molly to go invisible (overview)",
+        "observedDefectClasses": [
+          "UNSTATED_MOTIVE_OR_GOAL_SHARPENING",
+          "PLOT_MECHANISM_INFERENCE",
+          "UNSUPPORTED_SETTING_CONCEALMENT_OR_CONSEQUENCE",
+          "MIXED"
+        ],
+        "observedDefectSummary": "The curiosityHook asserts that the sisters attempt to \"keep an invisible reality under wraps\" while maintaining a high school routine. The authorized overview establishes only the setup (the experiment causing invisibility); it says nothing about secrecy, concealment, or a hiding plot."
+      },
+      "hypothesizedVerifierMissMechanism": {
+        "evidenceStatus": "INFERENTIAL_DEVELOPMENT_HYPOTHESIS",
+        "hypothesizedCategories": [
+          "PLAUSIBLE_GENRE_PRIOR_TOLERANCE",
+          "INTERROGATIVE_HOOK_SCRUTINY_RELAXATION"
+        ],
+        "mechanismRationale": "The verifier output rationale found no ungrounded plot mechanisms. A plausible development hypothesis is that the verifier evaluated the concealment premise as acceptable rhetorical or comedic genre framing for an invisibility premise rather than an ungrounded narrative mechanism. The frozen outputs do not establish whether the model distinguished interrogative rhetorical hooks from factual claims."
+      },
+      "recoverabilityAnalysis": {
+        "signalRecoverability": "CLEARLY_RECOVERABLE_FROM_EXISTING_INPUT",
+        "interventionHypothesis": {
+          "promptClarification": "PLAUSIBLE_BUT_UNTESTED",
+          "structuredDecisionRule": "PLAUSIBLE_BUT_UNTESTED",
+          "newEvidenceFields": "NOT_INDICATED_BY_CURRENT_FAILURE_ANALYSIS",
+          "schemaChange": "NOT_INDICATED_BY_CURRENT_FAILURE_ANALYSIS"
+        },
+        "recoverabilityRationale": "The discrepancy between the visible editorial copy and the authorized source packet is directly observable by comparing the supplied source packet and editorial copy on existing text surfaces."
+      }
+    },
+    {
+      "candidateId": "scale500-tmdb-509585",
+      "title": "7500",
+      "tmdbId": 509585,
+      "developmentStatus": "DEVELOPMENT_EXPOSED",
+      "evidenceReconstruction": {
+        "sourceRiskInputPath": "catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-2/execution/scale-tranche-2/risk-verifiers/scale500-tmdb-509585/risk-input.json",
+        "sourceRiskInputByteHash": "sha256:b5381ee841c3e83010f2db6e8aee328a76fe8564513e1b39ac188e180d49d76a",
+        "sourceOverview": "When terrorists try to seize control of a Berlin-Paris flight, a soft-spoken young American co-pilot struggles to save the lives of the passengers and crew while forging a surprising connection with one of the hijackers.",
+        "allowedSourceMaterial": {
+          "keywords": [],
+          "overview": "When terrorists try to seize control of a Berlin-Paris flight, a soft-spoken young American co-pilot struggles to save the lives of the passengers and crew while forging a surprising connection with one of the hijackers.",
+          "sourceRefs": [
+            "tmdb-facts",
+            "tmdb-overview"
+          ]
+        },
+        "factsKeywords": [
+          "airplane",
+          "airplane hijacking",
+          "airplane pilot",
+          "flight",
+          "islam",
+          "islamic terrorism",
+          "kidnapping",
+          "pilot",
+          "religious extremism",
+          "terrorism"
+        ],
+        "visibleEditorialCopy": {
+          "curiosityHook": "As the cockpit becomes a high-stakes standoff, the co-pilot begins to forge an unexpected connection with one of the hijackers.",
+          "description": "On a flight from Berlin to Paris, terrorists attempt to seize the aircraft, leaving a soft-spoken American co-pilot fighting to protect the passengers and crew under extreme pressure.",
+          "vibeSummary": "Fast-moving, immersive, and relentlessly tense, delivering compact suspense ideal for focused solo viewing.",
+          "whyWatch": "Director Patrick Vollrath crafts an intensely focused in-flight thriller that transforms an urgent airborne crisis into a compact, human-scale battle of nerves."
+        },
+        "humanGroundTruth": {
+          "decision": "REVISE",
+          "severity": "MINOR",
+          "affectedFields": [
+            "curiosityHook"
+          ],
+          "adjudicationCorrectionApplied": false,
+          "acceptedAdjudicationRationale": "Director \"Patrick Vollrath\" and runtime \"94 minutes\" match exactly, and the Description and Why-watch stay tightly grounded in the authorized overview (terrorists seizing a Berlin-Paris flight, soft-spoken American co-pilot protecting passengers/crew, the connection with one hijacker explicitly authorized). However, the Curiosity hook specifies \"the cockpit becomes a high-stakes standoff\" — the authorized overview never mentions the cockpit as the setting; it only says terrorists \"try to seize control\" of the flight. While plausible for an aviation-hijacking premise, this is a specific unstated location/setting detail not present in the authorized packet, and could reflect pre-training knowledge of the film's actual staging rather than the given facts. Recommend replacing \"the cockpit\" with a more general phrase (e.g., \"the flight deck\" only if authorized, or simply \"the standoff\") that doesn't assert an unconfirmed setting."
+        },
+        "verifierExecution": {
+          "attemptDisposition": "VALID_LOW_RISK",
+          "technicalOutcome": "SERIALIZATION_SUCCESS",
+          "riskLevel": "LOW_RISK",
+          "sourceBoundarySatisfied": true,
+          "issuesCount": 0,
+          "lowRiskCoverageSummaryRationale": "All visible editorial fields strictly adhere to authorized source boundaries. Factual claims, character roles, flight route, and premise details in description and curiosityHook are directly grounded in the overview. Attribution to director Patrick Vollrath and the thriller genre in whyWatch matches packet facts. Tonal and experiential descriptors across whyWatch and vibeSummary directly reflect accepted semantic classifications without introducing ungrounded external lore, late-plot spoilers, or unauthorized constraints."
+        }
+      },
+      "observedDefectPattern": {
+        "ungroundedElement": "the cockpit becomes a high-stakes standoff (curiosityHook)",
+        "authorizedCounterpart": "terrorists try to seize control of a Berlin-Paris flight, a soft-spoken young American co-pilot struggles to save the lives of the passengers and crew (overview)",
+        "observedDefectClasses": [
+          "SOURCE_UNAUTHORIZED_CONCRETIZATION",
+          "UNSUPPORTED_SETTING_CONCEALMENT_OR_CONSEQUENCE",
+          "MIXED"
+        ],
+        "observedDefectSummary": "The curiosityHook specifies \"the cockpit\" as the setting of the standoff. The authorized overview establishes an in-flight hijacking of a Berlin-Paris flight, but never specifies the cockpit as the setting."
+      },
+      "hypothesizedVerifierMissMechanism": {
+        "evidenceStatus": "INFERENTIAL_DEVELOPMENT_HYPOTHESIS",
+        "hypothesizedCategories": [
+          "PLAUSIBLE_EXTERNAL_KNOWLEDGE_COMPATIBILITY",
+          "SPATIAL_PREMISE_EXTRAPOLATION"
+        ],
+        "mechanismRationale": "The verifier output rationale treated the standoff setting as fully grounded in the flight-hijacking premise. A plausible development hypothesis is that the verifier treated \"cockpit\" as an obvious spatial extrapolation for an in-flight hijacking with a co-pilot protagonist, or that the detail was compatible with external world knowledge. The frozen output does not allow us to determine whether the miss was driven by external training familiarity, spatial inference, or loose setting verification."
+      },
+      "recoverabilityAnalysis": {
+        "signalRecoverability": "CLEARLY_RECOVERABLE_FROM_EXISTING_INPUT",
+        "interventionHypothesis": {
+          "promptClarification": "PLAUSIBLE_BUT_UNTESTED",
+          "structuredDecisionRule": "PLAUSIBLE_BUT_UNTESTED",
+          "newEvidenceFields": "NOT_INDICATED_BY_CURRENT_FAILURE_ANALYSIS",
+          "schemaChange": "NOT_INDICATED_BY_CURRENT_FAILURE_ANALYSIS"
+        },
+        "recoverabilityRationale": "The discrepancy between the visible editorial copy and the authorized source packet is directly observable by comparing the supplied source packet and editorial copy on existing text surfaces."
+      }
+    },
+    {
+      "candidateId": "scale500-tmdb-354556",
+      "title": "Guardians",
+      "tmdbId": 354556,
+      "developmentStatus": "DEVELOPMENT_EXPOSED",
+      "evidenceReconstruction": {
+        "sourceRiskInputPath": "catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-2/execution/scale-tranche-2/risk-verifiers/scale500-tmdb-354556/risk-input.json",
+        "sourceRiskInputByteHash": "sha256:32006e5f12c7f2011b26e55540591a2f153ae09b6fe57f94e76b0ae9df776a8f",
+        "sourceOverview": "During the Cold War, an organization called \"Patriot\" created a superhero squad, which includes members of multiple Soviet republics. For years, the heroes had to hide their identities, but, in hard times, they must show themselves again.",
+        "allowedSourceMaterial": {
+          "keywords": [],
+          "overview": "During the Cold War, an organization called \"Patriot\" created a superhero squad, which includes members of multiple Soviet republics. For years, the heroes had to hide their identities, but, in hard times, they must show themselves again.",
+          "sourceRefs": [
+            "tmdb-facts",
+            "tmdb-overview"
+          ]
+        },
+        "factsKeywords": [
+          "cold war",
+          "independent film",
+          "soviet politics",
+          "superhero",
+          "superhero team"
+        ],
+        "visibleEditorialCopy": {
+          "curiosityHook": "After decades living in complete secrecy, can these forgotten operatives pull together and handle the modern crisis waiting for them?",
+          "description": "During the Cold War, the organization Patriot assembled a superhero squad from across Soviet republics. Forced underground for years, the hidden team is called back into the open when grave new threats emerge.",
+          "vibeSummary": "Fast-paced, lighthearted, and exciting, making for an effortless, popcorn-ready squad adventure.",
+          "whyWatch": "Clocking in at a lean 89 minutes, it offers a brisk, Russian-language action-fantasy alternate take on the classic superhero ensemble formula with playful sci-fi energy."
+        },
+        "humanGroundTruth": {
+          "decision": "REVISE",
+          "severity": "MINOR",
+          "affectedFields": [
+            "curiosityHook"
+          ],
+          "adjudicationCorrectionApplied": true,
+          "acceptedAdjudicationRationale": "Director \"Sarik Andreasyan\" and runtime \"89 minutes\" match exactly, Description faithfully restates the authorized overview, and Why-watch assertion of \"Russian-language\" is authorized by facts.spokenLanguages: [\"Russian\"]. However, the Curiosity hook states the operatives have been \"living in complete secrecy\" for \"decades\" — the authorized overview says only \"for years,\" and \"decades\" overstates a specific, unverified duration beyond what's stated under Standard A'. Recommend replacing \"decades\" with the authorized \"years.\""
+        },
+        "verifierExecution": {
+          "attemptDisposition": "VALID_LOW_RISK",
+          "technicalOutcome": "SERIALIZATION_SUCCESS",
+          "riskLevel": "LOW_RISK",
+          "sourceBoundarySatisfied": true,
+          "issuesCount": 0,
+          "lowRiskCoverageSummaryRationale": "All visible editorial fields strictly adhere to authorized source surfaces. Metadata references accurately reflect the 89-minute runtime, Russian spoken language without nationality collapse, and explicit genres (Action, Fantasy, Science Fiction). Plot details in the description and hook remain within authorized Cold War premise boundaries, and experiential framing directly reflects accepted semantic classifications."
+        }
+      },
+      "observedDefectPattern": {
+        "ungroundedElement": "living in complete secrecy for decades (curiosityHook)",
+        "authorizedCounterpart": "For years, the heroes had to hide their identities (overview)",
+        "observedDefectClasses": [
+          "SOURCE_UNAUTHORIZED_CONCRETIZATION"
+        ],
+        "observedDefectSummary": "The curiosityHook states the operatives lived in secrecy for \"decades\", whereas the authorized overview specifies \"for years\". Under Standard A' precision, escalating an authorized duration from years to decades is an unsupported concrete claim."
+      },
+      "hypothesizedVerifierMissMechanism": {
+        "evidenceStatus": "INFERENTIAL_DEVELOPMENT_HYPOTHESIS",
+        "hypothesizedCategories": [
+          "TEMPORAL_MAGNITUDE_TOLERANCE",
+          "HISTORICAL_ERA_INFERENCE"
+        ],
+        "mechanismRationale": "The verifier output rationale found plot details remained within authorized premise boundaries. A plausible development hypothesis is that the verifier treated \"decades\" as stylistic variation for \"years\", or inferred decades from the Cold War context and modern crisis. The frozen outputs do not allow us to determine whether the model evaluated the numerical scale or treated duration terms as approximate stylistic flourishes."
+      },
+      "recoverabilityAnalysis": {
+        "signalRecoverability": "CLEARLY_RECOVERABLE_FROM_EXISTING_INPUT",
+        "interventionHypothesis": {
+          "promptClarification": "PLAUSIBLE_BUT_UNTESTED",
+          "structuredDecisionRule": "PLAUSIBLE_BUT_UNTESTED",
+          "newEvidenceFields": "NOT_INDICATED_BY_CURRENT_FAILURE_ANALYSIS",
+          "schemaChange": "NOT_INDICATED_BY_CURRENT_FAILURE_ANALYSIS"
+        },
+        "recoverabilityRationale": "The discrepancy between the visible editorial copy and the authorized source packet is directly observable by comparing the supplied source packet and editorial copy on existing text surfaces."
+      }
+    },
+    {
+      "candidateId": "scale500-tmdb-40662",
+      "title": "Batman: Under the Red Hood",
+      "tmdbId": 40662,
+      "developmentStatus": "DEVELOPMENT_EXPOSED",
+      "evidenceReconstruction": {
+        "sourceRiskInputPath": "catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-2/execution/scale-tranche-2/risk-verifiers/scale500-tmdb-40662/risk-input.json",
+        "sourceRiskInputByteHash": "sha256:e3d209fe721b987186ac2e51036b7d9d1ecc7c3f0a369a155b83ee44dc0a1526",
+        "sourceOverview": "One part vigilante, one part criminal kingpin, Red Hood begins cleaning up Gotham with the efficiency of Batman, but without following the same ethical code.",
+        "allowedSourceMaterial": {
+          "keywords": [],
+          "overview": "One part vigilante, one part criminal kingpin, Red Hood begins cleaning up Gotham with the efficiency of Batman, but without following the same ethical code.",
+          "sourceRefs": [
+            "tmdb-facts",
+            "tmdb-overview"
+          ]
+        },
+        "factsKeywords": [
+          "based on comic",
+          "billionaire",
+          "cartoon",
+          "martial arts",
+          "mascara",
+          "masked superhero",
+          "organized crime",
+          "super power",
+          "superhero",
+          "vigilante"
+        ],
+        "visibleEditorialCopy": {
+          "curiosityHook": "When a ruthless kingpin wages war on Gotham's streets under Batman's tactical mold, what line separates the vigilante from the criminal?",
+          "description": "In Gotham City, a mysterious figure known as Red Hood begins dismantling the criminal underworld with Batman's calculated efficiency, but refuses to be bound by the Dark Knight's strict moral restraints.",
+          "vibeSummary": "Fast, heavy, and suspenseful. An intense, morally conflicted animated mystery built for focused solo viewing.",
+          "whyWatch": "At a lean 75 minutes, this animated crime mystery pairs brisk, hard-hitting momentum with a sharp moral clash over what justice actually costs."
+        },
+        "humanGroundTruth": {
+          "decision": "REVISE",
+          "severity": "MINOR",
+          "affectedFields": [
+            "description"
+          ],
+          "adjudicationCorrectionApplied": false,
+          "acceptedAdjudicationRationale": "Director \"Brandon Vietti\" and runtime \"75 minutes\" match exactly. \"Gotham\" is authorized (explicitly present in the overview), and the core premise (Red Hood as vigilante/kingpin hybrid, Batman's efficiency without his ethical code) is well-grounded. However, the Description refers to \"the Dark Knight's strict moral restraints\" — \"Dark Knight\" is an unstated epithet/nickname for Batman drawn from broader franchise lore/branding, not from the authorized overview, which names him only as \"Batman.\" Recommend replacing \"the Dark Knight's\" with \"Batman's\" to stay strictly within the authorized text."
+        },
+        "verifierExecution": {
+          "attemptDisposition": "VALID_LOW_RISK",
+          "technicalOutcome": "SERIALIZATION_SUCCESS",
+          "riskLevel": "LOW_RISK",
+          "sourceBoundarySatisfied": true,
+          "issuesCount": 0,
+          "lowRiskCoverageSummaryRationale": "All editorial claims strictly adhere to authorized source packet boundaries: the 75-minute runtime matches facts.runtimeMinutes; genres (Animation, Crime, Mystery) are faithfully represented; plot references to Red Hood cleaning up Gotham with Batman's efficiency without his ethical code accurately reflect the synopsis; no external franchise lore or hidden identity spoilers are introduced; and tone/viewing attributes align directly with accepted semantic classifications."
+        }
+      },
+      "observedDefectPattern": {
+        "ungroundedElement": "the Dark Knight's strict moral restraints (description)",
+        "authorizedCounterpart": "cleaning up Gotham with the efficiency of Batman, but without following the same ethical code (overview)",
+        "observedDefectClasses": [
+          "FRANCHISE_OR_WORLD_KNOWLEDGE_IMPORT"
+        ],
+        "observedDefectSummary": "The description imports the moniker \"the Dark Knight\", whereas the authorized overview names the character only as \"Batman\"."
+      },
+      "hypothesizedVerifierMissMechanism": {
+        "evidenceStatus": "INFERENTIAL_DEVELOPMENT_HYPOTHESIS",
+        "hypothesizedCategories": [
+          "SYNONYMOUS_ALIAS_TOLERANCE",
+          "HUMAN_MODEL_ONTOLOGY_MISMATCH"
+        ],
+        "mechanismRationale": "The verifier output explicitly noted that \"no external franchise lore or hidden identity spoilers are introduced\". A plausible development hypothesis is that the verifier treated \"the Dark Knight\" as a standard synonymous noun phrase for Batman rather than an unauthorized lore import. The frozen evidence shows the verifier audited for lore, but its criteria for what constitutes external lore differed from the human adjudication standard."
+      },
+      "recoverabilityAnalysis": {
+        "signalRecoverability": "CLEARLY_RECOVERABLE_FROM_EXISTING_INPUT",
+        "interventionHypothesis": {
+          "promptClarification": "PLAUSIBLE_BUT_UNTESTED",
+          "structuredDecisionRule": "PLAUSIBLE_BUT_UNTESTED",
+          "newEvidenceFields": "NOT_INDICATED_BY_CURRENT_FAILURE_ANALYSIS",
+          "schemaChange": "NOT_INDICATED_BY_CURRENT_FAILURE_ANALYSIS"
+        },
+        "recoverabilityRationale": "The discrepancy between the visible editorial copy and the authorized source packet is directly observable by comparing the supplied source packet and editorial copy on existing text surfaces."
+      }
+    },
+    {
+      "candidateId": "scale500-tmdb-16804",
+      "title": "Departures",
+      "tmdbId": 16804,
+      "developmentStatus": "DEVELOPMENT_EXPOSED",
+      "evidenceReconstruction": {
+        "sourceRiskInputPath": "catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-2/execution/scale-tranche-2/risk-verifiers/scale500-tmdb-16804/risk-input.json",
+        "sourceRiskInputByteHash": "sha256:df6f30903be2adce2303c321a941049ce9f1ce6e6a7b28489efd4db5b7a76798",
+        "sourceOverview": "Daigo, a cellist, is laid off from his orchestra and moves with his wife back to his small hometown where the living is cheaper. Thinking he’s applying for a job at a travel agency he finds he’s being interviewed for work with departures of a more permanent nature – as an undertaker’s assistant.",
+        "allowedSourceMaterial": {
+          "keywords": [],
+          "overview": "Daigo, a cellist, is laid off from his orchestra and moves with his wife back to his small hometown where the living is cheaper. Thinking he’s applying for a job at a travel agency he finds he’s being interviewed for work with departures of a more permanent nature – as an undertaker’s assistant.",
+          "sourceRefs": [
+            "tmdb-facts",
+            "tmdb-overview"
+          ]
+        },
+        "factsKeywords": [
+          "based on memoir or autobiography",
+          "cello",
+          "coffin",
+          "dying and death",
+          "funeral",
+          "hopeful",
+          "musical",
+          "octopus",
+          "odd job",
+          "yamagata"
+        ],
+        "visibleEditorialCopy": {
+          "curiosityHook": "Expecting a routine desk job, an unemployed musician inadvertently steps into the solemn, intimate world of preparing the deceased for their final journey.",
+          "description": "After his orchestra disbands, cellist Daigo returns with his wife to his small hometown. Looking for steady work, an interview for what seems like a travel agency instead places him as an assistant to an undertaker.",
+          "vibeSummary": "A slow, thoughtful Japanese drama with heavy emotional weight, rewarding patient and engaged viewing.",
+          "whyWatch": "Directed by Yojiro Takita, this reflective drama handles grief and vocation with quiet tenderness, finding unexpected dignity in the delicate rituals of saying goodbye."
+        },
+        "humanGroundTruth": {
+          "decision": "REVISE",
+          "severity": "MINOR",
+          "affectedFields": [
+            "description"
+          ],
+          "adjudicationCorrectionApplied": false,
+          "acceptedAdjudicationRationale": "Director \"Yojiro Takita\" and country \"Japan\" match exactly, and most of the copy accurately reflects the authorized overview (return to hometown, mistaken travel agency interview, actual work as an undertaker's assistant). However, the Description states \"After his orchestra disbands\" — the authorized overview specifies Daigo \"is laid off from his orchestra,\" which describes his personal job loss, not the dissolution of the orchestra itself. These are materially different facts (individual termination vs. organizational collapse), and the substitution misrepresents the authorized premise. Recommend correcting to reflect that Daigo was laid off/let go, not that the orchestra disbanded."
+        },
+        "verifierExecution": {
+          "attemptDisposition": "VALID_LOW_RISK",
+          "technicalOutcome": "SERIALIZATION_SUCCESS",
+          "riskLevel": "LOW_RISK",
+          "sourceBoundarySatisfied": true,
+          "issuesCount": 0,
+          "lowRiskCoverageSummaryRationale": "All visible editorial copy strictly adheres to authorized packet facts, the accepted semantic classification, and setup story material. The director attribution, country/genre descriptor ('Japanese drama'), plot premise of an unemployed cellist becoming an undertaker's assistant, and experiential tone are fully authorized without crossing spoiler boundaries or introducing external lore."
+        }
+      },
+      "observedDefectPattern": {
+        "ungroundedElement": "After his orchestra disbands (description)",
+        "authorizedCounterpart": "Daigo, a cellist, is laid off from his orchestra (overview)",
+        "observedDefectClasses": [
+          "FACTUAL_SUBSTITUTION",
+          "PLOT_MECHANISM_INFERENCE",
+          "MIXED"
+        ],
+        "observedDefectSummary": "The description asserts that Daigo's \"orchestra disbands\", whereas the authorized source states that he \"is laid off from his orchestra\". Individual termination versus the dissolution of an entire musical organization represents a materially different factual premise."
+      },
+      "hypothesizedVerifierMissMechanism": {
+        "evidenceStatus": "INFERENTIAL_DEVELOPMENT_HYPOTHESIS",
+        "hypothesizedCategories": [
+          "PLAUSIBLE_EXTERNAL_KNOWLEDGE_COMPATIBILITY",
+          "CAUSAL_BACKGROUND_PARAPHRASE_TOLERANCE"
+        ],
+        "mechanismRationale": "The verifier output rationale treated the unemployment premise as fully authorized. A plausible development hypothesis is that the verifier viewed \"orchestra disbands\" as an acceptable causal paraphrase of an orchestra layoff, or that the detail was compatible with external world knowledge. The frozen outputs do not allow us to distinguish whether the model inferred disbandment as a plausible cause of job loss or under-audited the entity-level distinction between organizational dissolution and individual layoff."
+      },
+      "recoverabilityAnalysis": {
+        "signalRecoverability": "CLEARLY_RECOVERABLE_FROM_EXISTING_INPUT",
+        "interventionHypothesis": {
+          "promptClarification": "PLAUSIBLE_BUT_UNTESTED",
+          "structuredDecisionRule": "PLAUSIBLE_BUT_UNTESTED",
+          "newEvidenceFields": "NOT_INDICATED_BY_CURRENT_FAILURE_ANALYSIS",
+          "schemaChange": "NOT_INDICATED_BY_CURRENT_FAILURE_ANALYSIS"
+        },
+        "recoverabilityRationale": "The discrepancy between the visible editorial copy and the authorized source packet is directly observable by comparing the supplied source packet and editorial copy on existing text surfaces."
+      }
+    },
+    {
+      "candidateId": "scale500-tmdb-27670",
+      "title": "Nothing Left to Do But Cry",
+      "tmdbId": 27670,
+      "developmentStatus": "DEVELOPMENT_EXPOSED",
+      "evidenceReconstruction": {
+        "sourceRiskInputPath": "catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-2/execution/scale-tranche-2/risk-verifiers/scale500-tmdb-27670/risk-input.json",
+        "sourceRiskInputByteHash": "sha256:8b4c690af2fd5cbb3069d7710576f46207bc37636af6c25e48341642fbe28cc2",
+        "sourceOverview": "Two 20th-century friends accidentally stumble into the year 1492, where they meet a charming teen and try to alter history.",
+        "allowedSourceMaterial": {
+          "keywords": [],
+          "overview": "Two 20th-century friends accidentally stumble into the year 1492, where they meet a charming teen and try to alter history.",
+          "sourceRefs": [
+            "tmdb-facts",
+            "tmdb-overview"
+          ]
+        },
+        "factsKeywords": [
+          "leonardo da vinci",
+          "middle ages (476-1453)",
+          "travel"
+        ],
+        "visibleEditorialCopy": {
+          "curiosityHook": "Stranded centuries before their own era, can these two ordinary companions actually change the course of history without unraveling their own path?",
+          "description": "Two twentieth-century friends suddenly find themselves displaced into the year 1492, navigating an unfamiliar era while meeting a charming local teen and hatching a bold plan to meddle with history.",
+          "vibeSummary": "Light and funny fantasy comedy with a steady pace, engaging historical confusion, and an easygoing spirit ideal for watching with friends.",
+          "whyWatch": "Directed by Roberto Benigni and Massimo Troisi, this Italian comedy blends playful fantasy and historical misadventure into an inventive, lighthearted time-travel romp."
+        },
+        "humanGroundTruth": {
+          "decision": "REVISE",
+          "severity": "MINOR",
+          "affectedFields": [
+            "curiosityHook"
+          ],
+          "adjudicationCorrectionApplied": false,
+          "acceptedAdjudicationRationale": "Director attribution \"Roberto Benigni & Massimo Troisi\" matches exactly. Description and Why-watch stay faithfully within the authorized overview (accidental time-slip to 1492, meeting a charming teen, attempting to alter history). However, the Curiosity hook adds \"without unraveling their own path\" — this invokes a specific time-travel-paradox stake (risk to their own timeline/existence) that is not stated anywhere in the authorized overview, which only says they \"try to alter history.\" This is a genre-trope assumption imported from general time-travel-film conventions rather than the authorized source, and should be revised to a hook grounded only in the stated \"alter history\" premise (e.g., focusing on the culture-clash or the stakes of tampering with the past generally, without the paradox-to-self implication)."
+        },
+        "verifierExecution": {
+          "attemptDisposition": "VALID_LOW_RISK",
+          "technicalOutcome": "SERIALIZATION_SUCCESS",
+          "riskLevel": "LOW_RISK",
+          "sourceBoundarySatisfied": true,
+          "issuesCount": 0,
+          "lowRiskCoverageSummaryRationale": "All visible editorial copy strictly adheres to authorized sources: metadata facts (directors Benigni and Troisi, Italian production context, Comedy/Fantasy genres), allowed synopsis setup (two 20th-century friends stumbling into 1492, meeting a teen, attempting to alter history), and accepted semantic classifications (light/funny tone, steady pace, engaged attention, friend-viewing situation). No ungrounded plot mechanisms, external lore, deadlines, or spoiler boundaries are violated."
+        }
+      },
+      "observedDefectPattern": {
+        "ungroundedElement": "without unraveling their own path (curiosityHook)",
+        "authorizedCounterpart": "Two 20th-century friends accidentally stumble into the year 1492, where they meet a charming teen and try to alter history (overview)",
+        "observedDefectClasses": [
+          "PLOT_MECHANISM_INFERENCE",
+          "UNSUPPORTED_SETTING_CONCEALMENT_OR_CONSEQUENCE",
+          "MIXED"
+        ],
+        "observedDefectSummary": "The curiosityHook adds \"without unraveling their own path\", invoking a specific time-travel paradox consequence/stake not stated anywhere in the authorized overview, which specifies only that they \"try to alter history\"."
+      },
+      "hypothesizedVerifierMissMechanism": {
+        "evidenceStatus": "INFERENTIAL_DEVELOPMENT_HYPOTHESIS",
+        "hypothesizedCategories": [
+          "PLAUSIBLE_GENRE_PRIOR_TOLERANCE",
+          "RHETORICAL_QUESTION_STAKES_TOLERANCE"
+        ],
+        "mechanismRationale": "The verifier output rationale found that no ungrounded plot mechanisms were violated. A plausible development hypothesis is that the verifier treated the paradox clause as standard rhetorical tension or generic genre framing common to time-travel stories, rather than an ungrounded narrative rule. The frozen evidence does not establish whether the model evaluated the paradox clause as a concrete mechanism."
+      },
+      "recoverabilityAnalysis": {
+        "signalRecoverability": "CLEARLY_RECOVERABLE_FROM_EXISTING_INPUT",
+        "interventionHypothesis": {
+          "promptClarification": "PLAUSIBLE_BUT_UNTESTED",
+          "structuredDecisionRule": "PLAUSIBLE_BUT_UNTESTED",
+          "newEvidenceFields": "NOT_INDICATED_BY_CURRENT_FAILURE_ANALYSIS",
+          "schemaChange": "NOT_INDICATED_BY_CURRENT_FAILURE_ANALYSIS"
+        },
+        "recoverabilityRationale": "The discrepancy between the visible editorial copy and the authorized source packet is directly observable by comparing the supplied source packet and editorial copy on existing text surfaces."
+      }
+    }
+  ],
+  "crossCasePatterns": {
+    "summaryCounts": {
+      "totalCases": 7,
+      "countsByObservedDefectClass": {
+        "SOURCE_UNAUTHORIZED_CONCRETIZATION": 2,
+        "UNSTATED_MOTIVE_OR_GOAL_SHARPENING": 1,
+        "FACTUAL_SUBSTITUTION": 2,
+        "FRANCHISE_OR_WORLD_KNOWLEDGE_IMPORT": 1,
+        "PLOT_MECHANISM_INFERENCE": 3,
+        "UNSUPPORTED_SETTING_CONCEALMENT_OR_CONSEQUENCE": 3,
+        "EVIDENCE_PRESENT_BUT_MODEL_UNDERWEIGHTED": 0,
+        "SOURCE_PACKET_INSUFFICIENT": 0,
+        "THRESHOLD_OR_DECISION_RULE_TOO_CONSERVATIVE": 0,
+        "HUMAN_MODEL_ONTOLOGY_MISMATCH": 0,
+        "OTHER": 0,
+        "MIXED": 4
+      },
+      "countsByRecoverabilityClass": {
+        "CLEARLY_RECOVERABLE_FROM_EXISTING_INPUT": 7,
+        "PARTIALLY_RECOVERABLE": 0,
+        "NOT_RECOVERABLE_FROM_EXISTING_INPUT": 0,
+        "AMBIGUOUS": 0
+      },
+      "countsByAffectedField": {
+        "curiosityHook": 4,
+        "description": 2,
+        "whyWatch": 1,
+        "vibeSummary": 0
+      }
+    },
+    "repeatedLinguisticAndSemanticPatterns": [
+      "Interrogative Hook Premise Inflation (4/7): Writers introduce ungrounded plot goals (concealment in Invisible Sister), micro-settings (cockpit in 7500), temporal magnifications (decades in Guardians), or sci-fi genre stakes (timeline paradox in Nothing Left to Do But Cry) inside curiosityHook questions. The verifier output rationale in each case treated curiosityHook framing as grounded in setup material.",
+      "Synonym and Cause Substitution (2/7): Writers substituted distinct concepts for authorized terms (\"civil rights\" for \"human rights\" in Born on the Fourth of July; \"orchestra disbands\" for \"laid off from his orchestra\" in Departures). The verifier accepted both as authorized without issue flags.",
+      "Alias and External Lore Import (1/7): In Batman: Under the Red Hood, the writer imported \"the Dark Knight\", which the verifier did not flag despite explicitly auditing for external lore."
+    ],
+    "subtleInferenceVsExplicitUnsupportedness": "All seven misses cluster around subtle source-boundary overextensions, narrative premise sharpening, or entity substitutions on otherwise well-grounded editorial copy, rather than gross hallucinations of nonexistent entities. In all cases, the factual defect is directly identifiable by comparing the editorial copy to the authorized source packet.",
+    "verifierMissMechanismsEpistemicStatus": "The frozen outputs do not allow us to determine whether misses arose from pretraining memory, semantic similarity tolerances, genre priors, decision thresholding, or other internal mechanisms. All verifier miss mechanism classifications in this taxonomy are labeled INFERENTIAL_DEVELOPMENT_HYPOTHESIS.",
+    "interventionHypotheses": {
+      "promptClarification": "PLAUSIBLE_BUT_UNTESTED. Stricter prompt instructions on interrogative hook premises, exact alias prohibition, and duration/entity precision are development hypotheses that require independent empirical testing.",
+      "structuredDecisionRule": "PLAUSIBLE_BUT_UNTESTED. Explicit span-level evidence pointers across all fields are plausible but have not been evaluated in this experiment.",
+      "newEvidenceFields": "NOT_INDICATED_BY_CURRENT_FAILURE_ANALYSIS. All seven discrepancies are directly observable on existing input packet surfaces.",
+      "schemaChanges": "NOT_INDICATED_BY_CURRENT_FAILURE_ANALYSIS. Existing risk categories already encompass all seven defect types.",
+      "humanReviewBoundary": "Human review remains the definitive ground truth for subtle boundary distinctions."
+    }
+  },
+  "developmentLeakageBoundary": {
+    "status": "DEVELOPMENT_EXPOSED",
+    "policy": "These exact seven candidate records are formally classified as DEVELOPMENT_EXPOSED. They MUST NOT later be reused as independent evidence of semantic improvement after prompt tuning. They may be used solely for failure analysis, taxonomy construction, and design rationale. Future tuning examples must be synthetic or separately sourced, and future semantic evaluation must be conducted on an independent dataset."
+  },
+  "governanceConsequence": {
+    "governanceState": "PAUSED_FOR_SEVERE_AUDIT_MISS",
+    "justificationBoundary": "This taxonomy does not establish semantic improvement, prompt effectiveness, prospective validation, production readiness, or promotion authorization. Governance remains strictly PAUSED_FOR_SEVERE_AUDIT_MISS."
+  }
+}
