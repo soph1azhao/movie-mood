@@ -1,0 +1,11 @@
+{
+  "candidateId": "exp100-tmdb-18129",
+  "tmdbId": 18129,
+  "requestHash": "sha256:60a3aac0a8a4c02e16f664c1cf01a180b84a37347aa63b3c49542617786dbb30",
+  "state": "COMPLETED",
+  "currentAttempt": 1,
+  "startedAt": "2026-09-17T03:19:11.970Z",
+  "dispatchedAt": "2026-09-17T03:19:11.971Z",
+  "finalDisposition": "VALID_HIGH_RISK",
+  "completedAt": "2026-09-17T03:19:27.534Z"
+}

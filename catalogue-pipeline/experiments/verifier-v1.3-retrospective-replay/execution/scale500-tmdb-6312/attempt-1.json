@@ -1,0 +1,45 @@
+{
+  "candidateId": "scale500-tmdb-6312",
+  "attemptIndex": 1,
+  "requestHash": "sha256:bf08c1e6d63540a0f53b2c834b4ecd06edef30697fc1776c5cf8a4cd2861d999",
+  "httpStatus": 200,
+  "attemptDisposition": "VALID_LOW_RISK",
+  "transportRetryable": false,
+  "outputRetryEligible": false,
+  "callCostUsd": 0.00325275,
+  "usageMetadata": {
+    "promptTokenCount": 3247,
+    "candidatesTokenCount": 218,
+    "totalTokenCount": 5372,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3247
+      }
+    ],
+    "thoughtsTokenCount": 1907,
+    "serviceTier": "standard"
+  },
+  "rawResponseSha256": "sha256:b042779d06cea1836802549588edd474c4d2950cbe9a79a96da96e876ebe1498",
+  "rawTextLength": 12430,
+  "parsed": {
+    "riskLevel": "LOW_RISK",
+    "riskCategories": [],
+    "issues": [],
+    "sourceBoundarySatisfied": true,
+    "lowRiskCoverage": {
+      "allVisibleFieldsAudited": true,
+      "interrogativePremisesAudited": true,
+      "factualModifiersAudited": true,
+      "packetFactsAudited": true,
+      "settingAndLocationAudited": true,
+      "characterMotivesAndRelationshipsAudited": true,
+      "storyMechanismsAndConstraintsAudited": true,
+      "externalLoreAndBackstoryAudited": true,
+      "spoilerAndRevealBoundariesAudited": true,
+      "viewingExperienceInferenceAudited": true,
+      "summaryRationale": "All editorial claims across description, whyWatch, curiosityHook, and vibeSummary strictly adhere to authorized packet metadata, synopsis setup, and semantic classifications without ungrounded reveals, external lore, or factual conflicts."
+    }
+  },
+  "promptDriftExceeded": false
+}

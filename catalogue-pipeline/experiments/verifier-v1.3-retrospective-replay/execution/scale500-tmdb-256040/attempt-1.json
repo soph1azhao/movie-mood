@@ -1,0 +1,45 @@
+{
+  "candidateId": "scale500-tmdb-256040",
+  "attemptIndex": 1,
+  "requestHash": "sha256:4c19160a6f5296b45fd20951327328eeb0396f10f9bca73e19f3031dc44645f8",
+  "httpStatus": 200,
+  "attemptDisposition": "VALID_LOW_RISK",
+  "transportRetryable": false,
+  "outputRetryEligible": false,
+  "callCostUsd": 0.0034365,
+  "usageMetadata": {
+    "promptTokenCount": 3332,
+    "candidatesTokenCount": 250,
+    "totalTokenCount": 8344,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3332
+      }
+    ],
+    "thoughtsTokenCount": 4762,
+    "serviceTier": "standard"
+  },
+  "rawResponseSha256": "sha256:069f86c430febc0ff7b2803df0cd471d5835c07a3eba8828dcbcc45a7815ae95",
+  "rawTextLength": 28083,
+  "parsed": {
+    "riskLevel": "LOW_RISK",
+    "riskCategories": [],
+    "issues": [],
+    "sourceBoundarySatisfied": true,
+    "lowRiskCoverage": {
+      "allVisibleFieldsAudited": true,
+      "interrogativePremisesAudited": true,
+      "factualModifiersAudited": true,
+      "packetFactsAudited": true,
+      "settingAndLocationAudited": true,
+      "characterMotivesAndRelationshipsAudited": true,
+      "storyMechanismsAndConstraintsAudited": true,
+      "externalLoreAndBackstoryAudited": true,
+      "spoilerAndRevealBoundariesAudited": true,
+      "viewingExperienceInferenceAudited": true,
+      "summaryRationale": "All visible editorial fields strictly adhere to authorized source materials. Character setups, motives, and the 25-year captivity detail are directly grounded in the overview. Director attribution and genres match packet facts. Experiential and tonal descriptors align fully with accepted semantic classifications, and the copy strictly respects spoiler boundaries by avoiding external franchise lore and concealing Shivudu's true identity."
+    }
+  },
+  "promptDriftExceeded": false
+}

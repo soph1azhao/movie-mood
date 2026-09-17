@@ -1,0 +1,45 @@
+{
+  "candidateId": "scale500-tmdb-360605",
+  "attemptIndex": 1,
+  "requestHash": "sha256:f6fe22ffa5c20dee6676d4de8fdcb812c94e538894cd3f0d1c032025884ea8e4",
+  "httpStatus": 200,
+  "attemptDisposition": "VALID_LOW_RISK",
+  "transportRetryable": false,
+  "outputRetryEligible": false,
+  "callCostUsd": 0.00329475,
+  "usageMetadata": {
+    "promptTokenCount": 3213,
+    "candidatesTokenCount": 236,
+    "totalTokenCount": 4693,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3213
+      }
+    ],
+    "thoughtsTokenCount": 1244,
+    "serviceTier": "standard"
+  },
+  "rawResponseSha256": "sha256:2dbc93a63242d83a29ee3f40a3c5bb1cb32e9fef7cdda0ebecd7d44ac1680e06",
+  "rawTextLength": 8968,
+  "parsed": {
+    "riskLevel": "LOW_RISK",
+    "riskCategories": [],
+    "issues": [],
+    "sourceBoundarySatisfied": true,
+    "lowRiskCoverage": {
+      "allVisibleFieldsAudited": true,
+      "interrogativePremisesAudited": true,
+      "factualModifiersAudited": true,
+      "packetFactsAudited": true,
+      "settingAndLocationAudited": true,
+      "characterMotivesAndRelationshipsAudited": true,
+      "storyMechanismsAndConstraintsAudited": true,
+      "externalLoreAndBackstoryAudited": true,
+      "spoilerAndRevealBoundariesAudited": true,
+      "viewingExperienceInferenceAudited": true,
+      "summaryRationale": "All editorial claims in the visible copy remain strictly grounded in the authorized overview, packet facts (director Paul Hoen, 78-minute runtime, genres Comedy/Fantasy/Adventure), and accepted semantic classifications without introducing ungrounded story mechanisms, real-world lore, or spoiler reveals."
+    }
+  },
+  "promptDriftExceeded": false
+}

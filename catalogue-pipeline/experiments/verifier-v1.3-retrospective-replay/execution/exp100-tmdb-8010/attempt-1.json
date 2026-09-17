@@ -1,0 +1,57 @@
+{
+  "candidateId": "exp100-tmdb-8010",
+  "attemptIndex": 1,
+  "requestHash": "sha256:0be2ad3a261199c30558c0cdfe5bdc13b9b808b8fd1c4f0c561b8af9a49a6da2",
+  "httpStatus": 200,
+  "attemptDisposition": "VALID_HIGH_RISK",
+  "transportRetryable": false,
+  "outputRetryEligible": false,
+  "callCostUsd": 0.00403725,
+  "usageMetadata": {
+    "promptTokenCount": 3368,
+    "candidatesTokenCount": 403,
+    "totalTokenCount": 5413,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3368
+      }
+    ],
+    "thoughtsTokenCount": 1642,
+    "serviceTier": "standard"
+  },
+  "rawResponseSha256": "sha256:ef051b603dc7f60e7526843c0a77fe53138928ffd5e651ab0a04e51a3c88679a",
+  "rawTextLength": 11639,
+  "parsed": {
+    "riskLevel": "HIGH_RISK",
+    "riskCategories": [
+      "SPECULATIVE_HOOK_PREMISE"
+    ],
+    "issues": [
+      {
+        "category": "SPECULATIVE_HOOK_PREMISE",
+        "field": "curiosityHook",
+        "claimSpan": "what lingering secret from planet Zeist brings General Katana across worlds to finish him off?",
+        "normalizedClaim": "A lingering secret from the planet Zeist brings or motivates General Katana to travel across worlds to finish off Connor MacLeod.",
+        "claimType": "SPECULATIVE_HOOK_PREMISE",
+        "checkedAuthoritySources": [
+          "allowedSourceMaterial.overview",
+          "allowedSourceMaterial.keywords"
+        ],
+        "sourceEvidence": [
+          {
+            "source": "allowedSourceMaterial.overview",
+            "supportFound": false,
+            "value": "The Prize has been won. Connor MacLeod is mortal... Now an old man on the verge of death, memories of his past on the planet Zeist resurface, where a vengeful enemy, General Katana, plots to destroy him once and for all.",
+            "notes": "The overview establishes that memories of Zeist resurface and General Katana plots MacLeod's destruction, but it never mentions or implies any 'lingering secret'."
+          }
+        ],
+        "authorityResolution": "UNSUPPORTED_MISSING_AUTHORITY",
+        "materialityRationale": "The question embeds an ungrounded factual presupposition that a 'lingering secret' exists on Zeist and serves as the catalyst driving Katana's pursuit, fabricating story causality not present in the authorized source material."
+      }
+    ],
+    "sourceBoundarySatisfied": false,
+    "lowRiskCoverage": null
+  },
+  "promptDriftExceeded": false
+}

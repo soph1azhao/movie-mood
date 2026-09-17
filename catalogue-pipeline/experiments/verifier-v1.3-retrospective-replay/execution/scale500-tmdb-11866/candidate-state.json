@@ -1,0 +1,11 @@
+{
+  "candidateId": "scale500-tmdb-11866",
+  "tmdbId": 11866,
+  "requestHash": "sha256:764c278698d2141960a396ad276ce8796325f8b5ebe884888ddd6fe57ef4d2d5",
+  "state": "COMPLETED",
+  "currentAttempt": 1,
+  "startedAt": "2026-09-17T03:24:21.733Z",
+  "dispatchedAt": "2026-09-17T03:24:21.734Z",
+  "finalDisposition": "VALID_HIGH_RISK",
+  "completedAt": "2026-09-17T03:24:30.919Z"
+}

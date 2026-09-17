@@ -1,0 +1,77 @@
+{
+  "candidateId": "scale500-tmdb-22824",
+  "attemptIndex": 1,
+  "requestHash": "sha256:f4fa98243a926233b95a2a64cbba2eff91f4525590a3f0271ebadb4328b07912",
+  "httpStatus": 200,
+  "attemptDisposition": "VALID_HIGH_RISK",
+  "transportRetryable": false,
+  "outputRetryEligible": false,
+  "callCostUsd": 0.004905,
+  "usageMetadata": {
+    "promptTokenCount": 3345,
+    "candidatesTokenCount": 639,
+    "totalTokenCount": 8216,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3345
+      }
+    ],
+    "thoughtsTokenCount": 4232,
+    "serviceTier": "standard"
+  },
+  "rawResponseSha256": "sha256:695cb7233dbf0a604c775d00a14ea8d8d2a06748fded5cbf0c20afcfb8961c74",
+  "rawTextLength": 27624,
+  "parsed": {
+    "riskLevel": "HIGH_RISK",
+    "riskCategories": [
+      "SPECULATIVE_HOOK_PREMISE",
+      "FRANCHISE_OR_EXTERNAL_LORE"
+    ],
+    "issues": [
+      {
+        "category": "SPECULATIVE_HOOK_PREMISE",
+        "field": "curiosityHook",
+        "claimSpan": "multiple patients describe eerily similar nighttime traumas",
+        "normalizedClaim": "Multiple patients describe eerily similar nighttime traumas.",
+        "claimType": "SPECULATIVE_HOOK_PREMISE",
+        "checkedAuthoritySources": [
+          "allowedSourceMaterial.overview"
+        ],
+        "sourceEvidence": [
+          {
+            "source": "allowedSourceMaterial.overview",
+            "supportFound": false,
+            "value": "Dr. Abigail Tyler, a psychologist, may be on the verge of blowing the unsolved cases wide open when, during the course of treating her patients, she finds evidence of alien abductions.",
+            "notes": "The synopsis states that Dr. Tyler discovers evidence of alien abductions while treating patients, but does not state that patients describe eerily similar nighttime traumas."
+          }
+        ],
+        "authorityResolution": "UNSUPPORTED_MISSING_AUTHORITY",
+        "materialityRationale": "The curiosity hook embeds an unsupported factual presupposition that patients reported eerily similar nighttime traumas, introducing script-level narrative specifics absent from the authorized source material."
+      },
+      {
+        "category": "FRANCHISE_OR_EXTERNAL_LORE",
+        "field": "whyWatch",
+        "claimSpan": "reframes real-world missing-persons cases",
+        "normalizedClaim": "The film reframes actual real-world missing-persons cases.",
+        "claimType": "FRANCHISE_OR_EXTERNAL_LORE",
+        "checkedAuthoritySources": [
+          "allowedSourceMaterial.overview"
+        ],
+        "sourceEvidence": [
+          {
+            "source": "allowedSourceMaterial.overview",
+            "supportFound": false,
+            "value": "Since the 1960s, a disproportionate number of the population in and around Nome, Alaska, have gone missing. Despite FBI investigations, the disappearances remain a mystery.",
+            "notes": "The authorized overview describes the premise in-universe but provides no authority to claim that the film reframes actual real-world missing-persons cases."
+          }
+        ],
+        "authorityResolution": "UNSUPPORTED_MISSING_AUTHORITY",
+        "materialityRationale": "Asserting that the film reframes real-world historical missing-persons cases relies on external lore, adaptation framing, or real-world FBI case lore that is not authorized in the packet."
+      }
+    ],
+    "sourceBoundarySatisfied": false,
+    "lowRiskCoverage": null
+  },
+  "promptDriftExceeded": false
+}

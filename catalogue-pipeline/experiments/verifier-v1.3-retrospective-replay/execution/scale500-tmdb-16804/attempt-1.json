@@ -1,0 +1,45 @@
+{
+  "candidateId": "scale500-tmdb-16804",
+  "attemptIndex": 1,
+  "requestHash": "sha256:b7549c182270727e4a9e32bf269ae02ed8aff1990df441674351e0e70818315b",
+  "httpStatus": 200,
+  "attemptDisposition": "VALID_LOW_RISK",
+  "transportRetryable": false,
+  "outputRetryEligible": false,
+  "callCostUsd": 0.0033914999999999995,
+  "usageMetadata": {
+    "promptTokenCount": 3322,
+    "candidatesTokenCount": 240,
+    "totalTokenCount": 4871,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3322
+      }
+    ],
+    "thoughtsTokenCount": 1309,
+    "serviceTier": "standard"
+  },
+  "rawResponseSha256": "sha256:abdc6c086d5fdc58f273b09bfd47b1a5e2ab242145e37a758804d14d0b4882a4",
+  "rawTextLength": 9285,
+  "parsed": {
+    "riskLevel": "LOW_RISK",
+    "riskCategories": [],
+    "issues": [],
+    "sourceBoundarySatisfied": true,
+    "lowRiskCoverage": {
+      "allVisibleFieldsAudited": true,
+      "interrogativePremisesAudited": true,
+      "factualModifiersAudited": true,
+      "packetFactsAudited": true,
+      "settingAndLocationAudited": true,
+      "characterMotivesAndRelationshipsAudited": true,
+      "storyMechanismsAndConstraintsAudited": true,
+      "externalLoreAndBackstoryAudited": true,
+      "spoilerAndRevealBoundariesAudited": true,
+      "viewingExperienceInferenceAudited": true,
+      "summaryRationale": "All visible editorial copy strictly adheres to authorized packet facts, the accepted semantic classification, and setup story material. The director attribution, country/genre descriptor ('Japanese drama'), plot premise of an unemployed cellist becoming an undertaker's assistant, and experiential tone are fully authorized without crossing spoiler boundaries or introducing external lore."
+    }
+  },
+  "promptDriftExceeded": false
+}

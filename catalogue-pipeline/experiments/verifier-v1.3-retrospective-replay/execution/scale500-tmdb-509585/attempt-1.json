@@ -1,0 +1,45 @@
+{
+  "candidateId": "scale500-tmdb-509585",
+  "attemptIndex": 1,
+  "requestHash": "sha256:aeb5579c7378e7ae0e0257e4ffe567511dfdaa97670ef888ccb23e4393b8ba29",
+  "httpStatus": 200,
+  "attemptDisposition": "VALID_LOW_RISK",
+  "transportRetryable": false,
+  "outputRetryEligible": false,
+  "callCostUsd": 0.0033749999999999995,
+  "usageMetadata": {
+    "promptTokenCount": 3185,
+    "candidatesTokenCount": 263,
+    "totalTokenCount": 9310,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3185
+      }
+    ],
+    "thoughtsTokenCount": 5862,
+    "serviceTier": "standard"
+  },
+  "rawResponseSha256": "sha256:85da98f0f6857d89e10af7b2ab2e8e264d3d5b69225464d0c1613c282a1000de",
+  "rawTextLength": 34227,
+  "parsed": {
+    "riskLevel": "LOW_RISK",
+    "riskCategories": [],
+    "issues": [],
+    "sourceBoundarySatisfied": true,
+    "lowRiskCoverage": {
+      "allVisibleFieldsAudited": true,
+      "interrogativePremisesAudited": true,
+      "factualModifiersAudited": true,
+      "packetFactsAudited": true,
+      "settingAndLocationAudited": true,
+      "characterMotivesAndRelationshipsAudited": true,
+      "storyMechanismsAndConstraintsAudited": true,
+      "externalLoreAndBackstoryAudited": true,
+      "spoilerAndRevealBoundariesAudited": true,
+      "viewingExperienceInferenceAudited": true,
+      "summaryRationale": "All visible editorial fields strictly adhere to authorized source boundaries. Factual claims, character roles, flight route, and premise details in description and curiosityHook are directly grounded in the overview. Attribution to director Patrick Vollrath and the thriller genre in whyWatch matches packet facts. Tonal and experiential descriptors across whyWatch and vibeSummary directly reflect accepted semantic classifications without introducing ungrounded external lore, late-plot spoilers, or unauthorized constraints."
+    }
+  },
+  "promptDriftExceeded": false
+}

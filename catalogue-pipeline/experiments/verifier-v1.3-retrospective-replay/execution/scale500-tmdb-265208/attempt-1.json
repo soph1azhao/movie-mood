@@ -1,0 +1,77 @@
+{
+  "candidateId": "scale500-tmdb-265208",
+  "attemptIndex": 1,
+  "requestHash": "sha256:e7031a383bfc139694f1a6b2fb6e963c03b11ab01e2493eba8187829cf5fd61e",
+  "httpStatus": 200,
+  "attemptDisposition": "VALID_HIGH_RISK",
+  "transportRetryable": false,
+  "outputRetryEligible": false,
+  "callCostUsd": 0.004836750000000001,
+  "usageMetadata": {
+    "promptTokenCount": 3259,
+    "candidatesTokenCount": 638,
+    "totalTokenCount": 7217,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3259
+      }
+    ],
+    "thoughtsTokenCount": 3320,
+    "serviceTier": "standard"
+  },
+  "rawResponseSha256": "sha256:1f89688c8d9837f8990662fd63e063844f17371be77d1abcd307175d4e85ceba",
+  "rawTextLength": 20935,
+  "parsed": {
+    "riskLevel": "HIGH_RISK",
+    "riskCategories": [
+      "SPECULATIVE_HOOK_PREMISE",
+      "RELATIONSHIP_OR_CHARACTER_MOTIVE"
+    ],
+    "issues": [
+      {
+        "category": "SPECULATIVE_HOOK_PREMISE",
+        "field": "curiosityHook",
+        "claimSpan": "your lethal talents make you a target",
+        "normalizedClaim": "The protagonist became a target because of his lethal talents.",
+        "claimType": "SPECULATIVE_HOOK_PREMISE",
+        "checkedAuthoritySources": [
+          "allowedSourceMaterial.overview"
+        ],
+        "sourceEvidence": [
+          {
+            "source": "allowedSourceMaterial.overview",
+            "supportFound": false,
+            "value": "When a Las Vegas bodyguard with lethal skills and a gambling problem gets in trouble with the mob, he has one last play… and it's all or nothing.",
+            "notes": "The source material mentions lethal skills and trouble with the mob, but does not state or presuppose that his lethal talents are what caused him to be targeted."
+          }
+        ],
+        "authorityResolution": "UNSUPPORTED_MISSING_AUTHORITY",
+        "materialityRationale": "The curiosity hook question embeds an ungrounded factual presupposition asserting that the protagonist's lethal talents caused him to become a target, which is unauthorized causal story context."
+      },
+      {
+        "category": "RELATIONSHIP_OR_CHARACTER_MOTIVE",
+        "field": "description",
+        "claimSpan": "to settle the score",
+        "normalizedClaim": "The protagonist's desperate final move is motivated by a desire to settle a score or seek retribution against the mob.",
+        "claimType": "CHARACTER_MOTIVE_OR_GOAL",
+        "checkedAuthoritySources": [
+          "allowedSourceMaterial.overview"
+        ],
+        "sourceEvidence": [
+          {
+            "source": "allowedSourceMaterial.overview",
+            "supportFound": false,
+            "value": "When a Las Vegas bodyguard with lethal skills and a gambling problem gets in trouble with the mob, he has one last play… and it's all or nothing.",
+            "notes": "The overview indicates he has 'one last play' that is 'all or nothing' after getting in trouble with the mob, but does not provide a revenge or score-settling motive."
+          }
+        ],
+        "authorityResolution": "UNSUPPORTED_MISSING_AUTHORITY",
+        "materialityRationale": "Characterizing the final gamble as an action 'to settle the score' sharpens and invents an ungrounded vengeance motive not authorized by the source packet."
+      }
+    ],
+    "sourceBoundarySatisfied": false,
+    "lowRiskCoverage": null
+  },
+  "promptDriftExceeded": false
+}

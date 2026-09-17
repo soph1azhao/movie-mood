@@ -1,0 +1,11 @@
+{
+  "candidateId": "exp100-tmdb-8010",
+  "tmdbId": 8010,
+  "requestHash": "sha256:0be2ad3a261199c30558c0cdfe5bdc13b9b808b8fd1c4f0c561b8af9a49a6da2",
+  "state": "COMPLETED",
+  "currentAttempt": 1,
+  "startedAt": "2026-09-17T03:21:53.267Z",
+  "dispatchedAt": "2026-09-17T03:21:53.267Z",
+  "finalDisposition": "VALID_HIGH_RISK",
+  "completedAt": "2026-09-17T03:22:00.204Z"
+}

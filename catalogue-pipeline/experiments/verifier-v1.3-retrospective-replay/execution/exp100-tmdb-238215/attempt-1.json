@@ -1,0 +1,100 @@
+{
+  "candidateId": "exp100-tmdb-238215",
+  "attemptIndex": 1,
+  "requestHash": "sha256:b150e76f1e8c68f7cf051664d9a6233b971b87005446422abc2f595f6992c876",
+  "httpStatus": 200,
+  "attemptDisposition": "VALID_HIGH_RISK",
+  "transportRetryable": false,
+  "outputRetryEligible": false,
+  "callCostUsd": 0.00554625,
+  "usageMetadata": {
+    "promptTokenCount": 3355,
+    "candidatesTokenCount": 808,
+    "totalTokenCount": 8387,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3355
+      }
+    ],
+    "thoughtsTokenCount": 4224,
+    "serviceTier": "standard"
+  },
+  "rawResponseSha256": "sha256:c060ec14027839e2bbf6ff853b67b71f66a6d377c525bf1caaafe3e1dde41841",
+  "rawTextLength": 26352,
+  "parsed": {
+    "riskLevel": "HIGH_RISK",
+    "riskCategories": [
+      "SPECULATIVE_HOOK_PREMISE",
+      "CONCRETE_STORY_OR_SUPERNATURAL_MECHANISM"
+    ],
+    "issues": [
+      {
+        "category": "SPECULATIVE_HOOK_PREMISE",
+        "field": "curiosityHook",
+        "claimSpan": "inhabit anyone whose shoes he mends",
+        "normalizedClaim": "Max gains the supernatural ability to inhabit the body of anyone whose shoes he mends.",
+        "claimType": "SPECULATIVE_HOOK_PREMISE",
+        "checkedAuthoritySources": [
+          "allowedSourceMaterial.overview",
+          "allowedSourceMaterial.keywords"
+        ],
+        "sourceEvidence": [
+          {
+            "source": "allowedSourceMaterial.overview",
+            "supportFound": false,
+            "value": "Max stumbles upon a magical heirloom that allows him to step into the lives of his customers and see the world in a new way.",
+            "notes": "The authorized synopsis describes stepping into the lives of his customers, but does not establish a rule or mechanism of inhabiting anyone whose shoes he mends."
+          },
+          {
+            "source": "allowedSourceMaterial.keywords",
+            "supportFound": false,
+            "value": [],
+            "notes": "No keywords are authorized in allowedSourceMaterial."
+          }
+        ],
+        "authorityResolution": "UNSUPPORTED_MISSING_AUTHORITY",
+        "materialityRationale": "The curiosity hook question embeds an ungrounded factual presupposition defining a specific supernatural trigger and mechanism not present in the authorized story source material."
+      },
+      {
+        "category": "CONCRETE_STORY_OR_SUPERNATURAL_MECHANISM",
+        "field": "whyWatch",
+        "claimSpan": "body-swapping conceit",
+        "normalizedClaim": "The film utilizes a literal body-swapping supernatural device.",
+        "claimType": "CAUSAL_OR_STORY_MECHANISM",
+        "checkedAuthoritySources": [
+          "allowedSourceMaterial.overview",
+          "allowedSourceMaterial.keywords",
+          "facts.keywords"
+        ],
+        "sourceEvidence": [
+          {
+            "source": "allowedSourceMaterial.overview",
+            "supportFound": false,
+            "value": "allows him to step into the lives of his customers and see the world in a new way. Sometimes walking in another man's shoes is the only way one can discover who they really are.",
+            "notes": "The authorized overview uses metaphorical framing ('step into the lives', 'walking in another man's shoes') rather than defining a literal body-swapping device."
+          },
+          {
+            "source": "allowedSourceMaterial.keywords",
+            "supportFound": false,
+            "value": [],
+            "notes": "No keywords are provided in the authorized source material."
+          },
+          {
+            "source": "facts.keywords",
+            "supportFound": false,
+            "value": [
+              "body switch"
+            ],
+            "notes": "Raw metadata facts outside the authorized source material do not confer authority for story mechanisms."
+          }
+        ],
+        "authorityResolution": "DISALLOWED_AUTHORITY_SOURCE",
+        "materialityRationale": "Asserting a literal 'body-swapping' mechanism relies on raw metadata excluded from allowedSourceMaterial or external parametric film knowledge."
+      }
+    ],
+    "sourceBoundarySatisfied": false,
+    "lowRiskCoverage": null
+  },
+  "promptDriftExceeded": false
+}

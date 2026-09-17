@@ -1,0 +1,27 @@
+{
+  "candidateId": "scale500-tmdb-13398",
+  "attemptIndex": 1,
+  "requestHash": "sha256:1dfd81a569174db5220fdb92172c2ea3a09781b7f3a6a13c6e98c10ae689e519",
+  "httpStatus": 200,
+  "attemptDisposition": "MALFORMED_JSON_STRING",
+  "transportRetryable": false,
+  "outputRetryEligible": true,
+  "callCostUsd": 0.0033,
+  "usageMetadata": {
+    "promptTokenCount": 3260,
+    "candidatesTokenCount": 228,
+    "totalTokenCount": 9388,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3260
+      }
+    ],
+    "thoughtsTokenCount": 5900,
+    "serviceTier": "standard"
+  },
+  "rawResponseSha256": "sha256:e4f1928fab3b97262843815f3388ce42fa54dbbb9c24af0132dc80cab5715519",
+  "rawTextLength": 33484,
+  "parsed": null,
+  "promptDriftExceeded": false
+}

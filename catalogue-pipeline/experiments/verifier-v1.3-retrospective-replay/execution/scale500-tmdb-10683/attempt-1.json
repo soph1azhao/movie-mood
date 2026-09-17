@@ -1,0 +1,45 @@
+{
+  "candidateId": "scale500-tmdb-10683",
+  "attemptIndex": 1,
+  "requestHash": "sha256:87a44e13225293b797aa08e46d895bb46a0f8d4508ce9d084db65a3192cc866f",
+  "httpStatus": 200,
+  "attemptDisposition": "VALID_LOW_RISK",
+  "transportRetryable": false,
+  "outputRetryEligible": false,
+  "callCostUsd": 0.00335475,
+  "usageMetadata": {
+    "promptTokenCount": 3353,
+    "candidatesTokenCount": 224,
+    "totalTokenCount": 4996,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3353
+      }
+    ],
+    "thoughtsTokenCount": 1419,
+    "serviceTier": "standard"
+  },
+  "rawResponseSha256": "sha256:01dc8ce7826ea7198df2c13c1b79c462b0e3d100d4434e1eef5a33ac021e720f",
+  "rawTextLength": 10217,
+  "parsed": {
+    "riskLevel": "LOW_RISK",
+    "riskCategories": [],
+    "issues": [],
+    "sourceBoundarySatisfied": true,
+    "lowRiskCoverage": {
+      "allVisibleFieldsAudited": true,
+      "interrogativePremisesAudited": true,
+      "factualModifiersAudited": true,
+      "packetFactsAudited": true,
+      "settingAndLocationAudited": true,
+      "characterMotivesAndRelationshipsAudited": true,
+      "storyMechanismsAndConstraintsAudited": true,
+      "externalLoreAndBackstoryAudited": true,
+      "spoilerAndRevealBoundariesAudited": true,
+      "viewingExperienceInferenceAudited": true,
+      "summaryRationale": "All visible copy fields remain strictly grounded within authorized packet metadata and overview boundaries. Director attribution, genre pairing, ensemble structure, and experiential descriptors align directly with authorized surfaces without leaking excluded raw keywords, external lore, or late-plot revelations."
+    }
+  },
+  "promptDriftExceeded": false
+}

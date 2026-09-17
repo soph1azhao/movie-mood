@@ -1,0 +1,61 @@
+{
+  "candidateId": "scale500-tmdb-13398",
+  "attemptIndex": 2,
+  "requestHash": "sha256:1dfd81a569174db5220fdb92172c2ea3a09781b7f3a6a13c6e98c10ae689e519",
+  "httpStatus": 200,
+  "attemptDisposition": "VALID_HIGH_RISK",
+  "transportRetryable": false,
+  "outputRetryEligible": false,
+  "callCostUsd": 0.00379875,
+  "usageMetadata": {
+    "promptTokenCount": 3260,
+    "candidatesTokenCount": 361,
+    "totalTokenCount": 6400,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3260
+      }
+    ],
+    "thoughtsTokenCount": 2779,
+    "serviceTier": "standard"
+  },
+  "rawResponseSha256": "sha256:efbef8dfcd752546153da7d11b79290a836e176340ddcbd859c0572422fdf693",
+  "rawTextLength": 17369,
+  "parsed": {
+    "riskLevel": "HIGH_RISK",
+    "riskCategories": [
+      "SCENE_OR_SCRIPT_LEVEL_EXTERNAL_DETAIL"
+    ],
+    "issues": [
+      {
+        "category": "SCENE_OR_SCRIPT_LEVEL_EXTERNAL_DETAIL",
+        "field": "whyWatch",
+        "claimSpan": "snowy margins",
+        "normalizedClaim": "The story takes place in snowy physical settings or weather in Tokyo.",
+        "claimType": "LOCATION_OR_SETTING",
+        "checkedAuthoritySources": [
+          "allowedSourceMaterial.overview",
+          "facts.keywords"
+        ],
+        "sourceEvidence": [
+          {
+            "source": "allowedSourceMaterial.overview",
+            "supportFound": false,
+            "notes": "Overview establishes Tokyo on Christmas Eve and homeless characters finding an infant in the trash, but does not state or authorize snow or snowy setting conditions."
+          },
+          {
+            "source": "facts.keywords",
+            "supportFound": false,
+            "notes": "Keywords contain holiday, christmas, and tokyo, japan, but contain no reference to snow or weather."
+          }
+        ],
+        "authorityResolution": "UNSUPPORTED_MISSING_AUTHORITY",
+        "materialityRationale": "Factual modifiers asserting specific weather or physical scene conditions require authorization from the story source material. Describing the setting as 'snowy margins' relies on external scene-level knowledge not provided in the packet."
+      }
+    ],
+    "sourceBoundarySatisfied": false,
+    "lowRiskCoverage": null
+  },
+  "promptDriftExceeded": false
+}

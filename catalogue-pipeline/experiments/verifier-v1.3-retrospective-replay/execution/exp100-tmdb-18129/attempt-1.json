@@ -1,0 +1,87 @@
+{
+  "candidateId": "exp100-tmdb-18129",
+  "attemptIndex": 1,
+  "requestHash": "sha256:60a3aac0a8a4c02e16f664c1cf01a180b84a37347aa63b3c49542617786dbb30",
+  "httpStatus": 200,
+  "attemptDisposition": "VALID_HIGH_RISK",
+  "transportRetryable": false,
+  "outputRetryEligible": false,
+  "callCostUsd": 0.004977,
+  "usageMetadata": {
+    "promptTokenCount": 3366,
+    "candidatesTokenCount": 654,
+    "totalTokenCount": 8491,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3366
+      }
+    ],
+    "thoughtsTokenCount": 4471,
+    "serviceTier": "standard"
+  },
+  "rawResponseSha256": "sha256:976f2e2ccacb8bec0462b1cf994387d8bb2dda4e4f755697dba220ee7e76558f",
+  "rawTextLength": 27097,
+  "parsed": {
+    "riskLevel": "HIGH_RISK",
+    "riskCategories": [
+      "UNRESOLVED_SOURCE_GROUNDING_CONFLICT",
+      "SPECULATIVE_HOOK_PREMISE"
+    ],
+    "issues": [
+      {
+        "category": "UNRESOLVED_SOURCE_GROUNDING_CONFLICT",
+        "field": "vibeSummary",
+        "claimSpan": "neo-noir",
+        "normalizedClaim": "The film is classified as a neo-noir subgenre.",
+        "claimType": "GENRE_OR_SUBGENRE",
+        "checkedAuthoritySources": [
+          "facts.genres",
+          "allowedSourceMaterial.keywords"
+        ],
+        "sourceEvidence": [
+          {
+            "source": "facts.genres",
+            "supportFound": false,
+            "value": [
+              "Crime",
+              "Drama"
+            ],
+            "notes": "facts.genres explicitly limits authorized categories to Crime and Drama; high-level genres strictly do not authorize specific subgenres such as neo-noir."
+          },
+          {
+            "source": "allowedSourceMaterial.keywords",
+            "supportFound": false,
+            "value": [],
+            "notes": "allowedSourceMaterial.keywords is empty and provides no subgenre authorization."
+          }
+        ],
+        "authorityResolution": "UNSUPPORTED_MISSING_AUTHORITY",
+        "materialityRationale": "Asserting 'neo-noir' as a concrete subgenre classification exceeds the scope of authorized high-level genres ('Crime', 'Drama') without authorization in allowed source material."
+      },
+      {
+        "category": "SPECULATIVE_HOOK_PREMISE",
+        "field": "curiosityHook",
+        "claimSpan": "which angle will pull him under first?",
+        "normalizedClaim": "One of the two grifters' angles will inevitably pull the protagonist under and ruin him.",
+        "claimType": "SPECULATIVE_HOOK_PREMISE",
+        "checkedAuthoritySources": [
+          "allowedSourceMaterial.overview"
+        ],
+        "sourceEvidence": [
+          {
+            "source": "allowedSourceMaterial.overview",
+            "supportFound": false,
+            "value": "A small-time conman has his loyalties torn between his estranged mother and his new girlfriend, both of whom are high-stakes grifters with their own angles to play.",
+            "notes": "The authorized overview establishes torn loyalties and conflicting angles, but does not state or presuppose an inevitable downfall or that an angle pulls him under."
+          }
+        ],
+        "authorityResolution": "UNSUPPORTED_MISSING_AUTHORITY",
+        "materialityRationale": "The interrogative hook embeds an unauthorized factual presupposition that the protagonist will inevitably be defeated or pulled under by one of the schemes, exceeding setup boundaries."
+      }
+    ],
+    "sourceBoundarySatisfied": false,
+    "lowRiskCoverage": null
+  },
+  "promptDriftExceeded": false
+}

@@ -1,0 +1,45 @@
+{
+  "candidateId": "scale500-tmdb-1492",
+  "attemptIndex": 1,
+  "requestHash": "sha256:98f084408d6fda4a6bcd6cb2f0123ed3efd0b8b7844ec6f550550f8bd627ceda",
+  "httpStatus": 200,
+  "attemptDisposition": "VALID_LOW_RISK",
+  "transportRetryable": false,
+  "outputRetryEligible": false,
+  "callCostUsd": 0.00330525,
+  "usageMetadata": {
+    "promptTokenCount": 3167,
+    "candidatesTokenCount": 248,
+    "totalTokenCount": 4958,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3167
+      }
+    ],
+    "thoughtsTokenCount": 1543,
+    "serviceTier": "standard"
+  },
+  "rawResponseSha256": "sha256:adfd3b6fbd950a4ab070fe1bf89161207f8b09eb5a867fe1e2a1ccb0b420b4f9",
+  "rawTextLength": 10827,
+  "parsed": {
+    "riskLevel": "LOW_RISK",
+    "riskCategories": [],
+    "issues": [],
+    "sourceBoundarySatisfied": true,
+    "lowRiskCoverage": {
+      "allVisibleFieldsAudited": true,
+      "interrogativePremisesAudited": true,
+      "factualModifiersAudited": true,
+      "packetFactsAudited": true,
+      "settingAndLocationAudited": true,
+      "characterMotivesAndRelationshipsAudited": true,
+      "storyMechanismsAndConstraintsAudited": true,
+      "externalLoreAndBackstoryAudited": true,
+      "spoilerAndRevealBoundariesAudited": true,
+      "viewingExperienceInferenceAudited": true,
+      "summaryRationale": "All visible editorial copy remains strictly within authorized packet boundaries. Factual claims regarding director Ridley Scott, Columbus's expedition, reaching the New World, and the subsequent impact on indigenous populations are fully grounded in packet facts and the authorized synopsis. Stylistic framing and viewing guidance accurately reflect accepted semantic classifications without introducing ungrounded plot mechanisms, deadlines, or spoilers."
+    }
+  },
+  "promptDriftExceeded": false
+}

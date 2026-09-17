@@ -1,0 +1,45 @@
+{
+  "candidateId": "scale500-tmdb-40662",
+  "attemptIndex": 1,
+  "requestHash": "sha256:347d2de8d4db76e195e083768741cd59c51ed48b5e752272308354b603e4ffe2",
+  "httpStatus": 200,
+  "attemptDisposition": "VALID_LOW_RISK",
+  "transportRetryable": false,
+  "outputRetryEligible": false,
+  "callCostUsd": 0.003456,
+  "usageMetadata": {
+    "promptTokenCount": 3313,
+    "candidatesTokenCount": 259,
+    "totalTokenCount": 4649,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3313
+      }
+    ],
+    "thoughtsTokenCount": 1077,
+    "serviceTier": "standard"
+  },
+  "rawResponseSha256": "sha256:267ad2d468e48038f4aa67db83d39cad2fe5edf8564d04777d06a867e641fff6",
+  "rawTextLength": 7831,
+  "parsed": {
+    "riskLevel": "LOW_RISK",
+    "riskCategories": [],
+    "issues": [],
+    "sourceBoundarySatisfied": true,
+    "lowRiskCoverage": {
+      "allVisibleFieldsAudited": true,
+      "interrogativePremisesAudited": true,
+      "factualModifiersAudited": true,
+      "packetFactsAudited": true,
+      "settingAndLocationAudited": true,
+      "characterMotivesAndRelationshipsAudited": true,
+      "storyMechanismsAndConstraintsAudited": true,
+      "externalLoreAndBackstoryAudited": true,
+      "spoilerAndRevealBoundariesAudited": true,
+      "viewingExperienceInferenceAudited": true,
+      "summaryRationale": "All editorial claims strictly adhere to authorized source packet boundaries: the 75-minute runtime matches facts.runtimeMinutes; genres (Animation, Crime, Mystery) are faithfully represented; plot references to Red Hood cleaning up Gotham with Batman's efficiency without his ethical code accurately reflect the synopsis; no external franchise lore or hidden identity spoilers are introduced; and tone/viewing attributes align directly with accepted semantic classifications."
+    }
+  },
+  "promptDriftExceeded": false
+}

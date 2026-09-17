@@ -1,0 +1,70 @@
+{
+  "candidateId": "scale500-tmdb-445",
+  "attemptIndex": 1,
+  "requestHash": "sha256:8190c93ffc235c425328f9552993b0ff273ade76fd76242c543706d294884692",
+  "httpStatus": 200,
+  "attemptDisposition": "VALID_HIGH_RISK",
+  "transportRetryable": false,
+  "outputRetryEligible": false,
+  "callCostUsd": 0.0039105,
+  "usageMetadata": {
+    "promptTokenCount": 3289,
+    "candidatesTokenCount": 385,
+    "totalTokenCount": 5475,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3289
+      }
+    ],
+    "thoughtsTokenCount": 1801,
+    "serviceTier": "standard"
+  },
+  "rawResponseSha256": "sha256:2dc4c11a0c64eac4dedbe48fdeb51d43055163e4a6d500710af3779b385b1060",
+  "rawTextLength": 12367,
+  "parsed": {
+    "riskLevel": "HIGH_RISK",
+    "riskCategories": [
+      "UNAUTHORIZED_SOURCE_BOUNDARY_CLAIM"
+    ],
+    "issues": [
+      {
+        "category": "UNAUTHORIZED_SOURCE_BOUNDARY_CLAIM",
+        "field": "whyWatch",
+        "claimSpan": "French mystery",
+        "normalizedClaim": "The film is a single-origin French mystery production.",
+        "claimType": "NATIONALITY_OR_PRODUCTION_COUNTRY",
+        "checkedAuthoritySources": [
+          "facts.countries",
+          "facts.spokenLanguages"
+        ],
+        "sourceEvidence": [
+          {
+            "source": "facts.countries",
+            "supportFound": false,
+            "value": [
+              "Austria",
+              "France",
+              "Germany",
+              "Italy"
+            ],
+            "notes": "The film is an Austrian, French, German, and Italian co-production; collapsing a multi-country co-production into a single-country nationality descriptor is strictly unauthorized."
+          },
+          {
+            "source": "facts.spokenLanguages",
+            "supportFound": false,
+            "value": [
+              "French"
+            ],
+            "notes": "Spoken language does not authorize production country or nationality claims."
+          }
+        ],
+        "authorityResolution": "DISALLOWED_AUTHORITY_SOURCE",
+        "materialityRationale": "Describing the four-country co-production as a 'French mystery' improperly collapses multi-country production metadata into a single nationality descriptor in direct violation of Surface 1 authority rules."
+      }
+    ],
+    "sourceBoundarySatisfied": false,
+    "lowRiskCoverage": null
+  },
+  "promptDriftExceeded": false
+}

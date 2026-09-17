@@ -1,0 +1,56 @@
+{
+  "candidateId": "scale500-tmdb-14283",
+  "attemptIndex": 1,
+  "requestHash": "sha256:a49a14715303136b3986929af0539424206c12f10c7f9e349d9396144907b7a7",
+  "httpStatus": 200,
+  "attemptDisposition": "VALID_HIGH_RISK",
+  "transportRetryable": false,
+  "outputRetryEligible": false,
+  "callCostUsd": 0.003978000000000001,
+  "usageMetadata": {
+    "promptTokenCount": 3274,
+    "candidatesTokenCount": 406,
+    "totalTokenCount": 8960,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3274
+      }
+    ],
+    "thoughtsTokenCount": 5280,
+    "serviceTier": "standard"
+  },
+  "rawResponseSha256": "sha256:9de862a490d7f0e9379bd2ac0505c1e297b932e8223f06525c8e2a433fd507d0",
+  "rawTextLength": 30504,
+  "parsed": {
+    "riskLevel": "HIGH_RISK",
+    "riskCategories": [
+      "SPECULATIVE_HOOK_PREMISE"
+    ],
+    "issues": [
+      {
+        "category": "SPECULATIVE_HOOK_PREMISE",
+        "field": "curiosityHook",
+        "claimSpan": "what dark secret from its 1681 creation left a trail of misfortune?",
+        "normalizedClaim": "A dark secret from the violin's 1681 creation exists and caused a trail of misfortune.",
+        "claimType": "SPECULATIVE_HOOK_PREMISE",
+        "checkedAuthoritySources": [
+          "allowedSourceMaterial.overview"
+        ],
+        "sourceEvidence": [
+          {
+            "source": "allowedSourceMaterial.overview",
+            "supportFound": false,
+            "value": "300 years of a remarkable musical instrument. Crafted by the Italian master Bussotti (Cecchi) in 1681, the red violin has traveled through Austria, England, China, and Canada, leaving both beauty and tragedy in its wake. In Montreal, Samuel L Jackson plays an appraiser going over its complex history.",
+            "notes": "The source material mentions that the violin left beauty and tragedy in its wake, but does not state or authorize that a dark secret from its 1681 creation caused this misfortune."
+          }
+        ],
+        "authorityResolution": "UNSUPPORTED_MISSING_AUTHORITY",
+        "materialityRationale": "The question embeds an ungrounded factual presupposition that a dark secret from the instrument's 1681 creation caused the trail of tragedy, introducing speculative plot mechanisms not authorized by the packet."
+      }
+    ],
+    "sourceBoundarySatisfied": false,
+    "lowRiskCoverage": null
+  },
+  "promptDriftExceeded": false
+}

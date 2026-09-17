@@ -1,0 +1,11 @@
+{
+  "candidateId": "exp100-tmdb-238215",
+  "tmdbId": 238215,
+  "requestHash": "sha256:b150e76f1e8c68f7cf051664d9a6233b971b87005446422abc2f595f6992c876",
+  "state": "COMPLETED",
+  "currentAttempt": 1,
+  "startedAt": "2026-09-17T03:22:30.536Z",
+  "dispatchedAt": "2026-09-17T03:22:30.537Z",
+  "finalDisposition": "VALID_HIGH_RISK",
+  "completedAt": "2026-09-17T03:22:44.359Z"
+}

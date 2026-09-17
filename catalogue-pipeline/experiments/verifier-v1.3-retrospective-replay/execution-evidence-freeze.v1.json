@@ -1,0 +1,454 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "activity": "RETROSPECTIVE_DEVELOPMENT_REPLAY_V1_3",
+  "classification": "RETROSPECTIVE_DEVELOPMENT_EXECUTION_EVIDENCE",
+  "governanceState": "PAUSED_FOR_SEVERE_AUDIT_MISS",
+  "parentHarnessCommit": "a55e8a4",
+  "modelId": "gemini-3.8-flash",
+  "candidateCount": 30,
+  "primaryCalls": 30,
+  "technicalRetries": 7,
+  "totalExternalCalls": 37,
+  "finalDispositionCounts": {
+    "VALID_LOW_RISK": 18,
+    "VALID_HIGH_RISK": 9,
+    "MALFORMED_JSON_STRING": 3,
+    "SCHEMA_INVALID": 0,
+    "SEMANTICALLY_INVALID": 0
+  },
+  "accumulatedCostUsd": 0.13484925,
+  "severeCaseOutcome": "DETECTED_HIGH_RISK",
+  "systemicInvalidCount": 0,
+  "executionLedgerSha256": "sha256:9a1e0098935807935d9124a148b92f5363bade6516d80f742f3e160fead76888",
+  "executionFileCount": 105,
+  "malformedFinalCandidates": [
+    "scale500-tmdb-1563",
+    "scale500-tmdb-127533",
+    "scale500-tmdb-9725"
+  ],
+  "retriedThenValidCandidates": [
+    "scale500-tmdb-13398"
+  ],
+  "executionFiles": [
+    {
+      "relativePath": "execution-ledger.json",
+      "sha256": "sha256:9a1e0098935807935d9124a148b92f5363bade6516d80f742f3e160fead76888"
+    },
+    {
+      "relativePath": "exp100-tmdb-18129/attempt-1.json",
+      "sha256": "sha256:44efbc9f17c7611aa05d9a09235199159e3dafbc6682f9c36f7ffc0e951a05f8"
+    },
+    {
+      "relativePath": "exp100-tmdb-18129/attempt-1.raw.json",
+      "sha256": "sha256:0afb43d7fccac1cf5e58d015e608452c23cdb31f89778833fb1984634d1e5fcd"
+    },
+    {
+      "relativePath": "exp100-tmdb-18129/candidate-state.json",
+      "sha256": "sha256:ae970c88ddfd6ba05f6a1735fcef5ab2f14436f79c35a311afcaacd49a79ecc1"
+    },
+    {
+      "relativePath": "exp100-tmdb-238215/attempt-1.json",
+      "sha256": "sha256:c8592527f2a0571d777ed73d857b9e4daa9e513f29d2162c65203e95a0dad177"
+    },
+    {
+      "relativePath": "exp100-tmdb-238215/attempt-1.raw.json",
+      "sha256": "sha256:61977025e7c99724a12897b16bcf83bf62d049f46a0e401696cd95316bd77746"
+    },
+    {
+      "relativePath": "exp100-tmdb-238215/candidate-state.json",
+      "sha256": "sha256:a6b47524fa35c902b934000bee28c1f814efdf9e921c272e9adf928acaf77efd"
+    },
+    {
+      "relativePath": "exp100-tmdb-8010/attempt-1.json",
+      "sha256": "sha256:f263a6683a648156ade0e659657fac4b8e39c6e34d321e0788ddce29b4704426"
+    },
+    {
+      "relativePath": "exp100-tmdb-8010/attempt-1.raw.json",
+      "sha256": "sha256:b7e259db634e8c39d7ccabfe556887a79192ab32a9c14c74150cb1fb5c6f5fd1"
+    },
+    {
+      "relativePath": "exp100-tmdb-8010/candidate-state.json",
+      "sha256": "sha256:d623b45bed84e52e0d2349cacf3b586fe037c4ee8d447b76286c167c3b51c35e"
+    },
+    {
+      "relativePath": "scale500-tmdb-10683/attempt-1.json",
+      "sha256": "sha256:37c36fff91a1d4f9ac01c5859927a4c02338267e691655ddb6791dd536955512"
+    },
+    {
+      "relativePath": "scale500-tmdb-10683/attempt-1.raw.json",
+      "sha256": "sha256:54743621dd96c86c12a87eb757f496a2894621d29645c3b8e3337766607497df"
+    },
+    {
+      "relativePath": "scale500-tmdb-10683/candidate-state.json",
+      "sha256": "sha256:149f2bcd33d6957c4e3b07e3f6ca64e97efee5926a49e66194db553d25d311e0"
+    },
+    {
+      "relativePath": "scale500-tmdb-11866/attempt-1.json",
+      "sha256": "sha256:65f44586bb176e803cbf7038aa0c576b3f08940cc3c93541e48bdbee5a8ace60"
+    },
+    {
+      "relativePath": "scale500-tmdb-11866/attempt-1.raw.json",
+      "sha256": "sha256:6d70262b9259d5d919f78294a7cc77ea8e0a9862a99f327250fd6a2951175879"
+    },
+    {
+      "relativePath": "scale500-tmdb-11866/candidate-state.json",
+      "sha256": "sha256:6127aa9d18c85d314d9795b547c2f228b52d696c633ecc8dfc77c43dc960cb50"
+    },
+    {
+      "relativePath": "scale500-tmdb-127533/attempt-1.json",
+      "sha256": "sha256:c8ecb17e9065cee5305f0bb1058ec89c048031743961ecfa30e9d81e09b7a651"
+    },
+    {
+      "relativePath": "scale500-tmdb-127533/attempt-1.raw.json",
+      "sha256": "sha256:f703a76d98bca71ee39f8ad0f1c2586ea6fa8acddcc9c154a72eab0b4890bc42"
+    },
+    {
+      "relativePath": "scale500-tmdb-127533/attempt-2.json",
+      "sha256": "sha256:2719c05dc534076bde2f20808394b70ad772cb09cb55bbdc3adaee9168c6363f"
+    },
+    {
+      "relativePath": "scale500-tmdb-127533/attempt-2.raw.json",
+      "sha256": "sha256:4185e063a4b7414d19bd79cf258cb119135fb106383adbc9d5e805fe9644a25b"
+    },
+    {
+      "relativePath": "scale500-tmdb-127533/attempt-3.json",
+      "sha256": "sha256:8b3011098034aadf9e7e684a43ef354a0f1d8f83574391a1bbfb4212bafefb65"
+    },
+    {
+      "relativePath": "scale500-tmdb-127533/attempt-3.raw.json",
+      "sha256": "sha256:baf2abaafb346934b0a1fba0c0bc1ae734d0a5b04e949d75f56e9fe146ee6a30"
+    },
+    {
+      "relativePath": "scale500-tmdb-127533/candidate-state.json",
+      "sha256": "sha256:5b227064b3ca9c5f7e83224adc883419433c9c84b4d9f9d080b9de6a44a500ff"
+    },
+    {
+      "relativePath": "scale500-tmdb-13398/attempt-1.json",
+      "sha256": "sha256:4ec08e5cd099820f8467a28c42c29f49bc08bbe27369f81b29be553f15252a55"
+    },
+    {
+      "relativePath": "scale500-tmdb-13398/attempt-1.raw.json",
+      "sha256": "sha256:864151fa3a63e65d4aaffdcb59de46c801019b6634f663a1cf509ed2fcef8e13"
+    },
+    {
+      "relativePath": "scale500-tmdb-13398/attempt-2.json",
+      "sha256": "sha256:f7babd5b5f668b4d64b35f4d9e616c7af7d789a7d4366294d63e0fbe3d2a6e4a"
+    },
+    {
+      "relativePath": "scale500-tmdb-13398/attempt-2.raw.json",
+      "sha256": "sha256:490dadf1f06d8437ce44b52679eafeb303b22fdd1c0811b268dbce13020fe6ce"
+    },
+    {
+      "relativePath": "scale500-tmdb-13398/candidate-state.json",
+      "sha256": "sha256:d4e2e9872140688336e932b7f77f0b9ab2a07f8b70cc6658218cc18c465b62d7"
+    },
+    {
+      "relativePath": "scale500-tmdb-14283/attempt-1.json",
+      "sha256": "sha256:fac55df0fc041e9601ae9847ecc137d9f103d6a0e5eb42048d9774fc91178e9c"
+    },
+    {
+      "relativePath": "scale500-tmdb-14283/attempt-1.raw.json",
+      "sha256": "sha256:97037eadb1a7dd3c5ebfa27dedc198b6cdcf37a3fe7bf3f9c9f9b33682859e19"
+    },
+    {
+      "relativePath": "scale500-tmdb-14283/candidate-state.json",
+      "sha256": "sha256:4ac5351a95420105b1e2f133b7551f8cb87ea011c2f852376b3c0912936a1a42"
+    },
+    {
+      "relativePath": "scale500-tmdb-1492/attempt-1.json",
+      "sha256": "sha256:78b1c66f71fe94e2854fa6b92c041004b59bc171a92addd1ee62c03265b43c90"
+    },
+    {
+      "relativePath": "scale500-tmdb-1492/attempt-1.raw.json",
+      "sha256": "sha256:e83e24de2a5160ed84bb087b88cb09126d4c68cb81e054ce956a45678e7fda3f"
+    },
+    {
+      "relativePath": "scale500-tmdb-1492/candidate-state.json",
+      "sha256": "sha256:edac01d4edeab40e7800e394aacc9e22a2f35cf3e1da59a441703633f17a5bce"
+    },
+    {
+      "relativePath": "scale500-tmdb-1563/attempt-1.json",
+      "sha256": "sha256:47d21439a1d1cae5aee1b0f998605e1d1b677b75c5e1bceee5fc54ded9118b47"
+    },
+    {
+      "relativePath": "scale500-tmdb-1563/attempt-1.raw.json",
+      "sha256": "sha256:9525c617e0688d4a490c873e0a1faa38b9d25addc1cd6d3e573d049b72092c90"
+    },
+    {
+      "relativePath": "scale500-tmdb-1563/attempt-2.json",
+      "sha256": "sha256:7b0a6095913d06fa8ee5c8e19d181f5f596346df95826f3af56ab20b64a3ca5a"
+    },
+    {
+      "relativePath": "scale500-tmdb-1563/attempt-2.raw.json",
+      "sha256": "sha256:e1866898aa76fcbe4b0abd498b81679d7aaf04244b27d87bed9c248a7c1b1c06"
+    },
+    {
+      "relativePath": "scale500-tmdb-1563/attempt-3.json",
+      "sha256": "sha256:0a6475091f70bfe4db6819c6ed0e815bb82d836ec7c2d5fd59c477e12ddbddc4"
+    },
+    {
+      "relativePath": "scale500-tmdb-1563/attempt-3.raw.json",
+      "sha256": "sha256:51d8a35ad5a2cb67519aa34f334761237c74b267ce1bb31399ab3089a5d3733f"
+    },
+    {
+      "relativePath": "scale500-tmdb-1563/candidate-state.json",
+      "sha256": "sha256:f785509df1da35b55bfcc27d2e9b05a7f0e76121433451d8e965c58f38e63fd3"
+    },
+    {
+      "relativePath": "scale500-tmdb-16804/attempt-1.json",
+      "sha256": "sha256:4aa233cc6f16ba0424a3167c4c4f98a23adcaddd32e4df69a8aefae445f98948"
+    },
+    {
+      "relativePath": "scale500-tmdb-16804/attempt-1.raw.json",
+      "sha256": "sha256:8a517e52b11099c009fb352ae40a11341cf8adc16e2c23eae7f2ea86649d7a83"
+    },
+    {
+      "relativePath": "scale500-tmdb-16804/candidate-state.json",
+      "sha256": "sha256:12466d5fe848c5bc3d42aac2bf1c1388181c4651531128f08693f1e0f0a670cf"
+    },
+    {
+      "relativePath": "scale500-tmdb-18937/attempt-1.json",
+      "sha256": "sha256:77ce7522d849bc1348aadb1bb54ccb468ccb812952b4ce7048c8ca559df579c1"
+    },
+    {
+      "relativePath": "scale500-tmdb-18937/attempt-1.raw.json",
+      "sha256": "sha256:b018bc532f073778d6804e071f3becdf1762b3dabcc15b4f66baab45e1c363ae"
+    },
+    {
+      "relativePath": "scale500-tmdb-18937/candidate-state.json",
+      "sha256": "sha256:ac0a8046ebfb17ad6729e6470ccf3bfd894e2704b9aef9348dfbbe5b551080e9"
+    },
+    {
+      "relativePath": "scale500-tmdb-22824/attempt-1.json",
+      "sha256": "sha256:b7b44700bbc0041427ce2ae93ca06f245311fa2d0de1a1a69c9d5ce61b88b178"
+    },
+    {
+      "relativePath": "scale500-tmdb-22824/attempt-1.raw.json",
+      "sha256": "sha256:d7b5164522c7a4b75c4dc41fb65da990262dad791997af46fdfd5b1446a345c8"
+    },
+    {
+      "relativePath": "scale500-tmdb-22824/candidate-state.json",
+      "sha256": "sha256:ed52f310ab7e03a473c43e57aa9d7673fef8019d5de5d02370b8f2381b4519fc"
+    },
+    {
+      "relativePath": "scale500-tmdb-243684/attempt-1.json",
+      "sha256": "sha256:66104aad445a029aa651d26ae2218e9bc6df46c73ca64326c1eaf1e418f8dc77"
+    },
+    {
+      "relativePath": "scale500-tmdb-243684/attempt-1.raw.json",
+      "sha256": "sha256:39856cba55f4d3a07c4a84cf93accc82637979df9ac728ee7c3585f9cba1f326"
+    },
+    {
+      "relativePath": "scale500-tmdb-243684/candidate-state.json",
+      "sha256": "sha256:54827ecf3c0c3c613921df921a9874cdf08694d880c4d6d6e58bf5e5131865b3"
+    },
+    {
+      "relativePath": "scale500-tmdb-256040/attempt-1.json",
+      "sha256": "sha256:562727acf0c160513ac4e57c71576721726987da65d20cc291d77e9d5d5fd934"
+    },
+    {
+      "relativePath": "scale500-tmdb-256040/attempt-1.raw.json",
+      "sha256": "sha256:c2b7d1bf528a904af8fa267db3ace9ffa120306d964372ffacf70faef4a606b1"
+    },
+    {
+      "relativePath": "scale500-tmdb-256040/candidate-state.json",
+      "sha256": "sha256:2a902e7ffb42b4e4493218e7d37dd66ed1ce670b24978725b7b7b1e978ced1fe"
+    },
+    {
+      "relativePath": "scale500-tmdb-2604/attempt-1.json",
+      "sha256": "sha256:e46a64a9151483d359bc24d7dabade2b2e14b5b2c1875f15ea87116a90a0fb13"
+    },
+    {
+      "relativePath": "scale500-tmdb-2604/attempt-1.raw.json",
+      "sha256": "sha256:09097e38ab84c5177075b33c7114f9b144f3ffeae28cae24446cd70d4c968511"
+    },
+    {
+      "relativePath": "scale500-tmdb-2604/candidate-state.json",
+      "sha256": "sha256:984893867924f5589069ba37184cc0b89daf07a21f735047e6f845e59db7e4cd"
+    },
+    {
+      "relativePath": "scale500-tmdb-265208/attempt-1.json",
+      "sha256": "sha256:2e01c6bb76bb7c11924f75b5553ebc2567023aaba8b9cefb42e08d4695ce9182"
+    },
+    {
+      "relativePath": "scale500-tmdb-265208/attempt-1.raw.json",
+      "sha256": "sha256:c21a5feb2fa84d906dae587b4b254d56028cbc25ea4d06cbf8027255cfbc3e04"
+    },
+    {
+      "relativePath": "scale500-tmdb-265208/candidate-state.json",
+      "sha256": "sha256:ce7f593c5bfa1701fc6832b581cbd90c42d06882d747e6ed28b458af6ec23e64"
+    },
+    {
+      "relativePath": "scale500-tmdb-27670/attempt-1.json",
+      "sha256": "sha256:2fa0f99065de4ee9afb5120d50d3587d93871f2a1b6342f768a1a52a550969fa"
+    },
+    {
+      "relativePath": "scale500-tmdb-27670/attempt-1.raw.json",
+      "sha256": "sha256:5be394fd81f01b48034f749f3e8cc05399d746097d3e9e7a989d461c9cad2a30"
+    },
+    {
+      "relativePath": "scale500-tmdb-27670/candidate-state.json",
+      "sha256": "sha256:928c59784faab6667db7e04b5092e26bce3ddc5c6aabedc4e388aa3636a8e4ff"
+    },
+    {
+      "relativePath": "scale500-tmdb-345914/attempt-1.json",
+      "sha256": "sha256:508ed6f563ea3f8ee3b3eded7aadae2143023de6fc89d695e8e1ab0d424582f1"
+    },
+    {
+      "relativePath": "scale500-tmdb-345914/attempt-1.raw.json",
+      "sha256": "sha256:46d0358120401e0854fd10f69d327413c1032114eed579572c989a6bb41ecfac"
+    },
+    {
+      "relativePath": "scale500-tmdb-345914/candidate-state.json",
+      "sha256": "sha256:af80c975002519f502529ad21da4b730661de4d30e48b3ac406a4d978bc5642d"
+    },
+    {
+      "relativePath": "scale500-tmdb-354556/attempt-1.json",
+      "sha256": "sha256:41d6e9e3ca70581876e0c1ff28f224ae251a4a67ae96d8bc776835f001e117d2"
+    },
+    {
+      "relativePath": "scale500-tmdb-354556/attempt-1.raw.json",
+      "sha256": "sha256:e56f4fb9d783908a9cf0c7b084e78e6a1d2e6415b84a211b88fac610a1197536"
+    },
+    {
+      "relativePath": "scale500-tmdb-354556/candidate-state.json",
+      "sha256": "sha256:cd8d45988a8ca06ac0675d3a3c80196b111fef3014dfa9d7876b5a950e45e2c7"
+    },
+    {
+      "relativePath": "scale500-tmdb-360605/attempt-1.json",
+      "sha256": "sha256:d41c253703ddf0d09037709c5c13959555ad4f711c986d33bb6ec15e532a7321"
+    },
+    {
+      "relativePath": "scale500-tmdb-360605/attempt-1.raw.json",
+      "sha256": "sha256:9cecc103942da557852e7520eda3466796aabd1bae0f4ec3dcd0986051ad50a8"
+    },
+    {
+      "relativePath": "scale500-tmdb-360605/candidate-state.json",
+      "sha256": "sha256:8e8e96d16e7959eb2f18262f577f3a20c7b7d28c3fd6a0396a552ad52e03b094"
+    },
+    {
+      "relativePath": "scale500-tmdb-40662/attempt-1.json",
+      "sha256": "sha256:1d4701eeba74009c81e5e41b7b413e06693f369095f906d41c528acfd0203fdc"
+    },
+    {
+      "relativePath": "scale500-tmdb-40662/attempt-1.raw.json",
+      "sha256": "sha256:7849b288859bd6771ff68b4c07a32403463bd90e9566f4b09ea641807c2089b7"
+    },
+    {
+      "relativePath": "scale500-tmdb-40662/candidate-state.json",
+      "sha256": "sha256:d2797a0298121eb9d8e1ddba152b4e81a2303040b5b96fa766e6f875c93538ca"
+    },
+    {
+      "relativePath": "scale500-tmdb-407451/attempt-1.json",
+      "sha256": "sha256:870d67f6649254dfc8fb946105761bc40f4a5db175b9eba712b8884df62865f7"
+    },
+    {
+      "relativePath": "scale500-tmdb-407451/attempt-1.raw.json",
+      "sha256": "sha256:07e2c42d2cd129820c0d4ae8d6e0f81d895b4fd0f45163eb5f8f46d594c6b680"
+    },
+    {
+      "relativePath": "scale500-tmdb-407451/candidate-state.json",
+      "sha256": "sha256:e5122880323405ed95c96fe4244c6179f00102377a49629bf98554e322c1ac37"
+    },
+    {
+      "relativePath": "scale500-tmdb-44379/attempt-1.json",
+      "sha256": "sha256:dbc1e60dfbffc0c751ae2d92b60e24d5afb35e23552c54e1068bbbdc8919d150"
+    },
+    {
+      "relativePath": "scale500-tmdb-44379/attempt-1.raw.json",
+      "sha256": "sha256:22559d2a37008d34725eca35e0e69198efde5c3434807e6c558d9fcf78ce5f61"
+    },
+    {
+      "relativePath": "scale500-tmdb-44379/candidate-state.json",
+      "sha256": "sha256:e4e6d2dcbea1418e8f10a16e4c0fb0b61e2f789c14010d08066e78f47020c79d"
+    },
+    {
+      "relativePath": "scale500-tmdb-445/attempt-1.json",
+      "sha256": "sha256:d3a544906c2145b8ca6c5687b38dcb72a81094a9d078608914f43d083fc68211"
+    },
+    {
+      "relativePath": "scale500-tmdb-445/attempt-1.raw.json",
+      "sha256": "sha256:8e168af06001663ae99f93b24e1d208dc9b1c1c4cbca51b0d15d562c5427d312"
+    },
+    {
+      "relativePath": "scale500-tmdb-445/candidate-state.json",
+      "sha256": "sha256:5582676f399f90d828150e256ee8ea1ff2013d10a64069bc3efb2426e5dc240f"
+    },
+    {
+      "relativePath": "scale500-tmdb-509585/attempt-1.json",
+      "sha256": "sha256:3bfd6e315444b14842c9da94ed6ce1385fc1f22939df7c65fe64a31fce306565"
+    },
+    {
+      "relativePath": "scale500-tmdb-509585/attempt-1.raw.json",
+      "sha256": "sha256:de0cde41e07883dea3a33932489f51223c261ea7d29c236c178f7620fcd417f3"
+    },
+    {
+      "relativePath": "scale500-tmdb-509585/candidate-state.json",
+      "sha256": "sha256:c18bcb00eb1b9711a1206cb176146ae84b3a7545348d756fc98fe86f5de6bf9f"
+    },
+    {
+      "relativePath": "scale500-tmdb-578189/attempt-1.json",
+      "sha256": "sha256:7c3b155b382868313a5b2441b3eb69ff63f0b6fea5eaa54a2ddbf785f5db9ccd"
+    },
+    {
+      "relativePath": "scale500-tmdb-578189/attempt-1.raw.json",
+      "sha256": "sha256:6cc15aa9ba5f9ad01e23c0ea0026e88d240cf67c63c1339c87d098c222a1f7ed"
+    },
+    {
+      "relativePath": "scale500-tmdb-578189/candidate-state.json",
+      "sha256": "sha256:0fc2a788709866658e7d6bc897abcd8639ea91b2fd47f9bf19a43d8dba78e2d2"
+    },
+    {
+      "relativePath": "scale500-tmdb-6312/attempt-1.json",
+      "sha256": "sha256:49460cfe8453bc41fd341601cdd13cf1b5295f982b58e4ee3732ca963c8c3d10"
+    },
+    {
+      "relativePath": "scale500-tmdb-6312/attempt-1.raw.json",
+      "sha256": "sha256:e2c047b0a79430ed94349e39d057206f76802616114dfa8af443aea9b352676a"
+    },
+    {
+      "relativePath": "scale500-tmdb-6312/candidate-state.json",
+      "sha256": "sha256:df6634234d3e90d46a034cb6bae9f1b7652021d9697fbaaab975507c1d352288"
+    },
+    {
+      "relativePath": "scale500-tmdb-9096/attempt-1.json",
+      "sha256": "sha256:24a70493edba03dc24d9f46c850e5b86ccc9114489fc967f6072124331a1fb36"
+    },
+    {
+      "relativePath": "scale500-tmdb-9096/attempt-1.raw.json",
+      "sha256": "sha256:f5c1ed126fe68bdd9058fbde06e2af016054292daabfa931aeda11eb1354ef28"
+    },
+    {
+      "relativePath": "scale500-tmdb-9096/candidate-state.json",
+      "sha256": "sha256:8ca41b58d8121131a15f88984a62855d9f6d4fcac295a82ce2758a1297ae6bca"
+    },
+    {
+      "relativePath": "scale500-tmdb-9725/attempt-1.json",
+      "sha256": "sha256:1682df44a08ba7fc2684c818baa5b99d8c535c990fba5ea26d5524ca7207ea09"
+    },
+    {
+      "relativePath": "scale500-tmdb-9725/attempt-1.raw.json",
+      "sha256": "sha256:21afe841916cde98199e8ca329b15e17e9b707545c9d8a197226a67874692df7"
+    },
+    {
+      "relativePath": "scale500-tmdb-9725/attempt-2.json",
+      "sha256": "sha256:89b51ead3fd59608dff2a1e627cc4fbf07105eaad6aafb9b0eba03778fad92e6"
+    },
+    {
+      "relativePath": "scale500-tmdb-9725/attempt-2.raw.json",
+      "sha256": "sha256:a35d97c93e9ca14f27a772e6c0ca82b8ba3f23384e7057af22bd9875724ac39c"
+    },
+    {
+      "relativePath": "scale500-tmdb-9725/attempt-3.json",
+      "sha256": "sha256:f59fd49629be3b4a591fea11bb5076724fae97a3bd2cc63baed65e92c6d25026"
+    },
+    {
+      "relativePath": "scale500-tmdb-9725/attempt-3.raw.json",
+      "sha256": "sha256:2ac03835ed4e128bee1f9150e3d62df3f63625e5c78981575ef02a1dea2226d2"
+    },
+    {
+      "relativePath": "scale500-tmdb-9725/candidate-state.json",
+      "sha256": "sha256:ffeb349535a8b5a2573c324b96a13bbf05349f1c07ed5f1a1c75f919be7763e5"
+    }
+  ]
+}

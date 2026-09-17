@@ -1,0 +1,45 @@
+{
+  "candidateId": "scale500-tmdb-407451",
+  "attemptIndex": 1,
+  "requestHash": "sha256:cff6f153d2d2101653a1dbc172883d9efdf35cab9f4323f7d8c96d9c0e6e2462",
+  "httpStatus": 200,
+  "attemptDisposition": "VALID_LOW_RISK",
+  "transportRetryable": false,
+  "outputRetryEligible": false,
+  "callCostUsd": 0.00331125,
+  "usageMetadata": {
+    "promptTokenCount": 3190,
+    "candidatesTokenCount": 245,
+    "totalTokenCount": 5949,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3190
+      }
+    ],
+    "thoughtsTokenCount": 2514,
+    "serviceTier": "standard"
+  },
+  "rawResponseSha256": "sha256:7c83f861aa3b70ade36b55e9bf1da39655cf5b9edce9d7422a763cb402764496",
+  "rawTextLength": 16112,
+  "parsed": {
+    "riskLevel": "LOW_RISK",
+    "riskCategories": [],
+    "issues": [],
+    "sourceBoundarySatisfied": true,
+    "lowRiskCoverage": {
+      "allVisibleFieldsAudited": true,
+      "interrogativePremisesAudited": true,
+      "factualModifiersAudited": true,
+      "packetFactsAudited": true,
+      "settingAndLocationAudited": true,
+      "characterMotivesAndRelationshipsAudited": true,
+      "storyMechanismsAndConstraintsAudited": true,
+      "externalLoreAndBackstoryAudited": true,
+      "spoilerAndRevealBoundariesAudited": true,
+      "viewingExperienceInferenceAudited": true,
+      "summaryRationale": "All visible copy strictly adheres to the authorized packet. The description directly reflects the setup in the overview without introducing ungrounded story mechanisms, external book lore, or late-stage spoilers. The director attribution matches facts.director, genres match facts.genres, vibeSummary faithfully translates semantic classifications, and the curiosity hook stays within the authorized premise."
+    }
+  },
+  "promptDriftExceeded": false
+}

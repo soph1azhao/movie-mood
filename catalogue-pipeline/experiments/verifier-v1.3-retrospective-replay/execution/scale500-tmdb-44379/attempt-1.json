@@ -1,0 +1,45 @@
+{
+  "candidateId": "scale500-tmdb-44379",
+  "attemptIndex": 1,
+  "requestHash": "sha256:822b2610f2a4df47d071917e4f00a7a0e71523efae658671d00dc2269ca373e6",
+  "httpStatus": 200,
+  "attemptDisposition": "VALID_LOW_RISK",
+  "transportRetryable": false,
+  "outputRetryEligible": false,
+  "callCostUsd": 0.0033202500000000003,
+  "usageMetadata": {
+    "promptTokenCount": 3272,
+    "candidatesTokenCount": 231,
+    "totalTokenCount": 4842,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3272
+      }
+    ],
+    "thoughtsTokenCount": 1339,
+    "serviceTier": "standard"
+  },
+  "rawResponseSha256": "sha256:379b1f1ff3df10c75e00206c9feda88b44aea58ee7940ac5be70f6aa3000ee63",
+  "rawTextLength": 9344,
+  "parsed": {
+    "riskLevel": "LOW_RISK",
+    "riskCategories": [],
+    "issues": [],
+    "sourceBoundarySatisfied": true,
+    "lowRiskCoverage": {
+      "allVisibleFieldsAudited": true,
+      "interrogativePremisesAudited": true,
+      "factualModifiersAudited": true,
+      "packetFactsAudited": true,
+      "settingAndLocationAudited": true,
+      "characterMotivesAndRelationshipsAudited": true,
+      "storyMechanismsAndConstraintsAudited": true,
+      "externalLoreAndBackstoryAudited": true,
+      "spoilerAndRevealBoundariesAudited": true,
+      "viewingExperienceInferenceAudited": true,
+      "summaryRationale": "All editorial claims across description, whyWatch, curiosityHook, and vibeSummary strictly adhere to authorized source boundaries. The geographic scope, subjects, motives, documentary genre, production context, and experiential descriptors are completely supported by the facts metadata, synopsis, and accepted semantic classification."
+    }
+  },
+  "promptDriftExceeded": false
+}

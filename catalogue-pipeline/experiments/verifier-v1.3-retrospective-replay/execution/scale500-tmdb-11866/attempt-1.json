@@ -1,0 +1,55 @@
+{
+  "candidateId": "scale500-tmdb-11866",
+  "attemptIndex": 1,
+  "requestHash": "sha256:764c278698d2141960a396ad276ce8796325f8b5ebe884888ddd6fe57ef4d2d5",
+  "httpStatus": 200,
+  "attemptDisposition": "VALID_HIGH_RISK",
+  "transportRetryable": false,
+  "outputRetryEligible": false,
+  "callCostUsd": 0.003723,
+  "usageMetadata": {
+    "promptTokenCount": 3489,
+    "candidatesTokenCount": 295,
+    "totalTokenCount": 6418,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3489
+      }
+    ],
+    "thoughtsTokenCount": 2634,
+    "serviceTier": "standard"
+  },
+  "rawResponseSha256": "sha256:80a3fa30dd0757bb3eb96b2f1b01f390c300fcf0b1f4c6b61f25b544fd60f9c6",
+  "rawTextLength": 17477,
+  "parsed": {
+    "riskLevel": "HIGH_RISK",
+    "riskCategories": [
+      "SPECULATIVE_HOOK_PREMISE"
+    ],
+    "issues": [
+      {
+        "category": "SPECULATIVE_HOOK_PREMISE",
+        "field": "curiosityHook",
+        "claimSpan": "an impossible deadline",
+        "normalizedClaim": "The survivors are constrained by an impossible deadline to rebuild the plane or escape.",
+        "claimType": "TEMPORAL_OR_DURATION_CONSTRAINT",
+        "checkedAuthoritySources": [
+          "allowedSourceMaterial.overview"
+        ],
+        "sourceEvidence": [
+          {
+            "source": "allowedSourceMaterial.overview",
+            "supportFound": false,
+            "notes": "The overview mentions that low supplies and smugglers add urgency to the task of rebuilding the aircraft, but establishes no explicit deadline or ticking-clock temporal constraint."
+          }
+        ],
+        "authorityResolution": "UNSUPPORTED_MISSING_AUTHORITY",
+        "materialityRationale": "Asserting or presupposing an explicit deadline introduces an unauthorized temporal mechanism not grounded in the authorized source material, violating strict boundary rules against ungrounded deadlines."
+      }
+    ],
+    "sourceBoundarySatisfied": false,
+    "lowRiskCoverage": null
+  },
+  "promptDriftExceeded": false
+}

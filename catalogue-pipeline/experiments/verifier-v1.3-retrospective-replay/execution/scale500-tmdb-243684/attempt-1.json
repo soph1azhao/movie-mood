@@ -1,0 +1,45 @@
+{
+  "candidateId": "scale500-tmdb-243684",
+  "attemptIndex": 1,
+  "requestHash": "sha256:96afedee948010723683674f39cb3beb1154069e6dc179975694b086845b6fd7",
+  "httpStatus": 200,
+  "attemptDisposition": "VALID_LOW_RISK",
+  "transportRetryable": false,
+  "outputRetryEligible": false,
+  "callCostUsd": 0.003327,
+  "usageMetadata": {
+    "promptTokenCount": 3226,
+    "candidatesTokenCount": 242,
+    "totalTokenCount": 4780,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3226
+      }
+    ],
+    "thoughtsTokenCount": 1312,
+    "serviceTier": "standard"
+  },
+  "rawResponseSha256": "sha256:1388c7eac687b7764abb62eb52252aad61dee55b47453d1f9c7dfec06b0512f0",
+  "rawTextLength": 9574,
+  "parsed": {
+    "riskLevel": "LOW_RISK",
+    "riskCategories": [],
+    "issues": [],
+    "sourceBoundarySatisfied": true,
+    "lowRiskCoverage": {
+      "allVisibleFieldsAudited": true,
+      "interrogativePremisesAudited": true,
+      "factualModifiersAudited": true,
+      "packetFactsAudited": true,
+      "settingAndLocationAudited": true,
+      "characterMotivesAndRelationshipsAudited": true,
+      "storyMechanismsAndConstraintsAudited": true,
+      "externalLoreAndBackstoryAudited": true,
+      "spoilerAndRevealBoundariesAudited": true,
+      "viewingExperienceInferenceAudited": true,
+      "summaryRationale": "All editorial claims across description, whyWatch, curiosityHook, and vibeSummary strictly adhere to authorized source facts, synopsis details, and accepted semantic classifications. Director attribution, comedy-drama genre tags, intergenerational internet premise, and slow/thoughtful viewing experiences are fully supported with zero unauthorized plot, setting, or spoiler intrusions."
+    }
+  },
+  "promptDriftExceeded": false
+}

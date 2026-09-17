@@ -1,0 +1,45 @@
+{
+  "candidateId": "scale500-tmdb-27670",
+  "attemptIndex": 1,
+  "requestHash": "sha256:8a26e9b895ddb704c47e20c270ba1f1882ebc594cdf070f85ecff41c667bf7d0",
+  "httpStatus": 200,
+  "attemptDisposition": "VALID_LOW_RISK",
+  "transportRetryable": false,
+  "outputRetryEligible": false,
+  "callCostUsd": 0.0034815000000000002,
+  "usageMetadata": {
+    "promptTokenCount": 3257,
+    "candidatesTokenCount": 277,
+    "totalTokenCount": 6453,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3257
+      }
+    ],
+    "thoughtsTokenCount": 2919,
+    "serviceTier": "standard"
+  },
+  "rawResponseSha256": "sha256:37a524e176396e048f61935e8bf446263f4f945706fef59ceb3dadba1b46c520",
+  "rawTextLength": 17981,
+  "parsed": {
+    "riskLevel": "LOW_RISK",
+    "riskCategories": [],
+    "issues": [],
+    "sourceBoundarySatisfied": true,
+    "lowRiskCoverage": {
+      "allVisibleFieldsAudited": true,
+      "interrogativePremisesAudited": true,
+      "factualModifiersAudited": true,
+      "packetFactsAudited": true,
+      "settingAndLocationAudited": true,
+      "characterMotivesAndRelationshipsAudited": true,
+      "storyMechanismsAndConstraintsAudited": true,
+      "externalLoreAndBackstoryAudited": true,
+      "spoilerAndRevealBoundariesAudited": true,
+      "viewingExperienceInferenceAudited": true,
+      "summaryRationale": "All visible editorial copy strictly adheres to authorized sources: metadata facts (directors Benigni and Troisi, Italian production context, Comedy/Fantasy genres), allowed synopsis setup (two 20th-century friends stumbling into 1492, meeting a teen, attempting to alter history), and accepted semantic classifications (light/funny tone, steady pace, engaged attention, friend-viewing situation). No ungrounded plot mechanisms, external lore, deadlines, or spoiler boundaries are violated."
+    }
+  },
+  "promptDriftExceeded": false
+}

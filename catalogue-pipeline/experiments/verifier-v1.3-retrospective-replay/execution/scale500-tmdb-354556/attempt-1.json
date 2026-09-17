@@ -1,0 +1,45 @@
+{
+  "candidateId": "scale500-tmdb-354556",
+  "attemptIndex": 1,
+  "requestHash": "sha256:d936ebab6c6b2581a0027772d13c2b9975ba1c86e56a14c5f15ff106cc6767c8",
+  "httpStatus": 200,
+  "attemptDisposition": "VALID_LOW_RISK",
+  "transportRetryable": false,
+  "outputRetryEligible": false,
+  "callCostUsd": 0.0033772499999999996,
+  "usageMetadata": {
+    "promptTokenCount": 3293,
+    "candidatesTokenCount": 242,
+    "totalTokenCount": 7726,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3293
+      }
+    ],
+    "thoughtsTokenCount": 4191,
+    "serviceTier": "standard"
+  },
+  "rawResponseSha256": "sha256:2ff3f5244daf765cdbdabf324597adfdc029dd42b7c02aaaf8946b098e980c6d",
+  "rawTextLength": 25680,
+  "parsed": {
+    "riskLevel": "LOW_RISK",
+    "riskCategories": [],
+    "issues": [],
+    "sourceBoundarySatisfied": true,
+    "lowRiskCoverage": {
+      "allVisibleFieldsAudited": true,
+      "interrogativePremisesAudited": true,
+      "factualModifiersAudited": true,
+      "packetFactsAudited": true,
+      "settingAndLocationAudited": true,
+      "characterMotivesAndRelationshipsAudited": true,
+      "storyMechanismsAndConstraintsAudited": true,
+      "externalLoreAndBackstoryAudited": true,
+      "spoilerAndRevealBoundariesAudited": true,
+      "viewingExperienceInferenceAudited": true,
+      "summaryRationale": "All visible editorial fields strictly adhere to authorized source surfaces. Metadata references accurately reflect the 89-minute runtime, Russian spoken language without nationality collapse, and explicit genres (Action, Fantasy, Science Fiction). Plot details in the description and hook remain within authorized Cold War premise boundaries, and experiential framing directly reflects accepted semantic classifications."
+    }
+  },
+  "promptDriftExceeded": false
+}
