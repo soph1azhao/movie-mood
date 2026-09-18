@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports the two teenagers trapped in a repeating day / time loop seeking tiny, perfect fleeting moments."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly confirms the 'fantasy romance' genre descriptors used in whyWatch and vibeSummary."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director confirms Ian Samuels; acceptedSemanticClassification fully grounds thoughtful/emotional tone, medium pace, and date-night experiential framing."
+    }
+  ],
+  "sourceBoundaryReason": "All visible copy stays strictly within the authorized packet under A_PRIME_PRODUCTION_MATERIALITY_V1. Metaphorical and stylistic phrasing ('observant look at fleeting joy', 'fleeting, wondrous detail') represents non-material editorial framing of the authorized time-loop premise without introducing new factual claims, mechanics, external lore, or spoiler-boundary leaks.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

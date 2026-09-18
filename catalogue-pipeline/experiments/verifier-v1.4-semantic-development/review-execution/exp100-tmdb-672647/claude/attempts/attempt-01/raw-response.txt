@@ -1,0 +1,40 @@
+```json
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "description and curiosityHook closely paraphrase the authorized overview (\"endless time loop\" / \"repeating day\", \"find all the tiny things that make that one day perfect\" / \"every fleeting, wondrous detail\"). No added plot mechanics beyond what's stated."
+    },
+    {
+      "source": "facts.director",
+      "supportFound": true,
+      "notes": "whyWatch attributes direction to Ian Samuels, which matches facts.director verbatim — this is a verified baseline fact, not an unsupported attribution."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "whyWatch and vibeSummary describe the film as \"fantasy romance,\" matching facts.genres (Fantasy, Romance) exactly."
+    },
+    {
+      "source": "acceptedSemanticClassification",
+      "supportFound": true,
+      "notes": "vibeSummary's \"thoughtful and emotionally grounded,\" \"easy-going, steady pace,\" and \"date-night\" framing align directly with the authorized moods, pace, attentionDemand, and situations fields."
+    },
+    {
+      "source": "spoilerBoundaryRules.excluded",
+      "supportFound": true,
+      "notes": "None of the excluded elements (e.g. the cancer/loss-of-mother keywords present in facts.keywords) appear anywhere in the visible copy. Only premise, tone, and starting situation are referenced, which are explicitly permitted."
+    }
+  ],
+  "sourceBoundaryReason": "All four fields stay within paraphrase of the authorized overview and verified facts (director, genres) and semantic classification. No geographic specificity, invented causal mechanisms, franchise lore, or excluded spoiler content appears. Phrases like \"embark on a quest\" and \"observant look at fleeting joy\" are low-risk figurative language that does not add a material factual claim, consistent with the tolerated-flourish examples in the materiality standard.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}
+```
