@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "incidentType": "ACCIDENTAL_CANDIDATE2_CANONICAL_PREPARATION_DURING_TOOLING_TEST",
+  "activity": "VERIFIER_V14_POST_PILOT_IMPLEMENTATION_INCIDENT_RECORD",
+  "classification": "PRE_FREEZE_OPERATIONAL_INCIDENT_RECORD",
+  "schemaVersion": "p2-4-post-pilot-implementation-incident.v1",
+  "timestamp": "2026-09-18T01:00:00.000Z",
+  "candidateId": "scale500-tmdb-18912",
+  "occurredBeforePostPilotFreeze": true,
+  "semanticModelSubmissionOccurred": false,
+  "humanAdjudicationOccurred": false,
+  "networkCallOccurred": false,
+  "modelApiCallOccurred": false,
+  "survivingCandidate2Evidence": false,
+  "studyTruthCreated": false,
+  "incidentDetails": "During test Suite A implementation, prepareManualPayload was run against canonical review-execution root instead of an isolated fixture, creating review-execution/scale500-tmdb-18912 directory structure. No model calls or human adjudications occurred.",
+  "remediation": "Canonical Candidate #2 directory removed before post-pilot authorization freeze. Suite A updated to use isolated temporary root.",
+  "futurePrevention": "production-equivalent tests must use isolated temporary roots and must never create canonical future-candidate state"
+}

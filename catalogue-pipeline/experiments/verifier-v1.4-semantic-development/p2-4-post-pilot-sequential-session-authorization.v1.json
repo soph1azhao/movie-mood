@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "activity": "VERIFIER_V14_POST_PILOT_SEQUENTIAL_REVIEW_SESSION_AUTHORIZATION",
+  "classification": "POST_FREEZE_OPERATIONAL_AUTHORIZATION_AMENDMENT",
+  "methodStatement": "NO_METHOD_CHANGE",
+  "schemaVersion": "p2-4-post-pilot-sequential-session-authorization.v1",
+  "timestamp": "2026-09-18T00:30:00.000Z",
+  "p23FreezeManifestSha256": "sha256:b8eb3fde3203f6736a4d5b3a98f71fe50de70866b060614432f1b9a1757335d3",
+  "originalP24FreezeCommit": "9d73c3f2f25cf6c0a04b003f04186e2016084096",
+  "originalP24ImplementationSha256": "sha256:d43772907784ab2188745b49ac6f913278b9d3f8e028d8ab651f67d336d7a17f",
+  "originalP24TestSha256": "sha256:34f0d298cb3b2cc1c16b187cbc209ee36b27d1c72fd826450f3d454b040248fa",
+  "originalP24ReadinessSha256": "sha256:513838228cd9bc47e3f41788dd12f023ceef3be4222c00003a4543d9f2a9ea54",
+  "candidate1AuthorizationBridgeCommit": "3f885ff3ea904eb8522ffa4c9ba48a729aba8752",
+  "candidate1EvidenceFreezeCommit": "675e521334f582b70658312eb4496df64e4d189e",
+  "candidate1HumanAdjudicationSha256": "sha256:fecfa7dd7d5a44d17e3b1c76514400d97424973e7274e7ee42d26880b7f1366f",
+  "candidate1FrozenSessionLedgerSha256": "sha256:f1fc82b4acb316e6def5ea631de122a3d92151995c8941b790fac4c97b3004f6",
+  "implementationIncidentSha256": "sha256:656a68da879a1462b0aa05d4d86501a0bf5f99df5cc2e61c030be9a6a5ee8d69",
+  "frozenReviewOrderSha256": "sha256:758c9775e7e3171c68a50313c2720d4b8f696e6467f9801f12332391dc6213ed",
+  "frozenEligiblePoolSha256": "sha256:74c76d0b359125449173a4348e1dfdd737f886ddb2cb86d8af593a31aeab29b8",
+  "candidate1PilotCompleted": true,
+  "candidate1EvidenceChainValid": true,
+  "candidate1OperationalAuditPassed": true,
+  "sequentialSessionAuthorized": true,
+  "advancementConstraint": "DURABLE_HUMAN_ADJUDICATION_OF_CURRENT_CANDIDATE_REQUIRED",
+  "skippingPermitted": false,
+  "perCandidateAmendmentRequired": false,
+  "stoppingRule": {
+    "targetClean": 30,
+    "targetDefectPositive": 30,
+    "minSevere": 6
+  },
+  "invariants": {
+    "informationEnvironmentInvariance": true,
+    "noLiveQuotaPressure": true,
+    "manualConsumerUiMandatory": true,
+    "strictSequentialProgression": true,
+    "checkpointManifestDerivedNotAuthoritative": true,
+    "checkpointFailureHardStops": true
+  }
+}

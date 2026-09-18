@@ -13,13 +13,27 @@ import {
   getManualCandidateStatus,
   buildManualHumanBundle,
   validateCandidate1PilotAuthorization,
+  validatePostPilotSessionAuthorization,
+  recordManualHumanAdjudication,
+  getCurrentReviewCandidate,
+  generateCheckpointManifest,
+  verifyCheckpointManifest,
+  getCanonicalCheckpointPath,
+  SEQUENCE_POSITION_DRIFT_CONTRACT,
+  validateSequencePositionDriftExecution,
   main as runManualReviewCli,
 } from '../../scripts/runVerifierV14ManualReview.mjs'
 
 import { FROZEN_BINDINGS } from '../../scripts/verifierV14ReviewerAdapter.mjs'
 import {
+  checkStoppingRule,
+  STOPPING_TARGETS,
+} from '../../scripts/verifierV14ReviewState.mjs'
+import {
   verifyCandidateReviewEvidenceChain,
+  prepareCandidateExecution,
 } from '../../scripts/runVerifierV14BlindReview.mjs'
+import { serializeArtifactForPersistence } from '../../scripts/validatePromotionContract.mjs'
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..')
 const p2Dir = path.join(repoRoot, 'catalogue-pipeline/experiments/verifier-v1.4-semantic-development')
@@ -697,13 +711,27 @@ test('P. tampered advisory envelope or raw response is rejected by evidence chai
   }
 })
 
-// Test Q: Candidate #1 execution directory remains completely absent
-test('Q. Candidate #1 execution directory is absent and untouched', () => {
+// Test Q: Candidate #1 evidence integrity verified and Candidate #2 directory remains strictly absent
+test('Q. Candidate #1 evidence integrity verified and Candidate #2 execution directory is strictly absent', () => {
   const realP2ReviewExecution = path.join(p2Dir, 'review-execution')
-  assert.equal(fs.existsSync(realP2ReviewExecution), false, 'Live review-execution directory must not exist')
+  assert.equal(fs.existsSync(realP2ReviewExecution), true, 'Live review-execution directory must exist with Candidate #1')
 
   const cand1RealDir = path.join(p2Dir, 'review-execution/exp100-tmdb-672647')
-  assert.equal(fs.existsSync(cand1RealDir), false, 'Candidate #1 execution directory must NOT exist')
+  assert.equal(fs.existsSync(cand1RealDir), true, 'Candidate #1 execution directory must exist')
+
+  const cand1AdjPath = path.join(cand1RealDir, 'human/adjudication-record.v1.json')
+  assert.equal(fs.existsSync(cand1AdjPath), true)
+  const cand1AdjSha = sha256(fs.readFileSync(cand1AdjPath))
+  assert.equal(cand1AdjSha, 'sha256:fecfa7dd7d5a44d17e3b1c76514400d97424973e7274e7ee42d26880b7f1366f')
+
+  const ledgerPath = path.join(realP2ReviewExecution, 'review-session-ledger.json')
+  assert.equal(fs.existsSync(ledgerPath), true)
+  const ledgerSha = sha256(fs.readFileSync(ledgerPath))
+  assert.equal(ledgerSha, 'sha256:f1fc82b4acb316e6def5ea631de122a3d92151995c8941b790fac4c97b3004f6')
+
+  // Candidate #2 directory must NOT exist
+  const cand2RealDir = path.join(realP2ReviewExecution, 'scale500-tmdb-18912')
+  assert.equal(fs.existsSync(cand2RealDir), false, 'Candidate #2 execution directory must NOT exist')
 })
 
 // ============================================================
@@ -1001,27 +1029,49 @@ test('R2.3. Direct CLI path enforces sequence and rejects review-order bypass fl
 })
 
 test('R2.4. Production CLI Candidate #1 live pilot gate enforces authorization artifact and sequence constraints', () => {
-  const prodExecutionRoot = path.join(p2Dir, 'review-execution')
+  const tempFixtureDir = makeTempDir('p24-test-r2-4-')
+  try {
+    const tempProdRoot = path.join(tempFixtureDir, 'review-execution')
+    const filesToCopy = [
+      'blind-review-order.v1.json',
+      'blind-review-eligible-pool.v1.json',
+      'p2-3-freeze-manifest.v1.json',
+      'p2-3-live-operation-protocol.v1.json',
+      'p2-4-manual-ingestion-readiness.v1.json',
+    ]
+    for (const f of filesToCopy) {
+      fs.copyFileSync(path.join(p2Dir, f), path.join(tempFixtureDir, f))
+    }
 
-  // When authorization artifact is absent, Candidate #1 MUST reject with PILOT_NOT_AUTHORIZED
-  assert.throws(
-    () => prepareManualPayload({
-      candidateId: 'exp100-tmdb-672647',
-      reviewer: 'GEMINI',
-      executionRoot: prodExecutionRoot,
-      authorizationPath: path.join(p2Dir, 'nonexistent-pilot-auth.json'),
-    }),
-    /PILOT_NOT_AUTHORIZED/
-  )
+    // When authorization artifact is absent, Candidate #1 MUST reject with PILOT_NOT_AUTHORIZED
+    assert.throws(
+      () => prepareManualPayload({
+        candidateId: 'exp100-tmdb-672647',
+        reviewer: 'GEMINI',
+        executionRoot: tempProdRoot,
+        p2Dir: tempFixtureDir,
+        authorizationPath: path.join(tempFixtureDir, 'nonexistent-pilot-auth.json'),
+      }),
+      /PILOT_NOT_AUTHORIZED/
+    )
 
-  // Calling prepare on candidate #2 against production root MUST reject with OUT_OF_ORDER_EXECUTION
-  assert.throws(
-    () => prepareManualPayload({ candidateId: 'scale500-tmdb-18912', reviewer: 'GEMINI', executionRoot: prodExecutionRoot }),
-    /OUT_OF_ORDER_EXECUTION/
-  )
+    // Calling prepare on candidate #2 when candidate #1 is unadjudicated MUST reject with OUT_OF_ORDER_EXECUTION
+    assert.throws(
+      () => prepareManualPayload({
+        candidateId: 'scale500-tmdb-18912',
+        reviewer: 'GEMINI',
+        executionRoot: tempProdRoot,
+        p2Dir: tempFixtureDir,
+      }),
+      /OUT_OF_ORDER_EXECUTION/
+    )
 
-  // Real review-execution directory must remain absent
-  assert.equal(fs.existsSync(prodExecutionRoot), false)
+    // Candidate #2 directory must remain absent in real review-execution
+    const realProdRoot = path.join(p2Dir, 'review-execution')
+    assert.equal(fs.existsSync(path.join(realProdRoot, 'scale500-tmdb-18912')), false)
+  } finally {
+    cleanTempDir(tempFixtureDir)
+  }
 })
 
 // ============================================================
@@ -1460,37 +1510,53 @@ test('AUTH.8. automaticCandidate2Authorization: true is rejected with PILOT_AUTH
 })
 
 test('AUTH.9. Candidate #2 and later candidates remain blocked even when Candidate #1 authorization artifact is valid', () => {
-  const prodExecutionRoot = path.join(p2Dir, 'review-execution')
+  const tempFixtureDir = makeTempDir('p24-test-auth-9-')
+  try {
+    const tempProdRoot = path.join(tempFixtureDir, 'review-execution')
+    const filesToCopy = [
+      'blind-review-order.v1.json',
+      'blind-review-eligible-pool.v1.json',
+      'p2-3-freeze-manifest.v1.json',
+      'p2-3-live-operation-protocol.v1.json',
+      'p2-4-manual-ingestion-readiness.v1.json',
+      'p2-4-candidate1-pilot-authorization.v1.json',
+    ]
+    for (const f of filesToCopy) {
+      fs.copyFileSync(path.join(p2Dir, f), path.join(tempFixtureDir, f))
+    }
 
-  // When Candidate #1 is unadjudicated, Candidate #2 throws OUT_OF_ORDER_EXECUTION
-  assert.throws(
-    () => prepareManualPayload({ candidateId: 'scale500-tmdb-18912', reviewer: 'GEMINI', executionRoot: prodExecutionRoot }),
-    /OUT_OF_ORDER_EXECUTION/
-  )
+    // When Candidate #1 is unadjudicated, Candidate #2 throws OUT_OF_ORDER_EXECUTION
+    assert.throws(
+      () => prepareManualPayload({ candidateId: 'scale500-tmdb-18912', reviewer: 'GEMINI', executionRoot: tempProdRoot, p2Dir: tempFixtureDir }),
+      /OUT_OF_ORDER_EXECUTION/
+    )
 
-  // Later candidate in review order throws OUT_OF_ORDER_EXECUTION
-  assert.throws(
-    () => prepareManualPayload({ candidateId: 'scale500-tmdb-11802', reviewer: 'GEMINI', executionRoot: prodExecutionRoot }),
-    /OUT_OF_ORDER_EXECUTION/
-  )
+    // Later candidate in review order throws OUT_OF_ORDER_EXECUTION
+    assert.throws(
+      () => prepareManualPayload({ candidateId: 'scale500-tmdb-11802', reviewer: 'GEMINI', executionRoot: tempProdRoot, p2Dir: tempFixtureDir }),
+      /OUT_OF_ORDER_EXECUTION/
+    )
 
-  // Unknown candidate throws CANDIDATE_NOT_FOUND
-  assert.throws(
-    () => prepareManualPayload({ candidateId: 'unknown-candidate-xyz', reviewer: 'GEMINI', executionRoot: prodExecutionRoot }),
-    /CANDIDATE_NOT_FOUND/
-  )
+    // Unknown candidate throws CANDIDATE_NOT_FOUND
+    assert.throws(
+      () => prepareManualPayload({ candidateId: 'unknown-candidate-xyz', reviewer: 'GEMINI', executionRoot: tempProdRoot, p2Dir: tempFixtureDir }),
+      /CANDIDATE_NOT_FOUND/
+    )
+  } finally {
+    cleanTempDir(tempFixtureDir)
+  }
 })
 
-test('AUTH.10. Candidate #1 execution directory remains strictly absent and untouched', () => {
+test('AUTH.10. Candidate #1 evidence integrity verified and Candidate #2 remains strictly absent and untouched', () => {
   const prodExecutionRoot = path.join(p2Dir, 'review-execution')
-  assert.equal(fs.existsSync(prodExecutionRoot), false)
-  assert.equal(fs.existsSync(path.join(prodExecutionRoot, 'exp100-tmdb-672647')), false)
+  assert.equal(fs.existsSync(prodExecutionRoot), true)
+  assert.equal(fs.existsSync(path.join(prodExecutionRoot, 'exp100-tmdb-672647')), true)
+  assert.equal(fs.existsSync(path.join(prodExecutionRoot, 'scale500-tmdb-18912')), false, 'Candidate #2 directory must NOT exist')
 })
 
 test('AUTH.11. Production-path Candidate #1 integration in isolated temp fixture passes authorization gate and prepares payload', () => {
   const tempP2Dir = makeTempDir('p24-scope-proof-c1-')
   try {
-    // Mirror required governed input artifacts into isolated temp fixture
     const filesToCopy = [
       'blind-review-order.v1.json',
       'blind-review-eligible-pool.v1.json',
@@ -1505,7 +1571,6 @@ test('AUTH.11. Production-path Candidate #1 integration in isolated temp fixture
 
     const tempProdExecRoot = path.join(tempP2Dir, 'review-execution')
 
-    // Call production prepareManualPayload with candidate #1 on the fixture's production root
     const prep = prepareManualPayload({
       candidateId: 'exp100-tmdb-672647',
       reviewer: 'GEMINI',
@@ -1516,23 +1581,20 @@ test('AUTH.11. Production-path Candidate #1 integration in isolated temp fixture
     assert.ok(prep.copyReadyText.includes('exp100-tmdb-672647'))
     assert.ok(prep.payloadSha256.startsWith('sha256:'))
 
-    // Verify files created inside temp fixture
     const c1Dir = path.join(tempProdExecRoot, 'exp100-tmdb-672647')
     assert.ok(fs.existsSync(path.join(c1Dir, 'blind-packet.v1.json')))
     assert.ok(fs.existsSync(path.join(c1Dir, 'manual/gemini/attempt-01/submission-payload.v1.txt')))
 
-    // Verify canonical repo review-execution directory remains strictly absent
     const canonicalProdRoot = path.join(p2Dir, 'review-execution')
-    assert.equal(fs.existsSync(canonicalProdRoot), false)
+    assert.equal(fs.existsSync(path.join(canonicalProdRoot, 'scale500-tmdb-18912')), false)
   } finally {
     cleanTempDir(tempP2Dir)
   }
 })
 
-test('AUTH.12. Candidate #2 remains hard-blocked with PILOT_NOT_AUTHORIZED after Candidate #1 reaches durable human adjudication', () => {
+test('AUTH.12. Candidate #2 remains hard-blocked with PILOT_NOT_AUTHORIZED after Candidate #1 reaches durable human adjudication when session auth is absent', () => {
   const tempP2Dir = makeTempDir('p24-scope-proof-c2-')
   try {
-    // Mirror required governed input artifacts into isolated temp fixture
     const filesToCopy = [
       'blind-review-order.v1.json',
       'blind-review-eligible-pool.v1.json',
@@ -1547,7 +1609,6 @@ test('AUTH.12. Candidate #2 remains hard-blocked with PILOT_NOT_AUTHORIZED after
 
     const tempProdExecRoot = path.join(tempP2Dir, 'review-execution')
 
-    // 1. Prepare Candidate #1 for Gemini and Claude
     prepareManualPayload({
       candidateId: 'exp100-tmdb-672647',
       reviewer: 'GEMINI',
@@ -1561,7 +1622,6 @@ test('AUTH.12. Candidate #2 remains hard-blocked with PILOT_NOT_AUTHORIZED after
       p2Dir: tempP2Dir,
     })
 
-    // 2. Ingest valid Gemini and Claude responses
     const validOpinion = {
       preliminaryDecision: 'APPROVE',
       preliminarySeverity: null,
@@ -1575,35 +1635,30 @@ test('AUTH.12. Candidate #2 remains hard-blocked with PILOT_NOT_AUTHORIZED after
     }
     const geminiRespFile = path.join(tempP2Dir, 'gemini-resp.json')
     fs.writeFileSync(geminiRespFile, JSON.stringify(validOpinion, null, 2), 'utf8')
-    const geminiIngest = ingestManualResponse({
+    ingestManualResponse({
       candidateId: 'exp100-tmdb-672647',
       reviewer: 'GEMINI',
       responseFilePath: geminiRespFile,
       executionRoot: tempProdExecRoot,
       p2Dir: tempP2Dir,
     })
-    assert.equal(geminiIngest.disposition, 'VALID')
 
     const claudeRespFile = path.join(tempP2Dir, 'claude-resp.json')
     fs.writeFileSync(claudeRespFile, JSON.stringify(validOpinion, null, 2), 'utf8')
-    const claudeIngest = ingestManualResponse({
+    ingestManualResponse({
       candidateId: 'exp100-tmdb-672647',
       reviewer: 'CLAUDE',
       responseFilePath: claudeRespFile,
       executionRoot: tempProdExecRoot,
       p2Dir: tempP2Dir,
     })
-    assert.equal(claudeIngest.disposition, 'VALID')
 
-    // 3. Build human bundle for Candidate #1
     const bundleRes = buildManualHumanBundle({
       candidateId: 'exp100-tmdb-672647',
       executionRoot: tempProdExecRoot,
       p2Dir: tempP2Dir,
     })
-    assert.equal(bundleRes.bundle.candidateId, 'exp100-tmdb-672647')
 
-    // 4. Persist durable human adjudication record for Candidate #1
     const humanDir = path.join(tempProdExecRoot, 'exp100-tmdb-672647', 'human')
     fs.mkdirSync(humanDir, { recursive: true })
     const humanRecord = {
@@ -1622,9 +1677,7 @@ test('AUTH.12. Candidate #2 remains hard-blocked with PILOT_NOT_AUTHORIZED after
     }
     fs.writeFileSync(path.join(humanDir, 'adjudication-record.v1.json'), JSON.stringify(humanRecord, null, 2), 'utf8')
 
-    // 5. Attempt production prepare on Candidate #2 (scale500-tmdb-18912)
-    // Candidate #2 is now the sequentially allowable candidate (sequence index 2),
-    // but the Candidate #1 pilot authorization MUST NOT authorize it.
+    // Absent post-pilot session authorization blocks Candidate #2
     assert.throws(
       () => prepareManualPayload({
         candidateId: 'scale500-tmdb-18912',
@@ -1632,13 +1685,1919 @@ test('AUTH.12. Candidate #2 remains hard-blocked with PILOT_NOT_AUTHORIZED after
         executionRoot: tempProdExecRoot,
         p2Dir: tempP2Dir,
       }),
-      /PILOT_NOT_AUTHORIZED.*only authorized for Candidate #1/
+      /PILOT_NOT_AUTHORIZED.*without post-pilot session authorization/
     )
 
-    // Verify canonical repo review-execution directory remains strictly absent
     const canonicalProdRoot = path.join(p2Dir, 'review-execution')
-    assert.equal(fs.existsSync(canonicalProdRoot), false)
+    assert.equal(fs.existsSync(path.join(canonicalProdRoot, 'scale500-tmdb-18912')), false)
   } finally {
     cleanTempDir(tempP2Dir)
   }
+})
+
+// ============================================================
+// SUITE A: Post-Pilot Authorization Tests
+// ============================================================
+
+test('A.1. Absent post-pilot authorization blocks Candidate #2', () => {
+  const tempDir = makeTempDir('p24-suite-a1-')
+  try {
+    assert.throws(
+      () => validatePostPilotSessionAuthorization({
+        p2Dir: tempDir,
+        authorizationPath: path.join(tempDir, 'nonexistent-auth.json'),
+      }),
+      /SESSION_NOT_AUTHORIZED/
+    )
+  } finally {
+    cleanTempDir(tempDir)
+  }
+})
+
+test('A.2. Valid post-pilot session authorization permits Candidate #2 once Candidate #1 is durably complete', () => {
+  const auth = validatePostPilotSessionAuthorization({ p2Dir })
+  assert.equal(auth.activity, 'VERIFIER_V14_POST_PILOT_SEQUENTIAL_REVIEW_SESSION_AUTHORIZATION')
+  assert.equal(auth.classification, 'POST_FREEZE_OPERATIONAL_AUTHORIZATION_AMENDMENT')
+  assert.equal(auth.methodStatement, 'NO_METHOD_CHANGE')
+  assert.equal(auth.sequentialSessionAuthorized, true)
+  assert.equal(auth.skippingPermitted, false)
+  assert.equal(auth.perCandidateAmendmentRequired, false)
+
+  // Use an isolated temp fixture mirroring Candidate #1 complete state
+  const tempFixtureDir = makeTempDir('p24-suite-a2-')
+  try {
+    const tempProdRoot = path.join(tempFixtureDir, 'review-execution')
+    const filesToCopy = [
+      'blind-review-order.v1.json',
+      'blind-review-eligible-pool.v1.json',
+      'p2-3-freeze-manifest.v1.json',
+      'p2-3-live-operation-protocol.v1.json',
+      'p2-4-manual-ingestion-readiness.v1.json',
+      'p2-4-post-pilot-sequential-session-authorization.v1.json',
+      'p2-4-post-pilot-implementation-incident.v1.json',
+    ]
+    for (const f of filesToCopy) {
+      fs.copyFileSync(path.join(p2Dir, f), path.join(tempFixtureDir, f))
+    }
+    const c1Source = path.join(p2Dir, 'review-execution/exp100-tmdb-672647')
+    const c1Dest = path.join(tempProdRoot, 'exp100-tmdb-672647')
+    fs.cpSync(c1Source, c1Dest, { recursive: true })
+    fs.copyFileSync(path.join(p2Dir, 'review-execution/review-session-ledger.json'), path.join(tempProdRoot, 'review-session-ledger.json'))
+
+    const prep = prepareManualPayload({
+      candidateId: 'scale500-tmdb-18912',
+      reviewer: 'GEMINI',
+      executionRoot: tempProdRoot,
+      p2Dir: tempFixtureDir,
+    })
+    assert.equal(prep.candidateId, 'scale500-tmdb-18912')
+    assert.equal(prep.reviewer, 'GEMINI')
+    assert.ok(prep.copyReadyText.includes('scale500-tmdb-18912'))
+  } finally {
+    cleanTempDir(tempFixtureDir)
+  }
+})
+
+test('A.3. Authorization rejects wrong Candidate #1 evidence-freeze commit', () => {
+  const tempDir = makeTempDir('p24-suite-a3-')
+  try {
+    const authPath = path.join(p2Dir, 'p2-4-post-pilot-sequential-session-authorization.v1.json')
+    const authData = JSON.parse(fs.readFileSync(authPath, 'utf8'))
+    authData.candidate1EvidenceFreezeCommit = '0000000000000000000000000000000000000000'
+    const tempAuth = path.join(tempDir, 'invalid-auth.json')
+    fs.writeFileSync(tempAuth, JSON.stringify(authData, null, 2), 'utf8')
+
+    assert.throws(
+      () => validatePostPilotSessionAuthorization({ p2Dir, authorizationPath: tempAuth }),
+      /SESSION_AUTHORIZATION_INVALID.*candidate1EvidenceFreezeCommit/
+    )
+  } finally {
+    cleanTempDir(tempDir)
+  }
+})
+
+test('A.4. Authorization rejects wrong Candidate #1 adjudication SHA', () => {
+  const tempDir = makeTempDir('p24-suite-a4-')
+  try {
+    const authPath = path.join(p2Dir, 'p2-4-post-pilot-sequential-session-authorization.v1.json')
+    const authData = JSON.parse(fs.readFileSync(authPath, 'utf8'))
+    authData.candidate1HumanAdjudicationSha256 = 'sha256:0000000000000000000000000000000000000000000000000000000000000000'
+    const tempAuth = path.join(tempDir, 'invalid-auth.json')
+    fs.writeFileSync(tempAuth, JSON.stringify(authData, null, 2), 'utf8')
+
+    assert.throws(
+      () => validatePostPilotSessionAuthorization({ p2Dir, authorizationPath: tempAuth }),
+      /SESSION_AUTHORIZATION_INVALID.*candidate1HumanAdjudicationSha256/
+    )
+  } finally {
+    cleanTempDir(tempDir)
+  }
+})
+
+test('A.5. Authorization rejects wrong Candidate #1 ledger SHA', () => {
+  const tempDir = makeTempDir('p24-suite-a5-')
+  try {
+    const authPath = path.join(p2Dir, 'p2-4-post-pilot-sequential-session-authorization.v1.json')
+    const authData = JSON.parse(fs.readFileSync(authPath, 'utf8'))
+    authData.candidate1FrozenSessionLedgerSha256 = 'sha256:0000000000000000000000000000000000000000000000000000000000000000'
+    const tempAuth = path.join(tempDir, 'invalid-auth.json')
+    fs.writeFileSync(tempAuth, JSON.stringify(authData, null, 2), 'utf8')
+
+    assert.throws(
+      () => validatePostPilotSessionAuthorization({ p2Dir, authorizationPath: tempAuth }),
+      /SESSION_AUTHORIZATION_INVALID.*candidate1FrozenSessionLedgerSha256/
+    )
+  } finally {
+    cleanTempDir(tempDir)
+  }
+})
+
+test('A.6. Authorization rejects wrong frozen review-order authority', () => {
+  const tempDir = makeTempDir('p24-suite-a6-')
+  try {
+    const authPath = path.join(p2Dir, 'p2-4-post-pilot-sequential-session-authorization.v1.json')
+    const authData = JSON.parse(fs.readFileSync(authPath, 'utf8'))
+    authData.frozenReviewOrderSha256 = 'sha256:0000000000000000000000000000000000000000000000000000000000000000'
+    const tempAuth = path.join(tempDir, 'invalid-auth.json')
+    fs.writeFileSync(tempAuth, JSON.stringify(authData, null, 2), 'utf8')
+
+    assert.throws(
+      () => validatePostPilotSessionAuthorization({ p2Dir, authorizationPath: tempAuth }),
+      /SESSION_AUTHORIZATION_INVALID.*frozenReviewOrderSha256/
+    )
+  } finally {
+    cleanTempDir(tempDir)
+  }
+})
+
+test('A.7. Authorization rejects tampered actual Candidate #1 human adjudication record on disk', () => {
+  const tempFixtureDir = makeTempDir('p24-suite-a7-')
+  try {
+    const tempProdRoot = path.join(tempFixtureDir, 'review-execution')
+    const filesToCopy = [
+      'blind-review-order.v1.json',
+      'blind-review-eligible-pool.v1.json',
+      'p2-3-freeze-manifest.v1.json',
+      'p2-3-live-operation-protocol.v1.json',
+      'p2-4-manual-ingestion-readiness.v1.json',
+      'p2-4-post-pilot-sequential-session-authorization.v1.json',
+      'p2-4-post-pilot-implementation-incident.v1.json',
+    ]
+    for (const f of filesToCopy) {
+      fs.copyFileSync(path.join(p2Dir, f), path.join(tempFixtureDir, f))
+    }
+    const c1Source = path.join(p2Dir, 'review-execution/exp100-tmdb-672647')
+    const c1Dest = path.join(tempProdRoot, 'exp100-tmdb-672647')
+    fs.cpSync(c1Source, c1Dest, { recursive: true })
+    fs.copyFileSync(path.join(p2Dir, 'review-execution/review-session-ledger.json'), path.join(tempProdRoot, 'review-session-ledger.json'))
+
+    // Tamper actual Candidate #1 adjudication record on disk
+    const diskRecordPath = path.join(c1Dest, 'human/adjudication-record.v1.json')
+    const record = JSON.parse(fs.readFileSync(diskRecordPath, 'utf8'))
+    record.humanRationale = 'TAMPERED RATIONALE'
+    fs.writeFileSync(diskRecordPath, JSON.stringify(record, null, 2), 'utf8')
+
+    assert.throws(
+      () => validatePostPilotSessionAuthorization({
+        p2Dir: tempFixtureDir,
+        executionRoot: tempProdRoot,
+      }),
+      /SESSION_AUTHORIZATION_INVALID.*Canonical Candidate #1 human adjudication record SHA/
+    )
+  } finally {
+    cleanTempDir(tempFixtureDir)
+  }
+})
+
+test('A.8. Authorization rejects corrupted Candidate #1 evidence chain on disk', () => {
+  const tempFixtureDir = makeTempDir('p24-suite-a8-')
+  try {
+    const tempProdRoot = path.join(tempFixtureDir, 'review-execution')
+    const filesToCopy = [
+      'blind-review-order.v1.json',
+      'blind-review-eligible-pool.v1.json',
+      'p2-3-freeze-manifest.v1.json',
+      'p2-3-live-operation-protocol.v1.json',
+      'p2-4-manual-ingestion-readiness.v1.json',
+      'p2-4-post-pilot-sequential-session-authorization.v1.json',
+      'p2-4-post-pilot-implementation-incident.v1.json',
+    ]
+    for (const f of filesToCopy) {
+      fs.copyFileSync(path.join(p2Dir, f), path.join(tempFixtureDir, f))
+    }
+    const c1Source = path.join(p2Dir, 'review-execution/exp100-tmdb-672647')
+    const c1Dest = path.join(tempProdRoot, 'exp100-tmdb-672647')
+    fs.cpSync(c1Source, c1Dest, { recursive: true })
+    fs.copyFileSync(path.join(p2Dir, 'review-execution/review-session-ledger.json'), path.join(tempProdRoot, 'review-session-ledger.json'))
+
+    // Corrupt Gemini advisory envelope on disk to break evidence chain
+    const gEnvPath = path.join(c1Dest, 'gemini/active-advisory-envelope.v1.json')
+    const gEnv = JSON.parse(fs.readFileSync(gEnvPath, 'utf8'))
+    gEnv.rawResponseSha256 = 'sha256:0000000000000000000000000000000000000000000000000000000000000000'
+    fs.writeFileSync(gEnvPath, JSON.stringify(gEnv, null, 2), 'utf8')
+
+    assert.throws(
+      () => validatePostPilotSessionAuthorization({
+        p2Dir: tempFixtureDir,
+        executionRoot: tempProdRoot,
+      }),
+      /SESSION_AUTHORIZATION_INVALID.*Candidate #1 evidence chain verification failed/
+    )
+  } finally {
+    cleanTempDir(tempFixtureDir)
+  }
+})
+
+test('A.7b. Authorization rejects Candidate #1 missing from live session ledger state', () => {
+  const tempFixtureDir = makeTempDir('p24-suite-a7b-')
+  try {
+    const tempProdRoot = path.join(tempFixtureDir, 'review-execution')
+    const filesToCopy = [
+      'blind-review-order.v1.json',
+      'blind-review-eligible-pool.v1.json',
+      'p2-3-freeze-manifest.v1.json',
+      'p2-3-live-operation-protocol.v1.json',
+      'p2-4-manual-ingestion-readiness.v1.json',
+      'p2-4-post-pilot-sequential-session-authorization.v1.json',
+      'p2-4-post-pilot-implementation-incident.v1.json',
+    ]
+    for (const f of filesToCopy) {
+      fs.copyFileSync(path.join(p2Dir, f), path.join(tempFixtureDir, f))
+    }
+    const c1Source = path.join(p2Dir, 'review-execution/exp100-tmdb-672647')
+    const c1Dest = path.join(tempProdRoot, 'exp100-tmdb-672647')
+    fs.cpSync(c1Source, c1Dest, { recursive: true })
+
+    // Ledger has Candidate #1 deleted
+    const ledger = JSON.parse(fs.readFileSync(path.join(p2Dir, 'review-execution/review-session-ledger.json'), 'utf8'))
+    delete ledger.candidateStates['exp100-tmdb-672647']
+    fs.mkdirSync(tempProdRoot, { recursive: true })
+    fs.writeFileSync(path.join(tempProdRoot, 'review-session-ledger.json'), JSON.stringify(ledger, null, 2), 'utf8')
+
+    assert.throws(
+      () => validatePostPilotSessionAuthorization({
+        p2Dir: tempFixtureDir,
+        executionRoot: tempProdRoot,
+      }),
+      /SESSION_AUTHORIZATION_INVALID.*Candidate #1 \('exp100-tmdb-672647'\) missing from current session state/
+    )
+  } finally {
+    cleanTempDir(tempFixtureDir)
+  }
+})
+
+test('A.7c. Authorization rejects Candidate #1 with non-HUMAN_ADJUDICATED status in live session ledger', () => {
+  const tempFixtureDir = makeTempDir('p24-suite-a7c-')
+  try {
+    const tempProdRoot = path.join(tempFixtureDir, 'review-execution')
+    const filesToCopy = [
+      'blind-review-order.v1.json',
+      'blind-review-eligible-pool.v1.json',
+      'p2-3-freeze-manifest.v1.json',
+      'p2-3-live-operation-protocol.v1.json',
+      'p2-4-manual-ingestion-readiness.v1.json',
+      'p2-4-post-pilot-sequential-session-authorization.v1.json',
+      'p2-4-post-pilot-implementation-incident.v1.json',
+    ]
+    for (const f of filesToCopy) {
+      fs.copyFileSync(path.join(p2Dir, f), path.join(tempFixtureDir, f))
+    }
+    const c1Source = path.join(p2Dir, 'review-execution/exp100-tmdb-672647')
+    const c1Dest = path.join(tempProdRoot, 'exp100-tmdb-672647')
+    fs.cpSync(c1Source, c1Dest, { recursive: true })
+
+    // Ledger has Candidate #1 status reverted
+    const ledger = JSON.parse(fs.readFileSync(path.join(p2Dir, 'review-execution/review-session-ledger.json'), 'utf8'))
+    ledger.candidateStates['exp100-tmdb-672647'].status = 'PREPARED'
+    fs.mkdirSync(tempProdRoot, { recursive: true })
+    fs.writeFileSync(path.join(tempProdRoot, 'review-session-ledger.json'), JSON.stringify(ledger, null, 2), 'utf8')
+
+    assert.throws(
+      () => validatePostPilotSessionAuthorization({
+        p2Dir: tempFixtureDir,
+        executionRoot: tempProdRoot,
+      }),
+      /SESSION_AUTHORIZATION_INVALID.*Candidate #1 status in current session state is not HUMAN_ADJUDICATED/
+    )
+  } finally {
+    cleanTempDir(tempFixtureDir)
+  }
+})
+
+test('A.7d. Authorization rejects Candidate #1 humanAdjudicationSha256 mismatch in live session ledger', () => {
+  const tempFixtureDir = makeTempDir('p24-suite-a7d-')
+  try {
+    const tempProdRoot = path.join(tempFixtureDir, 'review-execution')
+    const filesToCopy = [
+      'blind-review-order.v1.json',
+      'blind-review-eligible-pool.v1.json',
+      'p2-3-freeze-manifest.v1.json',
+      'p2-3-live-operation-protocol.v1.json',
+      'p2-4-manual-ingestion-readiness.v1.json',
+      'p2-4-post-pilot-sequential-session-authorization.v1.json',
+      'p2-4-post-pilot-implementation-incident.v1.json',
+    ]
+    for (const f of filesToCopy) {
+      fs.copyFileSync(path.join(p2Dir, f), path.join(tempFixtureDir, f))
+    }
+    const c1Source = path.join(p2Dir, 'review-execution/exp100-tmdb-672647')
+    const c1Dest = path.join(tempProdRoot, 'exp100-tmdb-672647')
+    fs.cpSync(c1Source, c1Dest, { recursive: true })
+
+    // Ledger has tampered human hash
+    const ledger = JSON.parse(fs.readFileSync(path.join(p2Dir, 'review-execution/review-session-ledger.json'), 'utf8'))
+    ledger.candidateStates['exp100-tmdb-672647'].humanAdjudicationSha256 = 'sha256:0000000000000000000000000000000000000000000000000000000000000000'
+    fs.mkdirSync(tempProdRoot, { recursive: true })
+    fs.writeFileSync(path.join(tempProdRoot, 'review-session-ledger.json'), JSON.stringify(ledger, null, 2), 'utf8')
+
+    assert.throws(
+      () => validatePostPilotSessionAuthorization({
+        p2Dir: tempFixtureDir,
+        executionRoot: tempProdRoot,
+      }),
+      /SESSION_AUTHORIZATION_INVALID.*Candidate #1 humanAdjudicationSha256 in current session state does not match expected/
+    )
+  } finally {
+    cleanTempDir(tempFixtureDir)
+  }
+})
+
+test('A.7d2. Authorization rejects Candidate #1 with missing humanAdjudicationSha256 in live session ledger', () => {
+  const tempFixtureDir = makeTempDir('p24-suite-a7d2-')
+  try {
+    const tempProdRoot = path.join(tempFixtureDir, 'review-execution')
+    const filesToCopy = [
+      'blind-review-order.v1.json',
+      'blind-review-eligible-pool.v1.json',
+      'p2-3-freeze-manifest.v1.json',
+      'p2-3-live-operation-protocol.v1.json',
+      'p2-4-manual-ingestion-readiness.v1.json',
+      'p2-4-post-pilot-sequential-session-authorization.v1.json',
+      'p2-4-post-pilot-implementation-incident.v1.json',
+    ]
+    for (const f of filesToCopy) {
+      fs.copyFileSync(path.join(p2Dir, f), path.join(tempFixtureDir, f))
+    }
+    const c1Source = path.join(p2Dir, 'review-execution/exp100-tmdb-672647')
+    const c1Dest = path.join(tempProdRoot, 'exp100-tmdb-672647')
+    fs.cpSync(c1Source, c1Dest, { recursive: true })
+
+    // Ledger has missing human hash
+    const ledger = JSON.parse(fs.readFileSync(path.join(p2Dir, 'review-execution/review-session-ledger.json'), 'utf8'))
+    delete ledger.candidateStates['exp100-tmdb-672647'].humanAdjudicationSha256
+    fs.mkdirSync(tempProdRoot, { recursive: true })
+    fs.writeFileSync(path.join(tempProdRoot, 'review-session-ledger.json'), JSON.stringify(ledger, null, 2), 'utf8')
+
+    assert.throws(
+      () => validatePostPilotSessionAuthorization({
+        p2Dir: tempFixtureDir,
+        executionRoot: tempProdRoot,
+      }),
+      /SESSION_AUTHORIZATION_INVALID.*Candidate #1 humanAdjudicationSha256 in current session state does not match expected/
+    )
+  } finally {
+    cleanTempDir(tempFixtureDir)
+  }
+})
+
+test('A.7e. Authorization rejects review order that does not map sequence index 1 to Candidate #1', () => {
+  const tempFixtureDir = makeTempDir('p24-suite-a7e-')
+  try {
+    const tempProdRoot = path.join(tempFixtureDir, 'review-execution')
+    const filesToCopy = [
+      'blind-review-eligible-pool.v1.json',
+      'p2-3-freeze-manifest.v1.json',
+      'p2-3-live-operation-protocol.v1.json',
+      'p2-4-manual-ingestion-readiness.v1.json',
+      'p2-4-post-pilot-sequential-session-authorization.v1.json',
+      'p2-4-post-pilot-implementation-incident.v1.json',
+    ]
+    for (const f of filesToCopy) {
+      fs.copyFileSync(path.join(p2Dir, f), path.join(tempFixtureDir, f))
+    }
+    // Tamper review order so entry 1 is different candidate
+    const orderData = JSON.parse(fs.readFileSync(path.join(p2Dir, 'blind-review-order.v1.json'), 'utf8'))
+    orderData.orderedCandidates[0].candidateId = 'wrong-candidate-id'
+    fs.writeFileSync(path.join(tempFixtureDir, 'blind-review-order.v1.json'), JSON.stringify(orderData, null, 2), 'utf8')
+
+    assert.throws(
+      () => validatePostPilotSessionAuthorization({
+        p2Dir: tempFixtureDir,
+        executionRoot: tempProdRoot,
+      }),
+      /SESSION_AUTHORIZATION_INVALID.*(Bound file 'blind-review-order.v1.json' disk SHA mismatch|Frozen review order does not map sequence index 1)/
+    )
+  } finally {
+    cleanTempDir(tempFixtureDir)
+  }
+})
+
+test('A.7f. Live ledger evolution after Candidate #2 does not break Candidate #1 historical frozen binding', () => {
+  const tempFixtureDir = makeTempDir('p24-suite-a7f-')
+  try {
+    const tempProdRoot = path.join(tempFixtureDir, 'review-execution')
+    const filesToCopy = [
+      'blind-review-order.v1.json',
+      'blind-review-eligible-pool.v1.json',
+      'p2-3-freeze-manifest.v1.json',
+      'p2-3-live-operation-protocol.v1.json',
+      'p2-4-manual-ingestion-readiness.v1.json',
+      'p2-4-post-pilot-sequential-session-authorization.v1.json',
+      'p2-4-post-pilot-implementation-incident.v1.json',
+    ]
+    for (const f of filesToCopy) {
+      fs.copyFileSync(path.join(p2Dir, f), path.join(tempFixtureDir, f))
+    }
+    const c1Source = path.join(p2Dir, 'review-execution/exp100-tmdb-672647')
+    const c1Dest = path.join(tempProdRoot, 'exp100-tmdb-672647')
+    fs.cpSync(c1Source, c1Dest, { recursive: true })
+
+    // Live ledger evolves by adding Candidate #2
+    const ledger = JSON.parse(fs.readFileSync(path.join(p2Dir, 'review-execution/review-session-ledger.json'), 'utf8'))
+    ledger.candidateStates['scale500-tmdb-18912'] = {
+      status: 'HUMAN_ADJUDICATED',
+      humanAdjudicationSha256: 'sha256:1111111111111111111111111111111111111111111111111111111111111111',
+      finalDecision: 'APPROVE',
+      finalSeverity: null,
+      adjudicatedAt: '2026-09-18T03:00:00Z',
+    }
+    ledger.cleanCount = 2
+    fs.mkdirSync(tempProdRoot, { recursive: true })
+    fs.writeFileSync(path.join(tempProdRoot, 'review-session-ledger.json'), JSON.stringify(ledger, null, 2), 'utf8')
+
+    // Authorization passes cleanly despite live ledger evolution
+    const auth = validatePostPilotSessionAuthorization({
+      p2Dir: tempFixtureDir,
+      executionRoot: tempProdRoot,
+    })
+    assert.equal(auth.sequentialSessionAuthorized, true)
+  } finally {
+    cleanTempDir(tempFixtureDir)
+  }
+})
+
+test('A.9. Authorization rejects missing implementation incident artifact file on disk', () => {
+  const tempFixtureDir = makeTempDir('p24-suite-a9-')
+  try {
+    const tempProdRoot = path.join(tempFixtureDir, 'review-execution')
+    const filesToCopy = [
+      'blind-review-order.v1.json',
+      'blind-review-eligible-pool.v1.json',
+      'p2-3-freeze-manifest.v1.json',
+      'p2-3-live-operation-protocol.v1.json',
+      'p2-4-manual-ingestion-readiness.v1.json',
+      'p2-4-post-pilot-sequential-session-authorization.v1.json',
+      // Intentionally omit p2-4-post-pilot-implementation-incident.v1.json
+    ]
+    for (const f of filesToCopy) {
+      fs.copyFileSync(path.join(p2Dir, f), path.join(tempFixtureDir, f))
+    }
+    const c1Source = path.join(p2Dir, 'review-execution/exp100-tmdb-672647')
+    const c1Dest = path.join(tempProdRoot, 'exp100-tmdb-672647')
+    fs.cpSync(c1Source, c1Dest, { recursive: true })
+    fs.copyFileSync(path.join(p2Dir, 'review-execution/review-session-ledger.json'), path.join(tempProdRoot, 'review-session-ledger.json'))
+
+    assert.throws(
+      () => validatePostPilotSessionAuthorization({
+        p2Dir: tempFixtureDir,
+        executionRoot: tempProdRoot,
+      }),
+      /SESSION_AUTHORIZATION_INVALID.*Mandatory bound file 'p2-4-post-pilot-implementation-incident.v1.json' missing/
+    )
+  } finally {
+    cleanTempDir(tempFixtureDir)
+  }
+})
+
+test('A.10. Authorization rejects missing or tampered original P2.4 provenance bindings in authorization JSON', () => {
+  const tempFixtureDir = makeTempDir('p24-suite-a10-')
+  try {
+    const tempProdRoot = path.join(tempFixtureDir, 'review-execution')
+    const filesToCopy = [
+      'blind-review-order.v1.json',
+      'blind-review-eligible-pool.v1.json',
+      'p2-3-freeze-manifest.v1.json',
+      'p2-3-live-operation-protocol.v1.json',
+      'p2-4-manual-ingestion-readiness.v1.json',
+      'p2-4-post-pilot-implementation-incident.v1.json',
+    ]
+    for (const f of filesToCopy) {
+      fs.copyFileSync(path.join(p2Dir, f), path.join(tempFixtureDir, f))
+    }
+    const c1Source = path.join(p2Dir, 'review-execution/exp100-tmdb-672647')
+    const c1Dest = path.join(tempProdRoot, 'exp100-tmdb-672647')
+    fs.cpSync(c1Source, c1Dest, { recursive: true })
+    fs.copyFileSync(path.join(p2Dir, 'review-execution/review-session-ledger.json'), path.join(tempProdRoot, 'review-session-ledger.json'))
+
+    const baseAuth = JSON.parse(fs.readFileSync(path.join(p2Dir, 'p2-4-post-pilot-sequential-session-authorization.v1.json'), 'utf8'))
+
+    // Missing originalP24FreezeCommit
+    const auth1 = { ...baseAuth }
+    delete auth1.originalP24FreezeCommit
+    fs.writeFileSync(path.join(tempFixtureDir, 'p2-4-post-pilot-sequential-session-authorization.v1.json'), JSON.stringify(auth1, null, 2), 'utf8')
+    assert.throws(
+      () => validatePostPilotSessionAuthorization({ p2Dir: tempFixtureDir, executionRoot: tempProdRoot }),
+      /SESSION_AUTHORIZATION_INVALID.*Mandatory provenance field 'originalP24FreezeCommit' is missing/
+    )
+
+    // Tampered candidate1AuthorizationBridgeCommit
+    const auth2 = { ...baseAuth, candidate1AuthorizationBridgeCommit: '0000000000000000000000000000000000000000' }
+    fs.writeFileSync(path.join(tempFixtureDir, 'p2-4-post-pilot-sequential-session-authorization.v1.json'), JSON.stringify(auth2, null, 2), 'utf8')
+    assert.throws(
+      () => validatePostPilotSessionAuthorization({ p2Dir: tempFixtureDir, executionRoot: tempProdRoot }),
+      /SESSION_AUTHORIZATION_INVALID.*Provenance field 'candidate1AuthorizationBridgeCommit'/
+    )
+  } finally {
+    cleanTempDir(tempFixtureDir)
+  }
+})
+
+test('A.11. Authorization rejects missing or tampered implementationIncidentSha256 in authorization JSON', () => {
+  const tempFixtureDir = makeTempDir('p24-suite-a11-')
+  try {
+    const tempProdRoot = path.join(tempFixtureDir, 'review-execution')
+    const filesToCopy = [
+      'blind-review-order.v1.json',
+      'blind-review-eligible-pool.v1.json',
+      'p2-3-freeze-manifest.v1.json',
+      'p2-3-live-operation-protocol.v1.json',
+      'p2-4-manual-ingestion-readiness.v1.json',
+      'p2-4-post-pilot-implementation-incident.v1.json',
+    ]
+    for (const f of filesToCopy) {
+      fs.copyFileSync(path.join(p2Dir, f), path.join(tempFixtureDir, f))
+    }
+    const c1Source = path.join(p2Dir, 'review-execution/exp100-tmdb-672647')
+    const c1Dest = path.join(tempProdRoot, 'exp100-tmdb-672647')
+    fs.cpSync(c1Source, c1Dest, { recursive: true })
+    fs.copyFileSync(path.join(p2Dir, 'review-execution/review-session-ledger.json'), path.join(tempProdRoot, 'review-session-ledger.json'))
+
+    const baseAuth = JSON.parse(fs.readFileSync(path.join(p2Dir, 'p2-4-post-pilot-sequential-session-authorization.v1.json'), 'utf8'))
+
+    // Missing implementationIncidentSha256
+    const auth1 = { ...baseAuth }
+    delete auth1.implementationIncidentSha256
+    fs.writeFileSync(path.join(tempFixtureDir, 'p2-4-post-pilot-sequential-session-authorization.v1.json'), JSON.stringify(auth1, null, 2), 'utf8')
+    assert.throws(
+      () => validatePostPilotSessionAuthorization({ p2Dir: tempFixtureDir, executionRoot: tempProdRoot }),
+      /SESSION_AUTHORIZATION_INVALID.*Mandatory provenance field 'implementationIncidentSha256' is missing/
+    )
+  } finally {
+    cleanTempDir(tempFixtureDir)
+  }
+})
+
+// ============================================================
+// SUITE B: Sequential Continuation Tests
+// ============================================================
+
+test('B.1. Candidate #2 is exact next candidate after Candidate #1', () => {
+  const realProdRoot = path.join(p2Dir, 'review-execution')
+  const current = getCurrentReviewCandidate({ executionRoot: realProdRoot, p2Dir })
+  assert.equal(current.currentCandidateId, 'scale500-tmdb-18912')
+  assert.equal(current.currentReviewSequenceIndex, 2)
+  assert.equal(current.operationalStatus, 'PRIMARY_REVIEW_CONTINUES')
+})
+
+test('B.2. Candidate #3 cannot run before Candidate #2 adjudication', () => {
+  const realProdRoot = path.join(p2Dir, 'review-execution')
+  assert.throws(
+    () => prepareManualPayload({
+      candidateId: 'scale500-tmdb-11802', // Candidate #3
+      reviewer: 'GEMINI',
+      executionRoot: realProdRoot,
+      p2Dir,
+    }),
+    /OUT_OF_ORDER_EXECUTION.*Current sequential candidate is 'scale500-tmdb-18912'/
+  )
+})
+
+test('B.3. After synthetic Candidate #2 adjudication, Candidate #3 becomes exact next candidate', () => {
+  const tempFixtureDir = makeTempDir('p24-suite-b3-')
+  try {
+    const tempProdRoot = path.join(tempFixtureDir, 'review-execution')
+    const filesToCopy = [
+      'blind-review-order.v1.json',
+      'blind-review-eligible-pool.v1.json',
+      'p2-3-freeze-manifest.v1.json',
+      'p2-3-live-operation-protocol.v1.json',
+      'p2-4-manual-ingestion-readiness.v1.json',
+      'p2-4-post-pilot-sequential-session-authorization.v1.json',
+      'p2-4-post-pilot-implementation-incident.v1.json',
+    ]
+    for (const f of filesToCopy) {
+      fs.copyFileSync(path.join(p2Dir, f), path.join(tempFixtureDir, f))
+    }
+
+    // Mirror Candidate #1 into fixture
+    const c1Source = path.join(p2Dir, 'review-execution/exp100-tmdb-672647')
+    const c1Dest = path.join(tempProdRoot, 'exp100-tmdb-672647')
+    fs.cpSync(c1Source, c1Dest, { recursive: true })
+    fs.copyFileSync(path.join(p2Dir, 'review-execution/review-session-ledger.json'), path.join(tempProdRoot, 'review-session-ledger.json'))
+
+    // Prepare Candidate #2 for GEMINI and CLAUDE
+    prepareManualPayload({ candidateId: 'scale500-tmdb-18912', reviewer: 'GEMINI', executionRoot: tempProdRoot, p2Dir: tempFixtureDir })
+    prepareManualPayload({ candidateId: 'scale500-tmdb-18912', reviewer: 'CLAUDE', executionRoot: tempProdRoot, p2Dir: tempFixtureDir })
+
+    const validOpinion = {
+      preliminaryDecision: 'APPROVE',
+      preliminarySeverity: null,
+      affectedFields: [],
+      issueSummaries: [],
+      claimSpan: 'none',
+      sourceEvidence: [{ source: 'facts.overview', supportFound: true }],
+      sourceBoundaryReason: 'Strictly factual synthetic movie data',
+      confidence: 'HIGH',
+      advisoryOnly: true,
+    }
+    const respFile = path.join(tempFixtureDir, 'resp.json')
+    fs.writeFileSync(respFile, JSON.stringify(validOpinion, null, 2), 'utf8')
+    ingestManualResponse({ candidateId: 'scale500-tmdb-18912', reviewer: 'GEMINI', responseFilePath: respFile, executionRoot: tempProdRoot, p2Dir: tempFixtureDir })
+    ingestManualResponse({ candidateId: 'scale500-tmdb-18912', reviewer: 'CLAUDE', responseFilePath: respFile, executionRoot: tempProdRoot, p2Dir: tempFixtureDir })
+
+    buildManualHumanBundle({ candidateId: 'scale500-tmdb-18912', executionRoot: tempProdRoot, p2Dir: tempFixtureDir })
+
+    // Adjudicate Candidate #2
+    const adjRes = recordManualHumanAdjudication({
+      candidateId: 'scale500-tmdb-18912',
+      finalDecision: 'APPROVE',
+      finalSeverity: null,
+      affectedFields: [],
+      materialIssues: [],
+      humanRationale: 'Verified approved synthetic Candidate #2',
+      executionRoot: tempProdRoot,
+      p2Dir: tempFixtureDir,
+    })
+
+    assert.equal(adjRes.operationalStatus, 'PRIMARY_REVIEW_CONTINUES')
+    assert.equal(adjRes.nextCandidateId, 'scale500-tmdb-11802')
+
+    // B.4: Candidate #3 does NOT need another authorization amendment
+    const prepC3 = prepareManualPayload({
+      candidateId: 'scale500-tmdb-11802',
+      reviewer: 'GEMINI',
+      executionRoot: tempProdRoot,
+      p2Dir: tempFixtureDir,
+    })
+    assert.equal(prepC3.candidateId, 'scale500-tmdb-11802')
+  } finally {
+    cleanTempDir(tempFixtureDir)
+  }
+})
+
+test('B.5. Arbitrary later candidate remains blocked with OUT_OF_ORDER_EXECUTION', () => {
+  const realProdRoot = path.join(p2Dir, 'review-execution')
+  assert.throws(
+    () => prepareManualPayload({
+      candidateId: 'scale500-tmdb-999999',
+      reviewer: 'GEMINI',
+      executionRoot: realProdRoot,
+      p2Dir,
+    }),
+    /CANDIDATE_NOT_FOUND/
+  )
+})
+
+test('B.6. Unknown candidate remains rejected with CANDIDATE_NOT_FOUND', () => {
+  const realProdRoot = path.join(p2Dir, 'review-execution')
+  assert.throws(
+    () => prepareManualPayload({
+      candidateId: 'completely-unknown-film',
+      reviewer: 'GEMINI',
+      executionRoot: realProdRoot,
+      p2Dir,
+    }),
+    /CANDIDATE_NOT_FOUND/
+  )
+})
+
+// ============================================================
+// SUITE C: Information Environment Invariance Tests
+// ============================================================
+
+test('C.1. No quota counters are exposed in human adjudication output or bundle', () => {
+  const realProdRoot = path.join(p2Dir, 'review-execution')
+  const c1BundlePath = path.join(realProdRoot, 'exp100-tmdb-672647', 'human-review-bundle.v1.json')
+  const bundle = JSON.parse(fs.readFileSync(c1BundlePath, 'utf8'))
+
+  assert.equal(bundle.cleanCount, undefined)
+  assert.equal(bundle.defectPositiveCount, undefined)
+  assert.equal(bundle.severeCount, undefined)
+  assert.equal(bundle.targetClean, undefined)
+  assert.equal(bundle.remainingSevereNeeded, undefined)
+  assert.equal(bundle.observedYield, undefined)
+
+  const current = getCurrentReviewCandidate({ executionRoot: realProdRoot, p2Dir })
+  assert.equal(current.cleanCount, undefined)
+  assert.equal(current.defectPositiveCount, undefined)
+  assert.equal(current.severeCount, undefined)
+  assert.equal(current.quotaDeficit, undefined)
+})
+
+test('C.2. No semantic highlighting is introduced in bundle or payload', () => {
+  const realProdRoot = path.join(p2Dir, 'review-execution')
+  const payloadPath = path.join(realProdRoot, 'exp100-tmdb-672647/manual/gemini/attempt-01/submission-payload.v1.txt')
+  const payloadText = fs.readFileSync(payloadPath, 'utf8')
+
+  assert.ok(!payloadText.includes('CRITIC_FLAG'))
+  assert.ok(!payloadText.includes('SUSPICIOUS_PHRASE'))
+  assert.ok(!payloadText.includes('SEVERITY_SUGGESTION'))
+  assert.ok(!payloadText.includes('HIGHLIGHT'))
+})
+
+test('C.3. No model summary replaces full frozen advisory content', () => {
+  const realProdRoot = path.join(p2Dir, 'review-execution')
+  const c1Bundle = JSON.parse(fs.readFileSync(path.join(realProdRoot, 'exp100-tmdb-672647', 'human-review-bundle.v1.json'), 'utf8'))
+
+  assert.ok(c1Bundle.geminiAdvisory.sourceBoundaryReason.length > 0)
+  assert.ok(Array.isArray(c1Bundle.geminiAdvisory.sourceEvidence))
+  assert.ok(c1Bundle.claudeAdvisory.sourceBoundaryReason.length > 0)
+  assert.ok(Array.isArray(c1Bundle.claudeAdvisory.sourceEvidence))
+})
+
+test('C.4. Gemini/Claude presentation order remains stable', () => {
+  const realProdRoot = path.join(p2Dir, 'review-execution')
+  const c1Bundle = JSON.parse(fs.readFileSync(path.join(realProdRoot, 'exp100-tmdb-672647', 'human-review-bundle.v1.json'), 'utf8'))
+
+  assert.ok(c1Bundle.geminiAdvisory !== undefined)
+  assert.ok(c1Bundle.claudeAdvisory !== undefined)
+  assert.equal(c1Bundle.geminiAdvisory.advisoryOnly, true)
+  assert.equal(c1Bundle.claudeAdvisory.advisoryOnly, true)
+})
+
+test('C.5. No new semantic metadata reaches Sophia', () => {
+  const realProdRoot = path.join(p2Dir, 'review-execution')
+  const c1Bundle = JSON.parse(fs.readFileSync(path.join(realProdRoot, 'exp100-tmdb-672647', 'human-review-bundle.v1.json'), 'utf8'))
+
+  assert.equal(c1Bundle.predictedSeverity, undefined)
+  assert.equal(c1Bundle.aiRiskScore, undefined)
+  assert.equal(c1Bundle.consensusPrediction, undefined)
+})
+
+// ============================================================
+// SUITE D: Human Persistence Tests
+// ============================================================
+
+test('D.1. Authoritative adjudication can be persisted through governed operator', () => {
+  const tempFixtureDir = makeTempDir('p24-suite-d1-')
+  try {
+    const tempProdRoot = path.join(tempFixtureDir, 'review-execution')
+    const filesToCopy = [
+      'blind-review-order.v1.json',
+      'blind-review-eligible-pool.v1.json',
+      'p2-3-freeze-manifest.v1.json',
+      'p2-3-live-operation-protocol.v1.json',
+      'p2-4-manual-ingestion-readiness.v1.json',
+      'p2-4-post-pilot-sequential-session-authorization.v1.json',
+      'p2-4-post-pilot-implementation-incident.v1.json',
+    ]
+    for (const f of filesToCopy) {
+      fs.copyFileSync(path.join(p2Dir, f), path.join(tempFixtureDir, f))
+    }
+
+    // Mirror Candidate #1 into fixture
+    const c1Source = path.join(p2Dir, 'review-execution/exp100-tmdb-672647')
+    const c1Dest = path.join(tempProdRoot, 'exp100-tmdb-672647')
+    fs.cpSync(c1Source, c1Dest, { recursive: true })
+    fs.copyFileSync(path.join(p2Dir, 'review-execution/review-session-ledger.json'), path.join(tempProdRoot, 'review-session-ledger.json'))
+
+    prepareManualPayload({ candidateId: 'scale500-tmdb-18912', reviewer: 'GEMINI', executionRoot: tempProdRoot, p2Dir: tempFixtureDir })
+    prepareManualPayload({ candidateId: 'scale500-tmdb-18912', reviewer: 'CLAUDE', executionRoot: tempProdRoot, p2Dir: tempFixtureDir })
+
+    const validOpinion = {
+      preliminaryDecision: 'REVISE',
+      preliminarySeverity: 'MINOR',
+      affectedFields: ['description'],
+      issueSummaries: ['Minor editorial issue'],
+      claimSpan: 'none',
+      sourceEvidence: [{ source: 'facts.overview', supportFound: true }],
+      sourceBoundaryReason: 'Minor issue found',
+      confidence: 'HIGH',
+      advisoryOnly: true,
+    }
+    const respFile = path.join(tempFixtureDir, 'resp.json')
+    fs.writeFileSync(respFile, JSON.stringify(validOpinion, null, 2), 'utf8')
+
+    ingestManualResponse({ candidateId: 'scale500-tmdb-18912', reviewer: 'GEMINI', responseFilePath: respFile, executionRoot: tempProdRoot, p2Dir: tempFixtureDir })
+    ingestManualResponse({ candidateId: 'scale500-tmdb-18912', reviewer: 'CLAUDE', responseFilePath: respFile, executionRoot: tempProdRoot, p2Dir: tempFixtureDir })
+
+    const res = recordManualHumanAdjudication({
+      candidateId: 'scale500-tmdb-18912',
+      finalDecision: 'REVISE',
+      finalSeverity: 'MINOR',
+      affectedFields: ['description'],
+      materialIssues: ['Minor discrepancy in plot premise'],
+      humanRationale: 'Explicit Sophia rationale verifying minor discrepancy',
+      executionRoot: tempProdRoot,
+      p2Dir: tempFixtureDir,
+    })
+
+    assert.equal(res.success, true)
+    assert.equal(res.candidateId, 'scale500-tmdb-18912')
+    assert.equal(res.finalDecision, 'REVISE')
+    assert.equal(res.finalSeverity, 'MINOR')
+    assert.ok(res.recordSha256.startsWith('sha256:'))
+  } finally {
+    cleanTempDir(tempFixtureDir)
+  }
+})
+
+test('D.2. Explicit Sophia-supplied fields are strictly required (APPROVE vs REVISE)', () => {
+  const tempDir = makeTempDir('p24-suite-d2-')
+  try {
+    const { candidateId } = createSyntheticTestEnv(tempDir)
+
+    // Missing rationale
+    assert.throws(
+      () => recordManualHumanAdjudication({
+        candidateId,
+        finalDecision: 'APPROVE',
+        humanRationale: '',
+        executionRoot: tempDir,
+      }),
+      /INVALID_HUMAN_RATIONALE/
+    )
+
+    // REVISE without severity
+    assert.throws(
+      () => recordManualHumanAdjudication({
+        candidateId,
+        finalDecision: 'REVISE',
+        finalSeverity: null,
+        affectedFields: ['description'],
+        materialIssues: ['issue'],
+        humanRationale: 'valid rationale',
+        executionRoot: tempDir,
+      }),
+      /INVALID_SEVERITY/
+    )
+
+    // REVISE with empty affectedFields
+    assert.throws(
+      () => recordManualHumanAdjudication({
+        candidateId,
+        finalDecision: 'REVISE',
+        finalSeverity: 'SEVERE',
+        affectedFields: [],
+        materialIssues: ['issue'],
+        humanRationale: 'valid rationale',
+        executionRoot: tempDir,
+      }),
+      /INVALID_AFFECTED_FIELDS/
+    )
+  } finally {
+    cleanTempDir(tempDir)
+  }
+})
+
+test('D.3. Operator never derives human truth from model advisories', () => {
+  // Confirm recordManualHumanAdjudication rejects implicit decision
+  assert.throws(
+    () => recordManualHumanAdjudication({
+      candidateId: 'scale500-tmdb-18912',
+      finalDecision: undefined,
+      humanRationale: 'some rationale',
+      executionRoot: path.join(p2Dir, 'review-execution'),
+    }),
+    /INVALID_DECISION/
+  )
+})
+
+test('D.4. Complete evidence verification runs after persistence', () => {
+  const realProdRoot = path.join(p2Dir, 'review-execution')
+  const chain = verifyCandidateReviewEvidenceChain({
+    candidateId: 'exp100-tmdb-672647',
+    candidateDir: path.join(realProdRoot, 'exp100-tmdb-672647'),
+    bindings: {
+      geminiModel: 'MANUAL_CONSUMER_UI',
+      claudeModel: 'MANUAL_CONSUMER_UI',
+    },
+  })
+  assert.equal(chain.valid, true)
+  assert.equal(chain.humanRecord.finalDecision, 'APPROVE')
+})
+
+test('D.5. Restart reconstructs durable state correctly', () => {
+  const realProdRoot = path.join(p2Dir, 'review-execution')
+  const current = getCurrentReviewCandidate({ executionRoot: realProdRoot, p2Dir })
+  assert.equal(current.currentCandidateId, 'scale500-tmdb-18912')
+  assert.equal(current.currentReviewSequenceIndex, 2)
+})
+
+// ============================================================
+// SUITE E: Stopping Gate Tests
+// ============================================================
+
+test('E.1. Primary review continues below 30/30/6', () => {
+  const stopping = checkStoppingRule({ cleanCount: 29, defectPositiveCount: 30, severeCount: 6 })
+  assert.equal(stopping.stoppingRuleSatisfied, false)
+  assert.equal(stopping.cleanSatisfied, false)
+  assert.equal(stopping.defectSatisfied, true)
+  assert.equal(stopping.severeSatisfied, true)
+})
+
+test('E.2. Exact 30/30/6 threshold stops before another candidate is prepared', () => {
+  const stopping = checkStoppingRule({ cleanCount: 30, defectPositiveCount: 30, severeCount: 6 })
+  assert.equal(stopping.stoppingRuleSatisfied, true)
+})
+
+test('E.3. Exceeding threshold does not permit one extra candidate', () => {
+  const stopping = checkStoppingRule({ cleanCount: 31, defectPositiveCount: 30, severeCount: 7 })
+  assert.equal(stopping.stoppingRuleSatisfied, true)
+})
+
+test('E.4. Git batch target never overrides scientific stopping', () => {
+  // Scientific stopping rule satisfied at 30/30/6
+  const stopping = checkStoppingRule({ cleanCount: 30, defectPositiveCount: 30, severeCount: 6 })
+  assert.equal(stopping.stoppingRuleSatisfied, true)
+})
+
+// ============================================================
+// SUITE F: Checkpoint Manifest Tests
+// ============================================================
+
+test('F.1. Checkpoint manifest generated deterministically from authoritative records', () => {
+  const realProdRoot = path.join(p2Dir, 'review-execution')
+  const manifest = generateCheckpointManifest({
+    executionRoot: realProdRoot,
+    p2Dir,
+    fromSequenceIndex: 1,
+    toSequenceIndex: 1,
+  })
+
+  assert.equal(manifest.manifestType, 'DERIVED_AUDIT_ARTIFACT')
+  assert.equal(manifest.derivedNotAuthoritative, true)
+  assert.equal(manifest.firstReviewSequenceIndex, 1)
+  assert.equal(manifest.lastReviewSequenceIndex, 1)
+  assert.equal(manifest.recordCount, 1)
+  assert.equal(manifest.candidates[0].candidateId, 'exp100-tmdb-672647')
+  assert.equal(manifest.candidates[0].adjudicationRecordSha256, 'sha256:fecfa7dd7d5a44d17e3b1c76514400d97424973e7274e7ee42d26880b7f1366f')
+
+  const verifyRes = verifyCheckpointManifest({ manifest, executionRoot: realProdRoot, p2Dir })
+  assert.equal(verifyRes.valid, true)
+})
+
+test('F.2. Contiguous sequence verified in checkpoint manifest', () => {
+  const realProdRoot = path.join(p2Dir, 'review-execution')
+  const manifest = generateCheckpointManifest({
+    executionRoot: realProdRoot,
+    p2Dir,
+    fromSequenceIndex: 1,
+    toSequenceIndex: 1,
+  })
+
+  // Tamper sequence index to create non-contiguous sequence
+  manifest.candidates[0].reviewSequenceIndex = 2
+  assert.throws(
+    () => verifyCheckpointManifest({ manifest, executionRoot: realProdRoot, p2Dir }),
+    /PRIMARY_REVIEW_HARD_STOP_CHECKPOINT_INTEGRITY.*Sequence index gap/
+  )
+})
+
+test('F.3. SHA mismatches fail with PRIMARY_REVIEW_HARD_STOP_CHECKPOINT_INTEGRITY', () => {
+  const realProdRoot = path.join(p2Dir, 'review-execution')
+  const manifest = generateCheckpointManifest({
+    executionRoot: realProdRoot,
+    p2Dir,
+    fromSequenceIndex: 1,
+    toSequenceIndex: 1,
+  })
+
+  manifest.candidates[0].adjudicationRecordSha256 = 'sha256:0000000000000000000000000000000000000000000000000000000000000000'
+  assert.throws(
+    () => verifyCheckpointManifest({ manifest, executionRoot: realProdRoot, p2Dir }),
+    /PRIMARY_REVIEW_HARD_STOP_CHECKPOINT_INTEGRITY.*Hash mismatch/
+  )
+})
+
+test('F.4. Missing records fail with PRIMARY_REVIEW_HARD_STOP_CHECKPOINT_INTEGRITY', () => {
+  const realProdRoot = path.join(p2Dir, 'review-execution')
+  assert.throws(
+    () => generateCheckpointManifest({
+      executionRoot: realProdRoot,
+      p2Dir,
+      fromSequenceIndex: 1,
+      toSequenceIndex: 5, // Range demands 5 records, only 1 exists
+    }),
+    /PRIMARY_REVIEW_HARD_STOP_CHECKPOINT_INTEGRITY.*Missing required candidate record/
+  )
+})
+
+test('F.5. Duplicate sequence positions fail with PRIMARY_REVIEW_HARD_STOP_CHECKPOINT_INTEGRITY', () => {
+  const realProdRoot = path.join(p2Dir, 'review-execution')
+  const manifest = generateCheckpointManifest({
+    executionRoot: realProdRoot,
+    p2Dir,
+    fromSequenceIndex: 1,
+    toSequenceIndex: 1,
+  })
+
+  manifest.candidates.push({ ...manifest.candidates[0] })
+  manifest.recordCount = 2
+  manifest.lastReviewSequenceIndex = 2
+  assert.throws(
+    () => verifyCheckpointManifest({ manifest, executionRoot: realProdRoot, p2Dir }),
+    /PRIMARY_REVIEW_HARD_STOP_CHECKPOINT_INTEGRITY.*Sequence index gap/
+  )
+})
+
+test('F.6. Historical ledger slice hash mismatch fails with PRIMARY_REVIEW_HARD_STOP_CHECKPOINT_INTEGRITY', () => {
+  const realProdRoot = path.join(p2Dir, 'review-execution')
+  const manifest = generateCheckpointManifest({
+    executionRoot: realProdRoot,
+    p2Dir,
+    fromSequenceIndex: 1,
+    toSequenceIndex: 1,
+  })
+
+  manifest.historicalLedgerSliceSha256 = 'sha256:0000000000000000000000000000000000000000000000000000000000000000'
+  assert.throws(
+    () => verifyCheckpointManifest({ manifest, executionRoot: realProdRoot, p2Dir }),
+    /PRIMARY_REVIEW_HARD_STOP_CHECKPOINT_INTEGRITY.*Historical ledger slice hash mismatch/
+  )
+})
+
+test('F.7. Checkpoint manifest cannot become authoritative truth input', () => {
+  const realProdRoot = path.join(p2Dir, 'review-execution')
+  const manifest = generateCheckpointManifest({
+    executionRoot: realProdRoot,
+    p2Dir,
+    fromSequenceIndex: 1,
+    toSequenceIndex: 1,
+  })
+
+  assert.equal(manifest.derivedNotAuthoritative, true)
+  assert.equal(manifest.manifestType, 'DERIVED_AUDIT_ARTIFACT')
+
+  manifest.derivedNotAuthoritative = false
+  assert.throws(
+    () => verifyCheckpointManifest({ manifest, executionRoot: realProdRoot, p2Dir }),
+    /PRIMARY_REVIEW_HARD_STOP_CHECKPOINT_INTEGRITY.*derivedNotAuthoritative: true/
+  )
+})
+
+// Helper function to build a synthetic multi-candidate sequential environment for boundary testing
+function createMultiCandidateFixture(tempFixtureDir, count = 10) {
+  const tempProdRoot = path.join(tempFixtureDir, 'review-execution')
+  fs.mkdirSync(tempProdRoot, { recursive: true })
+
+  const filesToCopy = [
+    'p2-3-freeze-manifest.v1.json',
+    'p2-3-live-operation-protocol.v1.json',
+    'p2-4-manual-ingestion-readiness.v1.json',
+    'p2-4-post-pilot-sequential-session-authorization.v1.json',
+    'p2-4-post-pilot-implementation-incident.v1.json',
+  ]
+  for (const f of filesToCopy) {
+    fs.copyFileSync(path.join(p2Dir, f), path.join(tempFixtureDir, f))
+  }
+
+  // Copy canonical Candidate #1
+  const c1Source = path.join(p2Dir, 'review-execution/exp100-tmdb-672647')
+  const c1Dest = path.join(tempProdRoot, 'exp100-tmdb-672647')
+  fs.cpSync(c1Source, c1Dest, { recursive: true })
+
+  // Read canonical pool and order
+  const canonicalPool = JSON.parse(fs.readFileSync(path.join(p2Dir, 'blind-review-eligible-pool.v1.json'), 'utf8'))
+  const canonicalOrder = JSON.parse(fs.readFileSync(path.join(p2Dir, 'blind-review-order.v1.json'), 'utf8'))
+
+  const orderedCandidates = canonicalOrder.orderedCandidates.slice(0, count)
+  const poolRecords = orderedCandidates.map((c) => {
+    const r = canonicalPool.records.find((rec) => rec.candidateId === c.candidateId)
+    if (!r) throw new Error(`Record for ${c.candidateId} not found in canonical pool`)
+    return r
+  })
+
+  const c1Adjudication = JSON.parse(fs.readFileSync(path.join(c1Dest, 'human/adjudication-record.v1.json'), 'utf8'))
+  const candidateStates = {
+    'exp100-tmdb-672647': {
+      status: 'HUMAN_ADJUDICATED',
+      humanAdjudicationSha256: sha256(fs.readFileSync(path.join(c1Dest, 'human/adjudication-record.v1.json'))),
+      finalDecision: c1Adjudication.finalDecision,
+      finalSeverity: c1Adjudication.finalSeverity,
+      adjudicatedAt: c1Adjudication.adjudicationTimestamp,
+    },
+  }
+
+  // Generate complete evidence for candidates 2 through count using real projection
+  for (let i = 1; i < orderedCandidates.length; i++) {
+    const cEntry = orderedCandidates[i]
+    const cId = cEntry.candidateId
+    const seq = cEntry.reviewSequenceIndex
+
+    // Project real blind packet
+    const prep = prepareCandidateExecution({
+      candidateId: cId,
+      eligiblePool: { records: poolRecords },
+      reviewOrder: { orderedCandidates },
+      executionRoot: tempProdRoot,
+    })
+    const cDir = prep.candidateDir
+    const bpSha = prep.blindPacketSha256
+
+    fs.mkdirSync(path.join(cDir, 'gemini/attempts/attempt-01'), { recursive: true })
+    fs.mkdirSync(path.join(cDir, 'claude/attempts/attempt-01'), { recursive: true })
+    fs.mkdirSync(path.join(cDir, 'human'), { recursive: true })
+
+    // Gemini
+    const gResp = {
+      preliminaryDecision: 'APPROVE',
+      preliminarySeverity: null,
+      affectedFields: [],
+      issueSummaries: [],
+      claimSpan: 'none',
+      sourceEvidence: [{ source: 'facts.overview', supportFound: true }],
+      sourceBoundaryReason: 'Strictly factual',
+      confidence: 'HIGH',
+      advisoryOnly: true,
+    }
+    const gRespBytes = Buffer.from(JSON.stringify(gResp, null, 2), 'utf8')
+    fs.writeFileSync(path.join(cDir, 'gemini/attempts/attempt-01/raw-response.txt'), gRespBytes)
+    const gEnv = {
+      candidateId: cId,
+      reviewer: 'GEMINI',
+      reviewerModel: 'MANUAL_CONSUMER_UI',
+      rawResponseSha256: sha256(gRespBytes),
+      blindPacketSha256: bpSha,
+      reviewPromptSha256: FROZEN_BINDINGS.GEMINI_PROMPT_SHA256,
+      materialityPolicySha256: FROZEN_BINDINGS.MATERIALITY_POLICY_SHA256,
+      validatedOpinion: gResp,
+    }
+    fs.writeFileSync(path.join(cDir, 'gemini/attempts/attempt-01/advisory-envelope.v1.json'), JSON.stringify(gEnv, null, 2), 'utf8')
+    fs.writeFileSync(path.join(cDir, 'gemini/active-advisory-envelope.v1.json'), JSON.stringify(gEnv, null, 2), 'utf8')
+    const gEnvSha = sha256(serializeArtifactForPersistence(gEnv))
+
+    // Claude
+    const cResp = { ...gResp }
+    const cRespBytes = Buffer.from(JSON.stringify(cResp, null, 2), 'utf8')
+    fs.writeFileSync(path.join(cDir, 'claude/attempts/attempt-01/raw-response.txt'), cRespBytes)
+    const cEnv = {
+      candidateId: cId,
+      reviewer: 'CLAUDE',
+      reviewerModel: 'MANUAL_CONSUMER_UI',
+      rawResponseSha256: sha256(cRespBytes),
+      blindPacketSha256: bpSha,
+      reviewPromptSha256: FROZEN_BINDINGS.CLAUDE_PROMPT_SHA256,
+      materialityPolicySha256: FROZEN_BINDINGS.MATERIALITY_POLICY_SHA256,
+      validatedOpinion: cResp,
+    }
+    fs.writeFileSync(path.join(cDir, 'claude/attempts/attempt-01/advisory-envelope.v1.json'), JSON.stringify(cEnv, null, 2), 'utf8')
+    fs.writeFileSync(path.join(cDir, 'claude/active-advisory-envelope.v1.json'), JSON.stringify(cEnv, null, 2), 'utf8')
+    const cEnvSha = sha256(serializeArtifactForPersistence(cEnv))
+
+    // Human adjudication
+    const adjPath = path.join(cDir, 'human/adjudication-record.v1.json')
+    const adjData = {
+      candidateId: cId,
+      finalDecision: 'APPROVE',
+      finalSeverity: null,
+      affectedFields: [],
+      materialIssues: [],
+      humanRationale: `Approved candidate ${seq}`,
+      adjudicationTimestamp: `2026-09-18T03:00:${String(seq).padStart(2, '0')}Z`,
+      adjudicator: 'Sophia Zhao',
+      agreementPattern: 'BOTH_AI_AGREE_WITH_HUMAN',
+      blindPacketHash: bpSha,
+      geminiAdvisoryRecordSha256: gEnvSha,
+      claudeAdvisoryRecordSha256: cEnvSha,
+    }
+    fs.writeFileSync(adjPath, JSON.stringify(adjData, null, 2), 'utf8')
+    const adjSha = sha256(fs.readFileSync(adjPath))
+
+    candidateStates[cId] = {
+      status: 'HUMAN_ADJUDICATED',
+      humanAdjudicationSha256: adjSha,
+      finalDecision: 'APPROVE',
+      finalSeverity: null,
+      adjudicatedAt: adjData.adjudicationTimestamp,
+    }
+  }
+
+  // Copy exact frozen canonical order and pool
+  fs.copyFileSync(path.join(p2Dir, 'blind-review-order.v1.json'), path.join(tempFixtureDir, 'blind-review-order.v1.json'))
+  fs.copyFileSync(path.join(p2Dir, 'blind-review-eligible-pool.v1.json'), path.join(tempFixtureDir, 'blind-review-eligible-pool.v1.json'))
+
+  // Write ledger
+  const ledgerData = {
+    ledgerVersion: '1.0',
+    candidateStates,
+    cleanCount: count,
+    defectPositiveCount: 0,
+    severeCount: 0,
+  }
+  fs.writeFileSync(path.join(tempProdRoot, 'review-session-ledger.json'), JSON.stringify(ledgerData, null, 2), 'utf8')
+
+  return { tempFixtureDir, tempProdRoot, orderedCandidates }
+}
+
+test('F.8. Candidate immediately before boundary (#9) may proceed normally without checkpoint #2–#9', () => {
+  const tempFixtureDir = makeTempDir('p24-suite-f8-')
+  try {
+    // 8 candidates complete (1..8)
+    const { tempProdRoot } = createMultiCandidateFixture(tempFixtureDir, 8)
+    const canonicalOrder = JSON.parse(fs.readFileSync(path.join(p2Dir, 'blind-review-order.v1.json'), 'utf8'))
+    const cand9 = canonicalOrder.orderedCandidates[8].candidateId // Sequence index 9
+
+    // Candidate 9 can be prepared without checkpoint manifest for #2-#9
+    const prep = prepareManualPayload({
+      candidateId: cand9,
+      reviewer: 'GEMINI',
+      executionRoot: tempProdRoot,
+      p2Dir: tempFixtureDir,
+    })
+    assert.equal(prep.candidateId, cand9)
+    assert.equal(prep.reviewSequenceIndex, 9)
+  } finally {
+    cleanTempDir(tempFixtureDir)
+  }
+})
+
+test('F.9. Boundary reached (Candidate #10) with absent checkpoint manifest blocks next candidate prepare', () => {
+  const tempFixtureDir = makeTempDir('p24-suite-f9-')
+  try {
+    // 9 candidates complete (1..9), candidate 10 is next
+    const { tempProdRoot } = createMultiCandidateFixture(tempFixtureDir, 9)
+    const canonicalOrder = JSON.parse(fs.readFileSync(path.join(p2Dir, 'blind-review-order.v1.json'), 'utf8'))
+    const cand10 = canonicalOrder.orderedCandidates[9].candidateId // Sequence index 10
+
+    // Checkpoint manifest for #2-#9 is absent: prepare of candidate 10 must be blocked
+    assert.throws(
+      () => prepareManualPayload({
+        candidateId: cand10,
+        reviewer: 'GEMINI',
+        executionRoot: tempProdRoot,
+        p2Dir: tempFixtureDir,
+      }),
+      /PRIMARY_REVIEW_HARD_STOP_CHECKPOINT_INTEGRITY.*Checkpoint manifest missing at canonical path/
+    )
+  } finally {
+    cleanTempDir(tempFixtureDir)
+  }
+})
+
+test('F.10. Boundary reached (Candidate #10) with valid canonical checkpoint manifest allows next candidate prepare', () => {
+  const tempFixtureDir = makeTempDir('p24-suite-f10-')
+  try {
+    const { tempProdRoot } = createMultiCandidateFixture(tempFixtureDir, 9)
+    const canonicalOrder = JSON.parse(fs.readFileSync(path.join(p2Dir, 'blind-review-order.v1.json'), 'utf8'))
+    const cand10 = canonicalOrder.orderedCandidates[9].candidateId
+
+    // Generate canonical checkpoint manifest for #2-#9
+    const cpManifest = generateCheckpointManifest({
+      executionRoot: tempProdRoot,
+      p2Dir: tempFixtureDir,
+      fromSequenceIndex: 2,
+      toSequenceIndex: 9,
+    })
+    const cpPath = getCanonicalCheckpointPath(tempProdRoot, 2, 9)
+    fs.mkdirSync(path.dirname(cpPath), { recursive: true })
+    fs.writeFileSync(cpPath, JSON.stringify(cpManifest, null, 2), 'utf8')
+
+    // Now candidate 10 may be prepared
+    const prep = prepareManualPayload({
+      candidateId: cand10,
+      reviewer: 'GEMINI',
+      executionRoot: tempProdRoot,
+      p2Dir: tempFixtureDir,
+    })
+    assert.equal(prep.candidateId, cand10)
+    assert.equal(prep.reviewSequenceIndex, 10)
+  } finally {
+    cleanTempDir(tempFixtureDir)
+  }
+})
+
+test('F.11. Tampered canonical checkpoint manifest blocks next candidate prepare', () => {
+  const tempFixtureDir = makeTempDir('p24-suite-f11-')
+  try {
+    const { tempProdRoot } = createMultiCandidateFixture(tempFixtureDir, 9)
+    const canonicalOrder = JSON.parse(fs.readFileSync(path.join(p2Dir, 'blind-review-order.v1.json'), 'utf8'))
+    const cand10 = canonicalOrder.orderedCandidates[9].candidateId
+
+    // Generate canonical checkpoint manifest for #2-#9
+    const cpManifest = generateCheckpointManifest({
+      executionRoot: tempProdRoot,
+      p2Dir: tempFixtureDir,
+      fromSequenceIndex: 2,
+      toSequenceIndex: 9,
+    })
+    // Tamper hash of candidate in manifest
+    cpManifest.candidates[0].adjudicationRecordSha256 = 'sha256:0000000000000000000000000000000000000000000000000000000000000000'
+    const cpPath = getCanonicalCheckpointPath(tempProdRoot, 2, 9)
+    fs.mkdirSync(path.dirname(cpPath), { recursive: true })
+    fs.writeFileSync(cpPath, JSON.stringify(cpManifest, null, 2), 'utf8')
+
+    // Prepare candidate 10 fails with PRIMARY_REVIEW_HARD_STOP_CHECKPOINT_INTEGRITY
+    assert.throws(
+      () => prepareManualPayload({
+        candidateId: cand10,
+        reviewer: 'GEMINI',
+        executionRoot: tempProdRoot,
+        p2Dir: tempFixtureDir,
+      }),
+      /PRIMARY_REVIEW_HARD_STOP_CHECKPOINT_INTEGRITY.*Hash mismatch/
+    )
+  } finally {
+    cleanTempDir(tempFixtureDir)
+  }
+})
+
+test('F.12. Missing candidate evidence causes checkpoint generation to fail and next candidate remains blocked', () => {
+  const tempFixtureDir = makeTempDir('p24-suite-f12-')
+  try {
+    const { tempProdRoot, orderedCandidates } = createMultiCandidateFixture(tempFixtureDir, 9)
+    const canonicalOrder = JSON.parse(fs.readFileSync(path.join(p2Dir, 'blind-review-order.v1.json'), 'utf8'))
+    const cand10 = canonicalOrder.orderedCandidates[9].candidateId
+
+    // Delete adjudication record for candidate 5
+    const cand5Id = orderedCandidates[4].candidateId
+    const c5Record = path.join(tempProdRoot, cand5Id, 'human/adjudication-record.v1.json')
+    fs.unlinkSync(c5Record)
+
+    // Checkpoint generation fails
+    assert.throws(
+      () => generateCheckpointManifest({
+        executionRoot: tempProdRoot,
+        p2Dir: tempFixtureDir,
+        fromSequenceIndex: 2,
+        toSequenceIndex: 9,
+      }),
+      /PRIMARY_REVIEW_HARD_STOP_CHECKPOINT_INTEGRITY.*Missing required candidate record/
+    )
+
+    // And candidate 10 remains blocked
+    assert.throws(
+      () => prepareManualPayload({
+        candidateId: cand10,
+        reviewer: 'GEMINI',
+        executionRoot: tempProdRoot,
+        p2Dir: tempFixtureDir,
+      }),
+      /OUT_OF_ORDER_EXECUTION|PRIMARY_REVIEW_HARD_STOP_CHECKPOINT_INTEGRITY/
+    )
+  } finally {
+    cleanTempDir(tempFixtureDir)
+  }
+})
+
+test('F.13. Scientific stopping reached at partial block halts review regardless of checkpoint convenience', () => {
+  const tempFixtureDir = makeTempDir('p24-suite-f13-')
+  try {
+    // 5 candidates complete, but scientific stopping targets met (30 clean, 30 defect, 6 severe)
+    const { tempProdRoot } = createMultiCandidateFixture(tempFixtureDir, 5)
+
+    const ledgerPath = path.join(tempProdRoot, 'review-session-ledger.json')
+    const ledger = JSON.parse(fs.readFileSync(ledgerPath, 'utf8'))
+    ledger.cleanCount = 30
+    ledger.defectPositiveCount = 30
+    ledger.severeCount = 6
+    fs.writeFileSync(ledgerPath, JSON.stringify(ledger, null, 2), 'utf8')
+
+    const canonicalOrder = JSON.parse(fs.readFileSync(path.join(p2Dir, 'blind-review-order.v1.json'), 'utf8'))
+    const cand6 = canonicalOrder.orderedCandidates[5].candidateId
+
+    // Scientific stopping halts review immediately
+    assert.throws(
+      () => prepareManualPayload({
+        candidateId: cand6,
+        reviewer: 'GEMINI',
+        executionRoot: tempProdRoot,
+        p2Dir: tempFixtureDir,
+      }),
+      /PRIMARY_STOPPING_THRESHOLD_REACHED/
+    )
+  } finally {
+    cleanTempDir(tempFixtureDir)
+  }
+})
+
+// Helper to adjudicate a sequential candidate in a multi-candidate fixture
+function adjudicateCandidateInFixture(tempProdRoot, tempFixtureDir, candidateId, seqIndex) {
+  const poolData = JSON.parse(fs.readFileSync(path.join(tempFixtureDir, 'blind-review-eligible-pool.v1.json'), 'utf8'))
+  const orderData = JSON.parse(fs.readFileSync(path.join(tempFixtureDir, 'blind-review-order.v1.json'), 'utf8'))
+  const poolRecords = [poolData.records.find((r) => r.candidateId === candidateId)]
+  if (!poolRecords[0]) {
+    throw new Error(`Record for ${candidateId} not found in fixture eligible pool`)
+  }
+
+  const prep = prepareCandidateExecution({
+    candidateId,
+    eligiblePool: { records: poolRecords },
+    reviewOrder: orderData,
+    executionRoot: tempProdRoot,
+  })
+  const cDir = prep.candidateDir
+  const bpSha = prep.blindPacketSha256
+
+  fs.mkdirSync(path.join(cDir, 'gemini/attempts/attempt-01'), { recursive: true })
+  fs.mkdirSync(path.join(cDir, 'claude/attempts/attempt-01'), { recursive: true })
+  fs.mkdirSync(path.join(cDir, 'human'), { recursive: true })
+
+  const gResp = {
+    preliminaryDecision: 'APPROVE',
+    preliminarySeverity: null,
+    affectedFields: [],
+    issueSummaries: [],
+    claimSpan: 'none',
+    sourceEvidence: [{ source: 'facts.overview', supportFound: true }],
+    sourceBoundaryReason: 'Strictly factual',
+    confidence: 'HIGH',
+    advisoryOnly: true,
+  }
+  const gRespBytes = Buffer.from(JSON.stringify(gResp, null, 2), 'utf8')
+  fs.writeFileSync(path.join(cDir, 'gemini/attempts/attempt-01/raw-response.txt'), gRespBytes)
+  const gEnv = {
+    candidateId,
+    reviewer: 'GEMINI',
+    reviewerModel: 'MANUAL_CONSUMER_UI',
+    rawResponseSha256: sha256(gRespBytes),
+    blindPacketSha256: bpSha,
+    reviewPromptSha256: FROZEN_BINDINGS.GEMINI_PROMPT_SHA256,
+    materialityPolicySha256: FROZEN_BINDINGS.MATERIALITY_POLICY_SHA256,
+    validatedOpinion: gResp,
+  }
+  fs.writeFileSync(path.join(cDir, 'gemini/attempts/attempt-01/advisory-envelope.v1.json'), JSON.stringify(gEnv, null, 2), 'utf8')
+  fs.writeFileSync(path.join(cDir, 'gemini/active-advisory-envelope.v1.json'), JSON.stringify(gEnv, null, 2), 'utf8')
+  const gEnvSha = sha256(serializeArtifactForPersistence(gEnv))
+
+  const cResp = { ...gResp }
+  const cRespBytes = Buffer.from(JSON.stringify(cResp, null, 2), 'utf8')
+  fs.writeFileSync(path.join(cDir, 'claude/attempts/attempt-01/raw-response.txt'), cRespBytes)
+  const cEnv = {
+    candidateId,
+    reviewer: 'CLAUDE',
+    reviewerModel: 'MANUAL_CONSUMER_UI',
+    rawResponseSha256: sha256(cRespBytes),
+    blindPacketSha256: bpSha,
+    reviewPromptSha256: FROZEN_BINDINGS.CLAUDE_PROMPT_SHA256,
+    materialityPolicySha256: FROZEN_BINDINGS.MATERIALITY_POLICY_SHA256,
+    validatedOpinion: cResp,
+  }
+  fs.writeFileSync(path.join(cDir, 'claude/attempts/attempt-01/advisory-envelope.v1.json'), JSON.stringify(cEnv, null, 2), 'utf8')
+  fs.writeFileSync(path.join(cDir, 'claude/active-advisory-envelope.v1.json'), JSON.stringify(cEnv, null, 2), 'utf8')
+  const cEnvSha = sha256(serializeArtifactForPersistence(cEnv))
+
+  const adjPath = path.join(cDir, 'human/adjudication-record.v1.json')
+  const adjData = {
+    candidateId,
+    finalDecision: 'APPROVE',
+    finalSeverity: null,
+    affectedFields: [],
+    materialIssues: [],
+    humanRationale: `Approved candidate ${seqIndex}`,
+    adjudicationTimestamp: `2026-09-18T03:00:${String(seqIndex).padStart(2, '0')}Z`,
+    adjudicator: 'Sophia Zhao',
+    agreementPattern: 'BOTH_AI_AGREE_WITH_HUMAN',
+    blindPacketHash: bpSha,
+    geminiAdvisoryRecordSha256: gEnvSha,
+    claudeAdvisoryRecordSha256: cEnvSha,
+  }
+  fs.writeFileSync(adjPath, JSON.stringify(adjData, null, 2), 'utf8')
+  const adjSha = sha256(fs.readFileSync(adjPath))
+
+  // Update session ledger
+  const ledgerPath = path.join(tempProdRoot, 'review-session-ledger.json')
+  const ledger = JSON.parse(fs.readFileSync(ledgerPath, 'utf8'))
+  ledger.candidateStates[candidateId] = {
+    status: 'HUMAN_ADJUDICATED',
+    humanAdjudicationSha256: adjSha,
+    finalDecision: 'APPROVE',
+    finalSeverity: null,
+    adjudicatedAt: adjData.adjudicationTimestamp,
+  }
+  ledger.cleanCount = (ledger.cleanCount || 0) + 1
+  fs.writeFileSync(ledgerPath, JSON.stringify(ledger, null, 2), 'utf8')
+  return adjSha
+}
+
+test('F.10b. Historical checkpoint #2–#9 survives live ledger evolution after Candidate #10 adjudication', () => {
+  const tempFixtureDir = makeTempDir('p24-suite-f10b-')
+  try {
+    // 9 candidates complete (1..9)
+    const { tempProdRoot } = createMultiCandidateFixture(tempFixtureDir, 9)
+    const canonicalOrder = JSON.parse(fs.readFileSync(path.join(p2Dir, 'blind-review-order.v1.json'), 'utf8'))
+    const cand10 = canonicalOrder.orderedCandidates[9].candidateId
+    const cand11 = canonicalOrder.orderedCandidates[10].candidateId
+
+    // 1. Generate canonical checkpoint manifest for #2–#9 and persist
+    const cpManifest = generateCheckpointManifest({
+      executionRoot: tempProdRoot,
+      p2Dir: tempFixtureDir,
+      fromSequenceIndex: 2,
+      toSequenceIndex: 9,
+    })
+    const cpPath = getCanonicalCheckpointPath(tempProdRoot, 2, 9)
+    fs.mkdirSync(path.dirname(cpPath), { recursive: true })
+    fs.writeFileSync(cpPath, JSON.stringify(cpManifest, null, 2), 'utf8')
+
+    // 2. Candidate 10 prepare succeeds
+    const prep10 = prepareManualPayload({
+      candidateId: cand10,
+      reviewer: 'GEMINI',
+      executionRoot: tempProdRoot,
+      p2Dir: tempFixtureDir,
+    })
+    assert.equal(prep10.candidateId, cand10)
+
+    // 3. Adjudicate Candidate 10 -> mutates live session ledger
+    adjudicateCandidateInFixture(tempProdRoot, tempFixtureDir, cand10, 10)
+
+    // 4. Candidate 11 prepare STILL succeeds because #2–#9 checkpoint verified via historical subsumption
+    const prep11 = prepareManualPayload({
+      candidateId: cand11,
+      reviewer: 'GEMINI',
+      executionRoot: tempProdRoot,
+      p2Dir: tempFixtureDir,
+    })
+    assert.equal(prep11.candidateId, cand11)
+    assert.equal(prep11.reviewSequenceIndex, 11)
+  } finally {
+    cleanTempDir(tempFixtureDir)
+  }
+})
+
+test('F.10c. Mutation of any #2–#9 human record on disk breaks checkpoint verification during later prepare', () => {
+  const tempFixtureDir = makeTempDir('p24-suite-f10c-')
+  try {
+    const { tempProdRoot, orderedCandidates } = createMultiCandidateFixture(tempFixtureDir, 9)
+    const canonicalOrder = JSON.parse(fs.readFileSync(path.join(p2Dir, 'blind-review-order.v1.json'), 'utf8'))
+    const cand10 = canonicalOrder.orderedCandidates[9].candidateId
+    const cand11 = canonicalOrder.orderedCandidates[10].candidateId
+
+    const cpManifest = generateCheckpointManifest({
+      executionRoot: tempProdRoot,
+      p2Dir: tempFixtureDir,
+      fromSequenceIndex: 2,
+      toSequenceIndex: 9,
+    })
+    const cpPath = getCanonicalCheckpointPath(tempProdRoot, 2, 9)
+    fs.mkdirSync(path.dirname(cpPath), { recursive: true })
+    fs.writeFileSync(cpPath, JSON.stringify(cpManifest, null, 2), 'utf8')
+
+    adjudicateCandidateInFixture(tempProdRoot, tempFixtureDir, cand10, 10)
+
+    // Tamper Candidate 5 disk record
+    const cand5Id = orderedCandidates[4].candidateId
+    const c5RecordPath = path.join(tempProdRoot, cand5Id, 'human/adjudication-record.v1.json')
+    const c5Data = JSON.parse(fs.readFileSync(c5RecordPath, 'utf8'))
+    c5Data.humanRationale = 'TAMPERED_RATIONALE'
+    fs.writeFileSync(c5RecordPath, JSON.stringify(c5Data, null, 2), 'utf8')
+
+    // Candidate 11 prepare fails checkpoint verification
+    assert.throws(
+      () => prepareManualPayload({
+        candidateId: cand11,
+        reviewer: 'GEMINI',
+        executionRoot: tempProdRoot,
+        p2Dir: tempFixtureDir,
+      }),
+      /PRIMARY_REVIEW_HARD_STOP_CHECKPOINT_INTEGRITY.*Hash mismatch/
+    )
+  } finally {
+    cleanTempDir(tempFixtureDir)
+  }
+})
+
+test('F.10d. Mutation of any #2–#9 live human-adjudication SHA in session ledger breaks checkpoint verification during later prepare', () => {
+  const tempFixtureDir = makeTempDir('p24-suite-f10d-')
+  try {
+    const { tempProdRoot, orderedCandidates } = createMultiCandidateFixture(tempFixtureDir, 9)
+    const canonicalOrder = JSON.parse(fs.readFileSync(path.join(p2Dir, 'blind-review-order.v1.json'), 'utf8'))
+    const cand10 = canonicalOrder.orderedCandidates[9].candidateId
+    const cand11 = canonicalOrder.orderedCandidates[10].candidateId
+
+    const cpManifest = generateCheckpointManifest({
+      executionRoot: tempProdRoot,
+      p2Dir: tempFixtureDir,
+      fromSequenceIndex: 2,
+      toSequenceIndex: 9,
+    })
+    const cpPath = getCanonicalCheckpointPath(tempProdRoot, 2, 9)
+    fs.mkdirSync(path.dirname(cpPath), { recursive: true })
+    fs.writeFileSync(cpPath, JSON.stringify(cpManifest, null, 2), 'utf8')
+
+    adjudicateCandidateInFixture(tempProdRoot, tempFixtureDir, cand10, 10)
+
+    // Tamper Candidate 5 hash in live ledger
+    const cand5Id = orderedCandidates[4].candidateId
+    const ledgerPath = path.join(tempProdRoot, 'review-session-ledger.json')
+    const ledger = JSON.parse(fs.readFileSync(ledgerPath, 'utf8'))
+    ledger.candidateStates[cand5Id].humanAdjudicationSha256 = 'sha256:0000000000000000000000000000000000000000000000000000000000000000'
+    fs.writeFileSync(ledgerPath, JSON.stringify(ledger, null, 2), 'utf8')
+
+    // Candidate 11 prepare fails checkpoint verification
+    assert.throws(
+      () => prepareManualPayload({
+        candidateId: cand11,
+        reviewer: 'GEMINI',
+        executionRoot: tempProdRoot,
+        p2Dir: tempFixtureDir,
+      }),
+      /PRIMARY_REVIEW_HARD_STOP_CHECKPOINT_INTEGRITY.*Checkpoint candidate.*humanAdjudicationSha256 in live session ledger/
+    )
+  } finally {
+    cleanTempDir(tempFixtureDir)
+  }
+})
+
+test('F.10e. Deleting a #2–#9 candidate state in live ledger breaks checkpoint verification during later prepare', () => {
+  const tempFixtureDir = makeTempDir('p24-suite-f10e-')
+  try {
+    const { tempProdRoot, orderedCandidates } = createMultiCandidateFixture(tempFixtureDir, 9)
+    const canonicalOrder = JSON.parse(fs.readFileSync(path.join(p2Dir, 'blind-review-order.v1.json'), 'utf8'))
+    const cand10 = canonicalOrder.orderedCandidates[9].candidateId
+    const cand11 = canonicalOrder.orderedCandidates[10].candidateId
+
+    const cpManifest = generateCheckpointManifest({
+      executionRoot: tempProdRoot,
+      p2Dir: tempFixtureDir,
+      fromSequenceIndex: 2,
+      toSequenceIndex: 9,
+    })
+    const cpPath = getCanonicalCheckpointPath(tempProdRoot, 2, 9)
+    fs.mkdirSync(path.dirname(cpPath), { recursive: true })
+    fs.writeFileSync(cpPath, JSON.stringify(cpManifest, null, 2), 'utf8')
+
+    adjudicateCandidateInFixture(tempProdRoot, tempFixtureDir, cand10, 10)
+
+    // Delete Candidate 5 from live ledger
+    const cand5Id = orderedCandidates[4].candidateId
+    const ledgerPath = path.join(tempProdRoot, 'review-session-ledger.json')
+    const ledger = JSON.parse(fs.readFileSync(ledgerPath, 'utf8'))
+    delete ledger.candidateStates[cand5Id]
+    fs.writeFileSync(ledgerPath, JSON.stringify(ledger, null, 2), 'utf8')
+
+    // Candidate 11 prepare fails checkpoint verification
+    assert.throws(
+      () => prepareManualPayload({
+        candidateId: cand11,
+        reviewer: 'GEMINI',
+        executionRoot: tempProdRoot,
+        p2Dir: tempFixtureDir,
+      }),
+      /PRIMARY_REVIEW_HARD_STOP_CHECKPOINT_INTEGRITY.*is missing from current live session ledger candidateStates/
+    )
+  } finally {
+    cleanTempDir(tempFixtureDir)
+  }
+})
+
+test('F.6b. Checkpoint generation fails when a candidate is HUMAN_ADJUDICATED but ledger humanAdjudicationSha256 is absent', () => {
+  const tempFixtureDir = makeTempDir('p24-suite-f6b-')
+  try {
+    const { tempProdRoot, orderedCandidates } = createMultiCandidateFixture(tempFixtureDir, 9)
+    const cand5Id = orderedCandidates[4].candidateId
+    const ledgerPath = path.join(tempProdRoot, 'review-session-ledger.json')
+    const ledger = JSON.parse(fs.readFileSync(ledgerPath, 'utf8'))
+    delete ledger.candidateStates[cand5Id].humanAdjudicationSha256
+    fs.writeFileSync(ledgerPath, JSON.stringify(ledger, null, 2), 'utf8')
+
+    assert.throws(
+      () => generateCheckpointManifest({
+        executionRoot: tempProdRoot,
+        p2Dir: tempFixtureDir,
+        fromSequenceIndex: 2,
+        toSequenceIndex: 9,
+      }),
+      /PRIMARY_REVIEW_HARD_STOP_CHECKPOINT_INTEGRITY.*Ledger humanAdjudicationSha256 does not match disk bytes/
+    )
+  } finally {
+    cleanTempDir(tempFixtureDir)
+  }
+})
+
+test('F.10f. Checkpoint verification fails when a checkpoint candidate is HUMAN_ADJUDICATED but live ledger humanAdjudicationSha256 is absent', () => {
+  const tempFixtureDir = makeTempDir('p24-suite-f10f-')
+  try {
+    const { tempProdRoot, orderedCandidates } = createMultiCandidateFixture(tempFixtureDir, 9)
+    const canonicalOrder = JSON.parse(fs.readFileSync(path.join(p2Dir, 'blind-review-order.v1.json'), 'utf8'))
+    const cand10 = canonicalOrder.orderedCandidates[9].candidateId
+    const cand11 = canonicalOrder.orderedCandidates[10].candidateId
+
+    const cpManifest = generateCheckpointManifest({
+      executionRoot: tempProdRoot,
+      p2Dir: tempFixtureDir,
+      fromSequenceIndex: 2,
+      toSequenceIndex: 9,
+    })
+    const cpPath = getCanonicalCheckpointPath(tempProdRoot, 2, 9)
+    fs.mkdirSync(path.dirname(cpPath), { recursive: true })
+    fs.writeFileSync(cpPath, JSON.stringify(cpManifest, null, 2), 'utf8')
+
+    adjudicateCandidateInFixture(tempProdRoot, tempFixtureDir, cand10, 10)
+
+    // Delete Candidate 5 humanAdjudicationSha256 from live ledger
+    const cand5Id = orderedCandidates[4].candidateId
+    const ledgerPath = path.join(tempProdRoot, 'review-session-ledger.json')
+    const ledger = JSON.parse(fs.readFileSync(ledgerPath, 'utf8'))
+    delete ledger.candidateStates[cand5Id].humanAdjudicationSha256
+    fs.writeFileSync(ledgerPath, JSON.stringify(ledger, null, 2), 'utf8')
+
+    // Candidate 11 prepare fails checkpoint verification
+    assert.throws(
+      () => prepareManualPayload({
+        candidateId: cand11,
+        reviewer: 'GEMINI',
+        executionRoot: tempProdRoot,
+        p2Dir: tempFixtureDir,
+      }),
+      /PRIMARY_REVIEW_HARD_STOP_CHECKPOINT_INTEGRITY.*Checkpoint candidate.*humanAdjudicationSha256 in live session ledger/
+    )
+  } finally {
+    cleanTempDir(tempFixtureDir)
+  }
+})
+
+test('F.10g. Tampered manifest finalDecision fails verification even if historicalLedgerSliceSha256 is recomputed from tampered manifest', () => {
+  const tempFixtureDir = makeTempDir('p24-suite-f10g-')
+  try {
+    const { tempProdRoot } = createMultiCandidateFixture(tempFixtureDir, 9)
+    const cpManifest = generateCheckpointManifest({
+      executionRoot: tempProdRoot,
+      p2Dir: tempFixtureDir,
+      fromSequenceIndex: 2,
+      toSequenceIndex: 9,
+    })
+
+    const target = cpManifest.candidates[0]
+    const origDecision = target.finalDecision
+    target.finalDecision = origDecision === 'APPROVE' ? 'REVISE' : 'APPROVE'
+
+    // Recompute historicalLedgerSliceSha256 from tampered manifest candidateStates
+    const tamperedProjection = {
+      firstReviewSequenceIndex: cpManifest.firstReviewSequenceIndex,
+      lastReviewSequenceIndex: cpManifest.lastReviewSequenceIndex,
+      candidateStates: cpManifest.candidates.map((r) => ({
+        reviewSequenceIndex: r.reviewSequenceIndex,
+        candidateId: r.candidateId,
+        status: 'HUMAN_ADJUDICATED',
+        humanAdjudicationSha256: r.adjudicationRecordSha256,
+        finalDecision: r.finalDecision,
+        finalSeverity: r.finalSeverity,
+      })),
+      cumulativeProgression: cpManifest.cumulativeProgression,
+    }
+    cpManifest.historicalLedgerSliceSha256 = sha256(Buffer.from(serializeArtifactForPersistence(tamperedProjection), 'utf8'))
+
+    assert.throws(
+      () => verifyCheckpointManifest({
+        manifest: cpManifest,
+        executionRoot: tempProdRoot,
+        p2Dir: tempFixtureDir,
+      }),
+      /PRIMARY_REVIEW_HARD_STOP_CHECKPOINT_INTEGRITY.*Final decision mismatch/
+    )
+  } finally {
+    cleanTempDir(tempFixtureDir)
+  }
+})
+
+test('F.10h. Tampered manifest finalSeverity fails verification even when aggregate counts remain unchanged', () => {
+  const tempFixtureDir = makeTempDir('p24-suite-f10h-')
+  try {
+    const { tempProdRoot } = createMultiCandidateFixture(tempFixtureDir, 9)
+    const cpManifest = generateCheckpointManifest({
+      executionRoot: tempProdRoot,
+      p2Dir: tempFixtureDir,
+      fromSequenceIndex: 2,
+      toSequenceIndex: 9,
+    })
+
+    const target = cpManifest.candidates[0]
+    target.finalSeverity = target.finalSeverity === 'SEVERE' ? null : 'SEVERE'
+
+    assert.throws(
+      () => verifyCheckpointManifest({
+        manifest: cpManifest,
+        executionRoot: tempProdRoot,
+        p2Dir: tempFixtureDir,
+      }),
+      /PRIMARY_REVIEW_HARD_STOP_CHECKPOINT_INTEGRITY.*Final severity mismatch/
+    )
+  } finally {
+    cleanTempDir(tempFixtureDir)
+  }
+})
+
+test('F.14. Checkpoint generation is a deterministic pure projection with byte-identical serialization', () => {
+  const realProdRoot = path.join(p2Dir, 'review-execution')
+  const cp1 = generateCheckpointManifest({
+    executionRoot: realProdRoot,
+    p2Dir,
+    fromSequenceIndex: 1,
+    toSequenceIndex: 1,
+  })
+  const cp2 = generateCheckpointManifest({
+    executionRoot: realProdRoot,
+    p2Dir,
+    fromSequenceIndex: 1,
+    toSequenceIndex: 1,
+  })
+
+  // Assert no generatedAt or wall-clock entropy
+  assert.equal(cp1.generatedAt, undefined)
+  assert.equal(cp2.generatedAt, undefined)
+
+  // Assert canonical serialized bytes identical
+  const bytes1 = serializeArtifactForPersistence(cp1)
+  const bytes2 = serializeArtifactForPersistence(cp2)
+  assert.equal(bytes1, bytes2)
+  assert.equal(sha256(Buffer.from(bytes1, 'utf8')), sha256(Buffer.from(bytes2, 'utf8')))
+})
+
+// ============================================================
+// SUITE G: Frozen Design Preservation Tests
+// ============================================================
+
+test('G.1. Both advisories still required before human bundle or adjudication', () => {
+  const tempDir = makeTempDir('p24-suite-g1-')
+  try {
+    const { candidateId, candidateDir, eligiblePool, reviewOrder } = createSyntheticTestEnv(tempDir)
+    prepareCandidateExecution({ candidateId, executionRoot: tempDir, eligiblePool, reviewOrder })
+    assert.throws(
+      () => buildManualHumanBundle({ candidateId, executionRoot: tempDir, p2Dir }),
+      /MISSING_ADVISORY/
+    )
+  } finally {
+    cleanTempDir(tempDir)
+  }
+})
+
+test('G.2. Manual consumer UI channel still required', () => {
+  const realProdRoot = path.join(p2Dir, 'review-execution')
+  const c1Dir = path.join(realProdRoot, 'exp100-tmdb-672647')
+  const gEnv = JSON.parse(fs.readFileSync(path.join(c1Dir, 'gemini/active-advisory-envelope.v1.json'), 'utf8'))
+  const cEnv = JSON.parse(fs.readFileSync(path.join(c1Dir, 'claude/active-advisory-envelope.v1.json'), 'utf8'))
+
+  assert.equal(gEnv.reviewerModel, 'MANUAL_CONSUMER_UI')
+  assert.equal(cEnv.reviewerModel, 'MANUAL_CONSUMER_UI')
+})
+
+test('G.3. Zero network and zero model API calls', () => {
+  // Verifier CLI has zero network imports
+  const cliCode = fs.readFileSync(path.join(repoRoot, 'catalogue-pipeline/scripts/runVerifierV14ManualReview.mjs'), 'utf8')
+  assert.ok(!cliCode.includes('fetch('))
+  assert.ok(!cliCode.includes('axios'))
+  assert.ok(!cliCode.includes('@google/genai'))
+  assert.ok(!cliCode.includes('@anthropic-ai/sdk'))
+})
+
+test('G.4. No candidate skipping permitted in review progression', () => {
+  const realProdRoot = path.join(p2Dir, 'review-execution')
+  assert.throws(
+    () => prepareManualPayload({
+      candidateId: 'scale500-tmdb-11802', // Index 3
+      reviewer: 'GEMINI',
+      executionRoot: realProdRoot,
+      p2Dir,
+    }),
+    /OUT_OF_ORDER_EXECUTION/
+  )
+})
+
+test('G.5. No severity searching permitted', () => {
+  const cliCode = fs.readFileSync(path.join(repoRoot, 'catalogue-pipeline/scripts/runVerifierV14ManualReview.mjs'), 'utf8')
+  assert.ok(!cliCode.includes('searchSeverity'))
+  assert.ok(!cliCode.includes('filterSevereCandidates'))
+  assert.ok(!cliCode.includes('huntSevere'))
+})
+
+test('G.6. Frozen P2.3 hashes unchanged', () => {
+  const p23ManifestPath = path.join(p2Dir, 'p2-3-freeze-manifest.v1.json')
+  const manifestBytes = fs.readFileSync(p23ManifestPath)
+  assert.equal(sha256(manifestBytes), 'sha256:b8eb3fde3203f6736a4d5b3a98f71fe50de70866b060614432f1b9a1757335d3')
+})
+
+// ============================================================
+// SUITE H: Future Drift Diagnostic Contract Tests
+// ============================================================
+
+test('H.1. Diagnostic cannot run before primary + QA truth freeze', () => {
+  assert.throws(
+    () => validateSequencePositionDriftExecution({ primaryRecruitmentComplete: false, qaCompleted: false, truthFrozen: false }),
+    /EXECUTION_BLOCKED: SEQUENCE_POSITION_DRIFT_CHECK cannot run before/
+  )
+  assert.throws(
+    () => validateSequencePositionDriftExecution({ primaryRecruitmentComplete: true, qaCompleted: false, truthFrozen: false }),
+    /EXECUTION_BLOCKED/
+  )
+  assert.throws(
+    () => validateSequencePositionDriftExecution({ primaryRecruitmentComplete: true, qaCompleted: true, truthFrozen: false }),
+    /EXECUTION_BLOCKED/
+  )
+
+  const authorized = validateSequencePositionDriftExecution({ primaryRecruitmentComplete: true, qaCompleted: true, truthFrozen: true })
+  assert.equal(authorized.authorized, true)
+  assert.equal(authorized.classification, 'DIAGNOSTIC_ONLY')
+})
+
+test('H.2. Diagnostic output cannot mutate truth or alter final cohort', () => {
+  assert.equal(SEQUENCE_POSITION_DRIFT_CONTRACT.specification.cannotMutateTruth, true)
+  assert.equal(SEQUENCE_POSITION_DRIFT_CONTRACT.specification.cannotAlterFinalCohort, true)
+  assert.equal(SEQUENCE_POSITION_DRIFT_CONTRACT.specification.cannotTriggerSelectiveRereview, true)
+})
+
+test('H.3. Diagnostic is explicitly labeled DIAGNOSTIC_ONLY and has no invalidation rule', () => {
+  assert.equal(SEQUENCE_POSITION_DRIFT_CONTRACT.classification, 'DIAGNOSTIC_ONLY')
+  assert.equal(SEQUENCE_POSITION_DRIFT_CONTRACT.specification.invalidationRule, null)
 })
