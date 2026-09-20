@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports Jubei as a wandering masterless ninja lending his services for gold or a worthy cause, whose solitary life and survival are threatened by a plot to overthrow the government."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly confirms Action, Animation, Fantasy, and Horror genres, supporting the animated action feature, dark fantasy, and horror descriptors in whyWatch and vibeSummary."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies Yoshiaki Kawajiri and facts.year verifies 1993. Accepted semantic classification directly supports pace: fast ('Fast-paced', 'relentless, kinetic'), moods: [exciting, suspenseful] ('suspenseful', 'high-energy'), attentionDemand: engaged ('focused'), and situations: alone ('focused late-night viewing')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly complies with A_PRIME_PRODUCTION_MATERIALITY_V1. The synopsis and curiosity hook remain cleanly tethered to the authorized starting premise without introducing ungrounded plot specifics (such as the Eight Devils of Kimon, Kagero, or poison mechanics), external franchise lore, or third-act spoiler revelations. Phrasing such as 'mercenary ninja', 'lone swordsman's mercenary code', and 'forces bent on total upheaval' functions as legitimate, low-risk genre shorthand and thematic paraphrase reflecting the authorized masterless mercenary and government overthrow premise.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

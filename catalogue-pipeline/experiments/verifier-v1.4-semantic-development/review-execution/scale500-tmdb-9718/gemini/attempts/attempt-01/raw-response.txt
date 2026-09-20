@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports Ricky Bobby as a winning NASCAR sensation enjoying wealth and success until he is bested by flamboyant European rival Jean Girard and reduced to a fear-ridden wreck."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly confirms the Comedy genre, corroborated by authorized sports and racing keywords ('car race', 'race car driver', 'sport competition')."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies Adam McKay. Accepted semantic classification directly grounds pace: fast ('Fast', 'fast, wildly energetic'), emotionalWeight: light ('completely lighthearted'), attentionDemand: easy ('effortless', 'easy-watching'), moods: [funny, exciting] ('big laughs', 'energetic'), and situations: [friends, easy-watch] ('with friends', 'group watch')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly complies with A_PRIME_PRODUCTION_MATERIALITY_V1. The narrative premise and conflict in the description and curiosityHook adhere faithfully to the authorized overview and keywords without leaking external comedy lore, actor improvisations, or third-act race outcomes. Expressions such as 'paralyzing crisis of confidence' and 'reclaim the track' function as low-risk, natural thematic paraphrasing of the authorized 'fear-ridden wreck' premise, while experiential descriptors across whyWatch and vibeSummary map cleanly to verified metadata and authorized semantic classifications.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports Hector as a quirky psychiatrist feeling like a fraud because his patients never get happier, confiding in his girlfriend Clara, breaking out of his routine-driven life, and embarking on a global quest for the secret formula for happiness."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly confirms Adventure, Comedy, and Drama genres, grounding the comedic globe-trotting and comedy-drama framing across the visible copy."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies Peter Chelsom. Accepted semantic classification directly supports pace: medium, moods: [funny, thoughtful], discoveryStyle: adventurous ('globe-trotting', 'far-flung'), and situations: [alone, easy-watch] ('low-stress reflection')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly complies with A_PRIME_PRODUCTION_MATERIALITY_V1. The character setup, central existential dilemma, and departure on a global quest for happiness faithfully adhere to the authorized overview without importing external book or casting lore (e.g., François Lelord, Simon Pegg) or violating setup-only spoiler rules. Phrasing such as 'leaves behind his comfortable routine and girlfriend Clara' and 'sheltered therapist' constitutes legitimate, low-risk contextual concretization and thematic paraphrase of Hector confiding in Clara before embarking alone on his journey to break out of his routine.",
+  "uncertaintyNotes": "Under strict literalism, the overview states Hector tells Clara he feels like a fraud and decides to embark on a global quest, without explicitly using the words 'leaves behind'. However, under A_PRIME_PRODUCTION_MATERIALITY_V1, describing a protagonist who embarks on a solo global quest away from his domestic life as leaving behind his routine and partner is a standard, non-material narrative summary that does not distort relationship status or plot mechanics.",
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

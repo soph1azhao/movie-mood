@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports the central premise of a renowned New York playwright enticed to California to write for the movies and confronting the hellish truth of Hollywood."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly confirms Comedy, Drama, and Thriller genres, supporting the 'comedy, drama, and neo-noir thriller' classification in whyWatch (with neo-noir corroborated by facts.keywords)."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies Joel Coen & Ethan Coen. facts.keywords verifies '1940s', 'hotel', 'movie business', 'screenwriter', and 'neo-noir'. Accepted semantic classification directly grounds pace: medium ('steady dramatic pacing'), emotionalWeight: heavy ('heavy'), and moods: [funny, thoughtful, suspenseful] ('Darkly funny, suspenseful')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly adheres to A_PRIME_PRODUCTION_MATERIALITY_V1. The narrative premise, 1940s period setting, hotel backdrop, and thematic struggle in the description and curiosityHook are solidly grounded in the authorized overview and verified keywords. The copy scrupulously respects setup-only constraints by omitting late-stage revelations, murders, and neighbor subplots. Figurative expressions ('grim, disorienting realities', 'inescapable nightmare', 'stifling confines') represent legitimate, low-risk atmospheric inference and genre shorthand capturing the authorized 'hellish truth of Hollywood' without asserting ungrounded factual mechanics.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

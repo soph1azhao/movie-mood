@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports Charlie Burns facing the lawman's ultimatum in 1880s Australia to hunt down and kill his older brother to save his younger brother from the gallows, as well as his journey into the inhospitable Outback facing inevitable violence."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly verifies the Western and Drama genre labels used in whyWatch and vibeSummary."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "Facts establish director John Hillcoat and Australian production origin. Accepted semantic classification fully supports the heavy emotional weight, deliberate/slow pace, suspenseful mood, and engaged/alone viewing context."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly adheres to A_PRIME_PRODUCTION_MATERIALITY_V1. The premise, character dynamics, and stakes in description and curiosityHook faithfully reflect the authorized overview using acceptable genre and stylistic shorthand ('fratricide', 'youngest kin', 'brutal ultimatum', 'demands blood') without adding ungrounded plot mechanisms, unverified historical claims, or spoiler-boundary violations.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

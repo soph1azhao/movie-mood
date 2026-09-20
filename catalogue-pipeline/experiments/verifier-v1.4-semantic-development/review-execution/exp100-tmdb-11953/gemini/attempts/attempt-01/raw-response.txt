@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports Akira Kurosawa's feudal epic premise where a petty thief is recruited to impersonate the aging warlord Shingen to deter competing clans, Shingen's death, the reluctant generals continuing the ruse, and the double being tested when forced to lead troops into battle against rival forces."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly verifies the War, Drama, Action, and History genres, supporting the 'feudal war drama' and 'grand martial scale' descriptions across visible copy."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director confirms Akira Kurosawa, and runtimeMinutes (180) supports 'long-form'. Accepted semantic classification directly grounds emotionalWeight: heavy ('Heavy', 'heavy moral weight'), moods: [thoughtful, suspenseful] ('thoughtful, and suspenseful'), attentionDemand: engaged ('focused'), and situations: alone ('solo viewing')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly complies with A_PRIME_PRODUCTION_MATERIALITY_V1. The narrative premise, deception plot mechanic, and starting stakes in the description and curiosityHook faithfully track the authorized overview while strictly respecting setup-only boundaries. Rhetorical framing in the curiosityHook ('untrained rogue', 'entire dynasty's survival', 'active battlefield') represents acceptable metaphorical urgency and genre shorthand reflecting the authorized clan warfare and impostor ruler premise without inventing ungrounded factual claims, mechanics, or third-act spoiler revelations.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

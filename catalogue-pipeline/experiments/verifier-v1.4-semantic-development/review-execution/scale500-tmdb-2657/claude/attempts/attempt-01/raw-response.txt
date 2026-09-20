@@ -1,0 +1,35 @@
+```json
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "description: David and Jennifer as twins, the transport into the black-and-white world of a 1950s sitcom, the idyllic and predictable routine, and modern influence introducing color all restate the overview. 'Teenage twins' combines 'geeky teenager' with 'twin sister'. 'Shatters' mildly intensifies 'disrupts', and 'modern habits' loosely paraphrases 'modern attitude'. Neither changes the premise."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "curiosityHook: 'flawless monochrome town' paraphrases 'peachy keen' and 'black-and-white world'. 'Modern impulses' loosely restates Jennifer's 'modern attitude', and 'literal color' echoes 'literally brings color'. 'Threatens to upend everything the community takes for granted' is figurative urgency built on the stated disruption of Pleasantville's routine. It asserts no specific event or outcome."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "'Fantasy comedy', 'inventive fantasy', 'gentle comedy' and 'thoughtful drama' are consistent with genres Comedy/Drama/Fantasy. 'Gary Ross' matches director. The 'nostalgic television frame' is atmospheric shorthand for the 1950s sitcom setting."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "acceptedSemanticClassification: 'steady' matches pace=medium, 'thoughtful' matches moods, and 'engaged, moderate-weight family viewing' matches attentionDemand=engaged, emotionalWeight=moderate and situations=[family]. 'Imaginative visual style' and 'striking' are low-risk evaluative flourishes grounded in the color-versus-monochrome premise."
+    }
+  ],
+  "sourceBoundaryReason": "Every concrete claim (twins David and Jennifer, transport into a 1950s black-and-white sitcom world, the routine disrupted by modern influence, color arriving, the director) is grounded in the packet. The remaining language ('shatters', 'threatens to upend everything', 'study of conformity and awakening', 'nostalgic television frame') is figurative language, thematic shorthand, or atmospheric inference. None of it adds a meaningful new factual claim about plot mechanics, identities, relationships, motives, or causality. The copy stays within the premise and initial conflict, with no reversals, late outcomes, or endings. Keyword-only material (book burning, racism, bathtub, diner, TV repairman, dystopia, etc.) is not imported. This is harmless stylistic variation under A_PRIME_PRODUCTION_MATERIALITY_V1.",
+  "uncertaintyNotes": "'Conformity and awakening' in whyWatch is a thematic label. The overview supports conformity through the 'peaceful but boring routine', and 'awakening' is a figurative reading of color entering the town's life. It could imply a character arc the packet does not state, but it names no event or outcome, so it stays within tolerance. 'Modern impulses' and 'modern habits' drift slightly from 'modern attitude' but do not change what the viewer would expect.",
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}
+```

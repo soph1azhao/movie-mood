@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports journalist Gary Webb uncovering ties between the CIA, Nicaraguan Contra rebels, and cocaine trafficking into California, as well as the resulting vicious smear campaign against him based on a true story."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly verifies Crime, Drama, History, Mystery, and Thriller genres, corroborating the 'true-crime political drama' and 'procedural' framing across visible copy."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies Michael Cuesta. facts.keywords verifies 'crack cocaine', 'central intelligence agency (cia)', 'investigative journalism', and 'government conspiracy'. Accepted semantic classification directly grounds attentionDemand: engaged ('requiring engaged focus'), emotionalWeight: heavy ('somber', 'emotionally heavy'), moods: [thoughtful, suspenseful, emotional] ('suspenseful', 'thoughtful'), and situations: alone ('solo watch')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly complies with A_PRIME_PRODUCTION_MATERIALITY_V1. The narrative premise, investigative conflict, and institutional backlash in the description and curiosityHook faithfully reflect the authorized overview and verified keywords. Crucially, the copy exercises disciplined setup-only restraint: it refrains from detailing the protagonist's eventual suicide or third-act tragic revelations mentioned in the overview, framing the stakes neutrally as personal blowback and retaliation. Tonal descriptors such as 'illicit pipeline' and 'institutional retaliation' operate as legitimate, low-risk contextual concretization and genre shorthand cleanly anchored in the verified facts and semantic classifications.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

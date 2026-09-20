@@ -1,0 +1,33 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "description: the formula mutating Dr. Alec Holland, the half-plant transformation into Swamp Thing, the rescue of government agent Alice Cable, and the confrontation with his arch-nemesis all restate the overview. 'Experimental' loosely glosses 'secret formula'. 'Ruthless' echoes 'evil'. 'Confront' softens 'defeat'. 'Takes on the mantle of Swamp Thing' is a figurative gloss on 'becomes Swamp Thing' and is discussed under uncertaintyNotes."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "curiosityHook: 'transformed... by his own creation' restates 'mutated by his own secret formula'. 'Will Alec Holland survive the perilous fight' echoes the overview's 'even if it costs him his life'. 'Monstrous swamp creature' is a characterization the overview frames as 'superhero', and it is discussed under uncertaintyNotes. 'Protect Alice Cable' loosely paraphrases 'rescue'. The interrogative asserts no outcome."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "vibeSummary and whyWatch: 'sci-fi horror', 'creature horror' and 'genre crossover' are consistent with genres Horror/Science Fiction. 'Comic-book heroics' is supported by the overview's 'superhero', and 'comic book' also appears in facts.keywords. 'Wes Craven', '1982' and '91 minutes' match director, year and runtimeMinutes. 'Pulp action' and 'creature-feature fun' are tonal shorthand."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "acceptedSemanticClassification: 'Suspenseful' and 'exciting' match moods. 'Fast-moving' is slightly off pace=medium and is tonal only. 'Engaging' matches attentionDemand=engaged. 'Casual movie night with friends' matches situations=[friends, easy-watch]. Keyword-only material (body horror, swamp) is not imported."
+    }
+  ],
+  "sourceBoundaryReason": "Every concrete claim (Dr. Alec Holland, the secret-formula mutation, Swamp Thing as a half-human, half-plant figure, government agent Alice Cable, an evil arch-nemesis, the life-costing stakes, the director, year, runtime and genres) is grounded in the authorized overview. The remaining language ('mantle', 'monstrous', 'protect', 'ruthless', 'perilous fight', 'pulp action') is figurative characterization, genre shorthand or minor terminology variation. None of it works as a meaningful new factual claim about plot mechanics, identities, relationships, motives or causality under A_PRIME_PRODUCTION_MATERIALITY_V1. The copy stays at the premise and initial conflict. The survival question presupposes no outcome, and no reversal or ending is stated, so no spoiler-boundary content appears.",
+  "uncertaintyNotes": "Three items sit near the tolerance line. 'Monstrous swamp creature' in curiosityHook frames Swamp Thing as a monster where the overview calls him a 'superhero'. 'Takes on the mantle' implies a deliberate adoption of the role where the overview says he 'becomes' Swamp Thing. 'Protect' in place of 'rescue' shifts the framing slightly, since 'rescue' implies she is already in peril or captive. I read all three as characterization and terminology variation, since none names a new event, relationship or outcome and none changes what a viewer would expect. A stricter adjudicator could ask for 'superhero', 'becomes' and 'rescue' to be restored, in which case they would be MINOR alias or terminology substitutions. 'Fast-moving' sits slightly against the accepted pace of medium and is tonal only.",
+  "confidence": "MEDIUM",
+  "advisoryOnly": true
+}

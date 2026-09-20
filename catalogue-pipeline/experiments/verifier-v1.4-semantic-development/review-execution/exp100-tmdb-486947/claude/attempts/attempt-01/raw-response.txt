@@ -1,0 +1,41 @@
+{
+  "preliminaryDecision": "REVISE",
+  "preliminarySeverity": "MINOR",
+  "affectedFields": ["description", "curiosityHook"],
+  "issueSummaries": [
+    "description states as fact that the caller is 'an abducted woman'. The packet hedges this: she is 'a panicked woman who claims to have been kidnapped'. Dropping 'claims' turns an unverified claim into an established fact (unsupported causal/factual concretization).",
+    "curiosityHook repeats the same escalation with 'panicked victim' and 'save her', which treat the kidnapping as confirmed. The packet's goal is to 'get help and find her'. The phrase 'piece together the truth' partly preserves the ambiguity, so this is a secondary instance."
+  ],
+  "claimSpan": "answers a call from an abducted woman",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": false,
+      "notes": "description: 'abducted woman' is not supported as stated. The overview says the woman 'claims to have been kidnapped', so her status as an abduction victim is unverified within the packet. Removing the hedge falsely specifies a factual attribute of the premise."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "description: Asger Holm, police officer, demoted to alarm-dispatch desk work, the call, confinement, and the phone as his only tool all restate the overview. 'Demoted to emergency dispatch duty' paraphrases 'demoted to desk work as an alarm dispatcher'. 'Rely entirely on the phone line' matches 'the phone as his only tool'. 'Confined to his desk' narrows 'confined to the police station', which is a minor concretization supported by the 'desk work' framing and the keywords. 'Orchestrate a rescue' is a mild paraphrase of 'get help and find her'."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "curiosityHook: 'only a phone line' and 'desk-bound dispatcher' restate the overview. 'In time' echoes 'races against time'. 'Piece together the truth' is figurative and implies unresolved facts, which is consistent with the source's hedging. 'Panicked' is directly supported. 'Victim' and 'save her' assume the kidnapping is real, which the packet leaves open."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "'Thriller', 'suspense drama' and 'crime drama' are consistent with genres Crime/Drama/Thriller. 'Gustav Möller', '85-minute' and 'Danish' match director, runtimeMinutes and countries/spokenLanguages. 'Claustrophobic' and 'high-stakes' are low-risk genre and atmosphere shorthand grounded in the confinement premise."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "acceptedSemanticClassification: 'fast-paced' matches pace=fast, 'emotionally heavy' matches emotionalWeight=heavy, 'focused attention' matches attentionDemand=engaged, and 'solo watch' matches situations=[alone]. 'Driven purely by vocal cues' is a mild escalation ('purely', 'vocal cues') beyond 'the phone as his only tool', but it is stylistic and not a plot claim."
+    }
+  ],
+  "sourceBoundaryReason": "Most of the copy is grounded or is tolerated atmospheric and genre shorthand under A_PRIME_PRODUCTION_MATERIALITY_V1 ('claustrophobic', 'high-stakes', 'orchestrate a rescue', 'vocal cues'). The one substantive issue is that the packet's hedge, 'claims to have been kidnapped', is removed, so the copy presents the abduction as a settled fact ('abducted woman', 'victim', 'save her'). This affects a decision-relevant premise attribute, namely whether the kidnapping is established, and the packet does not authorize the certainty. It is bounded and easily fixed by restoring the hedge (for example 'a woman who says she has been abducted'), and it does not invent plot events, identities, relationships, or outcomes, so it is MINOR and not SEVERE. No spoiler-boundary items appear.",
+  "uncertaintyNotes": "This is a near-threshold call. An adjudicator could reasonably treat 'abducted woman' as harmless shorthand for the premise, since 'The Guilty' is framed as a rescue call, and approve. I flag it because the closed-world rule treats the packet's explicit hedge as authoritative and the truth of the kidnapping is a decision-relevant expectation. The curiosityHook's 'piece together the truth' softens the problem there, so the description is the primary locus. 'Confined to his desk' (versus 'the police station'), 'orchestrate a rescue', and 'purely by vocal cues' were considered and left within tolerance.",
+  "confidence": "MEDIUM",
+  "advisoryOnly": true
+}

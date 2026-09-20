@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports the setting of the CIA's secret training grounds 'the Farm', a trainee proving his worth through rigorous preparation, and learning to watch his back and trust no one."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly verifies Action and Thriller genres, corroborated by authorized keywords 'spy', 'training', and 'recruit'."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies Roger Donaldson. Accepted semantic classification directly grounds pace: medium ('steadily paced'), moods: suspenseful ('Tense', 'suspicion', 'suspenseful'), and attentionDemand: engaged ('sharp focus')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly complies with A_PRIME_PRODUCTION_MATERIALITY_V1. The narrative premise, secluded training facility setting, and psychological tension in the description and curiosityHook faithfully track the authorized overview without importing external casting lore (e.g., Al Pacino, Colin Farrell), unstated operational subplots, or third-act mole revelations. Phrasing such as 'questioning every ally' and 'constant psychological friction of high-stakes intelligence training' functions as legitimate, low-risk atmospheric inference and genre shorthand reflecting the authorized 'watch his back and trust no one' premise.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

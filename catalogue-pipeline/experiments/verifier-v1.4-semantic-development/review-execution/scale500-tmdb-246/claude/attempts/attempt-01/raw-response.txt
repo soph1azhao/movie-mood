@@ -1,0 +1,33 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "description: the blind masseur and gambler Zatoichi, arriving in a community torn by warring gangs, his swordsmanship, and his stepping in to protect the townspeople all restate the overview. 'Terrorized', 'ruthless' and 'escalating violence' are figurative intensifications of 'torn apart by warring gangs'. 'Steps between the townspeople and... violence' paraphrases 'sets out to protect the townspeople'. 'Exceptional swordsmanship' paraphrases 'master swordsman'. 'Wanders' paraphrases 'traveler'."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "curiosityHook: 'dice-rolling traveler' restates 'blind traveler... gambling on dice games'. 'Lethal precision' is a figurative gloss on 'master swordsman'. 'Quiet an entire town's crossfire' paraphrases protecting a village torn apart by warring gangs. 'Humble guise' is discussed under uncertaintyNotes. The interrogative asserts no outcome."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "whyWatch and vibeSummary: 'action-drama', 'kinetic, stylized swordplay' and 'village warfare' are consistent with genres Action/Adventure/Drama and the swordsman-versus-gangs premise. 'Samurai' appears only in facts.keywords (with 'jidaigeki' and 'sword'), not in the overview, but it works as genre shorthand for a swordsman-driven period action film. 'Takeshi Kitano' matches director."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "acceptedSemanticClassification: 'Fast-paced' and 'fast-moving' match pace=fast. 'Suspenseful' matches moods. 'Moderate emotional weight' matches emotionalWeight=moderate. 'Engaged' matches attentionDemand=engaged. 'Alone or with friends' matches situations=[friends, alone]. Keyword-only material (blackmail, geisha, revenge, aggressive) is not imported."
+    }
+  ],
+  "sourceBoundaryReason": "Every concrete claim (blind traveler Zatoichi, masseur and gambler, master swordsman, warring gangs in a village, his resolve to protect the townspeople, the director, genres, pacing and viewing-context labels) is grounded in the packet. The remaining language ('humble guise', 'lethal precision', 'terrorized', 'ruthless', 'escalating violence', 'stylized swordplay') is figurative language, genre shorthand or minor atmospheric inference. None of it functions as a meaningful new factual claim about plot mechanics, identities, relationships, motives or causality under A_PRIME_PRODUCTION_MATERIALITY_V1. The copy stays at the premise and initial conflict and states no reveal, outcome or ending, so no spoiler-boundary content appears.",
+  "uncertaintyNotes": "Two items sit near the tolerance line. 'Behind the humble guise... lies lethal precision' implies that Zatoichi's ordinary appearance conceals his skill, which edges toward a hidden-identity framing. The overview presents the swordsman and masseur as one openly stated profile and does not say he conceals anything. I read it as contrast shorthand between his everyday traits (gambler, traveler) and his swordsmanship, and the copy names no concealed fact or reveal. A stricter adjudicator could ask for 'guise' to be softened. 'Samurai' in vibeSummary and whyWatch relies on facts.keywords and not the overview. I treated it as low-risk genre shorthand because the packet establishes a master swordsman in a period setting, but a strict closed-world reading could ask for 'swordsman' or 'sword' wording.",
+  "confidence": "MEDIUM",
+  "advisoryOnly": true
+}

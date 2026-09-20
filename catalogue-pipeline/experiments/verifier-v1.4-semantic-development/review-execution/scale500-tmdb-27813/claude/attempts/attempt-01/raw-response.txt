@@ -1,0 +1,42 @@
+{
+  "preliminaryDecision": "REVISE",
+  "preliminarySeverity": "MINOR",
+  "affectedFields": ["description", "curiosityHook"],
+  "issueSummaries": [
+    "description: 'a young man arrives in the city' specifies a location (the city) not established anywhere in the authorized overview, which contains no setting/location detail beyond the characters and premise.",
+    "description: 'wicker basket' concretizes the basket's material, a specific factual attribute not supported by the overview's generic 'big basket.'",
+    "curiosityHook: 'the hidden brother inside the basket is finally unleashed against the surgeons' shifts agency to the twin brother acting against the surgeons, whereas the overview attributes the vengeance-seeking specifically to 'a young man,' with the brother as a carried, deformed figure rather than an established independent agent of the revenge."
+  ],
+  "claimSpan": "arrives in the city",
+  "sourceEvidence": [
+    {
+      "source": "allowedSourceMaterial.overview",
+      "supportFound": true,
+      "notes": "Overview supports: a young man carries a big basket containing his extremely deformed, formerly conjoined twin brother, and seeks vengeance on the doctors who separated them against their will. This grounds the core premise, central subjects, and initial conflict across all four fields."
+    },
+    {
+      "source": "allowedSourceMaterial.overview",
+      "supportFound": false,
+      "notes": "No location (e.g., 'the city') or basket material (e.g., 'wicker') is specified in the overview; these are unsupported concretizations of setting and object attributes."
+    },
+    {
+      "source": "allowedSourceMaterial.overview",
+      "supportFound": false,
+      "notes": "The overview attributes vengeance-seeking to 'a young man,' not explicitly to the twin brother acting independently; framing the brother as being 'unleashed' against the surgeons introduces an unsupported shift in agency/causal responsibility for the revenge."
+    },
+    {
+      "source": "facts",
+      "supportFound": true,
+      "notes": "whyWatch correctly attributes direction to Frank Henenlotter (facts.director) and blends the Comedy/Horror genres (facts.genres) via 'grotesque horror with pitch-black comedy.'"
+    },
+    {
+      "source": "acceptedSemanticClassification",
+      "supportFound": true,
+      "notes": "vibeSummary's 'suspenseful horror-comedy with heavy undertones... steady, focused pace' reflects the authorized moods (funny, suspenseful), emotionalWeight (heavy), pace (medium), and attentionDemand (engaged) classifications."
+    }
+  ],
+  "sourceBoundaryReason": "Per A_PRIME_PRODUCTION_MATERIALITY_V1, low-risk atmospheric and genre shorthand is tolerated, but 'arrives in the city' and 'wicker basket' add unsupported concrete factual attributes (location, material) not established by the closed-world source. More significantly, curiosityHook's framing of the brother being 'unleashed' against the surgeons reassigns agency for the vengeance from the young man (as stated in the overview) to the twin, which is a minor but meaningful shift in decision-relevant character/motive framing. These are bounded, fixable overstatements rather than severe distortions of plot mechanics or spoiler-boundary violations, so MINOR is appropriate.",
+  "uncertaintyNotes": "The overview's phrasing is ambiguous as to whether the twin brother participates in or drives the vengeance alongside the young man; it is plausible the brother is actively involved, in which case the agency framing in curiosityHook would be less problematic. Given the ambiguity, this is treated as a bounded concretization rather than a severe identity/motive fabrication.",
+  "confidence": "MEDIUM",
+  "advisoryOnly": true
+}

@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports Alex Honnold attempting to free solo climb Yosemite's 3,000-foot El Capitan wall without ropes or safety gear as a historic rock-climbing feat."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly verifies Adventure and Documentary genres, grounding the 'adventure documentary' categorization across visible copy."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies Jimmy Chin & Elizabeth Chai Vasarhelyi. Accepted semantic classification directly grounds pace: medium ('steady precision'), attentionDemand: engaged ('demanding', 'singular focus'), and moods: suspenseful ('deeply suspenseful', 'pure cinematic suspense', 'tension')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly complies with A_PRIME_PRODUCTION_MATERIALITY_V1. The narrative framing in the description and curiosityHook centers strictly on the preparation and attempt of the climb, meticulously respecting setup-only spoiler boundaries without disclosing third-act ascent outcomes or personal relationship subplots. Descriptive expressions such as 'sheer granite', 'protective tether', and 'vertigo-inducing tension' function as acceptable, low-risk atmospheric inferences and genre shorthand directly anchored in the authorized 3,000-foot ropeless rock-climbing premise.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

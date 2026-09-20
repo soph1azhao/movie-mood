@@ -1,0 +1,43 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "The description closely mirrors the authorized overview: brutal gangsters led by a crooked property developer attempting to seize the city, prompting Master Ip to act."
+    },
+    {
+      "source": "facts.keywords",
+      "supportFound": true,
+      "notes": "The '1950s Hong Kong' setting detail in the description is directly grounded in the keywords list ('1950s', 'hong kong') and facts.countries."
+    },
+    {
+      "source": "facts.director",
+      "supportFound": true,
+      "notes": "whyWatch attributes the film to Wilson Yip, matching facts.director exactly."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "'martial arts drama' and 'kinetic combat choreography' in whyWatch align with the Action/Drama genre tags and 'kung fu'/'martial arts' keywords."
+    },
+    {
+      "source": "acceptedSemanticClassification",
+      "supportFound": true,
+      "notes": "vibeSummary's 'exciting and fast-paced', 'engaging watch alone or with friends' phrasing directly reflects the authorized moods (exciting, emotional), pace (fast), and situations (alone, friends)."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "curiosityHook rephrases the premise as a question without introducing new plot mechanics, identities, or outcomes; it stays within the allowed spoiler boundary (premise/initial conflict)."
+    }
+  ],
+  "sourceBoundaryReason": "All four fields restate or lightly rephrase facts and classifications explicitly present in the authorized packet (overview, keywords, director, genres, semantic classification). Phrases like 'high-stakes neighborhood conflict' and 'kinetic combat choreography' are low-risk genre shorthand and atmospheric inference under A_PRIME_PRODUCTION_MATERIALITY_V1, not new factual claims. No plot mechanics, identities, motives, causality, quantities, locations beyond what's given, or later-story details are introduced.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

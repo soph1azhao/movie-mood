@@ -1,0 +1,33 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "description: NASCAR driver Ricky Bobby, his wealth and victories, the flamboyant Jean Girard, and the resulting crisis all restate the overview. 'Fame, wealth, and endless victories' paraphrases 'one of the greatest drivers in NASCAR history', 'winning machine', 'luxurious mansion' and the other perks. 'Daredevil driver' echoes 'dimwitted daredevil'. 'Challenges his dominance' is a softer paraphrase of 'bested by'. 'Spiraling into a paralyzing crisis of confidence' is a figurative gloss on 'reduced to a fear-ridden wreck'."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "curiosityHook: the challenger from Europe ('Euro-idiot'), the loss of Ricky's winning standing ('winning machine' and 'bested by'), and his terror ('fear-ridden wreck') all restate the overview. 'Winning streak' is a mild concretization of a winning-machine champion being beaten. 'Fallen champion' and 'reclaim the track' are figurative. The interrogative asserts no recovery or outcome, so the hook adds no spoiler-boundary content."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "whyWatch and vibeSummary: 'sports comedy' and 'racing farce' are consistent with genre Comedy and the NASCAR premise. 'Sports' rests on the overview's NASCAR framing. 'Adam McKay' matches director. 'Outsized rivalries' and 'unhinged humor' are tonal shorthand. 'Rivalries' (plural) is loose wording, but it names no additional rival."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "acceptedSemanticClassification: 'Fast' and 'fast' match pace=fast. 'Lighthearted' and 'big laughs' match emotionalWeight=light and mood funny. 'Wildly energetic' matches mood exciting. 'Easy-watching' and 'effortless' match attentionDemand=easy. 'Friends' and 'group watch' match situations=[friends, easy-watch]. Keyword-only material (divorce, betrayal, estranged father, best friend, North Carolina) is not imported."
+    }
+  ],
+  "sourceBoundaryReason": "Every concrete claim (NASCAR driver Ricky Bobby, Jean Girard as the flamboyant rival, the loss of his winning standing, the fear-ridden aftermath, the director and genre) is grounded in the packet. The remaining language ('arrogant', 'shatters', 'winning streak', 'paralyzing crisis of confidence', 'reclaim the track', 'outsized rivalries') is figurative characterization, genre shorthand or minor contextual concretization. None of it works as a meaningful new factual claim about plot mechanics, identities, relationships, motives or causality under A_PRIME_PRODUCTION_MATERIALITY_V1. The copy stays at the premise and initial conflict and states no comeback, resolution or later event, so no spoiler-boundary content appears. Keyword-only plot material is not imported.",
+  "uncertaintyNotes": "Two items sit near the tolerance line. 'Arrogant' in curiosityHook replaces the source's 'flamboyant' with a different trait attribute for Jean Girard. I read it as characterization shorthand in the same class as 'ruthless' for 'murderous', since it does not change his role or the plot. 'Shatters Ricky Bobby's winning streak' implies a specific unbroken run, where the overview says only that he was 'bested', and 'reclaim the track' hints at a comeback goal. The second is posed as a question and asserts no outcome. A stricter adjudicator could ask for 'flamboyant' to be restored and 'streak' softened, in which case they would be MINOR characterization and concretization issues.",
+  "confidence": "MEDIUM",
+  "advisoryOnly": true
+}

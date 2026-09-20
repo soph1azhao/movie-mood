@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports the young girl being left alone on a decrepit/decaying country estate due to the irresponsible/reckless actions of her parents, surviving through her imagination."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly verifies Drama, Fantasy, and Thriller genres, supporting the 'dark fantasy and suspense' description in whyWatch."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies Terry Gilliam. Accepted semantic classification directly grounds pace: slow ('Slow'), emotionalWeight: heavy ('emotional heaviness', 'somber', 'heavy'), attentionDemand: engaged ('engaged'), moods: suspenseful ('tense'), and situations: alone ('solo viewing')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly complies with A_PRIME_PRODUCTION_MATERIALITY_V1. The premise, isolated setting, and central dynamic in the description and curiosityHook adhere faithfully to the authorized overview without importing external book or casting details (e.g., Mitch Cullin, Jeliza-Rose), real-world drug overdose specifics, or spoiler-boundary breaches. Metaphorical framing such as 'psychological resilience' and 'where do the borders of her protective fantasies end' functions as legitimate editorial synthesis and atmospheric inference directly anchored in the authorized premise.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

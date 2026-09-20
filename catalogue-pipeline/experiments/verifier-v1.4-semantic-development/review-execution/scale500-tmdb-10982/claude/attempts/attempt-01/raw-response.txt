@@ -1,0 +1,35 @@
+{
+  "preliminaryDecision": "REVISE",
+  "preliminarySeverity": "MINOR",
+  "affectedFields": ["curiosityHook", "whyWatch"],
+  "issueSummaries": [
+    "curiosityHook states that 'everyone caught at Granny's cottage has an entirely different version of the incident' and asks 'whose perspective actually explains' events. whyWatch repeats this with 'conflicting witness stories'. The overview says only that the story 'begins at the end of the tale and winds its way back' and that Grizzly and Stork investigate a domestic disturbance involving three named characters. It never says the characters give conflicting accounts, that the film is told through multiple perspectives, or that the investigation turns on reconciling them. This is an unsupported plot-mechanic and structure claim, and it is the central premise of both fields. 'Caught' also implies the characters were apprehended at the scene, which the overview does not state."
+  ],
+  "claimSpan": "Everyone caught at Granny's cottage has an entirely different version of the incident.",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": false,
+      "notes": "curiosityHook and whyWatch: conflicting versions, competing perspectives and 'conflicting witness stories' have no support. The overview describes a reverse-chronological retelling and an investigation, not a multi-account structure. 'Whose perspective explains how they all arrived there' presupposes that competing perspectives exist."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "description: the disturbance at Granny's cottage, Chief Grizzly and Detective Bill Stork, the karate-kicking Red, the oafish Woodsman, the sarcastic Wolf, and the story running from the end backward all restate the overview. 'Altercation erupts' paraphrases 'domestic disturbance'. 'Red' abbreviates Red Riding Hood. 'Interrogate' is a mild concretization of 'investigate... involving'. 'Piece together the truth' is a figurative gloss on the investigation and is discussed under uncertaintyNotes."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "whyWatch and vibeSummary: 'animated', 'crime mystery', 'whodunit' and 'witty, fast-talking' comedy are consistent with genres Animation/Comedy/Crime/Family/Mystery and the detective premise. 'Cory Edwards' matches director. 'Flips a traditional fairy tale' echoes the overview's 're-telling of this classic fable'. 'Whodunit' is genre shorthand and implies a culprit puzzle, which the overview does not state. It is discussed under uncertaintyNotes."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "acceptedSemanticClassification: 'Funny' and 'lighthearted' match mood funny and emotionalWeight=light. 'Brisk' is slightly off pace=medium and is tonal only. 'Engaging' matches attentionDemand=engaged. 'Family movie night' and 'easy to enjoy' match situations=[family, easy-watch]. Keyword-only material (burglary, suspicion, villain) is not imported."
+    }
+  ],
+  "sourceBoundaryReason": "Most of the copy is grounded or is tolerated figurative language and genre shorthand under A_PRIME_PRODUCTION_MATERIALITY_V1. The exception is the conflicting-testimonies framing in curiosityHook and whyWatch. It gives the film a specific narrative mechanic, competing accounts of one incident, that the packet does not state, and it makes that mechanic the hook. That falsely specifies plot mechanics and shapes viewer expectations of the film's structure. It does not contradict the source, invent identities, or reveal any outcome or ending, so the severity is MINOR and not SEVERE. A bounded fix would stay with the overview, for example 'When a domestic disturbance at Granny's cottage draws in a karate-kicking Red, a sarcastic Wolf and an oafish Woodsman, how does a tale told from the end back to the beginning add up?'.",
+  "uncertaintyNotes": "This is a near-threshold call. An investigation involving three named suspects and a story told backward makes different accounts a natural inference, and the Mystery and Crime genres support a whodunit reading, so an adjudicator could treat the framing as tolerated genre shorthand and approve. I flag the fields because the packet never says the accounts conflict, and the hook rests on that claim. If Sophia treats the conflicting-accounts reading as harmless, the remaining concerns would shrink to 'interrogate' and 'caught'. 'Whodunit' in vibeSummary, 'interrogate' and 'piece together the truth' in description, and 'Red' for Red Riding Hood were considered and left within tolerance.",
+  "confidence": "MEDIUM",
+  "advisoryOnly": true
+}

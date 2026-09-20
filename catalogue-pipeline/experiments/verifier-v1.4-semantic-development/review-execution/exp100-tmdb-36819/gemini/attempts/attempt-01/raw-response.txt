@@ -1,0 +1,33 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "allowedSourceMaterial.overview",
+      "supportFound": true,
+      "notes": "Directly supports Kevin being swept away by six dwarfs who stole a time-portal map from the Supreme Being to plunder treasures across historical eras while being pursued."
+    },
+    {
+      "source": "facts.director",
+      "supportFound": true,
+      "notes": "Directly validates Terry Gilliam as director."
+    },
+    {
+      "source": "acceptedSemanticClassification",
+      "supportFound": true,
+      "notes": "Validates tone, pacing, situations, and experiential attributes ('exciting', 'humorous', 'fast-paced', 'engaging', 'friends or family')."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Supports categorization as an inventive fantasy/adventure time-travel romp."
+    }
+  ],
+  "sourceBoundaryReason": "All editorial copy remains strictly grounded in the authorized source packet. Descriptive flourishes such as 'cosmic blueprint', 'era-hopping heist', and tumbling through 'myth and legend' represent permissible stylistic variation, figurative language, and genre shorthand under A_PRIME_PRODUCTION_MATERIALITY_V1, introducing no unauthorized factual claims, distortions, or spoiler boundary leaks.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

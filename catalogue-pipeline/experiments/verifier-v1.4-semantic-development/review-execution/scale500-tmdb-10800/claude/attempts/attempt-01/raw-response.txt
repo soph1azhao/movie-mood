@@ -1,0 +1,41 @@
+{
+  "preliminaryDecision": "REVISE",
+  "preliminarySeverity": "MINOR",
+  "affectedFields": ["description", "curiosityHook", "whyWatch"],
+  "issueSummaries": [
+    "description says the world is 'made of floating islands'. curiosityHook says 'a fractured sky', and whyWatch says 'an inventive floating landscape'. The overview says only that the world is 'a vast conglomerate of islands of varying size and shape'. Nothing in it says the islands float or that the setting is aerial. This is an unsupported setting concretization repeated across three fields, and it changes the physical nature of the world.",
+    "description and curiosityHook call the protagonists 'wandering' and 'freelance' hunters. The overview says only 'two dragon hunters', so these are unsupported factual attributes, though minor ones. The copy also drops 'dragon' from 'hunters', which is an emphasis choice and not a boundary issue."
+  ],
+  "claimSpan": "a fractured world made of floating islands",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": false,
+      "notes": "description, curiosityHook and whyWatch: 'floating' and 'sky' have no support. The overview describes a conglomerate of islands, which is consistent with an archipelago or sea setting. 'Fractured' is a figurative gloss on 'conglomerate of islands' and is tolerable alone. 'Wandering' and 'freelance' are also absent from the overview."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "description: the two hunters, the rogues, surly peasants and petty lords, and the rule 'eat and don't get eaten' all restate the overview. 'Unruly realm' paraphrases 'babbling universe'. 'Survival hinges on' paraphrases 'main concerns revolve around'. 'One basic rule' compresses the overview's 'two fundamental rules: Eat and don't get eaten', a small quantity variation that is discussed under uncertaintyNotes."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "curiosityHook: 'survival is never guaranteed' and 'stay atop the food chain' are figurative renderings of 'Eat and don't get eaten'. 'Two... hunters' matches the overview. The interrogative asserts no outcome."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "whyWatch and vibeSummary: 'animated adventure', 'family-friendly fantasy' and 'animated escape' are consistent with genres Animation/Family and the overview's 'fantastic tale'. 'Arthur Qwak and Guillaume Ivernel' and '82-minute' match director and runtimeMinutes. 'Imaginative', 'inventive', 'brisk' and 'energetic' are evaluative flourishes."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "acceptedSemanticClassification: 'Exciting' matches mood exciting. 'Lightweight' and 'easy to watch' match emotionalWeight=light and attentionDemand=easy. 'Family viewing' matches situations=[family, easy-watch]. 'Brisk' and 'energetic' are slightly off pace=medium and are tonal only. Keyword-only material (doomsday, world supremacy, best friend) is not imported."
+    }
+  ],
+  "sourceBoundaryReason": "Most of the copy is grounded or is tolerated figurative language and genre shorthand under A_PRIME_PRODUCTION_MATERIALITY_V1. The recurring 'floating islands' and 'sky' framing, however, specifies a physical setting the packet does not establish, and it appears in three fields. That falls under the locations and factual attributes categories, and it shapes viewer expectations of the world's look. 'Wandering' and 'freelance' add smaller unsupported attributes. None of these contradicts the premise, reveals an outcome or invents identities, so the severity is MINOR and not SEVERE. A bounded fix would say 'a world of scattered islands' and 'a vast archipelago', and drop 'floating', 'sky', 'wandering' and 'freelance'.",
+  "uncertaintyNotes": "This is a near-threshold call. 'Fractured sky' and 'floating islands' could be read as loose visual shorthand for a fantasy conglomerate of islands, and the animated fantasy genre makes floating islands a plausible reading, so an adjudicator could approve on that basis. I flag the fields because the closed-world rule treats packet-absent setting details as ungrounded, and the same detail repeats across three fields. 'One basic rule' compresses 'two fundamental rules', which could be read as the two rules being the two halves of one saying. I left it within tolerance as a small quantity variation. 'Ruthless rogues' is omitted from the copy, but that is an emphasis choice.",
+  "confidence": "MEDIUM",
+  "advisoryOnly": true
+}

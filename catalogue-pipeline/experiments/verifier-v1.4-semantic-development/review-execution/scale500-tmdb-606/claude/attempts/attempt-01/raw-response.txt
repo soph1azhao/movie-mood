@@ -1,0 +1,33 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "description: Danish author Karen Blixen, the start of the twentieth century, the move to Africa, and the aim of establishing a new life all restate the overview. 'Journeys to Africa' paraphrases 'moved to Africa'. 'Navigating... unfamiliar terrain' is atmospheric inference from relocating to a new continent, in the class of the tolerated 'across the countryside'. 'Sydney Pollack' matches director."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "description: 'sweeping romance' and 'historical drama' are consistent with genres Drama/History/Romance. The overview does not mention romance, but the genre field authorizes it as a genre label. 'Sweeping' is evaluative shorthand and does not assert a specific relationship or plot event. vibeSummary and whyWatch: 'historical romance' and 'richly textured drama' rest on the same genre support."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "curiosityHook: the Danish writer and the unfamiliar world restate the overview ('Danish author', 'moved to Africa'). 'Leave her past behind' and 'forge an enduring future' are figurative glosses on 'build a new life for herself'. 'Enduring' implies longevity, and the source's 'life story' framing does not contradict it. The interrogative asserts no outcome and names no event."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "acceptedSemanticClassification: 'Slow' matches pace=slow. 'Emotionally heavy' and 'deeply felt' match emotionalWeight=heavy and mood emotional. 'Engaged focus' and 'patient viewing' match attentionDemand=engaged. 'Reflective storytelling' matches mood thoughtful. '161-minute' matches runtimeMinutes. Keyword-only material (coffee, safari, lions, Kenya, infidelity, syphilis, big game hunter) is not imported."
+    }
+  ],
+  "sourceBoundaryReason": "Every concrete claim (Karen Blixen, Danish author, the early-twentieth-century move to Africa to build a new life, the director, the genres, the runtime) is grounded in the packet. The remaining language ('sweeping romance', 'unfamiliar terrain', 'leave her past behind', 'enduring future', 'richly textured drama') is figurative language, genre shorthand, or atmospheric inference. None of it functions as a meaningful new factual claim about plot mechanics, identities, relationships, or causality under A_PRIME_PRODUCTION_MATERIALITY_V1. The copy stays at the premise and starting situation and states no relationship outcome, later event, or ending, so no spoiler-boundary content appears.",
+  "uncertaintyNotes": "Two items sit near the tolerance line. 'Leave her past behind' attributes a mild motive (escaping a past) that the overview does not state, since the source says only that she moved 'to build a new life for herself'. 'Sweeping romance' relies on facts.genres, because the overview never mentions a romance. I read the first as a natural gloss on 'new life' and the second as supported by the genre field, and neither changes what a viewer would expect. A stricter adjudicator could ask for the past-behind phrasing to be softened toward the source's own wording, which would make it a MINOR motive concretization.",
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

@@ -1,0 +1,33 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "The premise of a mother and daughter moving next door to a house where a daughter murdered her parents, and the daughter befriending the surviving son only to find the story isn't over, directly supports the description and curiosity hook."
+    },
+    {
+      "source": "facts.director",
+      "supportFound": true,
+      "notes": "Mark Tonderai is verified as the director."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Verified genres (Horror, Thriller) support the genre labeling in whyWatch."
+    },
+    {
+      "source": "acceptedSemanticClassification",
+      "supportFound": true,
+      "notes": "Semantic tags (suspenseful mood, heavy emotional weight, medium pace, solitary/alone context) directly ground the vibeSummary and whyWatch descriptors."
+    }
+  ],
+  "sourceBoundaryReason": "All editorial copy aligns strictly with the authorized baseline facts and overview. Characterizing the murder of both parents as a 'double murder' is an exact factual equivalence, and phrases such as 'suburban unease', 'quiet presence', and 'dark history begins to resurface' constitute standard atmospheric inference and thematic framing permitted under A_PRIME_PRODUCTION_MATERIALITY_V1.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports the central premise: a covert operative betrayed in a helicopter crash in South Africa, suffering severe amnesia, nursed by a local tribe, and teaming up with a mysterious reporter to uncover his identity and track down the conspirators."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly verifies Action, Adventure, Comedy, and Thriller genres, supporting the 'action-comedy' and 'action-adventure thrills' framing across visible copy."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies Jackie Chan & Benny Chan. facts.keywords verifies 'commando' and 'fistfight'. Accepted semantic classification directly grounds pace: fast ('Fast', 'fast-paced', 'brisk'), emotionalWeight: light ('lightly comic', 'lighthearted suspense'), moods: [funny, exciting, suspenseful] ('exciting', 'comic', 'suspense'), and attentionDemand: engaged ('engaging', 'keeps you engaged')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly complies with A_PRIME_PRODUCTION_MATERIALITY_V1. The narrative premise, character identity dilemma, and central conflict in the description and curiosityHook adhere faithfully to the authorized overview and verified keywords without leaking third-act plot resolutions, character reveals, or external franchise lore. Tonal descriptors such as 'globe-trotting intrigue' and 'physical stunts' operate as legitimate, low-risk genre shorthand reflecting the verified multi-country production background, action/thriller genres, and commando/fight keywords.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

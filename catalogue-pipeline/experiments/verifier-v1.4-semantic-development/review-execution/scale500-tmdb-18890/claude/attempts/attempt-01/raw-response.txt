@@ -1,0 +1,41 @@
+{
+  "preliminaryDecision": "REVISE",
+  "preliminarySeverity": "MINOR",
+  "affectedFields": ["curiosityHook"],
+  "issueSummaries": [
+    "curiosityHook frames the plot as a race in which Professor Screweyes threatens to 'derail' the dinosaurs' mission before they 'reach the Museum of Natural History'. The overview says the group gets 'sidetracked with their new children friends' and then 'run[s] into' Screweyes, so the sidetrack comes from the children and Screweyes is an encounter, not a mission-derailing antagonist racing them to the museum. The hook therefore misassigns causality and adds a race-against-a-villain mechanic the packet does not state.",
+    "curiosityHook also says 'modern New York'. The overview sets the trip in the 'Middle Future' in quotation marks, so 'modern' specifies a setting and time frame the packet does not state and may conflict with it."
+  ],
+  "claimSpan": "navigate modern New York and reach the Museum of Natural History before Professor Screweyes derails their mission",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": false,
+      "notes": "curiosityHook: nothing says Screweyes derails the mission or that the dinosaurs must beat him to the museum. The overview says they 'get sidetracked with their new children friends and run into the Captain's evil brother'. 'Modern' has no support, since the destination is described as the 'Middle Future' and children's wishes in New York City."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "description: Captain New Eyes as a time-traveler, the special cereal (Brain Grain) making the dinosaurs intelligent, the visit to New York City to grant children's wishes, and the crossing of paths with the Captain's evil brother Professor Screweyes all restate the overview. 'Special cereal' generalizes 'Brain Grain cereal', 'prehistoric' is supported by the dinosaur premise and facts.keywords, and 'soon' is a mild sequencing flourish. The Screweyes encounter is stated in the authorized overview, so it is not a spoiler-boundary leak."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "curiosityHook: 'gentle' paraphrases 'non-violent', and 'prehistoric giants' is figurative shorthand for dinosaurs. The Museum of Natural History, Professor Screweyes and New York City are all named in the overview. The interrogative form asserts no outcome."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "whyWatch and vibeSummary: 'animated family adventure' and 'science-fiction premise' match genres Animation/Family/Science Fiction. '71 minutes' matches runtimeMinutes. 'Playful city detours' echoes 'sidetracked'. 'Classic villainy' is mild tonal shorthand for the 'evil brother'. 'Inventive' and 'colorful family charm' are low-risk evaluative flourishes."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "acceptedSemanticClassification: 'Lighthearted' matches emotionalWeight=light. 'Briskly paced' is close to pace=medium and is tonal shorthand. 'Low viewing demand' matches attentionDemand=easy. 'Family charm' matches situations=[family, easy-watch]. 'Adventure' and 'exciting' match mood exciting. Keyword-only material (prehistory, villain) adds nothing beyond the overview."
+    }
+  ],
+  "sourceBoundaryReason": "The description, vibeSummary and whyWatch are grounded or use tolerated genre shorthand and figurative language under A_PRIME_PRODUCTION_MATERIALITY_V1. The curiosityHook's second clause reframes the stated sequence (get sidetracked by the children, then run into Screweyes) as a race to the museum against a villain who derails the mission. That falsely specifies plot mechanics and causality, which are named materiality categories, and the added 'modern' setting compounds it. It does not contradict the premise, invent identities or outcomes, or reveal a later event, so the severity is MINOR and not SEVERE. A bounded fix would stay with the overview's own sequence, for example 'Can these gentle dinosaurs stay on track to the Museum of Natural History once they run into Professor Screweyes?' and drop 'modern'.",
+  "uncertaintyNotes": "This is a near-threshold call. 'Derails their mission' could be read as generic villain-shorthand for running into the evil brother, and 'modern New York' as a loose gloss on the New York City setting, so an adjudicator could approve on that basis. I flag it because the overview attributes the sidetrack to the children, not to Screweyes, and because 'Middle Future' puts the destination's time frame in quotation marks. 'Gentle prehistoric giants' (size is unstated) and 'classic villainy' were considered and left within tolerance as figurative and genre shorthand. I did not treat the description's 'soon crossing paths' as an issue.",
+  "confidence": "MEDIUM",
+  "advisoryOnly": true
+}

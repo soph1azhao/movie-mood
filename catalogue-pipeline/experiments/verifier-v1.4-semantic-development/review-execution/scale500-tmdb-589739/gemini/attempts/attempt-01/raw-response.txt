@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports the father unexpectedly stepping in to do daughter Zuri's hair before a big event/special occasion, and the hair having a mind of its own."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly confirms Animation, Comedy, and Family genres reflected across description, whyWatch, and vibeSummary."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "runtimeMinutes (7) verifies 'seven lively minutes', and facts.keywords supports 'father daughter relationship'. Accepted semantic classification directly grounds pace: fast ('effortlessly fast', 'brisk comic timing'), emotionalWeight: light ('Lighthearted'), attentionDemand: easy ('easy burst', 'zero viewing friction'), moods: [funny, emotional] ('comedy', 'tender', 'warmth'), and situations: [family, easy-watch] ('family comedy')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly adheres to A_PRIME_PRODUCTION_MATERIALITY_V1. The narrative premise, character relationships, and central comedic conflict in the description and curiosityHook faithfully reflect the authorized overview while strictly respecting setup-only boundary constraints (omitting ungrounded external details or later third-act reveals). Phrasing such as 'high-stakes morning routine' operates as tolerated metaphorical urgency and minor contextual concretization around getting ready before a big event rather than an assertive new factual claim. Experiential and tonal descriptors in whyWatch and vibeSummary cleanly align with verified metadata and accepted semantic classifications.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

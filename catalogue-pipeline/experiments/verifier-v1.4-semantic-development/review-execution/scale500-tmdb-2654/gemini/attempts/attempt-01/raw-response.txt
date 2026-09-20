@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports an insurance investigator traveling to a small town to look into the strange disappearance of a popular horror novelist, discovering that the impact of the author's books goes far beyond mere inspiration."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly verifies Horror, Mystery, Fantasy, and Thriller genres, supporting 'horror', 'mystery', and 'supernatural dread' descriptions across visible copy."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies John Carpenter. facts.keywords verifies 'author', 'disappearance', 'insurance investigator', 'lovecraftian', and 'small town'. Accepted semantic classification directly grounds pace: medium ('steady... pace'), attentionDemand: engaged ('engaging', 'focused'), moods: suspenseful ('Suspenseful', 'suspenseful'), and situations: alone ('viewing alone')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly adheres to A_PRIME_PRODUCTION_MATERIALITY_V1. The narrative premise, small-town investigative framing, and reality-bending conflict in the description and curiosityHook faithfully track the authorized overview and keywords. The copy exercises disciplined setup-only restraint by omitting ungrounded character names (e.g., Sutter Cane, John Trent), specific scene-level mechanics, or third-act sanity/apocalyptic twists. Figurative phrasing such as 'bleeding into reality' and 'supernatural dread' functions as legitimate, low-risk atmospheric inference and genre shorthand capturing the authorized premise that the author's books exert an influence 'far more than inspirational'.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

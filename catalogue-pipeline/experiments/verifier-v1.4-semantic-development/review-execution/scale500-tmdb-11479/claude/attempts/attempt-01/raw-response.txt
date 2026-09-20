@@ -1,0 +1,33 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "description: Stephen as a trader, tracking his ex-wife to the Amazon, wanting a divorce to remarry, discovering a son he never knew he had, the boy's wish to see Paris, and Stephen reluctantly taking him home all restate the overview. 'Trader' abbreviates 'international trader'. 'The Amazon' paraphrases 'some Amazonian backwater'. 'Seeking a divorce to remarry' paraphrases 'needs her consent to a divorce so that he can marry Charlotte'. 'Brief visit' paraphrases 'a few days'. 'Longs to see Paris' paraphrases 'yearns to see Paris'. The copy omits Patricia and Charlotte by name, which is an emphasis choice."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "curiosityHook: young Mimi-Siku, the jungle upbringing, and life in Paris restate the overview and its closing question ('How will Mimi-Siku react to life in the great metropolis?'). 'Raised deep in the Amazon' is a light inference from 'young jungle boy' and his mother's Amazonian location. 'The French capital' names Paris. 'Towering rush and strange rules' is figurative characterization of the metropolis. The hook is interrogative and asserts no outcome."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "vibeSummary and whyWatch: 'family comedy', 'clash of cultures' and 'fish-out-of-water humor' are consistent with genres Adventure/Comedy/Drama/Family and the jungle-boy-in-Paris premise. 'Hervé Palud' and '90-minute' match director and runtimeMinutes. 'French' matches countries and spokenLanguages. 'Jungle life collides head-on with urban routine' is thematic shorthand for the same premise."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "acceptedSemanticClassification: 'Lighthearted' and 'comic' match mood funny and emotionalWeight=moderate. 'Warm-spirited' matches mood emotional. 'Accessible' and 'breezy' match attentionDemand=easy. 'Family' matches situations=[family, easy-watch]. Keyword-only material (bow and arrow, parent child relationship) is not imported."
+    }
+  ],
+  "sourceBoundaryReason": "Every concrete claim (Stephen the trader, his ex-wife in the Amazon, the divorce and remarriage motive, the son he never knew he had, the boy's wish to see Paris, Stephen's reluctant agreement to take him home for a few days, the director, runtime and genres) is grounded in the authorized overview. The remaining language ('raised deep in the Amazon', 'towering rush', 'strange rules', 'fish-out-of-water', 'collides head-on') is figurative characterization or genre shorthand. None of it works as a meaningful new factual claim about plot mechanics, identities, relationships, motives or causality under A_PRIME_PRODUCTION_MATERIALITY_V1. The copy stays at the premise and initial conflict, poses the closing question without answering it, and states no outcome or ending, so no spoiler-boundary content appears.",
+  "uncertaintyNotes": "The only item near the tolerance line is 'raised deep in the Amazon', which specifies an upbringing where the overview says only 'young jungle boy'. I read it as a natural inference from a boy who lives in the jungle and is the son of a woman found in an Amazonian backwater, and it does not change what a viewer would expect. A stricter adjudicator could ask for 'jungle boy' wording, in which case it would be a MINOR concretization. 'Seeking a divorce' follows the overview's own phrasing, including its 'ex-wife' and 'divorce' pairing, so I did not treat it as an issue.",
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

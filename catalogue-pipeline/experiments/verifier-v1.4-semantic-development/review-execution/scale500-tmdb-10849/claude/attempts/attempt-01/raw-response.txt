@@ -1,0 +1,33 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "description: the Great Depression, the New Jersey waitress Cecilia, her dreary life, the cinema as her escape, losing her job, and repeatedly watching the dashing archaeologist Tom Baxter all restate the overview. 'Returns repeatedly' paraphrases 'time and again'. 'The local cinema' is a light gloss on 'the movie theatre'. 'On the silver screen' is genre-appropriate shorthand for watching him in a film."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "curiosityHook: Cecilia's fixation on the dashing hero and her repeated viewings restate the overview. 'Spends her days' intensifies 'time and again'. 'Adventure film' is a light genre gloss on 'archaeologist Tom Baxter' and is not stated. 'The boundary between the movie house and her reality begins to blur' is figurative and is discussed under uncertaintyNotes."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "vibeSummary and whyWatch: 'romantic fantasy' and 'romantic comedy and fantasy' match genres Comedy/Fantasy/Romance. 'Woody Allen' matches director. 'Depression-era melancholy' follows from the overview's Great Depression and dreary life. 'Cinematic escapism' restates the overview's movie-theatre-as-escape premise. 'Playful charm', 'poignant' and 'heartfelt' are tonal shorthand."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "acceptedSemanticClassification: 'Thoughtful' and 'funny' match moods. 'Gentle medium pace' matches pace=medium. Engaged focus and date-night or solo viewing are not contradicted. Keyword-only material ('movie star', 'falling in love', 'New York City') is not imported."
+    }
+  ],
+  "sourceBoundaryReason": "Every concrete claim (Cecilia, a New Jersey waitress in the Great Depression, her dreary life, the cinema as her only escape, losing her job, repeatedly watching Tom Baxter, the director, the genres) is grounded in the authorized overview. The remaining language ('spends her days', 'adventure film', 'silver screen', 'Depression-era melancholy', 'film devotion runs deep') is figurative language, genre shorthand or minor contextual concretization. None of it works as a meaningful new factual claim about plot mechanics, identities, relationships, motives or causality under A_PRIME_PRODUCTION_MATERIALITY_V1. The copy names no specific event, reversal or outcome, so no spoiler-boundary content appears.",
+  "uncertaintyNotes": "The one item near the tolerance line is the curiosityHook clause 'the boundary between the movie house and her reality begins to blur'. The overview describes only escapism and repeated viewings, and it says nothing about a blurring of fiction and reality. I read the clause as figurative teaser language supported by the Fantasy genre and the escapism premise, and it names no concrete event, character action or outcome. A stricter adjudicator could treat it as a hint at a later development that the packet does not authorize, and ask for wording closer to 'escape'. In that case it would be a MINOR unsupported causal or spoiler-boundary implication. 'Spends her days' and 'adventure film' were considered and left within tolerance.",
+  "confidence": "MEDIUM",
+  "advisoryOnly": true
+}

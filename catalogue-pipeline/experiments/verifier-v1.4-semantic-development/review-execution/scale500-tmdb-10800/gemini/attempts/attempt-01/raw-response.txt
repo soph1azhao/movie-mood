@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports the setting of a world formed by a conglomerate of floating islands, two hunters navigating a landscape populated by rogues, surly peasants, and petty lords, and survival revolving around the rule to eat and not get eaten."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly verifies Animation and Family genres reflected in whyWatch and vibeSummary."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies Arthur Qwak and Guillaume Ivernel, and runtimeMinutes (82) verifies '82-minute'. Accepted semantic classification directly grounds emotionalWeight: light ('lightweight'), attentionDemand: easy ('easy to watch'), moods: exciting ('Exciting', 'energetic'), and situations: [family, easy-watch] ('family viewing', 'family-friendly', 'easy to watch')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly complies with A_PRIME_PRODUCTION_MATERIALITY_V1. The narrative premise, world setting, and central survival dynamic in the description and curiosityHook adhere closely to the authorized overview and verified keywords without inventing plot mechanics, character backstories, or unstated third-act conflicts. Figurative framing such as 'fractured sky' and 'stay atop the food chain' represents non-material, low-risk editorial paraphrase for the authorized conglomerate of islands and 'eat and don't get eaten' premise, while experiential descriptors across whyWatch and vibeSummary cleanly align with verified metadata and authorized semantic tags.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

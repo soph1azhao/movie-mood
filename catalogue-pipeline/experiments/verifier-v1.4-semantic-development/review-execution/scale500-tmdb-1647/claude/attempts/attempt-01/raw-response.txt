@@ -1,0 +1,33 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "description: the CIA, the Farm as a training facility, and a sharp recruit proving himself all restate the overview. 'Sharp' paraphrases 'brilliant', and 'recruit' paraphrases 'trainee'. 'Secluded' is a light gloss on 'secret training grounds'. 'Grueling preparation' is a tonal flourish for the training. 'Instinct is tested' is figurative. 'Survival means questioning every ally' is a figurative gloss on 'watch his back and trust no one'."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "curiosityHook: 'every lesson teaches you to suspect everyone around you' restates 'learns to watch his back and trust no one'. 'How do you know which test is real' extends the paranoia theme, and it is discussed under uncertaintyNotes. The interrogative asserts no event or outcome."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "whyWatch and vibeSummary: 'suspenseful spy thriller' and 'action-thriller' are consistent with genres Action/Thriller. 'Spy' also appears in facts.keywords and follows naturally from a CIA training premise. 'Roger Donaldson' matches director. 'Psychological friction' and 'high-stakes intelligence training' are thematic shorthand built on the trust-no-one premise."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "acceptedSemanticClassification: 'Tense' and 'suspenseful' match moods. 'Steadily paced' matches pace=medium. 'Sharp focus' matches attentionDemand=engaged. 'Paranoid' echoes the overview's 'trust no one'. Keyword-only material (extramarital affair, surveillance, Washington DC) is not imported."
+    }
+  ],
+  "sourceBoundaryReason": "Every concrete claim (CIA, the Farm as secret training grounds, a brilliant trainee proving his worth, the trust-no-one lesson, the director, the genres) is grounded in the authorized overview. The remaining language ('secluded', 'grueling', 'instinct is tested', 'psychological friction', 'which test is real') is figurative language, genre shorthand or atmospheric inference. None of it works as a meaningful new factual claim about plot mechanics, identities, relationships, motives or causality under A_PRIME_PRODUCTION_MATERIALITY_V1. The copy stays at the premise and starting situation and states no twist, outcome or later event, so no spoiler-boundary content appears.",
+  "uncertaintyNotes": "One item sits near the tolerance line. The curiosityHook's 'which test is real' implies that some tests within the training may not be genuine, which the overview does not state. It reads as a rhetorical extension of 'trust no one' and asserts no specific staged event, so I kept it within tolerance. A stricter adjudicator could ask for it to stay closer to the source's own wording, and it would then be a MINOR unsupported mechanistic implication. 'Secluded' for 'secret' and the second-person voice of the hook were considered and left within tolerance.",
+  "confidence": "MEDIUM",
+  "advisoryOnly": true
+}

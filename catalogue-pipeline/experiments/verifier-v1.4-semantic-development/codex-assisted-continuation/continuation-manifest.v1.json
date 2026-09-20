@@ -1,0 +1,70 @@
+{
+  "activity": "VERIFIER_V1_4_CODEX_ASSISTED_CONTINUATION",
+  "provenance": "Codex-generated retrospective-development judgments; not human ground truth; no Gemini or Claude advisories used.",
+  "sequenceRange": [
+    86,
+    184
+  ],
+  "candidateCount": 99,
+  "resultPath": "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/codex-assisted-continuation/adjudications-86-184.v1.jsonl",
+  "resultSha256": "sha256:87af5b277dc0ab1d440a8f0d7ca336422b28f6854be6ea1065b3268bbd0a0ed6",
+  "counts": {
+    "approve": 76,
+    "minor": 23,
+    "severe": 0
+  },
+  "checkpoints": [
+    [
+      86,
+      89
+    ],
+    [
+      90,
+      97
+    ],
+    [
+      98,
+      105
+    ],
+    [
+      106,
+      113
+    ],
+    [
+      114,
+      121
+    ],
+    [
+      122,
+      129
+    ],
+    [
+      130,
+      137
+    ],
+    [
+      138,
+      145
+    ],
+    [
+      146,
+      153
+    ],
+    [
+      154,
+      161
+    ],
+    [
+      162,
+      169
+    ],
+    [
+      170,
+      177
+    ],
+    [
+      178,
+      184
+    ]
+  ]
+}

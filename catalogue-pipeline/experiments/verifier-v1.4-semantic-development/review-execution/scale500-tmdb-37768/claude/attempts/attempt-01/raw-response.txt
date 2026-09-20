@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview + allowedSourceMaterial.overview",
+      "supportFound": true,
+      "notes": "Core premise (shy Sergio, music contracts, seeks Nadia's help) is directly supported. Characterization as 'painfully shy' is reasonable intensification of 'shy.' Location 'Rome' is supported by 'Roman company.' Character roles and initial conflict are all sourced."
+    },
+    {
+      "source": "acceptedSemanticClassification",
+      "supportFound": true,
+      "notes": "Mood ('funny,' 'light,' 'easygoing'), pace ('medium' → 'easy-paced'), attention demand ('easy'), and situations ('family,' 'easy-watch') align precisely with supplied vibe descriptors."
+    },
+    {
+      "source": "spoilerBoundaryRules.allowed",
+      "supportFound": true,
+      "notes": "All editorial content stays within allowed categories: tone/texture ('easygoing,' 'warm,' 'accessible,' 'lighthearted'), viewing experience ('undemanding,' 'relaxed watching'), initial conflict (Sergio's sales struggle, reliance on Nadia), and character framing. No excluded spoiler material (endings, major reversals, late outcomes) is present."
+    }
+  ],
+  "sourceBoundaryReason": "The editorial copy employs permissible atmospheric inference, figurative intensity ('painfully shy,' 'total lack'), and tonal characterization without introducing material factual inventions. The curiosity hook frames Nadia's impact as speculative ('leaving it open whether...') rather than asserting a known outcome, functioning as engagement rhetoric rather than a source-boundary violation. Tone-based commentary ('easygoing,' 'warm,' 'accessible,' 'light') is grounded in the acceptedSemanticClassification. No unsupported plot mechanics, identities, causal sequences, or decision-relevant expectations are altered. The copy satisfies A_PRIME_PRODUCTION_MATERIALITY_V1.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

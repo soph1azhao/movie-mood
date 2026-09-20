@@ -1,0 +1,33 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "description: Alex Honnold, Yosemite's 3,000-foot El Capitan wall, the attempt to climb it without ropes, and the framing as a documentary capture all restate the overview. 'Prepares to scale' is a light gloss on 'attempts to' and is consistent with the documentary form. 'Entirely alone' and 'without ropes' paraphrase 'free solo' and 'no ropes or safety gear'. 'Massive vertical ascent' is descriptive shorthand. The directors' names match facts.director."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "curiosityHook: '3,000 feet' restates '3,000 foot high', and 'without a single protective tether' paraphrases 'no ropes or safety gear'. 'Sheer granite' adds a rock-type and surface detail the overview does not state, and it is discussed under uncertaintyNotes. 'How does a climber prepare' is a framing question that asserts no outcome. 'Even the slightest slip is absolute' is figurative shorthand for the stakes of climbing without safety gear."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "vibeSummary and whyWatch: 'adventure documentary' matches genres Adventure/Documentary. 'Unthinkable physical feat' echoes 'arguably the greatest feat in rock climbing history'. 'Cinematic suspense', 'vertigo-inducing tension' and 'zero room for error' are tonal shorthand. 'Sheer vertical scale' is atmospheric shorthand."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "acceptedSemanticClassification: 'High-stakes', 'gripping' and 'suspenseful' match moods exciting/suspenseful and emotionalWeight=heavy. 'Steady precision' matches pace=medium. 'Demanding' matches attentionDemand=engaged. 'Singular focus' is thematic shorthand. Keyword-only material (California, woman director) is not imported."
+    }
+  ],
+  "sourceBoundaryReason": "Every concrete claim (Alex Honnold, El Capitan in Yosemite, the 3,000-foot wall, the attempt to climb it without ropes or safety gear, the directors, the genres) is grounded in the authorized overview. The remaining language ('sheer granite', 'vertigo-inducing tension', 'zero room for error', 'prepares to scale') is figurative language, genre shorthand or minor contextual concretization. None of it works as a meaningful new factual claim about plot mechanics, identities, relationships, motives or causality under A_PRIME_PRODUCTION_MATERIALITY_V1. The copy frames the climb as an attempt and states no outcome, so no spoiler-boundary content appears.",
+  "uncertaintyNotes": "Two items sit near the tolerance line. 'Sheer granite' specifies the rock type, which the overview does not state, so it is a small factual concretization. I read it as descriptive shorthand for a rock wall, since the packet already establishes rock climbing, and it does not change viewer expectations. 'Prepares' in description and curiosityHook implies a preparation phase that the overview does not mention, though 'attempts to' and the documentary premise make it a natural reading. A stricter adjudicator could ask for both to be softened toward the source's own wording, in which case they would be MINOR concretizations.",
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

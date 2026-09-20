@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports Bastian being transported back to Fantasia, discovering the realm threatened by the evil sorceress Xayide and the Emptiness, and uniting with Atreyu once more."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly verifies Adventure, Family, and Fantasy genres utilized across description, whyWatch, and vibeSummary."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies George T. Miller, runtimeMinutes verifies 90 minutes, and facts.keywords supports 'sequel' and 'fantasy world'. Accepted semantic classification directly grounds pace: medium ('steady pace'), moods: exciting ('Exciting'), discoveryStyle: familiar ('familiar', 'nostalgic return'), emotionalWeight: moderate ('moderate peril'), attentionDemand: engaged ('engaging'), and situations: [family, easy-watch] ('family fantasy', 'easy-watch quest', 'family viewing')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly adheres to A_PRIME_PRODUCTION_MATERIALITY_V1. The narrative premise, central characters (Bastian, Atreyu, Xayide), and core conflict in the description and curiosityHook faithfully track the authorized overview without leaking ungrounded franchise lore, recast actor trivia, or third-act spoiler resolutions. Experiential and tonal phrasing across whyWatch and vibeSummary aligns cleanly with verified metadata and authorized semantic classifications.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

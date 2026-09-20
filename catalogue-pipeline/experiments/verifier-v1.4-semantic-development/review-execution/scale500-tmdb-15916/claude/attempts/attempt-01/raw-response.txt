@@ -1,0 +1,40 @@
+{
+  "preliminaryDecision": "REVISE",
+  "preliminarySeverity": "MINOR",
+  "affectedFields": ["curiosityHook"],
+  "issueSummaries": [
+    "curiosityHook: 'how does it connect to the dream bird the wandering boy is searching for' asserts an unestablished causal/relational link between the egg's contents and the boy's dream bird, when the overview only states the girl bonds with the boy who separately searches for a bird from his dream — no connection between the egg and the bird is established."
+  ],
+  "claimSpan": "how does it connect to the dream bird the wandering boy is searching for across the desolate city",
+  "sourceEvidence": [
+    {
+      "source": "allowedSourceMaterial.overview",
+      "supportFound": true,
+      "notes": "Overview supports: a young girl in the ruins of a strange city carefully holds and cares for a large egg; she bonds with a boy searching for a bird he saw in a dream. This grounds description, whyWatch, vibeSummary, and most of curiosityHook."
+    },
+    {
+      "source": "allowedSourceMaterial.overview",
+      "supportFound": false,
+      "notes": "The overview does not state or imply any connection between the egg and the dream bird the boy seeks; these are presented as two separate elements (her egg-tending, his bird-seeking) linked only by the girl and boy's bonding. Asserting a link between them is an unsupported causal/relational inference that could materially shape a viewer's expectation of the plot's mystery structure."
+    },
+    {
+      "source": "allowedSourceMaterial.overview",
+      "supportFound": true,
+      "notes": "description's 'silent ruins of an uncanny city,' 'fragile, oversized egg,' and 'wandering boy... pursuing an elusive bird glimpsed only in a dream' are close, non-material paraphrases of the overview's stated details."
+    },
+    {
+      "source": "facts",
+      "supportFound": true,
+      "notes": "whyWatch correctly attributes direction to Mamoru Oshii (facts.director) and situates the film within Fantasy/Mystery/Science Fiction genres (facts.genres), and correctly identifies Japan/Japanese via facts.countries and facts.spokenLanguages."
+    },
+    {
+      "source": "acceptedSemanticClassification",
+      "supportFound": true,
+      "notes": "vibeSummary's 'slow, contemplative... immersive art-house anime best experienced solo in focused quiet' directly reflects the authorized pace (slow), moods (thoughtful, emotional), attentionDemand (immersive), and situations (alone) classifications."
+    }
+  ],
+  "sourceBoundaryReason": "Per A_PRIME_PRODUCTION_MATERIALITY_V1, atmospheric and figurative language (e.g., 'uncanny city,' 'elusive bird,' 'visual meditation') is tolerated genre shorthand. However, curiosityHook's suggestion that the egg 'connects to' the dream bird introduces an unsupported causal/mechanistic inference linking two narrative elements the source keeps separate. This could materially shape viewer expectations about the film's central mystery (implying the egg and bird are narratively entangled) beyond what the closed-world packet establishes. This is a bounded, fixable overstatement rather than a severe distortion or spoiler-boundary breach, so MINOR is appropriate.",
+  "uncertaintyNotes": "It is plausible the egg and bird are thematically or narratively related in the actual film, but the authorized overview does not establish this connection, so under the closed-world standard it must be treated as unsupported.",
+  "confidence": "MEDIUM",
+  "advisoryOnly": true
+}

@@ -1,0 +1,33 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "description: Kurosawa's feudal epic, the petty thief recruited to double for the aging warlord Shingen, Shingen's death, the reluctant generals, and the double taking command against rivals all restate the overview. 'Double' paraphrases 'impersonate' and 'impostor'. 'Preserve the ruse' is a light gloss on the generals agreeing to have the impostor take over. 'Thrusting the double into command' paraphrases 'take over as the powerful ruler'. 'Rival clans' echoes the overview's 'competing clans' and 'rival warlord'. Shingen's death and the takeover are stated in the authorized overview, so they are not a spoiler-boundary leak."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "curiosityHook: 'rogue' paraphrases 'petty thief'. 'Rival armies force him onto an active battlefield' restates that he 'must lead his troops into battle against the forces of a rival warlord'. 'Uphold an entire dynasty's survival' is a figurative gloss on the impersonation, which exists 'in order to avoid attacks by competing clans'. 'Untrained' is a characterization the packet does not state. It is a natural reading of a petty thief in a warlord's role and asserts no event. The interrogative asserts no outcome."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "'Feudal war drama', 'grand martial scale' and 'high-stakes deception' are consistent with genres Action/Drama/History/War and the feudal-epic framing. 'Kurosawa' matches director. 'Long-form' is consistent with the 180-minute runtime. 'Power and persona' and 'moral weight of a thief forced into leadership' are thematic shorthand built on the impersonation and reluctant-takeover premise."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "acceptedSemanticClassification: 'Heavy' matches emotionalWeight=heavy. 'Thoughtful' and 'suspenseful' match moods. 'Focused solo viewing' matches attentionDemand=engaged and situations=[alone]. Keyword-only material (doppelgänger, samurai, Sengoku period, Edo period, emperor, jidaigeki) is not imported."
+    }
+  ],
+  "sourceBoundaryReason": "Every concrete claim (petty thief, recruited to impersonate the aging warlord Shingen, Shingen's death, reluctant generals, the double taking command, battle against rivals, the director, the genres) is grounded in the packet. The remaining language ('untrained rogue', 'entire dynasty's survival', 'rival armies', 'high-stakes deception', 'moral weight') is figurative characterization, thematic shorthand, or minor contextual concretization. None of it functions as a meaningful new factual claim about plot mechanics, identities, relationships, motives, or causality under A_PRIME_PRODUCTION_MATERIALITY_V1. The copy stays inside the events the authorized overview itself gives and does not advance to any later reversal, outcome, or ending, so no spoiler-boundary content appears.",
+  "uncertaintyNotes": "Three small items in curiosityHook sit near the tolerance line. 'Untrained' asserts a lack of training the packet does not state. 'Dynasty' concretizes the stakes beyond 'avoid attacks by competing clans'. 'Rival armies' is plural where the overview names one rival warlord's forces. Each reads as characterization or stakes shorthand and none changes what a viewer would expect. A stricter adjudicator could ask for 'untrained' and 'dynasty' to be softened toward 'petty thief' and 'clan', in which case they would be MINOR concretizations. I did not treat them as such because they name no new event, relationship, or outcome.",
+  "confidence": "MEDIUM",
+  "advisoryOnly": true
+}

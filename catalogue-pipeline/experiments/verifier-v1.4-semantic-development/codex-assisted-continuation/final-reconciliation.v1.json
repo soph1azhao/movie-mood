@@ -1,0 +1,184 @@
+{
+  "activity": "VERIFIER_V1_4_CODEX_ASSISTED_CONTINUATION_FINAL_RECONCILIATION",
+  "provenance": "Codex-assisted retrospective-development evidence; not human ground truth. No Gemini or Claude advisory material was introduced.",
+  "pass1Sha256": "sha256:87af5b277dc0ab1d440a8f0d7ca336422b28f6854be6ea1065b3268bbd0a0ed6",
+  "pass2Sha256": "sha256:cccba0ed4cc9d0496e349f7cd125a88a7979f0d84eed68a1018e7a95209351d3",
+  "rules": [
+    "Preserve all 23 Pass-1 REVISE/MINOR judgments.",
+    "For the 76 Pass-1 APPROVE candidates, use the explicit Pass-2 judgment except for the seven authoritative reconciliations listed here.",
+    "Revert Pass-2 revisions at sequences 99, 145, and 165 to APPROVE.",
+    "Revise Pass-2 approvals at sequences 94, 111, 129, and 158 to REVISE/MINOR.",
+    "Accept the other 24 Pass-2 APPROVE-to-REVISE/MINOR disagreements and the remaining 48 final APPROVEs.",
+    "Require exactly one explicit final judgment for every frozen sequence 86–184; no missing-result APPROVE fallback."
+  ],
+  "pass2RevisionsReverted": [
+    {
+      "sequenceIndex": 99,
+      "candidateId": "exp100-tmdb-280996",
+      "finalDecision": "APPROVE",
+      "finalSeverity": null,
+      "affectedFields": [],
+      "materialIssues": [],
+      "rationale": "The unresolved case is explicitly stated to have led to Holmes's retirement; 'defeated', 'compelled', and 'forced' remain rhetorical intensification rather than a materially new causal mechanism. Calling the housekeeper's son young is unsupported literally but non-material under the calibrated threshold."
+    },
+    {
+      "sequenceIndex": 145,
+      "candidateId": "scale500-tmdb-9041",
+      "finalDecision": "APPROVE",
+      "finalSeverity": null,
+      "affectedFields": [],
+      "materialIssues": [],
+      "rationale": "'Calculating, personal motive' remains editorial characterization of the source's explicitly concealed reason for the relationship and does not specify a new motive, mechanism, or outcome."
+    },
+    {
+      "sequenceIndex": 165,
+      "candidateId": "exp100-tmdb-538362",
+      "finalDecision": "APPROVE",
+      "finalSeverity": null,
+      "affectedFields": [],
+      "materialIssues": [],
+      "rationale": "'Nationwide legal reckoning' is rhetorical scale framing of a source that already describes one of the most controversial Italian court cases in recent years; it does not add a concrete proceeding or plot mechanism."
+    }
+  ],
+  "pass2ApprovalsNewlyRevised": [
+    {
+      "sequenceIndex": 94,
+      "candidateId": "scale500-tmdb-14239",
+      "finalDecision": "REVISE",
+      "finalSeverity": "MINOR",
+      "affectedFields": [
+        "whyWatch"
+      ],
+      "materialIssues": [
+        "whyWatch: 'blends live action and animation' asserts a mixed live-action/animation production format not established by the authorized overview or permitted factual metadata; human and cartoon characters within the story do not themselves authorize that filmmaking-format claim."
+      ],
+      "rationale": "Diegetic human/cartoon worlds != an authorized claim about live-action production technique. This is a bounded production-format concretization and remains MINOR."
+    },
+    {
+      "sequenceIndex": 111,
+      "candidateId": "scale500-tmdb-9425",
+      "finalDecision": "REVISE",
+      "finalSeverity": "MINOR",
+      "affectedFields": [
+        "curiosityHook",
+        "whyWatch"
+      ],
+      "materialIssues": [
+        "curiosityHook and whyWatch: 'the very force designed to replace him' and 'engineered replacements' assign the genetically engineered soldiers an explicit design purpose of replacing Todd; the source establishes that they defeat him and that he is discarded, but not that replacement was their intended design function."
+      ],
+      "rationale": "Todd being defeated by a new breed of engineered soldiers and then discarded != those soldiers having been engineered specifically as his replacements. The added purpose/causality is bounded and MINOR."
+    },
+    {
+      "sequenceIndex": 129,
+      "candidateId": "exp100-tmdb-9681",
+      "finalDecision": "REVISE",
+      "finalSeverity": "MINOR",
+      "affectedFields": [
+        "whyWatch"
+      ],
+      "materialIssues": [
+        "whyWatch: 'period adventure' asserts a historical/period setting that is not established by the authorized overview or permitted factual metadata."
+      ],
+      "rationale": "Adventure/romance genre and the protagonist's reputation do not authorize a specific historical-period setting. This is a bounded setting/style concretization and remains MINOR."
+    },
+    {
+      "sequenceIndex": 158,
+      "candidateId": "scale500-tmdb-219",
+      "finalDecision": "REVISE",
+      "finalSeverity": "MINOR",
+      "affectedFields": [
+        "description"
+      ],
+      "materialIssues": [
+        "description: 'In Spain' turns production-country metadata into a narrative setting even though the authorized overview does not locate the story there."
+      ],
+      "rationale": "Production country != story setting. This is the same source-boundary category as other unsupported geographic narrowing and remains MINOR."
+    }
+  ],
+  "otherPass2RevisionsAcceptedCandidateIds": [
+    "scale500-tmdb-15152",
+    "exp100-tmdb-776797",
+    "scale500-tmdb-9317",
+    "scale500-tmdb-9588",
+    "exp100-tmdb-664469",
+    "scale500-tmdb-399366",
+    "scale500-tmdb-314405",
+    "exp100-tmdb-122857",
+    "scale500-tmdb-4349",
+    "scale500-tmdb-12599",
+    "scale500-tmdb-1433",
+    "scale500-tmdb-10974",
+    "exp100-tmdb-32823",
+    "scale500-tmdb-19123",
+    "scale500-tmdb-13150",
+    "scale500-tmdb-11333",
+    "scale500-tmdb-11205",
+    "exp100-tmdb-20992",
+    "scale500-tmdb-2671",
+    "exp100-tmdb-11782",
+    "scale500-tmdb-12246",
+    "scale500-tmdb-16441",
+    "scale500-tmdb-9642",
+    "exp100-tmdb-2621"
+  ],
+  "finalCounts": {
+    "approve": 48,
+    "minor": 51,
+    "severe": 0
+  },
+  "finalReviseCandidateIds": [
+    "exp100-tmdb-615469",
+    "scale500-tmdb-11895",
+    "scale500-tmdb-13600",
+    "scale500-tmdb-505706",
+    "scale500-tmdb-71524",
+    "scale500-tmdb-14239",
+    "scale500-tmdb-18861",
+    "scale500-tmdb-10951",
+    "scale500-tmdb-15152",
+    "scale500-tmdb-10253",
+    "exp100-tmdb-776797",
+    "scale500-tmdb-9317",
+    "scale500-tmdb-9588",
+    "scale500-tmdb-21629",
+    "scale500-tmdb-9669",
+    "scale500-tmdb-9425",
+    "exp100-tmdb-664469",
+    "scale500-tmdb-309",
+    "scale500-tmdb-11673",
+    "scale500-tmdb-399366",
+    "scale500-tmdb-314405",
+    "exp100-tmdb-122857",
+    "scale500-tmdb-4349",
+    "exp100-tmdb-9681",
+    "scale500-tmdb-12599",
+    "scale500-tmdb-1433",
+    "scale500-tmdb-10974",
+    "exp100-tmdb-32823",
+    "scale500-tmdb-19123",
+    "scale500-tmdb-13150",
+    "scale500-tmdb-11333",
+    "scale500-tmdb-11205",
+    "exp100-tmdb-20992",
+    "scale500-tmdb-2671",
+    "exp100-tmdb-11782",
+    "scale500-tmdb-219",
+    "scale500-tmdb-12246",
+    "scale500-tmdb-16441",
+    "scale500-tmdb-9642",
+    "scale500-tmdb-9613",
+    "scale500-tmdb-902",
+    "scale500-tmdb-31642",
+    "exp100-tmdb-666",
+    "scale500-tmdb-41428",
+    "scale500-tmdb-9367",
+    "scale500-tmdb-10675",
+    "exp100-tmdb-12289",
+    "scale500-tmdb-13192",
+    "scale500-tmdb-14249",
+    "exp100-tmdb-2621",
+    "scale500-tmdb-29161"
+  ],
+  "severeCandidateIds": [],
+  "finalJsonlSha256": "sha256:55a5626d921c54d44bd2f088a206b622f162b5a8f653c23f3224b5ac0726f3e9"
+}

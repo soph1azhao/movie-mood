@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ReviewSessionLedgerV1",
+  "description": "Governed sequential execution ledger tracking progress through the frozen retrospective review order under VERIFIER_BLINDED_AI_ASSISTED_HUMAN_ADJUDICATION.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "activity",
+    "classification",
+    "p21FreezeManifestSha256",
+    "reviewOrderSha256",
+    "currentReviewSequenceIndex",
+    "totalEligiblePoolCount",
+    "completedCount",
+    "cleanCount",
+    "defectPositiveCount",
+    "severeCount",
+    "stoppingRuleSatisfied",
+    "exhaustedPool",
+    "candidateStates"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "schemaVersion": {
+      "type": "string",
+      "const": "review-session-ledger.v1"
+    },
+    "activity": {
+      "type": "string",
+      "const": "VERIFIER_V14_BLIND_HUMAN_REVIEW_SESSION"
+    },
+    "classification": {
+      "type": "string",
+      "const": "RETROSPECTIVE_SEMANTIC_DEVELOPMENT_REVIEW_INFRASTRUCTURE"
+    },
+    "p21FreezeManifestSha256": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "reviewOrderSha256": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "currentReviewSequenceIndex": {
+      "type": "integer"
+    },
+    "totalEligiblePoolCount": {
+      "type": "integer",
+      "const": 184
+    },
+    "completedCount": {
+      "type": "integer"
+    },
+    "cleanCount": {
+      "type": "integer"
+    },
+    "defectPositiveCount": {
+      "type": "integer"
+    },
+    "severeCount": {
+      "type": "integer"
+    },
+    "stoppingRuleSatisfied": {
+      "type": "boolean"
+    },
+    "exhaustedPool": {
+      "type": "boolean"
+    },
+    "candidateStates": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "candidateId",
+          "reviewSequenceIndex",
+          "status"
+        ],
+        "properties": {
+          "candidateId": {
+            "type": "string",
+            "pattern": "^(scale500|exp100)-tmdb-[0-9]+$"
+          },
+          "reviewSequenceIndex": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "PACKET_FROZEN",
+              "GEMINI_PENDING",
+              "GEMINI_VALID",
+              "GEMINI_INVALID",
+              "CLAUDE_PENDING",
+              "CLAUDE_VALID",
+              "CLAUDE_INVALID",
+              "REVIEW_PAUSED_PENDING_ADVISORY",
+              "READY_FOR_HUMAN_ADJUDICATION",
+              "HUMAN_ADJUDICATION_PENDING",
+              "HUMAN_ADJUDICATED",
+              "QA_PENDING",
+              "COMPLETE"
+            ]
+          },
+          "blindPacketSha256": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "geminiAdvisoryRecordSha256": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "claudeAdvisoryRecordSha256": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "humanAdjudicationSha256": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "finalDecision": {
+            "type": ["string", "null"],
+            "enum": ["APPROVE", "REVISE", null]
+          },
+          "finalSeverity": {
+            "type": ["string", "null"],
+            "enum": ["MINOR", "SEVERE", null]
+          },
+          "failedReviewer": {
+            "type": ["string", "null"],
+            "enum": ["GEMINI", "CLAUDE", null]
+          },
+          "error": {
+            "type": ["string", "null"]
+          }
+        }
+      }
+    },
+    "currentReviewArrayIndex": {
+      "type": "integer"
+    }
+  }
+}

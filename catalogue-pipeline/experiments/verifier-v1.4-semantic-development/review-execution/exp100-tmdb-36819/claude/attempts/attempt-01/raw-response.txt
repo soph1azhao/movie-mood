@@ -1,0 +1,33 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Core premise in description and curiosityHook is supported: six dwarfs emerge from Kevin's closet, he is a young history buff, they have stolen a map of the holes in time, they steal treasures from historical eras, and the Supreme Being catches up with them. 'Era-hopping heist across the centuries' and 'plundering history's treasures' paraphrase this directly."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": false,
+      "notes": "Minor concretizations not literally stated: 'bedroom' closet (overview says only 'his closet ... one night'), 'cosmic' map (overview says the map charts holes in the fabric of time), 'blueprint' and 'greatest cracks' for map and holes, and 'former master' for 'former employees of the Supreme Being'. Each is figurative or contextual and none adds a new plot mechanic, motive, or outcome."
+    },
+    {
+      "source": "facts.director",
+      "supportFound": true,
+      "notes": "Terry Gilliam is listed in facts.director, so the whyWatch attribution is packet-supported. Framing him as the one who 'turns' the material into a witty adventure is editorial and does not add a factual claim."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "'Fantasy', 'time-travel romp', 'fast-paced adventure', and 'great for friends or family' are consistent with the genres Adventure/Comedy/Family/Fantasy/Science Fiction and with the accepted classification (moods funny/exciting, pace fast, situations family/friends). 'Witty' fits the satire keyword. 'Myth and legend' is supported by the Agamemnon, Robin Hood, and Minotaur references."
+    }
+  ],
+  "sourceBoundaryReason": "Under A_PRIME_PRODUCTION_MATERIALITY_V1 the copy stays within the packet's premise, starting situation, and initial conflict. It reveals nothing from the excluded spoiler categories: the overview ends at the Supreme Being catching up, and the copy stops short of that. The small drifts ('bedroom', 'cosmic', 'blueprint', 'greatest cracks', 'former master') are low-risk figurative or atmospheric flourishes. None materially alters the viewer's understanding of the plot, characters, causality, locations, or quantities.",
+  "uncertaintyNotes": "The closest call is 'their former master' in description, since the overview describes the dwarfs as 'former employees of the Supreme Being'. This is an alias/relationship substitution that leans toward servitude. I judged it non-material because viewer expectations are unchanged (they fled an authority figure who now pursues them). A stricter reading could treat it as a MINOR relationship-terminology issue for the human adjudicator to weigh.",
+  "confidence": "MEDIUM",
+  "advisoryOnly": true
+}

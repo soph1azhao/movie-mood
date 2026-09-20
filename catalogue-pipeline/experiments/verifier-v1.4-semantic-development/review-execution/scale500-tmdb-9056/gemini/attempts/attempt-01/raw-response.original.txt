@@ -1,0 +1,40 @@
+{
+  "preliminaryDecision": "REVISE",
+  "preliminarySeverity": "MINOR",
+  "affectedFields": ["description"],
+  "issueSummaries": [
+    "description says Tyler is 'Captured by the ruthless Terl'. The packet says only 'After being captured, it is up to Tyler to save mankind', with no capturer named. Naming Terl as the captor specifies a relationship and causal link that the packet does not authorize. It is an unsupported factual and causal concretization. It is bounded and easily fixed by restoring the passive form (for example 'Captured, Tyler must...') or attributing the capture to the Psychlos generally."
+  ],
+  "claimSpan": "Captured by the ruthless Terl",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": false,
+      "notes": "description: the overview does not say who captured Tyler. Terl appears only as the leader of the Psychlos. The step from 'Terl leads the Psychlos' to 'Terl captured Tyler' is an inference that specifies a plot mechanic and a relationship between the two characters."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "description: the year 3000, the alien Psychlos stripping Earth of its resources, the enslaved surviving humans, Tyler's capture, and Tyler's role in saving mankind all restate the overview. 'Ruthless' is a figurative variant of 'greedy, manipulative' and 'powerful'. 'Spark a fight to reclaim mankind's future' is a mild paraphrase of 'save mankind' that implies resistance without naming any event."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "curiosityHook: humanity in a primitive state, Psychlo rule, and Tyler's captivity restate the overview. 'Lone captive' adds a small isolating flourish, and 'Terl's empire' loosely frames a leader-led regime. Both are figurative, and neither asserts a discrete event or outcome. The interrogative asserts no resolution."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "'Sci-fi action', 'sci-fi adventure' and 'high-energy crowd watch' are consistent with genres Action/Adventure/Science Fiction. 'Roger Christian' matches director. 'Pure spectacle' is genre shorthand. 'Outmatched human rebellion against an overpowering alien conquest' follows from 'man is no match' and 'save mankind'. 'Rebellion' is a mild concretization of the resistance and is treated as tolerated."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "acceptedSemanticClassification: 'Exciting' and 'fast-moving / fast-paced' match mood exciting and pace=fast. 'Moderate emotional weight' matches emotionalWeight=moderate. 'Adventurous' matches discoveryStyle. 'Crowd watch' is consistent with situations=[friends]. Keyword-only material (Scientology, so bad it's good, etc.) is not imported."
+    }
+  ],
+  "sourceBoundaryReason": "Nearly all of the copy is grounded or is tolerated figurative language and genre shorthand under A_PRIME_PRODUCTION_MATERIALITY_V1. The one concrete unsupported addition is that Terl captured Tyler. The packet leaves the capturer unspecified, so this falsely specifies a relationship and a causal link, both named materiality categories. It does not contradict the source, invent identities or outcomes, or change what a viewer would expect from the film, so it is MINOR and not SEVERE. No spoiler-boundary content appears, since the copy stays at the premise and initial conflict.",
+  "uncertaintyNotes": "This is a near-threshold call. Terl is the named leader of the Psychlos, who hold humanity captive, so an adjudicator could reasonably read 'Captured by Terl' as harmless contextual concretization and approve. I flag it because the closed-world rule treats packet-absent specifics as ungrounded, and the capturer's identity is a relationship attribute. 'Terl's empire' in curiosityHook and 'human rebellion' in whyWatch are looser framings of the same kind. I left them within tolerance because they do not assign a specific act to a specific character.",
+  "confidence": "MEDIUM",
+  "advisoryOnly": true
+}

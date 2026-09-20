@@ -1,0 +1,33 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "allowedSourceMaterial.overview",
+      "supportFound": true,
+      "notes": "Directly supports the central premise: two college friends wrongfully arrested for murder in rural Alabama, calling upon Brooklyn cousin Vincent Gambini who just passed the bar after six attempts and arrives with his girlfriend to take on his first case, sparking culture shock in the Deep South."
+    },
+    {
+      "source": "facts.director",
+      "supportFound": true,
+      "notes": "Directly validates Jonathan Lynn as the director."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Validates the Comedy and Drama classifications."
+    },
+    {
+      "source": "acceptedSemanticClassification",
+      "supportFound": true,
+      "notes": "Supports experiential attributes including 'funny' mood, 'medium' pace, 'moderate' emotional weight, and 'engaged' attention demand."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly adheres to authorized baseline facts and semantic classifications. Phrasing such as 'courtroom procedure', 'Southern order and Brooklyn swagger', and 'sharp girlfriend' represents permissible genre shorthand, atmospheric inference, and low-risk stylistic framing under A_PRIME_PRODUCTION_MATERIALITY_V1, without introducing material factual inventions, external lore, or spoiler boundary violations.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

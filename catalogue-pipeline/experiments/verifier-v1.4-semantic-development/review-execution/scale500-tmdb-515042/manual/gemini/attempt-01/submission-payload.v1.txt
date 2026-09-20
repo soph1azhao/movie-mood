@@ -1,0 +1,124 @@
+# MOVIE MOOD V8.2 — PRELIMINARY ADVISORY REVIEW
+Reviewer: GEMINI
+Review Sequence Index: 41
+Candidate ID: scale500-tmdb-515042
+Blind Packet SHA-256: sha256:a147077268f2254467b7f63bf2de53bec0919cf00f3eb20c563ba5243e3d9b25
+Prompt SHA-256: sha256:e822b0eef3c9d0b0ece2365aa884593cd3de2eefafd50a3aa3ef2b77cf0847a5
+Materiality Policy SHA-256: sha256:21661892df4d1b009341b6d34de3bf5ad1ae17e3447abbdace15e1c31a5b843c
+------------------------------------------------------------
+
+# Candidate Verifier v1.4 — Gemini Preliminary Source-Boundary Review Prompt
+
+- **Version**: `verifier-v14-gemini-preliminary.v1`
+- **Workflow**: `VERIFIER_BLINDED_AI_ASSISTED_HUMAN_ADJUDICATION`
+- **Adjudication Standard**: `A_PRIME_PRODUCTION_MATERIALITY_V1` (`sha256:21661892df4d1b009341b6d34de3bf5ad1ae17e3447abbdace15e1c31a5b843c`)
+- **Role**: Independent Advisory Reviewer (Gemini)
+- **Authority Level**: ADVISORY ONLY (Non-Authoritative; Final Ground Truth is Sophia Zhao)
+- **Model Independence**: Strictly isolated from Claude preliminary opinions, verifier predictions, cohort quota tracking, and repair histories.
+
+---
+
+## 1. Task Objective
+
+You are an independent preliminary reviewer providing an advisory source-boundary opinion for Movie Mood editorial copy.
+Sophia Zhao makes the authoritative final human adjudication under `VERIFIER_BLINDED_AI_ASSISTED_HUMAN_ADJUDICATION`.
+Your sole role is to review a blinded candidate packet and determine whether the visible editorial copy (`description`, `whyWatch`, `curiosityHook`, `vibeSummary`) satisfies the frozen production materiality standard (`A_PRIME_PRODUCTION_MATERIALITY_V1`) against the supplied authorized source packet.
+
+---
+
+## 2. Review Invariants & Epistemic Boundaries
+
+1. **Closed-World Source Authority**: Judge claims solely against the supplied packet facts (`facts`, `allowedSourceMaterial`, `acceptedSemanticClassification`). Real-world movie facts, external encyclopedic knowledge, plot summaries, franchise lore, or personal movie familiarity MUST be strictly ignored. If a detail is absent from the packet, it is ungrounded.
+2. **Materiality Standard Principle (`A_PRIME_PRODUCTION_MATERIALITY_V1`)**:
+   > "Editorial inference is acceptable when it does not materially alter a viewer's understanding or expectation of the film. Low-risk figurative language, genre shorthand, atmospheric inference, metaphorical urgency, and minor contextual concretization may be accepted even when not literally stated in the authorized packet, provided they do not function as a meaningful new factual claim. Unsupported additions require intervention when they materially change or falsely specify plot mechanics, identity, relationships, motives, causality, factual attributes, locations, quantities, franchise history, spoiler boundaries, or other decision-relevant viewer expectations."
+3. **Key Distinction**:
+   > "minor unsupported flourish != severe factual/source-boundary failure"
+   Illustrative tolerated concepts include: "before mom returns", "sacred flame", "iconic allies", "fracturing loyalties", "corrupt certainty", "digital and physical maps", "across the countryside".
+4. **No External Context**: You must not use external web search, model pre-training recall about the film, or assumptions based on genre or actors.
+5. **No Verifier Predictions**: You have not been provided with, and must not attempt to guess or mimic, Candidate Verifier predictions or risk classifications.
+6. **No Quota Awareness**: You have zero visibility into cohort sampling, remaining quotas, or desired label balances. Evaluate this single candidate in total isolation.
+7. **Form Invariance**: Scrutinize factual claims regardless of editorial form (e.g., interrogatives in `curiosityHook`, stylistic lead-ins, or rhetorical framing).
+
+---
+
+## 3. Adjudication Categories & Severity
+
+Determine the primary decision:
+- `APPROVE`: Copy satisfies `A_PRIME_PRODUCTION_MATERIALITY_V1`. Non-material editorial inference or harmless stylistic variation; no material plot, identity, motive, or causal inventions.
+- `REVISE`: Copy violates source boundaries and requires editorial revision.
+
+If `REVISE`, assign preliminary severity:
+- `MINOR`: A fixable unsupported concrete claim or overstatement that warrants bounded revision but is not a severe material failure.
+- `SEVERE`: A material contradiction, leak, invention, distortion, or unauthorized concrete detail likely to mislead a viewer or materially alter expectations.
+
+Check against the standard material violation categories:
+1. Material source-boundary violation
+2. Harmless stylistic variation (Tolerated under `APPROVE`)
+3. Unsupported factual concretization
+4. Unsupported causal/mechanistic inference
+5. Alias / terminology substitution
+6. Setting / duration / quantity escalation
+7. External-lore import
+8. Spoiler / reveal boundary violation
+
+---
+
+## 4. Input Blind Packet Format
+
+You will be supplied with a JSON object conforming to `blind-human-review-packet.schema.v1.json`:
+- `candidateId`: unique candidate identifier
+- `facts`: verified baseline metadata (title, year, director, genres, countries, spokenLanguages, runtimeMinutes, overview)
+- `allowedSourceMaterial`: permitted source texts and keywords
+- `acceptedSemanticClassification`: authorized experiential and mood classifications
+- `semanticBoundaryRules` / `spoilerBoundaryRules`: boundary constraints
+- `visibleEditorialCopy`:
+  - `description`: core synopsis
+  - `whyWatch`: recommendation hook
+  - `curiosityHook`: engagement question
+  - `vibeSummary`: atmospheric summary
+- `sourcePacketHash`: SHA-256 hash of the source packet
+
+---
+
+## 5. Required Output Contract
+
+You must output strictly valid, parseable JSON conforming to `preliminary-advisory-review.schema.v1.json`:
+
+```json
+{
+  "preliminaryDecision": "APPROVE" | "REVISE",
+  "preliminarySeverity": "MINOR" | "SEVERE" | null,
+  "affectedFields": ["description" | "whyWatch" | "curiosityHook" | "vibeSummary"],
+  "issueSummaries": [
+    "Concise description of identified issue"
+  ],
+  "claimSpan": "Exact text substring from copy or empty string if clean",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview" | "allowedSourceMaterial.overview" | "facts.genres" | "other",
+      "supportFound": true | false,
+      "notes": "Explanation of support or lack thereof"
+    }
+  ],
+  "sourceBoundaryReason": "Concise justification under A_PRIME_PRODUCTION_MATERIALITY_V1",
+  "uncertaintyNotes": "Any ambiguity in source interpretation, or null",
+  "confidence": "LOW" | "MEDIUM" | "HIGH",
+  "advisoryOnly": true
+}
+```
+
+Constraints:
+- If `preliminaryDecision` is `APPROVE`: `preliminarySeverity` MUST be `null`, `affectedFields` MUST be `[]`, and `issueSummaries` MUST be `[]`.
+- If `preliminaryDecision` is `REVISE`: `preliminarySeverity` MUST be `"MINOR"` or `"SEVERE"`, `affectedFields` MUST contain $\ge 1$ field, and `issueSummaries` MUST contain $\ge 1$ item.
+- `advisoryOnly` MUST be `true`.
+
+---
+
+## 6. Authority Disclaimer
+
+This evaluation is an ADVISORY PRELIMINARY OPINION under `VERIFIER_BLINDED_AI_ASSISTED_HUMAN_ADJUDICATION`. Sophia Zhao makes the authoritative final human decision. Model preliminary opinions cannot become ground truth automatically.
+
+
+## REVIEW PACKET
+
+{"acceptedSemanticClassification":{"attentionDemand":"engaged","discoveryStyle":"adventurous","emotionalWeight":"heavy","filterLanguages":["English"],"moods":["exciting","suspenseful"],"pace":"medium","situations":["friends"]},"allowedSourceMaterial":{"keywords":[],"overview":"Follow Alex Honnold as he attempts to become the first person to ever free solo climb Yosemite's 3,000 foot high El Capitan wall. With no ropes or safety gear, this would arguably be the greatest feat in rock climbing history."},"candidateId":"scale500-tmdb-515042","copyConstraints":{"curiosityHook":{"maxChars":170,"minChars":50},"description":{"maxChars":220,"minChars":80},"vibeSummary":{"maxChars":150,"minChars":45},"whyWatch":{"maxChars":180,"minChars":60}},"facts":{"countries":["United States of America"],"director":"Jimmy Chin & Elizabeth Chai Vasarhelyi","genres":["Adventure","Documentary"],"keywords":["california","el capitan","extreme sports","free climbing","mountain","mountain climbing","rock climbing","solo climbing","woman director","yosemite"],"overview":"Follow Alex Honnold as he attempts to become the first person to ever free solo climb Yosemite's 3,000 foot high El Capitan wall. With no ropes or safety gear, this would arguably be the greatest feat in rock climbing history.","posterPath":"/v4QfYZMACODlWul9doN9RxE99ag.jpg","runtimeMinutes":100,"spokenLanguages":["English"],"title":"Free Solo","year":2018},"sourcePacketHash":"sha256:a595a43c92794e3c408e40835eb8e370e9a58d0a848a837da68e2af9f8e166e4","spoilerBoundaryRules":{"allowed":["characters or central subjects","starting situation","premise","initial conflict","tone","texture","viewing experience"],"excluded":["major reversals","hidden identities","later deaths","culprit information","late relationship outcomes","third-act events","endings","later revelations"]},"visibleEditorialCopy":{"curiosityHook":"Facing 3,000 feet of sheer granite without a single protective tether, how does a climber prepare for a feat where even the slightest slip is absolute?","description":"Directors Jimmy Chin and Elizabeth Chai Vasarhelyi capture climber Alex Honnold as he prepares to scale Yosemite's 3,000-foot El Capitan wall entirely alone, attempting the massive vertical ascent without ropes.","vibeSummary":"High-stakes, gripping, and deeply suspenseful; a demanding adventure documentary that pairs steady precision with vertigo-inducing tension.","whyWatch":"It translates an unthinkable physical feat into pure cinematic suspense, capturing sheer vertical scale alongside the singular focus demanded by an ascent with zero room for error."}}

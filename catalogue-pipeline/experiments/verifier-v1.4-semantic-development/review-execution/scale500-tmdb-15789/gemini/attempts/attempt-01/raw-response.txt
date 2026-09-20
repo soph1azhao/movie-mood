@@ -1,0 +1,32 @@
+{
+  "preliminaryDecision": "REVISE",
+  "preliminarySeverity": "MINOR",
+  "affectedFields": [
+    "vibeSummary"
+  ],
+  "issueSummaries": [
+    "The vibeSummary characterizes the film as 'fast-paced', which overstates the narrative tempo and conflicts with the authorized classification of pace: 'medium'."
+  ],
+  "claimSpan": "fast-paced",
+  "sourceEvidence": [
+    {
+      "source": "other",
+      "supportFound": false,
+      "notes": "acceptedSemanticClassification explicitly classifies pace as 'medium'. Describing the film as 'fast-paced' in vibeSummary directly escalates the narrative tempo toward 'fast', misrepresenting a primary decision-relevant experiential axis."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports Max desperate to impress his crush, Goofy suddenly whisking him on a cross-country road trip, disrupting his date plans, and their clashing agendas causing comedic mishaps."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly confirms Animation, Comedy, Family, and Adventure genres reflected across visible copy."
+    }
+  ],
+  "sourceBoundaryReason": "Under closed-world source authority and A_PRIME_PRODUCTION_MATERIALITY_V1, experiential descriptors in visible copy must remain accurately calibrated to the authorized acceptedSemanticClassification. Characterizing the film as 'fast-paced' in vibeSummary escalates the narrative tempo against the classified pace of 'medium', introducing an unsupported pace escalation on a decision-relevant viewer expectation axis. Because this is an isolated, easily fixable phrasing issue in an otherwise compliant record, it represents a MINOR defect requiring revision.",
+  "uncertaintyNotes": "The description, curiosityHook, and whyWatch strictly adhere to authorized baseline facts, keywords, and semantic classifications without leaking ungrounded franchise lore or third-act concert/resolution spoilers. In whyWatch, 'brisk 78-minute journey' functions as an acceptable description of a short physical runtime, but 'fast-paced' in vibeSummary directly asserts an unsupported fast pace.",
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports the James gang bank robbers made up of brothers launching legendary bank raids driven by revenge."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly verifies Action, Crime, Drama, History, and Western genre labels used across the visible copy."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.keywords explicitly authorizes 'jesse james', 'cole younger', and 'sibling relationship'. facts.director verifies Walter Hill. Accepted semantic classification fully supports fast pace ('fast-paced', 'brisk momentum'), exciting/suspenseful moods, moderate dramatic weight, and solo or group viewing ('alone', 'friends')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly complies with A_PRIME_PRODUCTION_MATERIALITY_V1. The premise, vengeance motive, and central historical figures (Jesse James, Cole Younger, and their outlaw brothers) are explicitly grounded in the authorized overview and verified packet keywords. The copy respects setup-only constraints by omitting the gang's ultimate historical fate and third-act outcomes. Phrasing such as 'across the frontier', 'shootouts', and 'brotherly loyalty pushed to the brink' functions as low-risk genre shorthand and atmospheric framing rather than ungrounded factual invention.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

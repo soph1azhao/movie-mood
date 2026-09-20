@@ -1,0 +1,40 @@
+{
+  "preliminaryDecision": "REVISE",
+  "preliminarySeverity": "MINOR",
+  "affectedFields": ["description"],
+  "issueSummaries": [
+    "description gives the protagonist the first name 'Jacques'. The packet identifies the character only as 'Mesrine' (overview) and via the title 'Mesrine: Public Enemy #1'. The first name appears nowhere in the authorized packet, so it is an ungrounded identity detail (external-lore import / unsupported factual concretization). It is easily fixable by using 'Mesrine' alone."
+  ],
+  "claimSpan": "Jacques Mesrine",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": false,
+      "notes": "description: 'Jacques' has no support. The overview and title use only the surname 'Mesrine', and the keywords list is empty. Under closed-world source authority, the first name is ungrounded regardless of outside familiarity."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "description: 'two decades of daring criminal exploits', 'national notoriety and headlines', 'French outlaw', 'mounting paranoia and isolation' and the confrontation with the authorities all restate the overview ('nearly two decades', 'legendary criminal feats', 'France's most notorious criminal', 'media attention', 'increasingly paranoid and isolated', 'confrontation with the law'). 'Nearly two decades' to 'two decades' is negligible rounding. 'Authorities prepare for a final reckoning' is a mild concretization of the stated confrontation and is softer than the overview's 'seals his fate', so it introduces no spoiler beyond the authorized text."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "curiosityHook: 'France's most famous outlaw' restates 'most notorious criminal'. 'Feeds on public fascination' restates 'feeding his desire for media attention and public adoration'. 'Escalating pressure from the law' echoes the confrontation with the law. 'Calculated charisma' is an evaluative flourish not stated in the source, but it is figurative characterization and not a plot claim. The interrogative asserts no outcome."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "'Crime drama', 'crime thriller' and 'explosive outlaw spectacle' are consistent with genres Action/Crime/Drama/Thriller. 'Jean-François Richet' matches director. 'Gritty' is genre shorthand. 'Heavy psychological toll of fame and isolation' is a reasonable thematic reading of the overview's paranoia, isolation and desire for public adoration."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "acceptedSemanticClassification: 'Tense', 'suspenseful pacing' and 'deliberate' match moods and pace=medium. 'High emotional stakes' and 'heavy' match emotionalWeight=heavy and mood emotional. 'Character-driven' is consistent with the packet's focus on Mesrine's psychology. No situation or attention claims conflict with the packet."
+    }
+  ],
+  "sourceBoundaryReason": "Nearly all of the copy is grounded or is tolerated figurative language, genre shorthand, or thematic inference ('calculated charisma', 'gritty', 'explosive outlaw spectacle', 'final reckoning') that does not function as a meaningful new factual claim under A_PRIME_PRODUCTION_MATERIALITY_V1. The one concrete unsupported addition is the first name 'Jacques'. It specifies a character identity detail that is absent from the authorized packet, which falls under the 'identity' and external-lore-import categories. It does not distort the plot, motives, relationships or expectations, so it is a bounded, minor concretization and not a severe failure. No spoiler-boundary items appear: the copy stays within the premise and the overview's own framing and states no ending or outcome.",
+  "uncertaintyNotes": "This is a near-threshold call. A first name does not change what a viewer would expect from the film, and an adjudicator could reasonably treat it as harmless contextual concretization and approve. I flag it because the closed-world rule treats any packet-absent detail as ungrounded and identity is a named materiality category. 'Two decades' for 'nearly two decades' and 'authorities prepare for a final reckoning' (implying a preparatory mechanism the source does not state) were considered and left within tolerance.",
+  "confidence": "MEDIUM",
+  "advisoryOnly": true
+}

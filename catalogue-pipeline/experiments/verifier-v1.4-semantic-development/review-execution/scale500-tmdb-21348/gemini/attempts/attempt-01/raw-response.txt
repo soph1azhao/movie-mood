@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports Kirikou as a newborn boy saving his village from the evil witch Karaba, drawn from elements of West African folk tales."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly confirms Adventure, Animation, Family, and Fantasy genres, supporting 'animated adventure', 'family-friendly', and 'fantasy adventure' across visible copy."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies Michel Ocelot, facts.title verifies 'the Sorceress', and runtimeMinutes (71) verifies '71-minute'. Accepted semantic classification directly grounds attentionDemand: easy ('accessible', 'easy-watch'), situations: family ('family-friendly'), moods: exciting ('exciting folk-tale stakes'), and pace: medium ('accessible 71-minute pace')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly complies with A_PRIME_PRODUCTION_MATERIALITY_V1. The narrative premise, character dynamic, and folklore foundation in the description and curiosityHook adhere faithfully to the authorized overview, verified keywords, and title without leaking third-act resolution mechanics or origin revelations. Characterizing Kirikou as 'precocious' or 'clever' operates as natural, low-risk editorial inference for an infant capable of immediately protecting his village from an evil witch, while descriptors such as 'vibrant', 'brisk', and 'concise' represent legitimate atmospheric framing well-anchored in the film's lean 71-minute runtime and verified animation/fantasy genres.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

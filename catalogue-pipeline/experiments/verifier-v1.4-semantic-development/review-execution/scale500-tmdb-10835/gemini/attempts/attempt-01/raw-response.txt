@@ -1,0 +1,27 @@
+{
+  "preliminaryDecision": "REVISE",
+  "preliminarySeverity": "MINOR",
+  "affectedFields": [
+    "curiosityHook"
+  ],
+  "issueSummaries": [
+    "The curiosityHook introduces an ungrounded character dynamic and plot mechanic by asserting that the rogue officer is 'hunting him', which is not stated in the source packet and constitutes an external-lore import."
+  ],
+  "claimSpan": "the rogue officer hunting him",
+  "sourceEvidence": [
+    {
+      "source": "allowedSourceMaterial.overview",
+      "supportFound": false,
+      "notes": "The source overview establishes only that Jeffrey 'reluctantly joins forces with a rogue policeman to make things right'; it does not state or imply that the officer was actively hunting or pursuing him."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": false,
+      "notes": "No pursuit or hunter-and-prey relationship between the hitman and the rogue policeman is mentioned in the verified baseline metadata."
+    }
+  ],
+  "sourceBoundaryReason": "Under A_PRIME_PRODUCTION_MATERIALITY_V1, editorial additions that concretize character relationships, plot mechanics, or external lore absent from the authorized source require intervention. While the source notes that Jeffrey reluctantly joins forces with a rogue policeman, claiming the officer was hunting him specifies an adversarial dynamic not present in the packet.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

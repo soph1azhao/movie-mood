@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports Ebenezer Scrooge's greed, his rejection of the holiday spirit, the guidance of newfound friends/visitors toward kindness, and the adaptation of Dickens' classic tale featuring Disney's classic characters."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly verifies the Animation and Family genre designations used across visible copy."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies Burny Mattinson, and runtimeMinutes verifies the 25-minute length. Accepted semantic classification directly grounds light emotional weight, thoughtful mood, comfortable/medium pace, easy attention demand, and the family-friendly viewing situation."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly complies with A_PRIME_PRODUCTION_MATERIALITY_V1. The description and curiosityHook adhere closely to the authorized premise and starting conflict of the classic Dickens adaptation without importing ungrounded plot mechanisms, specific unmentioned ghosts, or ending/spoiler reveals. Descriptors in whyWatch and vibeSummary cleanly map to verified factual metadata and authorized experiential classifications.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

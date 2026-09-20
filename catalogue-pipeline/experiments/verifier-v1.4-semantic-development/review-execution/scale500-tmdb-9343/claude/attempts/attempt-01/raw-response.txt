@@ -1,0 +1,33 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "description: Fitzcarraldo as a dreamer, the plan to build an opera house in the Peruvian Amazon, the expedition into a remote and unexplored rainforest region, and the rubber all restate the overview. 'Daring expedition' paraphrases 'epic adventure'. 'Uncharted jungle territory' paraphrases 'remote and unexplored region of the rainforest'. 'Secure a fortune in rubber' follows from rubber being 'a very profitable product' collected to finance the project. 'Driven by an ambition' is a light characterization consistent with the overview's framing and with the keyword 'ambition' in facts.keywords."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "curiosityHook: 'audacious artistic dream' paraphrases the dreamer's opera-house plan. 'Unforgiving trek through the heart of the rainforest' is figurative shorthand for the remote, unexplored rainforest adventure. 'Trek' does not assert a mode of travel any more than 'across the countryside' would. The interrogative asserts no outcome."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "'Adventure' and 'drama' match genres Adventure/Drama. 'Werner Herzog' matches director. 'Sprawling' is consistent with the 157-minute runtime. 'Culture and untamed wilderness collide' is thematic shorthand drawn from the opera-house-versus-rainforest premise."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "acceptedSemanticClassification: 'Immersive' matches attentionDemand=immersive. 'Thoughtful' matches moods. 'Steady momentum' matches pace=medium. 'Solo viewing' matches situations=[alone]. 'Adventure' matches mood exciting and the adventure genre. Keyword-only material (rubber plantation, steamboat, white water rafting, imperialism, Manaos) is not imported."
+    }
+  ],
+  "sourceBoundaryReason": "Every concrete claim (Fitzcarraldo, the dreamer framing, the opera house, the Peruvian Amazon, the rubber-financing motive, the remote and unexplored region, the director, the genres) is grounded in the packet. The remaining language ('audacious', 'unforgiving trek', 'monumental ambition', 'culture and untamed wilderness collide', 'sprawling') is figurative language, thematic shorthand, or atmospheric inference. None of it functions as a new factual claim about plot mechanics, identities, relationships, motives, or causality. The copy stays within the premise and initial conflict and states no outcome, reversal, or ending, so no spoiler-boundary content appears. This is harmless stylistic variation under A_PRIME_PRODUCTION_MATERIALITY_V1.",
+  "uncertaintyNotes": "The only item near the tolerance line is 'trek' in curiosityHook. The overview says 'embarks on an epic adventure' and does not specify how the journey is made, so 'trek' loosely implies overland travel. I read it as generic adventure shorthand that does not change viewer expectations, and it is posed in a question. 'Secure a fortune' in description slightly intensifies 'finance his project', but it stays close to the stated rubber-profit motive.",
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

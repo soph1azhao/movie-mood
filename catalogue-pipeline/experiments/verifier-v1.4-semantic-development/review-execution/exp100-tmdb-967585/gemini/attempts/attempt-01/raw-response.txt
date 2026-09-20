@@ -1,0 +1,38 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "allowedSourceMaterial.overview",
+      "supportFound": true,
+      "notes": "Directly supports the central premise: Greg deciding to propose to Flo, worrying his crooked father and ex-charm actress mother will ruin his future union, and reopening his alibi agency with former accomplices to stage an alibi with presentable fake parents."
+    },
+    {
+      "source": "facts.director",
+      "supportFound": true,
+      "notes": "Directly verifies Philippe Lacheau as director."
+    },
+    {
+      "source": "facts.runtimeMinutes",
+      "supportFound": true,
+      "notes": "Directly verifies the 88-minute runtime mentioned in vibeSummary."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Validates Comedy and Family genre framing."
+    },
+    {
+      "source": "acceptedSemanticClassification",
+      "supportFound": true,
+      "notes": "Directly supports experiential attributes: 'light' emotional weight, 'funny' mood ('comedic'), 'easy' attention demand ('easy to follow'), and 'medium' pace."
+    }
+  ],
+  "sourceBoundaryReason": "All editorial copy strictly aligns with the authorized packet facts, semantic classifications, and overview narrative elements. Phrasing such as 'protect the wedding', 'fiancée', 'pre-wedding dilemma', and 'classic farce' constitutes permissible genre shorthand and narrative compression of 'decides to propose to Flo' and 'ruin his future union' under A_PRIME_PRODUCTION_MATERIALITY_V1, introducing no material factual inventions, external lore, or spoiler violations.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

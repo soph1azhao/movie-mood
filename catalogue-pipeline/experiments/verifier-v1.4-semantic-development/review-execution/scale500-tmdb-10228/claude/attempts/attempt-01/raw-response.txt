@@ -1,0 +1,36 @@
+{
+  "preliminaryDecision": "REVISE",
+  "preliminarySeverity": "MINOR",
+  "affectedFields": ["curiosityHook", "description"],
+  "issueSummaries": [
+    "curiosityHook recasts Mewtwo 'luring' Ash, Pikachu and others into a match as an 'exclusive challenge' issued to 'trainers invited to its private proving ground'. The overview says only that Mewtwo lures them into 'a Pokémon match like none before'. 'Lures' implies enticement, and 'invited' softens it into an open invitation. 'Private proving ground' adds a specific location and an exclusivity mechanic the packet does not state.",
+    "description turns the 'Pokémon match' into an 'arena confrontation designed to test their limits'. 'Arena' is an unsupported setting detail, 'confrontation' is a different framing from a match, and 'designed to test their limits' assigns Mewtwo a purpose the overview does not give (it states only that Mewtwo is determined to prove its superiority). 'Fellow trainers' also specifies what the 'others' are."
+  ],
+  "claimSpan": "an exclusive challenge, what awaits the trainers invited to its private proving ground",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": false,
+      "notes": "curiosityHook and description: 'private proving ground', 'exclusive', 'invited', 'arena' and 'designed to test their limits' have no support. The overview gives a bio-engineered Pokémon, Mewtwo, motivated to prove its superiority, luring Ash, Pikachu and others into a Pokémon match. It names no venue and no purpose for the match beyond that motivation."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "description: Mewtwo as a bio-engineered Pokémon, its determination, Ash and Pikachu being drawn in, and the 'like none before' match ('unprecedented') all restate the overview. 'Assert its dominance' paraphrases 'prove its superiority'. 'Draws' paraphrases 'lures'. curiosityHook: 'genetically engineered powerhouse' paraphrases 'bio-engineered'. 'Powerhouse' is characterization shorthand."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "whyWatch and vibeSummary: 'animated fantasy' and 'animated adventure' are consistent with genres Action/Adventure/Animation/Family/Fantasy. 'Kunihiko Yuyama' matches director. 'Classic arena battles' repeats the unsupported 'arena' framing in a minor way. 'High-stakes showdown' and 'moderate emotional tension' are tonal shorthand."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "acceptedSemanticClassification: 'Fast-paced' matches pace=fast. 'Exciting' matches mood exciting. 'Easy family watch' matches attentionDemand=easy and situations=[family]. 'Moderate emotional tension' matches emotionalWeight=moderate. Keyword-only material (clone, cloning, existentialism, revenge, research laboratory, creator) is not imported."
+    }
+  ],
+  "sourceBoundaryReason": "Most of the copy is grounded or is tolerated figurative language and genre shorthand under A_PRIME_PRODUCTION_MATERIALITY_V1. The concern is the way curiosityHook and description stage the central setup: the lure becomes an exclusive invitation to a private proving ground, and the match becomes an 'arena confrontation designed to test their limits'. These additions falsely specify locations, plot mechanics and Mewtwo's purpose, which are named materiality categories, and they shape viewer expectations of the premise. They do not contradict the source, invent identities or reveal any outcome, so the severity is MINOR and not SEVERE. A bounded fix would stay with the overview's own wording, for example 'a bio-engineered Pokémon determined to prove its superiority lures Ash, Pikachu and others into a Pokémon match like none before'.",
+  "uncertaintyNotes": "This is a near-threshold call. The overview is so short that any expansion needs some concretization, and 'proving ground' echoes 'prove its superiority', so an adjudicator could read 'private proving ground' and 'arena' as harmless atmospheric shorthand and approve. I flag the fields because the closed-world rule treats a packet-absent venue and a packet-absent purpose as ungrounded, and because 'invited' softens the 'lures' framing. 'Arena' recurs in whyWatch ('classic arena battles'), and I left that within tolerance as genre shorthand, though a stricter reading could extend the concern there. 'Fellow trainers' for 'others' was considered and left within tolerance.",
+  "confidence": "MEDIUM",
+  "advisoryOnly": true
+}

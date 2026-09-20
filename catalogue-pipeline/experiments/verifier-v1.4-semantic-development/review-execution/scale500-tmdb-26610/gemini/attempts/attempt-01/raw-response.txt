@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports detective Jonas investigating a homicide in northern Norway's midnight sun country, accidentally shooting his partner during a botched arrest, pinning the death on the fugitive suspect, and pursuing the killer while battling guilt and insomnia."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly confirms Crime, Mystery, and Thriller genres, supporting 'psychological suspense' and procedural framing (corroborated by keywords 'neo-noir', 'nordic noir', 'investigation', and 'detective')."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies Erik Skjoldbjærg. Accepted semantic classification directly grounds pace: medium ('steady pace'), emotionalWeight: heavy ('heavy emotional weight'), attentionDemand: engaged ('focused'), moods: [suspenseful, thoughtful] ('psychological suspense'), and situations: alone ('solo viewing')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly complies with A_PRIME_PRODUCTION_MATERIALITY_V1. The synopsis and curiosity hook remain faithfully tethered to the authorized starting situation without leaking ungrounded external remake lore (such as the 2002 Christopher Nolan adaptation) or third-act narrative conclusions. Stylistic and thematic phrasing—such as 'perpetual daylight', 'trades shadowy noir for blinding midnight sun', and 'no darkness to hide in'—operates as legitimate, low-risk atmospheric inference and genre shorthand directly anchored in the verified midnight sun setting and neo-noir/nordic noir keywords, while experiential descriptors across whyWatch and vibeSummary cleanly map to verified metadata and authorized semantic tags.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

@@ -1,0 +1,33 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "description: Max's wish to impress his crush, his well-meaning father Goofy whisking him away on a cross-country road trip, the derailed plans, and the mishaps all restate the overview. 'Abruptly derailed' paraphrases 'suddenly whisks him away... messing up Max's first date plans'. 'Unexpected' echoes 'suddenly'. 'Chaotic mishaps' paraphrases 'hilarious mishaps'. 'High school crush' adds 'high' to the overview's 'crush' and 'school'. It is a small concretization, discussed under uncertaintyNotes."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "curiosityHook: Max, his dad's old-school parenting ('old-school vacation'), the date, and the clash of wants (Goofy's old-school parenting against Max's desire for independence) restate the overview. 'High-stakes date hanging in the balance' is figurative urgency built on the stated messed-up first date plans. 'Survive' and 'derail the journey entirely' are metaphorical. The interrogative asserts no outcome and does not touch the overview's closing reconciliation ('see eye to eye')."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "whyWatch and vibeSummary: 'animated comedy', 'animated family adventure' and 'road-trip adventure' are consistent with genres Adventure/Animation/Comedy/Family/Romance and the road-trip premise. '78-minute' matches runtimeMinutes. 'Honest father-son dynamic' and 'genuine warmth' are thematic shorthand supported by the overview's parenting premise and its 'learn to see eye to eye' framing. 'Slapstick' is genre shorthand for a cartoon comedy of mishaps."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "acceptedSemanticClassification: 'Lighthearted', 'warm' and 'gentle emotional weight' match emotionalWeight=light and moods funny/emotional. 'Easy laughs' matches attentionDemand=easy. 'Family adventure' matches situations=[family, easy-watch]. 'Fast-paced', 'brisk' and 'energetic' sit slightly off pace=medium and are tonal only. Keyword-only material (pop singer, celebrity, musical, first love) is not imported."
+    }
+  ],
+  "sourceBoundaryReason": "Every concrete claim (Max and his crush, Goofy's sudden cross-country road trip, the disrupted date plans, the old-school parenting versus desire for independence, the mishaps, the runtime, the genres) is grounded in the authorized overview. The remaining language ('high school', 'high-stakes date hanging in the balance', 'survive', 'slapstick', 'honest father-son dynamic') is figurative language, genre shorthand or minor contextual concretization. None of it works as a meaningful new factual claim about plot mechanics, identities, relationships, motives or causality under A_PRIME_PRODUCTION_MATERIALITY_V1. The copy stays at the premise and initial conflict, states no reconciliation, date outcome or ending, and imports no keyword-only plot material, so no spoiler-boundary content appears.",
+  "uncertaintyNotes": "Three small items sit near the tolerance line. 'High school' concretizes 'school' for a teenage boy, which is a natural reading but not stated. 'Slapstick' names a comedic mode the overview does not mention, though it fits a cartoon comedy about mishaps. 'Fast-paced' and 'brisk' sit slightly against the accepted pace of medium. None names a new event, relationship or outcome, so I kept all three within tolerance. A stricter adjudicator could ask for 'high school' to be softened to 'school', in which case it would be a MINOR setting concretization.",
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

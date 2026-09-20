@@ -1,0 +1,35 @@
+{
+  "preliminaryDecision": "REVISE",
+  "preliminarySeverity": "MINOR",
+  "affectedFields": ["description"],
+  "issueSummaries": [
+    "description: 'arrives in the city' introduces an ungrounded location and arrival narrative action, while 'wicker' adds an unsupported material attribute to the basket; the authorized overview establishes only that a young man carrying a big basket seeks vengeance on the doctors who separated them, with no setting, arrival event, or basket composition specified."
+  ],
+  "claimSpan": "arrives in the city",
+  "sourceEvidence": [
+    {
+      "source": "allowedSourceMaterial.overview",
+      "supportFound": false,
+      "notes": "The overview states that a young man carrying a big basket containing his formerly conjoined twin brother seeks vengeance on the doctors who separated them, but provides no grounding for an urban setting ('the city'), an arrival action, or the material of the basket ('wicker')."
+    },
+    {
+      "source": "facts.director",
+      "supportFound": true,
+      "notes": "Directly verifies Frank Henenlotter as director."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly validates Comedy and Horror genre classifications."
+    },
+    {
+      "source": "acceptedSemanticClassification",
+      "supportFound": true,
+      "notes": "Directly supports emotional weight ('heavy'), moods ('suspenseful', 'funny'), and pace ('medium' / steady pace)."
+    }
+  ],
+  "sourceBoundaryReason": "Under A_PRIME_PRODUCTION_MATERIALITY_V1, low-risk figurative language and atmospheric framing are permitted, but additions require intervention when they specify concrete locations or plot mechanics not established by the authorized source. Stating that the protagonist 'arrives in the city' specifies an ungrounded setting and arrival premise, reflecting external knowledge of the film rather than source-grounded inference.",
+  "uncertaintyNotes": "If 'arrives in the city' is treated as non-material narrative framing and 'wicker' as harmless sensory texture, the copy could be tolerated under APPROVE; however, because the authorized packet contains no setting or journey context whatsoever, it represents bounded setting and factual concretization warranting MINOR revision.",
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

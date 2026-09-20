@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports Zatoichi as a blind traveler, masseur, and dice gambler who uses master swordsmanship to protect townspeople in a village torn apart by warring gangs."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly confirms Action and Drama genres, supported by authorized keywords 'samurai', 'sword', and 'jidaigeki'."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies Takeshi Kitano. Accepted semantic classification directly grounds pace: fast ('Fast-paced', 'fast-moving'), emotionalWeight: moderate ('moderate emotional weight'), attentionDemand: engaged ('engaged drama'), moods: suspenseful ('suspenseful'), and situations: [friends, alone] ('perfect alone or with friends')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly complies with A_PRIME_PRODUCTION_MATERIALITY_V1. The narrative premise, central figure, and protective conflict in the description and curiosityHook faithfully track the authorized overview without importing external franchise lore (such as the classic Shintaro Katsu film series), unstated character subplots, or third-act spoiler reveals (such as villain identities or the climactic resolution). Experiential and genre descriptors in whyWatch and vibeSummary map cleanly to verified metadata and authorized semantic classifications.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

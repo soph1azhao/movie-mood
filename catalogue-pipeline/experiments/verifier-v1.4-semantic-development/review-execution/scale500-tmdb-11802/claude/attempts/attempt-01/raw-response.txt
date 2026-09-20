@@ -1,0 +1,33 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "description: the unmanned shuttle crash, the uncharted planet, NASA launching a trio of astronaut chimpanzees, the wormhole and the investigation all restate the overview. 'Straight through' is a pacing flourish. 'The alien world' is a light paraphrase of 'uncharted planet' and adds no new factual claim."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "curiosityHook: 'primate crew' matches the chimpanzee trio and 'unknown world' matches the uncharted planet. 'Navigate deep space' is atmospheric shorthand for launching into a wormhole. 'Touch down' mildly concretizes that the crew reaches the planet they were sent to investigate. It is an interrogative teaser and does not assert any event, outcome, or reveal."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "'Animated sci-fi comedy', 'family-friendly adventure' and 'colorful sci-fi exploration' are consistent with genres Adventure/Animation/Comedy/Family/Science Fiction. 'Kirk DeMicco' and '81 minutes' match director and runtimeMinutes."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "acceptedSemanticClassification: 'Fast-paced' and 'quick-moving' match pace=fast, 'low-demand' and 'breezy' match attentionDemand=easy, 'lighthearted' and 'light comic warmth' match emotionalWeight=light and mood funny, and 'family movie night' matches situations=[family, easy-watch]. 'Playful sci-fi peril' is inferred from the crash-and-investigate premise and is low-risk genre shorthand."
+    }
+  ],
+  "sourceBoundaryReason": "All concrete claims (unmanned shuttle crash, uncharted planet, NASA, trio of astronaut chimpanzees, wormhole, investigation, director, runtime, genres) are grounded in the packet. The remaining language ('straight through', 'touch down', 'playful sci-fi peril', 'colorful', 'cheerful') is atmospheric inference or genre shorthand and does not materially change plot mechanics, identities, relationships, motives, or causality. No spoiler-boundary content appears, since the copy stays within the premise and starting situation. No keyword-only material or external lore is imported. Under A_PRIME_PRODUCTION_MATERIALITY_V1 these are harmless stylistic variations, not source-boundary failures.",
+  "uncertaintyNotes": "'Touch down on an unknown world' in curiosityHook slightly concretizes the crew's arrival, which the overview implies through 'launched... to investigate' but does not state. It is posed as a question and reads as narrative teaser, so it stays within tolerance. 'Peril' is inferred from the crash and is not stated in the source.",
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

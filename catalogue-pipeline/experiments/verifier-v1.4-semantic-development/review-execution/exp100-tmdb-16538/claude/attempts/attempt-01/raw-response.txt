@@ -1,0 +1,41 @@
+{
+  "preliminaryDecision": "REVISE",
+  "preliminarySeverity": "MINOR",
+  "affectedFields": ["description", "curiosityHook"],
+  "issueSummaries": [
+    "description says 'After proposing to his dream woman Zooey'. The overview says only that Peter is 'getting engaged' to Zooey and does not say who proposed. Attributing the proposal to Peter specifies an event and causal role the packet does not state.",
+    "curiosityHook calls the man-dates 'painfully clumsy blind dates'. The overview describes 'bizarre and awkward man-dates' and nothing about blind dates. 'Blind dates' specifies how the meetings are arranged, which is an unsupported mechanistic concretization. The hook also adds 'before the wedding day', a deadline the overview does not state, and it presupposes a 'genuine best friend' outcome as the goal."
+  ],
+  "claimSpan": "After proposing to his dream woman Zooey",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": false,
+      "notes": "description: 'proposing' has no basis. The overview says 'upon getting engaged to the woman of his dreams, Zooey', which is neutral about who proposed and does not narrate a proposal scene. 'Blind dates' in curiosityHook is likewise absent, since the overview speaks only of 'man-dates'."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "description: real estate agent Peter Klaven, his fiancée Zooey, the lack of a close male friend to be Best Man, and the series of awkward man-dates all restate the overview. 'Dream woman' paraphrases 'woman of his dreams'. 'Immediate hunt' echoes 'immediately sets out to rectify the situation'. 'Mismatched' is a light characterization consistent with 'bizarre'. 'Lacks any close male companions' slightly broadens 'no male friend close enough' and is tolerated."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "curiosityHook: 'needs a best man fast' echoes the immediacy in the overview, and 'series' and 'clumsy' correspond to the series of awkward man-dates. 'Genuine best friend' is thematic inference from the Best Man problem. The wedding is implied by the engagement and the Best Man role, but 'before the wedding day' adds a timing frame that the packet does not state. The interrogative asserts no outcome."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "whyWatch: 'comedy' and 'warm' are consistent with genres Comedy/Romance. 'John Hamburg' matches director. 'Male bonding' and 'wedding anxiety' are thematic shorthand supported by the overview's Best Man premise and facts.keywords ('male bonding', 'wedding'). 'Modern' and 'social obstacle course' are flourishes."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "acceptedSemanticClassification: 'Light', 'funny' and 'breezy' match emotionalWeight=light and mood funny. 'Steady comic momentum' matches pace=medium. 'Low-stress' and 'easygoing' match attentionDemand=easy. 'Ideal to watch with friends' matches situations=[friends]. Keyword-only material (gay brother, guitar player, rock band, no friends) is not imported."
+    }
+  ],
+  "sourceBoundaryReason": "Most of the copy is grounded or is tolerated figurative language and genre shorthand under A_PRIME_PRODUCTION_MATERIALITY_V1. Two small concrete additions go beyond the packet: Peter is said to have proposed, and the man-dates are recast as 'blind dates' with a 'before the wedding day' deadline. Each falsely specifies an event or mechanic (who initiated the engagement, how the meetings are arranged, when the deadline falls), which are named materiality categories. None contradicts the premise, reveals an outcome, or invents identities, so the severity is MINOR and not SEVERE. A bounded fix would say 'after getting engaged to' and 'awkward man-dates', and drop the deadline.",
+  "uncertaintyNotes": "This is a near-threshold call. 'After proposing' is a common gloss on an engagement, and 'blind dates' is a plausible loose rendering of dates with near-strangers, so an adjudicator could approve either as minor contextual concretization. I flag them because both are specific event or mechanic claims that the closed-world rule treats as ungrounded, and because they recur across two fields. 'Before the wedding day' may be read as tolerated urgency, since the Best Man role implies a wedding. 'Genuine best friend' as the goal of the man-dates was considered and left within tolerance as thematic framing.",
+  "confidence": "MEDIUM",
+  "advisoryOnly": true
+}

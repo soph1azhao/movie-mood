@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports the central premise of a beautiful and mysterious woman helping an inept scam artist get his game together, as well as the core question of whether their meeting is purely coincidence."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly verifies Comedy, Fantasy, and Romance genres reflected across description, whyWatch, and vibeSummary."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies Luc Besson, and runtimeMinutes verifies 91 minutes. Accepted semantic classification directly grounds pace: medium ('medium-paced'), emotionalWeight: moderate ('moderate emotional weight'), moods: [funny, emotional] ('humorous', 'heartfelt'), attentionDemand: engaged ('engaging'), and situations: [date-night, easy-watch] ('easy, engaging evening watch')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly complies with A_PRIME_PRODUCTION_MATERIALITY_V1. The synopsis and curiosity hook faithfully adapt the authorized overview without revealing the woman's true nature or identity, avoiding setup-only spoiler breaches. Phrases like 'when his luck is running out' and 'unexpected lifeline' operate as low-risk figurative language and metaphorical urgency reflecting the authorized 'inept scam artist' needing help to 'get his game together', while questioning if the encounter is 'serendipity or something calculated' directly restates the authorized thematic question of whether the meeting was 'purely coincidence'.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

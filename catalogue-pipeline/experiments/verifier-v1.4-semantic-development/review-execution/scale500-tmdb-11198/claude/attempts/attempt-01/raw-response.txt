@@ -1,0 +1,41 @@
+{
+  "preliminaryDecision": "REVISE",
+  "preliminarySeverity": "MINOR",
+  "affectedFields": ["curiosityHook", "description", "whyWatch"],
+  "issueSummaries": [
+    "curiosityHook and description both say the protagonist is 'trapped' (aboard a luxury cruise liner / 'on the high seas'). The overview says only that he 'winds up on a cruise ship'. Confinement is a mechanic the packet does not state. curiosityHook also says 'no rations' where the overview says 'scarce food', and 'ruthless gunmen' where it says 'murderous terrorists'. The gunmen framing introduces a weapon attribute the packet does not state.",
+    "whyWatch calls the situation a 'cruise hostage crisis'. 'Hostage' appears only in facts.keywords, and allowedSourceMaterial.keywords is empty. The overview mentions terrorists but no hostages, so this imports a specific plot mechanic from keyword-only material."
+  ],
+  "claimSpan": "turning a high-stakes cruise hostage crisis into an energetic, lighthearted thrill ride",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "description: the self-indulgent private investigator winding up on a cruise ship, the wealthy passengers, the glamorous women, the scarce food and the terrorists all restate the overview. 'Wealthy socialites' paraphrases 'rich patrons', 'glamorous' paraphrases 'gorgeous', 'ruthless' paraphrases 'murderous', and 'luxury' cruise liner is tolerated atmospheric inference from 'rich patrons'. 'Wong Jing', '1993', 'Hong Kong' and 'action comedy' match director, year, countries and genres. 'Trapped' is the unsupported element, since the overview says only that he 'winds up' aboard."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": false,
+      "notes": "curiosityHook: 'trapped on the high seas', 'ruthless gunmen' and 'no rations' go beyond the overview. It states confinement nowhere, and 'terrorists' is not the same as 'gunmen'. 'Scarce food' is not 'no rations'. It also says 'outwit danger', which implies a strategy the packet does not state, and 'before the voyage goes completely off course' is figurative urgency. 'Frivolous private eye' is a characterization consistent with 'self-indulgent'."
+    },
+    {
+      "source": "facts.keywords",
+      "supportFound": false,
+      "notes": "whyWatch: 'hostage' appears only in facts.keywords and not in allowedSourceMaterial.keywords or the overview. A hostage crisis specifies a kind of terrorist plot that the packet does not establish. 'Martial-arts action' also comes from facts.keywords ('martial arts') and is consistent with the Action genre, so I treat it as tolerated genre shorthand."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "'Action comedy', 'broad farce', 'thrill ride' and 'lighthearted' are consistent with genres Action/Adventure/Comedy/Romance and the overview's tone. 'Wong Jing' matches director."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "acceptedSemanticClassification: 'Fast' matches pace=fast. 'Comedic' matches mood funny. 'Low emotional weight' matches emotionalWeight=light. 'High-energy' matches mood exciting. 'Easygoing group watch' matches attentionDemand=engaged loosely and situations=[friends, easy-watch]. 'Engaged' is not contradicted."
+    }
+  ],
+  "sourceBoundaryReason": "The core premise (self-indulgent private investigator, cruise ship, rich patrons, gorgeous women, terrorists, scarce food, director, year, genres) is grounded, and most remaining language is tolerated figurative language and genre shorthand under A_PRIME_PRODUCTION_MATERIALITY_V1. Three concrete plot mechanics go beyond the packet: confinement ('trapped'), a hostage situation ('hostage crisis'), and gunmen with 'no rations'. Each specifies plot mechanics or factual attributes of the premise, which are named materiality categories, and 'hostage' comes only from keyword-only material. The additions do not contradict the source, reveal an outcome, or cross the spoiler boundary, so the severity is MINOR and not SEVERE. A bounded fix would say 'winds up aboard' or 'finds himself on' a cruise ship, use 'terrorists' and 'scarce food', and drop 'hostage'.",
+  "uncertaintyNotes": "This is a near-threshold call. 'Trapped' is idiomatic for being on a ship full of murderous terrorists, and 'hostage crisis' is a plausible reading of terrorists on a cruise ship, so an adjudicator could approve on that basis. I flag the fields because the same escalation (a specific confinement or hostage mechanic) recurs across three fields, and because 'hostage' has no authorized source. If Sophia treats facts.keywords as valid grounding, the 'hostage' concern would weaken, though 'trapped', 'gunmen' and 'no rations' would remain. 'Luxury cruise liner' and 'glamorous passengers' were considered and left within tolerance.",
+  "confidence": "MEDIUM",
+  "advisoryOnly": true
+}

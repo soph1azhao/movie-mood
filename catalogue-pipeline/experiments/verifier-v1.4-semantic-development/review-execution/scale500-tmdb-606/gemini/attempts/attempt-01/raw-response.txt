@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports Danish author Karen Blixen moving to Africa at the beginning of the twentieth century to build a new life for herself."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly verifies the Drama, History, and Romance genre designations utilized across description, whyWatch, and vibeSummary."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies Sydney Pollack, and runtimeMinutes verifies 161 minutes. Accepted semantic classification directly grounds pace: slow ('slow', 'patient viewing'), emotionalWeight: heavy ('emotionally heavy'), attentionDemand: engaged ('demanding engaged focus'), and moods: [thoughtful, emotional] ('deeply felt', 'reflective storytelling')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly complies with A_PRIME_PRODUCTION_MATERIALITY_V1. The starting situation, historical timeframe, and central figure in the description and curiosityHook faithfully adhere to the authorized overview without importing ungrounded external biographical lore (such as specific lover identities, farm operations, or later illness) or breaching setup-only spoiler boundaries. Phrases like 'sweeping romance' and 'unfamiliar terrain' function as low-risk genre shorthand and atmospheric inference anchored in verified genres (Romance, Drama) and premise context, while whyWatch and vibeSummary cleanly reflect verified metadata and authorized experiential classifications.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

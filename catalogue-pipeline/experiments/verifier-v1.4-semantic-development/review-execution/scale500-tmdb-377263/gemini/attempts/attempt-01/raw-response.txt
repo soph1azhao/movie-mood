@@ -1,0 +1,32 @@
+{
+  "preliminaryDecision": "REVISE",
+  "preliminarySeverity": "MINOR",
+  "affectedFields": [
+    "description"
+  ],
+  "issueSummaries": [
+    "The description characterizes the mysterious visitor as an 'enigmatic French soldier', which introduces an unsupported factual concretization and specifies his identity/military status beyond the authorized source (which establishes him only as 'a mysterious French man')."
+  ],
+  "claimSpan": "French soldier",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": false,
+      "notes": "The authorized overview explicitly identifies the visitor as 'a mysterious French man who visits the fiance’s grave to lay flowers', leaving his identity and background unstated. It provides no basis for asserting that the French visitor is a soldier."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.keywords contains 'soldier', which in conjunction with 'grieves the death of her fiancé in France' in the aftermath of WWI supports characterizing the deceased fiancé as a fallen soldier (as correctly framed in curiosityHook: 'mourn at a fallen soldier's grave'), but does not authorize attributing soldier status to the mysterious French visitor."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly confirms Drama, History, and Romance genres reflected in whyWatch and vibeSummary."
+    }
+  ],
+  "sourceBoundaryReason": "Under closed-world source authority and A_PRIME_PRODUCTION_MATERIALITY_V1, editorial copy must not falsely specify character identity, profession, or background attributes when they are not established by the authorized packet. The authorized overview establishes the visitor solely as 'a mysterious French man', leaving his background and the nature of his connection to the grave as the central premise mystery. Labeling him a 'French soldier' in description concrete-specifies his occupation and wartime status without source authorization. Because this is an isolated, easily fixable phrasing issue in an otherwise compliant record (curiosityHook correctly uses 'enigmatic Frenchman'), it represents a MINOR defect requiring revision.",
+  "uncertaintyNotes": "CuriosityHook correctly handles the distinction by referring to the visitor as 'an enigmatic Frenchman' and applying soldier status to the fiancé ('fallen soldier's grave'). Description inverts this precision by applying 'French soldier' to the visitor and referring to the fiancé simply as 'the fallen man'.",
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

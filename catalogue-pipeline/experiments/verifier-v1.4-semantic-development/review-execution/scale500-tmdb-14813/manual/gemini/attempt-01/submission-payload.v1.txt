@@ -1,0 +1,124 @@
+# MOVIE MOOD V8.2 — PRELIMINARY ADVISORY REVIEW
+Reviewer: GEMINI
+Review Sequence Index: 8
+Candidate ID: scale500-tmdb-14813
+Blind Packet SHA-256: sha256:d3969657694ec53fcf7292a3cafd284748a5682f034b71330c132034c4e93014
+Prompt SHA-256: sha256:e822b0eef3c9d0b0ece2365aa884593cd3de2eefafd50a3aa3ef2b77cf0847a5
+Materiality Policy SHA-256: sha256:21661892df4d1b009341b6d34de3bf5ad1ae17e3447abbdace15e1c31a5b843c
+------------------------------------------------------------
+
+# Candidate Verifier v1.4 — Gemini Preliminary Source-Boundary Review Prompt
+
+- **Version**: `verifier-v14-gemini-preliminary.v1`
+- **Workflow**: `VERIFIER_BLINDED_AI_ASSISTED_HUMAN_ADJUDICATION`
+- **Adjudication Standard**: `A_PRIME_PRODUCTION_MATERIALITY_V1` (`sha256:21661892df4d1b009341b6d34de3bf5ad1ae17e3447abbdace15e1c31a5b843c`)
+- **Role**: Independent Advisory Reviewer (Gemini)
+- **Authority Level**: ADVISORY ONLY (Non-Authoritative; Final Ground Truth is Sophia Zhao)
+- **Model Independence**: Strictly isolated from Claude preliminary opinions, verifier predictions, cohort quota tracking, and repair histories.
+
+---
+
+## 1. Task Objective
+
+You are an independent preliminary reviewer providing an advisory source-boundary opinion for Movie Mood editorial copy.
+Sophia Zhao makes the authoritative final human adjudication under `VERIFIER_BLINDED_AI_ASSISTED_HUMAN_ADJUDICATION`.
+Your sole role is to review a blinded candidate packet and determine whether the visible editorial copy (`description`, `whyWatch`, `curiosityHook`, `vibeSummary`) satisfies the frozen production materiality standard (`A_PRIME_PRODUCTION_MATERIALITY_V1`) against the supplied authorized source packet.
+
+---
+
+## 2. Review Invariants & Epistemic Boundaries
+
+1. **Closed-World Source Authority**: Judge claims solely against the supplied packet facts (`facts`, `allowedSourceMaterial`, `acceptedSemanticClassification`). Real-world movie facts, external encyclopedic knowledge, plot summaries, franchise lore, or personal movie familiarity MUST be strictly ignored. If a detail is absent from the packet, it is ungrounded.
+2. **Materiality Standard Principle (`A_PRIME_PRODUCTION_MATERIALITY_V1`)**:
+   > "Editorial inference is acceptable when it does not materially alter a viewer's understanding or expectation of the film. Low-risk figurative language, genre shorthand, atmospheric inference, metaphorical urgency, and minor contextual concretization may be accepted even when not literally stated in the authorized packet, provided they do not function as a meaningful new factual claim. Unsupported additions require intervention when they materially change or falsely specify plot mechanics, identity, relationships, motives, causality, factual attributes, locations, quantities, franchise history, spoiler boundaries, or other decision-relevant viewer expectations."
+3. **Key Distinction**:
+   > "minor unsupported flourish != severe factual/source-boundary failure"
+   Illustrative tolerated concepts include: "before mom returns", "sacred flame", "iconic allies", "fracturing loyalties", "corrupt certainty", "digital and physical maps", "across the countryside".
+4. **No External Context**: You must not use external web search, model pre-training recall about the film, or assumptions based on genre or actors.
+5. **No Verifier Predictions**: You have not been provided with, and must not attempt to guess or mimic, Candidate Verifier predictions or risk classifications.
+6. **No Quota Awareness**: You have zero visibility into cohort sampling, remaining quotas, or desired label balances. Evaluate this single candidate in total isolation.
+7. **Form Invariance**: Scrutinize factual claims regardless of editorial form (e.g., interrogatives in `curiosityHook`, stylistic lead-ins, or rhetorical framing).
+
+---
+
+## 3. Adjudication Categories & Severity
+
+Determine the primary decision:
+- `APPROVE`: Copy satisfies `A_PRIME_PRODUCTION_MATERIALITY_V1`. Non-material editorial inference or harmless stylistic variation; no material plot, identity, motive, or causal inventions.
+- `REVISE`: Copy violates source boundaries and requires editorial revision.
+
+If `REVISE`, assign preliminary severity:
+- `MINOR`: A fixable unsupported concrete claim or overstatement that warrants bounded revision but is not a severe material failure.
+- `SEVERE`: A material contradiction, leak, invention, distortion, or unauthorized concrete detail likely to mislead a viewer or materially alter expectations.
+
+Check against the standard material violation categories:
+1. Material source-boundary violation
+2. Harmless stylistic variation (Tolerated under `APPROVE`)
+3. Unsupported factual concretization
+4. Unsupported causal/mechanistic inference
+5. Alias / terminology substitution
+6. Setting / duration / quantity escalation
+7. External-lore import
+8. Spoiler / reveal boundary violation
+
+---
+
+## 4. Input Blind Packet Format
+
+You will be supplied with a JSON object conforming to `blind-human-review-packet.schema.v1.json`:
+- `candidateId`: unique candidate identifier
+- `facts`: verified baseline metadata (title, year, director, genres, countries, spokenLanguages, runtimeMinutes, overview)
+- `allowedSourceMaterial`: permitted source texts and keywords
+- `acceptedSemanticClassification`: authorized experiential and mood classifications
+- `semanticBoundaryRules` / `spoilerBoundaryRules`: boundary constraints
+- `visibleEditorialCopy`:
+  - `description`: core synopsis
+  - `whyWatch`: recommendation hook
+  - `curiosityHook`: engagement question
+  - `vibeSummary`: atmospheric summary
+- `sourcePacketHash`: SHA-256 hash of the source packet
+
+---
+
+## 5. Required Output Contract
+
+You must output strictly valid, parseable JSON conforming to `preliminary-advisory-review.schema.v1.json`:
+
+```json
+{
+  "preliminaryDecision": "APPROVE" | "REVISE",
+  "preliminarySeverity": "MINOR" | "SEVERE" | null,
+  "affectedFields": ["description" | "whyWatch" | "curiosityHook" | "vibeSummary"],
+  "issueSummaries": [
+    "Concise description of identified issue"
+  ],
+  "claimSpan": "Exact text substring from copy or empty string if clean",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview" | "allowedSourceMaterial.overview" | "facts.genres" | "other",
+      "supportFound": true | false,
+      "notes": "Explanation of support or lack thereof"
+    }
+  ],
+  "sourceBoundaryReason": "Concise justification under A_PRIME_PRODUCTION_MATERIALITY_V1",
+  "uncertaintyNotes": "Any ambiguity in source interpretation, or null",
+  "confidence": "LOW" | "MEDIUM" | "HIGH",
+  "advisoryOnly": true
+}
+```
+
+Constraints:
+- If `preliminaryDecision` is `APPROVE`: `preliminarySeverity` MUST be `null`, `affectedFields` MUST be `[]`, and `issueSummaries` MUST be `[]`.
+- If `preliminaryDecision` is `REVISE`: `preliminarySeverity` MUST be `"MINOR"` or `"SEVERE"`, `affectedFields` MUST contain $\ge 1$ field, and `issueSummaries` MUST contain $\ge 1$ item.
+- `advisoryOnly` MUST be `true`.
+
+---
+
+## 6. Authority Disclaimer
+
+This evaluation is an ADVISORY PRELIMINARY OPINION under `VERIFIER_BLINDED_AI_ASSISTED_HUMAN_ADJUDICATION`. Sophia Zhao makes the authoritative final human decision. Model preliminary opinions cannot become ground truth automatically.
+
+
+## REVIEW PACKET
+
+{"acceptedSemanticClassification":{"attentionDemand":"easy","discoveryStyle":"familiar","emotionalWeight":"light","filterLanguages":["English"],"moods":["emotional","thoughtful"],"pace":"medium","situations":["family","easy-watch"]},"allowedSourceMaterial":{"keywords":[],"overview":"Ebenezer Scrooge is far too greedy to understand that Christmas is a time for kindness and generosity. But with the guidance of some new found friends, Scrooge learns to embrace the spirit of the season. A retelling of the classic Dickens tale with Disney's classic characters."},"candidateId":"scale500-tmdb-14813","copyConstraints":{"curiosityHook":{"maxChars":170,"minChars":50},"description":{"maxChars":220,"minChars":80},"vibeSummary":{"maxChars":150,"minChars":45},"whyWatch":{"maxChars":180,"minChars":60}},"facts":{"countries":["United States of America"],"director":"Burny Mattinson","genres":["Animation","Family"],"keywords":["anthropomorphism","carol","cartoon","cartoon dog","cartoon duck","cartoon mouse","christmas","featurette","ghost","short film","xmas"],"overview":"Ebenezer Scrooge is far too greedy to understand that Christmas is a time for kindness and generosity. But with the guidance of some new found friends, Scrooge learns to embrace the spirit of the season. A retelling of the classic Dickens tale with Disney's classic characters.","posterPath":"/hOuEgnB9jfVneEsulMcqEJE4kSL.jpg","runtimeMinutes":25,"spokenLanguages":["English"],"title":"Mickey's Christmas Carol","year":1983},"sourcePacketHash":"sha256:e714aafa069b79210f23399d289c66edb4d33ba49c9ce66f5fdc17ee4d404d26","spoilerBoundaryRules":{"allowed":["characters or central subjects","starting situation","premise","initial conflict","tone","texture","viewing experience"],"excluded":["major reversals","hidden identities","later deaths","culprit information","late relationship outcomes","third-act events","endings","later revelations"]},"visibleEditorialCopy":{"curiosityHook":"Can a stubborn miser truly change his ways before the season passes him by?","description":"Blinded by greed, Ebenezer Scrooge rejects the spirit of Christmas until newfound visitors arrive to guide him toward kindness in this animated retelling of the classic Dickens story starring iconic Disney characters.","vibeSummary":"Light, thoughtful, and comfortably paced for an easy family-friendly holiday viewing.","whyWatch":"At a breezy twenty-five minutes, Burny Mattinson's animated adaptation pairs timeless holiday sentiment with beloved classic characters for a gentle, family-friendly watch."}}

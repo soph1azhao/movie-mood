@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports the Christmas Eve setting, two neurotics working at a suicide hotline, and their office visit from an unpredictable mix of characters (pregnant woman, abusive boyfriend, cross-dresser) sparking a catastrophe."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly verifies the Comedy genre, supporting the 'French farce', 'comedy', and 'situational humor' descriptions across visible copy."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies Jean-Marie Poiré, facts.countries verifies France, and runtimeMinutes verifies 88 minutes. Accepted semantic classification directly supports pace: fast ('fast', 'fast-paced', 'relentless momentum'), emotionalWeight: light ('lighthearted'), attentionDemand: easy and situations: easy-watch ('easy-watching'), and moods: funny."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly complies with A_PRIME_PRODUCTION_MATERIALITY_V1. The narrative premise, holiday setting, and core situational conflict in the description and curiosityHook faithfully track the authorized overview without violating setup-only spoiler boundaries. Phrasing such as 'volunteers staffing a suicide hotline', 'cramped office', and summarizing the visitors as an 'unpredictable mix of eccentric visitors' functions as acceptable low-risk contextual concretization and atmospheric genre shorthand rather than a material factual claim, while experiential descriptors in whyWatch and vibeSummary perfectly match verified metadata and authorized semantic classifications.",
+  "uncertaintyNotes": "In description, describing the hotline workers as 'volunteers' slightly concretizes the overview's 'working for a suicide hotline'. Under a strict literal extraction standard, volunteer status is not explicitly stated; however, under A_PRIME_PRODUCTION_MATERIALITY_V1, this represents non-material contextual phrasing that does not alter plot mechanics, character relationships, or viewer decision-making, and curiosityHook uses the neutral term 'hotline workers'.",
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

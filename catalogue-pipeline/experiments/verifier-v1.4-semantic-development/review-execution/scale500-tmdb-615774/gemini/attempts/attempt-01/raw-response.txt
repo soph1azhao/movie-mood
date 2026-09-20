@@ -1,0 +1,32 @@
+{
+  "preliminaryDecision": "REVISE",
+  "preliminarySeverity": "MINOR",
+  "affectedFields": [
+    "vibeSummary"
+  ],
+  "issueSummaries": [
+    "The vibeSummary characterizes the film as 'fast-moving', which overstates the narrative tempo and conflicts with the authorized classification of pace: 'medium'."
+  ],
+  "claimSpan": "fast-moving",
+  "sourceEvidence": [
+    {
+      "source": "other",
+      "supportFound": false,
+      "notes": "acceptedSemanticClassification explicitly classifies pace as 'medium'. Describing the film as 'fast-moving' in vibeSummary escalates the narrative tempo toward 'fast', misrepresenting a primary decision-relevant experiential axis."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports Scooby-Doo and the gang winning an all-expense-paid tropical vacation, arriving at an island resort reminiscent of their prior zombie encounter, and zombies re-emerging to attack their hotel."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly verifies Animation, Comedy, Family, Horror, and Mystery genres reflected across description, whyWatch, and vibeSummary."
+    }
+  ],
+  "sourceBoundaryReason": "Under closed-world source authority and A_PRIME_PRODUCTION_MATERIALITY_V1, experiential descriptors in visible copy must remain accurately calibrated to the authorized acceptedSemanticClassification. Characterizing the film as 'fast-moving' in vibeSummary overstates narrative tempo against the classified pace of 'medium', introducing an unsupported pace escalation on a decision-relevant viewer expectation axis. Because this is a localized, easily fixable phrasing issue that does not distort plot mechanics, character identity, or spoiler boundaries, it represents a MINOR defect requiring revision.",
+  "uncertaintyNotes": "The description and curiosityHook faithfully track the authorized overview and avoid the external franchise-lore leakage ('unmasking countless con artists') that affected the 1998 predecessor entry, properly grounding the 'prior brush with the undead' in the authorized synopsis. In whyWatch, 'breezy 80 minutes' functions as an acceptable description of a short runtime and easy attention demand, but 'fast-moving' in vibeSummary directly asserts an unsupported fast pace.",
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

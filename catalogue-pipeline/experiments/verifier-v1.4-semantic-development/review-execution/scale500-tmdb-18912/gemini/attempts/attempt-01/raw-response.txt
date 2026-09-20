@@ -1,0 +1,31 @@
+```json
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports the killer freshly released from prison breaking into a remote home with a woman, her daughter, and her disabled son."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly confirms the 'crime thriller' and 'horror thriller' genre designations across description and whyWatch."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "Baseline metadata confirms Gerald Kargl (director), 1983 (year), Austria (country), and 75 minutes (runtime). Accepted semantic classification fully supports heavy emotional weight, suspenseful mood, and the alone viewing context."
+    }
+  ],
+  "sourceBoundaryReason": "All visible copy stays strictly within the authorized packet under A_PRIME_PRODUCTION_MATERIALITY_V1. Phrases such as 'trapped inside' and 'family's fight to survive within their own walls' represent low-risk genre shorthand and metaphorical urgency reflecting the authorized home-invasion setup without asserting ungrounded factual claims, mechanics, spoilers, or external lore.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}
+
+```

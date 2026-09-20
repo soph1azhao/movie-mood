@@ -1,0 +1,33 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "allowedSourceMaterial.overview",
+      "supportFound": true,
+      "notes": "Directly supports the central biographical arc: Edith Piaf raised in a brothel and on the streets of Belleville, Paris, discovered in 1935 by nightclub owner Louis Leplée, battling extreme nervousness/stage fright, and rising as an immortal 20th-century icon through a life defined by the struggle to sing and survive."
+    },
+    {
+      "source": "facts.director",
+      "supportFound": true,
+      "notes": "Directly verifies Olivier Dahan as director."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly validates Drama and Music classifications."
+    },
+    {
+      "source": "acceptedSemanticClassification",
+      "supportFound": true,
+      "notes": "Directly supports experiential attributes: 'heavy' emotional weight, 'medium' pace ('measured'), 'emotional' mood ('passionate'), 'engaged' attention demand ('focused'), and 'alone' situation ('solitary')."
+    }
+  ],
+  "sourceBoundaryReason": "All editorial copy strictly aligns with authorized packet facts, semantic classifications, and overview narrative elements. Descriptive phrasing such as 'crippling nerves', 'stage fright', and 'sheer grit' constitutes permissible colloquial compression, genre shorthand, and rhetorical framing under A_PRIME_PRODUCTION_MATERIALITY_V1, introducing no unsupported plot mechanics, external lore, or spoiler boundary violations.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

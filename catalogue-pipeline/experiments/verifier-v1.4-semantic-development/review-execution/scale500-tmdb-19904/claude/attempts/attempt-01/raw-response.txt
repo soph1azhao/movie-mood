@@ -1,0 +1,33 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "description: Michael Harding returning from military school, his mother living happily with her new boyfriend David, and Michael's growing suspicion of David's helpfulness all restate the overview. 'Discovers' paraphrases 'finds'. 'As they share the house' is a light inference from the mother living with David and Michael returning home. 'Excessively helpful demeanor' intensifies 'always there with a helpful hand'. 'Deep suspicion' paraphrases 'more and more suspicious'."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "curiosityHook: the question mirrors the overview's closing question ('Is he really the man of her dreams or could David be hiding a dark side?'). 'Dangerous secret' and 'helpful smile' are figurative renderings of 'dark side' and 'helpful hand'. 'Pretends to be' is discussed under uncertaintyNotes. The hook is interrogative and asserts no answer."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "vibeSummary and whyWatch: 'horror-thriller', 'domestic thriller' and 'taut' are consistent with genres Horror/Thriller and the home-based premise. 'Nelson McCormick' matches director. 'Claustrophobic dread' and 'sinister side' are tonal shorthand built on the suspicion premise."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "acceptedSemanticClassification: 'Steady' matches pace=medium. 'Suspenseful' matches moods. 'Moderate emotional stakes' matches emotionalWeight=moderate. 'Engaged solo watch' matches attentionDemand=engaged and situations=[alone]. Keyword-only material ('stepfather', 'remake', 'ominous') is not imported."
+    }
+  ],
+  "sourceBoundaryReason": "Every concrete claim (Michael Harding, the return from military school, the mother happily in love with her new boyfriend David, David's helpfulness, Michael's growing suspicion, the open question about a dark side, the director, the genres) is grounded in the authorized overview. The remaining language ('excessively helpful', 'dangerous secret', 'helpful smile', 'suburban unease', 'claustrophobic dread') is figurative language, genre shorthand or minor atmospheric inference. None of it works as a meaningful new factual claim about plot mechanics, identities, relationships, motives or causality under A_PRIME_PRODUCTION_MATERIALITY_V1. The copy preserves the packet's own ambiguity about David and states no reveal, later event or ending, so no spoiler-boundary content appears.",
+  "uncertaintyNotes": "Three items sit near the tolerance line. 'The ideal partner he pretends to be' presupposes that David is pretending, where the overview leaves open whether he is 'really the man of her dreams'. I read it as rhetorical framing inside a question that still poses the alternatives, and it names no confirmed deception. 'Suburban' in vibeSummary adds a setting the overview does not state. 'Excessively' slightly sharpens 'always there with a helpful hand'. A stricter adjudicator could ask for 'pretends to be' to become 'appears to be' and for 'suburban' to be dropped, in which case they would be MINOR presupposition and setting concretizations.",
+  "confidence": "MEDIUM",
+  "advisoryOnly": true
+}

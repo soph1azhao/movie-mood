@@ -1,0 +1,27 @@
+{
+  "preliminaryDecision": "REVISE",
+  "preliminarySeverity": "MINOR",
+  "affectedFields": [
+    "description"
+  ],
+  "issueSummaries": [
+    "The description specifies 'October 1962', introducing an ungrounded calendar month not authorized in the packet, which dates the premise solely to the year '1962'."
+  ],
+  "claimSpan": "October 1962",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": false,
+      "notes": "States 'The story of the Cuban Missile Crisis in 1962', authorizing the year 1962 but not the specific calendar month 'October'."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies Roger Donaldson, runtimeMinutes verifies 145 minutes, and facts.genres confirms History and Thriller. Accepted semantic classification fully supports the tense mood, deliberate pace, heavy emotional weight, and engaged focus across whyWatch and vibeSummary."
+    }
+  ],
+  "sourceBoundaryReason": "Under closed-world source authority and A_PRIME_PRODUCTION_MATERIALITY_V1, editorial copy must not import external historical facts or calendar-level specificity absent from the authorized packet. While the year 1962 is grounded in facts.overview, introducing the specific month 'October' constitutes an unsupported factual concretization (EXTERNALLY_TRUE_BUT_UNAUTHORIZED_DETAIL) drawn from pre-training encyclopedic knowledge. Because this addition does not distort plot mechanics, causality, or character relationships, it represents a fixable MINOR defect rather than a SEVERE material failure.",
+  "uncertaintyNotes": "Under a more permissive interpretation of A_PRIME_PRODUCTION_MATERIALITY_V1, adding 'October' to '1962' for the Cuban Missile Crisis might be regarded as a harmless minor contextual concretization that does not mislead viewer expectations. However, under strict closed-world source constraints where unprovided external temporal specifics are excluded, it constitutes an unauthorized factual addition. Furthermore, curiosityHook's phrasing 'surveillance reveals' concretizes the authorized 'discovery by the Americans', but functions within bounds as low-risk genre shorthand for Cold War intelligence discovery.",
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

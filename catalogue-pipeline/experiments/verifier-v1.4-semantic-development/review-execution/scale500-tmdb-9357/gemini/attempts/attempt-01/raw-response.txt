@@ -1,0 +1,20 @@
+cd /Users/hermes/code/movie-mood
+
+CANDIDATE_ID="scale500-tmdb-9357"
+export GEMINI_UI_LABEL="flash 3.8 extended"
+
+pbpaste > "/tmp/verifier-v14-${CANDIDATE_ID}-gemini-response.txt"
+
+node catalogue-pipeline/scripts/runVerifierV14ManualReview.mjs \
+  ingest "$CANDIDATE_ID" GEMINI \
+  "/tmp/verifier-v14-${CANDIDATE_ID}-gemini-response.txt" \
+  --visible-model-label "$GEMINI_UI_LABEL"
+
+node catalogue-pipeline/scripts/runVerifierV14ManualReview.mjs \
+  status "$CANDIDATE_ID"
+
+node catalogue-pipeline/scripts/runVerifierV14ManualReview.mjs \
+  bundle "$CANDIDATE_ID"
+
+python3 -m json.tool \
+  "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/review-execution/${CANDIDATE_ID}/human-review-bundle.v1.json"

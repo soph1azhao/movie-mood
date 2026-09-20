@@ -1,0 +1,33 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "allowedSourceMaterial.overview",
+      "supportFound": true,
+      "notes": "Directly supports the setting in Paris, the protagonist being a thirteen-year-old French girl, and the dual conflicts of adjusting to a new school and coping with her parents' divorce."
+    },
+    {
+      "source": "facts.director",
+      "supportFound": true,
+      "notes": "Directly confirms Claude Pinoteau as the director."
+    },
+    {
+      "source": "acceptedSemanticClassification",
+      "supportFound": true,
+      "notes": "Directly supports experiential framing and emotional tone ('easy', 'funny', 'emotional')."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Confirms 'Comedy', 'Drama', and 'Romance' genre context, supporting phrasing around comic charm, domestic friction, and bittersweet growing pains."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy adheres closely to authorized baseline facts and semantic classifications. Phrasing such as 'awkward rush of adolescent freedom', 'teen social life', and 'bittersweet momentum' constitutes permissible atmospheric inference and genre shorthand under A_PRIME_PRODUCTION_MATERIALITY_V1, introducing no unauthorized factual claims, distortions, or spoiler violations.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

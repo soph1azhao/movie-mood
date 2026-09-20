@@ -1,0 +1,31 @@
+```json
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports the premise of an unmanned space shuttle crashing on an uncharted planet and NASA launching a trio of astronaut chimpanzees into a wormhole to investigate."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly verifies the descriptors across all fields: Adventure, Animation, Comedy, Family, and Science Fiction."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "Facts confirm Kirk DeMicco as director and the 81-minute runtime. Accepted semantic classification fully grounds the fast pace, light emotional weight, easy attention demand, funny/exciting moods, and family/easy-watch viewing situations."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly complies with A_PRIME_PRODUCTION_MATERIALITY_V1. The description and curiosityHook faithfully adhere to the authorized starting premise without introducing ungrounded plot mechanics, external franchise lore, or third-act spoilers. Terms such as 'primate crew' and 'alien world' are standard synonyms and low-risk stylistic paraphrases, while whyWatch and vibeSummary cleanly map to verified metadata and authorized experiential classifications.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}
+
+```

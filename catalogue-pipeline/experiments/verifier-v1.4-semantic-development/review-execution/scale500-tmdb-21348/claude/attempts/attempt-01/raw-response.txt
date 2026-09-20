@@ -1,0 +1,33 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "description: the West African folk-tale origin, the newborn boy Kirikou, the village, and the sorceress Karaba all restate the overview. 'Sets out to protect' paraphrases 'saves'. 'Imperiled' is implied by the village needing to be saved. 'Powerful' echoes 'evil' as a characterization flourish. 'Sorceress' for 'witch' is a light terminology variation supported by the title, 'Kirikou and the Sorceress'. 'Michel Ocelot' and 'animated adventure' match director and genres."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "curiosityHook: 'newborn boy', 'formidable sorceress' and 'rescue his endangered village' restate the overview. 'Clever' and 'outwit' characterize how he prevails, and they are discussed under uncertaintyNotes. The interrogative asserts no outcome."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "whyWatch and vibeSummary: 'fantasy adventure', 'animated journey' and 'family-friendly' are consistent with genres Adventure/Animation/Family/Fantasy. '71-minute' matches runtimeMinutes. 'Reimagines traditional folklore' echoes 'drawn from elements of West African folk tales'. 'Visually distinctive', 'vibrant' and 'spirited' are evaluative flourishes."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "acceptedSemanticClassification: 'Exciting' matches mood exciting. 'Accessible' and 'family-friendly' match attentionDemand=easy and situations=[family, easy-watch]. 'Brisk' is slightly off pace=medium and is tonal only. Keyword-only material (supersteiner, power of goodness, bad witch) is not imported."
+    }
+  ],
+  "sourceBoundaryReason": "Every concrete claim (the West African folk-tale basis, the newborn Kirikou, the village, the sorceress Karaba, the director, runtime and genres) is grounded in the authorized overview. The remaining language ('precocious', 'immediately sets out', 'clever', 'outwit', 'powerful', 'imperiled') is figurative characterization or minor contextual concretization. None of it works as a meaningful new factual claim about plot mechanics, identities, relationships or causality under A_PRIME_PRODUCTION_MATERIALITY_V1. The copy stays at the premise and initial conflict, and the hook is a question that asserts no outcome, so no spoiler-boundary content appears.",
+  "uncertaintyNotes": "Three items sit near the tolerance line. 'Immediately sets out' adds a timing claim the overview does not make. 'Outwit' implies cleverness as the means of prevailing, where the overview says only that he saves the village. 'Precocious' is a characterization that the overview does not state, although it follows naturally from a newborn who saves a village. I read all three as figurative shorthand that names no new event, relationship or outcome. A stricter adjudicator could ask for 'immediately' and 'outwit' to be softened toward 'saves', in which case they would be MINOR timing and mechanism concretizations. 'Brisk' sits slightly against the accepted pace of medium and is tonal only.",
+  "confidence": "MEDIUM",
+  "advisoryOnly": true
+}

@@ -1,0 +1,9 @@
+pbpaste > "/tmp/verifier-v14-${CANDIDATE_ID}-gemini-response.txt"
+
+node catalogue-pipeline/scripts/runVerifierV14ManualReview.mjs ingest "$CANDIDATE_ID" GEMINI "/tmp/verifier-v14-${CANDIDATE_ID}-gemini-response.txt" --visible-model-label "$GEMINI_UI_LABEL"
+
+node catalogue-pipeline/scripts/runVerifierV14ManualReview.mjs prepare "$CANDIDATE_ID" CLAUDE
+
+CLAUDE_PAYLOAD="catalogue-pipeline/experiments/verifier-v1.4-semantic-development/review-execution/${CANDIDATE_ID}/manual/claude/attempt-01/submission-payload.v1.txt"
+
+pbcopy < "$CLAUDE_PAYLOAD"

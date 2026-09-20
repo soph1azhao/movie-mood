@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports teenage twins David and Jennifer being drawn into the black-and-white world of a 1950s sitcom where peachy keen/peaceful routine is disrupted by modern attitudes bringing literal color."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly confirms the 'fantasy', 'comedy', and 'drama' genre labels used across whyWatch and vibeSummary."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies Gary Ross. Accepted semantic classification directly supports 'steady' (pace: medium), 'thoughtful' (moods), 'engaged' (attentionDemand: engaged), 'moderate-weight' (emotionalWeight: moderate), and 'family viewing' (situations: family)."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly complies with A_PRIME_PRODUCTION_MATERIALITY_V1. The premise, character identities, and core visual concept are completely grounded in the authorized overview. Evaluative framing such as 'study of conformity and awakening' represents non-material critical and thematic synthesis of the authorized sitcom setup, without asserting ungrounded plot mechanics, external trivia, or spoiler-boundary breaches.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

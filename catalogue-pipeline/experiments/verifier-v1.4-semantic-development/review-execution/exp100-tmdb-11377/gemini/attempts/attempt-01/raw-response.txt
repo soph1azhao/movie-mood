@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports the central premise: an amusement park mogul gathering an eclectic group of diverse people with an offer of $1 million to spend the night in a decrepit former mental institution."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly confirms the Horror genre, supporting 'horror remake' and 'haunted-asylum experience' framing across visible copy."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies William Malone, runtimeMinutes (93) verifies '93 minutes', and facts.keywords verifies 'remake' and 'lunatic asylum'. Accepted semantic classification directly grounds pace: medium ('steady pace'), emotionalWeight: moderate ('moderate emotional weight'), attentionDemand: engaged ('engaging'), moods: suspenseful ('Suspenseful', 'suspenseful'), and situations: easy-watch ('easy late-night viewing', 'accessible')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly complies with A_PRIME_PRODUCTION_MATERIALITY_V1. The synopsis and curiosity hook remain faithfully tethered to the authorized starting situation without introducing ungrounded plot mechanisms, character identities, or third-act spoiler revelations regarding the nature of the asylum's hauntings or survivor outcomes. Phrasing such as 'survive the night' and 'decaying asylum' represents legitimate, low-risk genre shorthand and contextual concretization anchored directly in the authorized overview and verified keywords ('Horror', 'lunatic asylum'), while experiential descriptors across whyWatch and vibeSummary cleanly map to verified metadata and authorized semantic tags.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

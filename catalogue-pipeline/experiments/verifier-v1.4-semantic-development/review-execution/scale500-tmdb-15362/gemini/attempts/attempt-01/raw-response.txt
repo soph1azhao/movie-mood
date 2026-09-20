@@ -1,0 +1,32 @@
+{
+  "preliminaryDecision": "REVISE",
+  "preliminarySeverity": "MINOR",
+  "affectedFields": [
+    "description"
+  ],
+  "issueSummaries": [
+    "The description introduces the specific first name 'Jacques' ('Jacques Mesrine'), an ungrounded external biographical detail not present in the authorized source packet, where the subject is identified solely by his surname 'Mesrine'."
+  ],
+  "claimSpan": "Jacques Mesrine",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": false,
+      "notes": "Refers to the subject solely by his surname 'Mesrine'; does not provide or authorize the first name 'Jacques'."
+    },
+    {
+      "source": "facts.title",
+      "supportFound": false,
+      "notes": "The authorized title is 'Mesrine: Public Enemy #1', which references only the surname 'Mesrine'."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies Jean-François Richet, facts.genres verifies Action/Crime/Drama/Thriller, and acceptedSemanticClassification fully supports the tone, pace, and emotional weight descriptors across whyWatch and vibeSummary."
+    }
+  ],
+  "sourceBoundaryReason": "Under closed-world source authority and A_PRIME_PRODUCTION_MATERIALITY_V1, editorial copy must not import external biographical facts or proper nouns absent from the authorized packet. While the surname 'Mesrine' is established by the title and overview, introducing the specific first name 'Jacques' constitutes an unsupported factual concretization (EXTERNALLY_TRUE_BUT_UNAUTHORIZED_DETAIL) drawn from external pre-training knowledge. Because this addition does not distort plot mechanics, causality, or character relationships, it represents a fixable MINOR defect rather than a SEVERE material failure.",
+  "uncertaintyNotes": "Under a more permissive interpretation of A_PRIME_PRODUCTION_MATERIALITY_V1, expanding the titular subject's surname 'Mesrine' to 'Jacques Mesrine' might be considered a harmless contextual specification that does not falsely specify identity or mislead viewer expectations. However, under strict closed-world source constraints where unprovided external proper nouns are excluded, it constitutes an unauthorized factual addition.",
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

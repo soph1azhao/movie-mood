@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports Officer Chan Ka Kui arresting/putting behind bars a major Hong Kong drug dealer virtually alone following a chase in a slum, and subsequently being tasked with protecting the boss's secretary Selina as a key witness to testify in court."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly verifies the Action, Comedy, and Crime genre framing ('crime thriller', 'physical comedy', 'high-impact action', 'comic energy') across visible copy."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies Jackie Chan. Accepted semantic classification directly grounds pace: fast ('fast-paced', 'relentless momentum'), emotionalWeight: moderate ('moderate crime stakes'), and moods: funny/exciting/suspenseful ('exciting', 'lighthearted comic energy', 'suspenseful witness-protection stakes')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy satisfies A_PRIME_PRODUCTION_MATERIALITY_V1. The narrative premise, central characters, and primary stakes in the description and curiosityHook faithfully track the authorized overview and strictly observe setup-only spoiler boundaries. Phrases such as 'hillside slum' and 'star witness' operate as legitimate, low-risk atmospheric inference and procedural shorthand (analogous to tolerated concepts like 'across the countryside') without asserting ungrounded plot mechanisms, distorting character relationships, or altering decision-relevant viewer expectations.",
+  "uncertaintyNotes": "The modifier 'hillside' in 'hillside slum' reflects real-world scene detail from the opening shantytown sequence not literally stated in the overview's 'inside a slum'. However, under production materiality tolerance, this functions as a harmless atmospheric terrain concretization rather than an unauthorized location escalation or material factual claim.",
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

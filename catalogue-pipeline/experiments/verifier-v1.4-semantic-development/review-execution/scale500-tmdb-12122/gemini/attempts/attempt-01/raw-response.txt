@@ -1,0 +1,33 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "allowedSourceMaterial.overview",
+      "supportFound": true,
+      "notes": "Directly supports the central premise: an unknown life form visiting an American village/town, leaving local women pregnant who give birth nine months later to seemingly normal babies that lack humanity."
+    },
+    {
+      "source": "facts.director",
+      "supportFound": true,
+      "notes": "Directly verifies John Carpenter as the director."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly validates Science Fiction, Horror, and Thriller genres."
+    },
+    {
+      "source": "acceptedSemanticClassification",
+      "supportFound": true,
+      "notes": "Directly supports experiential classifications: 'heavy' emotional weight, 'suspenseful' mood, 'medium' pace (steady pacing), and 'alone' viewing situation."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly adheres to authorized packet facts and semantic classifications. Phrasing such as 'simultaneously fall pregnant', 'domestic dread', 'parental paranoia', and 'alien-visitation horror' represents permissible contextual inference, atmospheric framing, and standard genre shorthand under A_PRIME_PRODUCTION_MATERIALITY_V1, introducing no unsupported factual claims, distortions, or spoiler boundary violations.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

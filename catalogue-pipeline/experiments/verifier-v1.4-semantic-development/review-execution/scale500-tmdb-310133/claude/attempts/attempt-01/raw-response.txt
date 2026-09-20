@@ -1,0 +1,42 @@
+{
+  "preliminaryDecision": "REVISE",
+  "preliminarySeverity": "MINOR",
+  "affectedFields": ["description", "curiosityHook"],
+  "issueSummaries": [
+    "description: 'stumbling upon an abandoned police cruiser' asserts a specific acquisition circumstance (the cruiser was unattended/abandoned) that is not established by allowedSourceMaterial.overview, which only says the kids took 'a sheriff's cruiser for a joy ride' without specifying whether the vehicle was abandoned or its owner was nearby.",
+    "description: 'ruthless sheriff' attributes a specific character trait/personality to the sheriff that is not supported by allowedSourceMaterial.overview, which contains no characterization of the sheriff beyond ownership of the cruiser.",
+    "curiosityHook: 'the cruiser's dangerous owner' similarly invents a character trait ('dangerous') for the sheriff that is not established by the authorized overview."
+  ],
+  "claimSpan": "an abandoned police cruiser",
+  "sourceEvidence": [
+    {
+      "source": "allowedSourceMaterial.overview",
+      "supportFound": true,
+      "notes": "Overview supports: two kids take a sheriff's cruiser for a joy ride and become the center of a deadly cat-and-mouse game. This grounds the premise, initial conflict, and general tone of description, curiosityHook, and vibeSummary."
+    },
+    {
+      "source": "allowedSourceMaterial.overview",
+      "supportFound": false,
+      "notes": "The overview does not state that the cruiser was abandoned or unattended; 'taking a sheriff's cruiser for a joy ride' is compatible with multiple acquisition scenarios, so specifying 'abandoned' is an unsupported concretization of circumstance."
+    },
+    {
+      "source": "allowedSourceMaterial.overview",
+      "supportFound": false,
+      "notes": "No personality/character trait for the sheriff (e.g., 'ruthless', 'dangerous') is established by the overview. The overview identifies the sheriff only via possession of the cruiser."
+    },
+    {
+      "source": "facts",
+      "supportFound": true,
+      "notes": "whyWatch's '88 minutes' matches facts.runtimeMinutes exactly; description's attribution to director Jon Watts and framing as a 'crime thriller' align with facts.director and facts.genres (Crime, Thriller)."
+    },
+    {
+      "source": "acceptedSemanticClassification",
+      "supportFound": true,
+      "notes": "vibeSummary's 'fast, taut... sharp suspense and engaged focus' directly reflects the authorized pace (fast), moods (suspenseful), and attentionDemand (engaged) classifications."
+    }
+  ],
+  "sourceBoundaryReason": "Per A_PRIME_PRODUCTION_MATERIALITY_V1, unsupported additions require intervention when they materially specify factual attributes or identity/relationship traits not established by the authorized packet. 'Abandoned' concretizes an unstated circumstance of the cruiser's acquisition, and 'ruthless'/'dangerous' attribute unestablished character traits to the sheriff. These are bounded, fixable overstatements — not inventions of plot mechanics, causality, or spoiler-boundary material — so MINOR is appropriate rather than SEVERE. Excluding facts.keywords from authorization (per prior guidance) means these traits cannot be grounded even though 'corrupt sheriff' appears there.",
+  "uncertaintyNotes": "If facts.keywords were treated as part of the authorized source (contra the prior instruction to disregard them), 'corrupt sheriff' could arguably support a 'dangerous'/'ruthless' characterization; under the current closed-world reading restricted to allowedSourceMaterial and core facts, this support is absent.",
+  "confidence": "MEDIUM",
+  "advisoryOnly": true
+}

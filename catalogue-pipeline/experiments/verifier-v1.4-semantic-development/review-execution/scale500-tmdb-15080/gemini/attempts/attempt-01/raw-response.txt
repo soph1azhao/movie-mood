@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports Taeko moving between past and present, confronting childhood memories and youth, and questioning whether she has remained true to the dreams of her childhood self."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly verifies the Animation and Drama genre designations utilized across visible copy."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies Isao Takahata. Accepted semantic classification directly grounds pace: slow ('slow-paced', 'patient'), moods: [thoughtful, emotional] ('thoughtful', 'gently emotional'), emotionalWeight: moderate ('delicate emotional weight'), attentionDemand: engaged ('demanding attentive'), and situations: alone ('solo viewing')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly complies with A_PRIME_PRODUCTION_MATERIALITY_V1. The narrative premise and reflective internal conflict in the description and curiosityHook faithfully adhere to the authorized overview without importing ungrounded plot specifics (such as countryside safflower farming or rural romance), external studio lore (such as Studio Ghibli), or third-act spoiler revelations. Experiential and tonal descriptors across whyWatch and vibeSummary map cleanly to verified metadata and accepted semantic classifications.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

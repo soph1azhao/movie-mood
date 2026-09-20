@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports the New York City setting, a corrupt police detective struggling with severe drug and gambling addictions, his investigation into the rape of a young nun, and his attempt to change his ways and seek forgiveness."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly confirms the Crime and Drama genres, grounding the procedural grit and moral drama framing across the visible copy."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies Abel Ferrara. Accepted semantic classification directly grounds emotionalWeight: heavy ('emotionally heavy'), moods: suspenseful ('suspenseful'), attentionDemand: engaged ('full attention'), and situations: alone ('alone')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly adheres to A_PRIME_PRODUCTION_MATERIALITY_V1. The premise, protagonist traits, and central conflict in description and curiosityHook faithfully track the authorized overview while rigorously respecting setup-only spoiler boundaries. The critical and atmospheric framing in whyWatch and vibeSummary cleanly reflects verified baseline facts and authorized experiential classifications without importing external casting lore (e.g., Harvey Keitel), rating controversy, or third-act narrative developments.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

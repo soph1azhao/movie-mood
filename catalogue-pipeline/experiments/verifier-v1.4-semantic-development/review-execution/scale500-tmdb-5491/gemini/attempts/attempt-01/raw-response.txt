@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports the year 3000 setting, the Psychlos stripping Earth of resources and enslaving humans, humanity descending into a primitive state, and Tyler's capture and task to save mankind under the rule of Terl."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly confirms the 'Action', 'Adventure', and 'Science Fiction' genre descriptors utilized across whyWatch and vibeSummary."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies Roger Christian. Accepted semantic classification directly grounds pace: fast ('fast-moving', 'fast-paced'), moods: exciting ('exciting'), emotionalWeight: moderate ('moderate emotional weight'), discoveryStyle: adventurous ('adventurous'), and situations: friends ('crowd watch')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible copy strictly satisfies A_PRIME_PRODUCTION_MATERIALITY_V1. The narrative setup in description and curiosityHook remains anchored to the authorized overview without importing external franchise, authorial, or real-world background lore (such as L. Ron Hubbard, Scientology, or production reception). Expressions such as 'spark a fight to reclaim mankind's future' and 'Terl's empire' function as legitimate, low-risk genre shorthand reflecting the authorized alien enslavement and rebellion premise.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

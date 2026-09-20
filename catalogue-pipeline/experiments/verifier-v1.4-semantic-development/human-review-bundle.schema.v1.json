@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "HumanReviewBundleV1",
+  "description": "Deterministic presentation bundle delivered to Sophia Zhao for authoritative human adjudication. Contains only the blind packet, validated Gemini and Claude advisories, and cryptographic integrity hashes. Strictly excludes quota pressure, candidate verifier outcomes, and other candidate details.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "status",
+    "candidateId",
+    "blindPacketSha256",
+    "geminiAdvisoryEnvelopeSha256",
+    "claudeAdvisoryEnvelopeSha256",
+    "materialityPolicySha256",
+    "blindPacket",
+    "geminiAdvisory",
+    "claudeAdvisory",
+    "validationStatus"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "schemaVersion": {
+      "type": "string",
+      "const": "human-review-bundle.v1"
+    },
+    "status": {
+      "type": "string",
+      "const": "READY_FOR_HUMAN_ADJUDICATION"
+    },
+    "candidateId": {
+      "type": "string",
+      "pattern": "^(scale500|exp100)-tmdb-[0-9]+$"
+    },
+    "blindPacketSha256": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "geminiAdvisoryEnvelopeSha256": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "claudeAdvisoryEnvelopeSha256": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "materialityPolicySha256": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "blindPacket": {
+      "type": "object",
+      "description": "Canonical projected blind review packet"
+    },
+    "geminiAdvisory": {
+      "type": "object",
+      "description": "Validated Gemini preliminary advisory opinion"
+    },
+    "claudeAdvisory": {
+      "type": "object",
+      "description": "Validated Claude preliminary advisory opinion"
+    },
+    "validationStatus": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "geminiValidated",
+        "claudeValidated",
+        "packetHashMatched"
+      ],
+      "properties": {
+        "geminiValidated": {
+          "type": "boolean",
+          "const": true
+        },
+        "claudeValidated": {
+          "type": "boolean",
+          "const": true
+        },
+        "packetHashMatched": {
+          "type": "boolean",
+          "const": true
+        }
+      }
+    }
+  }
+}

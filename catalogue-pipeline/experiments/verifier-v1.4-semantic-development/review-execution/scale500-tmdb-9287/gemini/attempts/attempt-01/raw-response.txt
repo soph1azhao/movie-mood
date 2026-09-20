@@ -1,0 +1,23 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "allowedSourceMaterial.overview",
+      "supportFound": true,
+      "notes": "The premise of two estranged brothers spending Christmas with their mother while she attempts to reconcile them directly grounds the synopsis, hook, and thematic descriptions."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Verified genres (Western, Comedy, Romance) and director Terence Hill support the framing of Western comedy, comedic bickering, and romance."
+    }
+  ],
+  "sourceBoundaryReason": "The editorial copy stays within authorized source boundaries. Descriptive characterizations such as 'ambitious mother', 'mutually hostile brothers', and 'domestic friction' represent low-risk stylistic framing, genre shorthand, and thematic inference fully permitted under A_PRIME_PRODUCTION_MATERIALITY_V1 without asserting new material facts.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

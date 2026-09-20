@@ -1,0 +1,124 @@
+# MOVIE MOOD V8.2 — PRELIMINARY ADVISORY REVIEW
+Reviewer: CLAUDE
+Review Sequence Index: 68
+Candidate ID: scale500-tmdb-11479
+Blind Packet SHA-256: sha256:982d4ec63bbf5c643bfe8bc1305b46a8d9e9f1732f3ff523a54c3420b9a0bc6e
+Prompt SHA-256: sha256:de665f3e3157ccbbf896d6af2ae86e7c7e83fc2501e1be069ba50613d4d70628
+Materiality Policy SHA-256: sha256:21661892df4d1b009341b6d34de3bf5ad1ae17e3447abbdace15e1c31a5b843c
+------------------------------------------------------------
+
+# Candidate Verifier v1.4 — Claude Preliminary Source-Boundary Review Prompt
+
+- **Version**: `verifier-v14-claude-preliminary.v1`
+- **Workflow**: `VERIFIER_BLINDED_AI_ASSISTED_HUMAN_ADJUDICATION`
+- **Adjudication Standard**: `A_PRIME_PRODUCTION_MATERIALITY_V1` (`sha256:21661892df4d1b009341b6d34de3bf5ad1ae17e3447abbdace15e1c31a5b843c`)
+- **Role**: Independent Advisory Reviewer (Claude)
+- **Authority Level**: ADVISORY ONLY (Non-Authoritative; Final Ground Truth is Sophia Zhao)
+- **Model Independence**: Strictly isolated from Gemini preliminary opinions, verifier predictions, cohort quota tracking, and repair histories.
+
+---
+
+## 1. Task Objective
+
+You are an independent preliminary reviewer providing an advisory source-boundary opinion for Movie Mood editorial copy.
+Sophia Zhao makes the authoritative final human adjudication under `VERIFIER_BLINDED_AI_ASSISTED_HUMAN_ADJUDICATION`.
+Your sole role is to review a blinded candidate packet and determine whether the visible editorial copy (`description`, `whyWatch`, `curiosityHook`, `vibeSummary`) satisfies the frozen production materiality standard (`A_PRIME_PRODUCTION_MATERIALITY_V1`) against the supplied authorized source packet.
+
+---
+
+## 2. Review Invariants & Epistemic Boundaries
+
+1. **Closed-World Source Authority**: Judge claims solely against the supplied packet facts (`facts`, `allowedSourceMaterial`, `acceptedSemanticClassification`). Real-world movie facts, external encyclopedic knowledge, plot summaries, franchise lore, or personal movie familiarity MUST be strictly ignored. If a detail is absent from the packet, it is ungrounded.
+2. **Materiality Standard Principle (`A_PRIME_PRODUCTION_MATERIALITY_V1`)**:
+   > "Editorial inference is acceptable when it does not materially alter a viewer's understanding or expectation of the film. Low-risk figurative language, genre shorthand, atmospheric inference, metaphorical urgency, and minor contextual concretization may be accepted even when not literally stated in the authorized packet, provided they do not function as a meaningful new factual claim. Unsupported additions require intervention when they materially change or falsely specify plot mechanics, identity, relationships, motives, causality, factual attributes, locations, quantities, franchise history, spoiler boundaries, or other decision-relevant viewer expectations."
+3. **Key Distinction**:
+   > "minor unsupported flourish != severe factual/source-boundary failure"
+   Illustrative tolerated concepts include: "before mom returns", "sacred flame", "iconic allies", "fracturing loyalties", "corrupt certainty", "digital and physical maps", "across the countryside".
+4. **No External Context**: You must not use external web search, model pre-training recall about the film, or assumptions based on genre or actors.
+5. **No Verifier Predictions**: You have not been provided with, and must not attempt to guess or mimic, Candidate Verifier predictions or risk classifications.
+6. **No Quota Awareness**: You have zero visibility into cohort sampling, remaining quotas, or desired label balances. Evaluate this single candidate in total isolation.
+7. **Form Invariance**: Scrutinize factual claims regardless of editorial form (e.g., interrogatives in `curiosityHook`, stylistic lead-ins, or rhetorical framing).
+
+---
+
+## 3. Adjudication Categories & Severity
+
+Determine the primary decision:
+- `APPROVE`: Copy satisfies `A_PRIME_PRODUCTION_MATERIALITY_V1`. Non-material editorial inference or harmless stylistic variation; no material plot, identity, motive, or causal inventions.
+- `REVISE`: Copy violates source boundaries and requires editorial revision.
+
+If `REVISE`, assign preliminary severity:
+- `MINOR`: A fixable unsupported concrete claim or overstatement that warrants bounded revision but is not a severe material failure.
+- `SEVERE`: A material contradiction, leak, invention, distortion, or unauthorized concrete detail likely to mislead a viewer or materially alter expectations.
+
+Check against the standard material violation categories:
+1. Material source-boundary violation
+2. Harmless stylistic variation (Tolerated under `APPROVE`)
+3. Unsupported factual concretization
+4. Unsupported causal/mechanistic inference
+5. Alias / terminology substitution
+6. Setting / duration / quantity escalation
+7. External-lore import
+8. Spoiler / reveal boundary violation
+
+---
+
+## 4. Input Blind Packet Format
+
+You will be supplied with a JSON object conforming to `blind-human-review-packet.schema.v1.json`:
+- `candidateId`: unique candidate identifier
+- `facts`: verified baseline metadata (title, year, director, genres, countries, spokenLanguages, runtimeMinutes, overview)
+- `allowedSourceMaterial`: permitted source texts and keywords
+- `acceptedSemanticClassification`: authorized experiential and mood classifications
+- `semanticBoundaryRules` / `spoilerBoundaryRules`: boundary constraints
+- `visibleEditorialCopy`:
+  - `description`: core synopsis
+  - `whyWatch`: recommendation hook
+  - `curiosityHook`: engagement question
+  - `vibeSummary`: atmospheric summary
+- `sourcePacketHash`: SHA-256 hash of the source packet
+
+---
+
+## 5. Required Output Contract
+
+You must output strictly valid, parseable JSON conforming to `preliminary-advisory-review.schema.v1.json`:
+
+```json
+{
+  "preliminaryDecision": "APPROVE" | "REVISE",
+  "preliminarySeverity": "MINOR" | "SEVERE" | null,
+  "affectedFields": ["description" | "whyWatch" | "curiosityHook" | "vibeSummary"],
+  "issueSummaries": [
+    "Concise description of identified issue"
+  ],
+  "claimSpan": "Exact text substring from copy or empty string if clean",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview" | "allowedSourceMaterial.overview" | "facts.genres" | "other",
+      "supportFound": true | false,
+      "notes": "Explanation of support or lack thereof"
+    }
+  ],
+  "sourceBoundaryReason": "Concise justification under A_PRIME_PRODUCTION_MATERIALITY_V1",
+  "uncertaintyNotes": "Any ambiguity in source interpretation, or null",
+  "confidence": "LOW" | "MEDIUM" | "HIGH",
+  "advisoryOnly": true
+}
+```
+
+Constraints:
+- If `preliminaryDecision` is `APPROVE`: `preliminarySeverity` MUST be `null`, `affectedFields` MUST be `[]`, and `issueSummaries` MUST be `[]`.
+- If `preliminaryDecision` is `REVISE`: `preliminarySeverity` MUST be `"MINOR"` or `"SEVERE"`, `affectedFields` MUST contain $\ge 1$ field, and `issueSummaries` MUST contain $\ge 1$ item.
+- `advisoryOnly` MUST be `true`.
+
+---
+
+## 6. Authority Disclaimer
+
+This evaluation is an ADVISORY PRELIMINARY OPINION under `VERIFIER_BLINDED_AI_ASSISTED_HUMAN_ADJUDICATION`. Sophia Zhao makes the authoritative final human decision. Model preliminary opinions cannot become ground truth automatically.
+
+
+## REVIEW PACKET
+
+{"acceptedSemanticClassification":{"attentionDemand":"easy","discoveryStyle":"different","emotionalWeight":"moderate","filterLanguages":["French","Russian"],"moods":["funny","emotional"],"pace":"medium","situations":["family","easy-watch"]},"allowedSourceMaterial":{"keywords":[],"overview":"Stephen, an international trader, tracks down his ex-wife Patricia in some Amazonian backwater. He needs her consent to a divorce so that he can marry Charlotte. Unfortunately, he discovers a son he didn’t know he had – Mimi-Siku. The young jungle boy yearns to see Paris so Stephen reluctantly agrees to take him back home with him for a few days. How will Mimi-Siku react to life in the great metropolis?"},"candidateId":"scale500-tmdb-11479","copyConstraints":{"curiosityHook":{"maxChars":170,"minChars":50},"description":{"maxChars":220,"minChars":80},"vibeSummary":{"maxChars":150,"minChars":45},"whyWatch":{"maxChars":180,"minChars":60}},"facts":{"countries":["France"],"director":"Hervé Palud","genres":["Adventure","Comedy","Drama","Family"],"keywords":["amazon rainforest","bow and arrow","ex-wife","jungle","parent child relationship","paris, france"],"overview":"Stephen, an international trader, tracks down his ex-wife Patricia in some Amazonian backwater. He needs her consent to a divorce so that he can marry Charlotte. Unfortunately, he discovers a son he didn’t know he had – Mimi-Siku. The young jungle boy yearns to see Paris so Stephen reluctantly agrees to take him back home with him for a few days. How will Mimi-Siku react to life in the great metropolis?","posterPath":"/nUFHWv42GRJcjLTQa5IYBEuVzmK.jpg","runtimeMinutes":90,"spokenLanguages":["French","Russian"],"title":"Little Indian, Big City","year":1994},"sourcePacketHash":"sha256:d1171c4669a79671c05abd5e48b4317de20e41d469a7a2e4335dc685cdb93b0d","spoilerBoundaryRules":{"allowed":["characters or central subjects","starting situation","premise","initial conflict","tone","texture","viewing experience"],"excluded":["major reversals","hidden identities","later deaths","culprit information","late relationship outcomes","third-act events","endings","later revelations"]},"visibleEditorialCopy":{"curiosityHook":"Raised deep in the Amazon, how will young Mimi-Siku handle the towering rush and strange rules of the French capital?","description":"Seeking a divorce to remarry, trader Stephen tracks his ex-wife to the Amazon, only to discover a son he never knew existed. When the boy longs to see Paris, Stephen reluctantly brings him home for a brief visit.","vibeSummary":"Lighthearted, comic, and warm-spirited, offering an accessible 90-minute family clash of cultures.","whyWatch":"Directed by Hervé Palud, this breezy French family comedy blends classic fish-out-of-water humor with genuine warmth as jungle life collides head-on with urban routine."}}

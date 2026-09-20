@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports Queen Taramis commissioning Conan to escort the princess and bodyguard to retrieve the Horn of Dagoth, the queen's secret plot to betray and kill them upon their return, Conan's eccentric allies, and their confrontation with supernatural foes across sword-and-sorcery lands."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly verifies Action, Adventure, and Fantasy genre framing across description, whyWatch, and vibeSummary."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies Richard Fleischer. Accepted semantic classification directly grounds pace: fast ('Fast', 'fast pace'), moods: [exciting, funny] ('exciting', 'spirited comic relief'), attentionDemand: easy ('easygoing watch'), and situations: [friends, easy-watch] ('watch with friends')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly complies with A_PRIME_PRODUCTION_MATERIALITY_V1. The narrative setup in description and curiosityHook remains tightly tethered to the authorized overview and keywords without importing ungrounded franchise lore, Arnold Schwarzenegger/casting trivia, or third-act spoiler revelations. The dramatic irony concerning Queen Taramis's betrayal is explicitly authorized as part of the opening premise. Experiential descriptors across whyWatch and vibeSummary cleanly map to verified baseline facts and accepted semantic classifications.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

@@ -1,0 +1,33 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "allowedSourceMaterial.overview",
+      "supportFound": true,
+      "notes": "description tracks the overview closely: an unknown life form visits, women become pregnant, children are born looking normal, and parents come to realize the children are not human or humane. 'Village' rendered as 'quiet American town' is a minor terminology substitution that does not change scale, location type, or viewer expectations meaningfully."
+    },
+    {
+      "source": "allowedSourceMaterial.overview",
+      "supportFound": true,
+      "notes": "curiosityHook's framing (children appear normal at birth, question about what emerges as they grow) is consistent with the overview's structure (normal-looking babies, parents realizing something is wrong) and stays within allowed premise/initial-conflict territory without disclosing culprit information or later revelations."
+    },
+    {
+      "source": "facts",
+      "supportFound": true,
+      "notes": "whyWatch correctly attributes direction to John Carpenter (facts.director) and situates the film within Sci-Fi/Horror/Thriller genres (facts.genres)."
+    },
+    {
+      "source": "acceptedSemanticClassification",
+      "supportFound": true,
+      "notes": "vibeSummary's 'heavy, suspenseful... steady pacing, best experienced alone' directly reflects the authorized emotionalWeight (heavy), moods (suspenseful), pace (medium), and situations (alone) classifications."
+    }
+  ],
+  "sourceBoundaryReason": "All four fields restate or lightly rephrase the authorized overview, facts.director, facts.genres, and semantic classification. 'Village' to 'town' is a low-materiality terminology substitution that does not alter setting scale or viewer expectations. Atmospheric phrases like 'domestic dread', 'parental paranoia', and 'cold reality' are figurative/genre shorthand tolerated under A_PRIME_PRODUCTION_MATERIALITY_V1. The copy does not disclose what the children actually do, how the parents respond, or any third-act/ending information, respecting the spoiler boundary despite genre-driven implication.",
+  "uncertaintyNotes": "curiosityHook's phrase 'as these strange town children begin to grow' implies a longer developmental timeline than the overview's 'it doesn't take the parents long to realize,' which suggests a quicker realization. This is a mild pacing/duration inference rather than a new factual claim about plot mechanics or outcome, so it falls short of requiring intervention.",
+  "confidence": "MEDIUM",
+  "advisoryOnly": true
+}

@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports Michael Harding returning home from military school, finding his mother living happily with her new boyfriend David, growing suspicious of David's helpful nature, and wondering whether David is hiding a sinister dark side."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly verifies the Horror and Thriller genres, supporting the 'horror-thriller' and 'domestic thriller' descriptors across visible copy."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies Nelson McCormick. Accepted semantic classification directly grounds pace: medium ('steady'), moods: suspenseful ('suspenseful'), emotionalWeight: moderate ('moderate emotional stakes'), attentionDemand: engaged ('engaged'), and situations: alone ('solo watch')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly complies with A_PRIME_PRODUCTION_MATERIALITY_V1. The narrative setup, character dynamics, and domestic suspicion in the description and curiosityHook faithfully track the authorized overview without leaking ungrounded franchise/remake lore, real-world cast details, or third-act spoiler revelations regarding David's true identity or past crimes. Tonal phrasing such as 'suburban unease' and 'claustrophobic dread' functions as legitimate, low-risk atmospheric inference and genre shorthand capturing the authorized domestic thriller setup, while experiential descriptors in whyWatch and vibeSummary cleanly align with accepted semantic classifications.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

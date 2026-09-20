@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports the 1985 setting, mountaineers Joe Simpson and Simon Yates, the 6,344-meter Siula Grande in the Peruvian Andes, and the disastrous, nearly fatal climbing catastrophe."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly verifies the Documentary and Drama genre framing in whyWatch ('documentary precision and dramatic weight') as well as mountaineering survival thriller textures."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies Kevin Macdonald. Accepted semantic classification directly grounds 'demands focused attention' (attentionDemand: engaged), 'emotionally heavy' (emotionalWeight: heavy), 'steady' (pace: medium), and 'suspense' (moods: suspenseful)."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy satisfies A_PRIME_PRODUCTION_MATERIALITY_V1. The description strictly reproduces verified names, dates, elevations, and geographic locations from the overview. Phrasing in the curiosityHook ('stranded high in the remote Andes', 'impossible choices dictate whether either man can make it down alive') operates as acceptable genre shorthand and metaphorical urgency reflecting the authorized near-fatal mountain disaster without specifying ungrounded plot mechanisms (such as rope-cutting) or leaking third-act survival outcomes.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

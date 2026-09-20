@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "The premise of a former gunslinger forced to take up arms again after a corrupt lawman threatens him and his cattle crew directly supports the description, curiosity hook, and recommendation framing."
+    },
+    {
+      "source": "facts.director",
+      "supportFound": true,
+      "notes": "Kevin Costner is verified as the director."
+    },
+    {
+      "source": "acceptedSemanticClassification",
+      "supportFound": true,
+      "notes": "Accepted moods (exciting, suspenseful) and emotional weight (moderate) directly support the atmospheric phrasing in whyWatch and vibeSummary."
+    }
+  ],
+  "sourceBoundaryReason": "The editorial copy adheres strictly to the authorized source packet. Descriptive phrasing such as 'reformed gunslinger', 'frontier standoffs', and 'working cattlemen' constitutes low-risk genre shorthand, thematic inference, and stylistic framing fully permitted under A_PRIME_PRODUCTION_MATERIALITY_V1 without introducing new factual claims or altering viewer expectations.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

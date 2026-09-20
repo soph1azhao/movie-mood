@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports the retold origin premise, the altered meeting of Goku, Bulma, and Kame-Sen'nin, and the inverted dynamic where the Red Ribbon Army hunts/finds Goku rather than him finding them."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly verifies the Animation, Adventure, and Fantasy genre descriptors used across whyWatch and vibeSummary."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies Shigeyasu Yamauchi, and runtimeMinutes verifies the 80-minute length. Accepted semantic classification directly grounds pace: fast ('Fast-moving', 'brisk', 'fast-paced'), moods: exciting ('exciting', 'vibrant animated excitement'), emotionalWeight: moderate ('moderate stakes'), attentionDemand: engaged ('engaged'), and situations: [friends, family] ('group viewing')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly complies with A_PRIME_PRODUCTION_MATERIALITY_V1. The synopsis and curiosity hook faithfully adapt the authorized overview's premise of an inverted pursuit dynamic where the Red Ribbon Army tracks Goku from the start. Phrasing such as 'newly formed alliances' and 'encroaching army' functions as acceptable narrative shorthand and thematic framing without importing ungrounded Dragon Ball franchise lore, external characters, or spoiler-boundary breaches. The experiential descriptors in whyWatch and vibeSummary map cleanly to verified metadata and authorized semantic tags.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

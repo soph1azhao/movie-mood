@@ -1,0 +1,124 @@
+# MOVIE MOOD V8.2 — PRELIMINARY ADVISORY REVIEW
+Reviewer: CLAUDE
+Review Sequence Index: 3
+Candidate ID: scale500-tmdb-11802
+Blind Packet SHA-256: sha256:a9824badf3c250922c4453f9dd2cc185ccfe869fa2adc8ec921f8f3f287ec70d
+Prompt SHA-256: sha256:de665f3e3157ccbbf896d6af2ae86e7c7e83fc2501e1be069ba50613d4d70628
+Materiality Policy SHA-256: sha256:21661892df4d1b009341b6d34de3bf5ad1ae17e3447abbdace15e1c31a5b843c
+------------------------------------------------------------
+
+# Candidate Verifier v1.4 — Claude Preliminary Source-Boundary Review Prompt
+
+- **Version**: `verifier-v14-claude-preliminary.v1`
+- **Workflow**: `VERIFIER_BLINDED_AI_ASSISTED_HUMAN_ADJUDICATION`
+- **Adjudication Standard**: `A_PRIME_PRODUCTION_MATERIALITY_V1` (`sha256:21661892df4d1b009341b6d34de3bf5ad1ae17e3447abbdace15e1c31a5b843c`)
+- **Role**: Independent Advisory Reviewer (Claude)
+- **Authority Level**: ADVISORY ONLY (Non-Authoritative; Final Ground Truth is Sophia Zhao)
+- **Model Independence**: Strictly isolated from Gemini preliminary opinions, verifier predictions, cohort quota tracking, and repair histories.
+
+---
+
+## 1. Task Objective
+
+You are an independent preliminary reviewer providing an advisory source-boundary opinion for Movie Mood editorial copy.
+Sophia Zhao makes the authoritative final human adjudication under `VERIFIER_BLINDED_AI_ASSISTED_HUMAN_ADJUDICATION`.
+Your sole role is to review a blinded candidate packet and determine whether the visible editorial copy (`description`, `whyWatch`, `curiosityHook`, `vibeSummary`) satisfies the frozen production materiality standard (`A_PRIME_PRODUCTION_MATERIALITY_V1`) against the supplied authorized source packet.
+
+---
+
+## 2. Review Invariants & Epistemic Boundaries
+
+1. **Closed-World Source Authority**: Judge claims solely against the supplied packet facts (`facts`, `allowedSourceMaterial`, `acceptedSemanticClassification`). Real-world movie facts, external encyclopedic knowledge, plot summaries, franchise lore, or personal movie familiarity MUST be strictly ignored. If a detail is absent from the packet, it is ungrounded.
+2. **Materiality Standard Principle (`A_PRIME_PRODUCTION_MATERIALITY_V1`)**:
+   > "Editorial inference is acceptable when it does not materially alter a viewer's understanding or expectation of the film. Low-risk figurative language, genre shorthand, atmospheric inference, metaphorical urgency, and minor contextual concretization may be accepted even when not literally stated in the authorized packet, provided they do not function as a meaningful new factual claim. Unsupported additions require intervention when they materially change or falsely specify plot mechanics, identity, relationships, motives, causality, factual attributes, locations, quantities, franchise history, spoiler boundaries, or other decision-relevant viewer expectations."
+3. **Key Distinction**:
+   > "minor unsupported flourish != severe factual/source-boundary failure"
+   Illustrative tolerated concepts include: "before mom returns", "sacred flame", "iconic allies", "fracturing loyalties", "corrupt certainty", "digital and physical maps", "across the countryside".
+4. **No External Context**: You must not use external web search, model pre-training recall about the film, or assumptions based on genre or actors.
+5. **No Verifier Predictions**: You have not been provided with, and must not attempt to guess or mimic, Candidate Verifier predictions or risk classifications.
+6. **No Quota Awareness**: You have zero visibility into cohort sampling, remaining quotas, or desired label balances. Evaluate this single candidate in total isolation.
+7. **Form Invariance**: Scrutinize factual claims regardless of editorial form (e.g., interrogatives in `curiosityHook`, stylistic lead-ins, or rhetorical framing).
+
+---
+
+## 3. Adjudication Categories & Severity
+
+Determine the primary decision:
+- `APPROVE`: Copy satisfies `A_PRIME_PRODUCTION_MATERIALITY_V1`. Non-material editorial inference or harmless stylistic variation; no material plot, identity, motive, or causal inventions.
+- `REVISE`: Copy violates source boundaries and requires editorial revision.
+
+If `REVISE`, assign preliminary severity:
+- `MINOR`: A fixable unsupported concrete claim or overstatement that warrants bounded revision but is not a severe material failure.
+- `SEVERE`: A material contradiction, leak, invention, distortion, or unauthorized concrete detail likely to mislead a viewer or materially alter expectations.
+
+Check against the standard material violation categories:
+1. Material source-boundary violation
+2. Harmless stylistic variation (Tolerated under `APPROVE`)
+3. Unsupported factual concretization
+4. Unsupported causal/mechanistic inference
+5. Alias / terminology substitution
+6. Setting / duration / quantity escalation
+7. External-lore import
+8. Spoiler / reveal boundary violation
+
+---
+
+## 4. Input Blind Packet Format
+
+You will be supplied with a JSON object conforming to `blind-human-review-packet.schema.v1.json`:
+- `candidateId`: unique candidate identifier
+- `facts`: verified baseline metadata (title, year, director, genres, countries, spokenLanguages, runtimeMinutes, overview)
+- `allowedSourceMaterial`: permitted source texts and keywords
+- `acceptedSemanticClassification`: authorized experiential and mood classifications
+- `semanticBoundaryRules` / `spoilerBoundaryRules`: boundary constraints
+- `visibleEditorialCopy`:
+  - `description`: core synopsis
+  - `whyWatch`: recommendation hook
+  - `curiosityHook`: engagement question
+  - `vibeSummary`: atmospheric summary
+- `sourcePacketHash`: SHA-256 hash of the source packet
+
+---
+
+## 5. Required Output Contract
+
+You must output strictly valid, parseable JSON conforming to `preliminary-advisory-review.schema.v1.json`:
+
+```json
+{
+  "preliminaryDecision": "APPROVE" | "REVISE",
+  "preliminarySeverity": "MINOR" | "SEVERE" | null,
+  "affectedFields": ["description" | "whyWatch" | "curiosityHook" | "vibeSummary"],
+  "issueSummaries": [
+    "Concise description of identified issue"
+  ],
+  "claimSpan": "Exact text substring from copy or empty string if clean",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview" | "allowedSourceMaterial.overview" | "facts.genres" | "other",
+      "supportFound": true | false,
+      "notes": "Explanation of support or lack thereof"
+    }
+  ],
+  "sourceBoundaryReason": "Concise justification under A_PRIME_PRODUCTION_MATERIALITY_V1",
+  "uncertaintyNotes": "Any ambiguity in source interpretation, or null",
+  "confidence": "LOW" | "MEDIUM" | "HIGH",
+  "advisoryOnly": true
+}
+```
+
+Constraints:
+- If `preliminaryDecision` is `APPROVE`: `preliminarySeverity` MUST be `null`, `affectedFields` MUST be `[]`, and `issueSummaries` MUST be `[]`.
+- If `preliminaryDecision` is `REVISE`: `preliminarySeverity` MUST be `"MINOR"` or `"SEVERE"`, `affectedFields` MUST contain $\ge 1$ field, and `issueSummaries` MUST contain $\ge 1$ item.
+- `advisoryOnly` MUST be `true`.
+
+---
+
+## 6. Authority Disclaimer
+
+This evaluation is an ADVISORY PRELIMINARY OPINION under `VERIFIER_BLINDED_AI_ASSISTED_HUMAN_ADJUDICATION`. Sophia Zhao makes the authoritative final human decision. Model preliminary opinions cannot become ground truth automatically.
+
+
+## REVIEW PACKET
+
+{"acceptedSemanticClassification":{"attentionDemand":"easy","discoveryStyle":"adventurous","emotionalWeight":"light","filterLanguages":["English","Catalan"],"moods":["funny","exciting"],"pace":"fast","situations":["family","easy-watch"]},"allowedSourceMaterial":{"keywords":[],"overview":"When an unmanned space shuttle crashes on an uncharted planet, a trio of astronaut chimpanzees are launched by NASA into a wormhole to investigate."},"candidateId":"scale500-tmdb-11802","copyConstraints":{"curiosityHook":{"maxChars":170,"minChars":50},"description":{"maxChars":220,"minChars":80},"vibeSummary":{"maxChars":150,"minChars":45},"whyWatch":{"maxChars":180,"minChars":60}},"facts":{"countries":["Canada","United States of America"],"director":"Kirk DeMicco","genres":["Adventure","Animation","Comedy","Family","Science Fiction"],"keywords":["3d animation","aftercreditsstinger","chimpanzee","space","space marine"],"overview":"When an unmanned space shuttle crashes on an uncharted planet, a trio of astronaut chimpanzees are launched by NASA into a wormhole to investigate.","posterPath":"/ecAKgzlt78OvEVpZURYYdSz8K5v.jpg","runtimeMinutes":81,"spokenLanguages":["Catalan","English"],"title":"Space Chimps","year":2008},"sourcePacketHash":"sha256:01f894ff3b9f4a44af6cdbb5dde95be8116d16e64e41876afea25f4b1e462ded","spoilerBoundaryRules":{"allowed":["characters or central subjects","starting situation","premise","initial conflict","tone","texture","viewing experience"],"excluded":["major reversals","hidden identities","later deaths","culprit information","late relationship outcomes","third-act events","endings","later revelations"]},"visibleEditorialCopy":{"curiosityHook":"What awaits the primate crew once they navigate deep space and touch down on an unknown world?","description":"After an unmanned space shuttle crashes on an uncharted planet, NASA launches a trio of astronaut chimpanzees straight through a wormhole to investigate the alien world in Kirk DeMicco's animated sci-fi comedy.","vibeSummary":"Fast-paced, cheerful, and low-demand, blending playful sci-fi peril with light comic warmth for family movie night.","whyWatch":"Clocking in at an energetic 81 minutes, this family-friendly adventure pairs colorful sci-fi exploration with lighthearted comedy for a breezy, quick-moving watch."}}

@@ -1,0 +1,35 @@
+{
+  "preliminaryDecision": "REVISE",
+  "preliminarySeverity": "MINOR",
+  "affectedFields": ["description"],
+  "issueSummaries": [
+    "description: 'stumbling upon an abandoned police cruiser' introduces an unsupported factual concretization regarding the inciting plot mechanics and vehicle status; the authorized overview establishes only that two kids took a sheriff's cruiser for a joy ride, with no packet grounding that the car was abandoned or discovered by chance."
+  ],
+  "claimSpan": "stumbling upon an abandoned police cruiser",
+  "sourceEvidence": [
+    {
+      "source": "allowedSourceMaterial.overview",
+      "supportFound": false,
+      "notes": "The overview states that two kids find themselves in a deadly game of cat and mouse 'after taking a sheriff's cruiser for a joy ride', but does not state or imply that the cruiser was 'abandoned' or that they 'stumbled upon' it."
+    },
+    {
+      "source": "facts.director",
+      "supportFound": true,
+      "notes": "Directly verifies Jon Watts as director."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Validates Crime and Thriller genres."
+    },
+    {
+      "source": "acceptedSemanticClassification",
+      "supportFound": true,
+      "notes": "Supports experiential attributes including 'fast' pace, 'suspenseful' mood, 'engaged' attention demand, and 'moderate' emotional weight."
+    }
+  ],
+  "sourceBoundaryReason": "Under A_PRIME_PRODUCTION_MATERIALITY_V1, editorial inference is permitted for genre shorthand and rhetorical framing, but unsupported additions require intervention when they falsely specify plot mechanics or factual attributes. Describing the vehicle as an 'abandoned police cruiser' that the children 'stumbled upon' concretizes the inciting theft mechanism with ungrounded external plot specifics. The remaining copy across curiosityHook, vibeSummary, and whyWatch remains fully compliant.",
+  "uncertaintyNotes": "If 'abandoned' is viewed loosely as colloquial hyperbole for an unattended vehicle left momentarily accessible, an argument could be made for tolerance; however, because it concretely alters the factual condition of an in-service law enforcement vehicle and imports specific unverified plot staging, it is conservatively flagged as MINOR.",
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

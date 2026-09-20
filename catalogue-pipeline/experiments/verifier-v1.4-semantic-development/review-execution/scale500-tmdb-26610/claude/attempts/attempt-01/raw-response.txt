@@ -1,0 +1,33 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "description: the homicide investigation in northern Norway, detective Jonas, the botched arrest, Jonas mistakenly killing Erik, the fugitive suspect being blamed, and Jonas trying to protect himself all restate the overview. 'Perpetual daylight' paraphrases 'midnight sun country' and 'omnipresent sun'. 'Accidentally' paraphrases 'mistakenly'. 'Botched' paraphrases 'goes awry'. 'Framing the runaway suspect' paraphrases 'pins Erik's death on the fugitive'. 'Bury his own fatal mistake' is a figurative gloss on 'seeks to protect himself'. 'Partner' is a light inference from 'Detectives Jonas and Erik'."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "curiosityHook: 'a sun that never sets' restates the omnipresent midnight sun. 'Unraveling' echoes the sanity-affecting insomnia and mounting guilt. 'Catch a killer' restates Jonas continuing to pursue the killer, and 'his own deadly secret' restates his concealment of Erik's death. The interrogative asserts no outcome."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "whyWatch and vibeSummary: 'psychological suspense', 'procedural hunt' and 'tense... moral unraveling' are consistent with genres Crime/Mystery/Thriller and the guilt-and-insomnia premise. 'Noir' also appears in facts.keywords ('neo-noir', 'nordic noir') and is genre shorthand. 'Erik Skjoldbjærg' matches director. 'Guilt-ridden' restates 'mounting guilt'. 'Offers no darkness to hide in' is figurative shorthand for the constant daylight."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "acceptedSemanticClassification: 'Bleak' and 'heavy emotional weight' match emotionalWeight=heavy. 'Suspense' matches moods. 'Steady pace' matches pace=medium. 'Focused solo viewing' matches attentionDemand=engaged and situations=[alone]. Keyword-only material (corrupt cop, planted evidence, hallucination, crime writer, revolver, fog) is not imported."
+    }
+  ],
+  "sourceBoundaryReason": "Every concrete claim (Jonas, the northern Norway homicide investigation, the botched arrest, the accidental killing of Erik, the framing of the fugitive suspect, the effort to protect himself, the director, runtime and genres) is grounded in the authorized overview. The remaining language ('unraveling', 'bury his own fatal mistake', 'sun-bleached', 'blinding midnight sun', 'no darkness to hide in') is figurative language, genre shorthand or minor terminology variation. None of it works as a meaningful new factual claim about plot mechanics, identities, relationships, motives or causality under A_PRIME_PRODUCTION_MATERIALITY_V1. The copy does not go beyond the events the overview itself states and does not mention any later reversal, outcome or ending.",
+  "uncertaintyNotes": "The main point is the spoiler boundary and not source grounding. The spoiler rules exclude 'later deaths' and 'culprit information', and the description states outright that Jonas kills his partner and frames the suspect. That disclosure is part of the authorized overview, so I treated it as grounded, as in earlier packets where the overview itself stated an event. An adjudicator who reads the spoiler rules as overriding the overview could ask for the shooting and the framing to be softened, in which case this would be a spoiler-boundary revision. It would be a MINOR revision, since the events are the film's setup and not its ending. 'Partner' is a light inference from 'Detectives Jonas and Erik' and was left within tolerance.",
+  "confidence": "MEDIUM",
+  "advisoryOnly": true
+}

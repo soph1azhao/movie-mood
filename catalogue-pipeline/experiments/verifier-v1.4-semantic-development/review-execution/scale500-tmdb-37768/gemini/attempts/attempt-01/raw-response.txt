@@ -1,0 +1,33 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "allowedSourceMaterial.overview",
+      "supportFound": true,
+      "notes": "Directly supports the central premise: Sergio is a shy salesman for a Roman music company who cannot find customers and turns to a peer/fellow named Nadia for help."
+    },
+    {
+      "source": "facts.director",
+      "supportFound": true,
+      "notes": "Directly verifies Carlo Verdone as the director."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Validates the Comedy genre designation."
+    },
+    {
+      "source": "acceptedSemanticClassification",
+      "supportFound": true,
+      "notes": "Supports the experiential and mood classifications ('light', 'funny', 'easy', 'easy-watch')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly adheres to the authorized source packet. Descriptive phrasing regarding workplace awkwardness and the rhetorical hook concerning Nadia's guidance represent standard, non-material editorial framing under A_PRIME_PRODUCTION_MATERIALITY_V1 without inventing factual details, external lore, or violating spoiler boundaries.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports Fitzcarraldo's dream of building an opera house in the Peruvian Amazon and his expedition into the remote, unexplored rainforest to collect rubber."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly confirms the Adventure and Drama genre framing used across whyWatch and vibeSummary."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies Werner Herzog. Accepted semantic classification directly grounds attentionDemand: immersive ('immersive'), moods: thoughtful ('thoughtful'), pace: medium ('steady momentum'), and situations: alone ('dedicated solo viewing')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly complies with A_PRIME_PRODUCTION_MATERIALITY_V1. The premise, central subject, and primary stakes in the description and curiosityHook faithfully track the authorized overview without importing famous external production lore (such as hauling a steamship over a mountain) or violating setup-only spoiler boundaries. Descriptors in whyWatch and vibeSummary map cleanly to verified metadata and authorized experiential classifications.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

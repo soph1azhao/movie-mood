@@ -1,0 +1,33 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "description: 1880s Australia, the lawman, renegade Charlie Burns, and the hunt for the older brother to save the younger brother from the gallows all restate the overview. 'Fugitive' is supported by 'wanted for rape and murder'. 'Brutal ultimatum' is a figurative intensification of 'difficult choice'. 'Execute' is a mild terminology shift from 'kill', and 'captured' mildly concretizes the younger brother's custody, which 'save... from the gallows' implies. 'Will hang' restates the gallows stakes. None of these alter the premise."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "curiosityHook: 'fratricide' is an accurate label for Charlie killing his older brother. 'To save his youngest kin' matches saving the younger brother, though 'youngest' is a small imprecision. 'Enters the brutal Outback' is figurative for 'one of the Outback's most inhospitable regions'. 'Any resolution demands blood' paraphrases 'a terrible moral dilemma that can end only in violence'."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "'Australian Western' and 'frontier drama' are consistent with genres Drama/Western and countries Australia/United Kingdom. 'John Hillcoat' matches director. 'Family loyalty' and 'frontier justice' are thematic shorthand drawn from the brother-versus-brother stakes and the lawman premise."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "acceptedSemanticClassification: 'Heavy' matches emotionalWeight=heavy, 'deliberate' matches pace=slow, 'fiercely suspenseful' matches moods, and 'demanding... full focus' matches attentionDemand=engaged. 'Best taken in' with full focus is consistent with situations=[alone]. 'Sun-scorched' is atmospheric inference from the Outback setting, comparable to the tolerated 'across the countryside'."
+    }
+  ],
+  "sourceBoundaryReason": "All concrete claims (1880s Australia, lawman, Charlie Burns, the kill-one-brother-to-save-the-other bargain, the fugitive older brother, the Outback, the violent inevitability) are grounded in the overview. The remaining language ('brutal ultimatum', 'execute', 'captured', 'youngest kin', 'sun-scorched', 'moral crucible') is figurative language, genre shorthand, or minor contextual concretization that does not create a meaningful new factual claim about plot mechanics, identities, relationships, motives, or causality. No content crosses the spoiler boundary: the copy stays within the premise and initial conflict and states no outcome. Keyword-only material (rape as a specific charge, flogging, decapitation, Christmas, the gang) is not imported. This is harmless stylistic variation under A_PRIME_PRODUCTION_MATERIALITY_V1.",
+  "uncertaintyNotes": "Three small items sit near the tolerance line but stay within it. 'Execute' carries a slightly more judicial connotation than 'kill'. 'Captured younger brother' states custody that the source only implies through the gallows reference. 'Youngest kin' reads as 'youngest' rather than 'younger', though it identifies the same person in this packet. Together they are precision drift and do not change what a viewer would expect from the film.",
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

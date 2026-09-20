@@ -1,0 +1,60 @@
+{
+  "activity": "VERIFIER_V1_4_CODEX_ASSISTED_CONTINUATION_FINAL",
+  "provenance": "Codex-assisted retrospective-development evidence; not human ground truth. No Gemini or Claude advisory material was introduced.",
+  "sequenceRange": [
+    86,
+    184
+  ],
+  "candidateCount": 99,
+  "counts": {
+    "approve": 48,
+    "minor": 51,
+    "severe": 0
+  },
+  "artifacts": {
+    "amendment": {
+      "path": "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/codex-assisted-continuation/AMENDMENT.md",
+      "sha256": "sha256:12e5349018973587d2cfbe0d9a810066f17381a77d1fb95a22ba87771f2307b1"
+    },
+    "calibrationRubric": {
+      "path": "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/codex-assisted-continuation/calibration-rubric.v1.md",
+      "sha256": "sha256:f4d42520d4d9be2d3c6680b17cc0608a26c4f41c4cc8613a8b8f7a203893043d"
+    },
+    "compactFrozenPackets": {
+      "path": "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/codex-assisted-continuation/candidate-packets-86-184.compact.v1.json",
+      "sha256": "sha256:4ca03db9b319f2e6f5c1b8a0e5e08e16d5d4171c9c167268ef3afe05d39d5224"
+    },
+    "pass1Jsonl": {
+      "path": "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/codex-assisted-continuation/adjudications-86-184.v1.jsonl",
+      "sha256": "sha256:87af5b277dc0ab1d440a8f0d7ca336422b28f6854be6ea1065b3268bbd0a0ed6"
+    },
+    "pass2Jsonl": {
+      "path": "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/codex-assisted-continuation/approve-audit-pass2.v1.jsonl",
+      "sha256": "sha256:cccba0ed4cc9d0496e349f7cd125a88a7979f0d84eed68a1018e7a95209351d3"
+    },
+    "pass1VsPass2Comparison": {
+      "path": "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/codex-assisted-continuation/pass1-vs-pass2-comparison.v1.json",
+      "sha256": "sha256:9c79d23864a0c5bc0d47a74fcc587a5ed2b988714adaf8067bcdc091ed1b6933"
+    },
+    "finalReconciliation": {
+      "path": "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/codex-assisted-continuation/final-reconciliation.v1.json",
+      "sha256": "sha256:566c16eb9dac7714aab2fcce3b6cdfc6f9e92ed60d1392c8c68ce0a75013fd28"
+    },
+    "finalCanonicalJsonl": {
+      "path": "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/codex-assisted-continuation/adjudications-86-184.final.v1.jsonl",
+      "sha256": "sha256:55a5626d921c54d44bd2f088a206b622f162b5a8f653c23f3224b5ac0726f3e9"
+    },
+    "packetExtractionScript": {
+      "path": "catalogue-pipeline/scripts/extractVerifierV14CodexContinuationPackets.mjs",
+      "sha256": "sha256:7f150610aedecbb27127738ceff2c5127ca507811d573d2531205a53bd760610"
+    },
+    "finalizationValidationScript": {
+      "path": "catalogue-pipeline/scripts/finalizeVerifierV14CodexContinuation.mjs",
+      "sha256": "sha256:c8c751af4d773b5cf14c4dd070fc272ae80adc0718e5396e277fc6c9c2dff878"
+    },
+    "explicitJudgmentValidator": {
+      "path": "catalogue-pipeline/scripts/verifierV14ContinuationValidation.mjs",
+      "sha256": "sha256:57d35fc5fd739f615bb6a2b63ddee85941d07df3b7869ca9708093ba646a2eae"
+    }
+  }
+}

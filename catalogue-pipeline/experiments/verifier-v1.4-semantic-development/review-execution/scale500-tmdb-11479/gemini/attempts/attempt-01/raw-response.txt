@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports international trader Stephen traveling to the Amazon to secure a divorce from his ex-wife to remarry, discovering his previously unknown son Mimi-Siku, and reluctantly bringing him to Paris for a brief visit."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly verifies Comedy and Family genres, supporting the 'French family comedy' and 'family clash of cultures' categorization across visible copy."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies Hervé Palud, facts.countries verifies France ('French capital'), facts.keywords verifies 'amazon rainforest' and 'paris, france', and runtimeMinutes (90) verifies '90-minute'. Accepted semantic classification directly grounds attentionDemand: easy ('accessible', 'breezy'), situations: [family, easy-watch], and moods: [funny, emotional] ('comic', 'warm-spirited', 'genuine warmth')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly complies with A_PRIME_PRODUCTION_MATERIALITY_V1. The synopsis and curiosity hook remain faithfully tethered to the authorized starting situation without importing external franchise/remake lore (such as the 1997 American adaptation Jungle 2 Jungle) or script-level third-act resolutions. Thematic phrasing such as 'fish-out-of-water humor' and 'jungle life collides head-on with urban routine' represents legitimate, low-risk genre shorthand and atmospheric inference directly capturing the authorized Amazon-to-Paris premise, while experiential descriptors across whyWatch and vibeSummary cleanly map to verified metadata and authorized semantic tags.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

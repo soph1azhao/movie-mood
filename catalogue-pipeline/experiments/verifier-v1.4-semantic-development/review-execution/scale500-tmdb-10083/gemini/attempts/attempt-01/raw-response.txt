@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports Navy Lt. Tom Farrell's passionate affair with Susan Atwell, his discovery that Defense Secretary David Brice is also involved with her, her subsequent death, Farrell leading the homicide inquiry, and evidence surfacing that turns Farrell himself into a suspect."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly confirms Drama and Thriller genres, supporting 'thriller' and 'political thriller' framing across whyWatch and vibeSummary (corroborated by keywords 'secretary of defense', 'pentagon', and 'homicide')."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies Roger Donaldson, facts.year verifies 1987, and facts.keywords verifies 'u.s. navy' ('military investigator') and 'homicide'. Accepted semantic classification directly grounds pace: medium ('steady'), moods: suspenseful ('Suspenseful', 'suspenseful'), and emotionalWeight: moderate ('moderate emotional weight')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly adheres to A_PRIME_PRODUCTION_MATERIALITY_V1. The narrative premise, character dynamic, and investigative trap in the description and curiosityHook faithfully track the authorized overview. Most critically, the copy demonstrates rigorous setup-only restraint: despite provocative keywords in the factual packet ('mole', 'soviet spy', 'deep cover'), the editorial text scrupulously omits all third-act identity twists, espionage revelations, and climax outcomes. Experiential descriptors in whyWatch and vibeSummary cleanly align with verified metadata and accepted semantic classifications.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

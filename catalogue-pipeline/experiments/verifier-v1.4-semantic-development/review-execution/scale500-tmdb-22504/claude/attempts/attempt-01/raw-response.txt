@@ -1,0 +1,33 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "description: the young shepherdess, the chimneysweep, the tyrannical king, the escape, and the mockingbird aiding them all restate the overview. 'Attempt to elude' paraphrases 'escape the clutches of'. 'Witty' paraphrases 'guile' and 'cheeky'. 'Opposes the crown' paraphrases 'the king's archenemy'. 'Determined to marry her' is a mild concretization of a king 'in love with her' whose 'clutches' the couple flee. It is discussed under uncertaintyNotes. 'Paul Grimault' matches director, and 'French' and 'animated' match countries and genres."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "curiosityHook: 'cunning mockingbird' restates 'the guile of a cheeky mockingbird'. 'Relentless ruler' is a figurative intensification of 'tyrannical king in love with her'. 'Two young lovers' follows from the shepherdess and chimneysweep who 'plan to get married'. 'Long enough... to make their escape' is metaphorical urgency built on the stated escape plan. The interrogative asserts no outcome."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "'Animated fairy tale', 'inventive fairy tale', 'imaginative' and 'family-friendly' are consistent with genres Animation/Family/Fantasy and facts.keywords ('fairy tale'). '1980', '83 minutes' and 'French animation' match year, runtimeMinutes and countries. 'Romantic defiance' is thematic shorthand from the lovers-versus-tyrant premise."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "acceptedSemanticClassification: 'Exciting' matches mood exciting. 'Whimsical humor' matches mood funny. 'Briskly paced' and 'daring momentum' are close to pace=medium and are tonal shorthand. 'Accessible' and 'family-friendly escape' match attentionDemand=easy and situations=[family, easy-watch]."
+    }
+  ],
+  "sourceBoundaryReason": "Every concrete claim (shepherdess, chimneysweep, tyrannical king, the escape plan, the mockingbird as the king's opponent, the director, year, runtime, genres) is grounded in the packet. The remaining language ('relentless', 'cunning', 'witty', 'romantic defiance', 'inventive fairy tale', 'determined to marry her') is figurative characterization, genre shorthand, or minor contextual concretization. None of it functions as a meaningful new factual claim about plot mechanics, identities, or causality under A_PRIME_PRODUCTION_MATERIALITY_V1. The copy stays at the premise and initial conflict and states no outcome, so no spoiler-boundary content appears.",
+  "uncertaintyNotes": "The one near-threshold item is 'determined to marry her'. The overview says the king is 'in love with her' and that the couple must escape his 'clutches'. It does not state that he intends marriage, so this specifies the king's goal, which is a motive. I read it as a natural gloss on a king in love with the shepherdess, and it does not change what a viewer would expect. A stricter adjudicator could ask for 'in love with her' to be restored, which would make it a MINOR concretization. 'Relentless' and 'cunning' are unsupported characterizations but not plot claims. 'Briskly paced' sits close to the accepted pace of medium and is tonal only.",
+  "confidence": "MEDIUM",
+  "advisoryOnly": true
+}

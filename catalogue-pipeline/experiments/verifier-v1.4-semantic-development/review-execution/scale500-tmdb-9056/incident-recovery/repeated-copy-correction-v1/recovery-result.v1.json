@@ -1,0 +1,8 @@
+{
+  "candidateId": "scale500-tmdb-9056",
+  "status": "RECOVERED",
+  "newModelGenerationOccurred": false,
+  "finalCanonicalRawResponseSha256": "sha256:10dacb1ff07797c782356bde780382b75d08b250002dc69f0565383598d26ade",
+  "originalWrongResponseSha256": "sha256:f233e0f885e46706f2ee35cde9663f749c94804ea997aba28b3d8bd14a62ac96",
+  "preservedMalformedCorrectionSha256": "sha256:eeeedea66b5af9a6ce673e92f8730944ffae512500f1512767fe863508e833ea"
+}

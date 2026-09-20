@@ -1,0 +1,23 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "allowedSourceMaterial.overview",
+      "supportFound": true,
+      "notes": "All core factual elements—the Antarctic setting, the 70-mile march, alternating between egg guarding and ocean treks, storms, and predatory threats—are directly grounded in the source overview."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Baseline metadata confirms the documentary premise, director Luc Jacquet, themes of parental devotion, and the survival stakes."
+    }
+  ],
+  "sourceBoundaryReason": "All editorial fields adhere strictly to the authorized source packet. Descriptive flourishes such as 'predators circle' and 'survival hanging on precise timing' represent low-risk atmospheric inference and metaphorical urgency permitted under A_PRIME_PRODUCTION_MATERIALITY_V1 without asserting new material facts or altering viewer expectations.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

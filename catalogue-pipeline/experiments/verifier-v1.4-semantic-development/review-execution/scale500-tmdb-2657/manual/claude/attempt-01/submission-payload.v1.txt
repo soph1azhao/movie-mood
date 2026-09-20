@@ -1,0 +1,124 @@
+# MOVIE MOOD V8.2 — PRELIMINARY ADVISORY REVIEW
+Reviewer: CLAUDE
+Review Sequence Index: 5
+Candidate ID: scale500-tmdb-2657
+Blind Packet SHA-256: sha256:a42eb64d16a80d6b148317133b6ffc64f600ffad5f5e34b3142e94e1952b2863
+Prompt SHA-256: sha256:de665f3e3157ccbbf896d6af2ae86e7c7e83fc2501e1be069ba50613d4d70628
+Materiality Policy SHA-256: sha256:21661892df4d1b009341b6d34de3bf5ad1ae17e3447abbdace15e1c31a5b843c
+------------------------------------------------------------
+
+# Candidate Verifier v1.4 — Claude Preliminary Source-Boundary Review Prompt
+
+- **Version**: `verifier-v14-claude-preliminary.v1`
+- **Workflow**: `VERIFIER_BLINDED_AI_ASSISTED_HUMAN_ADJUDICATION`
+- **Adjudication Standard**: `A_PRIME_PRODUCTION_MATERIALITY_V1` (`sha256:21661892df4d1b009341b6d34de3bf5ad1ae17e3447abbdace15e1c31a5b843c`)
+- **Role**: Independent Advisory Reviewer (Claude)
+- **Authority Level**: ADVISORY ONLY (Non-Authoritative; Final Ground Truth is Sophia Zhao)
+- **Model Independence**: Strictly isolated from Gemini preliminary opinions, verifier predictions, cohort quota tracking, and repair histories.
+
+---
+
+## 1. Task Objective
+
+You are an independent preliminary reviewer providing an advisory source-boundary opinion for Movie Mood editorial copy.
+Sophia Zhao makes the authoritative final human adjudication under `VERIFIER_BLINDED_AI_ASSISTED_HUMAN_ADJUDICATION`.
+Your sole role is to review a blinded candidate packet and determine whether the visible editorial copy (`description`, `whyWatch`, `curiosityHook`, `vibeSummary`) satisfies the frozen production materiality standard (`A_PRIME_PRODUCTION_MATERIALITY_V1`) against the supplied authorized source packet.
+
+---
+
+## 2. Review Invariants & Epistemic Boundaries
+
+1. **Closed-World Source Authority**: Judge claims solely against the supplied packet facts (`facts`, `allowedSourceMaterial`, `acceptedSemanticClassification`). Real-world movie facts, external encyclopedic knowledge, plot summaries, franchise lore, or personal movie familiarity MUST be strictly ignored. If a detail is absent from the packet, it is ungrounded.
+2. **Materiality Standard Principle (`A_PRIME_PRODUCTION_MATERIALITY_V1`)**:
+   > "Editorial inference is acceptable when it does not materially alter a viewer's understanding or expectation of the film. Low-risk figurative language, genre shorthand, atmospheric inference, metaphorical urgency, and minor contextual concretization may be accepted even when not literally stated in the authorized packet, provided they do not function as a meaningful new factual claim. Unsupported additions require intervention when they materially change or falsely specify plot mechanics, identity, relationships, motives, causality, factual attributes, locations, quantities, franchise history, spoiler boundaries, or other decision-relevant viewer expectations."
+3. **Key Distinction**:
+   > "minor unsupported flourish != severe factual/source-boundary failure"
+   Illustrative tolerated concepts include: "before mom returns", "sacred flame", "iconic allies", "fracturing loyalties", "corrupt certainty", "digital and physical maps", "across the countryside".
+4. **No External Context**: You must not use external web search, model pre-training recall about the film, or assumptions based on genre or actors.
+5. **No Verifier Predictions**: You have not been provided with, and must not attempt to guess or mimic, Candidate Verifier predictions or risk classifications.
+6. **No Quota Awareness**: You have zero visibility into cohort sampling, remaining quotas, or desired label balances. Evaluate this single candidate in total isolation.
+7. **Form Invariance**: Scrutinize factual claims regardless of editorial form (e.g., interrogatives in `curiosityHook`, stylistic lead-ins, or rhetorical framing).
+
+---
+
+## 3. Adjudication Categories & Severity
+
+Determine the primary decision:
+- `APPROVE`: Copy satisfies `A_PRIME_PRODUCTION_MATERIALITY_V1`. Non-material editorial inference or harmless stylistic variation; no material plot, identity, motive, or causal inventions.
+- `REVISE`: Copy violates source boundaries and requires editorial revision.
+
+If `REVISE`, assign preliminary severity:
+- `MINOR`: A fixable unsupported concrete claim or overstatement that warrants bounded revision but is not a severe material failure.
+- `SEVERE`: A material contradiction, leak, invention, distortion, or unauthorized concrete detail likely to mislead a viewer or materially alter expectations.
+
+Check against the standard material violation categories:
+1. Material source-boundary violation
+2. Harmless stylistic variation (Tolerated under `APPROVE`)
+3. Unsupported factual concretization
+4. Unsupported causal/mechanistic inference
+5. Alias / terminology substitution
+6. Setting / duration / quantity escalation
+7. External-lore import
+8. Spoiler / reveal boundary violation
+
+---
+
+## 4. Input Blind Packet Format
+
+You will be supplied with a JSON object conforming to `blind-human-review-packet.schema.v1.json`:
+- `candidateId`: unique candidate identifier
+- `facts`: verified baseline metadata (title, year, director, genres, countries, spokenLanguages, runtimeMinutes, overview)
+- `allowedSourceMaterial`: permitted source texts and keywords
+- `acceptedSemanticClassification`: authorized experiential and mood classifications
+- `semanticBoundaryRules` / `spoilerBoundaryRules`: boundary constraints
+- `visibleEditorialCopy`:
+  - `description`: core synopsis
+  - `whyWatch`: recommendation hook
+  - `curiosityHook`: engagement question
+  - `vibeSummary`: atmospheric summary
+- `sourcePacketHash`: SHA-256 hash of the source packet
+
+---
+
+## 5. Required Output Contract
+
+You must output strictly valid, parseable JSON conforming to `preliminary-advisory-review.schema.v1.json`:
+
+```json
+{
+  "preliminaryDecision": "APPROVE" | "REVISE",
+  "preliminarySeverity": "MINOR" | "SEVERE" | null,
+  "affectedFields": ["description" | "whyWatch" | "curiosityHook" | "vibeSummary"],
+  "issueSummaries": [
+    "Concise description of identified issue"
+  ],
+  "claimSpan": "Exact text substring from copy or empty string if clean",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview" | "allowedSourceMaterial.overview" | "facts.genres" | "other",
+      "supportFound": true | false,
+      "notes": "Explanation of support or lack thereof"
+    }
+  ],
+  "sourceBoundaryReason": "Concise justification under A_PRIME_PRODUCTION_MATERIALITY_V1",
+  "uncertaintyNotes": "Any ambiguity in source interpretation, or null",
+  "confidence": "LOW" | "MEDIUM" | "HIGH",
+  "advisoryOnly": true
+}
+```
+
+Constraints:
+- If `preliminaryDecision` is `APPROVE`: `preliminarySeverity` MUST be `null`, `affectedFields` MUST be `[]`, and `issueSummaries` MUST be `[]`.
+- If `preliminaryDecision` is `REVISE`: `preliminarySeverity` MUST be `"MINOR"` or `"SEVERE"`, `affectedFields` MUST contain $\ge 1$ field, and `issueSummaries` MUST contain $\ge 1$ item.
+- `advisoryOnly` MUST be `true`.
+
+---
+
+## 6. Authority Disclaimer
+
+This evaluation is an ADVISORY PRELIMINARY OPINION under `VERIFIER_BLINDED_AI_ASSISTED_HUMAN_ADJUDICATION`. Sophia Zhao makes the authoritative final human decision. Model preliminary opinions cannot become ground truth automatically.
+
+
+## REVIEW PACKET
+
+{"acceptedSemanticClassification":{"attentionDemand":"engaged","discoveryStyle":"different","emotionalWeight":"moderate","filterLanguages":["English"],"moods":["funny","thoughtful"],"pace":"medium","situations":["family"]},"allowedSourceMaterial":{"keywords":[],"overview":"Geeky teenager David and his popular twin sister, Jennifer, get sucked into the black-and-white world of a 1950s TV sitcom called \"Pleasantville,\" and find a world where everything is peachy keen all the time. But when Jennifer's modern attitude disrupts Pleasantville's peaceful but boring routine, she literally brings color into its life."},"candidateId":"scale500-tmdb-2657","copyConstraints":{"curiosityHook":{"maxChars":170,"minChars":50},"description":{"maxChars":220,"minChars":80},"vibeSummary":{"maxChars":150,"minChars":45},"whyWatch":{"maxChars":180,"minChars":60}},"facts":{"countries":["United States of America"],"director":"Gary Ross","genres":["Comedy","Drama","Fantasy"],"keywords":["1950s","alternative reality","bathtub","black and white sequence","book burning","coming of age","diner","dystopia","magic realism","masturbation","racism","satire","sibling relationship","tv repairman","tv show in film"],"overview":"Geeky teenager David and his popular twin sister, Jennifer, get sucked into the black-and-white world of a 1950s TV sitcom called \"Pleasantville,\" and find a world where everything is peachy keen all the time. But when Jennifer's modern attitude disrupts Pleasantville's peaceful but boring routine, she literally brings color into its life.","posterPath":"/sjnRihb0OdmtD5GBe5lfdfBjSxo.jpg","runtimeMinutes":124,"spokenLanguages":["English"],"title":"Pleasantville","year":1998},"sourcePacketHash":"sha256:67616f8ba4f55cd8aeedf86d4f104f899230793eae98f71876fb1027173552e0","spoilerBoundaryRules":{"allowed":["characters or central subjects","starting situation","premise","initial conflict","tone","texture","viewing experience"],"excluded":["major reversals","hidden identities","later deaths","culprit information","late relationship outcomes","third-act events","endings","later revelations"]},"visibleEditorialCopy":{"curiosityHook":"When modern impulses breach the flawless monochrome town, the arrival of literal color threatens to upend everything the community takes for granted.","description":"Transported into the black-and-white realm of a cheerful 1950s sitcom, teenage twins David and Jennifer confront an idyllic world whose tidy, predictable routine shatters when modern habits introduce vivid color.","vibeSummary":"A steady, thoughtful fantasy comedy pairing imaginative visual style with engaged, moderate-weight family viewing.","whyWatch":"Gary Ross crafts an inventive fantasy that blends gentle comedy with thoughtful drama, turning a nostalgic television frame into a striking study of conformity and awakening."}}

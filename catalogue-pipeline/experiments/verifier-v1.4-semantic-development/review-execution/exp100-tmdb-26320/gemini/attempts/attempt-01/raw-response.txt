@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports Elliot Tiber seeking much-needed business for his parents' run-down motel after a neighboring town pulled the permit for a music festival, connecting organizers to his neighbor's farm, and inadvertently catalyzing the massive Woodstock gathering of half a million people."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly confirms Comedy and Drama genres, grounding the 'blend of comedy and drama' in vibeSummary."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies Ang Lee. facts.keywords verifies 'catskills' and 'music festival'. Accepted semantic classification directly grounds pace: medium ('medium-paced'), emotionalWeight: moderate ('moderate emotional weight'), attentionDemand: engaged ('steady engagement'), and moods: [funny, emotional, thoughtful] ('warm')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly complies with A_PRIME_PRODUCTION_MATERIALITY_V1. The synopsis and curiosity hook adhere faithfully to the authorized overview and verified keywords without importing ungrounded external festival trivia, artist cameos, or third-act narrative outcomes. Framing phrases such as 'chaotic logistics' and 'legendary counterculture milestone' represent legitimate, low-risk atmospheric inference and genre shorthand capturing the authorized scale of the event and its cultural impact, while experiential descriptors in whyWatch and vibeSummary cleanly map to verified metadata and authorized semantic classifications.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

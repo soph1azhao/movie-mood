@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports James Bond/007 battling SPECTRE, stopping Largo's theft of two atomic warheads for nuclear blackmail, and forging an alliance with Largo's vengeful girlfriend Domino."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly verifies Action, Adventure, and Thriller genres, supporting 'spy adventure' and 'spy thriller' framing across visible copy (corroborated by facts.keywords 'spy' and 'british secret service')."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies Irvin Kershner and facts.year verifies 1983. Accepted semantic classification directly grounds pace: fast ('fast pacing', 'fast-paced'), moods: [exciting, suspenseful] ('Exciting and suspenseful', 'classic espionage tension'), attentionDemand: engaged ('engaged action'), and situations: friends ('suited for friends')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly complies with A_PRIME_PRODUCTION_MATERIALITY_V1. The narrative premise, stolen nuclear warheads conflict, and character dynamics in the description and curiosityHook adhere faithfully to the authorized overview and verified keywords. The copy exercises disciplined restraint by omitting ungrounded real-world production lore (e.g., Sean Connery's return, Kevin McClory legal history, Thunderball remake context) and respecting setup-only boundary constraints with zero third-act or climax spoilers. Stylistic phrases such as 'entangled alliance' and 'before time runs out' function as legitimate, low-risk atmospheric inference and genre shorthand capturing the authorized starting premise.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

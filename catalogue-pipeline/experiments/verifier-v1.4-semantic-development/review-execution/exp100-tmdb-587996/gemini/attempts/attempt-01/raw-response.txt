@@ -1,0 +1,38 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "allowedSourceMaterial.overview",
+      "supportFound": true,
+      "notes": "Directly supports the central premise: an attacked prisoner transfer van where the officer in charge must fight threats from both inside and outside while battling freezing/icy temperatures."
+    },
+    {
+      "source": "facts.director",
+      "supportFound": true,
+      "notes": "Directly verifies Lluís Quílez as director."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Supports Action, Crime, and Thriller genre framing."
+    },
+    {
+      "source": "facts.countries",
+      "supportFound": true,
+      "notes": "Validates the Spanish production context ('in Spain', 'Spanish thriller')."
+    },
+    {
+      "source": "acceptedSemanticClassification",
+      "supportFound": true,
+      "notes": "Directly supports experiential attributes: 'fast' pace, 'suspenseful' mood, 'engaged' attention demand, and 'alone'/'friends' viewing situations ('solo or group viewing')."
+    }
+  ],
+  "sourceBoundaryReason": "All editorial copy remains strictly grounded in the authorized source packet. Descriptive phrasing such as 'on a desolate road', 'volatile inmates', 'armored prisoner van', and the rhetorical framing 'who will outlast the night?' constitute permissible atmospheric inference, genre shorthand, and low-risk metaphorical urgency under A_PRIME_PRODUCTION_MATERIALITY_V1, introducing no material factual inventions, external lore, or spoiler boundary violations.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

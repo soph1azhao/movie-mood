@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports Cecilia working as a waitress in New Jersey during the Great Depression, escaping her dreary life at the movie theatre, and repeatedly watching dashing archaeologist Tom Baxter in 'The Purple Rose of Cairo' after losing her job."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly confirms Comedy, Fantasy, and Romance genres, supporting 'romantic comedy and fantasy' in whyWatch and 'romantic fantasy' in vibeSummary."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies Woody Allen. facts.keywords verifies 'great depression' and 'falling in love'. Accepted semantic classification directly grounds pace: medium ('gentle medium pace'), emotionalWeight: moderate ('balancing Depression-era melancholy with playful charm'), and moods: [funny, thoughtful] ('Thoughtful, funny')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly adheres to A_PRIME_PRODUCTION_MATERIALITY_V1. The narrative premise in the description and curiosityHook remains faithfully anchored to the authorized overview and verified genres, displaying admirable restraint by omitting external cast lore (Mia Farrow, Jeff Daniels) and avoiding late/script-level mechanics (e.g., characters stepping physically off the screen, real-world actor confrontations, or relationship outcomes). Phrasing such as 'the boundary between the movie house and her reality begins to blur' and 'adventure film' functions as legitimate, low-risk atmospheric framing and genre shorthand reflecting the Fantasy/Romance tags and the archaeologist lead character, while experiential descriptors in whyWatch and vibeSummary cleanly map to verified metadata and authorized semantic classifications.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

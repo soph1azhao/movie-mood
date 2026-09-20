@@ -1,0 +1,37 @@
+{
+  "preliminaryDecision": "REVISE",
+  "preliminarySeverity": "MINOR",
+  "affectedFields": ["description", "curiosityHook", "vibeSummary", "whyWatch"],
+  "issueSummaries": [
+    "description says SPECTRE 'steals two atomic warheads' and that Largo is 'the mastermind'. The overview says Largo, not SPECTRE as an organization, 'has stolen two atomic warheads'. The overview also names SPECTRE only as the organization Bond battles, and never calls Largo a mastermind or ties him to it. The copy reassigns the theft and adds an unsupported role and relationship. 'Tasked with stopping' also adds an assignment the packet does not state.",
+    "curiosityHook says Domino is 'the villain's vengeful girlfriend' entering 'the fray'. The overview says she is Largo's girlfriend and Bond's ally who falls for Bond and seeks revenge. The copy omits her alliance with Bond and frames her as the villain's associate. That misstates her relationship, and 'enters the fray' with 'before time runs out' adds a timing and mechanic the packet does not state.",
+    "vibeSummary ('globe-trotting stakes') and whyWatch ('globetrotting') imply travel across many places. The overview names no locations, and 'bahamas' appears only in facts.keywords. This is an unsupported setting escalation."
+  ],
+  "claimSpan": "the villain's vengeful girlfriend Domino",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": false,
+      "notes": "description: SPECTRE does not steal the warheads in the overview. Largo does, and 'mastermind' is not stated. curiosityHook: Domino is described as Bond's ally who falls for him and seeks revenge, not as a villain's associate."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "James Bond as 007, the SPECTRE battle, two atomic warheads, nuclear blackmail, Largo, and Domino's revenge motive all restate the overview. 'Nefarious' paraphrases 'evil'. 'Returns to action' echoes 'returns'. 'An entangled alliance fueled by personal revenge' in whyWatch is consistent with the overview and does not misstate Domino's role."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "'Spy thriller', 'spy adventure', 'espionage tension' and 'action' are consistent with genres Action/Adventure/Thriller. 'Irvin Kershner' and '1983' match director and year. 'Classic' is tonal shorthand."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "'Fast-paced' matches pace=fast, 'exciting' and 'suspenseful' match moods, 'engaged' matches attentionDemand, and 'friends' matches situations. Keyword-only material (scuba, video game, Bahamas) is not imported."
+    }
+  ],
+  "sourceBoundaryReason": "Most of the copy is grounded or is tolerated genre shorthand under A_PRIME_PRODUCTION_MATERIALITY_V1. The exceptions are relationship and causality errors: SPECTRE is credited with Largo's theft, Largo is made a 'mastermind', and Domino is recast as the villain's associate instead of Bond's ally. Unsupported 'globe-trotting' language repeats in two fields. These fall under the relationships, causality and locations categories. They do not invent new characters, contradict the core premise, or reveal outcomes, so the severity is MINOR and not SEVERE. A bounded fix would say 'Bond must defeat Largo, who has stolen two atomic warheads for nuclear blackmail', describe Domino as Largo's girlfriend who becomes Bond's ally and seeks revenge, and drop 'globe-trotting'.",
+  "uncertaintyNotes": "This is a near-threshold call. Largo is presumably tied to SPECTRE, and the overview's sentence order makes that reading natural, so an adjudicator could treat the theft attribution as harmless. 'Globe-trotting' may also be read as spy-genre shorthand. I flag the fields mainly for the Domino framing, since the copy withholds her alliance with Bond, and for the repeated 'globe-trotting' claim. 'Tasked with', 'mastermind' and 'before time runs out' were considered and left as minor if the rest is approved.",
+  "confidence": "MEDIUM",
+  "advisoryOnly": true
+}

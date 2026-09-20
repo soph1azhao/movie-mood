@@ -1,0 +1,38 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "The description's core premise matches the overview: a mother and daughter move to a new town, the next-door house was the site of a murder, the daughter befriends the surviving son, and the story is 'far from over'. 'A dark history begins to resurface' is a light paraphrase of that last line. 'Double murder' is a direct arithmetic reading of a girl murdering 'her parents'. 'Brutal' is a low-risk intensifier."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "In curiosityHook, 'past double murder' and 'the family next door' follow from the overview. 'Tore the family apart' is figurative and hedged by 'seemingly'. 'The horror never truly ended' is a figurative restatement of 'the story is far from over'."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": false,
+      "notes": "'The surviving son's quiet presence suggests the horror never truly ended' has two unsupported elements. 'Quiet' is a characterization of the son that the packet does not state. Tying the ongoing horror to the son's presence is a mild inference, since the overview says only that the daughter learns the story is far from over after befriending him. Both elements are atmospheric insinuation. Neither states a new plot fact, identity, motive or outcome."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "'Horror-thriller' matches the Horror and Thriller genres. 'Mark Tonderai' matches facts.director. 'Tightening psychological dread' is genre shorthand for the suspenseful mood and these genres."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "acceptedSemanticClassification supports vibeSummary and whyWatch: mood 'suspenseful', emotional weight 'heavy' (fits 'heavy family tragedy'), pace 'medium' (fits 'steady' and 'medium pacing'), attention demand 'engaged' and situation 'alone' (fits 'solitary attention'). 'Suburban' is a minor setting concretization of 'new town' and 'next door', of the same kind as the tolerated 'across the countryside'."
+    }
+  ],
+  "sourceBoundaryReason": "Under A_PRIME_PRODUCTION_MATERIALITY_V1, the copy stays within the starting situation, premise and initial conflict. It uses only the murder backstory, the new-town setup, the friendship with the surviving son and the 'story is far from over' hook, all of which the overview states. The unsupported elements ('brutal', 'quiet presence', 'suburban', 'psychological') are atmospheric or genre-shorthand flourishes. None specifies plot mechanics, identity, motive, causality or later reveals. The copy does not name the perpetrator, does not label the son as threatening, and does not use the sensitive keywords in the packet (abuse, cross dressing, father son conflict). It reveals no reversals, later events or outcomes.",
+  "uncertaintyNotes": "The borderline phrase is 'the surviving son's quiet presence suggests the horror never truly ended' in curiosityHook. A stricter reviewer could read it as an unsupported characterization ('quiet') that also insinuates the son is tied to continuing danger, which the overview only hints at indirectly ('learns the story is far from over'). I read it as tolerated atmospheric inference because the insinuation is hedged, follows the overview's own framing, and adds no concrete fact. If Sophia weighs it more strictly, the most likely outcome is a MINOR revision limited to curiosityHook, such as dropping 'quiet' or reconnecting the hook to the daughter's discovery. 'Suburban' and 'brutal' are much lower risk.",
+  "confidence": "MEDIUM",
+  "advisoryOnly": true
+}

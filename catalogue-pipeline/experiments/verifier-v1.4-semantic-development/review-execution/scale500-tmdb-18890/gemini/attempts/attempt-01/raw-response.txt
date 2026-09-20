@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports Captain New Eyes feeding dinosaurs cereal to make them intelligent and non-violent, traveling to New York City to grant children's wishes, heading to the Museum of Natural History, and confronting the Captain's evil brother, Professor Screweyes."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly verifies Animation, Family, and Science Fiction genres reflected across description, whyWatch, and vibeSummary."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "runtimeMinutes (71) directly verifies 'breezy 71 minutes'. Accepted semantic classification directly grounds emotionalWeight: light ('Lighthearted'), attentionDemand: easy ('low viewing demand'), pace: medium ('briskly paced'), moods: exciting ('exciting'), and situations: family ('family charm')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly complies with A_PRIME_PRODUCTION_MATERIALITY_V1. The narrative premise, character motivations, destination, and core conflict in the description and curiosityHook faithfully adhere to the authorized overview and verified keywords without importing ungrounded plot developments or violating setup-only spoiler boundaries. Phrasing such as 'gentle prehistoric giants', 'special cereal', and 'playful city detours' functions as acceptable, low-risk editorial paraphrase and genre shorthand, while experiential descriptors in whyWatch and vibeSummary cleanly map to verified metadata and authorized semantic classifications.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

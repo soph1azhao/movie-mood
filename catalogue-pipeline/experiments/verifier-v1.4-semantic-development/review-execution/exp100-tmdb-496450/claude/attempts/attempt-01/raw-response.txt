@@ -1,0 +1,38 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "allowedSourceMaterial.overview",
+      "supportFound": true,
+      "notes": "Core premise (guardian, magical jewels, awkward girl, popular boy, superheroes, identity secrecy) directly mirrors authorized source."
+    },
+    {
+      "source": "facts.director",
+      "supportFound": true,
+      "notes": "Jeremy Zag named as director in whyWatch; matches facts.director."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Animation, Fantasy, Family, Action, Romance genres directly supported by editorial characterizations (animated fantasy, family, superhero action, romantic tension)."
+    },
+    {
+      "source": "facts.keywords",
+      "supportFound": true,
+      "notes": "Paris, France; superhero; teenager; magic all appear in authorized keywords and are appropriately referenced or reasonably inferred."
+    },
+    {
+      "source": "acceptedSemanticClassification",
+      "supportFound": true,
+      "notes": "Moods (exciting, emotional), pace (fast), situations (family), and emotional weight (moderate) all reflected in vibeSummary and whyWatch."
+    }
+  ],
+  "sourceBoundaryReason": "All editorial copy stays within authorized source boundaries and the materiality standard. The description and hooks employ reasonable semantic variation and minor contextual inference (e.g., 'defend Paris' drawn from location keywords and superhero premise; 'romantic tension' drawn from genre classification and character dynamic) without materially altering viewer expectations. Identity secrecy is explicitly authorized in the source overview and is part of the core premise, not a spoiler. 'World-saving teamwork' in the curiosityHook is a reasonable scope inference for superhero fiction and does not falsely specify mechanics or causality; it describes dramatic stakes consistent with the genre and tone. Rephrasing of the identity rule ('discover who the other really is' vs. 'never reveal identities') is semantically equivalent and presents no material factual violation.",
+  "uncertaintyNotes": "The phrase 'world-saving teamwork' in curiosityHook introduces scope (world-level stakes) not explicitly stated in the authorized overview, which specifies only that they 'become superheroes' with an identity constraint. However, under A_PRIME_PRODUCTION_MATERIALITY_V1, minor contextual concretization and atmospheric inference are tolerated when they do not materially misrepresent plot mechanics or viewer decision-relevant expectations. Given superhero genre convention and the absence of any contradictory scope limitation in source material, this inference remains within acceptable bounds. Confidence remains HIGH due to clarity of source alignment.",
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

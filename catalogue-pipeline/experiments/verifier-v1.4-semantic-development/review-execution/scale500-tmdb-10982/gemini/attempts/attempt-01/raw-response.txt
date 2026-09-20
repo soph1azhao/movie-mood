@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Overview explicitly establishes that Chief Grizzly and Detective Bill Stork investigate a domestic disturbance at Granny's cottage involving a karate-kicking Red, a sarcastic Wolf, and an oafish Woodsman, beginning at the end and winding backward with 'more to every tale than meets the eye.'"
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Genres (Animation, Comedy, Crime, Family, Mystery) directly support framing the film as an animated comedic crime mystery and whodunit."
+    },
+    {
+      "source": "acceptedSemanticClassification",
+      "supportFound": true,
+      "notes": "Classifications for mood ('funny'), emotionalWeight ('light'), attentionDemand ('engaged'), and situations ('family', 'easy-watch') fully ground the vibe and viewing experience claims."
+    }
+  ],
+  "sourceBoundaryReason": "All editorial copy stays within authorized boundaries under A_PRIME_PRODUCTION_MATERIALITY_V1. Framing the investigation around conflicting witness stories and perspectives is acceptable genre shorthand and thematic synthesis of the overview's domestic disturbance investigation and backward-unspooling narrative, introducing no ungrounded factual claims, new characters, or spoiler boundary violations.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

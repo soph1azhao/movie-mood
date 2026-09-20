@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports police officer Asger Holm demoted to desk work as an alarm dispatcher, answering a call from a panicked/kidnapped woman, and using the phone as his sole tool in a race against time to save her."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly confirms the 'thriller', 'crime drama', and 'suspense drama' genre labels across whyWatch and vibeSummary."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies Gustav Möller, runtimeMinutes verifies the 85-minute length, and countries/spokenLanguages support Danish. Accepted semantic classification directly grounds fast pace, heavy emotional weight, engaged attention demand, suspenseful/emotional moods, and the alone viewing situation."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly adheres to A_PRIME_PRODUCTION_MATERIALITY_V1. The starting premise, character identity, and core conflict in the description and curiosityHook closely track the authorized overview while scrupulously observing setup-only spoiler boundaries. Phrasing such as 'driven purely by vocal cues' and 'claustrophobic suspense drama' constitutes acceptable experiential and atmospheric inference directly anchored in the authorized phone-bound, desk-confinement premise rather than an ungrounded factual invention.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

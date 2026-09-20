@@ -1,0 +1,33 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "description: the musical framing, Argentinian actress Evita Duarte, marriage to President Juan Perón, and being both beloved and hated all restate the overview. 'Deeply revered and fiercely resented' paraphrases 'most beloved and hated woman in Argentina'. 'Ascends to national prominence' is a light inference from that same phrase. 'Marries President Juan Perón' restates 'eventually became the wife of Argentinian president Juan Perón'. It does not assert that he was already president at the time of marriage. 'Alan Parker' matches director."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "curiosityHook: the ambitious actress becoming one of Argentina's most fiercely debated figures echoes the actress-to-president's-wife arc and the beloved-and-hated framing. 'Fiercely debated' paraphrases 'beloved and hated'. 'Ambitious' and 'navigate Argentina's corridors of power' are figurative characterization and atmospheric inference. The overview states no motive and no mechanism for how she rose. 'Political forces' mildly recasts her public standing as political influence. The hook is an interrogative and asserts no specific event or outcome."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "'Historical drama' and 'historical musical' are consistent with genres Drama/History and the musical premise stated in the overview. 'Hit musical' restates 'the hit musical'. 'Grand' and 'theatricality' are genre and tonal shorthand consistent with a musical adaptation."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "acceptedSemanticClassification: 'Steady' matches pace=medium. 'Emotionally heavy' matches emotionalWeight=heavy. 'Engaged focus' matches attentionDemand=engaged. 'Reflective solitary viewing' matches mood thoughtful and situations=[alone]. 'Emotional weight carried by a polarizing national figure' matches mood emotional and the beloved-and-hated framing."
+    }
+  ],
+  "sourceBoundaryReason": "Every concrete claim (the musical adaptation, Evita Duarte, Argentinian actress, marriage to Juan Perón, the beloved-and-hated public standing, the director, the genres) is grounded in the packet. The remaining language ('ambitious', 'corridors of power', 'political forces', 'theatricality of political power', 'grand historical drama') is figurative characterization, thematic shorthand, or atmospheric inference. None of it functions as a meaningful new factual claim about plot mechanics, identities, relationships, or causality under A_PRIME_PRODUCTION_MATERIALITY_V1. The copy stays at the premise and central-subject level and states no death, late outcome, or ending, so no spoiler-boundary content appears. Keyword-only material (prostitute, funeral, death, deification, Peronism, 1940s/1950s) is not imported.",
+  "uncertaintyNotes": "Two items sit near the tolerance line. 'Ambitious' assigns a motive the packet does not state, and the 'how did she navigate corridors of power' framing implies a route to influence that the overview does not describe. 'Political forces' recasts her standing as political influence, where the source says only that she became the president's wife and the most beloved and hated woman in Argentina. A stricter adjudicator could ask for these to be softened toward the source's own framing. I read them as character-and-theme shorthand in the class of the tolerated 'corrupt certainty', since they name no event, relationship, or outcome and do not change what a viewer would expect from a musical about Evita. 'Marries President Juan Perón' could imply he was president at the time of the marriage, but 'eventually became the wife of' leaves the order open and the copy does not commit either way.",
+  "confidence": "MEDIUM",
+  "advisoryOnly": true
+}

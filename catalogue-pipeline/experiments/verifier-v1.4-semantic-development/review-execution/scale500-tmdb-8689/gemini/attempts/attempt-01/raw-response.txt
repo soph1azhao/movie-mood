@@ -1,0 +1,33 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "allowedSourceMaterial.overview",
+      "supportFound": true,
+      "notes": "Directly supports the central premise: an NYU professor returning from an Amazon rainforest rescue mission with footage/reels shot by a lost documentary crew who set out to film local cannibal tribes."
+    },
+    {
+      "source": "facts.director",
+      "supportFound": true,
+      "notes": "Directly validates Ruggero Deodato as director."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly validates the Horror genre designation."
+    },
+    {
+      "source": "acceptedSemanticClassification",
+      "supportFound": true,
+      "notes": "Directly supports emotional weight ('heavy'), mood ('suspenseful'), pace ('medium' / steady tension), and viewing situation ('alone' / focused solitary viewing)."
+    }
+  ],
+  "sourceBoundaryReason": "All editorial copy strictly aligns with the authorized overview, director attribution, genre, and semantic classifications without relying on unauthorized keywords or external lore. Descriptive phrasing such as 'reels', 'recovered footage', and 'horror investigation' represents permissible genre shorthand and narrative framing under A_PRIME_PRODUCTION_MATERIALITY_V1, introducing no ungrounded factual claims or spoiler violations.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

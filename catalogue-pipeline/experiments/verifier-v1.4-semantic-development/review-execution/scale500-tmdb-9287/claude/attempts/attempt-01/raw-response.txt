@@ -1,0 +1,43 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "The description's core premise matches the overview: two brothers who dislike each other, Christmas with their mother, and the mother trying to bring them together. 'Mutually hostile' is a reasonable reading of 'hate themselves' given the next sentence ('She tries to get them together'). 'Determined to engineer a family peace' is a light paraphrase of 'tries to get them together'. 'Headed home' mildly concretizes 'going to spend Christmas with their mother', but it adds no plot mechanic or factual specification."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "'Western comedy' is supported by the genres Comedy, Romance and Western, and by the keywords 'saloon' and 'sheriff'. 'Western atmosphere' in whyWatch is likewise supported. 'Lighthearted romance' is supported by the Romance genre. It is a generic framing and is not presented as a specific plot element."
+    },
+    {
+      "source": "facts.director",
+      "supportFound": true,
+      "notes": "'Directed by Terence Hill' matches facts.director."
+    },
+    {
+      "source": "facts.keywords",
+      "supportFound": true,
+      "notes": "'Holiday domestic friction' and 'comedic bickering' are supported by the keywords 'christmas', 'family' and 'prügel' (brawling) and by the overview's premise of hostile brothers. They are low-risk genre-shorthand inferences."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "acceptedSemanticClassification supports vibeSummary: mood 'funny', emotional weight 'light', pace 'medium', attention demand 'easy', discovery style 'familiar' and situation 'family' align with 'Light, funny... easy pace, familiar charm, low-stress holiday warmth'."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": false,
+      "notes": "'Ambitious' (mother) and 'stubborn' (brothers) in curiosityHook are characterizations not stated in the packet. They are low-stakes figurative flourishes inferred from the mother's effort and the brothers' hostility. They do not assert a new plot fact, motive, relationship or outcome."
+    }
+  ],
+  "sourceBoundaryReason": "Under A_PRIME_PRODUCTION_MATERIALITY_V1, the copy keeps to the starting situation and premise (hostile brothers, Christmas with their mother, her attempt to reunite them) and to the genre and tone signals in the packet. The unsupported bits ('ambitious', 'stubborn', 'headed home', 'bickering') are minor characterizations or contextual concretizations. None materially changes plot mechanics, identity, relationships, causality, locations, quantities or spoiler boundaries. The curiosityHook asks whether the mother can succeed but does not reveal or imply an outcome.",
+  "uncertaintyNotes": "The source is very thin, and 'hate themselves' is oddly phrased (possibly a garbled 'hate each other'). If it literally meant self-loathing, 'mutually hostile' would be a distortion, but the following sentence strongly supports the mutual-hostility reading. 'Ambitious mother' is the most noticeable unsupported characterization, and a stricter reviewer might flag it as a minor unsupported trait. 'Lighthearted romance' rests only on the Romance genre tag, with no romantic plot in the overview, so a stricter reader could see it as mild overreach. I treat both as tolerable under the standard.",
+  "confidence": "MEDIUM",
+  "advisoryOnly": true
+}

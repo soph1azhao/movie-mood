@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports the central premise of a self-indulgent private investigator on a cruise ship alongside rich patrons, gorgeous women, murderous terrorists, and scarce food."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly verifies Action and Comedy genres, grounding the 'action comedy', 'martial-arts action', and 'broad farce' descriptors across visible copy."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies Wong Jing, facts.year verifies 1993, and facts.countries verifies Hong Kong. Accepted semantic classification directly grounds pace: fast ('Fast', 'fast, breezy'), emotionalWeight: light ('low emotional weight', 'lighthearted'), moods: [funny, exciting] ('comedic action', 'energetic'), and situations: [friends, easy-watch] ('easygoing group watch')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly complies with A_PRIME_PRODUCTION_MATERIALITY_V1. The narrative premise and conflict in the description and curiosityHook faithfully adhere to the authorized overview and keywords without importing external casting lore (e.g., Jackie Chan), manga specifics, or third-act spoiler revelations. Phrasing such as 'wealthy socialites', 'glamorous passengers', and 'frivolous private eye' functions as acceptable synonymy and character shorthand for authorized elements ('rich patrons', 'gorgeous women', 'self-indulgent private investigator'), while experiential descriptors in whyWatch and vibeSummary cleanly align with verified metadata and authorized semantic classifications.",
+  "uncertaintyNotes": "In curiosityHook, 'no rations' slightly hyperbolizes the overview's 'scarce food'. Within the interrogative hook, this operates as low-risk rhetorical urgency rather than an assertive new factual claim, especially given that description explicitly and accurately retains 'scarce food'.",
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

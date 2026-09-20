@@ -1,0 +1,41 @@
+{
+  "preliminaryDecision": "REVISE",
+  "preliminarySeverity": "MINOR",
+  "affectedFields": ["whyWatch", "vibeSummary"],
+  "issueSummaries": [
+    "whyWatch: 'creature-feature dread' and 'predatory force' characterize the antagonist as a monster/creature, a specific identity attribute not established by allowedSourceMaterial.overview or facts.overview, which describe only an unnamed 'opponent' the athletes 'cannot defeat.'",
+    "vibeSummary: 'engaged night in with friends' asserts a nighttime setting not established anywhere in the authorized overview or facts; the source specifies no time of day."
+  ],
+  "claimSpan": "creature-feature dread",
+  "sourceEvidence": [
+    {
+      "source": "allowedSourceMaterial.overview",
+      "supportFound": true,
+      "notes": "Overview supports: a team of high school athletes' bus is crippled/breaks down on a deserted road, and they discover an opponent they cannot defeat and may not survive. This grounds description, curiosityHook, and most of vibeSummary and whyWatch."
+    },
+    {
+      "source": "allowedSourceMaterial.overview",
+      "supportFound": false,
+      "notes": "The overview refers only to an 'opponent,' with no indication of whether this opponent is human, animal, monster, or something else. 'Creature-feature' and 'predatory force' assert a specific identity/nature for the antagonist that the closed-world source does not establish (excluding facts.keywords, which contain 'monster'/'mythical creature'/'scarecrow' but were instructed to be disregarded)."
+    },
+    {
+      "source": "allowedSourceMaterial.overview",
+      "supportFound": false,
+      "notes": "No time of day is specified in the overview; 'night in' in vibeSummary is an unsupported setting/time concretization."
+    },
+    {
+      "source": "facts",
+      "supportFound": true,
+      "notes": "description and curiosityHook's framing (stranded on a deserted/empty road after bus breakdown, facing an undefeatable adversary) closely and safely paraphrases the overview without adding antagonist-identity claims."
+    },
+    {
+      "source": "acceptedSemanticClassification",
+      "supportFound": true,
+      "notes": "vibeSummary's 'tense... steady suspense and moderate emotional weight... engaged' correctly reflects the authorized moods (suspenseful), pace (medium), emotionalWeight (moderate), and attentionDemand (engaged); only the 'night in' addition is unsupported."
+    }
+  ],
+  "sourceBoundaryReason": "Per A_PRIME_PRODUCTION_MATERIALITY_V1, low-risk atmospheric language is tolerated, but 'creature-feature' and 'predatory force' specify a factual attribute of the antagonist's identity/nature (that it is a monster/animal-like predator rather than, e.g., a human killer) that the closed-world overview does not establish — this is decision-relevant to viewer expectations about the type of threat depicted. Similarly, 'night in' concretizes an unstated time-of-day setting. Both are bounded, fixable overstatements rather than severe distortions of plot mechanics or spoiler-boundary violations, so MINOR is appropriate rather than SEVERE.",
+  "uncertaintyNotes": "If facts.keywords ('monster', 'mythical creature', 'scarecrow') were treated as authorized source material, 'creature-feature' would be well-supported; under the current instruction to disregard keywords, this support is unavailable, making the antagonist's nature technically ungrounded in the remaining authorized fields.",
+  "confidence": "MEDIUM",
+  "advisoryOnly": true
+}

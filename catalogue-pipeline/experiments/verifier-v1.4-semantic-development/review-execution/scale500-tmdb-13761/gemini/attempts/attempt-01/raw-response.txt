@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports Pocahontas grieving the news/reported death of John Smith, journeying to London with John Rolfe to meet the King of England on a diplomatic peace mission, and facing Governor Ratcliffe's efforts to discredit her."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly verifies Adventure, Animation, Family, and Romance genres, supporting the 'animated adventure', 'romantic drama', and 'family journey' framing across visible copy."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "runtimeMinutes (72) verifies 'swift 72 minutes' (runtime duration). Accepted semantic classification directly grounds pace: medium ('steady pace'), emotionalWeight: moderate ('moderately emotional'), attentionDemand: easy ('easy-watching', 'accessible'), moods: [emotional, exciting], and situations: [family, easy-watch] ('family journey', 'easy-watching')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly complies with A_PRIME_PRODUCTION_MATERIALITY_V1. The narrative premise, diplomatic mission, and Ratcliffe's antagonistic plot in the description and curiosityHook adhere faithfully to the authorized overview. Crucially, the copy exercises rigorous setup-only restraint by qualifying John Smith's status as 'reported death' and omitting third-act revelations regarding his survival or subsequent relationship choices between Smith and Rolfe. Framing phrases such as 'royal peace mission' and 'court intrigue' represent legitimate, low-risk contextual concretization and genre shorthand anchored in the authorized meeting with the King of England.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

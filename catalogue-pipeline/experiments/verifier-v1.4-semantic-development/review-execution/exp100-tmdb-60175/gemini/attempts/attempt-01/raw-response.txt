@@ -1,0 +1,32 @@
+{
+  "preliminaryDecision": "REVISE",
+  "preliminarySeverity": "MINOR",
+  "affectedFields": [
+    "vibeSummary"
+  ],
+  "issueSummaries": [
+    "The vibeSummary characterizes the film as 'fast-moving', which overstates narrative tempo and conflicts with the authorized classification of pace: 'medium'."
+  ],
+  "claimSpan": "fast-moving",
+  "sourceEvidence": [
+    {
+      "source": "other",
+      "supportFound": false,
+      "notes": "acceptedSemanticClassification explicitly classifies pace as 'medium'. Describing the film as 'fast-moving' in vibeSummary escalates the pacing attribute to 'fast'."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports the Versailles private school setting, the graduating class of underachieving/less-gifted students, the prank that dynamites the school, and the court ultimatum to pass exams or go to prison."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly verifies the Comedy genre framing ('school farce', 'comic romp', 'broad laughs') across visible copy."
+    }
+  ],
+  "sourceBoundaryReason": "Under closed-world source authority and A_PRIME_PRODUCTION_MATERIALITY_V1, experiential descriptors in visible copy must remain accurately calibrated to the authorized acceptedSemanticClassification. Characterizing the film as 'fast-moving' in vibeSummary overstates narrative tempo against the classified pace of 'medium', introducing an unsupported pace escalation on a decision-relevant viewer expectation axis. Because this is a localized, easily fixable phrasing issue that does not distort plot mechanics, character identity, or spoiler boundaries, it represents a MINOR defect requiring revision.",
+  "uncertaintyNotes": "Under a more permissive reading of A_PRIME_PRODUCTION_MATERIALITY_V1, 'fast-moving school farce' might be defended as generic comedic flavor rather than a formal pace assertion. However, within Movie Mood's taxonomy where pace is an explicit filtering dimension, describing a medium-paced film as fast-moving creates an ungrounded attribute conflict. In curiosityHook, 'zero study habits' is tolerated as non-material rhetorical color characterizing the authorized 'less-gifted' students facing exams.",
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

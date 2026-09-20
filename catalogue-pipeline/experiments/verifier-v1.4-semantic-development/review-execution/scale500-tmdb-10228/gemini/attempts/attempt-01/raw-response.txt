@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "allowedSourceMaterial.overview",
+      "supportFound": true,
+      "notes": "Directly grounds the core conflict, Mewtwo's bio-engineered nature, its motive to prove superiority, and its luring of Ash, Pikachu, and others into an unprecedented match."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Confirms the baseline premise, character names, and confrontation setup reflected in the description and curiosity hook."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Validates the genre references ('animated fantasy', 'animated adventure') in whyWatch and vibeSummary."
+    }
+  ],
+  "sourceBoundaryReason": "The visible editorial copy adheres strictly to the authorized facts, overview, and accepted semantic classifications. Formulations such as 'assert its dominance', 'unprecedented arena confrontation', and 'private proving ground' function as harmless stylistic variation and genre shorthand directly rooted in Mewtwo's bio-engineered origins and its quest to prove superiority in a match like none before. No external lore, ungrounded factual claims, or spoiler boundaries are breached.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

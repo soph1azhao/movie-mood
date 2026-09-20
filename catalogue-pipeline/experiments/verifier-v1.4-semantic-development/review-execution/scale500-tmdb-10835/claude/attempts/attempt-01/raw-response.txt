@@ -1,0 +1,35 @@
+{
+  "preliminaryDecision": "REVISE",
+  "preliminarySeverity": "MINOR",
+  "affectedFields": ["curiosityHook"],
+  "issueSummaries": [
+    "curiosityHook says Jeffrey is 'double-crossed by his own employers' and that the rogue officer is 'hunting him'. The overview says only that Jeffrey 'is double-crossed', without saying who betrays him, and that he 'reluctantly joins forces with a rogue policeman to make things right'. It does not say the policeman is hunting him. The copy therefore names the betrayers as his employers and casts the cop as an adversary Jeffrey must learn to trust, which reverses the packet's framing of an alliance formed to set things right. This is an unsupported relationship and causal concretization."
+  ],
+  "claimSpan": "Double-crossed by his own employers, can a conscience-stricken hitman trust the rogue officer hunting him long enough to settle the score?",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": false,
+      "notes": "curiosityHook: 'his own employers' has no support, since the overview does not identify the double-crosser. 'Rogue officer hunting him' has no support either. The overview gives only a reluctant partnership with a rogue policeman. 'Settle the score' loosely paraphrases 'make things right' and is tolerated."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "description: the elite mob assassin Jeffrey ('best in his business'), the nightclub singer Jennie blinded during a hit ('inadvertently' paraphrases 'unintended victim'), the final job to fund her surgery, the betrayal, and the alliance with a rogue cop all restate the overview. 'Uneasy' echoes 'reluctantly'. 'Dangerous' is a light flourish on the final job. 'Face betrayal' paraphrases 'double-crossed'."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "whyWatch and vibeSummary: 'thriller', 'crime drama' and 'kinetic action' are consistent with genres Action/Crime/Drama/Thriller. 'John Woo', '1989' and 'Hong Kong' match director, year and countries. 'Moral weight of sacrifice and professional honor' echoes the overview's 'calling' and the retirement-for-Jennie premise. 'Conscience-stricken' in curiosityHook follows from his choice to fund her operation."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "acceptedSemanticClassification: 'Fast-paced' matches pace=fast. 'Emotionally heavy' matches emotionalWeight=heavy. 'Suspenseful' matches moods. 'Engaged attention' matches attentionDemand=engaged. Keyword-only material (police, hitman, blindness) adds nothing beyond the overview."
+    }
+  ],
+  "sourceBoundaryReason": "Nearly all of the copy is grounded or is tolerated genre shorthand under A_PRIME_PRODUCTION_MATERIALITY_V1. The exception is one clause in curiosityHook that names the betrayers ('his own employers') and recasts the cop as a pursuer Jeffrey must trust. The overview leaves the double-crosser unspecified and describes the policeman as an ally. That falsely specifies relationships and causality, which are named materiality categories. It does not contradict the core premise, invent new characters or reveal an outcome, so the severity is MINOR and not SEVERE. A bounded fix would say 'Double-crossed, can a conscience-stricken hitman and a rogue cop make things right?'.",
+  "uncertaintyNotes": "This is a near-threshold call. A mob assassin's double-crosser plausibly comes from his own circle, and a rogue policeman is plausibly on the hitman's trail, so an adjudicator could treat both as natural genre inferences and approve. I flag the clause because the packet is silent on who betrays Jeffrey and frames the cop as a reluctant ally. The description's 'take a final dangerous job' and 'form an uneasy alliance' were considered and left within tolerance.",
+  "confidence": "MEDIUM",
+  "advisoryOnly": true
+}

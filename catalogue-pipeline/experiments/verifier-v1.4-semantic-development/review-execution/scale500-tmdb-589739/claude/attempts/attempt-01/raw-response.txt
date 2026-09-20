@@ -1,0 +1,33 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "description: the father unexpectedly taking over his daughter Zuri's hair before a big event, the seemingly simple task turning difficult, and locks with 'a mind of their own' all restate the overview. 'Special occasion' paraphrases 'big event'. 'Unruly challenge' and 'everyday routine' are figurative glosses on 'what seems like a simple task is anything but'. 'Young' daughter is a light inference not stated in the overview. 'Take over' paraphrases 'step in for mom', and the copy does not mention the mother at all."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "curiosityHook: 'unprepared dad' follows from 'unexpectedly step in', and 'hair refuses to cooperate' paraphrases 'locks have a mind of their own'. 'High-stakes' is figurative urgency that follows from 'before a big event'. 'Morning routine' adds a time of day that the overview does not state, and it is discussed under uncertaintyNotes. The interrogative asserts no outcome."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "whyWatch and vibeSummary: 'animated family comedy' matches genres Animation/Comedy/Family. 'Seven minutes' matches runtimeMinutes=7. 'Father-daughter warmth' is supported by the dad-and-daughter premise in the overview and by the facts.keywords 'father daughter relationship', and it is a tonal descriptor and not a plot claim. 'Brisk comic timing' and 'zero viewing friction' are evaluative flourishes."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "acceptedSemanticClassification: 'Lighthearted' and 'tender' match emotionalWeight=light and moods funny/emotional. 'Effortlessly fast' matches pace=fast. 'Easy' and 'zero viewing friction' match attentionDemand=easy. 'Family comedy' matches situations=[family, easy-watch]. Keyword-only material (identity, self love, Black culture, short film) is not imported."
+    }
+  ],
+  "sourceBoundaryReason": "Every concrete claim (a father unexpectedly taking over his daughter Zuri's hair, the big event, the unruly hair with 'a mind of their own', the 7-minute runtime, the genres) is grounded in the authorized overview. The remaining language ('high-stakes', 'morning routine', 'unruly challenge', 'zero viewing friction') is figurative language, genre shorthand or minor contextual concretization. None of it works as a meaningful new factual claim about plot mechanics, identities, relationships, motives or causality under A_PRIME_PRODUCTION_MATERIALITY_V1. The copy stays at the premise and starting situation and states no outcome, so no spoiler-boundary content appears.",
+  "uncertaintyNotes": "The one near-threshold item is 'morning' in curiosityHook. The overview gives only 'before a big event' and does not say what time of day it is. It is a small setting concretization, and it does not change what a viewer would expect from the film, so I kept it within tolerance. A stricter adjudicator could ask for it to be dropped, in which case it would be a MINOR unsupported setting detail. 'Young' daughter and 'completely unprepared' were considered and left within tolerance as natural readings of the premise.",
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

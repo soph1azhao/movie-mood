@@ -1,0 +1,38 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "allowedSourceMaterial.overview",
+      "supportFound": true,
+      "notes": "The description's core claims (two college-bound friends mistakenly/wrongfully arrested for murder in rural Alabama; cousin Vincent Gambini, a newly-barred Brooklyn lawyer, arrives with his girlfriend to try his first case) map directly onto the authorized overview without invented plot mechanics."
+    },
+    {
+      "source": "allowedSourceMaterial.overview",
+      "supportFound": true,
+      "notes": "curiosityHook's claim that Vincent passed the bar on his sixth try and has never tried a case before is explicitly stated in the overview ('just passed his bar exam after his sixth try' / 'to try his first case'). The phrase 'innocent kin' is a low-risk inference consistent with 'mistakenly arrested' and does not reveal any later plot outcome."
+    },
+    {
+      "source": "facts",
+      "supportFound": true,
+      "notes": "whyWatch correctly attributes direction to Jonathan Lynn (facts.director) and frames the film within its Comedy/Drama genres via 'comedy' and 'real courtroom stakes' language, without overstating factual specifics."
+    },
+    {
+      "source": "acceptedSemanticClassification",
+      "supportFound": true,
+      "notes": "vibeSummary's 'funny, medium-paced legal comedy' directly reflects the authorized moods (funny) and pace (medium) classifications."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "Descriptive flourishes such as 'sharp girlfriend,' 'sheer instinct,' 'lively cultural friction,' and 'Brooklyn swagger' are stylistic/atmospheric embellishments of details already present in the overview (leather-clad girlfriend, Brooklyn mechanic-turned-lawyer, Deep South culture shock) and do not introduce new factual claims about plot, identity, or outcome."
+    }
+  ],
+  "sourceBoundaryReason": "All editorial claims trace back to the authorized overview or facts fields (director, genres) and the accepted semantic classification, excluding reliance on facts.keywords as instructed. Any embellishment (e.g., 'sharp girlfriend', 'sheer instinct', 'cultural friction') is low-risk figurative/atmospheric language under A_PRIME_PRODUCTION_MATERIALITY_V1 and does not alter viewer expectations about plot mechanics, identity, motives, or outcomes. No spoiler-boundary items (reversals, later revelations, endings) are disclosed; content stays within the allowed premise/initial-conflict/tone scope.",
+  "uncertaintyNotes": "vibeSummary's phrase 'Southern courtroom procedure' is a mild inferential concretization from the overview's mention of a murder charge and a lawyer's first case; it is not independently confirmed by non-keyword source fields, but it is a low-materiality genre-consistent inference rather than a new factual claim.",
+  "confidence": "MEDIUM",
+  "advisoryOnly": true
+}

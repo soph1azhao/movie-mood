@@ -1,0 +1,33 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "description: Sy Parrish developing photographs for the Yorkin family for years, his growing loneliness as their lives fill out, and his convincing himself he belongs in their family all restate the overview. 'For years' is supported by 'since their son was a baby'. 'Isolated existence' paraphrases 'lonelier'. 'Gradually twists into an unhealthy belief' is a figurative gloss on 'eventually convinces himself'. 'Picture-perfect world' echoes 'picture-perfect fantasy'. 'Photo lab technician' concretizes 'has lovingly developed photographs' and is discussed under uncertaintyNotes."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "curiosityHook: 'carefully nurtured delusion' paraphrases the self-convinced family fantasy. 'Crashes into an unforgiving dose of reality' restates 'collides with an ugly dose of reality'. 'Outsider' is a light characterization consistent with a man who is not actually part of the family. The hook is interrogative and asserts no outcome."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "vibeSummary and whyWatch: 'psychological drama' and 'taut thriller' are consistent with genres Drama/Thriller. 'Mark Romanek' and '96-minute' match director and runtimeMinutes. 'Intimate drama of loneliness' follows from the overview's loneliness premise. 'Unsettling study of... obsession' is thematic shorthand for the fantasy of belonging."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "acceptedSemanticClassification: 'Steady' matches pace=medium. 'Suspenseful' and 'quiet tension' match moods. 'Engaged solitary viewing' matches attentionDemand=engaged and situations=[alone]. Keyword-only material (stalker, knife, voyeurism, unfaithful husband, hotel room, supermarket) is not imported, and no keyword-derived plot claim appears."
+    }
+  ],
+  "sourceBoundaryReason": "Every concrete claim (Sy Parrish, developing photographs for the Yorkin family, his growing loneliness, his self-convinced sense of belonging, the collision with reality, the director, runtime and genres) is grounded in the authorized overview. The remaining language ('unhealthy belief', 'outsider', 'suburban obsession', 'quiet precision', 'photo lab technician') is figurative language, genre shorthand or minor contextual concretization. None of it works as a meaningful new factual claim about plot mechanics, identities, relationships, motives or causality under A_PRIME_PRODUCTION_MATERIALITY_V1. The copy stays at the premise and initial conflict and states no confrontation details, outcome or ending, so no spoiler-boundary content appears.",
+  "uncertaintyNotes": "Two items sit near the tolerance line. 'Photo lab technician' names a job that appears only in facts.keywords ('photo lab'), while the overview says only that Sy develops photographs. It is a small occupational concretization that does not change what a viewer would expect. 'Suburban' in whyWatch adds a setting the overview does not state. A stricter adjudicator could ask for 'photo lab technician' to become 'photo developer' and for 'suburban' to be dropped, in which case they would be MINOR concretizations. 'Unhealthy' is a mild evaluative flourish and I left it within tolerance.",
+  "confidence": "MEDIUM",
+  "advisoryOnly": true
+}

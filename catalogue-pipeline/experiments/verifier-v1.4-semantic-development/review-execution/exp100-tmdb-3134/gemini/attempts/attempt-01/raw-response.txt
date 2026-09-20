@@ -1,0 +1,28 @@
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "Directly supports Nadine and Manu as meticulous perfectionists who share habits of extreme sex and drugs, resolving their obstacles with guns and turning to violence against anyone in their way."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Directly verifies Crime and Thriller genres, supporting the 'crime thriller' categorization across description and whyWatch."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "facts.director verifies Coralie Trinh Thi and Virginie Despentes, facts.countries verifies France, and runtimeMinutes (77) verifies 'lean 77 minutes'. Accepted semantic classification directly grounds emotionalWeight: heavy ('Heavy'), pace: fast ('rapid'), moods: suspenseful ('fiercely tense'), attentionDemand: engaged ('intense'), and situations: alone ('solo watch')."
+    }
+  ],
+  "sourceBoundaryReason": "All visible editorial copy strictly complies with A_PRIME_PRODUCTION_MATERIALITY_V1. The synopsis and curiosity hook remain closely tethered to the authorized overview's starting setup of two perfectionist women solving problems with firearms, avoiding ungrounded external lore or third-act narrative developments. Sensitive background keywords (e.g., rape, murder) are carefully omitted to preserve setup-only spoiler boundaries. Phrases such as 'volatile crusade' and 'bypassing conventional storytelling limits' operate as tolerated, low-risk figurative framing and genre shorthand reflecting the authorized premise and the 'different' discovery style classification.",
+  "uncertaintyNotes": null,
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}

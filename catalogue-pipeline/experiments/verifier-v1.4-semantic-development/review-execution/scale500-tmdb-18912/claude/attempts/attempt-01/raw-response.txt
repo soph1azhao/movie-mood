@@ -1,0 +1,35 @@
+```json
+{
+  "preliminaryDecision": "APPROVE",
+  "preliminarySeverity": null,
+  "affectedFields": [],
+  "issueSummaries": [],
+  "claimSpan": "",
+  "sourceEvidence": [
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "description: 'Freshly released from prison' restates the released-from-prison premise. 'Invades an isolated home' matches 'breaks into a remote home'. 'A woman, her daughter, and her disabled son' matches the three targets in the overview, with 'handicapped' rendered as 'disabled'. 'Trapped inside' is a mild concretization of a home invasion and adds no new plot mechanic."
+    },
+    {
+      "source": "facts.overview",
+      "supportFound": true,
+      "notes": "curiosityHook: 'crosses the threshold into the secluded house' restates the break-in at a remote home. 'The family' is supported by the woman-son-daughter relationships in the overview. 'Fight to survive' and 'immediate and merciless' are atmospheric and metaphorical inference from a stated intent to kill. They do not add a new factual claim about events, outcomes, or the family's actions."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "'Crime thriller' and 'horror thriller' are supported by genres Crime/Horror/Thriller. 'Austrian' is supported by countries: Austria. '1983', 'Gerald Kargl' and '75 minutes' match year, director and runtimeMinutes."
+    },
+    {
+      "source": "other",
+      "supportFound": true,
+      "notes": "acceptedSemanticClassification: 'Heavy' matches emotionalWeight=heavy, 'suspenseful' matches moods, and 'best experienced alone' matches situations=[alone]. 'Deeply unsettling', 'uncompromising', 'taut', 'intensely focused', 'heavy-hitting' and 'high-stakes dread' are tonal shorthand consistent with the horror/thriller genres and the stated premise."
+    }
+  ],
+  "sourceBoundaryReason": "Every concrete claim (release from prison, remote home, woman/daughter/disabled son, year, director, country, runtime, genre) is grounded in the packet. The remaining language ('trapped inside', 'fight to survive', 'merciless', 'wastes no time', 'dread') is low-risk atmospheric inference and genre shorthand that does not change the viewer's understanding of the plot, identities, relationships, motives, or causality. No spoiler-boundary items appear (no reversals, later deaths, outcomes, endings, or revelations). No external lore or keyword-only material is imported. This is a minor flourish, not a material source-boundary failure, under A_PRIME_PRODUCTION_MATERIALITY_V1.",
+  "uncertaintyNotes": "Two phrases sit near the tolerance line but stay within it. 'The family's fight to survive' implies active resistance, which the overview does not state, but it reads as figurative urgency and not a claimed plot event. 'Wastes no time locking into high-stakes dread' is a pacing flourish that sits slightly against the accepted pace=medium. It is not a factual claim, and the 75-minute runtime is grounded.",
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}
+```

@@ -1,0 +1,37 @@
+{
+  "preliminaryDecision": "REVISE",
+  "preliminarySeverity": "MINOR",
+  "affectedFields": [
+    "whyWatch"
+  ],
+  "issueSummaries": [
+    "whyWatch: 'creature-feature' introduces an unsupported subgenre and antagonist-identity concretization; the authorized overview establishes only that the characters discover 'an opponent they cannot defeat', with no packet grounding that the threat is a creature or monster."
+  ],
+  "claimSpan": "creature-feature",
+  "sourceEvidence": [
+    {
+      "source": "allowedSourceMaterial.overview",
+      "supportFound": false,
+      "notes": "The overview states only that the athletes discover 'an opponent they cannot defeat – and may not survive' when their bus is crippled on a deserted road, without specifying that the opponent is a creature or monster."
+    },
+    {
+      "source": "facts.genres",
+      "supportFound": true,
+      "notes": "Validates the broad 'Horror' genre, but does not establish the specific 'creature-feature' subgenre."
+    },
+    {
+      "source": "facts.director",
+      "supportFound": true,
+      "notes": "Directly verifies Victor Salva as director."
+    },
+    {
+      "source": "acceptedSemanticClassification",
+      "supportFound": true,
+      "notes": "Directly supports experiential classifications: 'suspenseful' mood, 'medium' pace, 'moderate' emotional weight, 'engaged' attention demand, and 'friends' viewing situation."
+    }
+  ],
+  "sourceBoundaryReason": "Under A_PRIME_PRODUCTION_MATERIALITY_V1, editorial inference is permitted for low-risk figurative language and atmospheric framing, but unsupported additions require intervention when they materially specify antagonist identity, mechanics, or subgenre attributes. Labeling the film a 'creature-feature' concretizes the generic 'opponent' into a creature/monster, importing external lore or ungrounded subgenre claims rather than relying on the authorized source material.",
+  "uncertaintyNotes": "If 'creature-feature dread' is interpreted purely as loose atmospheric shorthand for an overwhelming horror threat, an argument could be made for tolerance; however, because it concretely specifies the entity type and subgenre where the source only authorizes 'an opponent', it is conservatively flagged as MINOR.",
+  "confidence": "HIGH",
+  "advisoryOnly": true
+}
