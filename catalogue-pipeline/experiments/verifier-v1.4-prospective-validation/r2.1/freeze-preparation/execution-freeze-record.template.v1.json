@@ -1,0 +1,127 @@
+{
+  "schemaVersion": "execution-freeze-record.v1",
+  "freezeId": "source-boundary-risk-verifier.v1.4-prospective-validation.r2.1-freeze-template",
+  "protocolId": "source-boundary-risk-verifier.v1.4-prospective-validation.r2.1",
+  "status": "PREPARATION_TEMPLATE",
+  "governanceAuthority": "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/V1_4_FINAL_SYNTHESIS_AND_GOVERNANCE.md",
+  "protocolCommitment": {
+    "path": "catalogue-pipeline/experiments/verifier-v1.4-prospective-validation/r2.1/PROTOCOL.md",
+    "sha256": "sha256:1258c3d823b838ec17e3b6efb49259b111cf097abc9a65fedfe51c4769158f57"
+  },
+  "manifestCommitment": {
+    "path": "catalogue-pipeline/experiments/verifier-v1.4-prospective-validation/r2.1/protocol-manifest.v1.json",
+    "sha256": "sha256:77fe25568bd03951114d2885dc518a121bc3406eac8cf51815ac1d2d75527955"
+  },
+  "replacementHoldoutCommitment": {
+    "path": "catalogue-pipeline/experiments/verifier-v1.4-prospective-validation/r2.1/freeze-preparation/replacement-holdout-commitment.json",
+    "sha256": "UNRESOLVED_PRE_EXECUTION_COMMITMENT",
+    "opaqueMembershipHash": "UNRESOLVED_PRE_EXECUTION_COMMITMENT",
+    "opaqueMemberReferenceSetHash": "UNRESOLVED_PRE_EXECUTION_COMMITMENT",
+    "deterministicOrderHash": "UNRESOLVED_PRE_EXECUTION_COMMITMENT",
+    "candidateCount": "UNRESOLVED_PRE_EXECUTION_COMMITMENT",
+    "sealingMethod": "UNRESOLVED_PRE_EXECUTION_COMMITMENT",
+    "status": "UNRESOLVED_PRE_EXECUTION_COMMITMENT"
+  },
+  "qaSeedCommitment": {
+    "qaSeedHash": "UNRESOLVED_PRE_EXECUTION_COMMITMENT",
+    "status": "UNRESOLVED_PRE_EXECUTION_COMMITMENT"
+  },
+  "challengePoolAndExclusionCommitment": {
+    "path": "catalogue-pipeline/experiments/verifier-v1.4-prospective-validation/r2.1/freeze-preparation/challenge-source-pool-exclusion.json",
+    "sha256": "UNRESOLVED_PRE_EXECUTION_COMMITMENT",
+    "status": "UNRESOLVED_PRE_EXECUTION_COMMITMENT"
+  },
+  "challengeAttemptManifestCommitment": {
+    "path": "catalogue-pipeline/experiments/verifier-v1.4-prospective-validation/r2.1/freeze-preparation/challenge-attempt-manifest.json",
+    "sha256": "UNRESOLVED_PRE_EXECUTION_COMMITMENT",
+    "totalAttempts": 18,
+    "status": "UNRESOLVED_PRE_EXECUTION_COMMITMENT"
+  },
+  "challengeTransformationSpecCommitment": {
+    "path": "catalogue-pipeline/experiments/verifier-v1.4-prospective-validation/r2.1/freeze-preparation/challenge-transformation-specification.md",
+    "sha256": "UNRESOLVED_PRE_EXECUTION_COMMITMENT",
+    "status": "UNRESOLVED_PRE_EXECUTION_COMMITMENT"
+  },
+  "challengeQualificationManifestCommitment": {
+    "path": "catalogue-pipeline/experiments/verifier-v1.4-prospective-validation/r2.1/freeze-preparation/challenge-qualification-manifest.json",
+    "sha256": "UNRESOLVED_PRE_EXECUTION_COMMITMENT",
+    "totalQualifying": 12,
+    "qualificationRule": "BOTH_INITIAL_HUMANS_SEVERE",
+    "thirdHumanRescue": false,
+    "status": "UNRESOLVED_PRE_EXECUTION_COMMITMENT"
+  },
+  "runtimeDependencyDeclarationCommitment": {
+    "path": "catalogue-pipeline/experiments/verifier-v1.4-prospective-validation/r2.1/freeze-preparation/runtime-dependency-declaration.json",
+    "sha256": "UNRESOLVED_PRE_EXECUTION_COMMITMENT",
+    "deterministicLintFindings": "UNRESOLVED_PRE_EXECUTION_COMMITMENT",
+    "status": "UNRESOLVED_PRE_EXECUTION_COMMITMENT"
+  },
+  "analysisPlanCommitment": {
+    "path": "catalogue-pipeline/experiments/verifier-v1.4-prospective-validation/r2.1/freeze-preparation/analysis-plan.json",
+    "sha256": "UNRESOLVED_PRE_EXECUTION_COMMITMENT",
+    "rateRuleFormula": "errorCount <= floor(0.10 * realizedHumanLabelCount)",
+    "status": "UNRESOLVED_PRE_EXECUTION_COMMITMENT"
+  },
+  "operatorLogSchemaCommitment": {
+    "path": "catalogue-pipeline/experiments/verifier-v1.4-prospective-validation/r2.1/freeze-preparation/operator-log.schema.v1.json",
+    "sha256": "UNRESOLVED_PRE_EXECUTION_COMMITMENT",
+    "retryRule": "retryCount == 0",
+    "status": "UNRESOLVED_PRE_EXECUTION_COMMITMENT"
+  },
+  "fixedExecutionOrderCommitment": {
+    "interArmSequencing": "qualifying_challenges_first_then_natural_stream",
+    "challengeOrderHash": "UNRESOLVED_PRE_EXECUTION_COMMITMENT",
+    "naturalOrderHash": "UNRESOLVED_PRE_EXECUTION_COMMITMENT",
+    "status": "UNRESOLVED_PRE_EXECUTION_COMMITMENT"
+  },
+  "humanResourceConfirmationCommitment": {
+    "path": "catalogue-pipeline/experiments/verifier-v1.4-prospective-validation/r2.1/freeze-preparation/human-resource-confirmation.json",
+    "sha256": "UNRESOLVED_PRE_EXECUTION_COMMITMENT",
+    "requiredDistinctPeople": 8,
+    "status": "UNRESOLVED_PRE_EXECUTION_COMMITMENT"
+  },
+  "frozenModelConfigurationCommitment": {
+    "provider": "google-gemini-developer-api",
+    "modelId": "gemini-3.8-flash",
+    "thinkingLevel": "low",
+    "temperature": 0.0,
+    "maxOutputTokens": 6144,
+    "timeoutMs": 30000,
+    "automaticRetries": 0,
+    "fallbackProhibited": true
+  },
+  "inputContractCommitments": {
+    "verifierInputBuilder": {
+      "path": "catalogue-pipeline/scripts/scaleTranche1Plan.mjs",
+      "sha256": "sha256:de201c6695d8198aac7059ceab1e1630cca9db9448b68c62a93a46137e98287c"
+    },
+    "surfaceAndLeakageContract": {
+      "path": "catalogue-pipeline/scripts/runVerifierV13RetrospectiveReplay.mjs",
+      "sha256": "sha256:3976a45b6e0655599c97bb560d6463ff78715a68b676225d117113a5f7382690"
+    },
+    "blindPacketSchema": {
+      "path": "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/blind-human-review-packet.schema.v1.json",
+      "sha256": "sha256:6bae3f04c4fc8d80d03e86adc389fb68a83b79098209b60fc498c59e0a4af257"
+    },
+    "requiredSurfaces": [
+      "facts",
+      "acceptedSemanticClassification",
+      "semanticBoundaryFlags",
+      "allowedSourceMaterial",
+      "spoilerBoundaryRules",
+      "copyConstraints",
+      "visibleEditorialCopy"
+    ]
+  },
+  "freezeValidationToolchainCommitment": {
+    "path": "catalogue-pipeline/experiments/verifier-v1.4-prospective-validation/r2.1/freeze-preparation/freeze-preparation-manifest.v1.json",
+    "sha256": "UNRESOLVED_PRE_EXECUTION_COMMITMENT",
+    "status": "UNRESOLVED_PRE_EXECUTION_COMMITMENT"
+  },
+  "freezePreparationCheckpointCommit": "UNRESOLVED_PRE_EXECUTION_COMMITMENT",
+  "freezeMetadata": {
+    "createdAt": "PREPARATION_TEMPLATE_UNEXECUTED",
+    "preparedByRole": "INDEPENDENT_PREPARATION_INFRASTRUCTURE",
+    "custodianSignoffStatus": "PENDING_SEALED_HOLDOUT_AND_RESOURCE_CONFIRMATION"
+  }
+}

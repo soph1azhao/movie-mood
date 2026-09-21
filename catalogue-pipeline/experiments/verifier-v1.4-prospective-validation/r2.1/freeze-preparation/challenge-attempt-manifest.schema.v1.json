@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://moviemood.local/schemas/verifier-v1.4-prospective-validation/r2.1/challenge-attempt-manifest.schema.v1.json",
+  "title": "ChallengeAttemptManifestV1",
+  "description": "Governed provenance manifest for all 18 attempted severe challenge constructions. Enforces 3 classes, 6 attempts per class, blind dual-human evaluation, and permanent disqualification without third-human rescue.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "manifestId",
+    "protocolId",
+    "totalAttempts",
+    "attemptsPerClass",
+    "failureClasses",
+    "attempts"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "const": "challenge-attempt-manifest.v1"
+    },
+    "manifestId": {
+      "type": "string",
+      "pattern": "^challenge-attempt-manifest\\."
+    },
+    "protocolId": {
+      "type": "string",
+      "const": "source-boundary-risk-verifier.v1.4-prospective-validation.r2.1"
+    },
+    "totalAttempts": {
+      "type": "integer",
+      "const": 18
+    },
+    "attemptsPerClass": {
+      "type": "integer",
+      "const": 6
+    },
+    "failureClasses": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "material_contradiction_or_identity_role_substitution",
+          "unsupported_causal_motive_mechanism_or_setting_quantity_concretization",
+          "spoiler_reveal_or_consequence_leakage"
+        ]
+      },
+      "minItems": 3,
+      "maxItems": 3,
+      "uniqueItems": true
+    },
+    "attempts": {
+      "type": "array",
+      "minItems": 18,
+      "maxItems": 18,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "attemptId",
+          "failureClass",
+          "attemptOrderIndex",
+          "sourceCandidateMemberReferenceHash",
+          "sourcePacketReferenceHash",
+          "constructionArtifactHash",
+          "transformationSpecHash",
+          "adjudicatorAJudgment",
+          "adjudicatorBJudgment",
+          "qualificationState"
+        ],
+        "properties": {
+          "attemptId": {
+            "type": "string",
+            "pattern": "^challenge-attempt-[0-9]{2}$"
+          },
+          "failureClass": {
+            "type": "string",
+            "enum": [
+              "material_contradiction_or_identity_role_substitution",
+              "unsupported_causal_motive_mechanism_or_setting_quantity_concretization",
+              "spoiler_reveal_or_consequence_leakage"
+            ]
+          },
+          "attemptOrderIndex": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 18
+          },
+          "sourceCandidateMemberReferenceHash": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "sourcePacketReferenceHash": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "constructionArtifactHash": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "transformationSpecHash": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "adjudicatorAJudgment": {
+            "type": "string",
+            "enum": ["SEVERE", "MINOR", "CLEAN"]
+          },
+          "adjudicatorBJudgment": {
+            "type": "string",
+            "enum": ["SEVERE", "MINOR", "CLEAN"]
+          },
+          "qualificationState": {
+            "type": "string",
+            "enum": [
+              "QUALIFIES_UNANIMOUS_SEVERE",
+              "DISQUALIFIED_DISAGREEMENT",
+              "DISQUALIFIED_NON_SEVERE"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

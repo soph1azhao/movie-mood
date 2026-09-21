@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://moviemood.local/schemas/verifier-v1.4-prospective-validation/r2.1/challenge-qualification-manifest.schema.v1.json",
+  "title": "ChallengeQualificationManifestV1",
+  "description": "Deterministic mechanical qualification manifest selecting exactly the first four qualifying cases per class in frozen order. Distinguishes READY from INCONCLUSIVE_CHALLENGE_QUALIFICATION.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "qualificationManifestId",
+    "protocolId",
+    "attemptManifestPath",
+    "attemptManifestSha256",
+    "qualificationStatus",
+    "thirdHumanRescue",
+    "totalQualifying",
+    "qualifyingPerClass",
+    "qualifyingCases",
+    "nonqualifyingProvenance"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "const": "challenge-qualification-manifest.v1"
+    },
+    "qualificationManifestId": {
+      "type": "string",
+      "pattern": "^challenge-qualification-manifest\\."
+    },
+    "protocolId": {
+      "type": "string",
+      "const": "source-boundary-risk-verifier.v1.4-prospective-validation.r2.1"
+    },
+    "attemptManifestPath": {
+      "type": "string"
+    },
+    "attemptManifestSha256": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "qualificationStatus": {
+      "type": "string",
+      "enum": [
+        "READY",
+        "INCONCLUSIVE_CHALLENGE_QUALIFICATION"
+      ]
+    },
+    "thirdHumanRescue": {
+      "type": "boolean",
+      "const": false
+    },
+    "totalQualifying": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 12
+    },
+    "qualifyingPerClass": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "material_contradiction_or_identity_role_substitution",
+        "unsupported_causal_motive_mechanism_or_setting_quantity_concretization",
+        "spoiler_reveal_or_consequence_leakage"
+      ],
+      "properties": {
+        "material_contradiction_or_identity_role_substitution": { "type": "integer", "minimum": 0, "maximum": 4 },
+        "unsupported_causal_motive_mechanism_or_setting_quantity_concretization": { "type": "integer", "minimum": 0, "maximum": 4 },
+        "spoiler_reveal_or_consequence_leakage": { "type": "integer", "minimum": 0, "maximum": 4 }
+      }
+    },
+    "qualifyingCases": {
+      "type": "array",
+      "maxItems": 12,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "suiteOrderIndex",
+          "attemptId",
+          "failureClass",
+          "attemptOrderIndex",
+          "casePacketHash"
+        ],
+        "properties": {
+          "suiteOrderIndex": { "type": "integer", "minimum": 1, "maximum": 12 },
+          "attemptId": { "type": "string", "pattern": "^challenge-attempt-[0-9]{2}$" },
+          "failureClass": {
+            "type": "string",
+            "enum": [
+              "material_contradiction_or_identity_role_substitution",
+              "unsupported_causal_motive_mechanism_or_setting_quantity_concretization",
+              "spoiler_reveal_or_consequence_leakage"
+            ]
+          },
+          "attemptOrderIndex": { "type": "integer", "minimum": 1, "maximum": 18 },
+          "casePacketHash": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+        }
+      }
+    },
+    "nonqualifyingProvenance": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "attemptId",
+          "failureClass",
+          "attemptOrderIndex",
+          "dispositionReason"
+        ],
+        "properties": {
+          "attemptId": { "type": "string", "pattern": "^challenge-attempt-[0-9]{2}$" },
+          "failureClass": { "type": "string" },
+          "attemptOrderIndex": { "type": "integer" },
+          "dispositionReason": {
+            "type": "string",
+            "enum": [
+              "DISQUALIFIED_DISAGREEMENT",
+              "DISQUALIFIED_NON_SEVERE",
+              "SURPLUS_QUALIFYING_BEYOND_FOUR"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

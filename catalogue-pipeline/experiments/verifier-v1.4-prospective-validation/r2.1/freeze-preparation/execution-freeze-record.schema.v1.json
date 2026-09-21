@@ -1,0 +1,337 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://moviemood.local/schemas/verifier-v1.4-prospective-validation/r2.1/execution-freeze-record.schema.v1.json",
+  "title": "ExecutionFreezeRecordV1",
+  "description": "Fail-closed execution freeze record governing prospective semantic validation for verifier v1.4 under protocol r2.1. Strictly binds all prerequisites before holdout opening.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "freezeId",
+    "protocolId",
+    "status",
+    "governanceAuthority",
+    "protocolCommitment",
+    "manifestCommitment",
+    "replacementHoldoutCommitment",
+    "qaSeedCommitment",
+    "challengePoolAndExclusionCommitment",
+    "challengeAttemptManifestCommitment",
+    "challengeTransformationSpecCommitment",
+    "challengeQualificationManifestCommitment",
+    "runtimeDependencyDeclarationCommitment",
+    "analysisPlanCommitment",
+    "operatorLogSchemaCommitment",
+    "fixedExecutionOrderCommitment",
+    "humanResourceConfirmationCommitment",
+    "frozenModelConfigurationCommitment",
+    "inputContractCommitments",
+    "freezeValidationToolchainCommitment",
+    "freezePreparationCheckpointCommit",
+    "freezeMetadata"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "const": "execution-freeze-record.v1"
+    },
+    "freezeId": {
+      "type": "string",
+      "pattern": "^source-boundary-risk-verifier\\.v1\\.4-prospective-validation\\.r2\\.1-freeze"
+    },
+    "protocolId": {
+      "type": "string",
+      "const": "source-boundary-risk-verifier.v1.4-prospective-validation.r2.1"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "PREPARATION_TEMPLATE",
+        "EXECUTION_READY"
+      ]
+    },
+    "governanceAuthority": {
+      "type": "string",
+      "description": "Reference to governing disposition permitting freeze preparation"
+    },
+    "protocolCommitment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "const": "catalogue-pipeline/experiments/verifier-v1.4-prospective-validation/r2.1/PROTOCOL.md"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        }
+      }
+    },
+    "manifestCommitment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "const": "catalogue-pipeline/experiments/verifier-v1.4-prospective-validation/r2.1/protocol-manifest.v1.json"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        }
+      }
+    },
+    "replacementHoldoutCommitment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256",
+        "opaqueMembershipHash",
+        "opaqueMemberReferenceSetHash",
+        "deterministicOrderHash",
+        "candidateCount",
+        "sealingMethod",
+        "status"
+      ],
+      "properties": {
+        "path": { "type": "string" },
+        "sha256": { "type": "string", "pattern": "^(sha256:[a-f0-9]{64}|UNRESOLVED_PRE_EXECUTION_COMMITMENT)$" },
+        "opaqueMembershipHash": { "type": "string", "pattern": "^(sha256:[a-f0-9]{64}|UNRESOLVED_PRE_EXECUTION_COMMITMENT)$" },
+        "opaqueMemberReferenceSetHash": { "type": "string", "pattern": "^(sha256:[a-f0-9]{64}|UNRESOLVED_PRE_EXECUTION_COMMITMENT)$" },
+        "deterministicOrderHash": { "type": "string", "pattern": "^(sha256:[a-f0-9]{64}|UNRESOLVED_PRE_EXECUTION_COMMITMENT)$" },
+        "candidateCount": { "type": ["integer", "string"] },
+        "derivationScheme": { "type": "string" },
+        "derivationVersion": { "type": "string" },
+        "derivationKeyCommitment": { "type": "string", "pattern": "^(sha256:[a-f0-9]{64}|UNRESOLVED_PRE_EXECUTION_COMMITMENT)$" },
+        "sealingMethod": { "type": "string" },
+        "status": { "type": "string" }
+      }
+    },
+    "qaSeedCommitment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["qaSeedHash", "status"],
+      "properties": {
+        "qaSeedHash": { "type": "string", "pattern": "^(sha256:[a-f0-9]{64}|UNRESOLVED_PRE_EXECUTION_COMMITMENT)$" },
+        "status": { "type": "string" }
+      }
+    },
+    "challengePoolAndExclusionCommitment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "status"],
+      "properties": {
+        "path": { "type": "string" },
+        "sha256": { "type": "string", "pattern": "^(sha256:[a-f0-9]{64}|UNRESOLVED_PRE_EXECUTION_COMMITMENT)$" },
+        "derivationScheme": { "type": "string" },
+        "derivationVersion": { "type": "string" },
+        "derivationKeyCommitment": { "type": "string", "pattern": "^(sha256:[a-f0-9]{64}|UNRESOLVED_PRE_EXECUTION_COMMITMENT)$" },
+        "status": { "type": "string" }
+      }
+    },
+    "challengeAttemptManifestCommitment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "totalAttempts", "status"],
+      "properties": {
+        "path": { "type": "string" },
+        "sha256": { "type": "string", "pattern": "^(sha256:[a-f0-9]{64}|UNRESOLVED_PRE_EXECUTION_COMMITMENT)$" },
+        "totalAttempts": { "type": ["integer", "string"] },
+        "status": { "type": "string" }
+      }
+    },
+    "challengeTransformationSpecCommitment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "status"],
+      "properties": {
+        "path": { "type": "string" },
+        "sha256": { "type": "string", "pattern": "^(sha256:[a-f0-9]{64}|UNRESOLVED_PRE_EXECUTION_COMMITMENT)$" },
+        "status": { "type": "string" }
+      }
+    },
+    "challengeQualificationManifestCommitment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "totalQualifying", "qualificationRule", "thirdHumanRescue", "status"],
+      "properties": {
+        "path": { "type": "string" },
+        "sha256": { "type": "string", "pattern": "^(sha256:[a-f0-9]{64}|UNRESOLVED_PRE_EXECUTION_COMMITMENT)$" },
+        "totalQualifying": { "type": ["integer", "string"] },
+        "qualificationRule": { "type": "string", "const": "BOTH_INITIAL_HUMANS_SEVERE" },
+        "thirdHumanRescue": { "type": "boolean", "const": false },
+        "status": { "type": "string" }
+      }
+    },
+    "runtimeDependencyDeclarationCommitment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "deterministicLintFindings", "status"],
+      "properties": {
+        "path": { "type": "string" },
+        "sha256": { "type": "string", "pattern": "^(sha256:[a-f0-9]{64}|UNRESOLVED_PRE_EXECUTION_COMMITMENT)$" },
+        "deterministicLintFindings": {
+          "type": "string",
+          "enum": ["UNIVERSALLY_ABSENT", "EXPLICITLY_BOUND_AND_FROZEN", "UNRESOLVED_PRE_EXECUTION_COMMITMENT"]
+        },
+        "status": { "type": "string" }
+      }
+    },
+    "analysisPlanCommitment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "rateRuleFormula", "status"],
+      "properties": {
+        "path": { "type": "string" },
+        "sha256": { "type": "string", "pattern": "^(sha256:[a-f0-9]{64}|UNRESOLVED_PRE_EXECUTION_COMMITMENT)$" },
+        "rateRuleFormula": { "type": "string", "const": "errorCount <= floor(0.10 * realizedHumanLabelCount)" },
+        "status": { "type": "string" }
+      }
+    },
+    "operatorLogSchemaCommitment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "retryRule", "status"],
+      "properties": {
+        "path": { "type": "string" },
+        "sha256": { "type": "string", "pattern": "^(sha256:[a-f0-9]{64}|UNRESOLVED_PRE_EXECUTION_COMMITMENT)$" },
+        "retryRule": { "type": "string", "const": "retryCount == 0" },
+        "status": { "type": "string" }
+      }
+    },
+    "fixedExecutionOrderCommitment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["interArmSequencing", "challengeOrderHash", "naturalOrderHash", "status"],
+      "properties": {
+        "interArmSequencing": {
+          "type": "string",
+          "const": "qualifying_challenges_first_then_natural_stream"
+        },
+        "challengeOrderHash": { "type": "string", "pattern": "^(sha256:[a-f0-9]{64}|UNRESOLVED_PRE_EXECUTION_COMMITMENT)$" },
+        "naturalOrderHash": { "type": "string", "pattern": "^(sha256:[a-f0-9]{64}|UNRESOLVED_PRE_EXECUTION_COMMITMENT)$" },
+        "status": { "type": "string" }
+      }
+    },
+    "humanResourceConfirmationCommitment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "requiredDistinctPeople", "status"],
+      "properties": {
+        "path": { "type": "string" },
+        "sha256": { "type": "string", "pattern": "^(sha256:[a-f0-9]{64}|UNRESOLVED_PRE_EXECUTION_COMMITMENT)$" },
+        "requiredDistinctPeople": { "type": "integer", "const": 8 },
+        "status": { "type": "string" }
+      }
+    },
+    "frozenModelConfigurationCommitment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provider",
+        "modelId",
+        "thinkingLevel",
+        "temperature",
+        "maxOutputTokens",
+        "timeoutMs",
+        "automaticRetries",
+        "fallbackProhibited"
+      ],
+      "properties": {
+        "provider": { "type": "string", "const": "google-gemini-developer-api" },
+        "modelId": { "type": "string", "const": "gemini-3.8-flash" },
+        "thinkingLevel": { "type": "string", "const": "low" },
+        "temperature": { "type": "number", "const": 0.0 },
+        "maxOutputTokens": { "type": "integer", "const": 6144 },
+        "timeoutMs": { "type": "integer", "const": 30000 },
+        "automaticRetries": { "type": "integer", "const": 0 },
+        "fallbackProhibited": { "type": "boolean", "const": true }
+      }
+    },
+    "inputContractCommitments": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "verifierInputBuilder",
+        "surfaceAndLeakageContract",
+        "blindPacketSchema",
+        "requiredSurfaces"
+      ],
+      "properties": {
+        "verifierInputBuilder": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["path", "sha256"],
+          "properties": {
+            "path": { "type": "string", "const": "catalogue-pipeline/scripts/scaleTranche1Plan.mjs" },
+            "sha256": { "type": "string", "const": "sha256:de201c6695d8198aac7059ceab1e1630cca9db9448b68c62a93a46137e98287c" }
+          }
+        },
+        "surfaceAndLeakageContract": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["path", "sha256"],
+          "properties": {
+            "path": { "type": "string", "const": "catalogue-pipeline/scripts/runVerifierV13RetrospectiveReplay.mjs" },
+            "sha256": { "type": "string", "const": "sha256:3976a45b6e0655599c97bb560d6463ff78715a68b676225d117113a5f7382690" }
+          }
+        },
+        "blindPacketSchema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["path", "sha256"],
+          "properties": {
+            "path": { "type": "string", "const": "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/blind-human-review-packet.schema.v1.json" },
+            "sha256": { "type": "string", "const": "sha256:6bae3f04c4fc8d80d03e86adc389fb68a83b79098209b60fc498c59e0a4af257" }
+          }
+        },
+        "requiredSurfaces": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 7,
+          "maxItems": 7
+        }
+      }
+    },
+    "freezeValidationToolchainCommitment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "status"],
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^(sha256:[a-f0-9]{64}|UNRESOLVED_PRE_EXECUTION_COMMITMENT)$"
+        },
+        "status": { "type": "string" }
+      }
+    },
+    "freezeMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["createdAt", "preparedByRole", "custodianSignoffStatus"],
+      "properties": {
+        "createdAt": { "type": "string" },
+        "preparedByRole": { "type": "string" },
+        "custodianSignoffStatus": {
+          "type": "string",
+          "enum": [
+            "PENDING_SEALED_HOLDOUT_AND_RESOURCE_CONFIRMATION",
+            "SIGNED_EXECUTION_FREEZE_AWAITING_SEPARATE_AUTHORIZATION"
+          ]
+        }
+      }
+    },
+    "freezePreparationCheckpointCommit": {
+      "type": "string",
+      "pattern": "^([a-f0-9]{40}|UNRESOLVED_PRE_EXECUTION_COMMITMENT)$",
+      "description": "Full Git commit SHA for the canonical freeze-preparation toolchain checkpoint"
+    }
+  }
+}

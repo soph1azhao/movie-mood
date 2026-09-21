@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "freeze-preparation-manifest.v1",
+  "manifestId": "freeze-preparation-manifest.r2.1",
+  "protocolId": "source-boundary-risk-verifier.v1.4-prospective-validation.r2.1",
+  "description": "Deterministic toolchain provenance manifest for the r2.1 pre-execution freeze preparation machinery.",
+  "toolchainFiles": {
+    "catalogue-pipeline/experiments/verifier-v1.4-prospective-validation/r2.1/freeze-preparation/execution-freeze-record.schema.v1.json": "sha256:278272132666bdcd1b41934db33ec249a0f52581def793f1117d6ab0f3504b37",
+    "catalogue-pipeline/experiments/verifier-v1.4-prospective-validation/r2.1/freeze-preparation/challenge-attempt-manifest.schema.v1.json": "sha256:84a95c76da38ed44282ff8a2f536968fc7698790660a270758d848add9fe9aeb",
+    "catalogue-pipeline/experiments/verifier-v1.4-prospective-validation/r2.1/freeze-preparation/challenge-qualification-manifest.schema.v1.json": "sha256:5e6727f4aa84b890d381e1c4ea59f66d6eaeaeacd1e403ea071cc6f009ebd062",
+    "catalogue-pipeline/experiments/verifier-v1.4-prospective-validation/r2.1/freeze-preparation/replacement-holdout-commitment.schema.v1.json": "sha256:78bbd91c0dc158536ac00f785f4223299b453c84e7970dcc12cc1903d6e09935",
+    "catalogue-pipeline/experiments/verifier-v1.4-prospective-validation/r2.1/freeze-preparation/runtime-dependency-declaration.schema.v1.json": "sha256:c25583567efbcd11f05b02cff69e7be4f831b91e8ced1486659ee018aa3472dd",
+    "catalogue-pipeline/experiments/verifier-v1.4-prospective-validation/r2.1/freeze-preparation/operator-log.schema.v1.json": "sha256:64664c3ca5c6c05ea4beb85cd734d0c8812c8bb5fc3b772aec05d0e24e8ae011",
+    "catalogue-pipeline/experiments/verifier-v1.4-prospective-validation/r2.1/freeze-preparation/human-resource-confirmation.schema.v1.json": "sha256:6e7caa9dbf9ac400af5d62f7163ea1eb510201cb1854fdf9df70a34c2e031969",
+    "catalogue-pipeline/experiments/verifier-v1.4-prospective-validation/r2.1/freeze-preparation/analysis-plan.schema.v1.json": "sha256:dd5881cc57643743808ea0920d097e0aa8251151bf89236fc14977c627d21d42",
+    "catalogue-pipeline/experiments/verifier-v1.4-prospective-validation/r2.1/freeze-preparation/challenge-source-exclusion.schema.v1.json": "sha256:854a4fabb596d093669751db04c8903582881cc5050f675cb076becf861ce4cc",
+    "catalogue-pipeline/scripts/validateVerifierV14ProspectiveFreeze.mjs": "sha256:15701b18e0aeae7c6e3c0ab983594c97167b725e2fd2c8a0329a59d805b8ba6f",
+    "catalogue-pipeline/scripts/validateVerifierV14ProspectiveFreeze.test.mjs": "sha256:6b01da35f7c89b0cbd1fa1e98b4dddfb98d67c689a6a4d3ff134e118a4cf6dba",
+    "catalogue-pipeline/experiments/verifier-v1.4-prospective-validation/r2.1/freeze-preparation/FREEZE_PREPARATION_README.md": "sha256:c20593d0333448cd089435862ec51d52078012d86386a3e9c175f05836fbab24"
+  }
+}

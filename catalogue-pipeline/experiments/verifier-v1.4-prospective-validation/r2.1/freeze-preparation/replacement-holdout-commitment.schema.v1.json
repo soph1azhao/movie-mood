@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://moviemood.local/schemas/verifier-v1.4-prospective-validation/r2.1/replacement-holdout-commitment.schema.v1.json",
+  "title": "ReplacementHoldoutCommitmentV1",
+  "description": "Content-free cryptographic commitment to the sealed replacement prospective holdout. Prohibits any identity, title, editorial copy, or semantic metadata.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "commitmentId",
+    "protocolId",
+    "opaqueMembershipHash",
+    "opaqueMemberReferenceSetHash",
+    "deterministicOrderHash",
+    "candidateCount",
+    "derivationScheme",
+    "derivationVersion",
+    "derivationKeyCommitment",
+    "sealingMethod",
+    "sealingVersion",
+    "custodianId",
+    "sealedAt",
+    "integrityStatus"
+  ],
+  "not": {
+    "anyOf": [
+      { "required": ["candidateId"] },
+      { "required": ["tmdbId"] },
+      { "required": ["imdbId"] },
+      { "required": ["movie_id"] },
+      { "required": ["title"] },
+      { "required": ["originalTitle"] },
+      { "required": ["overview"] },
+      { "required": ["facts"] },
+      { "required": ["keywords"] },
+      { "required": ["visibleEditorialCopy"] },
+      { "required": ["description"] },
+      { "required": ["whyWatch"] },
+      { "required": ["curiosityHook"] },
+      { "required": ["vibeSummary"] },
+      { "required": ["humanDecision"] },
+      { "required": ["severity"] },
+      { "required": ["label"] },
+      { "required": ["riskLevel"] },
+      { "required": ["riskCategories"] },
+      { "required": ["issues"] },
+      { "required": ["route"] },
+      { "required": ["riskRoutingStatus"] }
+    ]
+  },
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "const": "replacement-holdout-commitment.v1"
+    },
+    "commitmentId": {
+      "type": "string",
+      "pattern": "^replacement-holdout-commitment\\."
+    },
+    "protocolId": {
+      "type": "string",
+      "const": "source-boundary-risk-verifier.v1.4-prospective-validation.r2.1"
+    },
+    "opaqueMembershipHash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "opaqueMemberReferenceSetHash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "deterministicOrderHash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "candidateCount": {
+      "type": "integer",
+      "minimum": 100
+    },
+    "derivationScheme": {
+      "type": "string",
+      "const": "HMAC_SHA256_CANDIDATE_MEMBER_V1"
+    },
+    "derivationVersion": {
+      "type": "string",
+      "const": "1"
+    },
+    "derivationKeyCommitment": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "sealingMethod": {
+      "type": "string",
+      "minLength": 3
+    },
+    "sealingVersion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "custodianId": {
+      "type": "string",
+      "pattern": "^personnel-[a-zA-Z0-9_-]+$"
+    },
+    "sealedAt": {
+      "type": "string"
+    },
+    "integrityStatus": {
+      "type": "string",
+      "enum": [
+        "SEALED_AND_ISOLATED",
+        "UNVERIFIED_PREPARATION"
+      ]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "protocol-manifest.v1",
+  "protocolId": "source-boundary-risk-verifier.v1.4-prospective-validation.r2",
+  "status": "PREREGISTERED_DESIGN_ONLY_AWAITING_SEALING_AND_RESOURCE_CONFIRMATION",
+  "supersedes": {"protocolId": "source-boundary-risk-verifier.v1.4-prospective-validation.r1", "r1ArtifactsPreserved": true},
+  "design": {"naturalArm": "SEQUENTIAL_REPRESENTATIVE_MAX_100", "severeArm": "PREREGISTERED_ENRICHED_COVERAGE_SUITE", "armsPooled": false},
+  "sourceArtifacts": {
+    "v14PairedDevelopmentProtocol": {"path": "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/protocol.v1.json", "sha256": "sha256:7ccef839cc7bf434156881f6d8c12130a8d5e444e6038a95c50df8572c7c0f4d"},
+    "finalSynthesis": {"path": "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/V1_4_FINAL_SYNTHESIS_AND_GOVERNANCE.md", "sha256": "sha256:1ef1cb5d64e622e4dca09f23181698638ade5d170f80a3fe17d62aedab30b2d4"},
+    "verifierPrompt": {"path": "catalogue-pipeline/candidates/source-boundary-risk-verifier.v1.4.md", "sha256": "sha256:a2fe3ef32f5b417544276401d5b520274fc77ef97753da61c253032b3f1e0d7f"},
+    "outputSchema": {"path": "catalogue-pipeline/candidates/source-boundary-risk-verifier.v1.3.schema.json", "sha256": "sha256:aa73ad6463e47c835186f8f2705f5c46167cd053ec43c1a0d72014ccc68c26dc"},
+    "contractValidator": {"path": "catalogue-pipeline/scripts/validateVerifierV13Contract.mjs", "sha256": "sha256:258c1520779fd147bf9c4aaa1c31c385d1da1fbd0f4835d381e30f767efab5b6"},
+    "materialityPolicy": {"path": "catalogue-pipeline/generated/catalogue-promotion/v8-2-editorial-pilot-v1/scale-tranche-1/human-review-materiality-policy.v1.json", "policyId": "A_PRIME_PRODUCTION_MATERIALITY_V1", "sha256": "sha256:21661892df4d1b009341b6d34de3bf5ad1ae17e3447abbdace15e1c31a5b843c"},
+    "legacyHoldoutRetirement": {"path": "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/legacy-prospective-holdout-retirement.v1.json", "sha256": "sha256:f3b8d6a0dd58cdfa1ed772e925ab297169ef6191771cad118bd4c522fed67d5f"}
+  },
+  "inputContract": {
+    "statement": "No standalone v1.4 input schema exists; these jointly govern the seven-surface verifier input and human-facing packet validation.",
+    "verifierInputBuilder": {"path": "catalogue-pipeline/scripts/scaleTranche1Plan.mjs", "sha256": "sha256:de201c6695d8198aac7059ceab1e1630cca9db9448b68c62a93a46137e98287c"},
+    "surfaceAndLeakageContract": {"path": "catalogue-pipeline/scripts/runVerifierV13RetrospectiveReplay.mjs", "sha256": "sha256:3976a45b6e0655599c97bb560d6463ff78715a68b676225d117113a5f7382690"},
+    "blindPacketSchema": {"path": "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/blind-human-review-packet.schema.v1.json", "sha256": "sha256:6bae3f04c4fc8d80d03e86adc389fb68a83b79098209b60fc498c59e0a4af257"},
+    "requiredSurfaces": ["facts", "acceptedSemanticClassification", "semanticBoundaryFlags", "allowedSourceMaterial", "spoilerBoundaryRules", "copyConstraints", "visibleEditorialCopy"],
+    "optionalDeterministicLintFindings": "MUST_BE_ABSENT_OR_BOUND_IN_FUTURE_EXECUTION_FREEZE"
+  },
+  "frozenExecutionDecision": {"provider": "google-gemini-developer-api", "modelId": "gemini-3.8-flash", "thinkingLevel": "low", "temperature": 0.0, "maxOutputTokens": 6144, "timeoutMs": 30000, "fewShotExamples": "none", "automaticRetries": 0, "providerVersionRule": "log exact returned version; absence or mutation is TECHNICAL_ABORT", "routingAndMalformedOutput": {"LOW_RISK": "AUTO_ELIGIBLE_CANDIDATE_ROUTE", "HIGH_RISK": "HUMAN_REVIEW_ROUTE", "malformedOrInvalid": "TECHNICAL_ABORT_AND_NEVER_SEMANTIC_SUCCESS", "source": {"path": "catalogue-pipeline/scripts/scaleTranche1Plan.mjs", "sha256": "sha256:de201c6695d8198aac7059ceab1e1630cca9db9448b68c62a93a46137e98287c"}}, "authority": "v1.4 paired-development protocol; explicit prospective preregistration decision"},
+  "naturalArm": {"order": "deterministic representative order committed by custodian", "minimumClean": 20, "minimumMinor": 20, "maximumPackets": 100, "stop": "both minima reached OR maximum OR immediate FAIL/TECHNICAL_ABORT", "minorLowRiskMaximum": 2, "cleanHighRiskMaximum": 2, "thresholdType": "OPERATIONAL_GATE_NOT_INFERENTIAL_CONFIDENCE_REQUIREMENT"},
+  "challengeArm": {"qualifyingCases": 12, "classes": 3, "perClass": 4, "attemptsPerClassMaximum": 6, "attemptsMaximum": 18, "qualification": "BOTH_INITIAL_INDEPENDENT_HUMANS_MUST_LABEL_SEVERE; disagreement/non-SEVERE permanently disqualifies", "selection": "first four qualifying per class in custodian-frozen order", "severeEscapesAllowed": 0, "claim": "ZERO_ESCAPES_ACROSS_PREREGISTERED_SEVERE_CHALLENGE_COVERAGE_SUITE_NOT_GENERAL_RATE"},
+  "qa": {"naturalSevere": "100_PERCENT", "verifierHumanDisagreements": "100_PERCENT", "remainingAgreements": "ceil(25%); ascending SHA256(qaSeed + newline + packetHash)", "challenge": "two independent initial human labels on every attempt; no third-human rescue"},
+  "outcomes": {"PASS": "all operational gates, suite gate, technical validity, and integrity pass", "FAIL": "any severe escape or completed natural denominator beyond tolerance", "INCONCLUSIVE": "intact but insufficient qualifying challenges or natural denominator", "TECHNICAL_ABORT": "any malformed/mismatched output, frozen-input failure, leakage, order failure, or provider mutation"},
+  "unresolvedPreExecutionCommitments": ["new replacement holdout opaque membership hash and deterministic order hash", "independent-custodian signed sealing/exclusion proof", "challenge pool, construction specification, attempted-case order, and manifest hash", "QA seed", "analysis script and operator-log schema hashes", "signed execution freeze binding r2 artifact hashes", "eight distinct personnel including a predesignated blinded reconciliation adjudicator"]
+}

@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://moviemood.local/schemas/verifier-v1.4-prospective-validation/r2.1/operator-log.schema.v1.json",
+  "title": "OperatorLogV1",
+  "description": "Append-only execution ledger schema for verifier calls. Strictly enforces retryCount == 0, immutable request config, and failure-closed technical aborts on any integrity event.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "logId",
+    "protocolId",
+    "freezeId",
+    "entries"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "const": "operator-log.v1"
+    },
+    "logId": {
+      "type": "string",
+      "pattern": "^operator-log\\."
+    },
+    "protocolId": {
+      "type": "string",
+      "const": "source-boundary-risk-verifier.v1.4-prospective-validation.r2.1"
+    },
+    "freezeId": {
+      "type": "string"
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "entryIndex",
+          "arm",
+          "opaquePacketReference",
+          "expectedOrderIndex",
+          "packetHash",
+          "requestConfigHash",
+          "providerReturnedModel",
+          "providerReturnedVersion",
+          "callTimestamp",
+          "outputHash",
+          "schemaValidityState",
+          "retryCount",
+          "routeResult",
+          "integrityEventState"
+        ],
+        "properties": {
+          "entryIndex": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "arm": {
+            "type": "string",
+            "enum": ["CHALLENGE", "NATURAL"]
+          },
+          "opaquePacketReference": {
+            "type": "string",
+            "minLength": 1
+          },
+          "expectedOrderIndex": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "packetHash": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "requestConfigHash": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "providerReturnedModel": {
+            "type": "string",
+            "minLength": 1
+          },
+          "providerReturnedVersion": {
+            "type": "string",
+            "minLength": 1
+          },
+          "callTimestamp": {
+            "type": "string"
+          },
+          "outputHash": {
+            "type": ["string", "null"],
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "schemaValidityState": {
+            "type": "string",
+            "enum": ["VALID", "INVALID", "CALL_FAILED"]
+          },
+          "retryCount": {
+            "type": "integer",
+            "const": 0
+          },
+          "routeResult": {
+            "type": "string",
+            "enum": ["AUTO_ELIGIBLE", "HUMAN_REVIEW_REQUIRED", "INVALID_OUTPUT_ROUTE"]
+          },
+          "integrityEventState": {
+            "type": "string",
+            "enum": ["INTACT", "TECHNICAL_ABORT"]
+          },
+          "terminalAbortReason": {
+            "type": ["string", "null"]
+          }
+        }
+      }
+    }
+  }
+}

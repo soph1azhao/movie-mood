@@ -1,0 +1,196 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://moviemood.local/schemas/verifier-v1.4-prospective-validation/r2.1/challenge-source-exclusion.schema.v1.json",
+  "title": "ChallengeSourceExclusionManifestV1",
+  "description": "Content-free cryptographic exclusion proof establishing that the severe challenge source pool is strictly disjoint from development, retrospective v1.4, production, and replacement prospective holdout cohorts under a single common HMAC derivation domain.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "manifestId",
+    "protocolId",
+    "challengeSourcePoolId",
+    "derivationScheme",
+    "derivationVersion",
+    "derivationKeyCommitment",
+    "challengeSourceMemberHashes",
+    "prohibitedCohorts",
+    "exclusionVerificationStatus"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "const": "challenge-source-exclusion.v1"
+    },
+    "manifestId": {
+      "type": "string",
+      "pattern": "^challenge-source-exclusion\\."
+    },
+    "protocolId": {
+      "type": "string",
+      "const": "source-boundary-risk-verifier.v1.4-prospective-validation.r2.1"
+    },
+    "challengeSourcePoolId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "derivationScheme": {
+      "type": "string",
+      "const": "HMAC_SHA256_CANDIDATE_MEMBER_V1"
+    },
+    "derivationVersion": {
+      "type": "string",
+      "const": "1"
+    },
+    "derivationKeyCommitment": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "challengeSourceMemberHashes": {
+      "type": "array",
+      "minItems": 18,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^sha256:[a-f0-9]{64}$"
+      }
+    },
+    "prohibitedCohorts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "developmentCohort",
+        "retrospectiveV14Cohort",
+        "currentProductionCohort",
+        "replacementProspectiveHoldout"
+      ],
+      "properties": {
+        "developmentCohort": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["cohortName", "sourceMembershipCommitment", "opaqueMemberHashes"],
+          "properties": {
+            "cohortName": { "type": "string", "const": "verifier-v1.4-development" },
+            "sourceMembershipCommitment": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["path", "sha256", "candidateCount", "derivationScheme", "derivationVersion"],
+              "properties": {
+                "path": { "type": "string", "minLength": 1 },
+                "sha256": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+                "candidateCount": { "type": "integer", "minimum": 1 },
+                "derivationScheme": { "type": "string", "const": "HMAC_SHA256_CANDIDATE_MEMBER_V1" },
+                "derivationVersion": { "type": "string", "const": "1" },
+                "derivationKeyCommitment": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+              }
+            },
+            "derivationScheme": { "type": "string", "const": "HMAC_SHA256_CANDIDATE_MEMBER_V1" },
+            "derivationVersion": { "type": "string", "const": "1" },
+            "derivationKeyCommitment": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+            "opaqueMemberHashes": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+            }
+          }
+        },
+        "retrospectiveV14Cohort": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["cohortName", "sourceMembershipCommitment", "opaqueMemberHashes"],
+          "properties": {
+            "cohortName": { "type": "string", "const": "verifier-v1.4-retrospective-continuation" },
+            "sourceMembershipCommitment": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["path", "sha256", "candidateCount", "derivationScheme", "derivationVersion"],
+              "properties": {
+                "path": { "type": "string", "minLength": 1 },
+                "sha256": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+                "candidateCount": { "type": "integer", "minimum": 1 },
+                "derivationScheme": { "type": "string", "const": "HMAC_SHA256_CANDIDATE_MEMBER_V1" },
+                "derivationVersion": { "type": "string", "const": "1" },
+                "derivationKeyCommitment": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+              }
+            },
+            "derivationScheme": { "type": "string", "const": "HMAC_SHA256_CANDIDATE_MEMBER_V1" },
+            "derivationVersion": { "type": "string", "const": "1" },
+            "derivationKeyCommitment": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+            "opaqueMemberHashes": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+            }
+          }
+        },
+        "currentProductionCohort": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["cohortName", "sourceMembershipCommitment", "opaqueMemberHashes"],
+          "properties": {
+            "cohortName": { "type": "string", "const": "scale-tranche-1-production" },
+            "sourceMembershipCommitment": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["path", "sha256", "candidateCount", "derivationScheme", "derivationVersion"],
+              "properties": {
+                "path": { "type": "string", "minLength": 1 },
+                "sha256": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+                "candidateCount": { "type": "integer", "minimum": 1 },
+                "derivationScheme": { "type": "string", "const": "HMAC_SHA256_CANDIDATE_MEMBER_V1" },
+                "derivationVersion": { "type": "string", "const": "1" },
+                "derivationKeyCommitment": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+              }
+            },
+            "derivationScheme": { "type": "string", "const": "HMAC_SHA256_CANDIDATE_MEMBER_V1" },
+            "derivationVersion": { "type": "string", "const": "1" },
+            "derivationKeyCommitment": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+            "opaqueMemberHashes": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+            }
+          }
+        },
+        "replacementProspectiveHoldout": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["cohortName", "candidateCount", "opaqueMemberHashes"],
+          "properties": {
+            "cohortName": { "type": "string", "const": "replacement-prospective-holdout" },
+            "candidateCount": { "type": "integer", "minimum": 100 },
+            "derivationScheme": { "type": "string", "const": "HMAC_SHA256_CANDIDATE_MEMBER_V1" },
+            "derivationVersion": { "type": "string", "const": "1" },
+            "derivationKeyCommitment": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+            "opaqueMemberHashes": {
+              "type": "array",
+              "minItems": 100,
+              "uniqueItems": true,
+              "items": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+            }
+          }
+        }
+      }
+    },
+    "custodianDerivationAttestation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["custodianId", "attestationStatement", "attestedAt"],
+      "properties": {
+        "custodianId": { "type": "string", "pattern": "^personnel-[a-zA-Z0-9_-]+$" },
+        "attestationStatement": {
+          "type": "string",
+          "const": "CUSTODIAN_ATTESTS_UNIFORM_HMAC_DERIVATION_ACROSS_ALL_COHORTS"
+        },
+        "attestedAt": { "type": "string" }
+      }
+    },
+    "exclusionVerificationStatus": {
+      "type": "string",
+      "const": "DISJOINT_EXCLUSION_PROVEN"
+    }
+  }
+}

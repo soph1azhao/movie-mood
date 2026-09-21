@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "protocol-manifest.v1",
+  "protocolId": "source-boundary-risk-verifier.v1.4-prospective-validation.r1",
+  "status": "PREREGISTERED_DESIGN_ONLY_NOT_AUTHORIZED_TO_EXECUTE",
+  "recommendedDesign": "TWO_ARM_NATURAL_PLUS_SEVERE_ENRICHED_CHALLENGE",
+  "sourceArtifacts": {
+    "finalSynthesis": {"path": "catalogue-pipeline/experiments/verifier-v1.4-semantic-development/V1_4_FINAL_SYNTHESIS_AND_GOVERNANCE.md", "sha256": "sha256:1ef1cb5d64e622e4dca09f23181698638ade5d170f80a3fe17d62aedab30b2d4"},
+    "verifierPrompt": {"path": "catalogue-pipeline/candidates/source-boundary-risk-verifier.v1.4.md", "sha256": "sha256:a2fe3ef32f5b417544276401d5b520274fc77ef97753da61c253032b3f1e0d7f"},
+    "outputSchema": {"path": "catalogue-pipeline/candidates/source-boundary-risk-verifier.v1.3.schema.json", "sha256": "sha256:aa73ad6463e47c835186f8f2705f5c46167cd053ec43c1a0d72014ccc68c26dc"},
+    "contractValidator": {"path": "catalogue-pipeline/scripts/validateVerifierV13Contract.mjs", "sha256": "sha256:258c1520779fd147bf9c4aaa1c31c385d1da1fbd0f4835d381e30f767efab5b6"},
+    "materialityPolicy": {"path": "catalogue-pipeline/generated/catalogue-promotion/v8-2-editorial-pilot-v1/scale-tranche-1/human-review-materiality-policy.v1.json", "policyId": "A_PRIME_PRODUCTION_MATERIALITY_V1", "sha256": "sha256:21661892df4d1b009341b6d34de3bf5ad1ae17e3447abbdace15e1c31a5b843c"}
+  },
+  "frozenExecutionConfiguration": {
+    "provider": "Google Gemini Developer API",
+    "model": "gemini-3.8-flash",
+    "thinkingLevel": "low",
+    "temperature": 0.0,
+    "maxOutputTokens": 6144,
+    "timeoutMs": 30000,
+    "automaticRetries": 0,
+    "malformedOutput": "TECHNICAL_ABORT; operationally route to human review; never retry or score semantic success",
+    "routing": {"LOW_RISK": "AUTO_ELIGIBLE_CANDIDATE_ROUTE", "HIGH_RISK": "HUMAN_REVIEW_ROUTE", "INVALID": "HUMAN_REVIEW_ROUTE"}
+  },
+  "arms": {
+    "natural": {"stage1": 30, "stage2MaximumAdditional": 30, "maximum": 60, "expandIf": "stage1 has no FAIL/TECHNICAL_ABORT and CLEAN<20 or MINOR<20", "minimumCleanDenominator": 20, "minimumMinorDenominator": 20},
+    "severeChallenge": {"count": 12, "perFailureClass": 4, "classes": ["material_contradiction_or_identity_role_substitution", "unsupported_causal_motive_mechanism_or_setting_quantity_concretization", "spoiler_reveal_or_consequence_leakage"], "sourceTruth": "two independent blinded human SEVERE labels; third-human reconciliation if needed"}
+  },
+  "thresholds": {"severeEscapesAllowed": 0, "minorLowRiskAllowed": 2, "cleanHighRiskAllowed": 2, "invalidOutputsAllowed": 0},
+  "qa": {"allHumanSevere": true, "allVerifierHumanDisagreements": true, "agreementSample": "ceil(25%); SHA256(qaSeed || newline || packetHash), ascending", "qaSeed": "TO_BE_GENERATED_AND_COMMITTED_BY_INDEPENDENT_CUSTODIAN_BEFORE_ACCESS"},
+  "unresolvedExecutionCommitments": {
+    "reason": "Design-only work must not open or enumerate prospective holdout content.",
+    "legacyHoldout": "RETIRED; identity confidentiality compromised; MUST_NOT_BE_REUSED",
+    "replacementHoldoutMembershipHash": "REQUIRED_BEFORE_EXECUTION; not read or bound here",
+    "replacementHoldoutOrderHash": "REQUIRED_BEFORE_EXECUTION",
+    "challengeCohortManifestHash": "REQUIRED_BEFORE_EXECUTION",
+    "analysisScriptHash": "REQUIRED_BEFORE_EXECUTION",
+    "protocolAndManifestFreezeHashes": "REQUIRED_IN_SEPARATE_PRE_EXECUTION_FREEZE_RECORD"
+  },
+  "executionProhibitions": ["no prospective access before signed freeze", "no prompt/config/model substitution", "no adaptive tuning", "no verifier exposure to labels", "no reviewer exposure to verifier output/routes/quotas", "no prior-candidate judgment injected into later prompts"]
+}

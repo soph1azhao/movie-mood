@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://moviemood.local/schemas/verifier-v1.4-prospective-validation/r2.1/runtime-dependency-declaration.schema.v1.json",
+  "title": "RuntimeDependencyDeclarationV1",
+  "description": "Complete declaration of all runtime dependencies capable of affecting the verifier-visible semantic input payload. Enforces explicit disposition of optional deterministicLintFindings.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "declarationId",
+    "protocolId",
+    "deterministicLintFindingsDisposition",
+    "dependencies",
+    "allSemanticDependenciesDeclared"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "const": "runtime-dependency-declaration.v1"
+    },
+    "declarationId": {
+      "type": "string",
+      "pattern": "^runtime-dependency-declaration\\."
+    },
+    "protocolId": {
+      "type": "string",
+      "const": "source-boundary-risk-verifier.v1.4-prospective-validation.r2.1"
+    },
+    "deterministicLintFindingsDisposition": {
+      "type": "string",
+      "enum": [
+        "UNIVERSALLY_ABSENT",
+        "EXPLICITLY_BOUND_AND_FROZEN"
+      ]
+    },
+    "allSemanticDependenciesDeclared": {
+      "type": "boolean",
+      "const": true
+    },
+    "dependencies": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "reference",
+          "dependencyType",
+          "semanticPayloadImpact",
+          "required",
+          "disposition"
+        ],
+        "properties": {
+          "reference": {
+            "type": "string",
+            "minLength": 1
+          },
+          "dependencyType": {
+            "type": "string",
+            "enum": [
+              "source_code_file",
+              "configuration_file",
+              "environment_derived_input",
+              "generated_artifact",
+              "deterministic_lint_findings",
+              "provider_setting"
+            ]
+          },
+          "sha256": {
+            "type": ["string", "null"],
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "valueCommitment": {
+            "type": ["string", "number", "boolean", "null"]
+          },
+          "semanticPayloadImpact": {
+            "type": "boolean"
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "disposition": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

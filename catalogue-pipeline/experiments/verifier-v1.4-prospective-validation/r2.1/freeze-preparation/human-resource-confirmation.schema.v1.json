@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://moviemood.local/schemas/verifier-v1.4-prospective-validation/r2.1/human-resource-confirmation.schema.v1.json",
+  "title": "HumanResourceConfirmationV1",
+  "description": "Pre-execution human resource confirmation enforcing exactly eight distinct personnel assigned to governed validation roles with non-overlapping independence constraints.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "confirmationId",
+    "protocolId",
+    "requiredDistinctCount",
+    "roleAssignments",
+    "allRolesDistinct"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "const": "human-resource-confirmation.v1"
+    },
+    "confirmationId": {
+      "type": "string",
+      "pattern": "^human-resource-confirmation\\."
+    },
+    "protocolId": {
+      "type": "string",
+      "const": "source-boundary-risk-verifier.v1.4-prospective-validation.r2.1"
+    },
+    "requiredDistinctCount": {
+      "type": "integer",
+      "const": 8
+    },
+    "allRolesDistinct": {
+      "type": "boolean",
+      "const": true
+    },
+    "roleAssignments": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "independent_custodian",
+        "challenge_construction_author",
+        "challenge_adjudicator_A",
+        "challenge_adjudicator_B",
+        "natural_primary_adjudicator",
+        "natural_QA_adjudicator",
+        "natural_reconciliation_adjudicator",
+        "verifier_operator"
+      ],
+      "properties": {
+        "independent_custodian": {
+          "type": "string",
+          "pattern": "^personnel-[a-zA-Z0-9_-]+$"
+        },
+        "challenge_construction_author": {
+          "type": "string",
+          "pattern": "^personnel-[a-zA-Z0-9_-]+$"
+        },
+        "challenge_adjudicator_A": {
+          "type": "string",
+          "pattern": "^personnel-[a-zA-Z0-9_-]+$"
+        },
+        "challenge_adjudicator_B": {
+          "type": "string",
+          "pattern": "^personnel-[a-zA-Z0-9_-]+$"
+        },
+        "natural_primary_adjudicator": {
+          "type": "string",
+          "pattern": "^personnel-[a-zA-Z0-9_-]+$"
+        },
+        "natural_QA_adjudicator": {
+          "type": "string",
+          "pattern": "^personnel-[a-zA-Z0-9_-]+$"
+        },
+        "natural_reconciliation_adjudicator": {
+          "type": "string",
+          "pattern": "^personnel-[a-zA-Z0-9_-]+$"
+        },
+        "verifier_operator": {
+          "type": "string",
+          "pattern": "^personnel-[a-zA-Z0-9_-]+$"
+        }
+      }
+    }
+  }
+}

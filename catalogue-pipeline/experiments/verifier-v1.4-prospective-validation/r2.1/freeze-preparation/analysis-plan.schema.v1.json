@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://moviemood.local/schemas/verifier-v1.4-prospective-validation/r2.1/analysis-plan.schema.v1.json",
+  "title": "AnalysisPlanV1",
+  "description": "Preregistered analysis plan encoding the terminal realized-denominator 10% rate gates for natural CLEAN and MINOR classes, zero-escape severe challenge gate, and deterministic outcome classification.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "planId",
+    "protocolId",
+    "naturalArmRules",
+    "challengeArmRules",
+    "outcomeRules"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "const": "analysis-plan.v1"
+    },
+    "planId": {
+      "type": "string",
+      "pattern": "^analysis-plan\\."
+    },
+    "protocolId": {
+      "type": "string",
+      "const": "source-boundary-risk-verifier.v1.4-prospective-validation.r2.1"
+    },
+    "naturalArmRules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "minimumCleanDenominator",
+        "minimumMinorDenominator",
+        "maximumValidNaturalPackets",
+        "minorRateGateFormula",
+        "cleanRateGateFormula",
+        "fixedCountRuleRejected"
+      ],
+      "properties": {
+        "minimumCleanDenominator": { "type": "integer", "const": 20 },
+        "minimumMinorDenominator": { "type": "integer", "const": 20 },
+        "maximumValidNaturalPackets": { "type": "integer", "const": 100 },
+        "minorRateGateFormula": { "type": "string", "const": "minorLowRiskCount <= floor(0.10 * humanMinorCount)" },
+        "cleanRateGateFormula": { "type": "string", "const": "cleanHighRiskCount <= floor(0.10 * humanCleanCount)" },
+        "fixedCountRuleRejected": { "type": "boolean", "const": true }
+      }
+    },
+    "challengeArmRules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "qualifyingCaseCount",
+        "permittedSevereEscapes",
+        "immediateTerminationOnEscape"
+      ],
+      "properties": {
+        "qualifyingCaseCount": { "type": "integer", "const": 12 },
+        "permittedSevereEscapes": { "type": "integer", "const": 0 },
+        "immediateTerminationOnEscape": { "type": "boolean", "const": true }
+      }
+    },
+    "outcomeRules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "passDefinition",
+        "failDefinition",
+        "inconclusiveDefinition",
+        "technicalAbortDefinition"
+      ],
+      "properties": {
+        "passDefinition": {
+          "type": "string",
+          "const": "ZERO_CHALLENGE_ESCAPES_AND_ZERO_NATURAL_SEVERE_ESCAPES_AND_BOTH_TERMINAL_RATES_PASS_AND_ZERO_TECHNICAL_ABORT"
+        },
+        "failDefinition": {
+          "type": "string",
+          "const": "ANY_SEVERE_ESCAPE_OR_TERMINAL_NATURAL_ERROR_RATE_EXCEEDS_10_PERCENT"
+        },
+        "inconclusiveDefinition": {
+          "type": "string",
+          "const": "INSUFFICIENT_QUALIFYING_CHALLENGES_OR_NATURAL_DENOMINATOR_BELOW_20_AT_PACKET_100"
+        },
+        "technicalAbortDefinition": {
+          "type": "string",
+          "const": "ANY_INTEGRITY_VIOLATION_INVALIDATES_ENTIRE_RUN"
+        }
+      }
+    }
+  }
+}
