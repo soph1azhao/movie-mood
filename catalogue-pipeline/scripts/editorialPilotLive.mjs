@@ -1,4 +1,4 @@
-import { mkdir, readFile, writeFile } from 'node:fs/promises'
+import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 
 import { buildCriticGeminiSchema, buildEditorialGeminiSchema, buildGemini38Request, executeGemini38Structured, GEMINI_EDITORIAL_MODEL_ID, GEMINI_EDITORIAL_PROVIDER_ID, THINKING_LEVELS } from '../adapters/geminiEditorialProvider.mjs'
@@ -6,6 +6,7 @@ import { checkEditorialVoice } from './checkEditorialVoice.mjs'
 import { buildCriticInputPacket, createCriticResumeKey, createPilotResumeKey, CRITIC_MAX_OUTPUT_TOKENS, PILOT_ID, WRITER_MAX_OUTPUT_TOKENS } from './editorialPilot.mjs'
 import { hashArtifact, hashBytes, serializeArtifactForPersistence } from './validatePromotionContract.mjs'
 import { validateCriticOutput, validateEditorialOutput } from './validateBatch.mjs'
+import { normalizeGeminiUsage } from './editorialEfficiencyAudit.mjs'
 
 const MAX_ATTEMPTS = 2
 
@@ -14,6 +15,19 @@ function jsonPath(repoRoot) { return path.join(root(repoRoot), 'review/pilot-res
 async function readJson(filePath) { return JSON.parse(await readFile(filePath, 'utf8')) }
 async function writeCanonical(filePath, value) { await mkdir(path.dirname(filePath), { recursive: true }); await writeFile(filePath, serializeArtifactForPersistence(value)) }
 async function writeRaw(filePath, value) { await mkdir(path.dirname(filePath), { recursive: true }); await writeFile(filePath, value) }
+async function existingAttempts(dir) {
+  try { return (await readdir(dir)).filter((name) => /^raw-response\.attempt-\d+\.json$/.test(name)).length } catch { return 0 }
+}
+async function totalPreservedCalls(repoRoot) {
+  let total = 0
+  for (const stage of ['writers', 'critics']) {
+    const stageRoot = path.join(root(repoRoot), 'execution', stage)
+    try {
+      for (const candidateId of await readdir(stageRoot)) total += await existingAttempts(path.join(stageRoot, candidateId))
+    } catch {}
+  }
+  return total
+}
 
 function emptyResults(manifest) {
   return { schemaVersion: 'editorial-pilot-results.v1', pilotId: PILOT_ID, configuration: manifest.configuration, externalCalls: { model: 0, total: 0 }, pricingMetadata: { status: 'unavailable', reason: 'No price is embedded in promotion validity; report-only pricing must be supplied separately.' }, records: manifest.packets.map(({ order, candidateId, tmdbId, title, packetPath, v8_2ArtifactHash, writerResumeKey }) => ({ order, candidateId, tmdbId, title, writerPacketPath: packetPath, writerPacketHash: v8_2ArtifactHash, writerResumeKey, writer: { terminalState: 'PENDING', attempts: [] }, critic: { terminalState: 'PENDING', attempts: [] }, humanDecision: 'PENDING' })) }
@@ -46,13 +60,15 @@ async function dispatch({ stage, repoRoot, record, packet, promptText, schema, t
   const request = buildGemini38Request({ promptText, input: packet, responseSchema: schema, thinkingLevel, maxOutputTokens })
   const dir = path.join(root(repoRoot), 'execution', stage, record.candidateId)
   await writeCanonical(path.join(dir, 'request.json'), { ...request.requestMetadata, providerId: GEMINI_EDITORIAL_PROVIDER_ID, modelId: GEMINI_EDITORIAL_MODEL_ID, thinkingLevel, maxOutputTokens, resumeKey })
+  const existingAttemptCount = await existingAttempts(dir)
+  if (existingAttemptCount >= MAX_ATTEMPTS) return { terminalState: `${stage === 'writers' ? 'WRITER' : 'CRITIC'}_PROVIDER_FAILED`, attempts: [], request: request.requestMetadata, resumeKey, error: { code: 'ATTEMPT_BUDGET_EXHAUSTED', category: 'provider-http', status: null, message: 'Preserved attempts already exhaust this candidate budget.' }, attemptCount: existingAttemptCount }
   const attempts = []
   try {
     const result = await executeGemini38Structured({ apiKey, request, fetchImpl, sleep, maxAttempts: MAX_ATTEMPTS, preserveRawResponse: async ({ attempt, status, rawText, rawResponseHash }) => {
       const rawPath = path.join(dir, `raw-response.attempt-${String(attempt).padStart(2, '0')}.json`)
       await writeRaw(rawPath, rawText)
       attempts.push({ attempt, status, rawResponsePath: path.relative(repoRoot, rawPath), rawResponseHash })
-    }, validateOutput: () => ({ ok: true }) })
+    }, startingAttempt: existingAttemptCount, validateOutput: () => ({ ok: true }) })
     const validation = validate(result.output)
     const artifact = artifactBuilder(packet, result.output)
     const artifactHash = hashArtifact(artifact)
@@ -60,7 +76,7 @@ async function dispatch({ stage, repoRoot, record, packet, promptText, schema, t
     const artifactPath = path.join(dir, `${stage}-artifact.json`)
     await writeCanonical(outputPath, result.output)
     await writeCanonical(artifactPath, artifact)
-    return { terminalState: validation.ok ? `${stage === 'writers' ? 'WRITER' : 'CRITIC'}_VALID` : `${stage === 'writers' ? 'WRITER_HARD_INVALID' : 'CRITIC_HARD_INVALID'}`, attempts, request: request.requestMetadata, resumeKey, outputPath: path.relative(repoRoot, outputPath), outputHash: hashArtifact(result.output), artifactPath: path.relative(repoRoot, artifactPath), artifactHash, validation, usageMetadata: result.usageMetadata, attemptCount: result.attempt }
+    return { terminalState: validation.ok ? `${stage === 'writers' ? 'WRITER' : 'CRITIC'}_VALID` : `${stage === 'writers' ? 'WRITER_HARD_INVALID' : 'CRITIC_HARD_INVALID'}`, attempts, request: request.requestMetadata, resumeKey, outputPath: path.relative(repoRoot, outputPath), outputHash: hashArtifact(result.output), artifactPath: path.relative(repoRoot, artifactPath), artifactHash, validation, usageMetadata: result.usageMetadata, tokenAccounting: normalizeGeminiUsage(result.usageMetadata), attemptCount: result.attempt }
   } catch (error) {
     return { terminalState: error.ambiguous ? `${stage === 'writers' ? 'WRITER_AMBIGUOUS' : 'CRITIC_AMBIGUOUS'}` : `${stage === 'writers' ? 'WRITER_PROVIDER_FAILED' : 'CRITIC_PROVIDER_FAILED'}`, attempts, request: request.requestMetadata, resumeKey, error: { code: error.code ?? 'UNEXPECTED_ERROR', category: error.category ?? 'unknown', status: error.status ?? null, message: error.message }, attemptCount: attempts.length }
   }
@@ -131,6 +147,7 @@ function markdown(results) {
 
 export async function buildReviewReport({ repoRoot }) {
   const results = await readJson(jsonPath(repoRoot))
+  results.externalCalls = { model: await totalPreservedCalls(repoRoot), total: await totalPreservedCalls(repoRoot) }
   for (const record of results.records) {
     if (record.writer.outputPath) record.writer.output = await readJson(path.join(repoRoot, record.writer.outputPath))
     if (record.critic.outputPath) record.critic.output = await readJson(path.join(repoRoot, record.critic.outputPath))

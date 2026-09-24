@@ -1,0 +1,9 @@
+{
+  "schemaVersion": "t3-runtime-assembly-execution-ledger.v1",
+  "status": "RUNTIME_ASSEMBLY_COMPLETE_RELEASE_NOT_AUTHORIZED",
+  "completionManifestHash": "sha256:1cd2ef44ee43f43a28a1775d7861c0e323deee6e6c9f22b8f97276c5c10bb15e",
+  "runtimeAssemblyComplete": true,
+  "releaseAllowed": false,
+  "deploymentAllowed": false,
+  "rollbackUsed": false
+}

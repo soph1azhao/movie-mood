@@ -1,0 +1,44 @@
+{
+  "schemaVersion": "t3-runtime-write-execution-authorization.v1",
+  "runtimeWriteAuthorized": true,
+  "runtimeAssemblyPopulation": 139,
+  "expectedFinalCount": 180,
+  "semanticMutationAllowed": false,
+  "factualMutationAllowed": false,
+  "posterMutationAllowed": false,
+  "paletteMutationAllowed": false,
+  "networkCallsAuthorized": 0,
+  "providerCallsAuthorized": 0,
+  "releaseAllowed": false,
+  "deploymentAllowed": false,
+  "completionRoot": "catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-3/runtime-assembly-completion-v1",
+  "targetPaths": [
+    "src/data/curatedMovies.ts",
+    "src/data/generated/tmdbMovies.json",
+    "src/data/tmdbMovieMappings.json"
+  ],
+  "prospectiveTargetHashes": {
+    "src/data/curatedMovies.ts": "sha256:f8d1a87e652d8fd458d5c14b9c037a97712398b251093ebbfcb34440b54a7661",
+    "src/data/generated/tmdbMovies.json": "sha256:0e39c721a2e352fe1733acd572124bf43eef27ad793efa0622760809fe1e7478",
+    "src/data/tmdbMovieMappings.json": "sha256:0a9786facf7d5d2deb5ceca7c442f9a231f55079b1234910e31868afaf729e0f"
+  },
+  "bindings": {
+    "executor": {
+      "path": "catalogue-pipeline/scripts/t3RuntimeAssemblyExecution.mjs",
+      "rawFileHash": "sha256:e6bddacf78aea66fbb0e4e278e2c6f0a17da70f36e4683cde3a2ec5a0109868a"
+    },
+    "runtimeAssemblyAuthorization": {
+      "path": "catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-3/t3-runtime-assembly-authorization.v1.json",
+      "rawFileHash": "sha256:d9af65347c3deb219b852cd7b0b653b52a4b6496c2478d6034c3f25c0e993170"
+    },
+    "prospectiveManifest": {
+      "path": "catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-3/runtime-assembly-prospective-v1/t3-runtime-assembly-prospective-manifest.v1.json",
+      "rawFileHash": "sha256:7cf4018a690f032a3ad2918ac812b61caecef1e1298bdd0508324902a0c541c7"
+    },
+    "baselineTargets": {
+      "src/data/curatedMovies.ts": "sha256:3afe7763f6a88132eb4eb388550ce9a1caff24c8716589bb71c876525a98bba7",
+      "src/data/generated/tmdbMovies.json": "sha256:aa97ab9b491748763dc49080a52779001411e216529199728b9125f1613697cb",
+      "src/data/tmdbMovieMappings.json": "sha256:ff00f8a8482fb865d8269bcd561d8b89dfef03d1f4aaf3f4c8535afd476b2910"
+    }
+  }
+}

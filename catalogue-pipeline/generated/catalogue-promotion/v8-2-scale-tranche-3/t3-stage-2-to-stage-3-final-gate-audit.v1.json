@@ -1,0 +1,103 @@
+{
+  "schemaVersion": "t3-stage-2-to-stage-3-final-gate-audit.v1",
+  "status": "STAGE_2_EXIT_CRITERIA_MET",
+  "stage": "STAGE_2_TO_STAGE_3_FINAL_GATE_AUDIT",
+  "bindings": {
+    "finalClosure": {
+      "path": "catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-3/t3-final-closure.v1.json",
+      "rawFileHash": "sha256:32a66a2e894d2713f969cda9ba7a19942d73fb3754563f8a08a345867c2514d0"
+    },
+    "posterCompletion": {
+      "path": "catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-3/stage-2-poster-assets-v1/t3-stage-2-poster-acquisition-completion-manifest.v1.json",
+      "rawFileHash": "sha256:604f739b58c95e5681f204a81fc6f0938d94c8bb0f7ccbdf39104b278eeb7ea3"
+    },
+    "paletteCompletion": {
+      "path": "catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-3/stage-2-palette-artifacts-v1/t3-stage-2-palette-generation-completion-manifest.v1.json",
+      "rawFileHash": "sha256:d6201257d5c5e2b61d0f8d14dd96edb98d38db3df903cdc99004971929e0bbcd"
+    },
+    "historicalStage2DryRun": {
+      "path": "catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-3/stage-2-production-assembly-dry-run-v1/t3-stage-2-production-assembly-dry-run-manifest.v1.json",
+      "rawFileHash": "sha256:75a5ac032191b0d5055539c5d409aea38b4b71abc983fb16f2af65f68d9e7ae5"
+    },
+    "successorStage2DryRun": {
+      "path": "catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-3/stage-2-production-assembly-dry-run-v2/t3-stage-2-production-assembly-successor-dry-run-manifest.v1.json",
+      "rawFileHash": "sha256:b27103d5a9dee6c5b5d9a5e2e6195359c665a4040a67b1fbb6f4287fd207fcea"
+    },
+    "explicitPromotionAuthorization": {
+      "path": "catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-3/t3-explicit-promotion-authorization.v1.json",
+      "rawFileHash": "sha256:6248c3ab1100c71d66d22bf44072cd0ab1c1f1093a24d9512a080bab5236f8b4"
+    },
+    "promotionExecutionAuthorization": {
+      "path": "catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-3/t3-promotion-execution-authorization.v1.json",
+      "rawFileHash": "sha256:ce407008bcb966a24a2b925cd4ecf6929e023c2ae9bcf711c894eec4172724f5"
+    },
+    "promotionCompletion": {
+      "path": "catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-3/promoted-production-records-v1/t3-promotion-completion-manifest.v1.json",
+      "rawFileHash": "sha256:fe3c35c90cf3403762ca45b45ccaf8ce0d4ade628ed38b23c0f5e6614642dd18"
+    },
+    "promotionLedger": {
+      "path": "catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-3/promoted-production-records-v1/t3-promotion-execution-ledger.v1.json",
+      "rawFileHash": "sha256:4b2571ad791b0dd125c7a14f0c79bb72dab231f46e26acde76bbd521681d9b0d"
+    },
+    "runtimeAssemblyAuthorization": {
+      "path": "catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-3/t3-runtime-assembly-authorization.v1.json",
+      "rawFileHash": "sha256:d9af65347c3deb219b852cd7b0b653b52a4b6496c2478d6034c3f25c0e993170"
+    },
+    "prospectiveRuntimeAssembly": {
+      "path": "catalogue-pipeline/generated/catalogue-promotion/v8-2-scale-tranche-3/runtime-assembly-prospective-v1/t3-runtime-assembly-prospective-manifest.v1.json",
+      "rawFileHash": "sha256:7cf4018a690f032a3ad2918ac812b61caecef1e1298bdd0508324902a0c541c7"
+    },
+    "runtimeExecutor": {
+      "path": "catalogue-pipeline/scripts/t3RuntimeAssemblyExecution.mjs",
+      "rawFileHash": "sha256:e6bddacf78aea66fbb0e4e278e2c6f0a17da70f36e4683cde3a2ec5a0109868a"
+    }
+  },
+  "populationConservation": {
+    "normalCohort": 150,
+    "humanSemanticAccepted": 139,
+    "terminalPreHumanExclusions": 2,
+    "structuralQuarantine": 9,
+    "unresolved": 0,
+    "overlap": 0,
+    "deferredOutsideNormalCohort": "exp100-tmdb-1156593"
+  },
+  "stage2": {
+    "posters": { "population": 139, "acquired": 139, "failed": 0, "exactByteProvenance": true },
+    "palettes": { "population": 139, "generated": 139, "failed": 0, "sourcePosterHashBound": true, "deterministicSecondPass": 139 },
+    "historicalDryRun": { "population": 139, "assembled": 0, "failed": 139, "reason": "LOCAL_POSTER_ASSET_UNAVAILABLE", "historyPreserved": true },
+    "successorDryRun": { "population": 139, "assembled": 139, "passed": 139, "failed": 0, "pending": 0 }
+  },
+  "promotion": { "population": 139, "promotedOrReused": 139, "failed": 0, "pending": 0, "exactProductionRecordHashCoverage": true, "runtimeActivationPerformed": false },
+  "runtime": {
+    "baselineCount": 41,
+    "prospectiveAdded": 139,
+    "prospectiveFinalCount": 180,
+    "overlaps": { "exactExisting": 0, "deterministicUpdates": 0, "conflicts": 0 },
+    "liveBaselineHashes": {
+      "src/data/curatedMovies.ts": "sha256:3afe7763f6a88132eb4eb388550ce9a1caff24c8716589bb71c876525a98bba7",
+      "src/data/generated/tmdbMovies.json": "sha256:aa97ab9b491748763dc49080a52779001411e216529199728b9125f1613697cb",
+      "src/data/tmdbMovieMappings.json": "sha256:ff00f8a8482fb865d8269bcd561d8b89dfef03d1f4aaf3f4c8535afd476b2910"
+    },
+    "prospectiveTargetHashes": {
+      "src/data/curatedMovies.ts": "sha256:f8d1a87e652d8fd458d5c14b9c037a97712398b251093ebbfcb34440b54a7661",
+      "src/data/generated/tmdbMovies.json": "sha256:0e39c721a2e352fe1733acd572124bf43eef27ad793efa0622760809fe1e7478",
+      "src/data/tmdbMovieMappings.json": "sha256:0a9786facf7d5d2deb5ceca7c442f9a231f55079b1234910e31868afaf729e0f"
+    },
+    "writePerformed": false,
+    "releasePerformed": false,
+    "deploymentPerformed": false
+  },
+  "validation": {
+    "focusedPromotionRuntimeTests": "26/26 PASS",
+    "applicationRuntimeTests": "143/143 PASS",
+    "typecheck": "PASS",
+    "gitDiffCheck": "PASS",
+    "networkCallsAdded": 0,
+    "providerCallsAdded": 0,
+    "geminiPhysicalCalls": 151,
+    "geminiCap": 180,
+    "geminiHeadroom": 29
+  },
+  "nextLawfulRoute": "CREATE_SOURCE_HASH_BOUND_RUNTIME_WRITE_AUTHORIZATION; THEN REQUIRE_EXPLICIT_HUMAN_APPROVAL_BEFORE_THE_EXACT_THREE_FILE_RUNTIME_TRANSACTION; VERIFY_READBACK_TESTS_TYPECHECK_AND_BUILD; RELEASE_AND_DEPLOYMENT_REMAIN_WITHHELD",
+  "recommendedRoutineExecutionModel": "Antigravity Gemini 3.8 Flash"
+}

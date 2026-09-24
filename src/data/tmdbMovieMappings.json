@@ -162,5 +162,561 @@
   {
     "id": "one-cut-of-the-dead-2017",
     "tmdbId": 513434
+  },
+  {
+    "id": "heartbreak-ridge-1986",
+    "tmdbId": 10015
+  },
+  {
+    "id": "porky-s-1981",
+    "tmdbId": 10246
+  },
+  {
+    "id": "the-dark-half-1993",
+    "tmdbId": 10349
+  },
+  {
+    "id": "rules-of-engagement-2000",
+    "tmdbId": 10479
+  },
+  {
+    "id": "dead-calm-1989",
+    "tmdbId": 10493
+  },
+  {
+    "id": "hunger-2023",
+    "tmdbId": 1071806
+  },
+  {
+    "id": "black-cat-white-cat-1998",
+    "tmdbId": 1075
+  },
+  {
+    "id": "audition-2000",
+    "tmdbId": 11075
+  },
+  {
+    "id": "quiz-show-1994",
+    "tmdbId": 11450
+  },
+  {
+    "id": "silverado-1985",
+    "tmdbId": 11509
+  },
+  {
+    "id": "ran-1985",
+    "tmdbId": 11645
+  },
+  {
+    "id": "the-last-days-on-mars-2013",
+    "tmdbId": 190847
+  },
+  {
+    "id": "parkland-2013",
+    "tmdbId": 209262
+  },
+  {
+    "id": "leroy-stitch-2006",
+    "tmdbId": 21316
+  },
+  {
+    "id": "cold-prey-2006",
+    "tmdbId": 21786
+  },
+  {
+    "id": "the-box-2009",
+    "tmdbId": 22825
+  },
+  {
+    "id": "joint-security-area-2000",
+    "tmdbId": 2440
+  },
+  {
+    "id": "leviathan-2014",
+    "tmdbId": 265180
+  },
+  {
+    "id": "the-salvation-2014",
+    "tmdbId": 266285
+  },
+  {
+    "id": "big-fish-begonia-2016",
+    "tmdbId": 271706
+  },
+  {
+    "id": "the-adventures-of-priscilla-queen-of-the-1994",
+    "tmdbId": 2759
+  },
+  {
+    "id": "shadows-in-paradise-1986",
+    "tmdbId": 3
+  },
+  {
+    "id": "the-invisible-boy-2014",
+    "tmdbId": 303542
+  },
+  {
+    "id": "the-cheetah-girls-2003",
+    "tmdbId": 32293
+  },
+  {
+    "id": "bagdad-cafe-1987",
+    "tmdbId": 3543
+  },
+  {
+    "id": "bianco-rosso-e-verdone-1981",
+    "tmdbId": 37775
+  },
+  {
+    "id": "peter-rabbit-2018",
+    "tmdbId": 381719
+  },
+  {
+    "id": "the-mansion-2017",
+    "tmdbId": 437739
+  },
+  {
+    "id": "g-i-jane-1997",
+    "tmdbId": 4421
+  },
+  {
+    "id": "sympathy-for-mr-vengeance-2002",
+    "tmdbId": 4689
+  },
+  {
+    "id": "balloon-2018",
+    "tmdbId": 483983
+  },
+  {
+    "id": "burning-2018",
+    "tmdbId": 491584
+  },
+  {
+    "id": "fermat-s-room-2007",
+    "tmdbId": 5595
+  },
+  {
+    "id": "arthur-the-king-2024",
+    "tmdbId": 618588
+  },
+  {
+    "id": "flypaper-2011",
+    "tmdbId": 62046
+  },
+  {
+    "id": "titane-2021",
+    "tmdbId": 630240
+  },
+  {
+    "id": "rebel-ridge-2024",
+    "tmdbId": 646097
+  },
+  {
+    "id": "encounter-2021",
+    "tmdbId": 728526
+  },
+  {
+    "id": "friends-with-kids-2012",
+    "tmdbId": 80038
+  },
+  {
+    "id": "high-heels-1991",
+    "tmdbId": 8222
+  },
+  {
+    "id": "the-lord-of-the-rings-the-war-of-the-roh-2024",
+    "tmdbId": 839033
+  },
+  {
+    "id": "the-vanishing-1988",
+    "tmdbId": 8740
+  },
+  {
+    "id": "mixed-by-erry-2023",
+    "tmdbId": 921785
+  },
+  {
+    "id": "house-of-flying-daggers-2004",
+    "tmdbId": 9550
+  },
+  {
+    "id": "scrooged-1988",
+    "tmdbId": 9647
+  },
+  {
+    "id": "honey-2003",
+    "tmdbId": 10028
+  },
+  {
+    "id": "cyborg-1989",
+    "tmdbId": 10134
+  },
+  {
+    "id": "from-dusk-till-dawn-3-the-hangman-s-daug-2000",
+    "tmdbId": 10213
+  },
+  {
+    "id": "high-tension-2003",
+    "tmdbId": 10226
+  },
+  {
+    "id": "miami-supercops-1985",
+    "tmdbId": 10295
+  },
+  {
+    "id": "eat-drink-man-woman-1994",
+    "tmdbId": 10451
+  },
+  {
+    "id": "the-doors-1991",
+    "tmdbId": 10537
+  },
+  {
+    "id": "the-day-of-the-beast-1995",
+    "tmdbId": 10722
+  },
+  {
+    "id": "the-alamo-2004",
+    "tmdbId": 10733
+  },
+  {
+    "id": "infernal-affairs-2002",
+    "tmdbId": 10775
+  },
+  {
+    "id": "the-draughtsman-s-contract-1982",
+    "tmdbId": 10831
+  },
+  {
+    "id": "dagon-2001",
+    "tmdbId": 10836
+  },
+  {
+    "id": "i-want-you-2012",
+    "tmdbId": 109689
+  },
+  {
+    "id": "the-wedding-singer-1998",
+    "tmdbId": 11003
+  },
+  {
+    "id": "koyaanisqatsi-1983",
+    "tmdbId": 11314
+  },
+  {
+    "id": "domestic-disturbance-2001",
+    "tmdbId": 11456
+  },
+  {
+    "id": "asterix-and-the-big-fight-1989",
+    "tmdbId": 11625
+  },
+  {
+    "id": "ju-on-the-grudge-2002",
+    "tmdbId": 11838
+  },
+  {
+    "id": "betty-blue-1986",
+    "tmdbId": 11986
+  },
+  {
+    "id": "wyatt-earp-1994",
+    "tmdbId": 12160
+  },
+  {
+    "id": "oliver-company-1988",
+    "tmdbId": 12233
+  },
+  {
+    "id": "max-manus-man-of-war-2008",
+    "tmdbId": 13752
+  },
+  {
+    "id": "man-on-wire-2008",
+    "tmdbId": 14048
+  },
+  {
+    "id": "timecrimes-2007",
+    "tmdbId": 14139
+  },
+  {
+    "id": "the-adventures-of-baron-munchausen-1988",
+    "tmdbId": 14506
+  },
+  {
+    "id": "the-way-way-back-2013",
+    "tmdbId": 147773
+  },
+  {
+    "id": "sophie-s-choice-1982",
+    "tmdbId": 15764
+  },
+  {
+    "id": "vampire-hunter-d-bloodlust-2001",
+    "tmdbId": 15999
+  },
+  {
+    "id": "the-double-life-of-veronique-1991",
+    "tmdbId": 1600
+  },
+  {
+    "id": "juice-1992",
+    "tmdbId": 16136
+  },
+  {
+    "id": "rugrats-in-paris-the-movie-2000",
+    "tmdbId": 16340
+  },
+  {
+    "id": "re-animator-1985",
+    "tmdbId": 1694
+  },
+  {
+    "id": "after-life-1999",
+    "tmdbId": 17962
+  },
+  {
+    "id": "over-the-top-1987",
+    "tmdbId": 1825
+  },
+  {
+    "id": "the-connection-2014",
+    "tmdbId": 197950
+  },
+  {
+    "id": "pusher-1996",
+    "tmdbId": 2061
+  },
+  {
+    "id": "instructions-not-included-2013",
+    "tmdbId": 211954
+  },
+  {
+    "id": "in-the-name-of-the-king-a-dungeon-siege--2007",
+    "tmdbId": 2312
+  },
+  {
+    "id": "city-of-the-living-dead-1980",
+    "tmdbId": 24920
+  },
+  {
+    "id": "i-m-not-scared-2003",
+    "tmdbId": 25300
+  },
+  {
+    "id": "men-behind-the-sun-1988",
+    "tmdbId": 25998
+  },
+  {
+    "id": "the-homesman-2014",
+    "tmdbId": 264656
+  },
+  {
+    "id": "arthur-and-the-revenge-of-maltazard-2009",
+    "tmdbId": 26505
+  },
+  {
+    "id": "the-messenger-2009",
+    "tmdbId": 28089
+  },
+  {
+    "id": "return-of-the-living-dead-iii-1993",
+    "tmdbId": 28260
+  },
+  {
+    "id": "testament-of-youth-2015",
+    "tmdbId": 284689
+  },
+  {
+    "id": "amazonia-the-catherine-miles-story-1985",
+    "tmdbId": 28676
+  },
+  {
+    "id": "stand-and-deliver-1988",
+    "tmdbId": 29154
+  },
+  {
+    "id": "close-up-1990",
+    "tmdbId": 30017
+  },
+  {
+    "id": "night-watch-2004",
+    "tmdbId": 3040
+  },
+  {
+    "id": "going-clear-scientology-and-the-prison-o-2015",
+    "tmdbId": 318224
+  },
+  {
+    "id": "hangman-2017",
+    "tmdbId": 323368
+  },
+  {
+    "id": "the-choice-2016",
+    "tmdbId": 330483
+  },
+  {
+    "id": "mr-brooks-2007",
+    "tmdbId": 3432
+  },
+  {
+    "id": "after-the-wedding-2006",
+    "tmdbId": 3549
+  },
+  {
+    "id": "the-three-brothers-1995",
+    "tmdbId": 37653
+  },
+  {
+    "id": "batman-the-killing-joke-2016",
+    "tmdbId": 382322
+  },
+  {
+    "id": "dragon-ball-z-wrath-of-the-dragon-1995",
+    "tmdbId": 39108
+  },
+  {
+    "id": "women-on-the-verge-of-a-nervous-breakdow-1988",
+    "tmdbId": 4203
+  },
+  {
+    "id": "the-return-of-godzilla-1984",
+    "tmdbId": 421467
+  },
+  {
+    "id": "sorry-to-bother-you-2018",
+    "tmdbId": 424781
+  },
+  {
+    "id": "kin-2018",
+    "tmdbId": 425505
+  },
+  {
+    "id": "hearts-of-darkness-a-filmmaker-s-apocaly-1991",
+    "tmdbId": 4539
+  },
+  {
+    "id": "troll-hunter-2010",
+    "tmdbId": 46146
+  },
+  {
+    "id": "wild-at-heart-1990",
+    "tmdbId": 483
+  },
+  {
+    "id": "gonjiam-haunted-asylum-2018",
+    "tmdbId": 508642
+  },
+  {
+    "id": "winnie-the-pooh-2011",
+    "tmdbId": 51162
+  },
+  {
+    "id": "border-2018",
+    "tmdbId": 517839
+  },
+  {
+    "id": "a-beautiful-wife-2007",
+    "tmdbId": 52214
+  },
+  {
+    "id": "martin-eden-2019",
+    "tmdbId": 582873
+  },
+  {
+    "id": "les-miserables-2019",
+    "tmdbId": 586863
+  },
+  {
+    "id": "fanny-and-alexander-1982",
+    "tmdbId": 5961
+  },
+  {
+    "id": "the-jack-in-the-box-2019",
+    "tmdbId": 622420
+  },
+  {
+    "id": "home-2009",
+    "tmdbId": 62320
+  },
+  {
+    "id": "the-iron-lady-2011",
+    "tmdbId": 71688
+  },
+  {
+    "id": "the-last-emperor-1987",
+    "tmdbId": 746
+  },
+  {
+    "id": "cocktail-1988",
+    "tmdbId": 7520
+  },
+  {
+    "id": "half-nelson-2006",
+    "tmdbId": 7859
+  },
+  {
+    "id": "pale-rider-1985",
+    "tmdbId": 8879
+  },
+  {
+    "id": "the-river-wild-1994",
+    "tmdbId": 8987
+  },
+  {
+    "id": "witness-1985",
+    "tmdbId": 9281
+  },
+  {
+    "id": "11-14-2004",
+    "tmdbId": 9282
+  },
+  {
+    "id": "thesis-1996",
+    "tmdbId": 9299
+  },
+  {
+    "id": "ong-bak-2003",
+    "tmdbId": 9316
+  },
+  {
+    "id": "asterix-in-britain-1986",
+    "tmdbId": 9318
+  },
+  {
+    "id": "super-size-me-2004",
+    "tmdbId": 9372
+  },
+  {
+    "id": "kiss-the-girls-1997",
+    "tmdbId": 9437
+  },
+  {
+    "id": "menace-ii-society-1993",
+    "tmdbId": 9516
+  },
+  {
+    "id": "tootsie-1982",
+    "tmdbId": 9576
+  },
+  {
+    "id": "christiane-f-1981",
+    "tmdbId": 9589
+  },
+  {
+    "id": "big-nothing-2006",
+    "tmdbId": 9843
+  },
+  {
+    "id": "ultraviolet-2006",
+    "tmdbId": 9920
+  },
+  {
+    "id": "bad-taste-1987",
+    "tmdbId": 9964
+  },
+  {
+    "id": "the-great-mouse-detective-1986",
+    "tmdbId": 9994
   }
 ]

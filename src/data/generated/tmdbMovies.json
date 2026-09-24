@@ -805,5 +805,2741 @@
     ],
     "runtimeMinutes": 96,
     "posterPath": "/rws34k2bqYVo2B5MkhKAbV8925j.jpg"
+  },
+  "heartbreak-ridge-1986": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Clint Eastwood",
+    "genres": [
+      "Drama",
+      "War"
+    ],
+    "posterPath": "/aMr99UigkMCTSPnLTpkzJeLmpyc.jpg",
+    "runtimeMinutes": 130,
+    "spokenLanguages": [
+      "English",
+      "Spanish"
+    ],
+    "title": "Heartbreak Ridge",
+    "tmdbId": 10015,
+    "year": 1986
+  },
+  "porky-s-1981": {
+    "countries": [
+      "Canada"
+    ],
+    "director": "Bob Clark",
+    "genres": [
+      "Comedy"
+    ],
+    "posterPath": "/AqCOt1cWfKqCepxK7LIdT812idH.jpg",
+    "runtimeMinutes": 94,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Porky's",
+    "tmdbId": 10246,
+    "year": 1981
+  },
+  "the-dark-half-1993": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "George A. Romero",
+    "genres": [
+      "Horror",
+      "Mystery"
+    ],
+    "posterPath": "/uTzi0no438AjKELtJgTbipNxWGu.jpg",
+    "runtimeMinutes": 122,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "The Dark Half",
+    "tmdbId": 10349,
+    "year": 1993
+  },
+  "rules-of-engagement-2000": {
+    "countries": [
+      "Germany",
+      "United States of America"
+    ],
+    "director": "William Friedkin",
+    "genres": [
+      "Drama",
+      "Thriller",
+      "War"
+    ],
+    "posterPath": "/38iMM0sHOqNz315ApF9bEjT4rFA.jpg",
+    "runtimeMinutes": 127,
+    "spokenLanguages": [
+      "Arabic",
+      "English"
+    ],
+    "title": "Rules of Engagement",
+    "tmdbId": 10479,
+    "year": 2000
+  },
+  "dead-calm-1989": {
+    "countries": [
+      "Australia"
+    ],
+    "director": "Phillip Noyce",
+    "genres": [
+      "Drama",
+      "Horror",
+      "Thriller"
+    ],
+    "posterPath": "/hXpav86ZX5N1YIfVfVtzuZLNrjW.jpg",
+    "runtimeMinutes": 96,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Dead Calm",
+    "tmdbId": 10493,
+    "year": 1989
+  },
+  "hunger-2023": {
+    "countries": [
+      "Thailand"
+    ],
+    "director": "Sitisiri Mongkolsiri",
+    "genres": [
+      "Drama"
+    ],
+    "posterPath": "/rNYHsKHFP3AY2PIDZgz3AuY7QoC.jpg",
+    "runtimeMinutes": 145,
+    "spokenLanguages": [
+      "Thai"
+    ],
+    "title": "Hunger",
+    "tmdbId": 1071806,
+    "year": 2023
+  },
+  "black-cat-white-cat-1998": {
+    "countries": [
+      "France",
+      "Germany",
+      "Serbia and Montenegro",
+      "Yugoslavia"
+    ],
+    "director": "Emir Kusturica",
+    "genres": [
+      "Comedy",
+      "Crime",
+      "Romance"
+    ],
+    "posterPath": "/xxQ9jgYf3xhbUTW98VtCjA1wMLv.jpg",
+    "runtimeMinutes": 127,
+    "spokenLanguages": [
+      "Bulgarian",
+      "Serbian"
+    ],
+    "title": "Black Cat, White Cat",
+    "tmdbId": 1075,
+    "year": 1998
+  },
+  "audition-2000": {
+    "countries": [
+      "Japan"
+    ],
+    "director": "Takashi Miike",
+    "genres": [
+      "Drama",
+      "Horror"
+    ],
+    "posterPath": "/zwGaUMm0wAqi0wkO7LJDlwoA5LP.jpg",
+    "runtimeMinutes": 115,
+    "spokenLanguages": [
+      "Japanese"
+    ],
+    "title": "Audition",
+    "tmdbId": 11075,
+    "year": 2000
+  },
+  "quiz-show-1994": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Robert Redford",
+    "genres": [
+      "Drama",
+      "History"
+    ],
+    "posterPath": "/yoGJo1h3Hl2exXPVcG9UXWDENtX.jpg",
+    "runtimeMinutes": 133,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Quiz Show",
+    "tmdbId": 11450,
+    "year": 1994
+  },
+  "silverado-1985": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Lawrence Kasdan",
+    "genres": [
+      "Action",
+      "Drama",
+      "Western"
+    ],
+    "posterPath": "/k6zurzegRKsNGMICXZ57VJDUzXO.jpg",
+    "runtimeMinutes": 133,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Silverado",
+    "tmdbId": 11509,
+    "year": 1985
+  },
+  "ran-1985": {
+    "countries": [
+      "France",
+      "Japan"
+    ],
+    "director": "Akira Kurosawa",
+    "genres": [
+      "Action",
+      "Drama",
+      "History"
+    ],
+    "posterPath": "/dGgiXMWDcS5aJTBEFu7bmaQPNox.jpg",
+    "runtimeMinutes": 160,
+    "spokenLanguages": [
+      "Japanese"
+    ],
+    "title": "Ran",
+    "tmdbId": 11645,
+    "year": 1985
+  },
+  "the-last-days-on-mars-2013": {
+    "countries": [
+      "Belgium",
+      "Ireland",
+      "United Kingdom",
+      "United States of America"
+    ],
+    "director": "Ruairi Robinson",
+    "genres": [
+      "Horror",
+      "Science Fiction",
+      "Thriller"
+    ],
+    "posterPath": "/kxcQkAhpn8cvJTsU8PXblI5Qq8F.jpg",
+    "runtimeMinutes": 98,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "The Last Days on Mars",
+    "tmdbId": 190847,
+    "year": 2013
+  },
+  "parkland-2013": {
+    "countries": [
+      "United Kingdom",
+      "United States of America"
+    ],
+    "director": "Peter Landesman",
+    "genres": [
+      "Drama",
+      "History"
+    ],
+    "posterPath": "/23jc1Hclf1FFxpyYs9A4SxfRbK3.jpg",
+    "runtimeMinutes": 94,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Parkland",
+    "tmdbId": 209262,
+    "year": 2013
+  },
+  "leroy-stitch-2006": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Bobs Gannaway & Tony Craig",
+    "genres": [
+      "Animation",
+      "Comedy",
+      "Family",
+      "Science Fiction",
+      "TV Movie"
+    ],
+    "posterPath": "/1LCfRArffse3PnqkACooOHkWcry.jpg",
+    "runtimeMinutes": 73,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Leroy & Stitch",
+    "tmdbId": 21316,
+    "year": 2006
+  },
+  "cold-prey-2006": {
+    "countries": [
+      "Norway"
+    ],
+    "director": "Roar Uthaug",
+    "genres": [
+      "Horror",
+      "Mystery",
+      "Thriller"
+    ],
+    "posterPath": "/sxYjsslcs5FSsAkEfjr50gAQWNo.jpg",
+    "runtimeMinutes": 97,
+    "spokenLanguages": [
+      "Norwegian"
+    ],
+    "title": "Cold Prey",
+    "tmdbId": 21786,
+    "year": 2006
+  },
+  "the-box-2009": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Richard Kelly",
+    "genres": [
+      "Science Fiction",
+      "Thriller"
+    ],
+    "posterPath": "/xMAmOu6xl4CsstixcuecBle9krd.jpg",
+    "runtimeMinutes": 115,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "The Box",
+    "tmdbId": 22825,
+    "year": 2009
+  },
+  "joint-security-area-2000": {
+    "countries": [
+      "South Korea"
+    ],
+    "director": "Park Chan-wook",
+    "genres": [
+      "Drama",
+      "Mystery",
+      "Thriller"
+    ],
+    "posterPath": "/lTpdrei4eWsEsCi4tYYKwdYCFxw.jpg",
+    "runtimeMinutes": 108,
+    "spokenLanguages": [
+      "English",
+      "French",
+      "German",
+      "Korean"
+    ],
+    "title": "Joint Security Area",
+    "tmdbId": 2440,
+    "year": 2000
+  },
+  "leviathan-2014": {
+    "countries": [
+      "Russia"
+    ],
+    "director": "Andrey Zvyagintsev",
+    "genres": [
+      "Crime",
+      "Drama"
+    ],
+    "posterPath": "/dwmHSBBiu2ow271zrQ33rPKZDSC.jpg",
+    "runtimeMinutes": 141,
+    "spokenLanguages": [
+      "Russian"
+    ],
+    "title": "Leviathan",
+    "tmdbId": 265180,
+    "year": 2014
+  },
+  "the-salvation-2014": {
+    "countries": [
+      "Belgium",
+      "Brazil",
+      "Denmark",
+      "Norway",
+      "South Africa",
+      "Sweden",
+      "United Kingdom"
+    ],
+    "director": "Kristian Levring",
+    "genres": [
+      "Drama",
+      "Western"
+    ],
+    "posterPath": "/xQsv3OI8UT6s9Rn3C0WxO24bnEx.jpg",
+    "runtimeMinutes": 92,
+    "spokenLanguages": [
+      "Danish",
+      "English"
+    ],
+    "title": "The Salvation",
+    "tmdbId": 266285,
+    "year": 2014
+  },
+  "big-fish-begonia-2016": {
+    "countries": [
+      "China",
+      "South Korea"
+    ],
+    "director": "Liang Xuan & Zhang Chun",
+    "genres": [
+      "Adventure",
+      "Animation",
+      "Fantasy"
+    ],
+    "posterPath": "/fRCdXh9MZutj1JJPZlUXMex6AuB.jpg",
+    "runtimeMinutes": 101,
+    "spokenLanguages": [
+      "Mandarin"
+    ],
+    "title": "Big Fish & Begonia",
+    "tmdbId": 271706,
+    "year": 2016
+  },
+  "the-adventures-of-priscilla-queen-of-the-1994": {
+    "countries": [
+      "Australia",
+      "United States of America"
+    ],
+    "director": "Stephan Elliott",
+    "genres": [
+      "Comedy",
+      "Drama"
+    ],
+    "posterPath": "/rSkhcbHkk23fR3qhYJestqtamWK.jpg",
+    "runtimeMinutes": 103,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "The Adventures of Priscilla, Queen of the Desert",
+    "tmdbId": 2759,
+    "year": 1994
+  },
+  "shadows-in-paradise-1986": {
+    "countries": [
+      "Finland"
+    ],
+    "director": "Aki Kaurismäki",
+    "genres": [
+      "Drama",
+      "Romance"
+    ],
+    "posterPath": "/nj01hspawPof0mJmlgfjuLyJuRN.jpg",
+    "runtimeMinutes": 74,
+    "spokenLanguages": [
+      "English",
+      "Finnish",
+      "Swedish"
+    ],
+    "title": "Shadows in Paradise",
+    "tmdbId": 3,
+    "year": 1986
+  },
+  "the-invisible-boy-2014": {
+    "countries": [
+      "France",
+      "Italy"
+    ],
+    "director": "Gabriele Salvatores",
+    "genres": [
+      "Family",
+      "Fantasy",
+      "Science Fiction"
+    ],
+    "posterPath": "/rmuU1ExeIZ6tKlr0690cSs7WY59.jpg",
+    "runtimeMinutes": 100,
+    "spokenLanguages": [
+      "Italian"
+    ],
+    "title": "The Invisible Boy",
+    "tmdbId": 303542,
+    "year": 2014
+  },
+  "the-cheetah-girls-2003": {
+    "countries": [
+      "Canada",
+      "United States of America"
+    ],
+    "director": "Oz Scott",
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Family",
+      "Music",
+      "TV Movie"
+    ],
+    "posterPath": "/7XOJqR8WErIm1ZqytABCEuUke1C.jpg",
+    "runtimeMinutes": 89,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "The Cheetah Girls",
+    "tmdbId": 32293,
+    "year": 2003
+  },
+  "bagdad-cafe-1987": {
+    "countries": [
+      "Germany"
+    ],
+    "director": "Percy Adlon",
+    "genres": [
+      "Comedy",
+      "Drama"
+    ],
+    "posterPath": "/zeEa3jVkLE8C0KjOiiKqMbhHgaL.jpg",
+    "runtimeMinutes": 108,
+    "spokenLanguages": [
+      "English",
+      "German"
+    ],
+    "title": "Bagdad Cafe",
+    "tmdbId": 3543,
+    "year": 1987
+  },
+  "bianco-rosso-e-verdone-1981": {
+    "countries": [
+      "Italy"
+    ],
+    "director": "Carlo Verdone",
+    "genres": [
+      "Comedy"
+    ],
+    "posterPath": "/tS5ca077KEMbJHBVNLa1nCnycXJ.jpg",
+    "runtimeMinutes": 110,
+    "spokenLanguages": [
+      "Italian"
+    ],
+    "title": "Bianco, rosso e Verdone",
+    "tmdbId": 37775,
+    "year": 1981
+  },
+  "peter-rabbit-2018": {
+    "countries": [
+      "Australia",
+      "United States of America"
+    ],
+    "director": "Will Gluck",
+    "genres": [
+      "Adventure",
+      "Animation",
+      "Family"
+    ],
+    "posterPath": "/lugOvdaNpbVGQK9TyMRDiUbLtY6.jpg",
+    "runtimeMinutes": 93,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Peter Rabbit",
+    "tmdbId": 381719,
+    "year": 2018
+  },
+  "the-mansion-2017": {
+    "countries": [
+      "France"
+    ],
+    "director": "Tony T. Datis",
+    "genres": [
+      "Comedy",
+      "Horror"
+    ],
+    "posterPath": "/5R6dKr0sMogP9bjhJ0UHGxVckpw.jpg",
+    "runtimeMinutes": 100,
+    "spokenLanguages": [
+      "French",
+      "German"
+    ],
+    "title": "The Mansion",
+    "tmdbId": 437739,
+    "year": 2017
+  },
+  "g-i-jane-1997": {
+    "countries": [
+      "United Kingdom",
+      "United States of America"
+    ],
+    "director": "Ridley Scott",
+    "genres": [
+      "Action",
+      "Drama",
+      "War"
+    ],
+    "posterPath": "/6yBgZJYqaR4XkxwjsB9tS4GK1ZN.jpg",
+    "runtimeMinutes": 125,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "G.I. Jane",
+    "tmdbId": 4421,
+    "year": 1997
+  },
+  "sympathy-for-mr-vengeance-2002": {
+    "countries": [
+      "South Korea"
+    ],
+    "director": "Park Chan-wook",
+    "genres": [
+      "Action",
+      "Drama",
+      "Thriller"
+    ],
+    "posterPath": "/uj42ubGbgVL65T10SvPVr0p9mJc.jpg",
+    "runtimeMinutes": 129,
+    "spokenLanguages": [
+      "Korean"
+    ],
+    "title": "Sympathy for Mr. Vengeance",
+    "tmdbId": 4689,
+    "year": 2002
+  },
+  "balloon-2018": {
+    "countries": [
+      "France",
+      "Germany"
+    ],
+    "director": "Michael Herbig",
+    "genres": [
+      "Drama",
+      "History",
+      "Thriller"
+    ],
+    "posterPath": "/nRs8A0zp0jU211j8Zay3ApIzlpx.jpg",
+    "runtimeMinutes": 125,
+    "spokenLanguages": [
+      "English",
+      "German"
+    ],
+    "title": "Balloon",
+    "tmdbId": 483983,
+    "year": 2018
+  },
+  "burning-2018": {
+    "countries": [
+      "Japan",
+      "South Korea"
+    ],
+    "director": "Lee Chang-dong",
+    "genres": [
+      "Drama",
+      "Mystery",
+      "Thriller"
+    ],
+    "posterPath": "/kXiF80o74fE9gf3Utf9moAI7ar0.jpg",
+    "runtimeMinutes": 148,
+    "spokenLanguages": [
+      "English",
+      "Korean"
+    ],
+    "title": "Burning",
+    "tmdbId": 491584,
+    "year": 2018
+  },
+  "fermat-s-room-2007": {
+    "countries": [
+      "Spain"
+    ],
+    "director": "Luis Piedrahita & Rodrigo Sopeña",
+    "genres": [
+      "Mystery",
+      "Thriller"
+    ],
+    "posterPath": "/qQcYvPXxvk6bQDV9Zgd6cnDQmKZ.jpg",
+    "runtimeMinutes": 88,
+    "spokenLanguages": [
+      "Spanish"
+    ],
+    "title": "Fermat's Room",
+    "tmdbId": 5595,
+    "year": 2007
+  },
+  "arthur-the-king-2024": {
+    "countries": [
+      "Canada",
+      "United States of America"
+    ],
+    "director": "Simon Cellan Jones",
+    "genres": [
+      "Adventure",
+      "Drama"
+    ],
+    "posterPath": "/zkKB3kOun5DKAkm61pHvLbrjxfa.jpg",
+    "runtimeMinutes": 107,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Arthur the King",
+    "tmdbId": 618588,
+    "year": 2024
+  },
+  "flypaper-2011": {
+    "countries": [
+      "Germany",
+      "United States of America"
+    ],
+    "director": "Rob Minkoff",
+    "genres": [
+      "Comedy",
+      "Crime",
+      "Mystery"
+    ],
+    "posterPath": "/uJcxUKIy2GXDODT2pDl0q9XvByq.jpg",
+    "runtimeMinutes": 87,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Flypaper",
+    "tmdbId": 62046,
+    "year": 2011
+  },
+  "titane-2021": {
+    "countries": [
+      "Belgium",
+      "France"
+    ],
+    "director": "Julia Ducournau",
+    "genres": [
+      "Drama",
+      "Horror",
+      "Thriller"
+    ],
+    "posterPath": "/mBlpouG3gqB8WLdP65LCOXb3jFb.jpg",
+    "runtimeMinutes": 108,
+    "spokenLanguages": [
+      "French"
+    ],
+    "title": "Titane",
+    "tmdbId": 630240,
+    "year": 2021
+  },
+  "rebel-ridge-2024": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Jeremy Saulnier",
+    "genres": [
+      "Action",
+      "Crime",
+      "Drama",
+      "Thriller"
+    ],
+    "posterPath": "/xEt2GSz9z5rSVpIHMiGdtf0czyf.jpg",
+    "runtimeMinutes": 131,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Rebel Ridge",
+    "tmdbId": 646097,
+    "year": 2024
+  },
+  "encounter-2021": {
+    "countries": [
+      "United Kingdom",
+      "United States of America"
+    ],
+    "director": "Michael Pearce",
+    "genres": [
+      "Drama",
+      "Mystery",
+      "Thriller"
+    ],
+    "posterPath": "/AjRUsn8m2znK4mQuYR5fUguBDQM.jpg",
+    "runtimeMinutes": 108,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Encounter",
+    "tmdbId": 728526,
+    "year": 2021
+  },
+  "friends-with-kids-2012": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Jennifer Westfeldt",
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Romance"
+    ],
+    "posterPath": "/cA6putv2ND8snBBa0t9WhlW1TfG.jpg",
+    "runtimeMinutes": 100,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Friends with Kids",
+    "tmdbId": 80038,
+    "year": 2012
+  },
+  "high-heels-1991": {
+    "countries": [
+      "France",
+      "Spain"
+    ],
+    "director": "Pedro Almodóvar",
+    "genres": [
+      "Comedy",
+      "Crime",
+      "Drama"
+    ],
+    "posterPath": "/xUpMr3ma8XMpdDhM27s4EuFxdyC.jpg",
+    "runtimeMinutes": 114,
+    "spokenLanguages": [
+      "Spanish"
+    ],
+    "title": "High Heels",
+    "tmdbId": 8222,
+    "year": 1991
+  },
+  "the-lord-of-the-rings-the-war-of-the-roh-2024": {
+    "countries": [
+      "Japan",
+      "New Zealand",
+      "United States of America"
+    ],
+    "director": "Kenji Kamiyama",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Animation",
+      "Fantasy"
+    ],
+    "posterPath": "/23WCoDo6wzBfzbX7BGTNwVUqZfi.jpg",
+    "runtimeMinutes": 134,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "The Lord of the Rings: The War of the Rohirrim",
+    "tmdbId": 839033,
+    "year": 2024
+  },
+  "the-vanishing-1988": {
+    "countries": [
+      "France",
+      "Germany",
+      "Netherlands"
+    ],
+    "director": "George Sluizer",
+    "genres": [
+      "Mystery",
+      "Thriller"
+    ],
+    "posterPath": "/eE5bbuRJluooG2MjEAsLEYyuJoa.jpg",
+    "runtimeMinutes": 106,
+    "spokenLanguages": [
+      "Dutch",
+      "English",
+      "French"
+    ],
+    "title": "The Vanishing",
+    "tmdbId": 8740,
+    "year": 1988
+  },
+  "mixed-by-erry-2023": {
+    "countries": [
+      "Italy"
+    ],
+    "director": "Sydney Sibilia",
+    "genres": [
+      "Comedy",
+      "History",
+      "Music"
+    ],
+    "posterPath": "/tCTqW2YLxx6gqrPFTlMswvDunuQ.jpg",
+    "runtimeMinutes": 113,
+    "spokenLanguages": [
+      "Italian"
+    ],
+    "title": "Mixed by Erry",
+    "tmdbId": 921785,
+    "year": 2023
+  },
+  "house-of-flying-daggers-2004": {
+    "countries": [
+      "China",
+      "Hong Kong"
+    ],
+    "director": "Zhang Yimou",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Drama"
+    ],
+    "posterPath": "/93feGsGiCtG5ymrRcErUgBsdo6v.jpg",
+    "runtimeMinutes": 119,
+    "spokenLanguages": [
+      "Mandarin"
+    ],
+    "title": "House of Flying Daggers",
+    "tmdbId": 9550,
+    "year": 2004
+  },
+  "scrooged-1988": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Richard Donner",
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Fantasy"
+    ],
+    "posterPath": "/uO0znfB2ZzTXA1IS7jkrjNbpkYK.jpg",
+    "runtimeMinutes": 101,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Scrooged",
+    "tmdbId": 9647,
+    "year": 1988
+  },
+  "honey-2003": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Bille Woodruff",
+    "genres": [
+      "Drama",
+      "Music",
+      "Romance"
+    ],
+    "posterPath": "/gnY6d7BoddAAQ8s42fxCJK8lL1A.jpg",
+    "runtimeMinutes": 94,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Honey",
+    "tmdbId": 10028,
+    "year": 2003
+  },
+  "cyborg-1989": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Albert Pyun",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Science Fiction",
+      "Thriller"
+    ],
+    "posterPath": "/nOspcG8HP6KPdMvzezavRbzYCEw.jpg",
+    "runtimeMinutes": 86,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Cyborg",
+    "tmdbId": 10134,
+    "year": 1989
+  },
+  "from-dusk-till-dawn-3-the-hangman-s-daug-2000": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "P.J. Pesce",
+    "genres": [
+      "Horror",
+      "Thriller",
+      "Western"
+    ],
+    "posterPath": "/io5lQ7VRJGBCg2kTJ6BRWRclqJE.jpg",
+    "runtimeMinutes": 94,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "From Dusk Till Dawn 3: The Hangman's Daughter",
+    "tmdbId": 10213,
+    "year": 2000
+  },
+  "high-tension-2003": {
+    "countries": [
+      "France",
+      "Romania"
+    ],
+    "director": "Alexandre Aja",
+    "genres": [
+      "Horror",
+      "Mystery",
+      "Thriller"
+    ],
+    "posterPath": "/vKeFa7CqSxmWsQDjHP6SJXKoDbj.jpg",
+    "runtimeMinutes": 91,
+    "spokenLanguages": [
+      "English",
+      "French",
+      "Italian"
+    ],
+    "title": "High Tension",
+    "tmdbId": 10226,
+    "year": 2003
+  },
+  "miami-supercops-1985": {
+    "countries": [
+      "Italy",
+      "United States of America"
+    ],
+    "director": "Bruno Corbucci",
+    "genres": [
+      "Action",
+      "Comedy",
+      "Crime"
+    ],
+    "posterPath": "/j0zfJkOfQr4DfcxjjeCVFjirKpu.jpg",
+    "runtimeMinutes": 96,
+    "spokenLanguages": [
+      "English",
+      "Italian"
+    ],
+    "title": "Miami Supercops",
+    "tmdbId": 10295,
+    "year": 1985
+  },
+  "eat-drink-man-woman-1994": {
+    "countries": [
+      "Taiwan",
+      "United States of America"
+    ],
+    "director": "Ang Lee",
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Romance"
+    ],
+    "posterPath": "/olhIWtIBFg6VWK59DEd4lAvgVgz.jpg",
+    "runtimeMinutes": 123,
+    "spokenLanguages": [
+      "Mandarin"
+    ],
+    "title": "Eat Drink Man Woman",
+    "tmdbId": 10451,
+    "year": 1994
+  },
+  "the-doors-1991": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Oliver Stone",
+    "genres": [
+      "Drama",
+      "Music"
+    ],
+    "posterPath": "/x1LM3dzGuG6xOz0aT2e71o11vhu.jpg",
+    "runtimeMinutes": 140,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "The Doors",
+    "tmdbId": 10537,
+    "year": 1991
+  },
+  "the-day-of-the-beast-1995": {
+    "countries": [
+      "Italy",
+      "Spain"
+    ],
+    "director": "Álex de la Iglesia",
+    "genres": [
+      "Action",
+      "Comedy",
+      "Horror"
+    ],
+    "posterPath": "/yEXhgACPIV4PmTgHT2HS3Ko2oS3.jpg",
+    "runtimeMinutes": 104,
+    "spokenLanguages": [
+      "Italian",
+      "Spanish"
+    ],
+    "title": "The Day of the Beast",
+    "tmdbId": 10722,
+    "year": 1995
+  },
+  "the-alamo-2004": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "John Lee Hancock",
+    "genres": [
+      "Drama",
+      "History",
+      "War"
+    ],
+    "posterPath": "/weHQHadXJLrmIvBXwZJsMgfJ6jJ.jpg",
+    "runtimeMinutes": 137,
+    "spokenLanguages": [
+      "English",
+      "Spanish"
+    ],
+    "title": "The Alamo",
+    "tmdbId": 10733,
+    "year": 2004
+  },
+  "infernal-affairs-2002": {
+    "countries": [
+      "Hong Kong"
+    ],
+    "director": "Alan Mak Siu-Fai & Andrew Lau Wai-Keung",
+    "genres": [
+      "Action",
+      "Crime",
+      "Drama",
+      "Mystery",
+      "Thriller"
+    ],
+    "posterPath": "/gix9thDBXfjJ8M7rYbihqbQGBcP.jpg",
+    "runtimeMinutes": 101,
+    "spokenLanguages": [
+      "Cantonese",
+      "Mandarin",
+      "Thai"
+    ],
+    "title": "Infernal Affairs",
+    "tmdbId": 10775,
+    "year": 2002
+  },
+  "the-draughtsman-s-contract-1982": {
+    "countries": [
+      "United Kingdom"
+    ],
+    "director": "Peter Greenaway",
+    "genres": [
+      "Comedy",
+      "History",
+      "Mystery"
+    ],
+    "posterPath": "/ljeTWR2kowGXijMc8LMuy72ULM3.jpg",
+    "runtimeMinutes": 108,
+    "spokenLanguages": [
+      "Dutch",
+      "English",
+      "German"
+    ],
+    "title": "The Draughtsman's Contract",
+    "tmdbId": 10831,
+    "year": 1982
+  },
+  "dagon-2001": {
+    "countries": [
+      "Spain"
+    ],
+    "director": "Stuart Gordon",
+    "genres": [
+      "Fantasy",
+      "Horror",
+      "Thriller"
+    ],
+    "posterPath": "/8S648eMKObi8ERFS7cSYDocxSaZ.jpg",
+    "runtimeMinutes": 95,
+    "spokenLanguages": [
+      "English",
+      "Galician",
+      "Spanish"
+    ],
+    "title": "Dagon",
+    "tmdbId": 10836,
+    "year": 2001
+  },
+  "i-want-you-2012": {
+    "countries": [
+      "Spain"
+    ],
+    "director": "Fernando González Molina",
+    "genres": [
+      "Drama",
+      "Romance"
+    ],
+    "posterPath": "/m7JUNQu5zRsmFeUWZrGoV0fTp0B.jpg",
+    "runtimeMinutes": 123,
+    "spokenLanguages": [
+      "Spanish"
+    ],
+    "title": "I Want You",
+    "tmdbId": 109689,
+    "year": 2012
+  },
+  "the-wedding-singer-1998": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Frank Coraci",
+    "genres": [
+      "Comedy",
+      "Romance"
+    ],
+    "posterPath": "/zVvyTrcZQb7kC2DPDzyo25WcxXp.jpg",
+    "runtimeMinutes": 97,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "The Wedding Singer",
+    "tmdbId": 11003,
+    "year": 1998
+  },
+  "koyaanisqatsi-1983": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Godfrey Reggio",
+    "genres": [
+      "Documentary",
+      "Music"
+    ],
+    "posterPath": "/6zCNciRcob8lwuydVXgq0esla8L.jpg",
+    "runtimeMinutes": 86,
+    "spokenLanguages": [
+      "No Language"
+    ],
+    "title": "Koyaanisqatsi",
+    "tmdbId": 11314,
+    "year": 1983
+  },
+  "domestic-disturbance-2001": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Harold Becker",
+    "genres": [
+      "Crime",
+      "Mystery",
+      "Thriller"
+    ],
+    "posterPath": "/quRhjnXAuIn04VmgM84nmKzt79J.jpg",
+    "runtimeMinutes": 89,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Domestic Disturbance",
+    "tmdbId": 11456,
+    "year": 2001
+  },
+  "asterix-and-the-big-fight-1989": {
+    "countries": [
+      "France",
+      "Germany"
+    ],
+    "director": "Philippe Grimond",
+    "genres": [
+      "Adventure",
+      "Animation",
+      "Comedy",
+      "Family"
+    ],
+    "posterPath": "/7KFAtZRXzD00Zw9sWxusrInLHgJ.jpg",
+    "runtimeMinutes": 81,
+    "spokenLanguages": [
+      "French"
+    ],
+    "title": "Asterix and the Big Fight",
+    "tmdbId": 11625,
+    "year": 1989
+  },
+  "ju-on-the-grudge-2002": {
+    "countries": [
+      "Japan"
+    ],
+    "director": "Takashi Shimizu",
+    "genres": [
+      "Horror"
+    ],
+    "posterPath": "/6q1hlBC6rudc3mHwXsbMBR2xAT6.jpg",
+    "runtimeMinutes": 92,
+    "spokenLanguages": [
+      "Japanese"
+    ],
+    "title": "Ju-on: The Grudge",
+    "tmdbId": 11838,
+    "year": 2002
+  },
+  "betty-blue-1986": {
+    "countries": [
+      "France"
+    ],
+    "director": "Jean-Jacques Beineix",
+    "genres": [
+      "Drama",
+      "Romance"
+    ],
+    "posterPath": "/dGkxgj2ozlD4yRtsJL35EUXegFv.jpg",
+    "runtimeMinutes": 120,
+    "spokenLanguages": [
+      "French"
+    ],
+    "title": "Betty Blue",
+    "tmdbId": 11986,
+    "year": 1986
+  },
+  "wyatt-earp-1994": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Lawrence Kasdan",
+    "genres": [
+      "Drama",
+      "Western"
+    ],
+    "posterPath": "/51LItgyecu2KMAtIchYogEykCIu.jpg",
+    "runtimeMinutes": 191,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Wyatt Earp",
+    "tmdbId": 12160,
+    "year": 1994
+  },
+  "oliver-company-1988": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "George Scribner",
+    "genres": [
+      "Animation",
+      "Comedy",
+      "Family"
+    ],
+    "posterPath": "/dgaSqUHjm4CLOdiiJJJstVdreEe.jpg",
+    "runtimeMinutes": 74,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Oliver & Company",
+    "tmdbId": 12233,
+    "year": 1988
+  },
+  "max-manus-man-of-war-2008": {
+    "countries": [
+      "Denmark",
+      "Germany",
+      "Norway"
+    ],
+    "director": "Espen Sandberg & Joachim Rønning",
+    "genres": [
+      "Action",
+      "Crime",
+      "History",
+      "War"
+    ],
+    "posterPath": "/v9Z7CUGW1Q5L8GdGH3rY5SkU72L.jpg",
+    "runtimeMinutes": 118,
+    "spokenLanguages": [
+      "English",
+      "Finnish",
+      "German",
+      "Norwegian",
+      "Russian"
+    ],
+    "title": "Max Manus: Man of War",
+    "tmdbId": 13752,
+    "year": 2008
+  },
+  "man-on-wire-2008": {
+    "countries": [
+      "United Kingdom"
+    ],
+    "director": "James Marsh",
+    "genres": [
+      "Documentary"
+    ],
+    "posterPath": "/1mS4rhIgHZcHIvf1beP9Av0Ui33.jpg",
+    "runtimeMinutes": 94,
+    "spokenLanguages": [
+      "English",
+      "French"
+    ],
+    "title": "Man on Wire",
+    "tmdbId": 14048,
+    "year": 2008
+  },
+  "timecrimes-2007": {
+    "countries": [
+      "Spain"
+    ],
+    "director": "Nacho Vigalondo",
+    "genres": [
+      "Science Fiction",
+      "Thriller"
+    ],
+    "posterPath": "/zdxQRP7mzczMJBwKnv8MCPRq7rQ.jpg",
+    "runtimeMinutes": 93,
+    "spokenLanguages": [
+      "Spanish"
+    ],
+    "title": "Timecrimes",
+    "tmdbId": 14139,
+    "year": 2007
+  },
+  "the-adventures-of-baron-munchausen-1988": {
+    "countries": [
+      "Germany",
+      "United Kingdom",
+      "United States of America"
+    ],
+    "director": "Terry Gilliam",
+    "genres": [
+      "Adventure",
+      "Comedy",
+      "Fantasy"
+    ],
+    "posterPath": "/oiOwGRqwrKpg1EMUlPgRjVC49bn.jpg",
+    "runtimeMinutes": 126,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "The Adventures of Baron Munchausen",
+    "tmdbId": 14506,
+    "year": 1988
+  },
+  "the-way-way-back-2013": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Nat Faxon & Jim Rash",
+    "genres": [
+      "Comedy",
+      "Drama"
+    ],
+    "posterPath": "/4DgA0EDDVv37C8xISc3Vv0rhxlL.jpg",
+    "runtimeMinutes": 103,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "The Way Way Back",
+    "tmdbId": 147773,
+    "year": 2013
+  },
+  "sophie-s-choice-1982": {
+    "countries": [
+      "United Kingdom",
+      "United States of America"
+    ],
+    "director": "Alan J. Pakula",
+    "genres": [
+      "Drama",
+      "Romance",
+      "War"
+    ],
+    "posterPath": "/rZDPbPTFwuKgr5b9jixGFNYkGYt.jpg",
+    "runtimeMinutes": 151,
+    "spokenLanguages": [
+      "Czech",
+      "English",
+      "French",
+      "German",
+      "Polish",
+      "Russian"
+    ],
+    "title": "Sophie's Choice",
+    "tmdbId": 15764,
+    "year": 1982
+  },
+  "vampire-hunter-d-bloodlust-2001": {
+    "countries": [
+      "Japan"
+    ],
+    "director": "Yoshiaki Kawajiri",
+    "genres": [
+      "Animation",
+      "Fantasy",
+      "Horror"
+    ],
+    "posterPath": "/9ipbQRgOq6Ilxpwagfa98ikgR9v.jpg",
+    "runtimeMinutes": 103,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Vampire Hunter D: Bloodlust",
+    "tmdbId": 15999,
+    "year": 2001
+  },
+  "the-double-life-of-veronique-1991": {
+    "countries": [
+      "France",
+      "Norway",
+      "Poland"
+    ],
+    "director": "Krzysztof Kieślowski",
+    "genres": [
+      "Drama",
+      "Fantasy"
+    ],
+    "posterPath": "/oqRyO9xrNBRaxqF9pCHHgLuaATx.jpg",
+    "runtimeMinutes": 98,
+    "spokenLanguages": [
+      "French",
+      "Italian",
+      "Polish"
+    ],
+    "title": "The Double Life of Véronique",
+    "tmdbId": 1600,
+    "year": 1991
+  },
+  "juice-1992": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Ernest R. Dickerson",
+    "genres": [
+      "Crime",
+      "Drama",
+      "Thriller"
+    ],
+    "posterPath": "/hfXFPMhNjLnCugBHMN0nrtKW7Ra.jpg",
+    "runtimeMinutes": 96,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Juice",
+    "tmdbId": 16136,
+    "year": 1992
+  },
+  "rugrats-in-paris-the-movie-2000": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Stig Bergqvist & Paul Demeyer",
+    "genres": [
+      "Adventure",
+      "Animation",
+      "Comedy",
+      "Family",
+      "Romance"
+    ],
+    "posterPath": "/grIL8mvfLznaWsv7EEEPhCpkH81.jpg",
+    "runtimeMinutes": 79,
+    "spokenLanguages": [
+      "English",
+      "French"
+    ],
+    "title": "Rugrats in Paris: The Movie",
+    "tmdbId": 16340,
+    "year": 2000
+  },
+  "re-animator-1985": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Stuart Gordon",
+    "genres": [
+      "Comedy",
+      "Horror",
+      "Science Fiction"
+    ],
+    "posterPath": "/7FYhY70LTumoFfQgTI8TK0UDdsF.jpg",
+    "runtimeMinutes": 86,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Re-Animator",
+    "tmdbId": 1694,
+    "year": 1985
+  },
+  "after-life-1999": {
+    "countries": [
+      "Japan"
+    ],
+    "director": "Hirokazu Kore-eda",
+    "genres": [
+      "Drama",
+      "Fantasy"
+    ],
+    "posterPath": "/bs2M1hqAQl5LeAOPPRV4drwouZS.jpg",
+    "runtimeMinutes": 118,
+    "spokenLanguages": [
+      "Japanese"
+    ],
+    "title": "After Life",
+    "tmdbId": 17962,
+    "year": 1999
+  },
+  "over-the-top-1987": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Menahem Golan",
+    "genres": [
+      "Action",
+      "Drama"
+    ],
+    "posterPath": "/a926UPf4EYbHfjdzf012M5YHiQ5.jpg",
+    "runtimeMinutes": 94,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Over the Top",
+    "tmdbId": 1825,
+    "year": 1987
+  },
+  "the-connection-2014": {
+    "countries": [
+      "Belgium",
+      "France"
+    ],
+    "director": "Cédric Jimenez",
+    "genres": [
+      "Action",
+      "Crime",
+      "Thriller"
+    ],
+    "posterPath": "/4IAmHRGH8JRFuL4RYLvzOKNSBuz.jpg",
+    "runtimeMinutes": 135,
+    "spokenLanguages": [
+      "French"
+    ],
+    "title": "The Connection",
+    "tmdbId": 197950,
+    "year": 2014
+  },
+  "pusher-1996": {
+    "countries": [
+      "Denmark"
+    ],
+    "director": "Nicolas Winding Refn",
+    "genres": [
+      "Action",
+      "Crime",
+      "Drama"
+    ],
+    "posterPath": "/9Myfvq4e2BySE5aosX8UzV9cUME.jpg",
+    "runtimeMinutes": 110,
+    "spokenLanguages": [
+      "Danish",
+      "Serbian",
+      "Swedish"
+    ],
+    "title": "Pusher",
+    "tmdbId": 2061,
+    "year": 1996
+  },
+  "instructions-not-included-2013": {
+    "countries": [
+      "Mexico",
+      "United States of America"
+    ],
+    "director": "Eugenio Derbez",
+    "genres": [
+      "Comedy",
+      "Drama"
+    ],
+    "posterPath": "/x3Ygv0aZbZ3iUMeXyIlSu0Ugyp5.jpg",
+    "runtimeMinutes": 122,
+    "spokenLanguages": [
+      "English",
+      "Spanish"
+    ],
+    "title": "Instructions Not Included",
+    "tmdbId": 211954,
+    "year": 2013
+  },
+  "in-the-name-of-the-king-a-dungeon-siege--2007": {
+    "countries": [
+      "Canada",
+      "Germany",
+      "United States of America"
+    ],
+    "director": "Uwe Boll",
+    "genres": [
+      "Adventure",
+      "Fantasy"
+    ],
+    "posterPath": "/bbN1lmDk1PT0GsTFCy179sk5nIF.jpg",
+    "runtimeMinutes": 127,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "In the Name of the King: A Dungeon Siege Tale",
+    "tmdbId": 2312,
+    "year": 2007
+  },
+  "city-of-the-living-dead-1980": {
+    "countries": [
+      "Italy"
+    ],
+    "director": "Lucio Fulci",
+    "genres": [
+      "Fantasy",
+      "Horror",
+      "Mystery"
+    ],
+    "posterPath": "/8ymAiDW9ct2GSywWkqATEiKE8OB.jpg",
+    "runtimeMinutes": 93,
+    "spokenLanguages": [
+      "English",
+      "Italian"
+    ],
+    "title": "City of the Living Dead",
+    "tmdbId": 24920,
+    "year": 1980
+  },
+  "i-m-not-scared-2003": {
+    "countries": [
+      "Italy",
+      "Spain",
+      "United Kingdom"
+    ],
+    "director": "Gabriele Salvatores",
+    "genres": [
+      "Crime",
+      "Drama",
+      "Mystery",
+      "Thriller"
+    ],
+    "posterPath": "/vTf4qR0OSuV4qBT8As4QoWxSJSq.jpg",
+    "runtimeMinutes": 108,
+    "spokenLanguages": [
+      "Italian"
+    ],
+    "title": "I'm Not Scared",
+    "tmdbId": 25300,
+    "year": 2003
+  },
+  "men-behind-the-sun-1988": {
+    "countries": [
+      "Hong Kong"
+    ],
+    "director": "Mou Tun-Fei",
+    "genres": [
+      "History",
+      "Horror",
+      "War"
+    ],
+    "posterPath": "/vTbOXA1gBIhuumN5CnRhxfDp9xY.jpg",
+    "runtimeMinutes": 105,
+    "spokenLanguages": [
+      "Cantonese"
+    ],
+    "title": "Men Behind the Sun",
+    "tmdbId": 25998,
+    "year": 1988
+  },
+  "the-homesman-2014": {
+    "countries": [
+      "France",
+      "United States of America"
+    ],
+    "director": "Tommy Lee Jones",
+    "genres": [
+      "Drama",
+      "Western"
+    ],
+    "posterPath": "/eGpuOhkm1wG2AxEJShazH5NVGAO.jpg",
+    "runtimeMinutes": 122,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "The Homesman",
+    "tmdbId": 264656,
+    "year": 2014
+  },
+  "arthur-and-the-revenge-of-maltazard-2009": {
+    "countries": [
+      "France"
+    ],
+    "director": "Luc Besson",
+    "genres": [
+      "Adventure",
+      "Animation",
+      "Family",
+      "Fantasy"
+    ],
+    "posterPath": "/rHCL0HwlQvU01TLRRHZFlvsVEqt.jpg",
+    "runtimeMinutes": 93,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Arthur and the Revenge of Maltazard",
+    "tmdbId": 26505,
+    "year": 2009
+  },
+  "the-messenger-2009": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Oren Moverman",
+    "genres": [
+      "Drama",
+      "Romance",
+      "War"
+    ],
+    "posterPath": "/p4fJyH7mMbasiFYwiw2nE7D6pMY.jpg",
+    "runtimeMinutes": 113,
+    "spokenLanguages": [
+      "English",
+      "Spanish"
+    ],
+    "title": "The Messenger",
+    "tmdbId": 28089,
+    "year": 2009
+  },
+  "return-of-the-living-dead-iii-1993": {
+    "countries": [
+      "Japan",
+      "United States of America"
+    ],
+    "director": "Brian Yuzna",
+    "genres": [
+      "Horror",
+      "Romance"
+    ],
+    "posterPath": "/lu4Eit7pR5I8hGHJmy3K9Re8FPo.jpg",
+    "runtimeMinutes": 97,
+    "spokenLanguages": [
+      "English",
+      "Spanish"
+    ],
+    "title": "Return of the Living Dead III",
+    "tmdbId": 28260,
+    "year": 1993
+  },
+  "testament-of-youth-2015": {
+    "countries": [
+      "Denmark",
+      "United Kingdom"
+    ],
+    "director": "James Kent",
+    "genres": [
+      "Drama",
+      "History",
+      "War"
+    ],
+    "posterPath": "/a6kFsaDCulCLfYHmKLDKTYaddM4.jpg",
+    "runtimeMinutes": 129,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Testament of Youth",
+    "tmdbId": 284689,
+    "year": 2015
+  },
+  "amazonia-the-catherine-miles-story-1985": {
+    "countries": [
+      "Italy"
+    ],
+    "director": "Mario Gariazzo",
+    "genres": [
+      "Adventure",
+      "Drama",
+      "Horror"
+    ],
+    "posterPath": "/bvRjoKZkHgZxP7I9QY45Gw8M5hE.jpg",
+    "runtimeMinutes": 90,
+    "spokenLanguages": [
+      "English",
+      "Italian"
+    ],
+    "title": "Amazonia: The Catherine Miles Story",
+    "tmdbId": 28676,
+    "year": 1985
+  },
+  "stand-and-deliver-1988": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Ramón Menéndez",
+    "genres": [
+      "Drama"
+    ],
+    "posterPath": "/A9pfzwk02iNl6i9wyk8lNcBkvc.jpg",
+    "runtimeMinutes": 103,
+    "spokenLanguages": [
+      "English",
+      "Spanish"
+    ],
+    "title": "Stand and Deliver",
+    "tmdbId": 29154,
+    "year": 1988
+  },
+  "close-up-1990": {
+    "countries": [
+      "Iran"
+    ],
+    "director": "Abbas Kiarostami",
+    "genres": [
+      "Crime",
+      "Drama"
+    ],
+    "posterPath": "/m9HG2N9ZKCmNN9qOHJTNyy18wn3.jpg",
+    "runtimeMinutes": 98,
+    "spokenLanguages": [
+      "Azerbaijani",
+      "Persian"
+    ],
+    "title": "Close-Up",
+    "tmdbId": 30017,
+    "year": 1990
+  },
+  "night-watch-2004": {
+    "countries": [
+      "Russia"
+    ],
+    "director": "Timur Bekmambetov",
+    "genres": [
+      "Action",
+      "Fantasy",
+      "Thriller"
+    ],
+    "posterPath": "/mWdfItjr9tZtsSgjkqB8YhORF8T.jpg",
+    "runtimeMinutes": 114,
+    "spokenLanguages": [
+      "German",
+      "Russian"
+    ],
+    "title": "Night Watch",
+    "tmdbId": 3040,
+    "year": 2004
+  },
+  "going-clear-scientology-and-the-prison-o-2015": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Alex Gibney",
+    "genres": [
+      "Documentary"
+    ],
+    "posterPath": "/zWHQYR9srde9nZjU6Dot8qTjoni.jpg",
+    "runtimeMinutes": 120,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Going Clear: Scientology and the Prison of Belief",
+    "tmdbId": 318224,
+    "year": 2015
+  },
+  "hangman-2017": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Johnny Martin",
+    "genres": [
+      "Crime",
+      "Mystery",
+      "Thriller"
+    ],
+    "posterPath": "/u7HwjTX9h4B8kuolyKiztYjtqna.jpg",
+    "runtimeMinutes": 98,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Hangman",
+    "tmdbId": 323368,
+    "year": 2017
+  },
+  "the-choice-2016": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Ross Katz",
+    "genres": [
+      "Drama",
+      "Romance"
+    ],
+    "posterPath": "/6MF3cdAasnF17SG9bmeamQ066iJ.jpg",
+    "runtimeMinutes": 111,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "The Choice",
+    "tmdbId": 330483,
+    "year": 2016
+  },
+  "mr-brooks-2007": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Bruce A. Evans",
+    "genres": [
+      "Crime",
+      "Thriller"
+    ],
+    "posterPath": "/yYleq0qmb67Ig2ViY3hFmUOrH77.jpg",
+    "runtimeMinutes": 120,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Mr. Brooks",
+    "tmdbId": 3432,
+    "year": 2007
+  },
+  "after-the-wedding-2006": {
+    "countries": [
+      "Denmark",
+      "Sweden"
+    ],
+    "director": "Susanne Bier",
+    "genres": [
+      "Drama"
+    ],
+    "posterPath": "/29t5x0Aj4cQJJC9jNR3VWS7l3JL.jpg",
+    "runtimeMinutes": 124,
+    "spokenLanguages": [
+      "Danish",
+      "English",
+      "Hindi",
+      "Swedish"
+    ],
+    "title": "After the Wedding",
+    "tmdbId": 3549,
+    "year": 2006
+  },
+  "the-three-brothers-1995": {
+    "countries": [
+      "France"
+    ],
+    "director": "Bernard Campan & Didier Bourdon",
+    "genres": [
+      "Comedy"
+    ],
+    "posterPath": "/nPrUw2hLIt9uWrGwfKjr0AbGWgd.jpg",
+    "runtimeMinutes": 105,
+    "spokenLanguages": [
+      "French"
+    ],
+    "title": "The Three Brothers",
+    "tmdbId": 37653,
+    "year": 1995
+  },
+  "batman-the-killing-joke-2016": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Sam Liu",
+    "genres": [
+      "Action",
+      "Animation",
+      "Crime",
+      "Drama",
+      "Thriller"
+    ],
+    "posterPath": "/lrQ3LeNIN0nmviZ692seNBUl1Pq.jpg",
+    "runtimeMinutes": 77,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Batman: The Killing Joke",
+    "tmdbId": 382322,
+    "year": 2016
+  },
+  "dragon-ball-z-wrath-of-the-dragon-1995": {
+    "countries": [
+      "Japan"
+    ],
+    "director": "Mitsuo Hashimoto",
+    "genres": [
+      "Action",
+      "Animation",
+      "Science Fiction"
+    ],
+    "posterPath": "/7uRu9EA3nie0n2mlVDDLlTI3IzC.jpg",
+    "runtimeMinutes": 51,
+    "spokenLanguages": [
+      "Japanese"
+    ],
+    "title": "Dragon Ball Z: Wrath of the Dragon",
+    "tmdbId": 39108,
+    "year": 1995
+  },
+  "women-on-the-verge-of-a-nervous-breakdow-1988": {
+    "countries": [
+      "Spain"
+    ],
+    "director": "Pedro Almodóvar",
+    "genres": [
+      "Comedy",
+      "Drama"
+    ],
+    "posterPath": "/lOehCiqghODNrNBpI1JS76zl6Lx.jpg",
+    "runtimeMinutes": 88,
+    "spokenLanguages": [
+      "Spanish"
+    ],
+    "title": "Women on the Verge of a Nervous Breakdown",
+    "tmdbId": 4203,
+    "year": 1988
+  },
+  "the-return-of-godzilla-1984": {
+    "countries": [
+      "Japan"
+    ],
+    "director": "Koji Hashimoto",
+    "genres": [
+      "Action",
+      "Horror",
+      "Science Fiction"
+    ],
+    "posterPath": "/j6jPBig1P30VZmFTZJdLzFk3hrL.jpg",
+    "runtimeMinutes": 103,
+    "spokenLanguages": [
+      "English",
+      "Japanese",
+      "Russian"
+    ],
+    "title": "The Return of Godzilla",
+    "tmdbId": 421467,
+    "year": 1984
+  },
+  "sorry-to-bother-you-2018": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Boots Riley",
+    "genres": [
+      "Comedy",
+      "Fantasy",
+      "Science Fiction"
+    ],
+    "posterPath": "/peTl1V04E9ppvhgvNmSX0r2ALqO.jpg",
+    "runtimeMinutes": 112,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Sorry to Bother You",
+    "tmdbId": 424781,
+    "year": 2018
+  },
+  "kin-2018": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Josh Baker & Jonathan Baker",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Science Fiction",
+      "Thriller"
+    ],
+    "posterPath": "/oPE5GXHaTlu5eRcd4USuOX3A1mf.jpg",
+    "runtimeMinutes": 102,
+    "spokenLanguages": [
+      "English",
+      "Spanish"
+    ],
+    "title": "Kin",
+    "tmdbId": 425505,
+    "year": 2018
+  },
+  "hearts-of-darkness-a-filmmaker-s-apocaly-1991": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "George Hickenlooper & Fax Bahr & Eleanor Coppola",
+    "genres": [
+      "Documentary"
+    ],
+    "posterPath": "/nVMCtL3r2nj4fySihDDvamaVkfx.jpg",
+    "runtimeMinutes": 96,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Hearts of Darkness: A Filmmaker's Apocalypse",
+    "tmdbId": 4539,
+    "year": 1991
+  },
+  "troll-hunter-2010": {
+    "countries": [
+      "Norway"
+    ],
+    "director": "André Øvredal",
+    "genres": [
+      "Fantasy",
+      "Horror"
+    ],
+    "posterPath": "/v2W5NEz0p9jPFzbbYt0dP86gsOX.jpg",
+    "runtimeMinutes": 104,
+    "spokenLanguages": [
+      "English",
+      "Norwegian"
+    ],
+    "title": "Troll Hunter",
+    "tmdbId": 46146,
+    "year": 2010
+  },
+  "wild-at-heart-1990": {
+    "countries": [
+      "Germany",
+      "United States of America"
+    ],
+    "director": "David Lynch",
+    "genres": [
+      "Crime",
+      "Romance",
+      "Thriller"
+    ],
+    "posterPath": "/uLUFI5sJIfWrBUWB2Y1dEuyvvVy.jpg",
+    "runtimeMinutes": 125,
+    "spokenLanguages": [
+      "English",
+      "Spanish"
+    ],
+    "title": "Wild at Heart",
+    "tmdbId": 483,
+    "year": 1990
+  },
+  "gonjiam-haunted-asylum-2018": {
+    "countries": [
+      "South Korea"
+    ],
+    "director": "Jung Bum-shik",
+    "genres": [
+      "Horror",
+      "Mystery"
+    ],
+    "posterPath": "/fNqlsmu2tiI1bXcpU31yjHPkiJz.jpg",
+    "runtimeMinutes": 95,
+    "spokenLanguages": [
+      "Korean"
+    ],
+    "title": "Gonjiam: Haunted Asylum",
+    "tmdbId": 508642,
+    "year": 2018
+  },
+  "winnie-the-pooh-2011": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Stephen J. Anderson & Don Hall",
+    "genres": [
+      "Adventure",
+      "Animation",
+      "Comedy",
+      "Family"
+    ],
+    "posterPath": "/xlFs85nq62jeR4a9iHNGB113m6x.jpg",
+    "runtimeMinutes": 63,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Winnie the Pooh",
+    "tmdbId": 51162,
+    "year": 2011
+  },
+  "border-2018": {
+    "countries": [
+      "Denmark",
+      "Sweden"
+    ],
+    "director": "Ali Abbasi",
+    "genres": [
+      "Crime",
+      "Drama",
+      "Fantasy"
+    ],
+    "posterPath": "/8KzOTRlKjdAKQTemV41hq86ldFS.jpg",
+    "runtimeMinutes": 110,
+    "spokenLanguages": [
+      "Swedish"
+    ],
+    "title": "Border",
+    "tmdbId": 517839,
+    "year": 2018
+  },
+  "a-beautiful-wife-2007": {
+    "countries": [
+      "Italy"
+    ],
+    "director": "Leonardo Pieraccioni",
+    "genres": [
+      "Comedy",
+      "Romance"
+    ],
+    "posterPath": "/4nXWGRq30f9gQfRuiQoXZjvClvJ.jpg",
+    "runtimeMinutes": 96,
+    "spokenLanguages": [
+      "Italian"
+    ],
+    "title": "A Beautiful Wife",
+    "tmdbId": 52214,
+    "year": 2007
+  },
+  "martin-eden-2019": {
+    "countries": [
+      "France",
+      "Germany",
+      "Italy"
+    ],
+    "director": "Pietro Marcello",
+    "genres": [
+      "Drama",
+      "Romance"
+    ],
+    "posterPath": "/3lkrx1xQI4tOuvug4zZURKxQfet.jpg",
+    "runtimeMinutes": 129,
+    "spokenLanguages": [
+      "French",
+      "Italian"
+    ],
+    "title": "Martin Eden",
+    "tmdbId": 582873,
+    "year": 2019
+  },
+  "les-miserables-2019": {
+    "countries": [
+      "France"
+    ],
+    "director": "Ladj Ly",
+    "genres": [
+      "Crime",
+      "Drama",
+      "Thriller"
+    ],
+    "posterPath": "/2ZQV9rPFXF0iFfKbsAvVIweQ1yM.jpg",
+    "runtimeMinutes": 104,
+    "spokenLanguages": [
+      "Bambara",
+      "French"
+    ],
+    "title": "Les Misérables",
+    "tmdbId": 586863,
+    "year": 2019
+  },
+  "fanny-and-alexander-1982": {
+    "countries": [
+      "France",
+      "Germany",
+      "Sweden"
+    ],
+    "director": "Ingmar Bergman",
+    "genres": [
+      "Drama",
+      "Fantasy",
+      "Mystery"
+    ],
+    "posterPath": "/q8jlA3Wc1Z987hNKRFA44g5OugC.jpg",
+    "runtimeMinutes": 188,
+    "spokenLanguages": [
+      "English",
+      "German",
+      "Swedish",
+      "Yiddish"
+    ],
+    "title": "Fanny and Alexander",
+    "tmdbId": 5961,
+    "year": 1982
+  },
+  "the-jack-in-the-box-2019": {
+    "countries": [
+      "United Kingdom"
+    ],
+    "director": "Lawrence Fowler",
+    "genres": [
+      "Horror"
+    ],
+    "posterPath": "/suaQ6oScsa5rrfx3osJHyQp1ZXb.jpg",
+    "runtimeMinutes": 87,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "The Jack in the Box",
+    "tmdbId": 622420,
+    "year": 2019
+  },
+  "home-2009": {
+    "countries": [
+      "France"
+    ],
+    "director": "Yann Arthus-Bertrand",
+    "genres": [
+      "Documentary",
+      "Drama",
+      "Family"
+    ],
+    "posterPath": "/2Ph0vzTiORSSlYjsXLFM1OZHkI8.jpg",
+    "runtimeMinutes": 95,
+    "spokenLanguages": [
+      "French"
+    ],
+    "title": "Home",
+    "tmdbId": 62320,
+    "year": 2009
+  },
+  "the-iron-lady-2011": {
+    "countries": [
+      "United Kingdom"
+    ],
+    "director": "Phyllida Lloyd",
+    "genres": [
+      "Drama",
+      "History"
+    ],
+    "posterPath": "/fx7wpKXOht7WOkeOslvErbrf69Q.jpg",
+    "runtimeMinutes": 105,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "The Iron Lady",
+    "tmdbId": 71688,
+    "year": 2011
+  },
+  "the-last-emperor-1987": {
+    "countries": [
+      "China",
+      "France",
+      "Italy",
+      "United Kingdom"
+    ],
+    "director": "Bernardo Bertolucci",
+    "genres": [
+      "Drama",
+      "History"
+    ],
+    "posterPath": "/7TILJhdeJAaEyDiwvJZMo9SQBoe.jpg",
+    "runtimeMinutes": 163,
+    "spokenLanguages": [
+      "Chichewa; Nyanja",
+      "English",
+      "Japanese",
+      "Mandarin"
+    ],
+    "title": "The Last Emperor",
+    "tmdbId": 746,
+    "year": 1987
+  },
+  "cocktail-1988": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Roger Donaldson",
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Romance"
+    ],
+    "posterPath": "/jFRhEPhtsln9tDwzMdZN3OlhUob.jpg",
+    "runtimeMinutes": 104,
+    "spokenLanguages": [
+      "English",
+      "Portuguese",
+      "Spanish"
+    ],
+    "title": "Cocktail",
+    "tmdbId": 7520,
+    "year": 1988
+  },
+  "half-nelson-2006": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Ryan Fleck",
+    "genres": [
+      "Drama"
+    ],
+    "posterPath": "/fdUCisMpTwy0oJOGwM7NrFFs400.jpg",
+    "runtimeMinutes": 107,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Half Nelson",
+    "tmdbId": 7859,
+    "year": 2006
+  },
+  "pale-rider-1985": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Clint Eastwood",
+    "genres": [
+      "Drama",
+      "Western"
+    ],
+    "posterPath": "/kpAN5WnDEVWYzMDPkXHTbrDQuak.jpg",
+    "runtimeMinutes": 115,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Pale Rider",
+    "tmdbId": 8879,
+    "year": 1985
+  },
+  "the-river-wild-1994": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Curtis Hanson",
+    "genres": [
+      "Adventure",
+      "Drama",
+      "Thriller"
+    ],
+    "posterPath": "/wVgQ2T63ThjIsY4R0qoHXjyllql.jpg",
+    "runtimeMinutes": 111,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "The River Wild",
+    "tmdbId": 8987,
+    "year": 1994
+  },
+  "witness-1985": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Peter Weir",
+    "genres": [
+      "Crime",
+      "Drama",
+      "Thriller"
+    ],
+    "posterPath": "/kOymD1rChAMykmDVEzJpIh4OYS7.jpg",
+    "runtimeMinutes": 112,
+    "spokenLanguages": [
+      "English",
+      "German"
+    ],
+    "title": "Witness",
+    "tmdbId": 9281,
+    "year": 1985
+  },
+  "11-14-2004": {
+    "countries": [
+      "Canada",
+      "United States of America"
+    ],
+    "director": "Greg Marcks",
+    "genres": [
+      "Comedy",
+      "Crime",
+      "Thriller"
+    ],
+    "posterPath": "/3TFB0Doe92l9Jgc5qtUnE6r9rqt.jpg",
+    "runtimeMinutes": 86,
+    "spokenLanguages": [
+      "English",
+      "Spanish"
+    ],
+    "title": "11:14",
+    "tmdbId": 9282,
+    "year": 2004
+  },
+  "thesis-1996": {
+    "countries": [
+      "Spain"
+    ],
+    "director": "Alejandro Amenábar",
+    "genres": [
+      "Horror",
+      "Thriller"
+    ],
+    "posterPath": "/lzD8bdIptcgsAUaTgAdvD1e9NDu.jpg",
+    "runtimeMinutes": 125,
+    "spokenLanguages": [
+      "Spanish"
+    ],
+    "title": "Thesis",
+    "tmdbId": 9299,
+    "year": 1996
+  },
+  "ong-bak-2003": {
+    "countries": [
+      "France",
+      "Thailand"
+    ],
+    "director": "Prachya Pinkaew",
+    "genres": [
+      "Action",
+      "Crime",
+      "Thriller"
+    ],
+    "posterPath": "/oagqAwp48dMPoCT94yDJUDOCVPi.jpg",
+    "runtimeMinutes": 105,
+    "spokenLanguages": [
+      "English",
+      "Thai"
+    ],
+    "title": "Ong-Bak",
+    "tmdbId": 9316,
+    "year": 2003
+  },
+  "asterix-in-britain-1986": {
+    "countries": [
+      "Denmark",
+      "France"
+    ],
+    "director": "Pino Van Lamsweerde",
+    "genres": [
+      "Adventure",
+      "Animation",
+      "Comedy",
+      "Family"
+    ],
+    "posterPath": "/10L5R1l03MqDx36e0LJ99NKLGD3.jpg",
+    "runtimeMinutes": 79,
+    "spokenLanguages": [
+      "French"
+    ],
+    "title": "Asterix in Britain",
+    "tmdbId": 9318,
+    "year": 1986
+  },
+  "super-size-me-2004": {
+    "countries": [
+      "Netherlands",
+      "United States of America"
+    ],
+    "director": "Morgan Spurlock",
+    "genres": [
+      "Documentary"
+    ],
+    "posterPath": "/zYkbqQaCuIHBxqBDGgnQCwJ9jIG.jpg",
+    "runtimeMinutes": 100,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Super Size Me",
+    "tmdbId": 9372,
+    "year": 2004
+  },
+  "kiss-the-girls-1997": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Gary Fleder",
+    "genres": [
+      "Crime",
+      "Mystery",
+      "Thriller"
+    ],
+    "posterPath": "/a4P8PD9kvN0IZnDzsyurVs2WaJX.jpg",
+    "runtimeMinutes": 115,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Kiss the Girls",
+    "tmdbId": 9437,
+    "year": 1997
+  },
+  "menace-ii-society-1993": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Allen Hughes & Albert Hughes",
+    "genres": [
+      "Crime",
+      "Drama",
+      "Thriller"
+    ],
+    "posterPath": "/guvPiEOeXwROpfCb2LkHkVEvOck.jpg",
+    "runtimeMinutes": 97,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Menace II Society",
+    "tmdbId": 9516,
+    "year": 1993
+  },
+  "tootsie-1982": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Sydney Pollack",
+    "genres": [
+      "Comedy",
+      "Romance"
+    ],
+    "posterPath": "/ngyCzZwb9y5sMUCig5JQT4Y33Q.jpg",
+    "runtimeMinutes": 116,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Tootsie",
+    "tmdbId": 9576,
+    "year": 1982
+  },
+  "christiane-f-1981": {
+    "countries": [
+      "Germany"
+    ],
+    "director": "Uli Edel",
+    "genres": [
+      "Drama"
+    ],
+    "posterPath": "/d9A203jfNyPnvbCfzSqFwuwHEx7.jpg",
+    "runtimeMinutes": 131,
+    "spokenLanguages": [
+      "German"
+    ],
+    "title": "Christiane F.",
+    "tmdbId": 9589,
+    "year": 1981
+  },
+  "big-nothing-2006": {
+    "countries": [
+      "Canada",
+      "United Kingdom"
+    ],
+    "director": "Jean-Baptiste Andrea",
+    "genres": [
+      "Action",
+      "Comedy",
+      "Crime",
+      "Thriller"
+    ],
+    "posterPath": "/1A4DUWrFLchciMhC0hNJAJa92gU.jpg",
+    "runtimeMinutes": 86,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Big Nothing",
+    "tmdbId": 9843,
+    "year": 2006
+  },
+  "ultraviolet-2006": {
+    "countries": [
+      "Hong Kong",
+      "United States of America"
+    ],
+    "director": "Kurt Wimmer",
+    "genres": [
+      "Action",
+      "Science Fiction",
+      "Thriller"
+    ],
+    "posterPath": "/27OzQ2BBahQHYPiPEAXRXMbhnPQ.jpg",
+    "runtimeMinutes": 87,
+    "spokenLanguages": [
+      "English",
+      "Japanese",
+      "Vietnamese"
+    ],
+    "title": "Ultraviolet",
+    "tmdbId": 9920,
+    "year": 2006
+  },
+  "bad-taste-1987": {
+    "countries": [
+      "New Zealand"
+    ],
+    "director": "Peter Jackson",
+    "genres": [
+      "Action",
+      "Comedy",
+      "Horror",
+      "Science Fiction"
+    ],
+    "posterPath": "/msttMX3undIiaeJLZbMRq94v1bw.jpg",
+    "runtimeMinutes": 91,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "Bad Taste",
+    "tmdbId": 9964,
+    "year": 1987
+  },
+  "the-great-mouse-detective-1986": {
+    "countries": [
+      "United States of America"
+    ],
+    "director": "Burny Mattinson & John Musker & David Michener & Ron Clements",
+    "genres": [
+      "Adventure",
+      "Animation",
+      "Crime",
+      "Family",
+      "Mystery"
+    ],
+    "posterPath": "/9uDr7vfjCFr39KGCcqrk44Cg7fQ.jpg",
+    "runtimeMinutes": 74,
+    "spokenLanguages": [
+      "English"
+    ],
+    "title": "The Great Mouse Detective",
+    "tmdbId": 9994,
+    "year": 1986
   }
 }

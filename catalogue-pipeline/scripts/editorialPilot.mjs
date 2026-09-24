@@ -116,6 +116,18 @@ export function buildCriticInputPacket({ writerPacket, editorialOutput, hardVali
   }
 }
 
+export function buildCriticInputPacketV11({ writerPacket, editorialOutput, hardValidation = [], reviewFlags = [] }) {
+  const v1 = buildCriticInputPacket({ writerPacket, editorialOutput, hardValidation, reviewFlags })
+  return {
+    ...v1,
+    schemaVersion: 'editorial-critic-input.v1.1',
+    semanticBoundaryFlags: writerPacket.semanticBoundaryFlags,
+    allowedSourceMaterial: writerPacket.allowedSourceMaterial,
+    copyConstraints: writerPacket.copyConstraints,
+    spoilerBoundaryRules: writerPacket.spoilerBoundaryRules,
+  }
+}
+
 function tokenRange(byteCount) {
   return { lowerBound: Math.ceil(byteCount / 4), upperBound: Math.ceil(byteCount / 2), method: 'UTF-8 bytes divided by an approximate 2–4 bytes/token range; not provider billing data.' }
 }
@@ -300,7 +312,15 @@ export async function runEditorialPilotCommand(command, options, operations = { 
     await live.runCritics(options)
     return live.buildReviewReport(options)
   }
-  throw new Error('Supported commands are prepare, inspect, estimate, run-writers --execute, and run-critics --execute. Live dispatch requires --execute.')
+  if (command === 'recover-writer' && options.execute) return (await import('./editorialPilotRecovery.mjs')).recoverWriter({ ...options, candidateId: options.candidateId })
+  if (command === 'recover-all-writers' && options.execute) return (await import('./editorialPilotRecovery.mjs')).recoverEligibleWriters(options)
+  if (command === 'paid-resume-writer' && options.execute) return (await import('./editorialPilotPaidResume.mjs')).runPaidCanary({ ...options, candidateId: options.candidateId })
+  if (command === 'paid-resume-continuation' && options.execute) return (await import('./editorialPilotPaidResume.mjs')).runPaidContinuation(options)
+  if (command === 'critic-canaries' && options.execute) return (await import('./editorialCriticCanary.mjs')).runCriticCanaries(options)
+  if (command === 'critic-canaries-v1.1' && options.execute) return (await import('./editorialCriticCanaryV11.mjs')).runCriticCanariesV11(options)
+  if (command === 'critic-v1.1-continuation' && options.execute) return (await import('./criticV11Continuation.mjs')).runCriticV11Continuation(options)
+  if (command === 'writer-repair-v1.1' && options.execute) return (await import('./writerRepairV11.mjs')).runWriterRepairV11(options)
+  throw new Error('Supported commands are prepare, inspect, estimate, run-writers --execute, run-critics --execute, recover-writer <candidateId> --execute, recover-all-writers --execute, paid-resume-writer <candidateId> --execute, paid-resume-continuation --execute, and critic-canaries --execute. Live dispatch requires --execute.')
 }
 
 const isDirectRun = process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href
@@ -308,8 +328,9 @@ if (isDirectRun) {
   const command = process.argv[2]
   const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
   const execute = process.argv.slice(3).includes('--execute')
-  runEditorialPilotCommand(command, { repoRoot, execute }).then((value) => {
+  const candidateId = process.argv[3] === '--execute' ? null : process.argv[3]
+  runEditorialPilotCommand(command, { repoRoot, execute, candidateId }).then((value) => {
     const printable = command === 'prepare' ? { manifestPath: value.manifestPath, estimatePath: value.estimatePath, packetCount: value.manifest.packets.length, posterReadiness: value.manifest.posterReadiness, estimate: value.manifest.estimate, externalCalls: 0 } : value
     console.log(JSON.stringify(printable, null, 2))
-  }).catch((error) => { console.error(error.message); process.exitCode = 1 })
+  }).catch((error) => { console.error(error.stack ?? error.message); process.exitCode = 1 })
 }

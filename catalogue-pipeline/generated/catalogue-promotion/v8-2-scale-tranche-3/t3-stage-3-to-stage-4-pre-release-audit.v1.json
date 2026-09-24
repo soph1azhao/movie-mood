@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "movie-mood.t3-stage-3-to-stage-4-pre-release-audit.v1",
+  "status": "STAGE_3_EXIT_CRITERIA_MET",
+  "auditMode": "read-only-pre-release-audit",
+  "stage": "V8.2 Stage 3 to Stage 4",
+  "bindings": {
+    "stage2ToStage3GateRawSha256": "sha256:8bd9c41bbb14a2de34801ed13e6822362e22c3d3a4a7282cbf83bc0964387e3a",
+    "runtimeWriteAuthorizationRawSha256": "sha256:8bea620150dbaddd4282c41250fbbad8a2d272d96d58f8d32aa43e73c0275073",
+    "completionManifestRawSha256": "sha256:05f05dd7ecba722eac7e36a3beea5b5b1806fddf75484787818b845c3557e6b0",
+    "completionCanonicalArtifactSha256": "sha256:1cd2ef44ee43f43a28a1775d7861c0e323deee6e6c9f22b8f97276c5c10bb15e",
+    "executionLedgerRawSha256": "sha256:2e8e8577b1d5754c7cba33774335ce1801be76d970a290a13ba49326440d4122"
+  },
+  "runtimeAssembly": {
+    "baselineCount": 41,
+    "addedCount": 139,
+    "finalCount": 180,
+    "original41Preserved": true,
+    "accepted139Preserved": true,
+    "identityAndMappingConservation": true,
+    "semanticFactualPosterPaletteMutations": 0,
+    "networkProviderCalls": 0
+  },
+  "validation": {
+    "runtimeTests": {
+      "command": "pnpm test:runtime",
+      "status": "PASS",
+      "files": 9,
+      "tests": 143
+    },
+    "typecheck": {
+      "command": "pnpm exec tsc --noEmit -p tsconfig.app.json",
+      "status": "PASS"
+    },
+    "build": {
+      "command": "pnpm build",
+      "status": "PASS"
+    },
+    "gitDiffCheck": "PASS",
+    "secretConfigurationScan": "PASS_NO_CREDENTIAL_CONFIGURATION_FOUND"
+  },
+  "releaseBoundary": {
+    "releasePerformed": false,
+    "deploymentPerformed": false,
+    "commitCreated": false,
+    "pushPerformed": false,
+    "tagCreated": false,
+    "releasePublished": false
+  },
+  "stage4RequiredWork": [
+    "Document actual deployed and disposition counts, provider economics, and human-review workload.",
+    "Update README with the actual runtime-derived 180-film count and finalize V8.2/project retrospectives.",
+    "Deliberately stage only intended runtime, governance, and closure files; exclude transient output and non-runtime local poster bytes unless separately justified.",
+    "Commit intended V8.2 scope, push main, verify GitHub Pages deployment, then tag v8.2.0 and publish the release."
+  ]
+}

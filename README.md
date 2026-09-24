@@ -12,7 +12,7 @@ A mood-first, decision-focused movie companion for one deceptively difficult que
 
 Movie Mood replaces an endless catalogue with a small, considered shortlist. Start with how you want to feel, optionally refine the night, and work toward one film through progressive reveal and lightweight decision support.
 
-The deployed app currently contains **41 curated movies**. Separately, the V8.1 offline production pipeline reached **400 validated semantic records**. Those records demonstrate a reproducible catalogue-scaling process; they are not all deployed in the runtime app.
+The V8.2 runtime catalogue contains **180 curated movies** (the original 41-film baseline plus 139 movies promoted through the governed V8.2 pipeline). Separately, the offline production pipeline previously established a **400 validated semantic record** checkpoint; V8.2 promoted 139 human-adjudicated, contract-validated films into the static runtime catalogue.
 
 ## How it works
 
@@ -57,7 +57,7 @@ The runtime catalogue is committed static data:
 - `src/data/generated/tmdbMovies.json` contains the committed factual snapshot.
 - `src/data/movies.ts` joins the two into the app’s stable movie model.
 
-The separate `catalogue-pipeline/` is maintainer tooling for candidate selection, factual acquisition, evidence packets, semantic generation, validation, provenance, recovery, and resumable batch production. V8.1 closed at a cumulative **400/400 validated semantic checkpoint**. Semantic-500 is optional future scale, not unfinished V8.1 work.
+The separate `catalogue-pipeline/` is maintainer tooling for candidate selection, factual acquisition, evidence packets, semantic generation, validation, provenance, recovery, and resumable batch production. In V8.2, 139 offline-produced records passed strict source-boundary and contract verification and were promoted into the static runtime catalogue, expanding the live collection from 41 to 180 films.
 
 > Movie Mood owns meaning. TMDB owns facts.
 
@@ -140,6 +140,7 @@ Older specifications remain available as historical records and may be supersede
 - **V4–V6:** Decision Mode, progressive reveal, and a selective decision companion made choosing—not browsing—the central interaction.
 - **V7–V8:** visual research and the Editorial Wire system established the current cinematic identity.
 - **V8.1:** a reproducible, bounded, offline catalogue-production pipeline proved semantic scaling through 400 validated records.
+- **V8.2:** promoted 139 validated films from offline production into the static runtime catalogue, expanding the live collection to 180 films with zero runtime semantic or factual mutation.
 
 See [Releases](https://github.com/soph1azhao/movie-mood/releases) and the [project retrospective](docs/PROJECT_RETROSPECTIVE.md) for the detailed history.
 
@@ -149,7 +150,7 @@ This product uses the TMDB API but is not endorsed or certified by TMDB. Factual
 
 ## Project status
 
-Movie Mood V8.1 is released and closed at `v8.1.0`. The deployed experience remains a 41-film curated decision companion. The offline 400-record checkpoint is production-pipeline evidence, not a runtime catalogue promotion. Further catalogue scale is optional and belongs to a separately authorized future phase.
+Movie Mood V8.2 is prepared for release at `v8.2.0`. The runtime catalogue contains 180 curated movies. The runtime application remains static, deterministic, and fully self-contained, with offline maintainer tooling kept strictly separate from browser execution.
 
 ## License
 

@@ -8,6 +8,7 @@ import anchors from '../calibration/anchors.json' with { type: 'json' }
 import boundaryCases from '../calibration/boundaryCases.json' with { type: 'json' }
 import phase5bExamples from '../calibration/phase5b-experiential-examples.json' with { type: 'json' }
 import { createGeminiProvider } from '../adapters/geminiProvider.ts'
+import { createKimiProvider, KIMI_SUPPORTED_MODELS } from '../adapters/kimiProvider.ts'
 import { stableHash } from '../adapters/tmdbProvider.ts'
 import { buildEvidencePacket } from './buildEvidencePacket.mjs'
 import { classifySemanticCandidate } from './classifySemantic.mjs'
@@ -55,6 +56,7 @@ const EXCLUDED_FIELDS = [
 ]
 const LIVE_REQUEST_INTERVAL_MS = 5000
 const DEFAULT_CALIBRATION_MODEL = 'gemini-3.7-flash'
+const DEFAULT_KIMI_MODEL = 'k3-256k'
 const PHASE_5B_PROMPT_VERSION = 'semantic-classifier.v3'
 const PHASE_5B_SCHEMA_VERSION = 'semantic-output.v2'
 
@@ -97,6 +99,19 @@ function requireEnv(name) {
 export function resolveCalibrationModel(env = process.env) {
   const modelId = env.GEMINI_MODEL?.trim() || DEFAULT_CALIBRATION_MODEL
   if (!/^[A-Za-z0-9._-]+$/.test(modelId)) throw new CalibrationReplayError('GEMINI_MODEL contains unsupported characters.', { code: 'INVALID_GEMINI_MODEL' })
+  return modelId
+}
+
+export function resolveSemanticProvider(env = process.env) {
+  const provider = env.SEMANTIC_PROVIDER?.trim() || 'gemini'
+  if (!['gemini', 'kimi'].includes(provider)) throw new CalibrationReplayError('SEMANTIC_PROVIDER must be gemini or kimi.', { code: 'INVALID_SEMANTIC_PROVIDER' })
+  return provider
+}
+
+export function resolveKimiModel(env = process.env) {
+  const modelId = env.KIMI_MODEL?.trim() || DEFAULT_KIMI_MODEL
+  if (!/^[A-Za-z0-9._-]+$/.test(modelId)) throw new CalibrationReplayError('KIMI_MODEL contains unsupported characters.', { code: 'INVALID_KIMI_MODEL' })
+  if (!KIMI_SUPPORTED_MODELS.includes(modelId)) throw new CalibrationReplayError(`Unsupported KIMI_MODEL: ${modelId}.`, { code: 'UNSUPPORTED_KIMI_MODEL' })
   return modelId
 }
 
@@ -153,10 +168,11 @@ export function resolveReplayDefinition(diagnosticName) {
   }
 }
 
-export function resolveReplayStorage(replay, modelId) {
+export function resolveReplayStorage(replay, modelId, providerId = 'google-gemini-developer-api') {
+  const providerNamespace = providerId === 'google-gemini-developer-api' ? '' : `providers/${providerId}/`
   return {
-    outputRoot: `generated/semantic/${replay.outputNamespace}/${modelId}/${replay.promptVersion}`,
-    cacheRoot: `cache/semantic/${replay.outputNamespace}/${modelId}/${replay.promptVersion}`,
+    outputRoot: `generated/semantic/${replay.outputNamespace}/${providerNamespace}${modelId}/${replay.promptVersion}`,
+    cacheRoot: `cache/semantic/${replay.outputNamespace}/${providerNamespace}${modelId}/${replay.promptVersion}`,
   }
 }
 
@@ -542,13 +558,15 @@ async function main() {
     return
   }
 
-  requireEnv('GEMINI_API_KEY')
-  const modelId = resolveCalibrationModel()
-  const provider = createGeminiProvider({ modelId })
+  const providerName = resolveSemanticProvider()
+  const modelId = providerName === 'kimi' ? resolveKimiModel() : resolveCalibrationModel()
+  const provider = providerName === 'kimi'
+    ? createKimiProvider({ modelId })
+    : createGeminiProvider({ modelId })
   const prompt = await readFile(resolve(pipelineRoot, `prompts/${replay.promptFile}`), 'utf8')
   const calibrationAnchors = { ...anchors, anchors: [...anchors.anchors, ...phase5bExamples.positiveExamples] }
   const calibrationBoundaryCases = { ...boundaryCases, boundaryCases: [...boundaryCases.boundaryCases, ...phase5bExamples.boundaryAndCounterexamples] }
-  const storage = resolveReplayStorage(replay, modelId)
+  const storage = resolveReplayStorage(replay, modelId, provider.metadata.providerId)
   const outputRoot = resolve(pipelineRoot, storage.outputRoot)
   const cacheRoot = resolve(pipelineRoot, storage.cacheRoot)
   const firstResults = await runClassifierPass({ packets, provider, prompt, outputRoot, cacheRoot, promptVersion: replay.promptVersion, schemaVersion: replay.schemaVersion, calibrationAnchors, calibrationBoundaryCases })

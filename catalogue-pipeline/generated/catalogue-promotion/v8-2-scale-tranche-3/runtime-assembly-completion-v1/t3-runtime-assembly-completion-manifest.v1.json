@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "t3-runtime-assembly-completion-manifest.v1",
+  "status": "RUNTIME_ASSEMBLY_COMPLETE",
+  "runtimeAssemblyAuthorizationHash": "sha256:d9af65347c3deb219b852cd7b0b653b52a4b6496c2478d6034c3f25c0e993170",
+  "runtimeWriteAuthorizationHash": "sha256:aff2b2fd434949af29c0877c97b076d7b53fafc6848f51a195e282e25348c3e9",
+  "executorRawHash": "sha256:e6bddacf78aea66fbb0e4e278e2c6f0a17da70f36e4683cde3a2ec5a0109868a",
+  "prospectiveManifestHash": "sha256:7cf4018a690f032a3ad2918ac812b61caecef1e1298bdd0508324902a0c541c7",
+  "targetPaths": [
+    "src/data/curatedMovies.ts",
+    "src/data/generated/tmdbMovies.json",
+    "src/data/tmdbMovieMappings.json"
+  ],
+  "baselineHashes": {
+    "src/data/curatedMovies.ts": "sha256:3afe7763f6a88132eb4eb388550ce9a1caff24c8716589bb71c876525a98bba7",
+    "src/data/generated/tmdbMovies.json": "sha256:aa97ab9b491748763dc49080a52779001411e216529199728b9125f1613697cb",
+    "src/data/tmdbMovieMappings.json": "sha256:ff00f8a8482fb865d8269bcd561d8b89dfef03d1f4aaf3f4c8535afd476b2910"
+  },
+  "authorizedProspectiveHashes": {
+    "src/data/curatedMovies.ts": "sha256:f8d1a87e652d8fd458d5c14b9c037a97712398b251093ebbfcb34440b54a7661",
+    "src/data/generated/tmdbMovies.json": "sha256:0e39c721a2e352fe1733acd572124bf43eef27ad793efa0622760809fe1e7478",
+    "src/data/tmdbMovieMappings.json": "sha256:0a9786facf7d5d2deb5ceca7c442f9a231f55079b1234910e31868afaf729e0f"
+  },
+  "finalHashes": {
+    "src/data/curatedMovies.ts": "sha256:f8d1a87e652d8fd458d5c14b9c037a97712398b251093ebbfcb34440b54a7661",
+    "src/data/generated/tmdbMovies.json": "sha256:0e39c721a2e352fe1733acd572124bf43eef27ad793efa0622760809fe1e7478",
+    "src/data/tmdbMovieMappings.json": "sha256:0a9786facf7d5d2deb5ceca7c442f9a231f55079b1234910e31868afaf729e0f"
+  },
+  "baselineCount": 41,
+  "added": 139,
+  "finalCount": 180,
+  "overlaps": {
+    "exactExisting": 0,
+    "deterministicUpdates": 0,
+    "conflicts": 0
+  },
+  "semanticMutations": 0,
+  "factualMutations": 0,
+  "posterMutations": 0,
+  "paletteMutations": 0,
+  "networkCalls": 0,
+  "providerCalls": 0,
+  "rollbackUsed": false
+}

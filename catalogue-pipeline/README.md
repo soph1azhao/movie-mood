@@ -13,4 +13,6 @@ V8.1 guardrails:
 - Complete editorial fields for every promoted movie
 - Hard validation failures are separate from semantic review flags
 
+Descriptive-evidence work remains maintainer-only compilation infrastructure. The runtime remains a static Vite + React + TypeScript frontend on GitHub Pages: no backend, database, runtime Wikipedia request, runtime LLM/AI call, or authenticated external-data dependency. Phase 5C-C0 feasibility was 9/10 and its tense-yet-inward micro-check was 4/4. The C1 extraction policy is frozen before classifier execution; English Wikipedia reception prose is supplementary descriptive context, not a Movie Mood target label.
+
 Implemented pipeline stages are TMDB enrichment, the provider-neutral structured-output adapter, and semantic classification. The classifier accepts an injected maintainer-side provider module, writes only ignored semantic cache/generated artifacts, and never produces editorial copy. Editorial writing, critic execution, pilot generation, benchmarks, and production promotion remain later phases.

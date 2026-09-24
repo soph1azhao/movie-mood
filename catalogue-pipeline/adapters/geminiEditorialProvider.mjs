@@ -3,7 +3,8 @@ import { serializeArtifactForPersistence } from '../scripts/validatePromotionCon
 
 export const GEMINI_EDITORIAL_PROVIDER_ID = 'google-gemini-developer-api'
 export const GEMINI_EDITORIAL_MODEL_ID = 'gemini-3.8-flash'
-export const GEMINI_EDITORIAL_SCHEMA_PROJECTION_VERSION = 'gemini-editorial-structured-output.v1'
+export const GEMINI_EDITORIAL_SCHEMA_PROJECTION_VERSION = 'gemini-editorial-structured-output.v3'
+export const GEMINI_EDITORIAL_TRANSPORT_VERSION = 'gemini-3.8-generate-content-response-format.v1'
 export const THINKING_LEVELS = Object.freeze({ writer: 'low', critic: 'medium' })
 
 const RETRYABLE_HTTP_STATUS = new Set([429, 500, 502, 503, 504])
@@ -96,18 +97,62 @@ export function buildCriticGeminiSchema({ candidateId, tmdbId }) {
   }
 }
 
+export function buildCriticGeminiSchemaV11(identity) {
+  const schema = buildCriticGeminiSchema(identity)
+  schema.properties.promptVersion.enum = ['editorial-critic.v1.1']
+  return schema
+}
+
+// Gemini's response-format schema accepts a documented JSON-Schema subset. Keep
+// this projection provider-local: authoritative Movie Mood validation remains
+// responsible for constraints omitted from the transport schema.
+const GEMINI_RESPONSE_SCHEMA_KEYS = new Set([
+  '$id', '$defs', '$ref', '$anchor', 'type', 'format', 'title', 'description',
+  'enum', 'items', 'prefixItems', 'minItems', 'maxItems', 'minimum', 'maximum',
+  'anyOf', 'oneOf', 'properties', 'additionalProperties', 'required',
+])
+
+export function projectGeminiResponseJsonSchema(schema) {
+  if (Array.isArray(schema)) return schema.map((entry) => projectGeminiResponseJsonSchema(entry))
+  if (!schema || typeof schema !== 'object') return schema
+  const projected = {}
+  for (const [key, value] of Object.entries(schema)) {
+    if (!GEMINI_RESPONSE_SCHEMA_KEYS.has(key)) continue
+    if (key === 'properties' || key === '$defs') {
+      if (value && typeof value === 'object' && !Array.isArray(value)) projected[key] = Object.fromEntries(Object.entries(value).map(([name, child]) => [name, projectGeminiResponseJsonSchema(child)]))
+      continue
+    }
+    if (key === 'items' || key === 'additionalProperties') {
+      projected[key] = value && typeof value === 'object' ? projectGeminiResponseJsonSchema(value) : value
+      continue
+    }
+    if (key === 'anyOf' || key === 'oneOf' || key === 'prefixItems') {
+      projected[key] = Array.isArray(value) ? value.map((entry) => projectGeminiResponseJsonSchema(entry)) : value
+      continue
+    }
+    projected[key] = value
+  }
+  if ((projected.type === 'integer' || projected.type === 'number') && Array.isArray(projected.enum) && projected.enum.every((value) => typeof value === 'number')) delete projected.enum
+  return projected
+}
+
 export function buildGemini38Request({ modelId = GEMINI_EDITORIAL_MODEL_ID, promptText, input, responseSchema, thinkingLevel, maxOutputTokens }) {
   if (!['low', 'medium', 'high'].includes(thinkingLevel)) throw new GeminiEditorialProviderError('Invalid thinking level.', { code: 'INVALID_THINKING_LEVEL', category: 'configuration' })
   if (typeof promptText !== 'string' || promptText.length === 0) throw new GeminiEditorialProviderError('A non-empty exact prompt text is required.', { code: 'MISSING_PROMPT_TEXT', category: 'configuration' })
   const canonicalInput = serializeArtifactForPersistence(input)
-  const canonicalSchema = serializeArtifactForPersistence(responseSchema)
+  const projectedSchema = projectGeminiResponseJsonSchema(responseSchema)
+  const canonicalSchema = serializeArtifactForPersistence(projectedSchema)
   const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(modelId)}:generateContent`
   const body = {
     systemInstruction: { parts: [{ text: promptText }] },
     contents: [{ role: 'user', parts: [{ text: canonicalInput }] }],
     generationConfig: {
-      responseMimeType: 'application/json',
-      responseJsonSchema: responseSchema,
+      responseFormat: {
+        text: {
+          mimeType: 'APPLICATION_JSON',
+          schema: projectedSchema,
+        },
+      },
       maxOutputTokens,
       thinkingConfig: { thinkingLevel },
     },
@@ -125,7 +170,9 @@ export function buildGemini38Request({ modelId = GEMINI_EDITORIAL_MODEL_ID, prom
 }
 
 export function classifyGeminiFailure({ status = null, responseReceived = false, malformedOutput = false, cause = null } = {}) {
-  if (malformedOutput) return new GeminiEditorialProviderError('Gemini model output failed structured validation.', { code: 'MODEL_OUTPUT_INVALID', category: 'model-output-validation', retryable: true, cause })
+  // A response-bearing malformed output has a known delivery outcome. T3 must
+  // route it locally, never spend its transient transport retry reserve.
+  if (malformedOutput) return new GeminiEditorialProviderError('Gemini model output failed structured validation.', { code: 'MODEL_OUTPUT_INVALID', category: 'model-output-validation', retryable: false, cause })
   if (responseReceived) {
     const retryable = RETRYABLE_HTTP_STATUS.has(status)
     return new GeminiEditorialProviderError(`Gemini HTTP response ${status}.`, { code: retryable ? 'PROVIDER_HTTP_RETRYABLE' : 'PROVIDER_HTTP_TERMINAL', category: 'provider-http', retryable, status, cause })
@@ -137,7 +184,7 @@ export function mayRedispatch(error, { attempt, maxAttempts }) {
   return error instanceof GeminiEditorialProviderError && error.retryable && !error.ambiguous && attempt < maxAttempts
 }
 
-function extractText(body) {
+export function extractGeminiStructuredOutput(body) {
   const parts = body?.candidates?.[0]?.content?.parts
   if (!Array.isArray(parts)) throw classifyGeminiFailure({ malformedOutput: true })
   const text = parts.map((part) => part?.text).filter((value) => typeof value === 'string').join('')
@@ -180,11 +227,12 @@ export function resolveRetryDelayMs({ response, rawText, attempt, maxDelayMs = M
   return Math.min(1000 * (2 ** (attempt - 1)), maxDelayMs)
 }
 
-export async function executeGemini38Structured({ apiKey, request, fetchImpl = globalThis.fetch, maxAttempts = 2, validateOutput = () => ({ ok: true }), preserveRawResponse = async () => {}, sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms)), maxRetryDelayMs = MAX_RETRY_DELAY_MS }) {
+export async function executeGemini38Structured({ apiKey, request, fetchImpl = globalThis.fetch, maxAttempts = 2, startingAttempt = 0, validateOutput = () => ({ ok: true }), preserveRawResponse = async () => {}, onDispatch = async () => {}, sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms)), maxRetryDelayMs = MAX_RETRY_DELAY_MS }) {
   if (!apiKey) throw new GeminiEditorialProviderError('GEMINI_API_KEY is required.', { code: 'MISSING_CREDENTIAL', category: 'configuration' })
-  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+  for (let attempt = startingAttempt + 1; attempt <= maxAttempts; attempt += 1) {
     let response
     try {
+      await onDispatch({ attempt })
       response = await fetchImpl(request.endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'x-goog-api-key': apiKey },
@@ -210,7 +258,7 @@ export async function executeGemini38Structured({ apiKey, request, fetchImpl = g
       throw error
     }
     let output
-    try { output = extractText(body) } catch (error) {
+    try { output = extractGeminiStructuredOutput(body) } catch (error) {
       if (mayRedispatch(error, { attempt, maxAttempts })) { await sleep(resolveRetryDelayMs({ response, rawText, attempt, maxDelayMs: maxRetryDelayMs })); continue }
       throw error
     }

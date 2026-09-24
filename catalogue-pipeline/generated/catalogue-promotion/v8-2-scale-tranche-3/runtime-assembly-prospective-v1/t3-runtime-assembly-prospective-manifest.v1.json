@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "t3-runtime-assembly-prospective-manifest.v1",
+  "status": "PROSPECTIVE_NON_RUNTIME_VALIDATED",
+  "runtimeWriteAuthorized": false,
+  "targetPaths": [
+    "src/data/curatedMovies.ts",
+    "src/data/generated/tmdbMovies.json",
+    "src/data/tmdbMovieMappings.json"
+  ],
+  "baseline": {
+    "count": 41,
+    "hashes": {
+      "src/data/curatedMovies.ts": "sha256:3afe7763f6a88132eb4eb388550ce9a1caff24c8716589bb71c876525a98bba7",
+      "src/data/generated/tmdbMovies.json": "sha256:aa97ab9b491748763dc49080a52779001411e216529199728b9125f1613697cb",
+      "src/data/tmdbMovieMappings.json": "sha256:ff00f8a8482fb865d8269bcd561d8b89dfef03d1f4aaf3f4c8535afd476b2910"
+    }
+  },
+  "added": 139,
+  "finalCount": 180,
+  "overlaps": {
+    "exactExisting": 0,
+    "deterministicUpdates": 0,
+    "conflicts": 0
+  },
+  "validation": {
+    "resolvedCount": 180,
+    "uniqueRuntimeIds": 180,
+    "uniqueTmdbIds": 180
+  },
+  "prospectiveHashes": {
+    "src/data/curatedMovies.ts": "sha256:f8d1a87e652d8fd458d5c14b9c037a97712398b251093ebbfcb34440b54a7661",
+    "src/data/generated/tmdbMovies.json": "sha256:0e39c721a2e352fe1733acd572124bf43eef27ad793efa0622760809fe1e7478",
+    "src/data/tmdbMovieMappings.json": "sha256:0a9786facf7d5d2deb5ceca7c442f9a231f55079b1234910e31868afaf729e0f"
+  },
+  "networkCalls": 0,
+  "providerCalls": 0,
+  "posterMutations": 0,
+  "paletteMutations": 0
+}

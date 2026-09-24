@@ -5,7 +5,7 @@ This index separates the current product contract from historical design work an
 ## Start here
 
 - [Project overview](../README.md)
-- [V8.1 project retrospective](PROJECT_RETROSPECTIVE.md)
+- [Project retrospective](PROJECT_RETROSPECTIVE.md)
 - [Engineering learning notes](../LEARNING_NOTES.md)
 - [Contributing guide](../CONTRIBUTING.md)
 
@@ -17,13 +17,20 @@ This index separates the current product contract from historical design work an
 - [Catalogue curation workflow](CATALOGUE_CURATION_WORKFLOW.md)
 - [Repository operating instructions](../AGENTS.md)
 
-## V8.1 catalogue production
+## V8.2 catalogue promotion & release
+
+- [V8.2 catalogue promotion specification](V8_2_CATALOGUE_PROMOTION_SPEC.md)
+- [V8.2 scalable promotion governance](V8_2_SCALABLE_PROMOTION_GOVERNANCE.md)
+- [V8.2 process retrospective & master route](V8_2_PROCESS_RETROSPECTIVE_AND_MASTER_ROUTE.md)
+- [Project retrospective](PROJECT_RETROSPECTIVE.md)
+
+The V8.2 runtime catalogue contains 180 curated films (41 original baseline + 139 promoted from offline production). The runtime app remains static, deterministic, and free of runtime network or AI dependencies.
+
+## V8.1 catalogue production (historical milestone)
 
 - [V8.1 catalogue-production specification](V8_1_CATALOGUE_SCALE_IMPLEMENTATION_SPEC.md)
 - [V8.1 closure report](V8_1_CATALOGUE_SCALING_CLOSURE.md)
 - [V8.1 retrospective](PROJECT_RETROSPECTIVE.md)
-
-The deployed application currently contains 41 curated films. The separate offline V8.1 production pipeline has produced and validated 400 semantic records; those records are not automatically part of the deployed runtime catalogue.
 
 ## Historical product specifications
 

@@ -1,6 +1,6 @@
 # Movie Mood — Project Retrospective
 
-**Status:** V8.1 released and closed (`v8.1.0`)
+**Status:** V8.2 release candidate complete; `v8.2.0` release pending
 **Repository:** `soph1azhao/movie-mood`
 **Primary local repo:** `/Users/hermes/code/movie-mood`
 **Runtime architecture:** static Vite + React + TypeScript + plain CSS on GitHub Pages; no backend, accounts, database, or runtime authenticated TMDB API.
@@ -864,6 +864,70 @@ KIMI PRODUCTION: CLOSED
 SEMANTIC-500: INTENTIONALLY NOT PURSUED
 FURTHER SCALE: OPTIONAL
 FUTURE EXPANSION PROVIDER: GEMINI FLASH FAMILY
+```
+
+## V8.2 — Catalogue Promotion & Governance Evolution
+
+**Original goal:** Promote accepted offline-produced semantic candidates from Semantic-400 into the static runtime catalogue without weakening editorial meaning, factual integrity, or the pure static architecture.
+
+**What V8.2 delivers:** 139 promoted records join the original 41 curated baseline films, expanding the live static catalogue from 41 to **180 movies**. Zero runtime mutations, zero runtime external calls.
+
+**Key results:**
+
+| Metric | Result |
+| --- | ---: |
+| Baseline runtime catalogue | 41 |
+| Tranche 3 normal candidate cohort | 150 |
+| Human semantic accepted | 139 |
+| Pre-human terminal exclusions | 2 |
+| Structural quarantine | 9 |
+| Deferred outside normal cohort (`exp100-tmdb-1156593`) | 1 |
+| Stage 2 poster acquisition | 139/139 (100%) |
+| Stage 2 palette generation | 139/139 (100%) |
+| Successor production assembly | 139/139 (100%) |
+| Production promotion | 139/139 (100%) |
+| Final live runtime catalogue | 180 (100% unique runtime & TMDB IDs) |
+| Runtime identity/mapping overlaps/conflicts | 0 / 0 / 0 |
+| Runtime semantic/factual/poster/palette mutations | 0 |
+| Runtime assembly external calls | 0 network, 0 provider |
+| Gemini physical dispatch attempts | 151 / 180 cap (headroom: 29) |
+| Rollback invocations during live write | 0 |
+
+**Major engineering & governance lessons:**
+
+1. **Product Evolution vs. Catalogue/Governance Evolution:**
+   The product remains intentionally static, lightweight, and mood-first. Catalogue scaling is strictly maintainer/offline infrastructure. Runtime code was not compromised with backends, database layers, or dynamic API calls.
+
+2. **Source-Boundary Safeguards & Materiality:**
+   Structural validity (well-formed JSON, schema passing) is not semantic validity. Bounded source-grounding checks prevent models from asserting unsourced mechanisms, character motivations, or lore outside the evidence packet.
+
+3. **Human Review Governance (Machine can BLOCK; machine cannot ACCEPT):**
+   Automated tooling filters out syntax defects, length violations, and contract breaches so human review focuses strictly on semantic and editorial judgment. Models provide evidence, never promotion authority.
+
+4. **Failure Separation & Lawful Successor Execution:**
+   When historical dry runs encountered missing local poster assets, failure was quarantined and reconciled via a lawful successor dry run without modifying historical ledgers or papering over evidence.
+
+5. **Promotion vs. Runtime Separation & Prospective Binding:**
+   Candidate records were promoted to production records and prospective bytes were frozen and hashed *before* runtime writes were authorized.
+
+6. **Source-Hash-Bound Atomic Runtime Transaction:**
+   The live runtime write was bound to exact input and prospective hashes across all three runtime files (`curatedMovies.ts`, `tmdbMovies.json`, `tmdbMovieMappings.json`). The executor executed with staging, atomic replacement, post-write readback, and fail-closed rollback.
+
+7. **Model Routing Economics:**
+   High-consequence governance gating (e.g. final gate audits) was reserved for Codex, while routine deterministic execution, validation, and documentation was routed to Gemini Flash, staying well within the 180 physical call budget (151 calls used, 29 headroom).
+
+**Release candidate status:**
+
+```text
+V8.2 RELEASE CANDIDATE: COMPLETE
+RUNTIME ASSEMBLY: COMPLETE
+RELEASE: PENDING
+RUNTIME CATALOGUE: 180 FILMS (41 BASELINE + 139 PROMOTED)
+TRANCHE 3 COHORT: 150 (139 ACCEPTED, 2 TERMINAL EXCLUDED, 9 QUARANTINED)
+GEMINI PHYSICAL CALLS: 151 / 180 (29 HEADROOM)
+RUNTIME MUTATIONS: 0
+RUNTIME EXTERNAL CALLS: 0
+STATIC RUNTIME ARCHITECTURE: PRESERVED
 ```
 
 ---
