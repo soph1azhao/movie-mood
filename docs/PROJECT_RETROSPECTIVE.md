@@ -1,6 +1,6 @@
 # Movie Mood — Project Retrospective
 
-**Status:** V8.2 release candidate complete; `v8.2.0` release pending
+**Status:** V8.2 released and closed at `v8.2.0` (`309c736`)
 **Repository:** `soph1azhao/movie-mood`
 **Primary local repo:** `/Users/hermes/code/movie-mood`
 **Runtime architecture:** static Vite + React + TypeScript + plain CSS on GitHub Pages; no backend, accounts, database, or runtime authenticated TMDB API.
@@ -17,7 +17,7 @@ Two sentences define the project better than any feature list:
 
 > **Movie Mood owns meaning. TMDB owns facts.**
 
-The project began as a first vibe-coding experiment: choose a mood and receive three films. By V8.1 it had become both a working decision product and a disciplined AI-assisted engineering workflow. The most important achievement is not code volume. It is learning how to turn fast model output into a product that remains understandable, testable, reviewable, reversible, and intentionally simple.
+The project began as a first vibe-coding experiment: choose a mood and receive three films. By V8.2 it had become both a working decision product and a disciplined AI-assisted engineering workflow, with a 180-film static runtime backed by a governed offline catalogue-production system. The most important achievement is not code volume. It is learning how to turn fast model output into a product that remains understandable, testable, reviewable, reversible, and intentionally simple.
 
 ## Project at a glance
 
@@ -34,6 +34,7 @@ The project began as a first vibe-coding experiment: choose a mood and receive t
 | V7.1/V7.2 — Match the Moment / Earned Atmosphere | Can visual hierarchy and atmosphere support the decision state better? |
 | V8 — Cinematic Identity | Can the product feel unmistakably cinematic without adding new decision logic? |
 | V8.1 — Catalogue Scaling & Production Pipeline | Can semantic catalogue production scale reproducibly, resumably, and safely? |
+| V8.2 — Governed Catalogue Promotion | Can offline semantic-production records become runtime records without weakening source authority, human editorial control, or the static architecture? |
 
 ### A few terms used throughout
 
@@ -45,6 +46,18 @@ The project began as a first vibe-coding experiment: choose a mood and receive t
 - **Fail closed**: when identity, transport state, or semantic validity is uncertain, stop rather than guess or silently accept.
 - **Idempotent**: safely running the same recovery/action again does not duplicate or corrupt prior work.
 - **Preflight**: a zero-call/read-only inspection that proves the next live action is safe before external API work begins.
+- **Working tree**: the files currently present in the local checkout, including modified and untracked work that may not belong to the current task.
+- **Staging / index**: Git's proposed next commit. Staging is a deliberate selection step; it is not the same as saving a file.
+- **Commit / push / tag / release**: a commit records a local project checkpoint; push publishes commits to the remote; a tag names an exact commit; a GitHub Release publishes a human-facing release around a tag.
+- **Source of truth**: the authoritative artifact for a decision. Chat summaries are useful context, but frozen repository artifacts, hashes, manifests and accepted human decisions outrank memory.
+- **Deterministic**: the same frozen inputs and rules produce the same result.
+- **Schema**: a structural contract for what data must look like. Passing a schema does not prove semantic correctness.
+- **SHA-256 / artifact binding**: a content hash used to prove that the exact frozen bytes being reviewed are the bytes later executed or promoted.
+- **Fail open / fail closed**: fail-open behavior silently assumes success when evidence is missing; fail-closed behavior stops until the missing authority or state is resolved. Movie Mood increasingly chose fail-closed behavior for irreversible or semantic decisions.
+- **Dry run**: execute the checks and assembly logic without performing the production mutation.
+- **Calibration**: limited development work used to understand a model, prompt, validator or reviewer before relying on it more broadly.
+- **Retrospective development set / prospective holdout**: retrospective data may be used to learn and repair a method; a prospective holdout must remain untouched until the evaluation design is frozen. Performance on the development set is not prospective confirmation.
+- **Ambiguous dispatch**: an external request may have been sent but no durable response is known. Never automatically retry it as if nothing happened.
 
 ## 1. Pitfalls we encountered: lessons worth keeping
 
@@ -870,9 +883,110 @@ FUTURE EXPANSION PROVIDER: GEMINI FLASH FAMILY
 
 **Original goal:** Promote accepted offline-produced semantic candidates from Semantic-400 into the static runtime catalogue without weakening editorial meaning, factual integrity, or the pure static architecture.
 
-**What V8.2 delivers:** 139 promoted records join the original 41 curated baseline films, expanding the live static catalogue from 41 to **180 movies**. Zero runtime mutations, zero runtime external calls.
+**Final release:** `v8.2.0`, release commit `309c736`. GitHub Pages, the annotated tag and the published GitHub Release all point to the released 180-film state.
 
-**Key results:**
+### 8.2.1 Why V8.2 stopped at 180 rather than deploying Semantic-400
+
+Semantic-400 was a **semantic-production checkpoint**, not a promise that 400 candidates had production authority. This distinction became essential in V8.2.
+
+The live runtime began with 41 curated films. V8.2 deliberately used a bounded production tranche rather than treating every Semantic-400 record as automatically promotable. The normal T3 cohort contained 150 candidates, with one separately deferred candidate kept outside that denominator. The execution plan also imposed a hard physical model-call budget and a deterministic human-audit plan.
+
+The reason was therefore **not simply that 400 was too much work**. Cost, provider reliability and human-review burden mattered, but the stronger reason was governance: after source-boundary failures and a severe audit miss, earlier semantic validity could not silently inherit production authority. Each runtime entrant needed the current production contract, source-boundary/materiality review, repair/closure where necessary, complete production assembly, explicit promotion authorization and a separately authorized runtime write.
+
+The final normal-T3 disposition was:
+
+| T3 disposition | Count |
+| --- | ---: |
+| Human-semantic accepted | 139 |
+| Terminal pre-human exclusions | 2 |
+| Structural quarantine | 9 |
+| Normal T3 total | 150 |
+| Deferred outside normal T3 (`exp100-tmdb-1156593`) | 1 |
+
+Those 139 joined the original 41, producing **180 live movies**. Records left outside V8.2 runtime promotion should not be described as failed movies. They remained semantic/development candidates without V8.2 production authority. Future expansion must create a new bounded promotion decision rather than treating the remainder of Semantic-400 as unfinished deployment work.
+
+A useful arithmetic warning for future agents: `400 - 180 = 220` is the wrong comparison because the 180 runtime catalogue includes the original 41 films. V8.2 promoted **139** new Semantic-400-derived records; the rest of the Semantic-400 checkpoint was not promoted in this release.
+
+### 8.2.2 The review standard we eventually converged on
+
+The hardest V8.2 lesson was that "unsupported" and "revision-worthy" are not identical.
+
+The calibrated production materiality policy was `A_PRIME_PRODUCTION_MATERIALITY_V1`:
+
+> **UNSUPPORTED != AUTOMATICALLY REVISION-WORTHY.**
+
+Non-material ordinary inference, rhetorical intensification, figurative language, atmospheric framing, genre shorthand, viewing-experience language and minor contextual concretization could be tolerated when they did not materially change what the movie was being claimed to contain.
+
+Human intervention was required when unsupported copy materially added or changed concrete claims about identity, relationship/status, agency, motive, causality, mechanism, chronology/timing, quantity, setting/geographic scope, event state, object attributes, ontology/entity type, competence/personality, procedural stage, threat/stakes or spoiler information.
+
+The companion source-boundary rule was stricter about **where authorization comes from**: only the frozen allowed source material and source references authorize semantic copy. A fact's presence elsewhere in metadata does not automatically grant semantic authority. In particular, `facts.keywords` cannot authorize copy when `allowedSourceMaterial.keywords` is empty.
+
+Recurring adjudication distinctions worth preserving as permanent reviewer heuristics are:
+
+- energy is not automatically pace;
+- involvement is not automatically direct causality;
+- suspicion is not confirmed deception;
+- nationality or production country is not authorized story location;
+- fantasy atmosphere is not permission to assert specific world physics;
+- supernatural tone is not permission to invent a particular fiction–reality mechanism;
+- keyword metadata is not authorized semantic source material when the protocol excludes it;
+- reaching the same broad outcome does not permit inventing a different causal pathway.
+
+The operational authority rule became:
+
+> **Machine can BLOCK; machine cannot ACCEPT.**
+
+Deterministic tooling may stop malformed JSON, schema defects, length violations, identity drift, missing authority or other mechanical failures before human review. A machine pass is not semantic approval. Repaired copy must be approved as the repaired copy; approval does not transfer from a superseded version.
+
+### 8.2.3 Verifier v1.4: useful development evidence, not production authority
+
+Verifier v1.4 arose after an earlier severe audit miss showed that automated clearance could miss material source-boundary defects. Its most important contribution was not a triumphant accuracy number; it was clarifying what the project could and could not honestly claim.
+
+The retrospective evidence had two different provenance classes and they must never be pooled into a fictional single human-ground-truth dataset:
+
+- candidates #1–#85 remained human ground truth: **21 APPROVE, 64 REVISE/MINOR, 0 REVISE/SEVERE**;
+- candidates #86–#184 were a **Codex-assisted continuation**, explicitly not human ground truth: **48 APPROVE, 51 REVISE/MINOR, 0 REVISE/SEVERE**.
+
+The original human stopping protocol expected enough clean, defect-positive and severe examples to support its intended evaluation. By #85, zero severe cases had appeared and the workflow was amended rather than pretending the original protocol had completed unchanged. Zero observed severe cases was evidence about the reviewed sample, **not proof that severe risk was zero**.
+
+The continuation itself taught an execution-integrity lesson. Its first implementation contained unsafe fail-open behavior: missing explicit overrides could become APPROVE. That historical pass was preserved. An independent pass reviewed the apparent approvals, found substantial false negatives, and the final continuation was rebuilt around explicit judgments plus fail-closed validation. Missing judgment, duplicate sequence, candidate-ID mismatch or unexpected sequence became errors rather than implicit acceptance.
+
+This means:
+
+```text
+retrospective development evidence
+!= prospective validation
+!= production validation
+!= promotion authorization
+```
+
+The evidence available for this final retrospective supports a development-level remediation/governance conclusion, but it does **not** support inventing a prospective-performance claim. The prospective holdout was explicitly untouched at the v1.4 synthesis checkpoint. V8.2 ultimately did not grant the verifier autonomous positive promotion authority; production acceptance still depended on human semantic closure plus deterministic production gates.
+
+The earlier planning material requested an A/A′/B repeatability/noise-floor decomposition. The exact cell-level A/A′/B figures are **not reproduced here** because the authoritative final result artifact needed to reproduce those figures is not present in the source set used for this post-release update. Do not reconstruct them from chat memory. The durable conclusion is narrower and supported: repeated MINOR disagreements demonstrated a non-trivial semantic noise floor, zero observed SEVERE did not prove severe safety, and the verifier remained evidence/routing support rather than semantic authority.
+
+### 8.2.4 Gemini 3.8 provider recovery: debug the contract, not the model's intelligence
+
+A separate V8.2 problem initially looked like a provider/model failure. The recovery work eventually closed `CLOSED_PASS` on Google Gemini Developer API with `gemini-3.8-flash`.
+
+The decisive differential diagnosis was small:
+
+- string enum → HTTP 200;
+- integer without enum → HTTP 200;
+- integer plus numeric singleton enum → HTTP 400 `INVALID_ARGUMENT`.
+
+The lesson was that a provider transport/schema-compatibility defect is not a semantic reasoning benchmark. Movie Mood kept the authoritative local schema as the source of truth, projected a provider-compatible subset for Gemini's response-format transport, and continued to validate returned output against the authoritative contract locally.
+
+This changed our debugging habit from:
+
+> provider call failed → retry / use a stronger model
+
+into:
+
+> classify transport vs schema vs semantic failure → isolate one variable → prove the incompatibility → repair only that layer → rerun the smallest confirming probe.
+
+The final provider-recovery probe returned HTTP 200 with one physical dispatch and passed writer validation. That recovery then became a frozen dependency of T3 rather than another open research loop.
+
+### 8.2.5 Final production and runtime result
 
 | Metric | Result |
 | --- | ---: |
@@ -882,53 +996,38 @@ FUTURE EXPANSION PROVIDER: GEMINI FLASH FAMILY
 | Pre-human terminal exclusions | 2 |
 | Structural quarantine | 9 |
 | Deferred outside normal cohort (`exp100-tmdb-1156593`) | 1 |
-| Stage 2 poster acquisition | 139/139 (100%) |
-| Stage 2 palette generation | 139/139 (100%) |
-| Successor production assembly | 139/139 (100%) |
-| Production promotion | 139/139 (100%) |
-| Final live runtime catalogue | 180 (100% unique runtime & TMDB IDs) |
+| Stage 2 poster acquisition | 139/139 |
+| Stage 2 palette generation | 139/139 |
+| Successor production assembly | 139/139 |
+| Production promotion | 139/139 |
+| Final live runtime catalogue | 180 |
+| Unique runtime IDs / unique TMDB IDs | 180 / 180 |
 | Runtime identity/mapping overlaps/conflicts | 0 / 0 / 0 |
 | Runtime semantic/factual/poster/palette mutations | 0 |
 | Runtime assembly external calls | 0 network, 0 provider |
-| Gemini physical dispatch attempts | 151 / 180 cap (headroom: 29) |
+| Gemini physical dispatch attempts | 151 / 180 cap (29 headroom) |
 | Rollback invocations during live write | 0 |
 
-**Major engineering & governance lessons:**
+Production promotion and runtime mutation were deliberately separated. The exact prospective three-file runtime bytes were frozen and hashed before the write was authorized. The live transaction bound both the original 41-film source hashes and the future 180-film target hashes, staged all three files, replaced them atomically, read them back, and had fail-closed rollback behavior.
 
-1. **Product Evolution vs. Catalogue/Governance Evolution:**
-   The product remains intentionally static, lightweight, and mood-first. Catalogue scaling is strictly maintainer/offline infrastructure. Runtime code was not compromised with backends, database layers, or dynamic API calls.
+The release process then deliberately staged only the intended release scope, excluding local poster JPEGs, prospective full-file copies, `dist`, design experiments and unrelated dirty work. Release commit `309c736` was pushed to `main`, the GitHub Pages workflow succeeded, the live endpoint returned HTTP 200, annotated tag `v8.2.0` was created at that commit, and the GitHub Release was published.
 
-2. **Source-Boundary Safeguards & Materiality:**
-   Structural validity (well-formed JSON, schema passing) is not semantic validity. Bounded source-grounding checks prevent models from asserting unsourced mechanisms, character motivations, or lore outside the evidence packet.
-
-3. **Human Review Governance (Machine can BLOCK; machine cannot ACCEPT):**
-   Automated tooling filters out syntax defects, length violations, and contract breaches so human review focuses strictly on semantic and editorial judgment. Models provide evidence, never promotion authority.
-
-4. **Failure Separation & Lawful Successor Execution:**
-   When historical dry runs encountered missing local poster assets, failure was quarantined and reconciled via a lawful successor dry run without modifying historical ledgers or papering over evidence.
-
-5. **Promotion vs. Runtime Separation & Prospective Binding:**
-   Candidate records were promoted to production records and prospective bytes were frozen and hashed *before* runtime writes were authorized.
-
-6. **Source-Hash-Bound Atomic Runtime Transaction:**
-   The live runtime write was bound to exact input and prospective hashes across all three runtime files (`curatedMovies.ts`, `tmdbMovies.json`, `tmdbMovieMappings.json`). The executor executed with staging, atomic replacement, post-write readback, and fail-closed rollback.
-
-7. **Model Routing Economics:**
-   High-consequence governance gating (e.g. final gate audits) was reserved for Codex, while routine deterministic execution, validation, and documentation was routed to Gemini Flash, staying well within the 180 physical call budget (151 calls used, 29 headroom).
-
-**Release candidate status:**
+**Final V8.2 status:**
 
 ```text
-V8.2 RELEASE CANDIDATE: COMPLETE
-RUNTIME ASSEMBLY: COMPLETE
-RELEASE: PENDING
+V8.2: RELEASED AND CLOSED
+TAG: v8.2.0
+RELEASE COMMIT: 309c736
 RUNTIME CATALOGUE: 180 FILMS (41 BASELINE + 139 PROMOTED)
-TRANCHE 3 COHORT: 150 (139 ACCEPTED, 2 TERMINAL EXCLUDED, 9 QUARANTINED)
+SEMANTIC-400: OFFLINE PRODUCTION CHECKPOINT, NOT 400 DEPLOYED FILMS
+TRANCHE 3: 150 NORMAL CANDIDATES → 139 ACCEPTED / 2 TERMINAL EXCLUDED / 9 QUARANTINED
 GEMINI PHYSICAL CALLS: 151 / 180 (29 HEADROOM)
-RUNTIME MUTATIONS: 0
-RUNTIME EXTERNAL CALLS: 0
+RUNTIME MUTATIONS DURING ASSEMBLY: 0
+RUNTIME EXTERNAL CALLS DURING ASSEMBLY: 0
 STATIC RUNTIME ARCHITECTURE: PRESERVED
 ```
+
+The clean ending is intentionally modest: V8.2 proved that Movie Mood can expand its runtime catalogue through a reproducible, source-bound, human-authorized offline pipeline. It did **not** prove that every Semantic-400 record should be deployed, that verifier-only semantic acceptance is safe, or that the next milestone must be a round catalogue number.
 
 ---
 
@@ -958,6 +1057,12 @@ These rules supersede or qualify earlier guidance where necessary.
 20. **Freeze a decision once the evidence is sufficient. Do not reopen it just because another model is available.**
 21. **A milestone is allowed to stop below a round target when its learning goal is complete.**
 22. **Keep the project understandable to a beginner. Cleverness that cannot be audited later is a liability.**
+23. **Retrospective development evidence is not prospective validation, and neither one is production authorization.**
+24. **Containment is not detection.** If a defect reaches a human because a verifier crashed or routed conservatively, that proves the workflow contained it, not that the verifier semantically recognized it.
+25. **A critic or verifier is evidence, not authority.** Automation may reduce where humans spend attention; it may not silently redefine semantic acceptability.
+26. **Source availability is not source authorization.** Facts, keywords or plausible inference outside the allowed source boundary cannot be promoted into semantic copy merely because they are true somewhere.
+27. **Passing tests proves only the assertions that were actually written.** Test names and green status do not prove unasserted ordering, crash recovery, semantic quality or perceptual success.
+28. **Use the cheapest reliable falsification first.** Before code, another model call or a new protocol, ask for the smallest reliable test that could show the idea is wrong.
 
 ---
 
@@ -1063,6 +1168,54 @@ validate
 stop on uncertainty
 resume from manifest
 ```
+
+## Normative vs. historical evidence
+
+Current normative specifications, frozen authorization artifacts, accepted human decisions and released runtime state outrank old prompts, superseded protocols and chat recollection. Historical failures are still evidence: preserve them, label them as historical/superseded, and never rewrite them into an imaginary clean history.
+
+For experiments, always state which evidence class you are using:
+
+- retrospective development;
+- prospective validation;
+- production authorization;
+- runtime/release evidence.
+
+Do not borrow authority from one class for another.
+
+## Human semantic authority
+
+Movie Mood's editorial meaning is not delegated to a model merely because the model writes fluent copy. Where the governing production contract requires semantic approval, positive authority remains human. Mechanical tools may block; reviewers and verifiers may provide evidence; deterministic gates may prove identity and integrity; none of those silently substitutes for the required human judgment.
+
+When source support is ambiguous, report the uncertainty and the exact missing authority. Do not fill the gap with a plausible movie fact, a keyword, world knowledge, or a confident-sounding inference.
+
+## Post-release exploration snapshot
+
+V8.2 is released and closed. The following items are **future hypotheses, not unfinished V8.2 work**. Operational guidance lives in `MOVIE_MOOD_PLAYBOOK.md`; a more detailed exploration map lives in `FUTURE_WORK.md`.
+
+The most important post-release clarification is that **Semantic-400 is not a 400-film deployment backlog**. V8.1 produced 400 semantic records; V8.2 promoted the population that earned the complete current production/runtime authority chain. Earlier semantic-production records remain potential future inputs, but they do not inherit production authority merely because they exist. A future expansion should select a bounded tranche because it improves the product, not because a round number remains unfilled.
+
+A read-only analysis of the released 180-film runtime also suggests a more useful future question than raw scale. Core `mood × situation` coverage is already healthy: all 30 combinations have at least four films. The catalogue is less balanced on some semantic axes (`relaxing`, `immersive`, and `adventurous` are relatively thin), and pools become sparse when several practical filters are stacked as exact hard constraints. The current code also treats multiple selected genres as an AND condition, while pace and emotional weight are exact hard filters and only situation receives an automatic fallback. These are **design hypotheses**, not proven defects. The cheapest next validation would compare current exact matching with a transparent hard/soft preference model before changing production behavior.
+
+Current exploration options are:
+
+- **coverage-aware catalogue expansion** — use remaining semantic-production records to fill demonstrated catalogue gaps rather than chase 400/500/1,000 as quotas;
+- **filter semantics** — explicitly distinguish “must”, “prefer”, and “avoid,” test genre AND vs OR expectations, and consider transparent relaxation for soft preferences;
+- **TMDB rating/vote data** — test `vote_average` + `vote_count` as a late-stage factual confidence cue, never as an automatic popularity-first ranking signal;
+- **source-boundary automation** — pursue only if prospective evidence shows it can safely reduce human review burden;
+- **runtime architecture** — keep the static design until measured product/runtime limits justify something more complex.
+
+None of these is a commitment. A future version should reopen only the question that has the clearest user problem and cheapest reliable falsification path.
+
+## Open questions for a future version
+
+These are hypotheses, not commitments:
+
+- whether another bounded catalogue-expansion tranche is worth the human-review and production cost;
+- whether TMDB rating/vote information can help a user break a tie **without turning Movie Mood into a popularity-ranking product**;
+- whether source-boundary automation can earn enough prospective evidence to reduce human workload while preserving human semantic authority;
+- whether any future catalogue scale creates a demonstrated need for architecture beyond static committed data.
+
+A future version should reopen one of these only when there is a concrete product problem and a bounded validation plan.
 
 ## Closed questions: do not casually reopen
 
