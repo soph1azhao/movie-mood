@@ -1,44 +1,46 @@
 # Movie Mood
 
-Streaming platforms help you find more movies.
+**Movie Mood helps you choose one.** This static movie companion turns a mood and practical viewing constraints into a small shortlist from **180 curated films**, then helps you settle on tonight’s pick. V9 adds an opt-in **For you** order: saved films in the browser-local My List create a genre-similarity profile that reorders eligible picks while preserving hard constraints and exact-situation priority.
 
-Movie Mood helps you choose one.
+Separately, an **offline MovieLens 100K study** implements a popularity baseline, ItemKNN collaborative filtering, and an ItemKNN–popularity hybrid. It uses a global chronological train/validation/test split, selects model settings on validation only, and evaluates the locked methods on the same warm, unseen candidates. These MovieLens models are research code; the product uses the local content-based ranking above.
 
-A mood-first, decision-focused movie companion for one deceptively difficult question: **What should I watch tonight?**
+[Live demo (V8.2 on `main`)](https://soph1azhao.github.io/movie-mood/) · [V9 product architecture and original benchmark](experiments/v9-ranking/README.md) · [Global-time ItemKNN results](experiments/v9-ranking/ITEMKNN_RESULTS.md) · [Project history](docs/PROJECT_RETROSPECTIVE.md)
 
-[Live demo](https://soph1azhao.github.io/movie-mood/) · [Latest releases](https://github.com/soph1azhao/movie-mood/releases) · [Project retrospective](docs/PROJECT_RETROSPECTIVE.md) · [Documentation index](docs/README.md)
-
-## About
-
-Movie Mood replaces an endless catalogue with a small, considered shortlist. Start with how you want to feel, optionally refine the night, and work toward one film through progressive reveal and lightweight decision support.
-
-The V8.2 runtime catalogue contains **180 curated movies** (the original 41-film baseline plus 139 movies promoted through the governed V8.2 pipeline). Separately, the offline production pipeline previously established a **400 validated semantic record** checkpoint; V8.2 promoted 139 human-adjudicated, contract-validated films into the static runtime catalogue.
-
-## How it works
+## Recommendation architecture
 
 ```text
-Choose a mood
-      ↓
-Glimpse — three visual invitations
-      ↓
-Refine tonight (optional) or Take a closer look
-      ↓
-Full Reveal — three films with decision-ready detail
-      ↓
-That's the one ──────────────────────────────┐
-      or                                     │
-Help me choose                              │
-      ↓                                      │
-Decision companion where useful,             │
-or manually mark one Not tonight             │
-      ↓                                      │
-Final duel → optional coin-flip gut check     │
-      └───────────────────────────────────────┘
-                         ↓
-                   Tonight's Pick
+PRODUCT · 180 curated films
+Mood → hard filters + situation priority + dealbreakers → eligible pool
+     → discovery order → optional local "For you" genre ranking → three picks → choose one
+
+OFFLINE STUDY · MovieLens 100K (separate from the product)
+Global time split → train positive interactions → popularity / ItemKNN / hybrid
+                  → validation-only selection → locked test on shared candidates
 ```
 
-The app also supports practical filters, strict “Not tonight” boundaries, another-three cycling, related-film exploration, shareable decision states, expandable details, and a browser-local My List.
+## Offline benchmark: locked test results
+
+| Method | Recall@10 | NDCG@10 | Coverage@10 |
+| --- | ---: | ---: | ---: |
+| Popularity | **0.111058** | **0.150902** | 0.046683 |
+| ItemKNN | 0.074513 | 0.147481 | **0.085381** |
+| ItemKNN + popularity | 0.069965 | 0.149710 | 0.074324 |
+
+**Result:** Popularity had higher aggregate held-out relevance; collaborative filtering exposed more of the warm catalogue. The test covers 75 eligible users in one global time window. These offline ratings do not measure whether Movie Mood users prefer the deployed picks, and the earlier [per-user-split benchmark](experiments/v9-ranking/README.md) is not directly comparable.
+
+To reproduce the global-time comparison with Python 3 (standard library only), download the dataset once, then run the tests and benchmark from this V9 branch’s repository root:
+
+```bash
+python3 experiments/v9-ranking/benchmark.py --download
+PYTHONDONTWRITEBYTECODE=1 python3 experiments/v9-ranking/itemknn.test.py
+PYTHONDONTWRITEBYTECODE=1 python3 experiments/v9-ranking/itemknn.py
+```
+
+See the [frozen protocol, selected parameters, error analysis, and limitations](experiments/v9-ranking/ITEMKNN_RESULTS.md). Application setup and checks are below.
+
+## About the product
+
+Start with how you want to feel, optionally refine the night, then move from a three-film glimpse to a closer look or the deterministic Help Me Choose flow. The V8.2 expansion brought the static runtime catalogue from 41 to 180 films after offline validation and human review. The separate offline production pipeline previously reached a 400 validated semantic-record checkpoint; its full history remains in the [project retrospective](docs/PROJECT_RETROSPECTIVE.md).
 
 ## Current experience
 
@@ -87,6 +89,7 @@ Prerequisites: a Node version matching `package.json` and pnpm 11.
 ```bash
 git clone https://github.com/soph1azhao/movie-mood.git
 cd movie-mood
+git switch exploration/v9-personalized-ranking-mvp
 pnpm install --frozen-lockfile
 pnpm dev
 ```
@@ -117,6 +120,7 @@ src/
   types/               shared domain and state types
   utils/               filtering, discovery, decisions, URLs, presentation
 catalogue-pipeline/    maintainer-only offline catalogue production
+experiments/v9-ranking/ standalone MovieLens recommendation benchmarks
 scripts/               maintainer curation and TMDB snapshot tools
 docs/                  specifications, research, history, and closure records
 .github/workflows/     tested GitHub Pages deployment
@@ -141,6 +145,7 @@ Older specifications remain available as historical records and may be supersede
 - **V7–V8:** visual research and the Editorial Wire system established the current cinematic identity.
 - **V8.1:** a reproducible, bounded, offline catalogue-production pipeline proved semantic scaling through 400 validated records.
 - **V8.2:** promoted 139 validated films from offline production into the static runtime catalogue, expanding the live collection to 180 films with zero runtime semantic or factual mutation.
+- **V9 development branch:** added opt-in local genre-based ordering and separate MovieLens benchmarks; the locked global-time test favored popularity on relevance and ItemKNN on coverage.
 
 See [Releases](https://github.com/soph1azhao/movie-mood/releases) and the [project retrospective](docs/PROJECT_RETROSPECTIVE.md) for the detailed history.
 
@@ -150,7 +155,7 @@ This product uses the TMDB API but is not endorsed or certified by TMDB. Factual
 
 ## Project status
 
-Movie Mood V8.2 is prepared for release at `v8.2.0`. The runtime catalogue contains 180 curated movies. The runtime application remains static, deterministic, and fully self-contained, with offline maintainer tooling kept strictly separate from browser execution.
+The live GitHub Pages demo deploys from `main` and presents the V8.2 product with 180 curated films. V9 is documented on the `exploration/v9-personalized-ranking-mvp` development branch; its ItemKNN models remain offline. The application remains static and self-contained.
 
 ## License
 
