@@ -47,6 +47,14 @@ function App() {
   const refinementRef = useRef<HTMLDivElement>(null)
   const { favoriteIds, toggleFavorite, isFavorite } = useFavorites()
 
+  function toggleFavoriteAndRefreshRanking(movieId: string) {
+    toggleFavorite(movieId)
+    if (personalized) {
+      setRound(0)
+      setPreviousPickOffset(null)
+    }
+  }
+
   const genreOptions = useMemo(
     () => [...new Set(movies.flatMap((movie) => movie.genres))].sort(),
     [],
@@ -324,7 +332,7 @@ function App() {
                 </div>
                 {!isViewingFavorites && !isViewingSimilarMovies && (
                   <div className="result-actions">
-                    {!decisionState && !isViewingSimilarMovies && favoriteIds.length > 0 && (
+                    {!decisionState && !isViewingSimilarMovies && (favoriteIds.length > 0 || personalized) && (
                       <button type="button" className="another-button" aria-pressed={personalized} onClick={() => { setPersonalized(value => !value); setRound(0); setPreviousPickOffset(null); setRecommendationReveal('glimpse') }}>
                         {personalized ? 'For you: On' : 'For you: Off'}
                       </button>
@@ -359,7 +367,7 @@ function App() {
               </div>
               {isViewingFavorites ? (
                 favoriteMovies.length > 0 ? (
-                  <MovieGrid movies={favoriteMovies} isFavorite={isFavorite} onToggleFavorite={toggleFavorite} />
+                  <MovieGrid movies={favoriteMovies} isFavorite={isFavorite} onToggleFavorite={toggleFavoriteAndRefreshRanking} />
                 ) : (
                   <div className="empty-state compact-empty">
                     <div>
@@ -374,7 +382,7 @@ function App() {
                   <MovieGrid
                     movies={similarMovies}
                     isFavorite={isFavorite}
-                    onToggleFavorite={toggleFavorite}
+                    onToggleFavorite={toggleFavoriteAndRefreshRanking}
                     onFindSimilar={showSimilarMovies}
                   />
                 ) : (
@@ -402,7 +410,7 @@ function App() {
                       state={decisionState}
                       shareUrl={shareUrl}
                       isFavorite={isFavorite}
-                      onToggleFavorite={toggleFavorite}
+                      onToggleFavorite={toggleFavoriteAndRefreshRanking}
                       onChange={setDecisionState}
                       onExit={() => setDecisionState(null)}
                     />
@@ -412,7 +420,7 @@ function App() {
                         movies={picks}
                         variant={isFullReveal ? 'full' : 'glimpse'}
                         isFavorite={isFavorite}
-                        onToggleFavorite={toggleFavorite}
+                        onToggleFavorite={toggleFavoriteAndRefreshRanking}
                         onFindSimilar={isFullReveal ? showSimilarMovies : undefined}
                         onChooseMovie={isFullReveal ? directPickMovie : undefined}
                         showFinishTime={isFullReveal}

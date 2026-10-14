@@ -14,13 +14,16 @@ This is a controlled MVP, not collaborative filtering, online learning, producti
 
 Source: https://grouplens.org/datasets/movielens/100k/ (100,000 ratings, 943 users, 1,682 movies). Downloaded data is ignored and remains outside product/runtime code. Per-user chronological split by timestamp (oldest floor(80%) train, newest remaining 20% test; tie item ID); relevant = rating ≥ 4. Evaluate users with ≥1 positive train and ≥1 eligible positive held-out item, excluding previously seen movies and test-only new movies from rankings. Item popularity uses **only training ratings**. Movie genre flags are static public item metadata. Fixed candidate universe across methods: all items observed in training, excluding each user's training history. Positive rating popularity baseline uses log(1+positive count). Personalized candidate uses 70% cosine similarity of training positive genre profile and 30% normalized training popularity. Both rank all eligible unseen items, tie-breaking by item ID. Top K=10. Macro-average Recall@10 and binary NDCG@10 over eligible users; report exposure-based catalogue coverage. Parameters are declared upfront rather than tuned to test outcomes. No validation-driven model selection or hyperparameter tuning is claimed.
 
-A preliminary independent calculation of this specification on a public MovieLens 100K mirror gave:
-- 100,000 ratings: 79,619 train / 20,381 test.
-- 907 eligible evaluation users.
-- Popularity: Recall@10 **0.070946**, NDCG@10 **0.098337**.
-- Content 70/30: Recall@10 **0.051960**, NDCG@10 **0.071948**.
+Reproduced locally from the MovieLens 100K files with `benchmark.py`:
+- 100,000 ratings: 79,619 train / 20,381 test; 907 eligible evaluation users.
+- Popularity: Recall@10 **0.070946**, NDCG@10 **0.098337**, Coverage@10 **0.046555**.
+- Content 70/30: Recall@10 **0.051960**, NDCG@10 **0.071948**, Coverage@10 **0.191806**.
 
-**The personalized approach underperforms the baseline on this split.** These are preliminary observed values, not independently verified by executing this committed Python script in the target checkout. Reproduce locally before treating them as checked project evidence; benchmark reports its own computed values. Since a single fixed 70/30 mix was not tuned, do not claim learned optimality. The split can reflect historical popularity and strongly favor popularity; analyze, do not hide, that limitation.
+**The content-based method underperforms popularity on relevance on this split while exposing more of the catalogue.** Its fixed 70/30 mix was not tuned; these offline ratings do not measure Movie Mood user satisfaction or validate the production ranking. This per-user split is historical evidence; another user’s training event can occur after a target user’s held-out event, so it is not a globally future-safe evaluation.
+
+## Separate global-time ItemKNN extension
+
+[`ITEMKNN_RESULTS.md`](ITEMKNN_RESULTS.md) records a later, offline comparison of popularity, ItemKNN, and an ItemKNN/popularity hybrid. It uses a globally chronological train/validation/test split, validation-only parameter selection, a common warm-item candidate universe, and locked test results. Neither collaborative method beat popularity on test Recall@10 or NDCG@10; both improved Coverage@10. Its split, eligible users, and fitted methods differ from the historical experiment above, so **do not compare their metric values directly**. The ItemKNN code is not used by the product and makes no production-quality claim.
 
 ## Verification and constraints
 - Run `pnpm test:runtime`, `pnpm build`, `pnpm exec tsc -b` in the repository after syncing branch.
