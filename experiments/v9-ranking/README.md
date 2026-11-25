@@ -35,4 +35,4 @@ Reproduced locally from the MovieLens 100K files with `benchmark.py`:
 - Cold start: original released order, with no forced new selections.
 
 ## Boundaries
-No promotion to `main` or release by this branch. No V10 work. Resume evidence should state the true underperformance and the difference between a working heuristic feature and separately benchmarked methods. Do not claim empirical improvement or business impact.
+These MovieLens experiments are offline research and are not runtime recommendation models. Their results do not establish in-product lift or justify an accuracy-improvement claim. The product's opt-in local genre heuristic is described separately above.

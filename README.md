@@ -4,7 +4,7 @@
 
 Separately, an **offline MovieLens 100K study** implements a popularity baseline, ItemKNN collaborative filtering, and an ItemKNN–popularity hybrid. It uses a global chronological train/validation/test split, selects model settings on validation only, and evaluates the locked methods on the same warm, unseen candidates. These MovieLens models are research code; the product uses the local content-based ranking above.
 
-[Live demo (V8.2 on `main`)](https://soph1azhao.github.io/movie-mood/) · [V9 product architecture and original benchmark](experiments/v9-ranking/README.md) · [Global-time ItemKNN results](experiments/v9-ranking/ITEMKNN_RESULTS.md) · [Project history](docs/PROJECT_RETROSPECTIVE.md)
+[Live demo](https://soph1azhao.github.io/movie-mood/) · [V9 product architecture and original benchmark](experiments/v9-ranking/README.md) · [Global-time ItemKNN results](experiments/v9-ranking/ITEMKNN_RESULTS.md) · [Project history](docs/PROJECT_RETROSPECTIVE.md)
 
 ## Recommendation architecture
 
@@ -28,7 +28,7 @@ Global time split → train positive interactions → popularity / ItemKNN / hyb
 
 **Result:** Popularity had higher aggregate held-out relevance; collaborative filtering exposed more of the warm catalogue. The test covers 75 eligible users in one global time window. These offline ratings do not measure whether Movie Mood users prefer the deployed picks, and the earlier [per-user-split benchmark](experiments/v9-ranking/README.md) is not directly comparable.
 
-To reproduce the global-time comparison with Python 3 (standard library only), download the dataset once, then run the tests and benchmark from this V9 branch’s repository root:
+To reproduce the global-time comparison with Python 3 (standard library only), download the dataset once, then run the tests and benchmark from the repository root:
 
 ```bash
 python3 experiments/v9-ranking/benchmark.py --download
@@ -89,7 +89,6 @@ Prerequisites: a Node version matching `package.json` and pnpm 11.
 ```bash
 git clone https://github.com/soph1azhao/movie-mood.git
 cd movie-mood
-git switch exploration/v9-personalized-ranking-mvp
 pnpm install --frozen-lockfile
 pnpm dev
 ```
@@ -155,7 +154,7 @@ This product uses the TMDB API but is not endorsed or certified by TMDB. Factual
 
 ## Project status
 
-The live GitHub Pages demo deploys from `main` and presents the V8.2 product with 180 curated films. V9 is documented on the `exploration/v9-personalized-ranking-mvp` development branch; its ItemKNN models remain offline. The application remains static and self-contained.
+GitHub Pages deploys the application from `main`. The MovieLens experiments are offline research; ItemKNN and hybrid ranking are not runtime recommendation models. The browser application remains static and self-contained.
 
 ## License
 

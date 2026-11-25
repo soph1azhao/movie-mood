@@ -32,13 +32,13 @@ All validation grid scores are printed by the reproduction command; only the abo
 | ItemKNN (20, 0) | 0.074513 | 0.147481 | **0.085381** |
 | Hybrid (50, 0, 0.50) | 0.069965 | 0.149710 | 0.074324 |
 
-Neither collaborative method beat popularity on test relevance metrics. ItemKNN exposed about 8.54% of the warm catalogue versus popularity's 4.67%; the hybrid exposed 7.43%. These coverage differences represent recommendation diversity, not demonstrated user benefit.
+Neither collaborative method beat popularity on test relevance metrics. ItemKNN catalogue exposure was about 8.54% of the warm catalogue versus popularity's 4.67%; the hybrid's was 7.43%. Coverage measures how many distinct warm items appear in top-10 lists; it does not demonstrate user benefit.
 
 ### Error analysis and interpretation
 
 Against popularity, ItemKNN had higher per-user NDCG for 24 users, lower for 20, and ties for 31; the hybrid had 21 higher, 20 lower, and 34 ties. Thus the macro metric loss is not a uniform per-user loss. None of the 75 eligible test users lacked CF similarity evidence in the candidate set, so the pure model's popularity fallback did not explain this result. Test eligible users had 3–375 positive historical items (median 74), 1–190 relevant target items (median 3), and 1,008–1,622 unseen warm candidates (median 1,495). The long tail of target counts and only 75 eligible users make the point estimates sensitive to the global time window and user activity. There were 226 unique users with any test-period rating, but the defined warm, unseen, positive-history eligibility reduces that to 75. Test-only new items and other ineligible target positives are excluded from every method equally.
 
-A plausible explanation is that dense historical item co-occurrence retrieves narrower taste neighborhoods while popularity captures broadly popular future positives; validation's small gain did not transfer across the later global window. This is a hypothesis, not a causal finding. The larger coverage shows more distinct recommendations, but offline rating relevance cannot establish whether users would prefer them. Only one temporal split and one small grid were studied; there are no confidence intervals, repeated windows, implicit-feedback data, or in-product outcomes. MovieLens item IDs do not map to the curated Movie Mood catalogue, and this offline model is not integrated into the app.
+A plausible explanation is that dense historical item co-occurrence retrieves narrower taste neighborhoods while popularity captures broadly popular future positives; validation's small gain did not transfer across the later global window. This is a hypothesis, not a causal finding. Greater catalogue coverage means more distinct warm items appeared in the lists; offline rating relevance cannot establish whether users would prefer those results. Only one temporal split and one small grid were studied; there are no confidence intervals, repeated windows, implicit-feedback data, or in-product outcomes. MovieLens item IDs do not map to the curated Movie Mood catalogue, and this offline model is not integrated into the app.
 
 ### Reproduce
 
